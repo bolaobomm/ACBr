@@ -546,26 +546,26 @@ begin
   qrmPagDesc.Lines.Clear;
   qrmPagValor.Lines.Clear;
 
-  qrmPagDesc.Lines.Add('Qtde Total de Itens');
+  qrmPagDesc.Lines.Add('QTD. TOTAL DE ITENS');
   qrmPagValor.Lines.Add(IntToStr(TotalItens));
 
-  qrmPagDesc.Lines.Add('Valor Total');
+  qrmPagDesc.Lines.Add('VALOR TOTAL');
   qrmPagValor.Lines.Add(DFeUtil.FormatFloat(FNFE.Total.ICMSTot.vNF));
 
   if FNFE.Total.ICMSTot.vDesc > 0.0
    then begin
-     qrmPagDesc.Lines.Add('Total Descontos');
+     qrmPagDesc.Lines.Add('TOTAL DESCONTOS');
      qrmPagValor.Lines.Add(DFeUtil.FormatFloat(FNFE.Total.ICMSTot.vDesc));
    end;
 
   if FvTroco > 0.0
    then begin
-     qrmPagDesc.Lines.Add('Troco');
+     qrmPagDesc.Lines.Add('TROCO');
      qrmPagValor.Lines.Add(DFeUtil.FormatFloat(FvTroco));
    end;
 
-  qrmPagDesc.Lines.Add('Forma de Pagamento');
-  qrmPagValor.Lines.Add('Valor Pago');
+  qrmPagDesc.Lines.Add('FORMA DE PAGAMENTO');
+  qrmPagValor.Lines.Add('VALOR PAGO');
 
   for i := 0 to FNFE.pag.Count -1 do
    begin
@@ -598,7 +598,7 @@ begin
 //  PrintBand := QRNFe.PageNumber = 1;
 
   Perc := (FNFE.Total.ICMSTot.vTotTrib / FNFE.Total.ICMSTot.vNF) * 100;
-  qrlTributos.Caption := 'Valor aprox. dos tributos: ' +
+  qrlTributos.Caption := 'Val Aprox. dos Tributos: ' +
                          DFeUtil.FormatFloat(FNFE.Total.ICMSTot.vTotTrib) +
                          '(' + DFeUtil.FormatFloat(Perc) + '%)(Fonte: IBPT)';
 end;
@@ -625,7 +625,7 @@ begin
 
     teContingencia,
     teFSDA,
-    teOffline:      qrlTipoEmissao.Caption := 'EMITIDA EM CONTINGENCIA';
+    teOffline:      qrlTipoEmissao.Caption := 'EMITIDA EM CONTINGÊNCIA';
   end;
   (*
   if FNFe.procNFe.cStat > 0 then
@@ -641,7 +641,7 @@ begin
    end;
   *)
   if FNFe.Ide.tpAmb = taHomologacao then
-    qrlTipoEmissao.Caption := 'HOMOLOGAÇÂO - SEM VALOR FISCAL';
+    qrlTipoEmissao.Caption := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';
 
   lblNumero.Caption := 'Número: ' + FormatFloat('000,000,000', FNFe.Ide.nNF) +
                        ' - Série: '+ FormatFloat('000', FNFe.Ide.serie);

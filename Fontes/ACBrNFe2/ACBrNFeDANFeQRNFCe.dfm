@@ -1,9 +1,8 @@
 inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
   Left = 238
   Top = 120
-  Width = 658
-  Height = 791
-  VertScrollBar.Position = 369
+  Width = 667
+  Height = 784
   Caption = 'DANFe - NFC-e'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -13,8 +12,8 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
   TextHeight = 10
   inherited QRNFe: TQuickRep
     Tag = 1
-    Left = 2
-    Top = 2
+    Left = 10
+    Top = 10
     Width = 302
     BeforePrint = QRNFeBeforePrint
     DataSet = cdsItens
@@ -39,7 +38,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       Left = 23
       Top = 30
       Width = 260
-      Height = 162
+      Height = 93
       Frame.Color = clBlack
       Frame.DrawTop = False
       Frame.DrawBottom = True
@@ -58,7 +57,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewPage = False
       ParentFont = False
       Size.Values = (
-        428.625000000000000000
+        246.062500000000000000
         687.916666666666800000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -434,42 +433,42 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       end
       object qrmEmitente: TQRMemo
         Left = 2
-        Top = 85
+        Top = 76
         Width = 255
-        Height = 76
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          201.083333333333300000
+          39.687500000000000000
           5.291666666666667000
-          224.895833333333300000
+          201.083333333333300000
           674.687500000000000000)
         XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
+        Alignment = taCenter
+        AlignToBand = True
         AutoSize = False
         AutoStretch = True
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = False
         WordWrap = True
         FullJustify = False
-        FontSize = 8
+        FontSize = 7
       end
     end
     object qrb02_DadosFixosDanfe: TQRChildBand
       Left = 23
-      Top = 192
+      Top = 123
       Width = 260
-      Height = 60
+      Height = 48
       Frame.Color = clBlack
       Frame.DrawTop = False
       Frame.DrawBottom = True
@@ -488,117 +487,117 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewPage = False
       ParentFont = False
       Size.Values = (
-        158.750000000000000000
+        127.000000000000000000
         687.916666666666800000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       ParentBand = qrb01_Emitente
       PrintOrder = cboAfterParent
       object QRLabel17: TQRLabel
-        Left = 36
-        Top = 4
-        Width = 200
-        Height = 16
+        Left = 30
+        Top = 1
+        Width = 199
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
-          95.250000000000000000
-          10.583333333333330000
-          529.166666666666700000)
+          39.687500000000000000
+          79.375000000000000000
+          2.645833333333333000
+          526.520833333333400000)
         XLColumn = 0
         Alignment = taCenter
-        AlignToBand = False
+        AlignToBand = True
         AutoSize = True
         AutoStretch = True
         Caption = 'DANFE NFC-e - Documento Auxiliar'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = True
         WordWrap = True
         ExportAs = exptText
-        FontSize = 10
+        FontSize = 7
       end
       object qrlURLSefaz: TQRLabel
-        Left = 16
-        Top = 20
-        Width = 221
-        Height = 16
+        Left = 14
+        Top = 12
+        Width = 231
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
-          42.333333333333340000
-          52.916666666666670000
-          584.729166666666800000)
+          39.687500000000000000
+          37.041666666666670000
+          31.750000000000000000
+          611.187500000000000000)
         XLColumn = 0
         Alignment = taCenter
-        AlignToBand = False
+        AlignToBand = True
         AutoSize = True
-        AutoStretch = False
+        AutoStretch = True
         Caption = 'da Nota Fiscal do Consumidor Eletr'#244'nica'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = True
         WordWrap = True
         ExportAs = exptText
-        FontSize = 10
+        FontSize = 7
       end
       object QRLabel19: TQRLabel
-        Left = -123
-        Top = 40
-        Width = 257
-        Height = 16
+        Left = 17
+        Top = 25
+        Width = 226
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
-          -325.437500000000000000
-          105.833333333333300000
-          679.979166666666800000)
+          39.687500000000000000
+          44.979166666666670000
+          66.145833333333340000
+          597.958333333333400000)
         XLColumn = 0
         Alignment = taCenter
-        AlignToBand = False
+        AlignToBand = True
         AutoSize = True
-        AutoStretch = False
+        AutoStretch = True
         Caption = 'N'#227'o permite aproveitamento de cr'#233'dito de ICMS'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = True
         WordWrap = True
         ExportAs = exptText
-        FontSize = 10
+        FontSize = 7
       end
     end
     object qrb03a_Cab_Itens: TQRBand
       Left = 23
-      Top = 252
+      Top = 171
       Width = 260
-      Height = 34
+      Height = 30
       Frame.Color = clBlack
       Frame.DrawTop = False
       Frame.DrawBottom = True
@@ -611,26 +610,26 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        89.958333333333320000
+        79.375000000000000000
         687.916666666666800000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       BandType = rbColumnHeader
       object QRLabel142: TQRLabel
         Left = 2
-        Top = 2
-        Width = 30
-        Height = 16
+        Top = 1
+        Width = 23
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
+          39.687500000000000000
           5.291666666666667000
-          5.291666666666667000
-          79.375000000000000000)
+          2.645833333333333000
+          60.854166666666680000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -640,30 +639,30 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = False
         WordWrap = True
         ExportAs = exptText
-        FontSize = 8
+        FontSize = 7
       end
       object QRLabel143: TQRLabel
-        Left = 120
-        Top = 2
-        Width = 138
-        Height = 16
+        Left = 96
+        Top = 1
+        Width = 116
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
-          317.500000000000000000
-          5.291666666666667000
-          365.125000000000000000)
+          39.687500000000000000
+          254.000000000000000000
+          2.645833333333333000
+          306.916666666666700000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -673,30 +672,30 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = False
         WordWrap = True
         ExportAs = exptText
-        FontSize = 8
+        FontSize = 7
       end
       object QRLabel147: TQRLabel
         Left = 78
-        Top = 18
-        Width = 32
-        Height = 16
+        Top = 13
+        Width = 27
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
+          39.687500000000000000
           206.375000000000000000
-          47.625000000000000000
-          84.666666666666680000)
+          34.395833333333340000
+          71.437500000000000000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -706,18 +705,18 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = False
         WordWrap = True
         ExportAs = exptText
-        FontSize = 8
+        FontSize = 7
       end
       object QRLabel148: TQRLabel
         Left = 24
-        Top = 18
+        Top = 13
         Width = 48
         Height = 15
         Frame.Color = clBlack
@@ -728,7 +727,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Size.Values = (
           39.687500000000000000
           63.500000000000000000
-          47.625000000000000000
+          34.395833333333330000
           127.000000000000000000)
         XLColumn = 0
         Alignment = taRightJustify
@@ -739,30 +738,30 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = False
         WordWrap = True
         ExportAs = exptText
-        FontSize = 8
+        FontSize = 7
       end
       object QRLabel149: TQRLabel
-        Left = 115
-        Top = 18
-        Width = 69
-        Height = 16
+        Left = 125
+        Top = 13
+        Width = 59
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
-          304.270833333333400000
-          47.625000000000000000
-          182.562500000000000000)
+          39.687500000000000000
+          330.729166666666700000
+          34.395833333333340000
+          156.104166666666700000)
         XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
@@ -772,30 +771,30 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = False
         WordWrap = True
         ExportAs = exptText
-        FontSize = 8
+        FontSize = 7
       end
       object QRLabel150: TQRLabel
-        Left = 189
-        Top = 18
-        Width = 67
-        Height = 16
+        Left = 200
+        Top = 13
+        Width = 56
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
-          500.062500000000000000
-          47.625000000000000000
-          177.270833333333300000)
+          39.687500000000000000
+          529.166666666666700000
+          34.395833333333340000
+          148.166666666666700000)
         XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
@@ -805,30 +804,30 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = False
         WordWrap = True
         ExportAs = exptText
-        FontSize = 8
+        FontSize = 7
       end
       object QRLabel3: TQRLabel
         Left = 34
-        Top = 2
-        Width = 43
-        Height = 16
+        Top = 1
+        Width = 38
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
+          39.687500000000000000
           89.958333333333320000
-          5.291666666666667000
-          113.770833333333300000)
+          2.645833333333333000
+          100.541666666666700000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -838,21 +837,21 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = False
         WordWrap = True
         ExportAs = exptText
-        FontSize = 8
+        FontSize = 7
       end
     end
     object qrb04_Totais: TQRBand
       Left = 23
-      Top = 320
+      Top = 233
       Width = 260
-      Height = 140
+      Height = 19
       Frame.Color = clBlack
       Frame.DrawTop = False
       Frame.DrawBottom = True
@@ -865,26 +864,26 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        370.416666666666700000
+        50.270833333333330000
         687.916666666666800000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       BandType = rbSummary
       object qrmPagDesc: TQRMemo
-        Left = 2
-        Top = 0
+        Left = 5
+        Top = 1
         Width = 139
-        Height = 137
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          362.479166666666700000
-          5.291666666666667000
-          0.000000000000000000
-          367.770833333333400000)
+          39.687500000000000000
+          13.229166666666670000
+          2.645833333333333000
+          367.770833333333300000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -893,29 +892,29 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = False
         WordWrap = True
         FullJustify = False
-        FontSize = 10
+        FontSize = 7
       end
       object qrmPagValor: TQRMemo
         Left = 150
-        Top = 0
+        Top = 1
         Width = 105
-        Height = 137
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          362.479166666666700000
+          39.687500000000000000
           396.875000000000000000
-          0.000000000000000000
+          2.645833333333333000
           277.812500000000000000)
         XLColumn = 0
         Alignment = taRightJustify
@@ -925,21 +924,21 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = False
         WordWrap = True
         FullJustify = False
-        FontSize = 10
+        FontSize = 7
       end
     end
     object qrb07_Consumidor: TQRChildBand
       Left = 23
-      Top = 690
+      Top = 396
       Width = 260
-      Height = 64
+      Height = 35
       Frame.Color = clBlack
       Frame.DrawTop = False
       Frame.DrawBottom = True
@@ -952,27 +951,27 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        169.333333333333300000
+        92.604166666666680000
         687.916666666666800000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       ParentBand = qrb06_Chave
       PrintOrder = cboAfterParent
       object QRLabel1: TQRLabel
-        Left = 84
-        Top = 4
-        Width = 88
-        Height = 16
+        Left = 93
+        Top = 5
+        Width = 73
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
-          222.250000000000000000
-          10.583333333333330000
-          232.833333333333400000)
+          39.687500000000000000
+          246.062500000000000000
+          13.229166666666670000
+          193.145833333333300000)
         XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
@@ -982,29 +981,29 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = True
         WordWrap = True
         ExportAs = exptText
-        FontSize = 10
+        FontSize = 7
       end
       object qrlDestCNPJ: TQRMemo
         Left = 2
-        Top = 17
+        Top = 19
         Width = 255
-        Height = 16
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
+          39.687500000000000000
           5.291666666666667000
-          44.979166666666670000
+          50.270833333333330000
           674.687500000000000000)
         XLColumn = 0
         Alignment = taCenter
@@ -1014,21 +1013,21 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Color = clWhite
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = False
         WordWrap = True
         FullJustify = False
-        FontSize = 10
+        FontSize = 7
       end
     end
     object qrb03b_Desc_Itens: TQRBand
       Left = 23
-      Top = 286
+      Top = 201
       Width = 260
-      Height = 34
+      Height = 32
       Frame.Color = clBlack
       Frame.DrawTop = False
       Frame.DrawBottom = True
@@ -1048,7 +1047,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewPage = False
       ParentFont = False
       Size.Values = (
-        89.958333333333320000
+        84.666666666666680000
         687.916666666666800000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -1057,15 +1056,15 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Left = 34
         Top = 2
         Width = 55
-        Height = 16
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
-          89.958333333333340000
+          39.687500000000000000
+          89.958333333333320000
           5.291666666666667000
           145.520833333333300000)
         XLColumn = 0
@@ -1078,28 +1077,28 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         DataField = 'CODIGO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = True
         WordWrap = True
         ExportAs = exptText
         FullJustify = False
-        FontSize = 8
+        FontSize = 7
       end
       object qrmProdutoDescricao: TQRDBText
         Left = 96
         Top = 2
         Width = 160
-        Height = 16
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
+          39.687500000000000000
           254.000000000000000000
           5.291666666666667000
           423.333333333333300000)
@@ -1113,8 +1112,8 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         DataField = 'DESCRICAO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         OnPrint = qrmProdutoDescricaoPrint
         ParentFont = False
@@ -1122,11 +1121,11 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         WordWrap = True
         ExportAs = exptText
         FullJustify = False
-        FontSize = 8
+        FontSize = 7
       end
       object qrmProdutoUnidade: TQRDBText
         Left = 78
-        Top = 18
+        Top = 15
         Width = 32
         Height = 15
         Frame.Color = clBlack
@@ -1137,7 +1136,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Size.Values = (
           39.687500000000000000
           206.375000000000000000
-          47.625000000000000000
+          39.687500000000000000
           84.666666666666680000)
         XLColumn = 0
         Alignment = taCenter
@@ -1149,19 +1148,19 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         DataField = 'UNIDADE'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = True
         WordWrap = True
         ExportAs = exptText
         FullJustify = False
-        FontSize = 8
+        FontSize = 7
       end
       object qrmProdutoQTDE: TQRDBText
         Left = 24
-        Top = 18
+        Top = 15
         Width = 48
         Height = 15
         Frame.Color = clBlack
@@ -1172,7 +1171,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Size.Values = (
           39.687500000000000000
           63.500000000000000000
-          47.625000000000000000
+          39.687500000000000000
           127.000000000000000000)
         XLColumn = 0
         Alignment = taRightJustify
@@ -1184,19 +1183,19 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         DataField = 'QTDE'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = True
         WordWrap = True
         ExportAs = exptText
         FullJustify = False
-        FontSize = 8
+        FontSize = 7
       end
       object qrmProdutoValor: TQRDBText
         Left = 116
-        Top = 18
+        Top = 15
         Width = 69
         Height = 15
         Frame.Color = clBlack
@@ -1207,7 +1206,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Size.Values = (
           39.687500000000000000
           306.916666666666700000
-          47.625000000000000000
+          39.687500000000000000
           182.562500000000000000)
         XLColumn = 0
         Alignment = taRightJustify
@@ -1219,19 +1218,19 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         DataField = 'VALOR'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = True
         WordWrap = True
         ExportAs = exptText
         FullJustify = False
-        FontSize = 8
+        FontSize = 7
       end
       object qrmProdutoTotal: TQRDBText
         Left = 188
-        Top = 18
+        Top = 15
         Width = 67
         Height = 15
         Frame.Color = clBlack
@@ -1242,7 +1241,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Size.Values = (
           39.687500000000000000
           497.416666666666700000
-          47.625000000000000000
+          39.687500000000000000
           177.270833333333300000)
         XLColumn = 0
         Alignment = taRightJustify
@@ -1254,28 +1253,28 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         DataField = 'TOTAL'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = True
         WordWrap = True
         ExportAs = exptText
         FullJustify = False
-        FontSize = 8
+        FontSize = 7
       end
       object qrmProdutoItem: TQRDBText
         Left = 2
         Top = 2
         Width = 30
-        Height = 16
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
+          39.687500000000000000
           5.291666666666667000
           5.291666666666667000
           79.375000000000000000)
@@ -1289,20 +1288,20 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         DataField = 'ITEM'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = True
         WordWrap = True
         ExportAs = exptText
         FullJustify = False
-        FontSize = 8
+        FontSize = 7
       end
     end
     object qrb03c_Lin_Itens: TQRChildBand
       Left = 23
-      Top = 320
+      Top = 233
       Width = 260
       Height = 0
       Frame.Color = clBlack
@@ -1345,9 +1344,9 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
     end
     object qrb08_QRCode: TQRChildBand
       Left = 23
-      Top = 754
+      Top = 431
       Width = 260
-      Height = 198
+      Height = 183
       Frame.Color = clBlack
       Frame.DrawTop = False
       Frame.DrawBottom = True
@@ -1366,7 +1365,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewPage = False
       ParentFont = False
       Size.Values = (
-        523.875000000000000000
+        484.187500000000000000
         687.916666666666800000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -1374,18 +1373,18 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       PrintOrder = cboAfterParent
       object qrlDescricao: TQRLabel
         Left = 2
-        Top = 158
+        Top = 151
         Width = 255
-        Height = 16
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333330000
+          39.687500000000000000
           5.291666666666667000
-          418.041666666666700000
+          399.520833333333300000
           674.687500000000000000)
         XLColumn = 0
         Alignment = taCenter
@@ -1396,29 +1395,29 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = False
         WordWrap = True
         ExportAs = exptText
-        FontSize = 10
+        FontSize = 7
       end
       object qrlProtocolo: TQRLabel
         Left = 2
-        Top = 176
+        Top = 163
         Width = 255
-        Height = 16
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333330000
+          39.687500000000000000
           5.291666666666667000
-          465.666666666666700000
+          431.270833333333300000
           674.687500000000000000)
         XLColumn = 0
         Alignment = taCenter
@@ -1429,29 +1428,29 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = True
         WordWrap = True
         ExportAs = exptText
-        FontSize = 10
+        FontSize = 7
       end
       object QRLabel2: TQRLabel
         Left = 2
-        Top = 6
+        Top = 4
         Width = 255
-        Height = 16
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333330000
+          39.687500000000000000
           5.291666666666667000
-          15.875000000000000000
+          10.583333333333330000
           674.687500000000000000)
         XLColumn = 0
         Alignment = taCenter
@@ -1462,18 +1461,18 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = False
         WordWrap = True
         ExportAs = exptText
-        FontSize = 10
+        FontSize = 7
       end
       object qriQRCode: TQRImage
         Left = 64
-        Top = 25
+        Top = 20
         Width = 130
         Height = 130
         Frame.Color = clBlack
@@ -1482,18 +1481,18 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          343.958333333333400000
+          343.958333333333300000
           169.333333333333300000
-          66.145833333333340000
-          343.958333333333400000)
+          52.916666666666670000
+          343.958333333333300000)
         XLColumn = 0
       end
     end
     object qrb05_Tributos: TQRChildBand
       Left = 23
-      Top = 460
+      Top = 252
       Width = 260
-      Height = 24
+      Height = 19
       Frame.Color = clBlack
       Frame.DrawTop = False
       Frame.DrawBottom = True
@@ -1506,51 +1505,51 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        63.500000000000000000
+        50.270833333333330000
         687.916666666666800000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       ParentBand = qrb04_Totais
       PrintOrder = cboAfterParent
       object qrlTributos: TQRLabel
-        Left = 2
-        Top = 4
-        Width = 52
-        Height = 16
+        Left = 102
+        Top = 2
+        Width = 56
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
+          39.687500000000000000
+          269.875000000000000000
           5.291666666666667000
-          10.583333333333330000
-          137.583333333333300000)
+          148.166666666666700000)
         XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
+        Alignment = taCenter
+        AlignToBand = True
         AutoSize = True
-        AutoStretch = False
+        AutoStretch = True
         Caption = 'qrlTributos'
         Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
+        Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = True
         WordWrap = True
         ExportAs = exptText
-        FontSize = 8
+        FontSize = 7
       end
     end
     object qrb06_Chave: TQRChildBand
       Left = 23
-      Top = 558
+      Top = 289
       Width = 260
-      Height = 132
+      Height = 107
       Frame.Color = clBlack
       Frame.DrawTop = False
       Frame.DrawBottom = True
@@ -1563,249 +1562,249 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        349.250000000000000000
+        283.104166666666700000
         687.916666666666800000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       ParentBand = qrb05a_InfComplementar
       PrintOrder = cboAfterParent
       object QRLabel9: TQRLabel
-        Left = 76
-        Top = 90
-        Width = 117
-        Height = 16
+        Left = 81
+        Top = 73
+        Width = 98
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
-          201.083333333333300000
-          238.125000000000000000
-          309.562500000000000000)
+          39.687500000000000000
+          214.312500000000000000
+          193.145833333333300000
+          259.291666666666700000)
         XLColumn = 0
         Alignment = taCenter
-        AlignToBand = False
+        AlignToBand = True
         AutoSize = True
         AutoStretch = True
         Caption = 'CHAVE DE ACESSO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = True
         WordWrap = True
         ExportAs = exptText
-        FontSize = 10
+        FontSize = 7
       end
       object qrlChave: TQRLabel
-        Left = 0
-        Top = 108
-        Width = 257
-        Height = 16
+        Left = 113
+        Top = 87
+        Width = 34
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
-          0.000000000000000000
-          285.750000000000000000
-          679.979166666666800000)
+          39.687500000000000000
+          298.979166666666700000
+          230.187500000000000000
+          89.958333333333320000)
         XLColumn = 0
         Alignment = taCenter
-        AlignToBand = False
-        AutoSize = False
-        AutoStretch = False
+        AlignToBand = True
+        AutoSize = True
+        AutoStretch = True
         Caption = 'qrlChave'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
+        Font.Height = -8
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = False
         WordWrap = True
         ExportAs = exptText
-        FontSize = 7
+        FontSize = 6
       end
       object qrlTipoEmissao: TQRLabel
-        Left = 58
+        Left = 82
         Top = 4
-        Width = 142
-        Height = 24
+        Width = 96
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          63.500000000000000000
-          153.458333333333300000
+          39.687500000000000000
+          216.958333333333400000
           10.583333333333330000
-          375.708333333333400000)
+          254.000000000000000000)
         XLColumn = 0
         Alignment = taCenter
-        AlignToBand = False
+        AlignToBand = True
         AutoSize = True
         AutoStretch = True
         Caption = 'EMISS'#195'O NORMAL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Times New Roman'
-        Font.Style = []
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
+        Font.Style = [fsBold]
         ParentFont = False
         Transparent = True
         WordWrap = True
         ExportAs = exptText
-        FontSize = 12
+        FontSize = 7
       end
       object lblNumero: TQRLabel
-        Left = 2
-        Top = 28
-        Width = 255
-        Height = 16
+        Left = 104
+        Top = 16
+        Width = 51
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
+          39.687500000000000000
+          275.166666666666700000
           42.333333333333340000
-          5.291666666666667000
-          74.083333333333340000
-          674.687500000000000000)
+          134.937500000000000000)
         XLColumn = 0
         Alignment = taCenter
-        AlignToBand = False
-        AutoSize = False
-        AutoStretch = False
+        AlignToBand = True
+        AutoSize = True
+        AutoStretch = True
         Caption = 'lblNumero'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = True
         WordWrap = True
         ExportAs = exptText
-        FontSize = 10
+        FontSize = 7
       end
       object qrlSiteConsulta: TQRLabel
-        Left = 2
-        Top = 76
-        Width = 70
-        Height = 16
+        Left = 93
+        Top = 59
+        Width = 73
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
-          5.291666666666667000
-          201.083333333333300000
-          185.208333333333300000)
+          39.687500000000000000
+          246.062500000000000000
+          156.104166666666700000
+          193.145833333333300000)
         XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
+        Alignment = taCenter
+        AlignToBand = True
         AutoSize = True
-        AutoStretch = False
+        AutoStretch = True
         Caption = 'qrlSiteConsulta'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = True
         WordWrap = True
         ExportAs = exptText
-        FontSize = 8
+        FontSize = 7
       end
       object QRLabel10: TQRLabel
-        Left = 38
-        Top = 60
-        Width = 186
-        Height = 16
+        Left = 49
+        Top = 44
+        Width = 161
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
-          100.541666666666700000
-          158.750000000000000000
-          492.125000000000000000)
+          39.687500000000000000
+          129.645833333333300000
+          116.416666666666700000
+          425.979166666666700000)
         XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
+        Alignment = taCenter
+        AlignToBand = True
         AutoSize = True
-        AutoStretch = False
+        AutoStretch = True
         Caption = 'Consulte pela chave de acesso em:'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = True
         WordWrap = True
         ExportAs = exptText
-        FontSize = 10
+        FontSize = 7
       end
       object qrlEmissao: TQRLabel
-        Left = 2
-        Top = 44
-        Width = 51
-        Height = 16
+        Left = 103
+        Top = 31
+        Width = 53
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
-          5.291666666666667000
-          116.416666666666700000
-          134.937500000000000000)
+          39.687500000000000000
+          272.520833333333400000
+          82.020833333333340000
+          140.229166666666700000)
         XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
+        Alignment = taCenter
+        AlignToBand = True
         AutoSize = True
-        AutoStretch = False
+        AutoStretch = True
         Caption = 'qrlEmissao'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = True
         WordWrap = True
         ExportAs = exptText
-        FontSize = 8
+        FontSize = 7
       end
     end
     object qrb05a_InfComplementar: TQRChildBand
       Left = 23
-      Top = 484
+      Top = 271
       Width = 260
-      Height = 74
+      Height = 18
       Frame.Color = clBlack
       Frame.DrawTop = False
       Frame.DrawBottom = False
@@ -1818,7 +1817,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        195.791666666666700000
+        47.625000000000000000
         687.916666666666800000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -1826,18 +1825,18 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       PrintOrder = cboAfterParent
       object qrmInfComp: TQRMemo
         Left = 2
-        Top = 0
+        Top = 1
         Width = 255
-        Height = 72
+        Height = 15
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          190.500000000000000000
+          39.687500000000000000
           5.291666666666667000
-          0.000000000000000000
+          2.645833333333333000
           674.687500000000000000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -1847,14 +1846,14 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
+        Font.Height = -9
+        Font.Name = 'Lucida Sans Unicode'
         Font.Style = []
         ParentFont = False
         Transparent = False
         WordWrap = True
         FullJustify = False
-        FontSize = 10
+        FontSize = 7
       end
     end
   end

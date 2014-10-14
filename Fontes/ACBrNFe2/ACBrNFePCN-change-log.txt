@@ -47,6 +47,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/10/2014
+[*] Melhorias no DANFE - NFC-e (Quick Report) realizadas por Daniel Caus
+
 13/10/2014
 [-] Na unit ACBrNFeDANFeQR a propriedade FViaConsumidor estava com uma letra
     a mais (FAViaConsumidor - letra A).
