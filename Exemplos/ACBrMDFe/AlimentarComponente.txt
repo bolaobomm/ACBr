@@ -178,6 +178,32 @@ begin
          rodo.veicTracao.capKG := DM_MDF.VeiculosCapKg.AsInteger;
          rodo.veicTracao.capM3 := DM_MDF.VeiculosCapM3.AsInteger;
          rodo.veicTracao.UF    := DM_CNT.FrotaUF.AsString;
+
+         if DM_CNT.FrotaProprietario.AsString = 'N'
+          then begin
+           rodo.veicTracao.prop.CNPJCPF := DM_CNT.FrotaCNPJProp.AsString;
+           rodo.veicTracao.prop.RNTRC   := DM_CNT.FrotaRNTRC.AsString;
+
+           DM_CTA.PessoaFJ.Close;
+           DM_CTA.PessoaFJ.SQL.Clear;
+           DM_CTA.PessoaFJ.SQL.Add('Select * From Sis_PessoaFJ');
+           DM_CTA.PessoaFJ.SQL.Add('Where CGC = :xCGC');
+           DM_CTA.PessoaFJ.Params[0].AsString := DM_CNT.FrotaCNPJProp.AsString;
+           DM_CTA.PessoaFJ.Active:=True;
+           DM_CTA.PessoaFJ.Open;
+
+           rodo.veicTracao.prop.xNome := DM_CTA.PessoaFJRSocial.AsString;
+           rodo.veicTracao.prop.IE    := DM_CTA.PessoaFJIEstadual.AsString;
+           rodo.veicTracao.prop.UF    := DM_CTA.PessoaFJEstado.AsString;
+
+           // TpcteProp = (tpTACAgregado, tpTACIndependente, tpOutros);
+           case DM_CNT.FrotaTipoProp.AsInteger of
+            0: rodo.veicTracao.prop.tpProp := tpTACAgregado;
+            1: rodo.veicTracao.prop.tpProp := tpTACIndependente;
+            2: rodo.veicTracao.prop.tpProp := tpOutros;
+           end;
+          end;
+
          // TpcteTipoRodado = (trNaoAplicavel, trTruck, trToco, trCavaloMecanico, trVAN, trUtilitario, trOutros);
          case DM_CNT.FrotaTipoRodado.AsInteger of
           0: rodo.veicTracao.tpRod := trNaoAplicavel;
@@ -189,7 +215,16 @@ begin
           6: rodo.veicTracao.tpRod := trOutros;
          end;
 
-         //rodo.veicTracao.RNTRC := DM_MDF.VeiculosRNTRC.AsString;
+         // TpcteTipoCarroceria = (tcNaoAplicavel, tcAberta, tcFechada, tcGraneleira, tcPortaContainer, tcSider);
+         case DM_CNT.FrotaTipoCarroceria.AsInteger of
+          0: rodo.veicTracao.tpCar := tcNaoAplicavel;
+          1: rodo.veicTracao.tpCar := tcAberta;
+          2: rodo.veicTracao.tpCar := tcFechada;
+          3: rodo.veicTracao.tpCar := tcGraneleira;
+          4: rodo.veicTracao.tpCar := tcPortaContainer;
+          5: rodo.veicTracao.tpCar := tcSider;
+         end;
+
         end
         else begin
          with rodo.veicReboque.Add do
@@ -199,9 +234,44 @@ begin
            tara  := DM_MDF.VeiculosTara.AsInteger;
            capKG := DM_MDF.VeiculosCapKg.AsInteger;
            capM3 := DM_MDF.VeiculosCapM3.AsInteger;
+
+           if DM_CNT.FrotaProprietario.AsString = 'N'
+            then begin
+             prop.CNPJCPF := DM_CNT.FrotaCNPJProp.AsString;
+             prop.RNTRC   := DM_CNT.FrotaRNTRC.AsString;
+
+             DM_CTA.PessoaFJ.Close;
+             DM_CTA.PessoaFJ.SQL.Clear;
+             DM_CTA.PessoaFJ.SQL.Add('Select * From Sis_PessoaFJ');
+             DM_CTA.PessoaFJ.SQL.Add('Where CGC = :xCGC');
+             DM_CTA.PessoaFJ.Params[0].AsString := DM_CNT.FrotaCNPJProp.AsString;
+             DM_CTA.PessoaFJ.Active:=True;
+             DM_CTA.PessoaFJ.Open;
+
+             prop.xNome := DM_CTA.PessoaFJRSocial.AsString;
+             prop.IE    := DM_CTA.PessoaFJIEstadual.AsString;
+             prop.UF    := DM_CTA.PessoaFJEstado.AsString;
+
+             // TpcteProp = (tpTACAgregado, tpTACIndependente, tpOutros);
+             case DM_CNT.FrotaTipoProp.AsInteger of
+              0: prop.tpProp := tpTACAgregado;
+              1: prop.tpProp := tpTACIndependente;
+              2: prop.tpProp := tpOutros;
+             end;
+            end;
+
+           // TpcteTipoCarroceria = (tcNaoAplicavel, tcAberta, tcFechada, tcGraneleira, tcPortaContainer, tcSider);
+           case DM_CNT.FrotaTipoCarroceria.AsInteger of
+            0: tpCar := tcNaoAplicavel;
+            1: tpCar := tcAberta;
+            2: tpCar := tcFechada;
+            3: tpCar := tcGraneleira;
+            4: tpCar := tcPortaContainer;
+            5: tpCar := tcSider;
+           end;
+
            UF    := DM_CNT.FrotaUF.AsString;
 
-           //RNTRC := DM_MDF.VeiculosRNTRC.AsString;
           end;
         end;
        DM_MDF.Veiculos.Next;
