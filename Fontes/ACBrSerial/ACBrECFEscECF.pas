@@ -157,6 +157,7 @@ TACBrECFEscECF = class( TACBrECFClass )
     fsNumECF         : String ;
     fsNumCRO         : String ;
     fsNumLoja        : String ;
+    fsDataHoraSB     : TDateTime;
     fsEscECFComando  : TACBrECFEscECFComando;
     fsEscECFResposta : TACBrECFEscECFResposta;
     fsMarcaECF       : String ;
@@ -663,6 +664,7 @@ begin
   fsNumECF        := '' ;
   fsNumCRO        := '' ;
   fsNumLoja       := '' ;
+  fsDataHoraSB    := 0 ;
   fsMarcaECF      := '' ;
   fsModeloECF     := '' ;
   fsEmPagamento   := False ;
@@ -705,6 +707,7 @@ begin
   fsNumECF       := '' ;
   fsNumCRO       := '' ;
   fsNumLoja      := '' ;
+  fsDataHoraSB   := 0 ;
   fsMarcaECF     := '' ;
   fsModeloECF    := '' ;
   fsSincronizou       := False;
@@ -1528,7 +1531,7 @@ begin
            FlagEst := StrToInt( EscECFResposta.Params[1] );
 
            if FlagEst = 2 then
-              fpEstado := estRequerZ;
+              fpEstado := estRequerZ
         end;
       end ;
   finally
@@ -3117,30 +3120,12 @@ function TACBrECFEscECF.GetDataHoraSB : TDateTime ;
 var
    RetCmd: String;
 begin
-  EscECFComando.CMD := 140;
-  EscECFComando.AddParamString( fsNumECF ) ;
-  EnviaComando;
+  if fsDataHoraSB = 0 then
+  begin
+    fsDataHoraSB := inherited GetDataHoraSB;
+  end;
 
-  RetCmd := EscECFResposta.Params[0] ;
-
-  try
-    Result := EncodeDateTime( StrToInt(copy(RetCmd,82,4)),   // Ano
-                              StrToInt(copy(RetCmd,86,2)),   // Mes
-                              StrToInt(copy(RetCmd,88,2)),   // Dia
-                              StrToInt(copy(RetCmd,90,2)),   // Hora
-                              StrToInt(copy(RetCmd,92,2)),   // Min
-                              StrToInt(copy(RetCmd,94,2)),   // Seg
-                              0 ) ;
-  except
-     // Notei que o ECF de Bamatech retorna a Data no formato DDMMAAAA
-     Result := EncodeDateTime( StrToInt(copy(RetCmd,86,4)),   // Ano
-                               StrToInt(copy(RetCmd,84,2)),   // Mes
-                               StrToInt(copy(RetCmd,82,2)),   // Dia
-                               StrToInt(copy(RetCmd,90,2)),   // Hora
-                               StrToInt(copy(RetCmd,92,2)),   // Min
-                               StrToInt(copy(RetCmd,94,2)),   // Seg
-                               0 ) ;
-  end ;
+  Result := fsDataHoraSB ;
 end ;
 
 function TACBrECFEscECF.GetSubModeloECF: String;

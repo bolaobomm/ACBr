@@ -97,6 +97,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 14/10/2014   (por: DSA)
+-- ACBrECFEscECF --
+[-] Correção para método: GetDataHoraSB, no modelo Epson
+
 Data: 13/10/2014   (por: DSA)
 -- ACBrECFEpson --
 [-] Removido o método interno "RemoveCaracteresNaoImprimiveis" criado em 28/05/2014
