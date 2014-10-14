@@ -15,7 +15,6 @@
       <XPManifest>
         <DpiAware Value="True"/>
       </XPManifest>
-      <Icon Value="0"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
@@ -57,9 +56,6 @@
             </Options>
           </Linking>
           <Other>
-            <CompilerMessages>
-              <UseMsgFile Value="True"/>
-            </CompilerMessages>
             <CompilerPath Value="$(CompPath)"/>
           </Other>
         </CompilerOptions>
@@ -92,8 +88,7 @@
           </Linking>
           <Other>
             <CompilerMessages>
-              <IgnoredMessages idx5024="True" idx5043="True"/>
-              <UseMsgFile Value="True"/>
+              <IgnoredMessages idx5043="True" idx5024="True"/>
             </CompilerMessages>
             <CompilerPath Value="$(CompPath)"/>
           </Other>
@@ -165,7 +160,7 @@
         <PackageName Value="TurboPowerIPro"/>
       </Item16>
     </RequiredPackages>
-    <Units Count="9">
+    <Units Count="10">
       <Unit0>
         <Filename Value="ecfteste.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -233,6 +228,14 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uDAVOS"/>
       </Unit8>
+      <Unit9>
+        <Filename Value="RelatorioGerencialFormatado.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmGerencialFormatado"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="RelatorioGerencialFormatado"/>
+      </Unit9>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -261,8 +264,7 @@
     </Linking>
     <Other>
       <CompilerMessages>
-        <IgnoredMessages idx5024="True" idx5043="True"/>
-        <UseMsgFile Value="True"/>
+        <IgnoredMessages idx5043="True" idx5024="True"/>
       </CompilerMessages>
       <CustomOptions Value="-dDEBUG"/>
       <CompilerPath Value="$(CompPath)"/>

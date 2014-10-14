@@ -248,6 +248,7 @@ type
     MenuItem39: TMenuItem;
     MenuItem40: TMenuItem;
     MenuItem41: TMenuItem;
+    mniRelatorioGerencialComFormatacao: TMenuItem;
     mSAT: TMenuItem;
     mTotalTroco: TMenuItem;
     OpenDialog1: TOpenDialog;
@@ -697,6 +698,7 @@ type
     procedure mLerTotaisRelatoriosGerenciaisClick(Sender : TObject) ;
     procedure mLerTrocoClick(Sender : TObject) ;
     procedure mModeloStrClick(Sender : TObject) ;
+    procedure mniRelatorioGerencialComFormatacaoClick(Sender: TObject);
     procedure mNumCCDCClick(Sender : TObject) ;
     procedure mNumCFDClick(Sender : TObject) ;
     procedure mNumGNFCClick(Sender : TObject) ;
@@ -909,9 +911,9 @@ implementation
 
 {$R *.lfm}
 
-uses ACBrUtil, ACBrECFBematech, VendeItem, EfetuaPagamento,
-     Relatorio, Sobre, Math, strutils, Printers,
-     ConfiguraSerial, uDAV, uDAVOS, ACBrPAFClass, typinfo, pcnConversao;
+uses ACBrUtil, ACBrECFBematech, VendeItem, EfetuaPagamento, Relatorio, Sobre,
+  Math, strutils, Printers, ConfiguraSerial, uDAV, uDAVOS,
+  RelatorioGerencialFormatado, ACBrPAFClass, typinfo, pcnConversao;
      
 procedure TForm1.FormCreate(Sender: TObject);
 Var
@@ -2577,6 +2579,16 @@ procedure TForm1.mModeloStrClick(Sender : TObject) ;
 begin
   mResp.Lines.Add( 'ModeloStr: ('+ ACBrECF1.ModeloStr+')' );
   AtualizaMemos ;
+end;
+
+procedure TForm1.mniRelatorioGerencialComFormatacaoClick(Sender: TObject);
+begin
+  frmGerencialFormatado := TfrmGerencialFormatado.Create(Application);
+  try
+    frmGerencialFormatado.ShowModal;
+  finally
+    FreeAndNil(frmGerencialFormatado);
+  end;
 end;
 
 procedure TForm1.mNumCCDCClick(Sender : TObject) ;

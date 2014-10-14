@@ -8,7 +8,8 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, sysutils, // this includes the LCL widgetset
   Forms, ECFTeste1, ConfiguraSerial, EfetuaPagamento, Relatorio, Sobre,
-  VendeItem, uDAV, uDAVOS, TurboPowerIPro, memdslaz, ACBrSerial, ACBrComum;
+  VendeItem, uDAV, uDAVOS, RelatorioGerencialFormatado, TurboPowerIPro,
+  memdslaz, ACBrSerial, ACBrComum;
 
 {$R *.res}
 
