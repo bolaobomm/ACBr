@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 13/10/2014
+[-] Correção do registro A350 (por: Vagner Nox)
+http://www.projetoacbr.com.br/forum/index.php?/tracker/issue-45-lfd-livro-fiscal-eletr%C3%B4nico-registro-a350-com-bug/
+
 Data 04/04/2013
 [+] Alterado o ACBrLFD.pas para inserir a imagem ao componente no lazarus
 	(Juliomar Marchetti)

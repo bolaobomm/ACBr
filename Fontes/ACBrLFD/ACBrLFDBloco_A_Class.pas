@@ -379,21 +379,21 @@ begin
                  LFill(SUB) +
                  LFill(NUM_DOC) +
                  LFill(DT_DOC) +
-                 LFill(COP, 4) +
+                 LFill(COP,4) +
                  LFill(COD_MUN_SERV,7) +
                  LFill(COD_NAT) +
-                 LFill(VL_DOC, 0, 2) +
+                 LFill(VL_DOC) +
                  LFill(integer(IND_PGTO),1 )+
-                 LFill(VL_SUB, 0, 2) +
-                 LFill(VL_DESC, 0, 2) +
-                 LFill(VL_SERV, 0, 2) +
-                 LFill(VL_MAT_PROP, 0, 2) +
-                 LFill(VL_MAT_TERC, 0, 2) +
-                 LFill(VL_DA, 0, 2) +
-                 LFill(VL_BC_ISS, 0, 2) +
-                 LFill(VL_ISS, 0, 2) +
-                 LFill(VL_BC_RT_ISS, 0, 2) +
-                 LFill(VL_RT_ISS, 0, 2) +
+                 LFill(VL_SUB) +
+                 LFill(VL_DESC) +
+                 LFill(VL_SERV) +
+                 LFill(VL_MAT_PROP) +
+                 LFill(VL_MAT_TERC) +
+                 LFill(VL_DA) +
+                 LFill(VL_BC_ISS) +
+                 LFill(VL_ISS) +
+                 LFill(VL_BC_RT_ISS) +
+                 LFill(VL_RT_ISS) +
                  LFill(COD_INF_OBS) );
 
          end;
