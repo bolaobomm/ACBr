@@ -161,7 +161,7 @@ begin
 
  case AProvedor of
   proTecnos : IdLote := '1' + IntToStrZero(YearOf(Date), 4) +
-                        Copy(Notas, Pos('<InfDeclaracaoPrestacaoServico Id="', Notas) + 36, 14) +
+                        Copy(Notas, Pos('<InfDeclaracaoPrestacaoServico Id="', Notas) + 40, 14) +
                         IntToStrZero(StrToIntDef(NumeroLote, 1), 16);
   else IdLote := NumeroLote;
  end;
