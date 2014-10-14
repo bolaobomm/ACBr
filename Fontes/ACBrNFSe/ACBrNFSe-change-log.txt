@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/10/2014
+[-] Para os provedores Araucaria, DBSeller e Publica ao gerar o XML do RPS
+    o atributo ID será id uma vez que o RPS não é assinado.
+    Para o Lote o ID será Id para poder receber a assinatura e depois alterado
+    para id.
+    por: Italo Jurisato Junior
+
 10/10/2014
 [-] Ajustes na geração do XML para ficar de acordo com o Schema da DBSeller.
     por: Italo Jurisato Junior

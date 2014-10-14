@@ -825,6 +825,9 @@ end;
 
 procedure TNFSeW.GerarXML_ABRASF_V1;
 begin
+  if Aprovedor in [proAraucaria, proDBSeller, proPublica] then
+    FIdentificador := 'id';
+
   if (FIdentificador = '') {or (FProvedor = proPublica)}
     then Gerador.wGrupoNFSe('InfRps')
     else Gerador.wGrupoNFSe('InfRps ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
