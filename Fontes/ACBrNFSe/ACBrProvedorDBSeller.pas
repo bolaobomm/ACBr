@@ -98,7 +98,7 @@ begin
  ConfigCidade.Prefixo2      := '';
  ConfigCidade.Prefixo3      := '';
  ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id'; // Dever ser trocado depois para id
+ ConfigCidade.Identificador := 'Id'; 
 
  case ACodCidade of
   4300406: NomeCidade := 'alegrete.rs';
