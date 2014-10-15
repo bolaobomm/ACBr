@@ -992,7 +992,7 @@ begin
   Result   := '';
   sRetorno := HexToAscii(Retorno) ;
 
-  Result := DescricaoRetornoEpson( ord(fsRetorno[1]), ord(fsRetorno[2]));
+  Result := DescricaoRetornoEpson( ord(sRetorno[1]), ord(sRetorno[2]));
 end;
 
 

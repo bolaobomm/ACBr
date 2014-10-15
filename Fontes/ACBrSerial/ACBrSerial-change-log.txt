@@ -97,6 +97,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 15/10/2014   (por: DSA)
+-- ACBrECFEpson --
+[-] Correção de Bug na rotina de analise de Erro... ocasionando erro na carga de
+    Formas de Pagamento
+
 Data: 14/10/2014   (por: DSA)
 -- ACBrECFEscECF --
 [-] Correção para método: GetDataHoraSB, no modelo Epson
