@@ -291,6 +291,7 @@ type
     ACBrMDFe1: TACBrMDFe;
     ACBrMDFeDAMDFEQR1: TACBrMDFeDAMDFEQR;
     ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL;
+    rgLocalCanhoto: TRadioGroup;
     procedure DoACBrTimer(Sender: TObject);
     procedure edOnlyNumbers(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
@@ -923,12 +924,14 @@ begin
      cbxMostraStatus.Checked   := Ini.ReadBool(   'DANFE','MostrarStatus',True) ;
      cbxExpandirLogo.Checked   := Ini.ReadBool(   'DANFE','ExpandirLogo',False) ;
      rgTipoFonte.ItemIndex     := Ini.ReadInteger( 'DANFE','Fonte'   ,0) ;
+     rgLocalCanhoto.ItemIndex  := Ini.ReadInteger('DANFE','LocalCanhoto',0);
 
      if rgModeloDanfe.ItemIndex = 0 then
         ACBrNFe1.DANFE := ACBrNFeDANFERave1
      else
         ACBrNFe1.DANFE := ACBrNFeDANFERaveCB1;
 
+     ACBrNFe1.DANFE.LocalImpCanhoto := rgLocalCanhoto.ItemIndex;
      rgModeloDANFeNFCE.ItemIndex   := Ini.ReadInteger('NFCe','Modelo'   ,0) ;
 
      ConfiguraDANFe;
@@ -1150,6 +1153,7 @@ begin
      Ini.WriteBool(   'DANFE','MostrarStatus' ,cbxMostraStatus.Checked) ;
      Ini.WriteBool(   'DANFE','ExpandirLogo'  ,cbxExpandirLogo.Checked) ;
      Ini.WriteInteger('DANFE','Fonte'         ,rgTipoFonte.ItemIndex) ;
+     Ini.WriteInteger('DANFE','LocalCanhoto'  ,rgLocalCanhoto.ItemIndex);
 
      Ini.WriteInteger('NFCe','Modelo'   ,rgModeloDANFeNFCE.ItemIndex) ;
 

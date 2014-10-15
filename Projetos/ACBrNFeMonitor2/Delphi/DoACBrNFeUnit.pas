@@ -1755,7 +1755,7 @@ begin
          while true do
           begin
             sSecao    := 'Produto'+IntToStrZero(I,3) ;
-            sCodPro   := INIRec.ReadString(sSecao,'Codigo',,INIRec.ReadString( sSecao,'cProd','FIM')) ;
+            sCodPro   := INIRec.ReadString(sSecao,'Codigo',INIRec.ReadString( sSecao,'cProd','FIM')) ;
             if sCodPro = 'FIM' then
                break ;
 

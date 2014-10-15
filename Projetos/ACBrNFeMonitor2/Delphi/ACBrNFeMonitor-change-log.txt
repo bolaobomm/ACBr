@@ -48,6 +48,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/10/2014
+[+] : Adição da opção do Danfe para selecionar o local onde deve sair o canhoto, cabeçalho ou rodapé. (por: Juliomar Marchetti)
+
 01/10/2014
 [-] : Modificação nos instaladores para remover a opção para arquivos de exemplos que nunca existiu para o Monitor de NFe.
 
