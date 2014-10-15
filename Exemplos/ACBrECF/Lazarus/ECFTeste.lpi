@@ -88,7 +88,7 @@
           </Linking>
           <Other>
             <CompilerMessages>
-              <IgnoredMessages idx5043="True" idx5024="True"/>
+              <IgnoredMessages idx5024="True" idx5043="True"/>
             </CompilerMessages>
             <CompilerPath Value="$(CompPath)"/>
           </Other>
@@ -264,50 +264,32 @@
     </Linking>
     <Other>
       <CompilerMessages>
-        <IgnoredMessages idx5043="True" idx5024="True"/>
+        <IgnoredMessages idx5024="True" idx5043="True"/>
       </CompilerMessages>
       <CustomOptions Value="-dDEBUG"/>
       <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="12" IgnoreAll="True">
+    <Exceptions Count="6">
       <Item1>
         <Name Value="EACBrECFSemResposta"/>
       </Item1>
       <Item2>
-        <Name Value="Exception"/>
+        <Name Value="EACBrECFNaoInicializado"/>
       </Item2>
       <Item3>
-        <Name Value="EACBrECFErro"/>
+        <Name Value="ESynaSerError"/>
       </Item3>
       <Item4>
-        <Name Value="ESynaSerError"/>
+        <Name Value="Exception"/>
       </Item4>
       <Item5>
-        <Name Value="EStringListError"/>
+        <Name Value="EACBrECFErro"/>
       </Item5>
       <Item6>
-        <Name Value="EACBrECFNaoInicializado"/>
+        <Name Value="EStringListError"/>
       </Item6>
-      <Item7>
-        <Name Value="EACBrECFTimeOut"/>
-      </Item7>
-      <Item8>
-        <Name Value="EACBrECFOcupado"/>
-      </Item8>
-      <Item9>
-        <Name Value="EACBrECFCMDInvalido"/>
-      </Item9>
-      <Item10>
-        <Name Value="EConvertError"/>
-      </Item10>
-      <Item11>
-        <Name Value="EACBrECFSemPapel"/>
-      </Item11>
-      <Item12>
-        <Name Value="RunError(103)"/>
-      </Item12>
     </Exceptions>
   </Debugging>
 </CONFIG>
