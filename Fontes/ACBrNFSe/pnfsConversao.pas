@@ -87,7 +87,7 @@ type
                     proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov,
                     proVitoria, proMitra, ProTecnos, proPronim, proActcon, proEL,
                     proEgoverneISS, proSisPMJP, proSystemPro, proSalvador,
-                    proAraucaria, proDBSeller );
+                    proAraucaria, proDBSeller, proLexsom, proABRASFv1, proABRASFv2 );
 
   TnfseAcao = ( acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe, acCancelar, acGerar, acRecSincrono, acConsSecRps );
 
@@ -398,7 +398,8 @@ begin
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
                             '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
                             'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon',
-                            'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Salvador', 'Araucaria', 'DBSeller'],
+                            'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Salvador', 'Araucaria', 'DBSeller',
+                            'Lexsom', 'ABRASFv1', 'ABRASFv2'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
@@ -406,7 +407,7 @@ begin
                             proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
                             proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
                             proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP, proSystemPro,
-                            proSalvador, proAraucaria, proDBSeller]);
+                            proSalvador, proAraucaria, proDBSeller, proLexsom, proABRASFv1, proABRASFv2]);
 end;
 
 function StrToProvedor(var ok: boolean; const s: string):TnfseProvedor;
@@ -418,7 +419,8 @@ begin
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
                             '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
                             'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon',
-                            'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Salvador', 'Araucaria', 'DBSeller'],
+                            'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Salvador', 'Araucaria', 'DBSeller',
+                            'Lexsom', 'ABRASFv1', 'ABRASFv2'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
@@ -426,7 +428,7 @@ begin
                             proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
                             proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
                             proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP, proSystemPro,
-                            proSalvador, proAraucaria, proDBSeller]);
+                            proSalvador, proAraucaria, proDBSeller, proLexsom, proABRASFv1, proABRASFv2]);
 end;
 
 // Condição de pagamento ******************************************************
@@ -687,6 +689,19 @@ var
 begin
  Provedor := 'Nenhum';
  case ACodigo of
+
+        // Devemos informar aqui a lista de cidades que utilizam a versão 1
+        // do layout da ABRASF mas ainda não possui um Web Service, ou seja,
+        // devemos apenas gerar o XML do RPS para ser lido site da prefeitura
+       -1
+         : Provedor := 'ABRASFv1';
+
+        // Devemos informar aqui a lista de cidades que utilizam a versão 2
+        // do layout da ABRASF mas ainda não possui um Web Service, ou seja,
+        // devemos apenas gerar o XML do RPS para ser lido site da prefeitura
+       -2
+         : Provedor := 'ABRASFv2';
+
 //  3127701, // Governador Valadares/MG
   3500105, // Adamantina/SP
   3510203, // Capão Bonito/SP
@@ -1005,6 +1020,9 @@ begin
   //4210506, // Maravilha/SC
   4321709  // Tres Coroas/RS
          : Provedor := 'GovBR';
+
+  4108304  // Foz Do Iguacu/PR
+         : Provedor := 'Lexsom';
 
   3118601, // Contagem/MG
   3304706, // Sto Antonio de Padua/RJ

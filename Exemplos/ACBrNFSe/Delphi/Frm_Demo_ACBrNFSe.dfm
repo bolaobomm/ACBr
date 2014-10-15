@@ -354,6 +354,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Feliz/4308102/RS'
               'Formiga/3126109/MG'
               'Fortaleza/2304400/CE'
+              'Foz Do Iguacu/4108304/PR'
               'Franca/3516200/SP'
               'Francisco Beltrao/4108403/PR'
               'Frederico Westphalen/4308508/RS'

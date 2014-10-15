@@ -215,6 +215,7 @@ begin
  end;
 
  case FProvedor of
+  proABRASFv1,
   proAbaco,
   proAraucaria,
   proBetha,
@@ -227,6 +228,7 @@ begin
   proISSCuritiba,
   proISSIntel,
   proISSNet,
+  proLexsom,
   proNatal,
   proProdemge,
   proPronim,
@@ -240,6 +242,7 @@ begin
   proTiplan,
   proWebISS: GerarXML_ABRASF_V1;
 
+  proABRASFv2,
   pro4R,
   proActcon,
   proAgili,
@@ -825,7 +828,7 @@ end;
 
 procedure TNFSeW.GerarXML_ABRASF_V1;
 begin
-  if FProvedor in [proAraucaria, proDBSeller, proPublica] then
+  if FProvedor in [proAraucaria, proDBSeller, proLexsom, proPublica] then
     FIdentificador := 'id';
 
   if (FIdentificador = '') {or (FProvedor = proPublica)}

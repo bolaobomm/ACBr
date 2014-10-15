@@ -710,6 +710,7 @@ begin
  begin
 
    case FProvedor of
+    proABRASFv1,
     proAbaco,
     proAraucaria,
     proBetha,
@@ -721,6 +722,7 @@ begin
     proISSCuritiba,
     proISSIntel,
     proISSNet,
+    proLexsom,
     proNatal,
     proProdemge,
     proPronim,
@@ -733,6 +735,7 @@ begin
     proTiplan,
     proWebISS: Result := LerRPS_ABRASF_V1;
 
+    proABRASFv2,
     pro4R,
     proActcon,
     proAgili,
@@ -1580,6 +1583,7 @@ begin
  end;
 
  case FProvedor of
+  proABRASFv1,
   proAbaco,
   proAraucaria,
   proBetha,
@@ -1591,6 +1595,7 @@ begin
   proISSCuritiba,
   proISSIntel,
   proISSNet,
+  proLexsom,
   proNatal,
   proProdemge,
   proPronim,
@@ -1603,6 +1608,7 @@ begin
   proTiplan,
   proWebISS: Result := LerNFSe_ABRASF_V1;
 
+  proABRASFv2,
   pro4R,
   proActcon,
   proAgili,

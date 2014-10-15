@@ -73,7 +73,8 @@ uses
     ACBrProvedorMitra, ACBrProvedorTecnos, ACBrProvedorPronim,
     ACBrProvedorActcon, ACBrProvedorEL, ACBrProvedorEgoverneISS,
     ACBrProvedorSisPMJP, ACBrProvedorSystemPro, ACBrProvedorSalvador,
-    ACBrProvedorAraucaria, ACBrProvedorDBSeller;
+    ACBrProvedorAraucaria, ACBrProvedorDBSeller, ACBrProvedorLexsom,
+    ACBrProvedorABRASFv1, ACBrProvedorABRASFv2;
 
 type
 
@@ -733,12 +734,15 @@ begin
   proSalvador:    FProvedorClass := TProvedorSalvador.Create;
   proAraucaria:   FProvedorClass := TProvedorAraucaria.Create;
   proDBSeller:    FProvedorClass := TProvedorDBSeller.Create;
+  proLexsom:      FProvedorClass := TProvedorLexsom.Create;
+  proABRASFv1:    FProvedorClass := TProvedorABRASFv1.Create;
+  proABRASFv2:    FProvedorClass := TProvedorABRASFv2.Create;
  end;
 
- FPrefixo2     := FConfiguracoes.WebServices.Prefixo2;
- FPrefixo3     := FConfiguracoes.WebServices.Prefixo3;
- FPrefixo4     := FConfiguracoes.WebServices.Prefixo4;
- FURLNS1       := FConfiguracoes.WebServices.NameSpace;
+ FPrefixo2 := FConfiguracoes.WebServices.Prefixo2;
+ FPrefixo3 := FConfiguracoes.WebServices.Prefixo3;
+ FPrefixo4 := FConfiguracoes.WebServices.Prefixo4;
+ FURLNS1   := FConfiguracoes.WebServices.NameSpace;
 
  FVersaoLayOut          := FConfiguracoes.WebServices.VersaoCabecalho;
  FVersaoDados           := FConfiguracoes.WebServices.VersaoDados;

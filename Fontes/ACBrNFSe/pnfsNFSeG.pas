@@ -179,7 +179,7 @@ begin
                // Não Incluir a versão para os provedores abaixo
                DFeUtil.SeSenao(AProvedor in [proAbaco, proAraucaria, proBetha, proDBSeller,
                                              proGinfes, proGoiania, proGovBR, proIssCuritiba,
-                                             proISSNET, proNatal, proRecife, proRJ,
+                                             proISSNET, proLexsom, proNatal, proRecife, proRJ,
                                              proSimplISS, proThema, proTiplan, proAgili,
                                              proFISSLex, proSpeedGov, proPronim, proCoplan,
                                              proSalvador],
@@ -227,7 +227,7 @@ begin
 
  Result := TagI + DadosMsg + TagF;
 
- if AProvedor in [proNenhum, proVirtual] then Result := '';
+ if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proVirtual] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgConsSitLote(Prefixo3, Prefixo4,
@@ -268,10 +268,11 @@ begin
 
  Result := TagI + DadosMsg + TagF;
 
- if AProvedor in [proNenhum, pro4R, proAgili, proCoplan, profintelISS, proFiorilli,
-                  proGoiania, proGovDigital, proISSDigital, proISSe, proProdata,
-                  proVirtual, proSaatri, proFreire, proPVH, proVitoria, proTecnos,
-                  proSisPMJP, proSystemPro] then Result := '';
+ if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, pro4R, proAgili,
+                  proCoplan, profintelISS, proFiorilli, proGoiania, proGovDigital,
+                  proISSDigital, proISSe, proProdata, proVirtual, proSaatri,
+                  proFreire, proPVH, proVitoria, proTecnos, proSisPMJP,
+                  proSystemPro] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgConsLote(Prefixo3, Prefixo4,
@@ -322,7 +323,7 @@ begin
 
  Result := TagI + DadosMsg + TagF;
 
- if AProvedor in [proNenhum, proVirtual] then Result := '';
+ if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proVirtual] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4,
@@ -382,7 +383,7 @@ begin
 
  Result := TagI + DadosMsg + TagF;
 
- if AProvedor in [proNenhum, proVirtual] then Result := '';
+ if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proVirtual] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4,
@@ -514,7 +515,7 @@ begin
 
  Result := TagI + DadosMsg + TagF;
 
- if AProvedor in [proNenhum, proVirtual] then Result := '';
+ if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proVirtual] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgCancelarNFSe(Prefixo4, NameSpaceDad, NumeroNFSe,
@@ -610,7 +611,7 @@ begin
 
  Result := TagI + DadosMsg + TagF;
 
- if AProvedor = proNenhum then Result := '';
+ if AProvedor in [proNenhum, proABRASFv1, proABRASFv2] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgGerarNFSe(Prefixo3, Prefixo4,
@@ -682,10 +683,12 @@ begin
   end;
  end;
 
- if AProvedor in [proNenhum, proAbaco, proAraucaria, proBetha, proBetim, proBHIss, proDBSeller,
-  proDigifred, proEquiplano, {proFiorilli, }proFIssLex, proGinfes, proGovBR, proIssCuritiba,
-  proIssIntel, proIssNet, proNatal, proProdemge, {proRecife,} proRJ,
-  proSimplIss, proThema, proTiplan, proIssDSF, proAgili, proSpeedGov, proPronim, proActcon] then Result := '';
+ if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proAraucaria,
+                  proBetha, proBetim, proBHIss, proDBSeller, proDigifred,
+                  proEquiplano, proFIssLex, proGinfes, proGovBR, proIssCuritiba,
+                  proIssIntel, proIssNet, proLexsom, proNatal, proProdemge,
+                  proRJ, proSimplIss, proThema, proTiplan, proIssDSF, proAgili,
+                  proSpeedGov, proPronim, proActcon] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
@@ -696,12 +699,14 @@ begin
                                    VersaoDados, VersaoXML, NumeroLote, CNPJ, IM,
                                    QtdeNotas, Notas, TagI, TagF, AProvedor);
 
- if AProvedor in [proNenhum, proAbaco, proAraucaria, proBetha, proBetim, proBHISS, proDBSeller,
-     proDigifred, proEquiplano, profintelISS, proFISSLex, proGinfes, proGoiania, proGovBR,
-     proGovDigital, proIssCuritiba, proISSDigital, proISSIntel, proISSNet, proNatal,
-     proProdemge, proPublica, proRecife, proRJ, proSaatri, proFreire, proSimplISS,
-     proThema, proTiplan, proWebISS, proProdata, proAgili, proSpeedGov, proPronim,
-     proVirtual] then Result := '';
+ if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proAraucaria,
+                  proBetha, proBetim, proBHISS, proDBSeller, proDigifred,
+                  proEquiplano, profintelISS, proFISSLex, proGinfes, proGoiania,
+                  proGovBR, proGovDigital, proIssCuritiba, proISSDigital,
+                  proISSIntel, proISSNet, proLexsom, proNatal, proProdemge,
+                  proPublica, proRecife, proRJ, proSaatri, proFreire,
+                  proSimplISS, proThema, proTiplan, proWebISS, proProdata,
+                  proAgili, proSpeedGov, proPronim, proVirtual] then Result := '';
 end;
 
 //-------------------------------------------------------------------------
