@@ -1208,8 +1208,8 @@ begin
 
   // configurações de codigos de barras impressos por tags
   fsConfigBarras := TACBrECFConfigBarras.Create;
-  fsConfigBarras.LarguraLinha := 3;
-  fsConfigBarras.Altura := 10;
+  fsConfigBarras.LarguraLinha := 0;
+  fsConfigBarras.Altura := 0;
   fsConfigBarras.MostrarCodigo := True;
 
 end;

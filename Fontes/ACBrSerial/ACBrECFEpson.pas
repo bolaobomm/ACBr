@@ -2442,6 +2442,7 @@ end;
 procedure TACBrECFEpson.LinhaRelatorioGerencial(Linha: AnsiString; IndiceBMP: Integer);
 Var I  : Integer ;
     SL : TStringList ;
+    L: String;
 begin
   Linha := AjustaLinhas( Linha, Colunas );  { Formata as Linhas de acordo com "Coluna" }
 
@@ -2454,8 +2455,9 @@ begin
         // Isso deve ser tratado pela rotina chamadora... filtrar esses caracteres aqui, afeta a rotina de
         // TAGS de formatação (que usa caracteres de controle)
 
+        L := SL[I];
         EpsonComando.Comando  := '0E02' ;
-        EpsonComando.AddParamString( SL[I] ) ;
+        EpsonComando.AddParamString( L ) ;
         EnviaComando ;
      end ;
   finally
@@ -3951,9 +3953,7 @@ const
   Var
     Altura, Largura, Mostrar : Integer ;
   begin
-    Altura  := max(min(ConfigBarras.Altura,255),0);
-    if (Altura = 0) and fpDevice.IsDLLPort then
-       Altura := 32;
+    Altura  := IfThen( ConfigBarras.Altura = 0, 32, max(min(ConfigBarras.Altura,255),1) );
     Largura := max(min(ConfigBarras.LarguraLinha,6),2);
     Mostrar := IfThen(fpDevice.IsDLLPort,2,0);
     if ConfigBarras.MostrarCodigo then
