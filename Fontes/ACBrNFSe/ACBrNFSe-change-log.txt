@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/10/2014
+[+] Alterado a cidade de São José/SC do provedor Betha para o o provedor
+    Pronim.
+    por: Pauloclv
+
 15/10/2014
 [+] Implementado os provedores ABRASFv1 e ABRASFv2 visando as cidades que ainda
     não possui um Web Servive, tem por finalidade apenas gerar o XML do RPS e 

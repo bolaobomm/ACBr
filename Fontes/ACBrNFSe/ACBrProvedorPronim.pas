@@ -109,6 +109,7 @@ begin
   4309407: ConfigCidade.AssinaLote := True; {Dalvan}
   4320800: ConfigCidade.AssinaLote := True; {Dalvan}
   4204004: ConfigCidade.AssinaLote := True; {Dalvan}
+  4216602: ConfigCidade.AssinaLote := True;
  else      ConfigCidade.AssinaLote := False;
  end;
 
@@ -157,6 +158,24 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
             ConfigURL.ProConsultaNFSe       := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
+           end;
+
+  4216602: begin // São José/SC
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.pmsj.sc.gov.br:90/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaLoteRPS    := 'http://nfse.pmsj.sc.gov.br:90/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSeRPS    := 'http://nfse.pmsj.sc.gov.br:90/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaSitLoteRPS := 'http://nfse.pmsj.sc.gov.br:90/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSe       := 'http://nfse.pmsj.sc.gov.br:90/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomCancelaNFSe        := 'http://nfse.pmsj.sc.gov.br:90/NFSEWSTESTE/Services.svc';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.pmsj.sc.gov.br:90/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://nfse.pmsj.sc.gov.br:90/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.pmsj.sc.gov.br:90/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.pmsj.sc.gov.br:90/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://nfse.pmsj.sc.gov.br:90/NFSEWS/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://nfse.pmsj.sc.gov.br:90/NFSEWS/Services.svc';
            end;
 
   3118601: begin // Contagem/MG

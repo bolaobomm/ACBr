@@ -798,7 +798,6 @@ begin
   4215802, // São Bento do Sul/SC
   4216008, // São Carlos/SC
   4216305, // São João Batista/SC
-  4216602, // São José/SC
   4216909, // São Lourenço do Oeste/SC
   4217204, // São Miguel do Oeste/SC
   4217402, // Schroeder/SC
@@ -1034,6 +1033,7 @@ begin
   4204004, //Catanduvas / SC
   4205902, // Gaspar/SC
   4210506, // Maravilha/SC
+  4216602, // São José/SC
   4308102, // Feliz/RS
   4309407, // Guapore/RS
   4310207, // Ijui/RS
@@ -17470,7 +17470,7 @@ begin
       5551: CodCidade := 4216354 ; //Sao Joao Do Itaperiu/SC  
       8323: CodCidade := 4216404 ; //Sao Joao Do Sul/SC  
       8325: CodCidade := 4216503 ; //Sao Joaquim/SC  
-      8327: CodCidade := 4216602 ; //Sao Jose/SC  
+      8327: CodCidade := 4216602 ; //Sao Jose/SC
       8329: CodCidade := 4216701 ; //Sao Jose Do Cedro/SC  
       8331: CodCidade := 4216800 ; //Sao Jose Do Cerrito/SC  
       8333: CodCidade := 4216909 ; //Sao Lourenco Do Oeste/SC  
