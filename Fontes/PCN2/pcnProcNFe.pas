@@ -240,7 +240,8 @@ begin
                     '<tpAmb>' + TpAmbToStr(FtpAmb) + '</tpAmb>' +
                     '<verAplic>' + FverAplic + '</verAplic>' +
                     '<chNFe>' + FchNFe + '</chNFe>' +
-                    '<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + '</dhRecbto>' +
+                    //'<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + '</dhRecbto>' +
+					'<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + IIf(Versao >= '3.10', GetUTC(copy(FverAplic,1,2),FdhRecbto),'')+'</dhRecbto>'+
                     '<nProt>' + FnProt + '</nProt>' +
                     '<digVal>' + FdigVal + '</digVal>' +
                     '<cStat>' + IntToStr(FcStat) + '</cStat>' +
