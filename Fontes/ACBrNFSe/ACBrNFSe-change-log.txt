@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/10/204
+[+] Adicionando o QrCode no DANFSe em Fortes Report caso exista uma URL nos dados adicionais da NFS-e
+	por: Juliomar Marchetti
+	
 16/10/2014
 [+] Alterado a cidade de São José/SC do provedor Betha para o o provedor
     Pronim.

@@ -9,7 +9,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, ACBrNFSeDANFSeRL, RLFilters, RLPDFFilter, RLReport, DB,
-  pnfsConversao, ACBrNFSeDANFSEClass, ACBrNFSeDANFSeRLClass;
+  pnfsConversao, ACBrNFSeDANFSEClass, ACBrNFSeDANFSeRLClass, ACBrDelphiZXingQRCode ;
 
 type
   TfrlDANFSeRLRetrato = class(TfrlDANFSeRL)
@@ -207,37 +207,84 @@ end;
 
 procedure TfrlDANFSeRLRetrato.rbOutrasInformacoesBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
+var
+  QrCode      : TDelphiZXingQRCode;
+  QrCodeBitmap: TBitmap;
+  QRCodeData  : String;
+  rlImgQrCode : TRLImage;
+  Row, Column : Integer;
 begin
   inherited;
- rlmDadosAdicionais.Lines.BeginUpdate;
- rlmDadosAdicionais.Lines.Clear;
+  rlmDadosAdicionais.Lines.BeginUpdate;
+  rlmDadosAdicionais.Lines.Clear;
 
- If FNFSe.OutrasInformacoes <> '' Then
-   rlmDadosAdicionais.Lines.Add(StringReplace(FNFSe.OutrasInformacoes, ';', #13#10, [rfReplaceAll,rfIgnoreCase]))
- Else If FOutrasInformacaoesImp <> '' Then
-   rlmDadosAdicionais.Lines.Add(StringReplace(FOutrasInformacaoesImp, ';', #13#10, [rfReplaceAll,rfIgnoreCase]));
+  If FNFSe.OutrasInformacoes <> '' Then
+    rlmDadosAdicionais.Lines.Add(StringReplace(FNFSe.OutrasInformacoes, ';', #13#10, [rfReplaceAll,rfIgnoreCase]))
+  Else If FOutrasInformacaoesImp <> '' Then
+    rlmDadosAdicionais.Lines.Add(StringReplace(FOutrasInformacaoesImp, ';', #13#10, [rfReplaceAll,rfIgnoreCase]));
 
- rlmDadosAdicionais.Lines.EndUpdate;
+  if pos('http://', LowerCase( FNFSe.OutrasInformacoes) ) > 0 then
+  begin
+    rlmDadosAdicionais.Width := 643;
+    
+    rlImgQrCode          := TRLImage.Create(rbOutrasInformacoes);
+    rlImgQrCode.Parent   := rbOutrasInformacoes;
+    rlImgQrCode.Stretch  := True;
+    rlImgQrCode.AutoSize := False;
+    rlImgQrCode.Center   := true;
+    rlImgQrCode.SetBounds(648, 3, 90, 90);
+    rlImgQrCode.BringToFront;
 
- // imprime data e hora da impressao
- rllDataHoraImpressao.Caption := 'DATA E HORA DA IMPRESSÃO: ' + FormatDateTime('dd/mm/yyyy hh:nn',Now);
+    QRCodeData   := Trim(MidStr(FNFSe.OutrasInformacoes, pos('http://', LowerCase( FNFSe.OutrasInformacoes)), Length(FNFSe.OutrasInformacoes) ));
+    QRCode       := TDelphiZXingQRCode.Create;
+    QRCodeBitmap := TBitmap.Create;
+    try
+      QRCode.Data      := QRCodeData;
+      QRCode.Encoding  := qrUTF8NoBOM;
+      QRCode.QuietZone := 1;
 
- // imprime usuario
- if FUsuario <> ''
-  then begin
-   rllDataHoraImpressao.Caption := rllDataHoraImpressao.Caption + '   USUÁRIO: ' + FUsuario;
+      QRCodeBitmap.Width  := QRCode.Columns;
+      QRCodeBitmap.Height := QRCode.Rows;
+
+      for Row := 0 to QRCode.Rows - 1 do
+      begin
+        for Column := 0 to QRCode.Columns - 1 do
+        begin
+          if (QRCode.IsBlack[Row, Column]) then
+            QRCodeBitmap.Canvas.Pixels[Column, Row] := clBlack
+          else
+            QRCodeBitmap.Canvas.Pixels[Column, Row] := clWhite;
+        end;
+      end;
+
+//      rlImgQrCode.Assign(QRCodeBitmap);
+      rlImgQrCode.Picture.Bitmap.Assign(QRCodeBitmap);
+    finally
+      QRCode.Free;
+      QRCodeBitmap.Free;
+    end;
   end;
 
- // imprime sistema
- if FSistema <> ''
-  then begin
-   rllSistema.Caption := 'Desenvolvido por ' + FSistema;
+  rlmDadosAdicionais.Lines.EndUpdate;
+
+  // imprime data e hora da impressao
+  rllDataHoraImpressao.Caption := Format('DATA E HORA DA IMPRESSÃO: %s' , [FormatDateTime('dd/mm/yyyy hh:nn',Now)]);
+
+  // imprime usuario
+  if FUsuario <> '' then
+  begin
+    rllDataHoraImpressao.Caption := Format('%s   USUÁRIO: %s', [rllDataHoraImpressao.Caption, FUsuario]);
+  end;
+
+  // imprime sistema
+  if FSistema <> '' then
+  begin
+    rllSistema.Caption := Format('Desenvolvido por %s' , [FSistema]);
   end
-  else begin
-   rllSistema.Caption := '';
+  else
+  begin
+    rllSistema.Caption := '';
   end;
-
-
 end;
 
 procedure TfrlDANFSeRLRetrato.rlbCabecalhoBeforePrint(Sender: TObject;

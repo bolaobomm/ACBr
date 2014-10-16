@@ -1,15 +1,15 @@
 inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
-  Left = 427
-  Top = 189
+  Left = 349
+  Top = 55
   Width = 843
   Height = 725
-  VertScrollBar.Position = 433
+  VertScrollBar.Position = 445
   Caption = 'frlDANFSeRLRetrato'
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFSe: TRLReport
     Left = 12
-    Top = -425
+    Top = -437
     Margins.LeftMargin = 6.000000000000000000
     Margins.TopMargin = 8.000000000000000000
     Margins.RightMargin = 5.099999999999999000
@@ -610,6 +610,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Height = 92
         Alignment = taCenter
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -1600,6 +1601,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Width = 737
         Height = 97
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -1770,6 +1772,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Width = 645
         Height = 43
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -2622,6 +2625,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Width = 743
         Height = 64
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
