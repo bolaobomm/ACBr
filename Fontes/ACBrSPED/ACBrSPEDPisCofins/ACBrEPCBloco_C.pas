@@ -396,42 +396,42 @@ type
 
   TRegistroC175 = class
   private
-    fALIQ_COFINS       : double;
-    fALIQ_COFINS_QUANT : double;
-    fALIQ_PIS          : Double;
-    fALIQ_PIS_QUANT    : double;
+    fALIQ_COFINS       : Variant;
+    fALIQ_COFINS_QUANT : Variant;
+    fALIQ_PIS          : Variant;
+    fALIQ_PIS_QUANT    : Variant;
     fCFOP              : string;
     fCOD_CTA           : string;
     fCST_COFINS        : TACBrSituacaoTribCOFINS;
     fCST_PIS           : TACBrCstPis;
     fINFO_COMPL        : string;
-    fQUANT_BC_COFINS   : double;
-    fQUANT_BC_PIS      : double;
-    fVL_BC_COFINS      : Currency;
-    fVL_BC_PIS         : Currency;
-    fVL_COFINS         : Currency;
-    fVL_DESC           : Currency;
-    fVL_OPR            : Currency;
-    fVL_PIS            : Currency;
+    fQUANT_BC_COFINS   : Variant;
+    fQUANT_BC_PIS      : Variant;
+    fVL_BC_COFINS      : Variant;
+    fVL_BC_PIS         : Variant;
+    fVL_COFINS         : Variant;
+    fVL_DESC           : Variant;
+    fVL_OPR            : Variant;
+    fVL_PIS            : Variant;
   public
 
-    property CFOP                 : string   read fCFOP                  write fCFOP;
-    property VL_OPR               : Currency read fVL_OPR                write fVL_OPR;
-    property VL_DESC              : Currency read fVL_DESC               write fVL_DESC;
-    property CST_PIS              : TACBrCstPis   read fCST_PIS               write fCST_PIS;
-    property VL_BC_PIS            : Currency read fVL_BC_PIS             write fVL_BC_PIS;
-    property ALIQ_PIS             : Double   read fALIQ_PIS              write fALIQ_PIS;
-    property QUANT_BC_PIS         : double   read fQUANT_BC_PIS          write fQUANT_BC_PIS;
-    property ALIQ_PIS_QUANT       : double   read fALIQ_PIS_QUANT        write fALIQ_PIS_QUANT;
-    property VL_PIS               : Currency read fVL_PIS                write fVL_PIS;
-    property CST_COFINS           : TACBrSituacaoTribCOFINS   read fCST_COFINS            write fCST_COFINS;
-    property VL_BC_COFINS         : Currency read fVL_BC_COFINS          write fVL_BC_COFINS;
-    property ALIQ_COFINS          : double   read fALIQ_COFINS           write fALIQ_COFINS;
-    property QUANT_BC_COFINS      : double   read fQUANT_BC_COFINS       write fQUANT_BC_COFINS;
-    property ALIQ_COFINS_QUANT    : double   read fALIQ_COFINS_QUANT     write fALIQ_COFINS_QUANT;
-    property VL_COFINS            : Currency read fVL_COFINS             write fVL_COFINS;
-    property COD_CTA              : string   read fCOD_CTA               write fCOD_CTA;
-    property INFO_COMPL           : string   read fINFO_COMPL            write fINFO_COMPL;
+    property CFOP                 : string  read fCFOP                  write fCFOP;
+    property VL_OPR               : Variant read fVL_OPR                write fVL_OPR;
+    property VL_DESC              : Variant read fVL_DESC               write fVL_DESC;
+    property CST_PIS              : TACBrCstPis read fCST_PIS           write fCST_PIS;
+    property VL_BC_PIS            : Variant read fVL_BC_PIS             write fVL_BC_PIS;
+    property ALIQ_PIS             : Variant read fALIQ_PIS              write fALIQ_PIS;
+    property QUANT_BC_PIS         : Variant read fQUANT_BC_PIS          write fQUANT_BC_PIS;
+    property ALIQ_PIS_QUANT       : Variant read fALIQ_PIS_QUANT        write fALIQ_PIS_QUANT;
+    property VL_PIS               : Variant read fVL_PIS                write fVL_PIS;
+    property CST_COFINS           : TACBrSituacaoTribCOFINS   read fCST_COFINS write fCST_COFINS;
+    property VL_BC_COFINS         : Variant read fVL_BC_COFINS          write fVL_BC_COFINS;
+    property ALIQ_COFINS          : Variant read fALIQ_COFINS           write fALIQ_COFINS;
+    property QUANT_BC_COFINS      : Variant read fQUANT_BC_COFINS       write fQUANT_BC_COFINS;
+    property ALIQ_COFINS_QUANT    : Variant read fALIQ_COFINS_QUANT     write fALIQ_COFINS_QUANT;
+    property VL_COFINS            : Variant read fVL_COFINS             write fVL_COFINS;
+    property COD_CTA              : string  read fCOD_CTA               write fCOD_CTA;
+    property INFO_COMPL           : string  read fINFO_COMPL            write fINFO_COMPL;
   end;
 
   /// Registro C175 - Lista
@@ -527,24 +527,24 @@ type
   private
     fCST_COFINS                : TACBrSituacaoTribCOFINS;             //02	CST_COFINS	Código da Situação Tributária referente a COFINS, conforme a Tabela indicada no item 4.3.4.	N	002*	-
     fCFOP                      : string;                              //03	CFOP	Código fiscal de operação e prestação	N	004*	-
-    fVL_ITEM                   : Currency;                            //04	VL_ITEM	Valor do item	N	-	02
-    fVL_DESC                   : Currency;                            //05	VL_DESC	Valor do desconto comercial	N	-	02
-    fVL_BC_COFINS              : Currency;                            //06	VL_BC_COFINS	Valor da base de cálculo da COFINS	N	 -	02
-    fALIQ_COFINS               : Currency;                            //07	ALIQ_COFINS	Alíquota da COFINS (em percentual)	N	008	04
-    fQUANT_BC_COFINS           : Currency;                            //08	QUANT_BC_COFINS	Quantidade – Base de cálculo da COFINS	N	 -	03
-    fALIQ_COFINS_QUANT         : Currency;                            //09	ALIQ_COFINS_QUANT	Alíquota da COFINS (em reais)	N	 -	04
-    fVL_COFINS                 : Currency;                            //10	VL_COFINS	Valor da COFINS	N	-	02
+    fVL_ITEM                   : Variant;                             //04	VL_ITEM	Valor do item	N	-	02
+    fVL_DESC                   : Variant;                            //05	VL_DESC	Valor do desconto comercial	N	-	02
+    fVL_BC_COFINS              : Variant;                            //06	VL_BC_COFINS	Valor da base de cálculo da COFINS	N	 -	02
+    fALIQ_COFINS               : Variant;                            //07	ALIQ_COFINS	Alíquota da COFINS (em percentual)	N	008	04
+    fQUANT_BC_COFINS           : Variant;                            //08	QUANT_BC_COFINS	Quantidade – Base de cálculo da COFINS	N	 -	03
+    fALIQ_COFINS_QUANT         : Variant;                            //09	ALIQ_COFINS_QUANT	Alíquota da COFINS (em reais)	N	 -	04
+    fVL_COFINS                 : Variant;                            //10	VL_COFINS	Valor da COFINS	N	-	02
     fCOD_CTA                   : string;                              //11	COD_CTA	Código da conta analítica contábil debitada/creditada	C	060	-
   public
     property CST_COFINS        : TACBrSituacaoTribCOFINS read FCST_COFINS        write FCST_COFINS;
     property CFOP              : string                  read FCFOP              write FCFOP;
-    property VL_ITEM           : Currency                read FVL_ITEM           write FVL_ITEM;
-    property VL_DESC           : Currency                read FVL_DESC           write FVL_DESC;
-    property VL_BC_COFINS      : Currency                read FVL_BC_COFINS      write FVL_BC_COFINS;
-    property ALIQ_COFINS       : Currency                read FALIQ_COFINS       write FALIQ_COFINS;
-    property QUANT_BC_COFINS   : Currency                read FQUANT_BC_COFINS   write FQUANT_BC_COFINS;
-    property ALIQ_COFINS_QUANT : Currency                read FALIQ_COFINS_QUANT write FALIQ_COFINS_QUANT;
-    property VL_COFINS         : Currency                read FVL_COFINS         write FVL_COFINS;
+    property VL_ITEM           : Variant                 read FVL_ITEM           write FVL_ITEM;
+    property VL_DESC           : Variant                 read FVL_DESC           write FVL_DESC;
+    property VL_BC_COFINS      : Variant                 read FVL_BC_COFINS      write FVL_BC_COFINS;
+    property ALIQ_COFINS       : Variant                 read FALIQ_COFINS       write FALIQ_COFINS;
+    property QUANT_BC_COFINS   : Variant                 read FQUANT_BC_COFINS   write FQUANT_BC_COFINS;
+    property ALIQ_COFINS_QUANT : Variant                 read FALIQ_COFINS_QUANT write FALIQ_COFINS_QUANT;
+    property VL_COFINS         : Variant                 read FVL_COFINS         write FVL_COFINS;
     property COD_CTA           : string                  read FCOD_CTA           write FCOD_CTA;
   end;
 
