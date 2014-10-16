@@ -593,7 +593,7 @@ begin
     FieldDefs.Add('CPais', ftString, 4);
     FieldDefs.Add('XPais', ftString, 60);
     FieldDefs.Add('Fone', ftString, 15);
-    FieldDefs.Add('IE', ftString, 14);
+    FieldDefs.Add('IE', ftString, 20);
 
     CreateDataSet;
     Append;
@@ -632,7 +632,7 @@ begin
     FieldDefs.Add('CNPJCPF', ftString, 18);
     FieldDefs.Add('xNome', ftString, 60);
     FieldDefs.Add('UF', ftString, 2);
-    FieldDefs.Add('IE', ftString, 14);
+    FieldDefs.Add('IE', ftString, 20);
 
     FieldDefs.Add('Tipo', ftString, 33);
     FieldDefs.Add('Serie', ftString, 3);
@@ -727,9 +727,9 @@ begin
     FieldDefs.Add('CPais', ftString, 4);
     FieldDefs.Add('XPais', ftString, 60);
     FieldDefs.Add('Fone', ftString, 15);
-    FieldDefs.Add('IE', ftString, 14);
+    FieldDefs.Add('IE', ftString, 20);
     FieldDefs.Add('IM', ftString, 15);
-    FieldDefs.Add('IEST', ftString, 15);
+    FieldDefs.Add('IEST', ftString, 20);
     FieldDefs.Add('CRT', ftString, 1);
 
     CreateDataSet;
@@ -782,9 +782,9 @@ begin
     FieldDefs.Add('CPais', ftString, 4);
     FieldDefs.Add('XPais', ftString, 60);
     FieldDefs.Add('Fone', ftString, 15);
-    FieldDefs.Add('IE', ftString, 14);
+    FieldDefs.Add('IE', ftString, 20);
     FieldDefs.Add('IM', ftString, 15);
-    FieldDefs.Add('IEST', ftString, 15);
+    FieldDefs.Add('IEST', ftString, 20);
     FieldDefs.Add('CRT', ftString, 1);
 
     CreateDataSet;
@@ -1448,9 +1448,9 @@ begin
     FieldDefs.Add('CPais', ftString, 4);
     FieldDefs.Add('XPais', ftString, 60);
     FieldDefs.Add('Fone', ftString, 15);
-    FieldDefs.Add('IE', ftString, 14);
+    FieldDefs.Add('IE', ftString, 20);
     FieldDefs.Add('IM', ftString, 15);
-    FieldDefs.Add('IEST', ftString, 15);
+    FieldDefs.Add('IEST', ftString, 20);
     FieldDefs.Add('CRT', ftString, 1);
 
     CreateDataSet;
@@ -1503,9 +1503,9 @@ begin
     FieldDefs.Add('CPais', ftString, 4);
     FieldDefs.Add('XPais', ftString, 60);
     FieldDefs.Add('Fone', ftString, 15);
-    FieldDefs.Add('IE', ftString, 14);
+    FieldDefs.Add('IE', ftString, 20);
     FieldDefs.Add('IM', ftString, 15);
-    FieldDefs.Add('IEST', ftString, 15);
+    FieldDefs.Add('IEST', ftString, 20);
     FieldDefs.Add('CRT', ftString, 1);
 
     CreateDataSet;
@@ -1603,7 +1603,7 @@ begin
     Close;
     FieldDefs.Clear;
     FieldDefs.Add('CNPJ', ftString, 18);
-    FieldDefs.Add('IE', ftString, 14);
+    FieldDefs.Add('IE', ftString, 20);
     FieldDefs.Add('XNome', ftString, 60);
     FieldDefs.Add('XFant', ftString, 60);
     FieldDefs.Add('Fone', ftString, 15);
