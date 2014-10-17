@@ -1701,7 +1701,6 @@ begin
   if not FileExists( fpNomeArqINI ) then
   begin
     CriarMemoriaInicial;
-    Exit;
   end ;
 
   ConteudoINI.LoadFromFile( fpNomeArqINI );

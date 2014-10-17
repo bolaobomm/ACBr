@@ -97,7 +97,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 17/10/2014   (por: DSA)
+-- ACBrECFVirtual --
+[-] Correção de bug na Criação de memória virtual, onde as aliquotas padrões
+    eram perdidas
+
 Data: 15/10/2014   (por: DSA)
+-- ACBrECF --
+[*] Ajustes para ConfigBarras usar valores default de cada Classe
+
 -- ACBrECFEpson --
 [-] Correção de Bug na rotina de analise de Erro... ocasionando erro na carga de
     Formas de Pagamento
