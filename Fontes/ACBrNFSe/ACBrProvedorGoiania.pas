@@ -97,6 +97,7 @@ begin
  	ConfigCidade.Prefixo3      := '';
  	ConfigCidade.Prefixo4      := '';
  	ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
 
  	{if AAmbiente = 1
   	then ConfigCidade.NameSpaceEnvelope := 'http://nfse.goiania.go.gov.br/xsd/nfse_gyn_v02.xsd'

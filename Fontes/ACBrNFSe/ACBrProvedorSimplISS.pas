@@ -91,22 +91,24 @@ end;
 function TProvedorSimplISS.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'id';
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'id';
+  ConfigCidade.QuebradeLinha := ';';
 
- if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'http://www.sistema.com.br/Sistema.Ws.Nfse'
-  else ConfigCidade.NameSpaceEnvelope := 'http://www.sistema.com.br/Sistema.Ws.Nfse';
+  if AAmbiente = 1 then
+    ConfigCidade.NameSpaceEnvelope := 'http://www.sistema.com.br/Sistema.Ws.Nfse'
+  else
+    ConfigCidade.NameSpaceEnvelope := 'http://www.sistema.com.br/Sistema.Ws.Nfse';
 
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := False;
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := False;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorSimplISS.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

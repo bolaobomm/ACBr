@@ -91,20 +91,21 @@ end;
 function TProvedorVitoria.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id';
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
 
- ConfigCidade.NameSpaceEnvelope := 'http://www.abrasf.org.br';
+  ConfigCidade.NameSpaceEnvelope := 'http://www.abrasf.org.br';
 
- ConfigCidade.AssinaRPS  := True;
- ConfigCidade.AssinaLote := True;
+  ConfigCidade.AssinaRPS  := True;
+  ConfigCidade.AssinaLote := True;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorVitoria.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

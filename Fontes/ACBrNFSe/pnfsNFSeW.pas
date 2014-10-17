@@ -61,6 +61,7 @@ type
     FVersaoXML: String;
     FDefTipos: String;
     FServicoEnviar: String;
+    FQuebradeLinha: String;
 
     procedure GerarIdentificacaoRPS;
     procedure GerarRPSSubstituido;
@@ -100,6 +101,7 @@ type
     property VersaoXML: String read FVersaoXML write FVersaoXML;
     property DefTipos: String read FDefTipos write FDefTipos;
     property ServicoEnviar: String read FServicoEnviar write FServicoEnviar;
+    property QuebradeLinha: String read FQuebradeLinha write FQuebradeLinha;
   end;
 
  TGeradorOpcoes = class(TPersistent)
@@ -433,7 +435,8 @@ begin
        Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 0, NFSe.Servico.CodigoTributacaoMunicipio, '');
      end;
 
-   Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
+   Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao', 01, 2000, 1,
+                      StringReplace( FNFSe.Servico.Discriminacao, ';', FQuebradeLinha, [rfReplaceAll, rfIgnoreCase] ), '');
 
    // Provedor Ginfes
    // Schema: tipos_v02 o nome da tag é MunicipioPrestacaoServico *** essa versão não esta em uso
@@ -581,7 +584,9 @@ begin
 //   if FProvedor <> proFiorilli then
    Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 0, SomenteNumeros(NFSe.Servico.CodigoTributacaoMunicipio), '');
 
-  Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
+  Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao', 01, 2000, 1,
+                      StringReplace( FNFSe.Servico.Discriminacao, ';', FQuebradeLinha, [rfReplaceAll, rfIgnoreCase] ), '');
+//  Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
   Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
 
 //   if FProvedor <> proFiorilli then
@@ -639,7 +644,9 @@ begin
       Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico         ', 01, 0005, 1, NFSe.Servico.ItemListaServico, '');
       Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae               ', 01, 0007, 0, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
       Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 0, SomenteNumeros(NFSe.Servico.CodigoTributacaoMunicipio), '');
-      Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.ItemServico[i].Discriminacao, '');
+      Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao', 01, 2000, 1,
+                      StringReplace( NFSe.Servico.ItemServico[i].Discriminacao, ';', FQuebradeLinha, [rfReplaceAll, rfIgnoreCase] ), '');
+//      Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.ItemServico[i].Discriminacao, '');
       Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
       Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais               ', 04, 04,   0, NFSe.Servico.CodigoPais, '');
       Gerador.wCampoNFSe(tcStr, '#35', 'ExigibilidadeISS         ', 01, 01,   1, ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS), '');

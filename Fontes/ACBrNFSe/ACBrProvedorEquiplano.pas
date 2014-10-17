@@ -91,22 +91,24 @@ end;
 function TProvedorEquiplano.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := 'es:';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id';
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := 'es:';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
 
- if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'http://services.enfsws.es'
-  else ConfigCidade.NameSpaceEnvelope := 'http://services.enfsws.es';
+  if AAmbiente = 1 then
+    ConfigCidade.NameSpaceEnvelope := 'http://services.enfsws.es'
+  else
+    ConfigCidade.NameSpaceEnvelope := 'http://services.enfsws.es';
 
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := True;
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := True;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorEquiplano.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

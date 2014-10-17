@@ -243,6 +243,7 @@ type
     procedure Itens;
   public
     { Public declarations }
+    procedure QuebradeLinha(const sQuebradeLinha: String);
   end;
 
 
@@ -253,6 +254,9 @@ uses
  ACBrUtil, ACBrDFeUtil, ACBrNFSeUtil, pnfsNFSe;
 
 {$R *.dfm}
+
+var
+  FQuebradeLinha: String;
 
 procedure TfqrDANFSeQRRetrato.cdsItensAfterScroll(DataSet: TDataSet);
 //var
@@ -450,8 +454,11 @@ begin
  qrmDescricao.Lines.BeginUpdate;
  qrmDescricao.Lines.Clear;
 
+// qrmDescricao.Lines.Add( StringReplace( FNFSe.Servico.Discriminacao,
+//                         ';', #13#10, [rfReplaceAll, rfIgnoreCase] ) );
+
  qrmDescricao.Lines.Add( StringReplace( FNFSe.Servico.Discriminacao,
-                         ';', #13#10, [rfReplaceAll, rfIgnoreCase] ) );
+                         FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase] ) );
 
  qrmDescricao.Lines.EndUpdate;
 end;
@@ -692,6 +699,11 @@ begin
   QRNFSe.Page.LeftMargin   := FMargemEsquerda * 100;
   QRNFSe.Page.RightMargin  := FMargemDireita  * 100;
 
+end;
+
+procedure TfqrDANFSeQRRetrato.QuebradeLinha(const sQuebradeLinha: String);
+begin
+  FQuebradeLinha := sQuebradeLinha;
 end;
 
 end.

@@ -91,20 +91,21 @@ end;
 function TProvedorEL.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := '';
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := '';
+  ConfigCidade.QuebradeLinha := ';';
 
- ConfigCidade.NameSpaceEnvelope := 'http://www.el.com.br/nfse/xsd/el-nfse.xsd';
+  ConfigCidade.NameSpaceEnvelope := 'http://www.el.com.br/nfse/xsd/el-nfse.xsd';
 
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := True;
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := True;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorEL.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

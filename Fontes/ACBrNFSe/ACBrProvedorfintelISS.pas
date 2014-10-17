@@ -91,25 +91,27 @@ end;
 function TProvedorfintelISS.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id';
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
 
- case ACodCidade of
-  4119905: begin // Ponta Grossa/PR
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://iss.pontagrossa.pr.gov.br'
-             else ConfigCidade.NameSpaceEnvelope := 'https://iss.pontagrossa.pr.gov.br';
-           end;
- end;
- ConfigCidade.AssinaRPS  := True;
- ConfigCidade.AssinaLote := True;
+  case ACodCidade of
+   4119905: begin // Ponta Grossa/PR
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://iss.pontagrossa.pr.gov.br'
+              else ConfigCidade.NameSpaceEnvelope := 'https://iss.pontagrossa.pr.gov.br';
+            end;
+  end;
 
- Result := ConfigCidade;
+  ConfigCidade.AssinaRPS  := True;
+  ConfigCidade.AssinaLote := True;
+
+  Result := ConfigCidade;
 end;
 
 function TProvedorfintelISS.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

@@ -89,22 +89,24 @@ end;
 
 function TProvedorSalvador.GetConfigCidade(ACodCidade, AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id'; // Alterado para poder Assinar no Schema é id
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'Id'; // Alterado para poder Assinar no Schema é id
+  ConfigCidade.QuebradeLinha := ';';
 
- if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd'
-  else ConfigCidade.NameSpaceEnvelope := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd';
+  if AAmbiente = 1 then
+    ConfigCidade.NameSpaceEnvelope := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd'
+  else
+    ConfigCidade.NameSpaceEnvelope := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd';
 
- ConfigCidade.AssinaRPS  := True;
- ConfigCidade.AssinaLote := True;
+  ConfigCidade.AssinaRPS  := True;
+  ConfigCidade.AssinaLote := True;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorSalvador.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

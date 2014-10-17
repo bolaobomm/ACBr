@@ -91,22 +91,24 @@ end;
 function TProvedorSisPMJP.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := ''; //nfse: Alterado por Carlos Henrique
- ConfigCidade.Prefixo3      := ''; //nfse: Alterado por Carlos Henrique
- ConfigCidade.Prefixo4      := ''; //nfse: Alterado por Carlos Henrique
- ConfigCidade.Identificador := 'Id';
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := ''; //nfse: Alterado por Carlos Henrique
+  ConfigCidade.Prefixo3      := ''; //nfse: Alterado por Carlos Henrique
+  ConfigCidade.Prefixo4      := ''; //nfse: Alterado por Carlos Henrique
+  ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
 
- if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'http://nfse.abrasf.org.br'
-  else ConfigCidade.NameSpaceEnvelope := 'http://nfse.abrasf.org.br';
+  if AAmbiente = 1 then
+    ConfigCidade.NameSpaceEnvelope := 'http://nfse.abrasf.org.br'
+  else
+    ConfigCidade.NameSpaceEnvelope := 'http://nfse.abrasf.org.br';
 
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := True; //False; Alterado por Carlos Henrique
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := True; //False; Alterado por Carlos Henrique
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorSisPMJP.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

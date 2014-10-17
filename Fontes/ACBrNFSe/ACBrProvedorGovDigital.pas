@@ -97,6 +97,7 @@ begin
  	ConfigCidade.Prefixo3      := '';
  	ConfigCidade.Prefixo4      := '';
  	ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
 
   case ACodCidade of
    3132404: begin // Itajubá/MG

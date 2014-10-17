@@ -91,24 +91,25 @@ end;
 function TProvedorIssCuritiba.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.2';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'id';
+  ConfigCidade.VersaoSoap    := '1.2';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'id';
+  ConfigCidade.QuebradeLinha := ';';
 
 // if AAmbiente = 1
 //  then ConfigCidade.NameSpaceEnvelope := 'https://isscuritiba.curitiba.pr.gov.br'
 //  else ConfigCidade.NameSpaceEnvelope := 'http://200.189.192.82/pilotonota_iss/';
 
- ConfigCidade.NameSpaceEnvelope := 'http://www.e-governeapps2.com.br/';
+  ConfigCidade.NameSpaceEnvelope := 'http://www.e-governeapps2.com.br/';
 
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := True;
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := True;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorIssCuritiba.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

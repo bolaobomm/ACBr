@@ -91,22 +91,24 @@ end;
 function TProvedorISSDigital.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id';
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
 
- if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org'
-  else ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org';
+  if AAmbiente = 1 then
+    ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org'
+  else
+    ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org';
 
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := False;
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := False;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorISSDigital.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

@@ -90,16 +90,20 @@ end;
 function TProvedorEgoverneISS.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := 'tem:';
- ConfigCidade.Prefixo4      := 'rgm:';
- ConfigCidade.Identificador := '';
- ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org';
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := False;
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := 'tem:';
+  ConfigCidade.Prefixo4      := 'rgm:';
+  ConfigCidade.Identificador := '';
+  ConfigCidade.QuebradeLinha := ';';
+
+  ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org';
+  
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := False;
+
  Result := ConfigCidade;
 end;
 

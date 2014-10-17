@@ -91,29 +91,32 @@ end;
 function TProvedorPronim.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'id';
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'id';
+  ConfigCidade.QuebradeLinha := ';';
 
- if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org'
-  else ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org';
+  if AAmbiente = 1 then
+    ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org'
+  else
+    ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org';
 
- ConfigCidade.AssinaRPS  := False;
- case ACodCidade of
-  3118601: ConfigCidade.AssinaLote := True; {Denio Incluido para Contagem} 
-  4309407: ConfigCidade.AssinaLote := True; {Dalvan}
-  4320800: ConfigCidade.AssinaLote := True; {Dalvan}
-  4204004: ConfigCidade.AssinaLote := True; {Dalvan}
-  4216602: ConfigCidade.AssinaLote := True;
- else      ConfigCidade.AssinaLote := False;
- end;
+  ConfigCidade.AssinaRPS  := False;
 
- Result := ConfigCidade;
+  case ACodCidade of
+   3118601: ConfigCidade.AssinaLote := True; {Denio Incluido para Contagem}
+   4309407: ConfigCidade.AssinaLote := True; {Dalvan}
+   4320800: ConfigCidade.AssinaLote := True; {Dalvan}
+   4204004: ConfigCidade.AssinaLote := True; {Dalvan}
+   4216602: ConfigCidade.AssinaLote := True;
+  else      ConfigCidade.AssinaLote := False;
+  end;
+
+  Result := ConfigCidade;
 end;
 
 function TProvedorPronim.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

@@ -57,6 +57,7 @@ type
     NameSpaceEnvelope: String;
     AssinaRPS: Boolean;
     AssinaLote: Boolean;
+    QuebradeLinha: String;
  end;
 
  TConfigSchema = record
@@ -165,6 +166,7 @@ type
     FNameSpace: String;
     FSenhaWeb: AnsiString;
     FUserWeb: String;
+    FQuebradeLinha: String;
 
     // Schemas
     FVersaoCabecalho: String;
@@ -238,6 +240,7 @@ type
     property SenhaWeb: AnsiString read FSenhaWeb write FSenhaWeb;
     property UserWeb: String read FUserWeb write FUserWeb;
     property ConsultaLoteAposEnvio: Boolean read FConsultaLoteAposEnvio write FConsultaLoteAposEnvio;
+    property QuebradeLinha: String read FQuebradeLinha;
 
     // Schemas
     property VersaoCabecalho: String read FVersaoCabecalho;
@@ -578,6 +581,8 @@ begin
  FVersaoSoap    := '';
  FIdentificador := 'Id';
  FNameSpace     := '';
+ FQuebradeLinha := ';';
+
  FConsultaLoteAposEnvio := True;
 end;
 
@@ -871,6 +876,7 @@ begin
  FPrefixo4      := ConfigCidade.Prefixo4;
  FIdentificador := ConfigCidade.Identificador;
  FNameSpace     := ConfigCidade.NameSpaceEnvelope;
+ FQuebradeLinha := ConfigCidade.QuebradeLinha;
 
  TConfiguracoes( Self.Owner ).Certificados.FAssinaRPS  := ConfigCidade.AssinaRPS;
  TConfiguracoes( Self.Owner ).Certificados.FAssinaLote := ConfigCidade.AssinaLote;

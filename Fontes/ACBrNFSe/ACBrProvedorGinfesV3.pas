@@ -91,34 +91,35 @@ end;
 function TProvedorGinfesV3.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.2';
- ConfigCidade.Prefixo2      := 'ns2:';
- ConfigCidade.Prefixo3      := 'ns3:';
- ConfigCidade.Prefixo4      := 'ns4:';
- ConfigCidade.Identificador := 'Id';
+  ConfigCidade.VersaoSoap    := '1.2';
+  ConfigCidade.Prefixo2      := 'ns2:';
+  ConfigCidade.Prefixo3      := 'ns3:';
+  ConfigCidade.Prefixo4      := 'ns4:';
+  ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
 
- case ACodCidade of
-  2304400: begin // Fortaleza/CE
-            ConfigCidade.NameSpaceEnvelope := 'http://producao.issfortaleza.com.br';
-            (*
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'http://producao.issfortaleza.com.br'
-             else ConfigCidade.NameSpaceEnvelope := 'http://homologacao.issfortaleza.com.br';
-            *)
-           end;
-  else     begin // Demais cidades
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'http://producao.ginfes.com.br'
-             else ConfigCidade.NameSpaceEnvelope := 'http://homologacao.ginfes.com.br';
-           end;
- end;
+  case ACodCidade of
+   2304400: begin // Fortaleza/CE
+             ConfigCidade.NameSpaceEnvelope := 'http://producao.issfortaleza.com.br';
+             (*
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'http://producao.issfortaleza.com.br'
+              else ConfigCidade.NameSpaceEnvelope := 'http://homologacao.issfortaleza.com.br';
+             *)
+            end;
+   else     begin // Demais cidades
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'http://producao.ginfes.com.br'
+              else ConfigCidade.NameSpaceEnvelope := 'http://homologacao.ginfes.com.br';
+            end;
+  end;
 
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := True;
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := True;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorGinfesV3.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

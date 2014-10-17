@@ -91,22 +91,23 @@ end;
 function TProvedorFreire.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id';
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
 
- if AAmbiente = 1					//http://www.abrasf.org.br/nfse.xsd
+  if AAmbiente = 1					//http://www.abrasf.org.br/nfse.xsd
   then ConfigCidade.NameSpaceEnvelope := 'http://nfse.abrasf.org.br'
   else ConfigCidade.NameSpaceEnvelope := 'http://nfse.abrasf.org.br';
 
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := False;
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := False;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorFreire.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

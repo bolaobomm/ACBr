@@ -91,28 +91,30 @@ end;
 function TProvedorDBSeller.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
- NomeCidade: String;
+  ConfigCidade: TConfigCidade;
+  NomeCidade: String;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id'; 
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
 
- case ACodCidade of
-  4300406: NomeCidade := 'alegrete.rs';
-  4304705: NomeCidade := 'carazinho.rs';
- end;
+  case ACodCidade of
+   4300406: NomeCidade := 'alegrete.rs';
+   4304705: NomeCidade := 'carazinho.rs';
+  end;
 
- if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'http://nfse.' + NomeCidade + '.gov.br/webservice/index/producao'
-  else ConfigCidade.NameSpaceEnvelope := 'http://nfse.' + NomeCidade + '.gov.br:82/webservice/index/homologacao';
+  if AAmbiente = 1 then
+    ConfigCidade.NameSpaceEnvelope := 'http://nfse.' + NomeCidade + '.gov.br/webservice/index/producao'
+  else
+    ConfigCidade.NameSpaceEnvelope := 'http://nfse.' + NomeCidade + '.gov.br:82/webservice/index/homologacao';
 
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := True;
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := True;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorDBSeller.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

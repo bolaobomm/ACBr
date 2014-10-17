@@ -91,22 +91,24 @@ end;
 function TProvedorISSNet.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := 'tc:';
- ConfigCidade.Identificador := '';
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := 'tc:';
+  ConfigCidade.Identificador := '';
+  ConfigCidade.QuebradeLinha := ';';
 
- if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'http://www.issnetonline.com.br/webservice/nfd'
-  else ConfigCidade.NameSpaceEnvelope := 'http://www.issnetonline.com.br/webservice/nfd';
+  if AAmbiente = 1 then
+    ConfigCidade.NameSpaceEnvelope := 'http://www.issnetonline.com.br/webservice/nfd'
+  else
+    ConfigCidade.NameSpaceEnvelope := 'http://www.issnetonline.com.br/webservice/nfd';
 
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := True;
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := True;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorISSNet.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

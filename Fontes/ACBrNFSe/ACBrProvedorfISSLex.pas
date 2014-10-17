@@ -91,36 +91,37 @@ end;
 function TProvedorFISSLEX.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.2';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'id';
+  ConfigCidade.VersaoSoap    := '1.2';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'id';
+  ConfigCidade.QuebradeLinha := ';';
 
- if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'https://demo.fisslex.com.br'
-  else begin
-   case ACodCidade of
-    1100304: ConfigCidade.NameSpaceEnvelope := 'https://vilhena.fisslex.com.br';
-    5101704: ConfigCidade.NameSpaceEnvelope := 'https://barradobugres.fisslex.com.br';
-    5102504: ConfigCidade.NameSpaceEnvelope := 'https://caceres.fisslex.com.br';
-    5102702: ConfigCidade.NameSpaceEnvelope := 'https://canarana.fisslex.com.br';
-    5103007: ConfigCidade.NameSpaceEnvelope := 'https://chapada.fisslex.com.br';
-    5104559: ConfigCidade.NameSpaceEnvelope := 'https://itauba.fisslex.com.br';
-    5104609: ConfigCidade.NameSpaceEnvelope := 'https://itiquira.fisslex.com.br';
-    5107248: ConfigCidade.NameSpaceEnvelope := 'https://santacarmen.fisslex.com.br';
-    5107800: ConfigCidade.NameSpaceEnvelope := 'https://leverger.fisslex.com.br';
-    5107875: ConfigCidade.NameSpaceEnvelope := 'https://sapezal.fisslex.com.br';
-    5107958: ConfigCidade.NameSpaceEnvelope := 'https://tangara.fisslex.com.br';
-   end;
+  if AAmbiente = 1
+   then ConfigCidade.NameSpaceEnvelope := 'https://demo.fisslex.com.br'
+   else begin
+    case ACodCidade of
+     1100304: ConfigCidade.NameSpaceEnvelope := 'https://vilhena.fisslex.com.br';
+     5101704: ConfigCidade.NameSpaceEnvelope := 'https://barradobugres.fisslex.com.br';
+     5102504: ConfigCidade.NameSpaceEnvelope := 'https://caceres.fisslex.com.br';
+     5102702: ConfigCidade.NameSpaceEnvelope := 'https://canarana.fisslex.com.br';
+     5103007: ConfigCidade.NameSpaceEnvelope := 'https://chapada.fisslex.com.br';
+     5104559: ConfigCidade.NameSpaceEnvelope := 'https://itauba.fisslex.com.br';
+     5104609: ConfigCidade.NameSpaceEnvelope := 'https://itiquira.fisslex.com.br';
+     5107248: ConfigCidade.NameSpaceEnvelope := 'https://santacarmen.fisslex.com.br';
+     5107800: ConfigCidade.NameSpaceEnvelope := 'https://leverger.fisslex.com.br';
+     5107875: ConfigCidade.NameSpaceEnvelope := 'https://sapezal.fisslex.com.br';
+     5107958: ConfigCidade.NameSpaceEnvelope := 'https://tangara.fisslex.com.br';
+    end;
   end;
 
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := True;
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := True;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorFISSLEX.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

@@ -91,22 +91,24 @@ end;
 function TProvedorNatal.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id';
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
 
- if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'https://wsnfsev1.natal.rn.gov.br:8444'
-  else ConfigCidade.NameSpaceEnvelope := 'https://wsnfsev1homologacao.natal.rn.gov.br:8443';
+  if AAmbiente = 1 then
+    ConfigCidade.NameSpaceEnvelope := 'https://wsnfsev1.natal.rn.gov.br:8444'
+  else
+    ConfigCidade.NameSpaceEnvelope := 'https://wsnfsev1homologacao.natal.rn.gov.br:8443';
 
- ConfigCidade.AssinaRPS  := True;
- ConfigCidade.AssinaLote := True;
+  ConfigCidade.AssinaRPS  := True;
+  ConfigCidade.AssinaLote := True;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorNatal.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

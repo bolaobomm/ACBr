@@ -98,6 +98,7 @@ begin
  	ConfigCidade.Prefixo3          := '';
  	ConfigCidade.Prefixo4          := '';
  	ConfigCidade.Identificador     := 'Id';
+  ConfigCidade.QuebradeLinha     := ';';
 	ConfigCidade.NameSpaceEnvelope := 'http://www.abrasf.org.br';
  	ConfigCidade.AssinaRPS         := False;
  	ConfigCidade.AssinaLote        := False;

@@ -91,22 +91,24 @@ end;
 function TProvedorRecife.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id';
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
 
- if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'http://nfse.recife.pe.gov.br'
-  else ConfigCidade.NameSpaceEnvelope := 'http://nfse.recife.pe.gov.br';
+  if AAmbiente = 1 then
+    ConfigCidade.NameSpaceEnvelope := 'http://nfse.recife.pe.gov.br'
+  else
+    ConfigCidade.NameSpaceEnvelope := 'http://nfse.recife.pe.gov.br';
 
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := True;
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := True;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorRecife.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

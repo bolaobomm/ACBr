@@ -91,22 +91,24 @@ end;
 function TProvedorBetha.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := 'ns3:';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id';
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := 'ns3:';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
 
- if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'http://www.betha.com.br/e-nota-contribuinte-ws'
-  else ConfigCidade.NameSpaceEnvelope := 'http://www.betha.com.br/e-nota-contribuinte-ws';
+  if AAmbiente = 1 then
+    ConfigCidade.NameSpaceEnvelope := 'http://www.betha.com.br/e-nota-contribuinte-ws'
+  else
+    ConfigCidade.NameSpaceEnvelope := 'http://www.betha.com.br/e-nota-contribuinte-ws';
 
- ConfigCidade.AssinaRPS  := True;
- ConfigCidade.AssinaLote := True;
+  ConfigCidade.AssinaRPS  := True;
+  ConfigCidade.AssinaLote := True;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorBetha.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

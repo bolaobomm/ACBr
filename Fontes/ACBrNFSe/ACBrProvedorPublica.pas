@@ -91,20 +91,23 @@ end;
 function TProvedorPublica.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id'; // Alterado para poder Assinar no Schema é id
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'Id'; // Alterado para poder Assinar no Schema é id
+  ConfigCidade.QuebradeLinha := ';';
 
- if AAmbiente = 1                         
-  then ConfigCidade.NameSpaceEnvelope := 'http://service.nfse.integracao.ws.publica/'
-  else ConfigCidade.NameSpaceEnvelope := 'http://service.nfse.integracao.ws.publica/';
+  if AAmbiente = 1 then
+    ConfigCidade.NameSpaceEnvelope := 'http://service.nfse.integracao.ws.publica/'
+  else
+    ConfigCidade.NameSpaceEnvelope := 'http://service.nfse.integracao.ws.publica/';
 
- ConfigCidade.AssinaRPS  := False; // True;
- ConfigCidade.AssinaLote := True;
+  ConfigCidade.AssinaRPS  := False; // True;
+  ConfigCidade.AssinaLote := True;
+  
  Result := ConfigCidade;
 end;
 

@@ -91,18 +91,19 @@ end;
 function TProvedorAbaco.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap        := '1.1';
- ConfigCidade.Prefixo2          := '';
- ConfigCidade.Prefixo3          := '';
- ConfigCidade.Prefixo4          := '';
- ConfigCidade.Identificador     := 'id';
- ConfigCidade.NameSpaceEnvelope := 'http://www.e-nfs.com.br';
- ConfigCidade.AssinaRPS         := False;
- ConfigCidade.AssinaLote        := True;
+  ConfigCidade.VersaoSoap        := '1.1';
+  ConfigCidade.Prefixo2          := '';
+  ConfigCidade.Prefixo3          := '';
+  ConfigCidade.Prefixo4          := '';
+  ConfigCidade.Identificador     := 'id';
+  ConfigCidade.QuebradeLinha     := ';';
+  ConfigCidade.NameSpaceEnvelope := 'http://www.e-nfs.com.br';
+  ConfigCidade.AssinaRPS         := False;
+  ConfigCidade.AssinaLote        := True;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorAbaco.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

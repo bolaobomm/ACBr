@@ -91,18 +91,19 @@ end;
 function TProvedorLexsom.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap        := '1.1';
- ConfigCidade.Prefixo2          := '';
- ConfigCidade.Prefixo3          := '';
- ConfigCidade.Prefixo4          := '';
- ConfigCidade.Identificador     := 'Id'; // Dever ser trocado depois para id
- ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org';
- ConfigCidade.AssinaRPS         := False;
- ConfigCidade.AssinaLote        := True;
+  ConfigCidade.VersaoSoap        := '1.1';
+  ConfigCidade.Prefixo2          := '';
+  ConfigCidade.Prefixo3          := '';
+  ConfigCidade.Prefixo4          := '';
+  ConfigCidade.Identificador     := 'Id'; // Dever ser trocado depois para id
+  ConfigCidade.QuebradeLinha     := ';';
+  ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org';
+  ConfigCidade.AssinaRPS         := False;
+  ConfigCidade.AssinaLote        := True;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorLexsom.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

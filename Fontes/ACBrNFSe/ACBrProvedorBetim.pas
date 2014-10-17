@@ -91,26 +91,28 @@ end;
 function TProvedorBetim.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.2';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id';
+  ConfigCidade.VersaoSoap    := '1.2';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
 
 // if AAmbiente = 1
 //  then ConfigCidade.NameSpaceEnvelope := 'http://betim.rps.com.br/sgm/zend/default/xsd/nfse?format=xml'
 //  else ConfigCidade.NameSpaceEnvelope := 'http://betim.rps.com.br/sgm/zend/default/xsd/nfse?format=xml';
 
- if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'https://betim.rps.com.br/sgm/zend/nfs/nfs'
-  else ConfigCidade.NameSpaceEnvelope := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';
+  if AAmbiente = 1 then
+    ConfigCidade.NameSpaceEnvelope := 'https://betim.rps.com.br/sgm/zend/nfs/nfs'
+  else
+    ConfigCidade.NameSpaceEnvelope := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';
 
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := True;
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := True;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorBetim.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

@@ -47,6 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/10/204
+[+] Adicionando a propriedade QuebradeLinha na configuração de cada provedor.
+    O valor padrão é ";" ponto e virgula
+    Ao alimentar o componente devemos sempre utilizar o ";" para indicar uma quebra de linha no
+    campo Discriminacao.
+    O componente vai substituir o ";" pelo caracter ou sequencia de caracters parametrizado no
+    provedor que esta sendo utilizado no momento de gerar o XML.
+    A impressão do DANFSE vai transcorrer normalmente.
+    Sugestão de brsamn
+    por: Italo Jurisato Junior
+	
 16/10/204
 [+] Adicionando o QrCode no DANFSe em Fortes Report caso exista uma URL nos dados adicionais da NFS-e
 	por: Juliomar Marchetti

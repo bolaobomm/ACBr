@@ -91,20 +91,21 @@ end;
 function TProvedorMitra.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id';
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
 
- ConfigCidade.NameSpaceEnvelope := 'https://nfe.progam.com.br/cruzeiro/nfse/xsd/rps_importacao_manual.xsd';
+  ConfigCidade.NameSpaceEnvelope := 'https://nfe.progam.com.br/cruzeiro/nfse/xsd/rps_importacao_manual.xsd';
 
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := False;
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := False;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorMitra.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

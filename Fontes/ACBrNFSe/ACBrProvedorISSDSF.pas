@@ -92,32 +92,33 @@ end;
 function TProvedorIssDSF.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.2';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := 'ns1:';
- ConfigCidade.Prefixo4      := 'tipos:';
- ConfigCidade.Identificador := 'Id';
+  ConfigCidade.VersaoSoap    := '1.2';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := 'ns1:';
+  ConfigCidade.Prefixo4      := 'tipos:';
+  ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
 
- if AAmbiente = 1
-  then case ACodCidade of
-     3509502: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/lote';  // 'http://issdigital.campinas.sp.gov.br/WsNFe2/lote'; // Campinas/SP
-     3170206: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/lote';  // 'http://udigital.uberlandia.mg.gov.br/WsNFe2/lote'; // Uberlandia/MG
-     1501402: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/lote';  // 'http://www.issdigitalbel.com.br/WsNFe2/lote';      // Belem/PA
-     5002704: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/lote';  // 'http://issdigital.pmcg.ms.gov.br/WsNFe2/lote';     // Campo Grande/MS
-     3303500: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/lote';  // 'http://www.issmaisfacil.com.br/WsNFe2/lote';       // Nova Iguacu/RJ
-     2211001: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/lote';  // 'http://www.issdigitalthe.com.br/WsNFe2/lote';      // Teresina/PI
-     2111300: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/lote';  // 'http://www.issdigitalslz.com.br/WsNFe2/lote';      // Sao Luis/MA
-     3552205: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/lote';  // 'http://www.issdigitalsod.com.br/WsNFe2/lote';      // Sorocaba/SP
-  end
-  else ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/lote';
+  if AAmbiente = 1
+   then case ACodCidade of
+      3509502: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/lote';  // 'http://issdigital.campinas.sp.gov.br/WsNFe2/lote'; // Campinas/SP
+      3170206: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/lote';  // 'http://udigital.uberlandia.mg.gov.br/WsNFe2/lote'; // Uberlandia/MG
+      1501402: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/lote';  // 'http://www.issdigitalbel.com.br/WsNFe2/lote';      // Belem/PA
+      5002704: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/lote';  // 'http://issdigital.pmcg.ms.gov.br/WsNFe2/lote';     // Campo Grande/MS
+      3303500: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/lote';  // 'http://www.issmaisfacil.com.br/WsNFe2/lote';       // Nova Iguacu/RJ
+      2211001: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/lote';  // 'http://www.issdigitalthe.com.br/WsNFe2/lote';      // Teresina/PI
+      2111300: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/lote';  // 'http://www.issdigitalslz.com.br/WsNFe2/lote';      // Sao Luis/MA
+      3552205: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/lote';  // 'http://www.issdigitalsod.com.br/WsNFe2/lote';      // Sorocaba/SP
+   end
+  else
+    ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/lote';
 
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := (AAmbiente = 1);
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := (AAmbiente = 1);
 
-
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorIssDSF.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

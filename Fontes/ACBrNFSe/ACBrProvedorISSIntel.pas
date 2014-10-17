@@ -91,100 +91,101 @@ end;
 function TProvedorISSIntel.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id';
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
 
- case ACodCidade of
-  1709500: begin // Gurupi/TO
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://gurupi-to.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://gurupi-to.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  2112209: begin // Timon/MA
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://timon-ma.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://timon-ma.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  2207009: begin // Oeiras/PI
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://oeiras-pi.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://oeiras-pi.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  2208007: begin // Picos/PI
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://picos-pi.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://picos-pi.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  2211209: begin // Uruçuí/PI
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://urucui-pi.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://urucui-pi.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  2307304: begin // Juazeiro do Norte/CE
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://juazeirodonorte-ce.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://juazeirodonorte-ce.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  2504009: begin // Campina Grande/PB
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://campinagrande-pb.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://campinagrande-pb.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  2910727: begin // Eunapolis/BA
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://eunapolis-ba.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://eunapolis-ba.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  2925303: begin // Porto Seguro/BA
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://portoseguro-ba.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://portoseguro-ba.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  3107109: begin // Boa Esperança/MG
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://boaesperanca-mg.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://boaesperanca-mg.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  3112505: begin // Capim Branco/MG
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://capimbranco-mg.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://capimbranco-mg.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  3113305: begin // Carangola/MG
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://carangola-mg.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://carangola-mg.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  3114402: begin // Carmo do Rio Claro/MG
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://carmodorioclaro-mg.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://carmodorioclaro-mg.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  3116605: begin // Cláudio/MG
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://claudio-mg.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://claudio-mg.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  3128006: begin // Guanhães/MG
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://guanhaes-mg.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://guanhaes-mg.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  3128105: begin // Guapé/MG
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://guape-mg.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://guape-mg.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  3131307: begin // Ipatinga/MG
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://ipatinga-mg.issintel.com.br:442/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://ipatinga-mg.treino-issintel.com.br:442/webservices/abrasf/api';
-           end;
+  case ACodCidade of
+   1709500: begin // Gurupi/TO
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://gurupi-to.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://gurupi-to.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   2112209: begin // Timon/MA
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://timon-ma.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://timon-ma.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   2207009: begin // Oeiras/PI
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://oeiras-pi.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://oeiras-pi.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   2208007: begin // Picos/PI
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://picos-pi.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://picos-pi.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   2211209: begin // Uruçuí/PI
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://urucui-pi.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://urucui-pi.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   2307304: begin // Juazeiro do Norte/CE
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://juazeirodonorte-ce.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://juazeirodonorte-ce.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   2504009: begin // Campina Grande/PB
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://campinagrande-pb.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://campinagrande-pb.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   2910727: begin // Eunapolis/BA
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://eunapolis-ba.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://eunapolis-ba.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   2925303: begin // Porto Seguro/BA
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://portoseguro-ba.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://portoseguro-ba.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   3107109: begin // Boa Esperança/MG
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://boaesperanca-mg.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://boaesperanca-mg.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   3112505: begin // Capim Branco/MG
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://capimbranco-mg.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://capimbranco-mg.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   3113305: begin // Carangola/MG
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://carangola-mg.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://carangola-mg.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   3114402: begin // Carmo do Rio Claro/MG
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://carmodorioclaro-mg.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://carmodorioclaro-mg.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   3116605: begin // Cláudio/MG
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://claudio-mg.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://claudio-mg.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   3128006: begin // Guanhães/MG
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://guanhaes-mg.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://guanhaes-mg.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   3128105: begin // Guapé/MG
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://guape-mg.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://guape-mg.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   3131307: begin // Ipatinga/MG
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://ipatinga-mg.issintel.com.br:442/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://ipatinga-mg.treino-issintel.com.br:442/webservices/abrasf/api';
+            end;
 //  3157807: begin // Santa Luzia/MG
 //            if AAmbiente = 1
 //             then ConfigCidade.NameSpaceEnvelope := 'https://santaluzia-mg.issintel.com.br/webservices/abrasf/api'
@@ -195,61 +196,61 @@ begin
 //             then ConfigCidade.NameSpaceEnvelope := 'https://passos-mg.issintel.com.br/webservices/abrasf/api'
 //             else ConfigCidade.NameSpaceEnvelope := 'https://passos-mg.treino-issintel.com.br/webservices/abrasf/api';
 //           end;
-  3148004: begin // Patos de Minas/MG
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://patosdeminas-mg.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://patosdeminas-mg.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  3149903: begin // Perdões/MG
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://perdoes-mg.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://perdoes-mg.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  3151503: begin // Piumhi/MG
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://piumhi-mg.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://piumhi-mg.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  3152600: begin // Pouso Alto/MG
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://pousoalto-mg.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://pousoalto-mg.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  3153905: begin // Raposos/MG
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://raposos-mg.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://raposos-mg.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  3170800: begin // Várzea da Palma/MG
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://varzeadapalma-mg.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://varzeadapalma-mg.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  3171303: begin // Viçosa/MG
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://vicosa-mg.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://vicosa-mg.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  3200102: begin // Afonso Cláudio/ES
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://afonsoclaudio-es.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://afonsoclaudio-es.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  3200300: begin // Alfredo Chaves/ES
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://alfredochaves-es.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://alfredochaves-es.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  3204708: begin // São Gabriel da Palha/ES
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://saogabrieldapalha-es.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://saogabrieldapalha-es.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  4109609: begin // Guaratuba/PR
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://guaratuba-pr.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://guaratuba-pr.treino-issintel.com.br/webservices/abrasf/api';
-           end;
+   3148004: begin // Patos de Minas/MG
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://patosdeminas-mg.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://patosdeminas-mg.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   3149903: begin // Perdões/MG
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://perdoes-mg.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://perdoes-mg.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   3151503: begin // Piumhi/MG
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://piumhi-mg.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://piumhi-mg.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   3152600: begin // Pouso Alto/MG
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://pousoalto-mg.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://pousoalto-mg.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   3153905: begin // Raposos/MG
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://raposos-mg.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://raposos-mg.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   3170800: begin // Várzea da Palma/MG
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://varzeadapalma-mg.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://varzeadapalma-mg.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   3171303: begin // Viçosa/MG
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://vicosa-mg.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://vicosa-mg.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   3200102: begin // Afonso Cláudio/ES
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://afonsoclaudio-es.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://afonsoclaudio-es.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   3200300: begin // Alfredo Chaves/ES
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://alfredochaves-es.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://alfredochaves-es.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   3204708: begin // São Gabriel da Palha/ES
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://saogabrieldapalha-es.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://saogabrieldapalha-es.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   4109609: begin // Guaratuba/PR
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://guaratuba-pr.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://guaratuba-pr.treino-issintel.com.br/webservices/abrasf/api';
+            end;
            (*
   4300406: begin // Alegrete/RS
             if AAmbiente = 1
@@ -257,31 +258,32 @@ begin
              else ConfigCidade.NameSpaceEnvelope := 'https://alegrete-rs.treino-issintel.com.br/webservices/abrasf/api';
            end;
            *)
-  4313953: begin // Pantano Grande/RS
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://pantanogrande-rs.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://pantanogrande-rs.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  5106505: begin // Poconé/MT
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://pocone-mt.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://pocone-mt.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  5106778: begin // Porto Alegre do Norte/MT
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://portoalegredonorte-mt.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://portoalegredonorte-mt.treino-issintel.com.br/webservices/abrasf/api';
-           end;
-  5107107: begin // São José dos Quatro Marcos/MT
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://saojosedosquatromarcos-mt.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://saojosedosquatromarcos-mt.treino-issintel.com.br/webservices/abrasf/api';
-           end;
- end;
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := True;
+   4313953: begin // Pantano Grande/RS
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://pantanogrande-rs.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://pantanogrande-rs.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   5106505: begin // Poconé/MT
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://pocone-mt.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://pocone-mt.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   5106778: begin // Porto Alegre do Norte/MT
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://portoalegredonorte-mt.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://portoalegredonorte-mt.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+   5107107: begin // São José dos Quatro Marcos/MT
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://saojosedosquatromarcos-mt.issintel.com.br/webservices/abrasf/api'
+              else ConfigCidade.NameSpaceEnvelope := 'https://saojosedosquatromarcos-mt.treino-issintel.com.br/webservices/abrasf/api';
+            end;
+  end;
 
- Result := ConfigCidade;
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := True;
+
+  Result := ConfigCidade;
 end;
 
 function TProvedorISSIntel.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

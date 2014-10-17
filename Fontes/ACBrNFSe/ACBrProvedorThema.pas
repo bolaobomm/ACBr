@@ -97,22 +97,24 @@ end;
 function TProvedorThema.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := '';
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := '';
+  ConfigCidade.QuebradeLinha := ';';
 
- if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'http://server.nfse.thema.inf.br'
-  else ConfigCidade.NameSpaceEnvelope := 'http://server.nfse.thema.inf.br';
+  if AAmbiente = 1 then
+    ConfigCidade.NameSpaceEnvelope := 'http://server.nfse.thema.inf.br'
+  else
+    ConfigCidade.NameSpaceEnvelope := 'http://server.nfse.thema.inf.br';
 
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := True;
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := True;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorThema.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

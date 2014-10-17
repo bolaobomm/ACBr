@@ -91,22 +91,24 @@ end;
 function TProvedorCoplan.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id';
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
 
- if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'http://nfse.abrasf.org.br'
-  else ConfigCidade.NameSpaceEnvelope := 'http://nfse.abrasf.org.br';
+  if AAmbiente = 1 then
+    ConfigCidade.NameSpaceEnvelope := 'http://nfse.abrasf.org.br'
+  else
+    ConfigCidade.NameSpaceEnvelope := 'http://nfse.abrasf.org.br';
 
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := False;
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := False;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorCoplan.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

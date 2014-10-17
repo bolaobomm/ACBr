@@ -95,23 +95,26 @@ end;
 function TProvedorTecnos.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id';
- ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org/';
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
+
+  ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org/';
   {
  if AAmbiente = 1 then
    ConfigCidade.AssinaRPS  := false
  else
    ConfigCidade.AssinaRPS  := true;
-}   
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := True;
- Result := ConfigCidade;
+}
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := True;
+  
+  Result := ConfigCidade;
 end;
 
 function TProvedorTecnos.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

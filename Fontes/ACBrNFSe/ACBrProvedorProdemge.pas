@@ -91,22 +91,24 @@ end;
 function TProvedorProdemge.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id';
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
 
- if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'http://ws.bhiss.pbh.gov.br'
-  else ConfigCidade.NameSpaceEnvelope := 'http://ws.bhiss.pbh.gov.br';
+  if AAmbiente = 1 then
+    ConfigCidade.NameSpaceEnvelope := 'http://ws.bhiss.pbh.gov.br'
+  else
+    ConfigCidade.NameSpaceEnvelope := 'http://ws.bhiss.pbh.gov.br';
 
- ConfigCidade.AssinaRPS  := True;
- ConfigCidade.AssinaLote := True;
+  ConfigCidade.AssinaRPS  := True;
+  ConfigCidade.AssinaLote := True;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorProdemge.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

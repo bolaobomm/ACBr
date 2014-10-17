@@ -91,8 +91,8 @@ end;
 function TProvedorActcon.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
- NomeCidade: String;
+  ConfigCidade: TConfigCidade;
+  NomeCidade: String;
 begin
   case ACodCidade of
    3131307: NomeCidade := 'ipatinga';
@@ -104,6 +104,7 @@ begin
   ConfigCidade.Prefixo3      := '';
   ConfigCidade.Prefixo4      := '';
   ConfigCidade.Identificador := 'Id';
+  ConfigCidade.QuebradeLinha := ';';
 
   if AAmbiente = 1  then
     DescAmbiente:='nfseserv'

@@ -91,20 +91,21 @@ end;
 function TProvedorAraucaria.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
- ConfigCidade: TConfigCidade;
+  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'id'; // Dever ser trocado depois para id
+  ConfigCidade.VersaoSoap    := '1.1';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'id'; // Dever ser trocado depois para id
+  ConfigCidade.QuebradeLinha := ';';
 
- ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org';
+  ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org';
 
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := False;
+  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaLote := False;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorAraucaria.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

@@ -71,6 +71,8 @@ var
 begin
  fqrDANFSeQRRetrato := TfqrDANFSeQRRetrato.Create(Self);
 
+ fqrDANFSeQRRetrato.QuebradeLinha(TACBrNFSe(ACBrNFSe).Configuracoes.WebServices.QuebradeLinha);
+
  if NFSe = nil
   then begin
    for i:= 0 to TACBrNFSe(ACBrNFSe).NotasFiscais.Count-1 do
@@ -282,6 +284,8 @@ var
  fqrDANFSeQRRetrato : TfqrDANFSeQRRetrato;
 begin
  fqrDANFSeQRRetrato := TfqrDANFSeQRRetrato.Create(Self);
+
+ fqrDANFSeQRRetrato.QuebradeLinha(TACBrNFSe(ACBrNFSe).Configuracoes.WebServices.QuebradeLinha);
 
  if NFSe = nil
   then begin
