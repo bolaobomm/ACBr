@@ -48,6 +48,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/10/2014
+[*] : Correção na função setversaodf, estava buscando o indice mas não estava repassando ao componente para alterar!
+
 15/10/2014
 [+] : Adição da opção do Danfe para selecionar o local onde deve sair o canhoto, cabeçalho ou rodapé. (por: Juliomar Marchetti)
 

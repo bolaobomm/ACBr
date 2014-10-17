@@ -1289,7 +1289,7 @@ begin
             if OK then
              begin
                ACBrNFe1.Configuracoes.Geral.VersaoDF := VersaoDF;
-               cbVersaoWS.Items.IndexOf(Cmd.Params(0)) ;
+               cbVersaoWS.ItemIndex := cbVersaoWS.Items.IndexOf(Cmd.Params(0)) ;
                frmAcbrNfeMonitor.SalvarIni;
              end
             else
