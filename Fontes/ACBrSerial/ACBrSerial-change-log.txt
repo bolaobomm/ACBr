@@ -97,6 +97,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 18/10/2014   (por: DSA)
+-- ACBrECFEscECF --
+[*] Aplicado workaround para o modelo Epson, na detectção do estado "estRequerZ"
+
 Data: 17/10/2014   (por: DSA)
 -- ACBrECFVirtual --
 [-] Correção de bug na Criação de memória virtual, onde as aliquotas padrões

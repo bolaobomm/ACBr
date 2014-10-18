@@ -1532,6 +1532,13 @@ begin
 
            if FlagEst = 2 then
               fpEstado := estRequerZ
+           // Workaround para Epson que não responde Flag de Status de Movimento corretamente
+           else if (fpEstado = estBloqueada) and (FlagEst = 0) and IsEpson then
+           begin
+              RetornaInfoECF( '99|21' ) ;
+              if (EscECFResposta.Params.Count > 11) and (EscECFResposta.Params[11] = 'S') then
+                fpEstado := estRequerZ;
+           end;
         end;
       end ;
   finally
