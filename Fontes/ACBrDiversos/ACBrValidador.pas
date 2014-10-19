@@ -68,6 +68,8 @@ uses ACBrBase, ACBrUtil, {Units da ACBr}
 
 const
   cIgnorarChar = './-' ;
+  cUFsValidas = ',AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MS,MG,PA,PB,PR,PE,PI,'+
+                'RJ,RN,RS,RO,RR,SC,SP,SE,TO,EX,';
 
 type
   TACBrValTipoDocto = ( docCPF, docCNPJ, docUF, docInscEst, docNumCheque,
@@ -1183,8 +1185,7 @@ end;
 
 Procedure TACBrValidador.ValidarUF(UF: AnsiString) ;
 begin
- if pos( ','+UF+',', ',AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MS,MG,PA,PB,PR,PE,PI,'+
-                     'RJ,RN,RS,RO,RR,SC,SP,SE,TO,EX,') = 0 then
+ if pos( ','+UF+',', cUFsValidas) = 0 then
     fsMsgErro := 'UF inválido: '+UF ;
 end;
 
@@ -1466,18 +1467,18 @@ Begin
   IF UF = 'MG' Then Mascara := '***.***.***/****';
   IF UF = 'PA' Then Mascara := '**-******-*';
   IF UF = 'PB' Then Mascara := '********-*';
-  IF UF = 'PR' Then Mascara := '********-**';
+  IF UF = 'PR' Then Mascara := '***.*****-**';
   IF UF = 'PE' Then Mascara := IfThen((LenDoc>9),'**.*.***.*******-*','*******-**');
   IF UF = 'PI' Then Mascara := '*********';
   IF UF = 'RJ' Then Mascara := '**.***.**-*';
   IF UF = 'RN' Then Mascara := IfThen((LenDoc>9),'**.*.***.***-*','**.***.***-*');
   IF UF = 'RS' Then Mascara := '***/*******';
-  IF UF = 'RO' Then Mascara := '*************-*'; // Antiga = '***.*****-*';
+  IF UF = 'RO' Then Mascara := IfThen((LenDoc>13),'*************-*','***.*****-*');
   IF UF = 'RR' Then Mascara := '********-*';
   IF UF = 'SC' Then Mascara := '***.***.***';
-  IF UF = 'SP' Then Mascara := '***.***.***.***';
+  IF UF = 'SP' Then Mascara := ifthen((LenDoc>1) and (AString[1]='P'),'*-********.*/***', '***.***.***.***');
   IF UF = 'SE' Then Mascara := '**.***.***-*';
-  IF UF = 'TO' Then Mascara := IfThen((LenDoc=11),'***********','**.***.***-*');
+  IF UF = 'TO' Then Mascara := IfThen((LenDoc=11),'**.**.******-*','**.***.***-*');
 
   Result := '';
   LenMas := Length( Mascara ) ;

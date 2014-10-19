@@ -96,6 +96,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/10/2014
+-- ACBrValidador --  (por: DSA)
+[*] Ajustes para permitir UnitTeste
+[*] Ajustes na formatação de mascaras de algumas Inscrição Estadual
+
 01/08/2013
 -- ACBrValidador --
 [*] Acertos de acentuação nas mensagens de Erro.
