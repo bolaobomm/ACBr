@@ -98,7 +98,7 @@ begin
   ConfigCidade.Prefixo3      := '';
   ConfigCidade.Prefixo4      := '';
   ConfigCidade.Identificador := 'Id';
-  ConfigCidade.QuebradeLinha := ';';
+  ConfigCidade.QuebradeLinha := '\s\n'; // Conforme manual versão 2.00 da ABRASF
 
   if AAmbiente = 1 then
     ConfigCidade.NameSpaceEnvelope := 'http://ws.issweb.fiorilli.com.br/'

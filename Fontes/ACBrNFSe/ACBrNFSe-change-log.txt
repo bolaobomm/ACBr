@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/10/204
+[*] Alterado o parâmetro: QuebradeLinha de ";" para "\s\n" - provedor Fiorilli.
+    Conforme Manual versão 2.00 da ABRASF.
+    por: Italo Jurisato Junior
+	
 17/10/204
 [+] Adicionando a propriedade QuebradeLinha na configuração de cada provedor.
     O valor padrão é ";" ponto e virgula
