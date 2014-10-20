@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 20/10/2014
+[*] Alterado para imprimir o protocolo de autorização de um MDF-e emitido 
+    inicialmente em Contingência.
+    Por: Italo Jurisato Junior
+
 Data 01/04/2013
 [*] Alterado para instalar em Lazarus, também adicionado o pacote ACBr_MDFe.lpk, criação 
     do arquivo para a imagem do componente no lazarus. 

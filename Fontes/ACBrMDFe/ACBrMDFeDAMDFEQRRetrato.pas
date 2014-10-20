@@ -311,7 +311,8 @@ begin
 
   qrlChave.Caption := MDFeUtil.FormatarChaveAcesso(Copy(FMDFe.InfMDFe.Id, 5, 44));
 
-  if FMDFe.ide.tpEmis = teNormal
+  if (FMDFe.ide.tpEmis = teNormal) or (FProtocoloMDFE <> '') or
+     (FMDFe.procMDFe.nProt <> '')
    then begin
     qrlProtocolo.Font.Size  := 8;
     qrlProtocolo.Font.Style := [fsBold];
