@@ -1092,83 +1092,274 @@ function TNotasFiscais.LoadFromStream(Stream: TStringStream): boolean;
 var
  LocNFSeR : TNFSeR;
  ArquivoXML: TStringList;
- StreamText: TStringStream;
+ XML : AnsiString;
+ Tipo: Integer;
+{$IFDEF DELPHI2009_UP}
+ Encoding : TEncoding;
+{$ENDIF}
+ CodigoMunicipio, Prestador, RazaoSocial,
  CNPJ, IM, NumeroRPS, SerieRPS, TipoRPS: String;
  ok: Boolean;
 begin
- try
-  Result     := True;
-  LocNFSeR   := TNFSeR.Create(Self.Add.NFSe);
-  ArquivoXML := TStringList.Create;
   try
+   Result     := True;
+   LocNFSeR   := TNFSeR.Create(Self.Add.NFSe);
+   ArquivoXML := TStringList.Create;
+
    LocNFSeR.Leitor.CarregarArquivo(Stream);
    ArquivoXML.Text := LocNFSeR.Leitor.Arquivo;
    ArquivoXML.Text := StringReplace(StringReplace( ArquivoXML.Text, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
    ArquivoXML.Text := NotaUtil.RetirarPrefixos(ArquivoXML.Text);
-   
-   NumeroRPS := Copy(ArquivoXML.Text,
-                Pos('<Numero>', ArquivoXML.Text) + 8,
-                Pos('</Numero>',ArquivoXML.Text) - (Pos('<Numero>', ArquivoXML.Text) + 8));
 
-   SerieRPS := Copy(ArquivoXML.Text,
-               Pos('<Serie>', ArquivoXML.Text) + 7,
-               Pos('</Serie>',ArquivoXML.Text) - (Pos('<Serie>', ArquivoXML.Text) + 7));
+  if pos('</CompNfse>', ArquivoXML.Text) > 0
+   then Tipo := 1
+   else if pos('</ComplNfse>', ArquivoXML.Text) > 0
+         then Tipo := 2
+         else if pos('</Nfse>', ArquivoXML.Text) > 0
+               then Tipo := 3
+               else if pos('</ListaRps>', ArquivoXML.Text) > 0
+                    then Tipo := 4
+                    else if pos('</Rps>', ArquivoXML.Text) > 0
+                         then Tipo := 5
+                         else if pos('</listaRps>', ArquivoXML.Text) > 0
+                              then Tipo := 6
+                              else Tipo := 0;
 
-   TipoRPS := Copy(ArquivoXML.Text,
-              Pos('<Tipo>', ArquivoXML.Text) + 6,
-              Pos('</Tipo>',ArquivoXML.Text) - (Pos('<Tipo>', ArquivoXML.Text) + 6));
+  case Tipo of
+   1: begin
+       while pos('</CompNfse>', ArquivoXML.Text) > 0 do
+        begin
+         XML             := copy(ArquivoXML.Text, 1, pos('</CompNfse>', ArquivoXML.Text) + 10);
+         ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</CompNfse>', ArquivoXML.Text) + 11, length(ArquivoXML.Text)));
+         try
+          LocNFSeR.Leitor.Arquivo := XML;
+          LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
+          LocNFSeR.TabServicosExt := self.Configuracoes.Arquivos.TabServicosExt;
+          LocNFSeR.LerXml;
+          Items[Self.Count-1].XML_NFSe := LocNFSeR.Leitor.Arquivo;
+         finally
+          LocNFSeR.Free;
+         end;
+        end;
+      end;
+   2: begin
+       while pos('</ComplNfse>', ArquivoXML.Text) > 0 do
+        begin
+         XML             := copy(ArquivoXML.Text, 1, pos('</ComplNfse>', ArquivoXML.Text) + 11);
+         ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</ComplNfse>', ArquivoXML.Text) + 12, length(ArquivoXML.Text)));
+         try
+          LocNFSeR.Leitor.Arquivo := XML;
+          LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
+          LocNFSeR.TabServicosExt := self.Configuracoes.Arquivos.TabServicosExt;
+          LocNFSeR.LerXml;
+          Items[Self.Count-1].XML_NFSe := LocNFSeR.Leitor.Arquivo;
+         finally
+          LocNFSeR.Free;
+         end;
+        end;
+      end;
+   3: begin
+      ArquivoXML.Text := '<CompNfse xmlns="http://www.abrasf.org.br/ABRASF/arquivos/">' +
+                           ArquivoXML.Text +
+                         '</CompNfse>';
+      while pos('</CompNfse>', ArquivoXML.Text) > 0 do
+       begin
+        XML             := copy(ArquivoXML.Text, 1, pos('</CompNfse>', ArquivoXML.Text) + 10);
+        ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</CompNfse>', ArquivoXML.Text) + 11, length(ArquivoXML.Text)));
+        try
+         LocNFSeR.Leitor.Arquivo := XML;
+         LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
+         LocNFSeR.TabServicosExt := self.Configuracoes.Arquivos.TabServicosExt;
+         LocNFSeR.LerXml;
+         Items[Self.Count-1].XML_NFSe := LocNFSeR.Leitor.Arquivo;
+        finally
+         LocNFSeR.Free;
+        end;
+       end;
+      end;
+   4: begin
+       if Trim(RazaoSocial) = '' then
+          Prestador := Copy(ArquivoXML.Text,
+                      Pos('<Prestador>', ArquivoXML.Text) + 11,
+                      Pos('</Prestador>',ArquivoXML.Text) - (Pos('<Prestador>', ArquivoXML.Text) + 11));
 
-   CNPJ := Copy(ArquivoXML.Text,
-           Pos('<CpfCnpj><Cnpj>', ArquivoXML.Text) + 15,
-           Pos('</Cnpj></CpfCnpj>',ArquivoXML.Text) - (Pos('<CpfCnpj><Cnpj>', ArquivoXML.Text) + 15));
+          RazaoSocial := Copy(Prestador,
+                      Pos('<RazaoSocial>', Prestador) + 13,
+                      Pos('</RazaoSocial>',Prestador) - (Pos('<RazaoSocial>', Prestador) + 13));
 
-   if Trim(CNPJ) = '' then
-      CNPJ:= Copy(ArquivoXML.Text,
-                  Pos('<CpfCnpj><Cpf>', ArquivoXML.Text) + 14,
-                  Pos('</Cpf></CpfCnpj>',ArquivoXML.Text) - (Pos('<CpfCnpj><Cpf>', ArquivoXML.Text) + 14));
+       if pos('</InfDeclaracaoPrestacaoServico>',ArquivoXML.Text) > 0
+        then begin
+         while pos('</InfDeclaracaoPrestacaoServico>',ArquivoXML.Text) > 0 do
+          begin
+           XML             := copy(ArquivoXML.Text, 1, pos('</InfDeclaracaoPrestacaoServico>', ArquivoXML.Text) + 37);
+           ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</InfDeclaracaoPrestacaoServico>', ArquivoXML.Text) + 38, length(ArquivoXML.Text)));
+           try
+            LocNFSeR.Leitor.Arquivo := XML;
+            LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
+            LocNFSeR.TabServicosExt := self.Configuracoes.Arquivos.TabServicosExt;
+            LocNFSeR.LerXml;
+            LocNFSeR.NFSe.PrestadorServico.RazaoSocial := RazaoSocial;
+            Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
+           finally
+            LocNFSeR.Free;
+           end;
+          end;
+        end
+        else begin
+         while pos('</Rps>',ArquivoXML.Text) > 0 do
+          begin
+           XML             := copy(ArquivoXML.Text, 1, pos('</Rps>', ArquivoXML.Text) + 5);
+           ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</Rps>', ArquivoXML.Text) + 6, length(ArquivoXML.Text)));
+           try
+            LocNFSeR.Leitor.Arquivo := XML;
+            LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
+            LocNFSeR.TabServicosExt := self.Configuracoes.Arquivos.TabServicosExt;
+            LocNFSeR.LerXml;
+            Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
+           finally
+            LocNFSeR.Free;
+           end;
+          end;
+        end;
+      end;
+   5: begin
+       NumeroRPS := Copy(ArquivoXML.Text,
+                    Pos('<Numero>', ArquivoXML.Text) + 8,
+                    Pos('</Numero>',ArquivoXML.Text) - (Pos('<Numero>', ArquivoXML.Text) + 8));
 
-   IM := Copy(ArquivoXML.Text,
-              Pos('<InscricaoMunicipal>', ArquivoXML.Text) + 20,
-              Pos('</InscricaoMunicipal>',ArquivoXML.Text) - (Pos('<InscricaoMunicipal>', ArquivoXML.Text) + 20));
+       SerieRPS := Copy(ArquivoXML.Text,
+                    Pos('<Serie>', ArquivoXML.Text) + 7,
+                    Pos('</Serie>',ArquivoXML.Text) - (Pos('<Serie>', ArquivoXML.Text) + 7));
 
+       TipoRPS := Copy(ArquivoXML.Text,
+                    Pos('<Tipo>', ArquivoXML.Text) + 6,
+                    Pos('</Tipo>',ArquivoXML.Text) - (Pos('<Tipo>', ArquivoXML.Text) + 6));
 
-   LocNFSeR.NFSe.IdentificacaoRps.Numero := NumeroRPS;
-   LocNFSeR.NFSe.IdentificacaoRps.Serie := SerieRPS;
-   LocNFSeR.NFSe.IdentificacaoRps.Tipo := StrToTipoRPS(ok, TipoRPS);
-   LocNFSeR.NFSe.Prestador.Cnpj:= CNPJ;
-   LocNFSeR.NFSe.Prestador.InscricaoMunicipal:= IM;
+       CNPJ := Copy(ArquivoXML.Text,
+                    Pos('<Prestador><CpfCnpj><Cnpj>', ArquivoXML.Text) + 26,
+                    Pos('</Cnpj></CpfCnpj>',ArquivoXML.Text) - (Pos('<Prestador><CpfCnpj><Cnpj>', ArquivoXML.Text) + 26));
 
-   LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(ArquivoXML.Text);
-   LocNFSeR.Leitor.Arquivo := ArquivoXML.Text;
-   LocNFSeR.TabServicosExt := self.Configuracoes.Arquivos.TabServicosExt;
-   LocNFSeR.LerXml;
+       if ((Length(CNPJ) <> 11) and (Length(CNPJ) <> 14)) then
+          CNPJ:= Copy(ArquivoXML.Text,
+                      Pos('<Prestador><CpfCnpj><Cpf>', ArquivoXML.Text) + 25,
+                      Pos('</Cpf></CpfCnpj>',ArquivoXML.Text) - (Pos('<Prestador><CpfCnpj><Cpf>', ArquivoXML.Text) + 25));
 
-   Items[Self.Count-1].XML_NFSe := LocNFSeR.Leitor.Arquivo;
-   Items[Self.Count-1].NomeArq  := '';
+       if ((Length(CNPJ) <> 11) and (Length(CNPJ) <> 14)) then
+          CNPJ := Copy(ArquivoXML.Text,
+                      Pos('<Prestador><Cnpj>', ArquivoXML.Text) + 17,
+                      Pos('</Cnpj>',ArquivoXML.Text) - (Pos('<Prestador><Cnpj>', ArquivoXML.Text) + 17));
 
-   (*
-   StreamText := TStringStream.Create(ArquivoXML.Text);
-   try
-    LocNFSeR.VersaoXML := NotaUtil.VersaoXML(ArquivoXML.Text);
-    LocNFSeR.Leitor.CarregarArquivo(StreamText);
-    LocNFSeR.TabServicosExt := self.Configuracoes.Arquivos.TabServicosExt;
-    LocNFSeR.LerXml;
-    Items[Self.Count-1].XML_NFSe := Stream.DataString; // LocNFSeR.Leitor.Arquivo;
-    Items[Self.Count-1].NomeArq  := '';
+       if ((Length(CNPJ) <> 11) and (Length(CNPJ) <> 14)) then
+          CNPJ:= Copy(ArquivoXML.Text,
+                      Pos('<Prestador><Cpf>', ArquivoXML.Text) + 16,
+                      Pos('</Cpf>',ArquivoXML.Text) - (Pos('<Prestador><Cpf>', ArquivoXML.Text) + 16));
 
-//    Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
-//    GerarRPS;
-   finally
-    StreamText.Free;
-   end;
-   *)
-  finally
-   LocNFSeR.Free;
-   ArquivoXML.Free;
+       IM := Copy(ArquivoXML.Text,
+                  Pos('<InscricaoMunicipal>', ArquivoXML.Text) + 20,
+                  Pos('</InscricaoMunicipal>',ArquivoXML.Text) - (Pos('<InscricaoMunicipal>', ArquivoXML.Text) + 20));
+
+       CodigoMunicipio := Copy(ArquivoXML.Text,
+                   Pos('<CodigoMunicipio>', ArquivoXML.Text) + 17,
+                   Pos('</CodigoMunicipio>',ArquivoXML.Text) - (Pos('<CodigoMunicipio>', ArquivoXML.Text) + 17));
+
+       if pos('</InfDeclaracaoPrestacaoServico>',ArquivoXML.Text) > 0
+        then begin
+         while pos('</InfDeclaracaoPrestacaoServico>',ArquivoXML.Text) > 0 do
+          begin
+           XML             := copy(ArquivoXML.Text, 1, pos('</InfDeclaracaoPrestacaoServico>', ArquivoXML.Text) + 37);
+           ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</InfDeclaracaoPrestacaoServico>', ArquivoXML.Text) + 38, length(ArquivoXML.Text)));
+
+           LocNFSeR.NFSe.Numero := NumeroRPS;
+           LocNFSeR.NFSe.IdentificacaoRps.Numero := NumeroRPS;
+           LocNFSeR.NFSe.IdentificacaoRps.Serie := SerieRPS;
+           LocNFSeR.NFSe.IdentificacaoRps.Tipo := StrToTipoRPS(ok, TipoRPS);
+           LocNFSeR.NFSe.Prestador.Cnpj:= CNPJ;
+           LocNFSeR.NFSe.Prestador.InscricaoMunicipal:= IM;
+           LocNFSeR.NFSe.PrestadorServico.Endereco.CodigoMunicipio:= CodigoMunicipio;
+           try
+            LocNFSeR.Leitor.Arquivo := XML;
+            LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
+            LocNFSeR.TabServicosExt := self.Configuracoes.Arquivos.TabServicosExt;
+            LocNFSeR.LerXml;
+            Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
+           finally
+            LocNFSeR.Free;
+           end;
+          end;
+        end
+        else begin
+         while pos('</Rps>', ArquivoXML.Text) > 0 do
+          begin
+           XML             := copy(ArquivoXML.Text, 1, pos('</Rps>', ArquivoXML.Text) + 5);
+           ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</Rps>',ArquivoXML.Text) + 6, length(ArquivoXML.Text)));
+
+           LocNFSeR.NFSe.IdentificacaoRps.Numero := NumeroRPS;
+           LocNFSeR.NFSe.IdentificacaoRps.Serie := SerieRPS;
+           LocNFSeR.NFSe.IdentificacaoRps.Tipo := StrToTipoRPS(ok, TipoRPS);
+           LocNFSeR.NFSe.Prestador.Cnpj:= CNPJ;
+           LocNFSeR.NFSe.Prestador.InscricaoMunicipal:= IM;
+           try
+            LocNFSeR.Leitor.Arquivo := XML;
+            LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
+            LocNFSeR.TabServicosExt := self.Configuracoes.Arquivos.TabServicosExt;
+            LocNFSeR.LerXml;
+            Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
+           finally
+            LocNFSeR.Free;
+           end;
+          end;
+        end;
+      end;
+   6: begin //Equiplano
+        CNPJ:= Copy(ArquivoXML.Text,
+                    Pos('<nrCnpj>', ArquivoXML.Text) + 8,
+                    Pos('</nrCnpj>',ArquivoXML.Text) - (Pos('<nrCnpj>', ArquivoXML.Text) + 8));
+        IM:= Copy(ArquivoXML.Text,
+                  Pos('<nrInscricaoMunicipal>', ArquivoXML.Text) + 22,
+                  Pos('</nrInscricaoMunicipal>',ArquivoXML.Text) - (Pos('<nrInscricaoMunicipal>', ArquivoXML.Text) + 22));
+
+        while pos('</rps>',ArquivoXML.Text) > 0 do
+          begin
+            XML            := Copy(ArquivoXML.Text, Pos('<rps>', ArquivoXML.Text), Pos('</rps>', ArquivoXML.Text) + 5);
+            ArquivoXML.Text:= Trim(Copy(ArquivoXML.Text, Pos('</rps>', ArquivoXML.Text) + 6, Length(ArquivoXML.Text)));
+            //LocNFSeR.Provedor:= proEquiplano;
+            LocNFSeR.NFSe.Prestador.Cnpj:= CNPJ;
+            LocNFSeR.NFSe.Prestador.InscricaoMunicipal:= IM;
+            try
+              LocNFSeR.Leitor.Arquivo := XML;
+              LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
+              LocNFSeR.TabServicosExt := self.Configuracoes.Arquivos.TabServicosExt;
+              LocNFSeR.LerXml;
+              Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
+            finally
+              LocNFSeR.Free;
+            end;
+          end;
+      end;
   end;
+
+  if pos('</Notas>', ArquivoXML.Text)> 0 then begin
+    while pos('</Notas>', ArquivoXML.Text) > 0 do begin
+      XML             := copy(ArquivoXML.Text, 1, pos('</Notas>', ArquivoXML.Text) + 5);
+      ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</Notas>',ArquivoXML.Text) + 6, length(ArquivoXML.Text)));
+      try
+       LocNFSeR.Leitor.Arquivo := XML;
+       LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
+       LocNFSeR.TabServicosExt := self.Configuracoes.Arquivos.TabServicosExt;
+       LocNFSeR.LerXml;
+       Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
+      finally
+       LocNFSeR.Free;
+      end;
+    end;
+  end;
+
+  ArquivoXML.Free;
  except
+  raise;
   Result := False;
  end;
+
 end;
 
 function TNotasFiscais.LoadFromString(AString: string): boolean;

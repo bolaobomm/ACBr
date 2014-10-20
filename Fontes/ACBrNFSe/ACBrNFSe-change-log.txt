@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/10/204
+[*] Alterado a rotida LoadFormStream visando executar as mesmas tratativas do
+    LoadFromFile - Unit ACBrNFSeNotasFiscais.
+    por: Thiago Filiano
 [*] Alterado o parâmetro: QuebradeLinha de ";" para "\s\n" - provedor Fiorilli.
     Conforme Manual versão 2.00 da ABRASF.
     por: Italo Jurisato Junior
