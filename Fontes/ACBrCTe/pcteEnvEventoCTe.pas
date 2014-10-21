@@ -316,6 +316,7 @@ begin
         infEvento.detEvento.modal      := RetEventoCTe.InfEvento.DetEvento.modal;
         infEvento.detEvento.UFIni      := RetEventoCTe.InfEvento.DetEvento.UFIni;
         infEvento.detEvento.UFFim      := RetEventoCTe.InfEvento.DetEvento.UFFim;
+        infEvento.detEvento.xCondUso   := RetEventoCTe.InfEvento.DetEvento.xCondUso;
 
         for i := 0 to RetEventoCTe.InfEvento.detEvento.infCorrecao.Count -1 do
          begin

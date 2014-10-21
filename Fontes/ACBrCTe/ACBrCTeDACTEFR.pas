@@ -58,18 +58,25 @@ type
     FdmDacte: TdmACBrCTeFR;
     FFastFile: String;
     FEspessuraBorda: Integer;
+    FFastFileEvento: string;
     function GetPreparedReport: TfrxReport;
+    function GetPreparedReportEvento: TfrxReport;
     function PrepareReport(CTE: TCTe = nil): Boolean;
+    function PrepareReportEvento: Boolean;
    public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure ImprimirDACTE(CTE: TCTe = nil); override;
     procedure ImprimirDACTEPDF(CTE: TCTe = nil); override;
+    procedure ImprimirEVENTO(CTE: TCTe = nil); override;
+    procedure ImprimirEVENTOPDF(CTE: TCTe = nil); override;
   published
     property FastFile: String read FFastFile write FFastFile;
+    property FastFileEvento:       string read FFastFileEvento write FFastFileEvento;
     property dmDacte: TdmACBrCTeFR read FdmDacte write FdmDacte;
     property EspessuraBorda: Integer read FEspessuraBorda write FEspessuraBorda;
     property PreparedReport: TfrxReport read GetPreparedReport;
+    property PreparedReportEvento: TfrxReport read GetPreparedReportEvento;
   end;
 
 implementation
@@ -97,6 +104,19 @@ begin
   else
   begin
     if PrepareReport(nil) then
+      Result := dmDacte.frxReport
+    else
+      Result := nil;
+  end;
+end;
+
+function TACBrCTeDACTEFR.GetPreparedReportEvento: TfrxReport;
+begin
+  if Trim(FFastFileEvento) = '' then
+    Result := nil
+  else
+  begin
+    if PrepareReportEvento then
       Result := dmDacte.frxReport
     else
       Result := nil;
@@ -147,6 +167,41 @@ begin
   end;
 end;
 
+procedure TACBrCTeDACTEFR.ImprimirEVENTO(CTE: TCTe);
+begin
+  if PrepareReportEvento then
+  begin
+    if MostrarPreview then
+      dmDacte.frxReport.ShowPreparedReport
+    else
+      dmDacte.frxReport.Print;
+  end;
+end;
+
+procedure TACBrCTeDACTEFR.ImprimirEVENTOPDF(CTE: TCTe);
+const
+  TITULO_PDF = 'Conhecimento de Transporte Eletrônico - Evento';
+var
+  I: Integer;
+begin
+  if PrepareReportEvento then
+  begin
+    dmDacte.frxPDFExport.Author     := Sistema;
+    dmDacte.frxPDFExport.Creator    := Sistema;
+    dmDacte.frxPDFExport.Producer   := Sistema;
+    dmDacte.frxPDFExport.Title      := TITULO_PDF;
+    dmDacte.frxPDFExport.Subject    := TITULO_PDF;
+    dmDacte.frxPDFExport.Keywords   := TITULO_PDF;
+    dmDacte.frxPDFExport.ShowDialog := False;
+
+    for I := 0 to TACBrCTe(ACBrCTe).Conhecimentos.Count - 1 do
+    begin
+      dmDacte.frxPDFExport.FileName := IncludeTrailingPathDelimiter(PathPDF) + dmDacte.CTe.procCTe.chCTe + '-evento.pdf';
+      dmDacte.frxReport.Export(dmDacte.frxPDFExport);
+    end;
+  end;
+end;
+
 function TACBrCTeDACTEFR.PrepareReport(CTE: TCTe): Boolean;
 var
   i: Integer;
@@ -187,6 +242,43 @@ begin
     else
       raise EACBrCTeDACTEFR.Create('Propriedade ACBrCTe não assinalada.');
   end;
+end;
+
+function TACBrCTeDACTEFR.PrepareReportEvento: Boolean;
+begin
+  if Trim(FastFileEvento) <> '' then
+  begin
+    if FileExists(FastFileEvento) then
+      dmDacte.frxReport.LoadFromFile(FastFileEvento)
+    else
+      raise EACBrCTeDACTEFR.CreateFmt('Caminho do arquivo de impressão do EVENTO "%s" inválido.', [FastFileEvento]);
+  end
+  else
+    raise EACBrCTeDACTEFR.Create('Caminho do arquivo de impressão do EVENTO não assinalado.');
+
+  dmDacte.frxReport.PrintOptions.Copies := NumCopias;
+
+  // preparar relatorio
+  if Assigned(ACBrCTe) then
+  begin
+    if assigned(TACBrCTe(ACBrCTe).EventoCTe) then
+    begin
+      dmDacte.Evento := TACBrCTe(ACBrCTe).EventoCTe;
+      dmDacte.CarregaDadosEventos;
+    end
+    else
+      raise EACBrCTeDACTEFR.Create('Evento não foi assinalado.');
+
+    if TACBrCTe(ACBrCTe).Conhecimentos.Count > 0 then
+    begin
+      dmDacte.CTe                              := TACBrCTe(ACBrCTe).Conhecimentos.Items[0].CTe;
+      dmDacte.CarregaDados;
+    end;
+
+    Result := dmDacte.frxReport.PrepareReport;
+  end
+  else
+    raise EACBrCTeDACTEFR.Create('Propriedade ACBrNFe não assinalada.');
 end;
 
 end.

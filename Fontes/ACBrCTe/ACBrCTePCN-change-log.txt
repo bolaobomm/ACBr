@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/10/2014
+[+] Adição da impressão de eventos para CT-e em Fast Report
+http://www.projetoacbr.com.br/forum/index.php?/topic/17024-impressao-do-evento-cte/#entry114948
+por : Thiago Filiano
+
 06/06/2013
 [*] Alterado a unit ACBrCTeWebServices.pas para que na consulta com openssl não retorne vazio os dados
 	(por Juliomar Marchetti

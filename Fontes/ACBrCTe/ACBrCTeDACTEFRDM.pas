@@ -48,7 +48,7 @@ interface
 
 uses
   SysUtils, Classes, ACBrCTeDACTEClass, pcteCTe, frxClass, frxExportPDF, DB,
-  DBClient, frxDBSet, pcnConversao, frxBarcode, MaskUtils, pcnCadEmiDFe;
+  DBClient, frxDBSet, pcnConversao, frxBarcode, MaskUtils, pcnCadEmiDFe, pcteEnvEventoCTe;
 
 type
   TdmACBrCTeFR = class(TDataModule)
@@ -95,11 +95,14 @@ type
     cdsDocAnterior: TClientDataSet;
     cdsAnuladoComple: TClientDataSet;
     frxcdsAnuladoComple: TfrxDBDataset;
+    cdsEventos: TClientDataSet;
+    frxEventos: TfrxDBDataset;
     constructor Create(AOwner: TComponent); override;
   private
     { Private declarations }
     FDACTEClassOwner: TACBrCTeDACTEClass;
     FCTe: TCTe;
+    FEvento: TEventoCTe;
     procedure CarregaIdentificacao;
     procedure CarregaTomador;
     procedure CarregaEmitente;
@@ -120,8 +123,10 @@ type
   public
     { Public declarations }
     property CTe: TCTe read FCTe write FCTe;
+    property Evento          : TEventoCTe read FEvento write FEvento;
     property DACTEClassOwner: TACBrCTeDACTEClass read FDACTEClassOwner;
     procedure CarregaDados;
+    procedure CarregaDadosEventos;
   end;
 
 var
@@ -454,6 +459,96 @@ begin
   CarregaDocumentoAnterior;
   CarregaCTeAnuladoComplementado;
 
+end;
+
+procedure TdmACBrCTeFR.CarregaDadosEventos;
+var
+  i: integer;
+  J: integer;
+begin
+  with cdsEventos, FieldDefs do
+  begin
+    Close;
+
+    Clear;
+    Add('DescricaoTipoEvento', ftString, 150);
+    Add('Modelo', ftString, 2);
+    Add('Serie', ftString, 3);
+    Add('Numero', ftString, 9);
+    Add('MesAno', ftString, 5);
+    Add('Barras', ftString, 44);
+    Add('ChaveAcesso', ftString, 60);
+    Add('cOrgao', ftInteger);
+    Add('tpAmb', ftString, 100);
+    Add('dhEvento', ftDateTime);
+    Add('TipoEvento', ftString, 6);
+    Add('DescEvento', ftString, 100);
+    Add('nSeqEvento', ftInteger);
+    Add('versaoEvento', ftString, 10);
+    Add('cStat', ftInteger);
+    Add('xMotivo', ftString, 100);
+    Add('nProt', ftString, 20);
+    Add('dhRegEvento', ftDateTime);
+    Add('xJust', ftBlob);
+    Add('xCondUso', ftBlob);
+    Add('grupoAlterado', ftBlob);
+    Add('campoAlterado', ftBlob);
+    Add('valorAlterado', ftBlob);
+    Add('nroItemAlterado', ftInteger);
+
+    CreateDataSet;
+
+    for i := 0 to FEvento.Evento.Count - 1 do
+    begin
+      with Evento.Evento[i] do
+      begin
+        for J := 0 to InfEvento.detEvento.infCorrecao.Count -1 do
+        begin
+          Append;
+          FieldByName('DescricaoTipoEvento').AsString := InfEvento.DescricaoTipoEvento(InfEvento.tpEvento);
+          FieldByName('Modelo').AsString      := Copy(InfEvento.chCTe, 21, 2);
+          FieldByName('Serie').AsString       := Copy(InfEvento.chCTe, 23, 3);
+          FieldByName('Numero').AsString      := Copy(InfEvento.chCTe, 26, 9);
+          FieldByName('MesAno').AsString      := Copy(InfEvento.chCTe, 05, 2) + '/' + Copy(InfEvento.chCTe, 03, 2);
+          FieldByName('Barras').AsString      := InfEvento.chCTe;
+          FieldByName('ChaveAcesso').AsString := CTEUtil.FormatarChaveAcesso(InfEvento.chCTe);
+          FieldByName('cOrgao').AsInteger     := InfEvento.cOrgao;
+          FieldByName('nSeqEvento').AsInteger := InfEvento.nSeqEvento;
+
+          case InfEvento.tpAmb of
+            taProducao:
+              FieldByName('tpAmb').AsString := 'PRODUÇÃO';
+            taHomologacao:
+              begin
+                FieldByName('tpAmb').AsString      := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';
+                frxReport.Variables['HOMOLOGACAO'] := True;
+              end;
+          end;
+
+          FieldByName('dhEvento').AsDateTime    := InfEvento.dhEvento;
+          FieldByName('TipoEvento').AsString    := InfEvento.TipoEvento;
+          FieldByName('DescEvento').AsString    := InfEvento.DescEvento;
+          FieldByName('versaoEvento').AsString  := InfEvento.versaoEvento;
+          FieldByName('cStat').AsInteger        := RetInfEvento.cStat;
+          FieldByName('xMotivo').AsString       := RetInfEvento.xMotivo;
+          FieldByName('nProt').AsString         := RetInfEvento.nProt;
+          FieldByName('dhRegEvento').AsDateTime := RetInfEvento.dhRegEvento;
+          FieldByName('xJust').AsString         := InfEvento.detEvento.xJust;
+          FieldByName('xCondUso').AsString      := InfEvento.detEvento.xCondUso;
+
+          with InfEvento.detEvento.infCorrecao.Items[J] do
+          begin
+            FieldByName('grupoAlterado').AsString := grupoAlterado;
+            FieldByName('campoAlterado').AsString := campoAlterado;
+            FieldByName('valorAlterado').AsString := valorAlterado;
+            FieldByName('nroItemAlterado').AsInteger := nroItemAlterado;
+          end;
+
+          Post;
+        end;
+      end;
+    end;
+  end;
 end;
 
 procedure TdmACBrCTeFR.CarregaDadosNotasFiscais;
@@ -958,6 +1053,9 @@ begin
     FieldDefs.Add('OBS', ftString, 2000);
     FieldDefs.Add('infAdFisco', ftString, 2000);
     FieldDefs.Add('ObsCont', ftString, 1800);
+    FieldDefs.Add('Fluxo_xOrig', ftString, 15);
+    FieldDefs.Add('Fluxo_xDest', ftString, 15);
+    FieldDefs.Add('Fluxo_xRota', ftString, 15);
 
     CreateDataSet;
     Append;
@@ -1036,6 +1134,11 @@ begin
       finally
         vTemp.Free;
       end;
+
+      FieldByName('Fluxo_xOrig').AsString := fluxo.xOrig;
+      FieldByName('Fluxo_xDest').AsString := fluxo.xDest;
+      FieldByName('Fluxo_xRota').AsString := fluxo.xRota;
+
     end;
     FieldByName('OBS').AsString := BufferObs;
 
