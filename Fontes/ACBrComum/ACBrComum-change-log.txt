@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 20/10/2014
+-- ACBrSpedFiscal
+[-] Corrigido problema com validação de variant para number, alterado ACBrTXTClass.pas na função VLFill
+    para utilizar nativa do delphi/lazarus VarIsNumeric.
+	http://www.projetoacbr.com.br/forum/index.php?/topic/17921-aliq-icms-com-decimal/
+	por: Juliomar Marchetti
+	
 Data: 08/10/2014
 -- ACBrDFeUtil 
 [-] Corrigito o calculo do DV na Função Modulo 11.

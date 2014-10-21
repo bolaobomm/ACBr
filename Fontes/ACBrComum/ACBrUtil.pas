@@ -2772,14 +2772,14 @@ end;
 
 function IsNumber(const Value: Variant): Boolean;
 var
-valResult: Extended;
-valCode: Integer;
+  valResult: Extended;
+  valCode: Integer;
 begin
   Val(Value, valResult, valCode);
   if valCode = 0 then
-     Result := True
+    Result := True
   else
-     Result := False;
+    Result := False;
 end ;
 
 //*****************************************************************************************

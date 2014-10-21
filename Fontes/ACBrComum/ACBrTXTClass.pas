@@ -376,7 +376,7 @@ begin
      Exit;
   end;
   // Checa se é um valor numérico
-  if not IsNumber(Value) then
+  if not VarIsNumeric(Value) then
      raise Exception.Create( Format('[%a] Não é um valor numérico!', [Value]) );
 
   intP := 1;

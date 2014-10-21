@@ -258,7 +258,7 @@ begin
         TIPO_ITEM := tiMercadoriaRevenda;
         COD_NCM := '30049026';
         COD_GEN := '30';
-        ALIQ_ICMS := 17.00;
+        ALIQ_ICMS := 2.42;
 
         //REGISTRO 0206: CÓDIGO DE PRODUTO CONFORME TABELA PUBLICADA PELA ANP (COMBUSTÍVEIS)
 //        With Registro0206New do
