@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/20/2014
+-- ACBrNCMs
+[*] Aplicado correção na váriavel que não era inicializada e formatado o código conforme solicitado
+	por: Juliomar Marchetti
+	
 13/10/2014
 -- ACBrSocket --   (por: DSA)
 [+] Adicionada propriedade URL, que permite ler a URL final utilizada na consulta
