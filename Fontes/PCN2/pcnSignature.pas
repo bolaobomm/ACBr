@@ -54,6 +54,8 @@ uses
 
 type
 
+  { TSignature }
+
   TSignature = class(TPersistent)
   private
     FGerador: TGerador;
@@ -65,6 +67,7 @@ type
     constructor Create;
     destructor Destroy; override;
     function GerarXML: Boolean;
+    procedure Clear;
   published
     property Gerador: TGerador       read FGerador         write FGerador;
     property URI: String             read FURI             write FURI;
@@ -86,6 +89,14 @@ destructor TSignature.Destroy;
 begin
   FGerador.Free;
   inherited;
+end;
+
+procedure TSignature.Clear;
+begin
+  FURI             := '';
+  FDigestValue     := '';
+  FSignatureValue  := '';
+  FX509Certificate := '';
 end;
 
 function TSignature.GerarXML: Boolean;
