@@ -178,6 +178,7 @@ type
     procedure Itens;
   public
     { Public declarations }
+    procedure QuebradeLinha(const sQuebradeLinha: String);
   end;
 
 var
@@ -189,6 +190,9 @@ uses
  StrUtils, DateUtils, ACBrUtil, pnfsNFSe, ACBrNFSeUtil, ACBrDFeUtil; //Astrogildo em 13/12/12
 
 {$R *.dfm}
+
+var
+  FQuebradeLinha: String;
 
 { TfrlDANFSeRLRetrato }
 
@@ -203,6 +207,11 @@ begin
  cdsItens.Post;
 
  cdsItens.First;
+end;
+
+procedure TfrlDANFSeRLRetrato.QuebradeLinha(const sQuebradeLinha: String);
+begin
+  FQuebradeLinha := sQuebradeLinha;
 end;
 
 procedure TfrlDANFSeRLRetrato.rbOutrasInformacoesBeforePrint(Sender: TObject;
@@ -492,8 +501,11 @@ begin
 
  rlmDescricao.Lines.Clear;
 
- rlmDescricao.Lines.Add( StringReplace( FNFSe.Servico.Discriminacao,
-                         ';', #13#10, [rfReplaceAll, rfIgnoreCase] ) );
+ {rlmDescricao.Lines.Add( StringReplace( FNFSe.Servico.Discriminacao,
+                         ';', #13#10, [rfReplaceAll, rfIgnoreCase] ) );}
+
+  rlmDescricao.Lines.Add( StringReplace( FNFSe.Servico.Discriminacao,
+                         FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase] ) );
 
 end;
 

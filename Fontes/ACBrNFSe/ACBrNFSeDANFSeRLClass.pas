@@ -48,6 +48,8 @@ var
 begin
  frlDANFSeRLRetrato := TfrlDANFSeRLRetrato.Create(Self);
 
+ frlDANFSeRLRetrato.QuebradeLinha(TACBrNFSe(ACBrNFSe).Configuracoes.WebServices.QuebradeLinha);
+
  if NFSe = nil
   then begin
    for i:= 0 to TACBrNFSe(ACBrNFSe).NotasFiscais.Count-1 do
@@ -131,6 +133,8 @@ var
  frlDANFSeRLRetrato : TfrlDANFSeRLRetrato;
 begin
  frlDANFSeRLRetrato := TfrlDANFSeRLRetrato.Create(Self);
+
+ frlDANFSeRLRetrato.QuebradeLinha(TACBrNFSe(ACBrNFSe).Configuracoes.WebServices.QuebradeLinha);
 
  if NFSe = nil
   then begin

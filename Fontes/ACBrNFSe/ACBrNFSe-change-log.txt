@@ -47,10 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/10/2014
+[*] Alterado para entender a quebradelinha no Fortes
+	http://www.projetoacbr.com.br/forum/index.php?/topic/18141-quebra-de-linha-na-tag-discrimina%C3%A7%C3%A3o/#entry114679
+	por: Juliomar Marchetti
+	
 20/10/204
 [*] Alterado a rotida LoadFormStream visando executar as mesmas tratativas do
     LoadFromFile - Unit ACBrNFSeNotasFiscais.
     por: Thiago Filiano
+	
 [*] Alterado o parâmetro: QuebradeLinha de ";" para "\s\n" - provedor Fiorilli.
     Conforme Manual versão 2.00 da ABRASF.
     por: Italo Jurisato Junior
