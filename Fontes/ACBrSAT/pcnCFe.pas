@@ -1291,7 +1291,7 @@ begin
   FTotal.Clear;
   fPagto.Clear;
   FInfAdic.Clear;
-  //FSignature.Clear;
+  FSignature.Clear;
 end ;
 
 function TCFe.LoadFromFile(AFileName : String) : boolean ;

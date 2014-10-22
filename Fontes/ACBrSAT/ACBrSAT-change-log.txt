@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/10/2014     (por: DSA)
+-- ACBrSAT --
+[-] Metodo CFe.Clear e CFeCanc.Clear não limpavam a sessão de assinatura
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=18266
+
 Data: 07/10/2014     (por: DSA)
 -- ACBrSAT --
 [*] Metodo CFe.SaveToFile modificado para:

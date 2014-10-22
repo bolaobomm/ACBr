@@ -548,7 +548,7 @@ begin
   FDest.Clear;
   FTotal.Clear;
   FInfAdic.Clear;
-  //FSignature.Clear;
+  FSignature.Clear;
 end ;
 
 function TCFeCanc.LoadFromFile(AFileName : String) : boolean ;
