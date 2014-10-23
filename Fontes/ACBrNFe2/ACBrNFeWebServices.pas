@@ -2119,85 +2119,86 @@ begin
        Result := (NFeRetornoSincrono.cStat = 104) and (NFeRetornoSincrono.protNFe.cStat in [100, 150]);
 
        if NFeRetornoSincrono.cStat = 104 then
-        begin
-          for i:= 0 to TACBrNFe( FACBrNFe ).NotasFiscais.Count-1 do
+       begin
+         for i:= 0 to TACBrNFe( FACBrNFe ).NotasFiscais.Count-1 do
+         begin
+           if StringReplace(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.infNFe.ID,'NFe','',[rfIgnoreCase]) = chNFe then
            begin
-             if StringReplace(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.infNFe.ID,'NFe','',[rfIgnoreCase]) = chNFe then
-              begin
-                TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].Confirmada           := (NFeRetornoSincrono.protNFe.cStat in [100, 150]);
-                TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].Msg                  := NFeRetornoSincrono.protNFe.xMotivo;
-                TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.tpAmb    := NFeRetornoSincrono.tpAmb;
-                TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.verAplic := NFeRetornoSincrono.verAplic;
-                TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.chNFe    := NFeRetornoSincrono.ProtNFe.chNFe;
-                TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.dhRecbto := NFeRetornoSincrono.protNFe.dhRecbto;
-                TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.nProt    := NFeRetornoSincrono.ProtNFe.nProt;
-                TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.digVal   := NFeRetornoSincrono.protNFe.digVal;
-                TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.cStat    := NFeRetornoSincrono.protNFe.cStat;
-                TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.xMotivo  := NFeRetornoSincrono.protNFe.xMotivo;
-                if (FileExists(PathWithDelim(FConfiguracoes.Geral.PathSalvar) + chNFe + '-nfe.xml')) or
-                    DFeUtil.NaoEstaVazio(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NomeArq) then
-                 begin
-                   AProcNFe:=TProcNFe.Create;
+             TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].Confirmada           := (NFeRetornoSincrono.protNFe.cStat in [100, 150]);
+             TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].Msg                  := NFeRetornoSincrono.protNFe.xMotivo;
+             TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.tpAmb    := NFeRetornoSincrono.tpAmb;
+             TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.verAplic := NFeRetornoSincrono.verAplic;
+             TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.chNFe    := NFeRetornoSincrono.ProtNFe.chNFe;
+             TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.dhRecbto := NFeRetornoSincrono.protNFe.dhRecbto;
+             TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.nProt    := NFeRetornoSincrono.ProtNFe.nProt;
+             TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.digVal   := NFeRetornoSincrono.protNFe.digVal;
+             TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.cStat    := NFeRetornoSincrono.protNFe.cStat;
+             TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.xMotivo  := NFeRetornoSincrono.protNFe.xMotivo;
+             if (FileExists(PathWithDelim(FConfiguracoes.Geral.PathSalvar) + chNFe + '-nfe.xml')) or
+                DFeUtil.NaoEstaVazio(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NomeArq) then
+             begin
+               AProcNFe:=TProcNFe.Create;
 
-                   if DFeUtil.NaoEstaVazio(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NomeArq) then
-                      AProcNFe.PathNFe:=TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NomeArq
-                   else
-                      AProcNFe.PathNFe:=PathWithDelim(FConfiguracoes.Geral.PathSalvar) + chNFe + '-nfe.xml';
+               if DFeUtil.NaoEstaVazio(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NomeArq) then
+                 AProcNFe.PathNFe:=TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NomeArq
+               else
+                 AProcNFe.PathNFe:=PathWithDelim(FConfiguracoes.Geral.PathSalvar) + chNFe + '-nfe.xml';
 
-                   AProcNFe.PathRetConsSitNFe  := '';
-                   AProcNFe.PathRetConsReciNFe := '';
-                   AProcNFe.tpAmb              := NFeRetornoSincrono.protNFe.tpAmb;
-                   AProcNFe.verAplic           := NFeRetornoSincrono.protNFe.verAplic;
-                   AProcNFe.chNFe              := NFeRetornoSincrono.protNFe.chNFe;
-                   AProcNFe.dhRecbto           := NFeRetornoSincrono.protNFe.dhRecbto;
-                   AProcNFe.nProt              := NFeRetornoSincrono.protNFe.nProt;
-                   AProcNFe.digVal             := NFeRetornoSincrono.protNFe.digVal;
-                   AProcNFe.cStat              := NFeRetornoSincrono.protNFe.cStat;
-                   AProcNFe.xMotivo            := NFeRetornoSincrono.protNFe.xMotivo;
+               AProcNFe.PathRetConsSitNFe  := '';
+               AProcNFe.PathRetConsReciNFe := '';
+               AProcNFe.tpAmb              := NFeRetornoSincrono.protNFe.tpAmb;
+               AProcNFe.verAplic           := NFeRetornoSincrono.protNFe.verAplic;
+               AProcNFe.chNFe              := NFeRetornoSincrono.protNFe.chNFe;
+               AProcNFe.dhRecbto           := NFeRetornoSincrono.protNFe.dhRecbto;
+               AProcNFe.nProt              := NFeRetornoSincrono.protNFe.nProt;
+               AProcNFe.digVal             := NFeRetornoSincrono.protNFe.digVal;
+               AProcNFe.cStat              := NFeRetornoSincrono.protNFe.cStat;
+               AProcNFe.xMotivo            := NFeRetornoSincrono.protNFe.xMotivo;
 
 //                   AProcNFe.PathRetConsSitNFe:=PathWithDelim(FConfiguracoes.Geral.PathSalvar) + chNFe + '-sit.xml';
 
-                   if nfeAutorizacaoLote then
-                     AProcNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
-                                                     FConfiguracoes.Geral.VersaoDF,
-                                                     LayNfeAutorizacao)
-                   else
-                     AProcNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
-                                                     FConfiguracoes.Geral.VersaoDF,
-                                                     LayNfeRecepcao);
+               if nfeAutorizacaoLote then
+                 AProcNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                                 FConfiguracoes.Geral.VersaoDF,
+                                                 LayNfeAutorizacao)
+               else
+                 AProcNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                                 FConfiguracoes.Geral.VersaoDF,
+                                                 LayNfeRecepcao);
 
-                   AProcNFe.GerarXML;
+               AProcNFe.GerarXML;
 
-                   if DFeUtil.NaoEstaVazio(AProcNFe.Gerador.ArquivoFormatoXML) then
-                      AProcNFe.Gerador.SalvarArquivo(AProcNFe.PathNFe);
+               if DFeUtil.NaoEstaVazio(AProcNFe.Gerador.ArquivoFormatoXML) then
+                 AProcNFe.Gerador.SalvarArquivo(AProcNFe.PathNFe);
 
-                   AProcNFe.Free;
-                 end;
+               AProcNFe.Free;
+             end; // if
 
              if FConfiguracoes.Arquivos.Salvar then
-              begin
-                if FConfiguracoes.Arquivos.EmissaoPathNFe then
-                   TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Ide.dEmi,
-                                                                                                                          TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Emit.CNPJCPF))
-                                                                                                                          +StringReplace(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.InfNFe.Id,'NFe','',[rfIgnoreCase])+'-nfe.xml')
-                else
-                   TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(Now,
-                                                                                                                          TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Emit.CNPJCPF))
-                                                                                                                          +StringReplace(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.InfNFe.Id,'NFe','',[rfIgnoreCase])+'-nfe.xml')                end;
-              end;
-          break;
-        end;
+             begin
+               if FConfiguracoes.Arquivos.EmissaoPathNFe then
+                 TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Ide.dEmi,
+                                                                                                                        TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Emit.CNPJCPF))
+                                                                                                                        +StringReplace(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.InfNFe.Id,'NFe','',[rfIgnoreCase])+'-nfe.xml')
+               else
+                 TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(Now,
+                                                                                                                        TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Emit.CNPJCPF))
+                                                                                                                        +StringReplace(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.InfNFe.Id,'NFe','',[rfIgnoreCase])+'-nfe.xml')
+             end; // if
+           end; // if
+           break;
+         end; // for
 //        Result :=  Confirma(NFeRetornoS.ProtNFe);
 //        FChaveNfe  := NFeRetornoS.ProtNFe.Items[0].chNFe;
 //        FProtocolo := NFeRetornoS.ProtNFe.Items[0].nProt;
 //        FcStat     := NFeRetornoS.ProtNFe.Items[0].cStat;
 //        FMsg       := NFeRetornoS.ProtNFe.Items[0].xMotivo;
 //        FxMotivo   := NFeRetornoS.ProtNFe.Items[0].xMotivo;
-        end;
+       end; // if
 
-      NFeRetornoSincrono.Free;
+       NFeRetornoSincrono.Free;
 
-      if  FConfiguracoes.Geral.Salvar then
+       if FConfiguracoes.Geral.Salvar then
        begin
          // Alterado por Italo em 16/04/2014
          if FRecibo <> '' then
@@ -2208,14 +2209,14 @@ begin
          FConfiguracoes.Geral.Save(FPathArqResp, FRetWS);
        end;
 
-      if  FConfiguracoes.WebServices.Salvar then
+       if FConfiguracoes.WebServices.Salvar then
        begin
-         if FRecibo <> '' then
-           FPathArqResp := FRecibo+'-pro-rec-soap.xml'
-         else
-           FPathArqResp := Lote+'-pro-lot-soap.xml';
+        if FRecibo <> '' then
+          FPathArqResp := FRecibo+'-pro-rec-soap.xml'
+        else
+          FPathArqResp := Lote+'-pro-lot-soap.xml';
 
-         FConfiguracoes.Geral.Save(FPathArqResp, FRetornoWS);
+        FConfiguracoes.Geral.Save(FPathArqResp, FRetornoWS);
        end;
 
      end
