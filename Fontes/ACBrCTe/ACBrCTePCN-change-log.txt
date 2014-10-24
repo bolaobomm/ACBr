@@ -47,18 +47,23 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/10/2014
+[*] Alteração para apresentar todas as informações de InfQ em Fast Report
+    http://www.projetoacbr.com.br/forum/index.php?/topic/2049-colocar-volume-no-cte-%C3%A9-possivel/
+    por: Nicolas Carlos
+
 21/10/2014
 [+] Adição da impressão de eventos para CT-e em Fast Report
-http://www.projetoacbr.com.br/forum/index.php?/topic/17024-impressao-do-evento-cte/#entry114948
-por : Thiago Filiano
+    http://www.projetoacbr.com.br/forum/index.php?/topic/17024-impressao-do-evento-cte/#entry114948
+    por: Thiago Filiano
 
 06/06/2013
 [*] Alterado a unit ACBrCTeWebServices.pas para que na consulta com openssl não retorne vazio os dados
-	(por Juliomar Marchetti
+    por: Juliomar Marchetti
 
 04/04/2013
 [+] Modificado o arquivo ACBrCTeReg.pas para colocar a imagen ao componente no Lazarus
-	(por Juliomar Marchetti)
+   (por Juliomar Marchetti)
 
 22/11/2012
 -- ACBrDFeUtil

@@ -1878,25 +1878,33 @@ begin
         {$ENDIF}
 
         case InfQ.Items[I].cUnid of
-          uM3: MCub := InfQ.Items[I].qCarga;
-          uUNIDADE: Volumes := InfQ.Items[I].qCarga;
-          else
-            begin
-              Inc(J);
-              SetLength(TipoMedida, j);
-              SetLength(UnidMedida, j);
-              SetLength(QdtMedida, j);
-              TipoMedida[J - 1] := InfQ.Items[I].tpMed;
-              QdtMedida[J - 1] := InfQ.Items[I].qCarga;
-
-              case InfQ.Items[I].cUnid of
-                uKG: UnidMedida[J - 1] := 'KG';
-                uTON: UnidMedida[J - 1] := 'TON';
-                uLITROS: UnidMedida[J - 1] := 'LT';
-                uMMBTU: UnidMedida[J - 1] := 'MMBTU';
-              end;
-            end;
+          uM3: MCub := MCub+InfQ.Items[I].qCarga;
+          uUNIDADE: Volumes := Volumes+InfQ.Items[I].qCarga;
         end;
+//          else
+
+// Alterado por NCC em 23/10/2014
+// Alterei para casos onde há volumes distintos, mesmo sendo em unidades.
+// Exemplo, dois fardos com quantidades diferentes cada fardo.
+// Ver http://www.projetoacbr.com.br/forum/index.php?/topic/2049-colocar-volume-no-cte-%C3%A9-possivel/
+        begin
+          Inc(J);
+          SetLength(TipoMedida, j);
+          SetLength(UnidMedida, j);
+          SetLength(QdtMedida, j);
+          TipoMedida[J - 1] := InfQ.Items[I].tpMed;
+          QdtMedida[J - 1] := InfQ.Items[I].qCarga;
+
+          case InfQ.Items[I].cUnid of
+            uKG: UnidMedida[J - 1] := 'KG';
+            uTON: UnidMedida[J - 1] := 'TON';
+            uLITROS: UnidMedida[J - 1] := 'LT';
+            uMMBTU: UnidMedida[J - 1] := 'MMBTU';
+            uUNIDADE: UnidMedida[J - 1] := 'UND';
+            uM3: UnidMedida[J - 1] := 'M3';
+          end;
+        end;
+        //end;
       end;
     end;
 
