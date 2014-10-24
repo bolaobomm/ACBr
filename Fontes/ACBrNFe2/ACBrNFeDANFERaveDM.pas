@@ -1048,12 +1048,20 @@ begin
       end
       else if (FNFe.Ide.tpEmis=teDPEC) then
       begin
-         Connection.WriteStrData('', 'NÚMERO DE REGISTRO DPEC');
-         //precisa testar
-         if DFeUtil.EstaVazio(FDANFEClassOwner.ProtocoloNFe) then
-            raise EACBrNFeException.Create('Protocolo de Registro no DPEC não informado.')
+         if DFeUtil.NaoEstaVazio(FNFe.procNFe.nProt) then
+         begin
+           Connection.WriteStrData('', 'PROTOCOLO DE AUTORIZAÇÃO DE USO');
+           Connection.WriteStrData('', FNFe.procNFe.nProt+' '+DFeUtil.SeSenao(FNFe.procNFe.dhRecbto<>0,DateTimeToStr(FNFe.procNFe.dhRecbto),''));
+         end
          else
-            Connection.WriteStrData('', FDANFEClassOwner.ProtocoloNFe);
+         begin
+           Connection.WriteStrData('', 'NÚMERO DE REGISTRO DPEC');
+           if DFeUtil.EstaVazio(FDANFEClassOwner.ProtocoloNFe) then
+               Connection.WriteStrData('', 'NFe sem Autorização de Uso da SEFAZ')
+              //raise EACBrNFeException.Create('Protocolo de Registro no DPEC não informado.')
+           else
+              Connection.WriteStrData('', FDANFEClassOwner.ProtocoloNFe);
+         end;
       end;
    end;
 
