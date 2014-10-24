@@ -63,9 +63,11 @@ const aHeigthPadrao:Double=5.7;
       FontSizeItens:Integer=6;
       FontSizeInfComplementares:Integer=6;
 
-      ColsTitle:array[1..17] of String=('CÓDIGO','DESCRIÇÃO DO PRODUTO / SERVIÇO','NCM/SH','CST','CFOP','UNID','QUANT.','VALOR','VALOR','VALOR','B.CÁLC.','B.CÁLC.ICMS','VAL.ICMS','VALOR','VALOR','ALÍQ.','ALÍQ.');
-      ColsTitleAux:array[1..17] of String=('','','','','','','','UNITÁRIO','TOTAL','DESC.','DO ICMS','SUBST.TRIB.','SUBST.TRIB.','ICMS','IPI','ICMS','IPI');
-      ColsAlingment:array[1..17] of TPrintJustify=(pjCenter,pjLeft,pjCenter,pjCenter,pjCenter,pjCenter,pjRight,pjRight,pjRight,pjRight,pjRight,pjRight,pjRight,pjRight,pjRight,pjCenter,pjCenter);
+      // # consult atech
+      ColsTitle    : array[1..18] of String = ('CÓDIGO','DESCRIÇÃO DO PRODUTO / SERVIÇO','NCM/SH','CST','CFOP','UND','QUANT.','VALOR'   ,'VALOR','VALOR','V.APROX','B.CÁLC.','B.CÁLC.ICMS','VAL.ICMS'   ,'VALOR','VALOR','ALÍQ.','ALÍQ.');
+      ColsTitleAux : array[1..18] of String = (''      ,''                              ,''      ,''   ,''    ,''   ,''      ,'UNITÁRIO','TOTAL','DESC.','TRIBUT.','DO ICMS','SUBST.TRIB.','SUBST.TRIB.','ICMS' ,'IPI'  ,'ICMS' ,'IPI'  );
+
+      ColsAlingment:array[1..18] of TPrintJustify=(pjCenter,pjLeft,pjCenter,pjCenter,pjCenter,pjCenter,pjRight,pjRight,pjRight,pjRight,pjRight,pjRight,pjRight,pjRight,pjRight,pjCenter,pjCenter,pjRight);
 
 type
   TTipoSaida=(tsPrint,tsPreview,tsPDF,tsText,tsHTML,tsRTF);
@@ -93,6 +95,7 @@ type
      FExibirResumoCanhoto:boolean;
      FExibirResumoCanhoto_Texto:string;
      FImprimirDescPorc: boolean;
+     FImprimirDesconto: boolean; // #consult atech
      FImprimirValorLiquido: boolean;
      FImprimirDetalhamentoEspecifico: boolean;
      FTamanhoCampoCodigo:integer;
@@ -111,6 +114,7 @@ type
     FTamanhoCampoVlUnit: integer;
     FPosicaoCanhoto: integer;
     FExpandirDadosAdicionaisAuto: boolean;
+    FImprimirTributosItem: boolean;
   public
      FCurrentPage, FPageNum, FNFIndex, FNumNFe:Integer;
      FChaveNFe, FNumeroNF, FSerie: String;
@@ -146,8 +150,10 @@ type
      property ExibirResumoCanhoto:boolean read FExibirResumoCanhoto write FExibirResumoCanhoto;
      property ExibirResumoCanhoto_Texto:string read FExibirResumoCanhoto_Texto write FExibirResumoCanhoto_Texto;
      property ImprimirDescPorc:boolean read FImprimirDescPorc write FImprimirDescPorc;
+     property ImprimirDesconto:boolean read FimprimirDesconto write FimprimirDesconto;
      property ImprimirValorLiquido:boolean read FImprimirValorLiquido write FImprimirValorLiquido;
      property ImprimirDetalhamentoEspecifico:boolean read FImprimirDetalhamentoEspecifico write FImprimirDetalhamentoEspecifico;
+     property ImprimirTributosItem:boolean read FImprimirTributosItem write FImprimirTributosItem;
      property TamanhoCampoCodigo:integer read FTamanhoCampoCodigo write FTamanhoCampoCodigo;
      property TamanhoCampoVlUnit:integer read FTamanhoCampoVlUnit write FTamanhoCampoVlUnit;
      property TamanhoFonte_DemaisCampos:integer read FTamanhoFonte_DemaisCampos write FTamanhoFonte_DemaisCampos;
@@ -306,8 +312,10 @@ procedure ImprimirDANFeRave(aACBrNFe:TACBrNFe;
                             aExibirResumoCanhoto:boolean=false;
                             aExibirResumoCanhoto_Texto:string='';
                             aImprimirDescPorc:boolean=false;
+                            aImprimirDesconto:boolean=true; // #consult atech
                             aImprimirValorLiquido:boolean=false;
                             aImprimirDetalhamentoEspecifico:boolean=true;
+                            aImprimirTributosItem:boolean=false;
                             aFormularioContinuo:boolean=false;
                             aExpadirLogoMarca:boolean=false;
                             aNFeCancelada:boolean=false;
@@ -407,8 +415,10 @@ procedure ImprimirDANFeRave(aACBrNFe:TACBrNFe;
                             aExibirResumoCanhoto:boolean=false;
                             aExibirResumoCanhoto_Texto:string='';
                             aImprimirDescPorc:boolean=false;
+                            aImprimirDesconto:boolean=true; // #consult atech
                             aImprimirValorLiquido:boolean=false;
                             aImprimirDetalhamentoEspecifico:boolean=true;
+                            aImprimirTributosItem:boolean=false;
                             aFormularioContinuo:boolean=false;
                             aExpadirLogoMarca:boolean=false;
                             aNFeCancelada:boolean=false;
@@ -484,8 +494,10 @@ begin
     DANFeRave.ExibirResumoCanhoto:=aExibirResumoCanhoto;
     DANFeRave.ExibirResumoCanhoto_Texto:=aExibirResumoCanhoto_Texto;
     DANFeRave.ImprimirDescPorc:=aImprimirDescPorc;
+    DANFeRave.ImprimirDesconto:=aImprimirDesconto; // #consult atech
     DANFeRave.ImprimirValorLiquido:=aImprimirValorLiquido;
     DANFeRave.ImprimirDetalhamentoEspecifico:=aImprimirDetalhamentoEspecifico;
+    DANFeRave.ImprimirTributosItem:=aImprimirTributosItem;
     DANFeRave.TributosFonte:=aTributosFonte;
     DANFeRave.TributosPercentual:=aTributosPercentual;
     DANFeRave.MarcaDaguaMSG:=aMarcaDaguaMSG;
@@ -519,9 +531,11 @@ begin
     DANFeRave.SystemPrinter.StatusFormat:='Imprimindo página %p';
     DANFeRave.SystemPrinter.Title:='DANFE';
     DANFeRave.SystemPrinter.Units:=unMM;
-    //DANFeRave.SystemPrinter.Collate := True;
     DANFeRave.SystemPrinter.UnitsFactor:=25.4;
     DANFeRave.SystemPrinter.Orientation:=aOrientacaoPapel;
+    {$IFNDEF RAVE50VCL} //JuaumKiko-Teste
+      DANFeRave.SystemPrinter.Collate := True;
+    {$ENDIF}
     DANFeRave.SystemSetups:=[ssAllowSetup,ssAllowCopies,ssAllowCollate,ssAllowDuplex,ssAllowDestPreview,ssAllowDestPrinter,ssAllowDestFile,ssAllowPrinterSetup,ssAllowPreviewSetup];
     if not aMostrarSetup then
        DANFeRave.SystemSetups:=DANFeRave.SystemSetups - [ssAllowSetup];
@@ -645,9 +659,11 @@ begin
     EventoRave.SystemPrinter.StatusFormat:='Imprimindo página %p';
     EventoRave.SystemPrinter.Title:='DANFE';
     EventoRave.SystemPrinter.Units:=unMM;
-    //EventoRave.SystemPrinter.Collate := True;
     EventoRave.SystemPrinter.UnitsFactor:=25.4;
     EventoRave.SystemPrinter.Orientation:=aOrientacaoPapel;
+    {$IFNDEF RAVE50VCL} ////JuaumKiko-Teste
+      DANFeRave.SystemPrinter.Collate := True;
+    {$ENDIF}
     EventoRave.SystemSetups:=[ssAllowSetup,ssAllowCopies,ssAllowCollate,ssAllowDuplex,ssAllowDestPreview,ssAllowDestPrinter,ssAllowDestFile,ssAllowPrinterSetup,ssAllowPreviewSetup];
     if not aMostrarSetup then
        EventoRave.SystemSetups:=EventoRave.SystemSetups - [ssAllowSetup];
@@ -771,9 +787,11 @@ begin
     InutilizacaoRave.SystemPrinter.StatusFormat:='Imprimindo página %p';
     InutilizacaoRave.SystemPrinter.Title:='DANFE';
     InutilizacaoRave.SystemPrinter.Units:=unMM;
-    //InutilizacaoRave.SystemPrinter.Collate := True;
     InutilizacaoRave.SystemPrinter.UnitsFactor:=25.4;
     InutilizacaoRave.SystemPrinter.Orientation:=aOrientacaoPapel;
+    {$IFNDEF RAVE50VCL} ////JuaumKiko-Teste
+      InutilizacaoRave.SystemPrinter.Collate := True;
+    {$ENDIF}
     InutilizacaoRave.SystemSetups:=[ssAllowSetup,ssAllowCopies,ssAllowCollate,ssAllowDuplex,ssAllowDestPreview,ssAllowDestPrinter,ssAllowDestFile,ssAllowPrinterSetup,ssAllowPreviewSetup];
     if not aMostrarSetup then
        InutilizacaoRave.SystemSetups:=InutilizacaoRave.SystemSetups - [ssAllowSetup];
@@ -1279,4 +1297,5 @@ begin
 end;
 
 end.
+
 

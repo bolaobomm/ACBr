@@ -68,6 +68,8 @@ type
      FMarcaDaguaMSG: string;
      FTamanhoCampoVlUnit: integer;
      FExpandirDadosAdicionaisAuto: boolean;
+     FimprimirDesconto: Boolean;
+    FImprimirTributosItem: Boolean; // #consult atech
 
      function SeSenaoJPEG(ACondicao: Boolean; ATrue, AFalse: TJPEGImage): TJPEGImage;
    public
@@ -90,6 +92,8 @@ type
      property TributosFonte: string read FTributosFonte write FTributosFonte;
      property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write FTributosPercentual;
      property MarcaDaguaMSG: string read FMarcaDaguaMSG write FMarcaDaguaMSG;
+     property ImprimirDesconto: Boolean read FimprimirDesconto write FImprimirDesconto; // #consult atech
+     property ImprimirTributosItem: Boolean read FImprimirTributosItem write FImprimirTributosItem;
   end;
 
 implementation
@@ -107,6 +111,8 @@ begin
   FMostrarSetup:=False;
   FTributosPercentual:=ptValorProdutos;
   FExpandirDadosAdicionaisAuto := False;
+  FImprimirDesconto := True;
+  FImprimirTributosItem := False;
 end;
 
 destructor TACBrNFeDANFERaveCB.Destroy;
@@ -173,8 +179,10 @@ begin
                        ExibirResumoCanhoto,
                        ExibirResumoCanhoto_Texto,
                        ImprimirDescPorc,
+                       ImprimirDesconto,  // #consult atech
                        ImprimirTotalLiquido,
                        ImprimirDetalhamentoEspecifico,
+                       ImprimirTributosItem,
                        FormularioContinuo,
                        ExpandirLogoMarca,
                        NFeCancelada,
@@ -255,8 +263,10 @@ begin
                        ExibirResumoCanhoto,
                        ExibirResumoCanhoto_Texto,
                        ImprimirDescPorc,
+                       ImprimirDesconto, // #consult atech
                        ImprimirTotalLiquido,
                        ImprimirDetalhamentoEspecifico,
+                       ImprimirTributosItem,
                        FormularioContinuo,
                        ExpandirLogoMarca,
                        NFeCancelada,

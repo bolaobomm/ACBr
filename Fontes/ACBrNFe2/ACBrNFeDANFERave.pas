@@ -918,7 +918,11 @@ begin
   dmDanfe.RvSystem1.SystemPrinter.StatusFormat:='Imprimindo página %p';
   dmDanfe.RvSystem1.SystemPrinter.Title:= 'NFe - Impressão do DANFE';
   dmDanfe.RvSystem1.SystemPrinter.Units:=unMM;
-  //dmDanfe.RvSystem1.SystemPrinter.Collate:=true;
+
+  {$IFNDEF RAVE50VCL} //JuaumKiko-Teste
+    dmDanfe.RvSystem1.SystemPrinter.Collate:=true;
+  {$ENDIF}
+
   dmDanfe.RvSystem1.SystemPrinter.UnitsFactor:=25.4;
 
   if Length(Impressora) > 0 then
@@ -975,7 +979,11 @@ begin
 
   dmDanfe.RvSystem1.DefaultDest := rdFile;
   dmDanfe.RvSystem1.DoNativeOutput:=false;
-  //dmDanfe.RvSystem1.SystemPrinter.Collate:=true;
+
+  {$IFNDEF RAVE50VCL} //JuaumKiko-Teste
+    dmDanfe.RvSystem1.SystemPrinter.Collate:=true;
+  {$ENDIF}
+
   dmDanfe.RvSystem1.RenderObject:= dmDanfe.RvRenderPDF1;
   if not MostrarStatus then
      dmDanfe.RvSystem1.SystemOptions:=dmDanfe.RvSystem1.SystemOptions - [soShowStatus];

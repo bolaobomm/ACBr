@@ -64,7 +64,7 @@ const aWidthTituloBloco:Double=6;
 
 var
    FontSizeText:Double;
-   ColsWidth:array[1..17] of Double; //colunas dados dos produtos
+   ColsWidth:array[1..18] of Double; //colunas dados dos produtos
 
 
 procedure ImprimirPaisagem(aRaveSystem:TDANFeRave);
@@ -1179,24 +1179,42 @@ begin
      NewLine;
      for i:=Low(ColsTitle) to High(ColsTitle) do
      begin
-
+         // #consult atech, o usuário resolve não imprimir o vr. desconto na linha do item
          if (i=4) and (emit.CRT = crtSimplesNacional)  then
             PrintTab('CSO')
-
-         else if (i=10) and ImprimirDescPorc then
-            PrintTab('DESC. %')
+         else if (i=10) and ImprimirDesconto then
+         begin
+             if (i=10) and ImprimirDescPorc then
+                PrintTab('DESC. %')
+             else
+                PrintTab(ColsTitle[i]);
+         end
+         else if (i=11) and ImprimirTributosItem then
+         begin
+            PrintTab(ColsTitle[i]);
+         end
          else
             PrintTab(ColsTitle[i]);
      end;
      NewLine;
      for i:=Low(ColsTitleAux) to High(ColsTitleAux) do
      begin
+         // #consult atech, o usuário resolve não imprimir o vr. desconto na linha do item
          if (i=4) and (emit.CRT = crtSimplesNacional)  then
             PrintTab('SN')
          else if (i=9) and ImprimirValorLiquido then
             PrintTab('LÍQUIDO')
-         else if (i=10) and ImprimirDescPorc then
-            PrintTab('')
+         else if (i=10) and ImprimirDesconto then
+         begin
+             if (i=10) and ImprimirDescPorc then
+                PrintTab('')
+             else
+                PrintTab(ColsTitleAux[i]);
+         end
+         else if (i=11) and ImprimirTributosItem then
+         begin
+            PrintTab(ColsTitleAux[i]);
+         end
          else
             PrintTab(ColsTitleAux[i]);
      end;
@@ -1386,15 +1404,26 @@ begin
           else
              PrintTab(DFeUtil.FormatFloat(Prod.VProd));
 
-          if ImprimirDescPorc then
+          // #consult atech, impressão do desconto?
+          if ImprimirDesconto then
           begin
-            if Prod.vDesc > 0 then
-               PrintTab(DFeUtil.FormatFloat({RoundTo(}100-((((Prod.VUnCom*Prod.QCom)-Prod.vDesc)/(Prod.VUnCom*Prod.QCom))*100){,-1)})+'%')
+            if ImprimirDescPorc then
+            begin
+              if Prod.vDesc > 0 then
+                 PrintTab(DFeUtil.FormatFloat({RoundTo(}100-((((Prod.VUnCom*Prod.QCom)-Prod.vDesc)/(Prod.VUnCom*Prod.QCom))*100){,-1)})+'%')
+              else
+                 PrintTab(DFeUtil.FormatFloat(Prod.vDesc));
+            end
             else
-               PrintTab(DFeUtil.FormatFloat(Prod.vDesc));
+              PrintTab(DFeUtil.FormatFloat(Prod.vDesc));
           end
           else
-            PrintTab(DFeUtil.FormatFloat(Prod.vDesc));
+             PrintTab('');
+
+          if ImprimirTributosItem then
+            PrintTab(DFeUtil.FormatFloat(Imposto.vTotTrib))
+          else
+            PrintTab('');
 
           PrintTab(DFeUtil.FormatFloat(Imposto.ICMS.vBC));
           PrintTab(DFeUtil.FormatFloat(Imposto.ICMS.vBCST));
@@ -1403,6 +1432,7 @@ begin
           PrintTab(DFeUtil.FormatFloat(Imposto.IPI.vIPI));
           PrintTab(DFeUtil.FormatFloat(Imposto.ICMS.pICMS));
           PrintTab(DFeUtil.FormatFloat(Imposto.IPI.pIPI));
+
           Memo:=TMemoBuf.Create;
           try
             Memo.PrintStart:=PosX+ColsWidth[1]+0.5;
@@ -1441,26 +1471,30 @@ var wtemp:Double;
     bInicio:boolean;
 begin
   //tamanho padrao das colunas
-  ColsWidth[1]:=17;
-  ColsWidth[2]:=73;
-  ColsWidth[3]:=14;
+
+  // #consult atech, ajustes no tamanho dos campos código e descrição principalmente
+  // e inclusao da coluna valor dos tributos e possibilidade de ocultar a coluna desconto
+  ColsWidth[1]:=15;
+  ColsWidth[2]:=67;
+  ColsWidth[3]:=13;
   ColsWidth[4]:=7;
   ColsWidth[5]:=7;
   ColsWidth[6]:=9;
   ColsWidth[7]:=15;
   ColsWidth[8]:=13;
   ColsWidth[9]:=13;
-  ColsWidth[10]:=12;
-  ColsWidth[11]:=15;
+  ColsWidth[10]:=11;
+  ColsWidth[11]:=11;
   ColsWidth[12]:=15;
-  ColsWidth[13]:=11;
+  ColsWidth[13]:=15;
   ColsWidth[14]:=11;
   ColsWidth[15]:=11;
-  ColsWidth[16]:=8;
-  ColsWidth[17]:=8;
+  ColsWidth[16]:=11;
+  ColsWidth[17]:=7;
+  ColsWidth[18]:=7;
 
   FontSizeText:=10;
-  
+
   DANFeRave:=aRaveSystem;
 
   //ajusta tamanho da coluna codigo
@@ -1473,6 +1507,20 @@ begin
       wtemp:=ColsWidth[1]-TamanhoCampoCodigo;
       ColsWidth[1]:=ColsWidth[1]-wtemp;
       ColsWidth[2]:=ColsWidth[2]+wtemp;
+    end;
+
+    // #consult atech
+    if not ImprimirDesconto then
+    begin
+        ColsWidth[10]:=0;
+        ColsWidth[ 1]:=ColsWidth[1]+2;
+        ColsWidth[ 2]:=ColsWidth[2]+8;
+    end;
+    if not ImprimirTributosItem then
+    begin
+        //ColsWidth[ 1]:=ColsWidth[1]+2;
+        ColsWidth[ 2]:=ColsWidth[2]+ColsWidth[11];
+        ColsWidth[11]:=0;
     end;
 
     FDetIndex:=0;
