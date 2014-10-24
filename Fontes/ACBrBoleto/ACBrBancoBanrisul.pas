@@ -858,10 +858,10 @@ begin
       //Anderson
       ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
       ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
-      if (StrToIntDef(Copy(Linha,247,6),0) <> 0) then
-        Vencimento := StringToDateTimeDef( Copy(Linha,247,2)+'/'+
-                                           Copy(Linha,249,2)+'/'+
-                                           Copy(Linha,251,2),0, 'DD/MM/YY' );
+      if (StrToIntDef(Copy(Linha,147,6),0) <> 0) then
+        Vencimento := StringToDateTimeDef( Copy(Linha,147,2)+'/'+
+                                           Copy(Linha,149,2)+'/'+
+                                           Copy(Linha,151,2),0, 'DD/MM/YY' );
 
       if StrToIntDef(Copy(Linha,296,6),0) <> 0 then
         DataCredito:= StringToDateTimeDef( Copy(Linha,296,2)+'/'+
