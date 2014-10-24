@@ -758,6 +758,24 @@ type
                                 NomeRemetente: String = '';
                                 TLS : Boolean = True);
 
+    // enviar email.
+    procedure EnviarEmailNormal(const sSmtpHost,
+                                sSmtpPort,
+                                sSmtpUser,
+                                sSmtpPasswd,
+                                sFrom,
+                                sTo,
+                                sAssunto: String;
+                                sMensagem : TStrings;
+                                SSL : Boolean;
+                                EnviaPDF: Boolean = true;
+                                sCC: TStrings = nil;
+                                Anexos:TStrings=nil;
+                                PedeConfirma: Boolean = False;
+                                AguardarEnvio: Boolean = False;
+                                NomeRemetente: String = '';
+                                TLS : Boolean = True);
+
 
     procedure AdicionarMensagensPadroes(Titulo : TACBrTitulo; AStringList: TStrings);
 
@@ -1333,6 +1351,104 @@ begin
     m.free;
     StreamNFe.Free ;
  end;
+end;
+
+procedure TACBrBoleto.EnviarEmailNormal(const sSmtpHost, sSmtpPort, sSmtpUser, sSmtpPasswd, sFrom, sTo, sAssunto: String;
+  sMensagem: TStrings; SSL, EnviaPDF: Boolean; sCC, Anexos: TStrings; PedeConfirma, AguardarEnvio: Boolean; NomeRemetente: String;
+  TLS: Boolean);
+var
+  smtp: TSMTPSend;
+  msg_lines: TStringList;
+  m:TMimemess;
+  p: TMimepart;
+  i: Integer;
+begin
+  smtp      := TSMTPSend.Create;
+  m         := TMimemess.create;
+  msg_lines := TStringList.Create;
+
+  try
+    p := m.AddPartMultipart('mixed', nil);
+    if sMensagem <> nil then
+       m.AddPartText(sMensagem, p);
+
+    if (EnviaPDF) then
+     begin
+       if ACBrBoletoFC.NomeArquivo = '' then
+          ACBrBoletoFC.NomeArquivo := 'boleto.pdf';;
+       GerarPDF;
+       m.AddPartBinaryFromFile(ACBrBoletoFC.NomeArquivo, p);
+     end
+    else
+     begin
+       if ACBrBoletoFC.NomeArquivo = '' then
+          ACBrBoletoFC.NomeArquivo := 'boleto.html';;
+       GerarHTML;
+       m.AddPartBinaryFromFile(ACBrBoletoFC.NomeArquivo, p);
+     end;
+
+
+    if assigned(Anexos) then
+       for i := 0 to Anexos.Count - 1 do
+       begin
+          m.AddPartBinaryFromFile(Anexos[i], p);
+       end;
+
+    m.header.tolist.add(sTo);
+
+    if Trim(NomeRemetente) <> '' then
+       m.header.From := Format('%s<%s>', [NomeRemetente, sFrom])
+    else
+       m.header.From := sFrom;
+
+    m.header.subject:= sAssunto;
+    m.Header.ReplyTo := sFrom;
+    if PedeConfirma then
+       m.Header.CustomHeaders.Add('Disposition-Notification-To: '+sFrom);
+    m.EncodeMessage;
+
+     msg_lines.Add(m.Lines.Text);
+
+     smtp.UserName := sSmtpUser;
+     smtp.Password := sSmtpPasswd;
+
+     smtp.TargetHost := sSmtpHost;
+     smtp.TargetPort := sSmtpPort;
+
+     smtp.FullSSL := SSL;
+     smtp.AutoTLS := TLS;
+
+     if (TLS) then
+       smtp.StartTLS;
+
+     if not smtp.Login then
+       raise Exception.Create('SMTP ERROR: Login: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
+
+     if not smtp.MailFrom(sFrom, Length(sFrom)) then
+       raise Exception.Create('SMTP ERROR: MailFrom: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
+
+     if not smtp.MailTo(sTo) then
+       raise Exception.Create('SMTP ERROR: MailTo: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
+
+     if sCC <> nil then
+     begin
+       for I := 0 to sCC.Count - 1 do
+       begin
+         if not smtp.MailTo(sCC.Strings[i]) then
+           raise Exception.Create('SMTP ERROR: MailTo: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
+       end;
+     end;
+
+     if not smtp.MailData(msg_lines) then
+       raise Exception.Create('SMTP ERROR: MailData: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
+
+     if not smtp.Logout then
+       raise Exception.Create('SMTP ERROR: Logout: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
+  finally
+     msg_lines.Free;
+     smtp.Free;
+     m.free;
+  end;
 end;
 
 // email
