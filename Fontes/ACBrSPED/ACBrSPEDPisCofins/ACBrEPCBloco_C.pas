@@ -491,24 +491,24 @@ type
   private
     fCST_PIS                : TACBrCstPis;          //02	CST_PIS	Código da Situação Tributária referente ao PIS/PASEP, conforme a Tabela indicada no item 4.3.3.	N	002*	-
     fCFOP                   : String;               //03	CFOP	Código fiscal de operação e prestação	N	004*	-
-    fVL_ITEM                : Currency;             //04	VL_ITEM	Valor do item	N	-	02
-    fVL_DESC                : Currency;             //05	VL_DESC	Valor do desconto comercial	N	-	02
-    fVL_BC_PIS              : Currency;             //06	VL_BC_PIS	Valor da base de cálculo do PIS/PASEP	N	 -	02
-    fALIQ_PIS               : Currency;             //07	ALIQ_PIS	Alíquota do PIS/PASEP (em percentual)	N	008	04
-    fQUANT_BC_PIS           : Currency;             //08	QUANT_BC_PIS	Quantidade – Base de cálculo PIS/PASEP	N	 -	03
-    fALIQ_PIS_QUANT         : Currency;             //09	ALIQ_PIS_QUANT	Alíquota do PIS/PASEP (em reais)	N	 -	04
-    fVL_PIS                 : Currency;             //10	VL_PIS	Valor do PIS/PASEP	N	-	02
+    fVL_ITEM                : Variant;              //04	VL_ITEM	Valor do item	N	-	02
+    fVL_DESC                : Variant;              //05	VL_DESC	Valor do desconto comercial	N	-	02
+    fVL_BC_PIS              : Variant;              //06	VL_BC_PIS	Valor da base de cálculo do PIS/PASEP	N	 -	02
+    fALIQ_PIS               : Variant;              //07	ALIQ_PIS	Alíquota do PIS/PASEP (em percentual)	N	008	04
+    fQUANT_BC_PIS           : Variant;              //08	QUANT_BC_PIS	Quantidade – Base de cálculo PIS/PASEP	N	 -	03
+    fALIQ_PIS_QUANT         : Variant;              //09	ALIQ_PIS_QUANT	Alíquota do PIS/PASEP (em reais)	N	 -	04
+    fVL_PIS                 : Variant;              //10	VL_PIS	Valor do PIS/PASEP	N	-	02
     fCOD_CTA                : string;               //11	COD_CTA	Código da conta analítica contábil debitada/creditada	C	060	-
   public
     property CST_PIS        : TACBrCstPis read FCST_PIS        write FCST_PIS;
     property CFOP           : string      read FCFOP           write FCFOP;
-    property VL_ITEM        : Currency    read FVL_ITEM        write FVL_ITEM;
-    property VL_DESC        : Currency    read FVL_DESC        write FVL_DESC;
-    property VL_BC_PIS      : Currency    read FVL_BC_PIS      write FVL_BC_PIS;
-    property ALIQ_PIS       : Currency    read FALIQ_PIS       write FALIQ_PIS;
-    property QUANT_BC_PIS   : Currency    read FQUANT_BC_PIS   write FQUANT_BC_PIS;
-    property ALIQ_PIS_QUANT : Currency    read FALIQ_PIS_QUANT write FALIQ_PIS_QUANT;
-    property VL_PIS         : Currency    read FVL_PIS         write FVL_PIS;
+    property VL_ITEM        : Variant     read FVL_ITEM        write FVL_ITEM;
+    property VL_DESC        : Variant     read FVL_DESC        write FVL_DESC;
+    property VL_BC_PIS      : Variant     read FVL_BC_PIS      write FVL_BC_PIS;
+    property ALIQ_PIS       : Variant     read FALIQ_PIS       write FALIQ_PIS;
+    property QUANT_BC_PIS   : Variant     read FQUANT_BC_PIS   write FQUANT_BC_PIS;
+    property ALIQ_PIS_QUANT : Variant     read FALIQ_PIS_QUANT write FALIQ_PIS_QUANT;
+    property VL_PIS         : Variant     read FVL_PIS         write FVL_PIS;
     property COD_CTA        : string      read FCOD_CTA        write FCOD_CTA;
   end;
 

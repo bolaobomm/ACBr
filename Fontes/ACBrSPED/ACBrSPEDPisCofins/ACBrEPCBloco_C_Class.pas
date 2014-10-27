@@ -1150,13 +1150,13 @@ begin
         Add( LFill('C181')             +
              LFill(CstPisToStr(CST_PIS)) +
              LFill(CFOP)               +
-             LFill(VL_ITEM,0,2)        +
-             LFill(VL_DESC,0,2)        +
-             LFill(VL_BC_PIS,0,2,True) +
-             DFill(ALIQ_PIS,4,True)    +
-             LFill(QUANT_BC_PIS,0,3,True) +
-             DFill(ALIQ_PIS_QUANT,4,True) +
-             LFill(VL_PIS,0,2)         +
+             VLFill(VL_ITEM,0,2)        +
+             VLFill(VL_DESC,0,2)        +
+             VLFill(VL_BC_PIS,0,2) +
+             VDFill(ALIQ_PIS,4)    +
+             VLFill(QUANT_BC_PIS,0,3) +
+             VDFill(ALIQ_PIS_QUANT,4) +
+             VLFill(VL_PIS,0,2)         +
              LFill(COD_CTA) ) ;
         //
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
@@ -1181,13 +1181,13 @@ begin
         Add( LFill('C185')                     +
              LFill(CstCofinsToStr(CST_COFINS)) +
              LFill(CFOP)                       +
-            VLFill(VL_ITEM, 0, 2)              +
-            VLFill(VL_DESC, 0, 2)              +
-            VLFill(VL_BC_COFINS, 0, 2)         +
-            VDFill(ALIQ_COFINS, 4)             +
-            VLFill(QUANT_BC_COFINS, 0, 3)      +
-            VDFill(ALIQ_COFINS_QUANT, 4)       +
-            VLFill(VL_COFINS, 0, 2)            +
+             VLFill(VL_ITEM,0,2)         +
+             VLFill(VL_DESC,0,2)         +
+             VLFill(VL_BC_COFINS,0,2)    +
+             VDFill(ALIQ_COFINS,4)       +
+             VLFill(QUANT_BC_COFINS,0,3) +
+             VDFill(ALIQ_COFINS_QUANT,4) +
+             VLFill(VL_COFINS,0,2)       +
              LFill(COD_CTA) ) ;
         //
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
