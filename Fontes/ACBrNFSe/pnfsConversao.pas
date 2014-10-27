@@ -1217,6 +1217,7 @@ begin
   3148103, // Patrocinio/MG
   3503307, // Araras/SP
   3511508, // Cerquilho/SP
+  3520608, // Indiana/SP
   3524808, // Jales/SP
   3534609, // Osvaldo Cruz/SP
   3538709, // Piracicaba/SP
