@@ -216,7 +216,8 @@ begin
   Item := TStringList.Create;
   try
     // primeira linha contem os cabecalhos de campo e versão do arquivo
-    QuebrarLinha(Arquivo.Strings[0], Item);
+    // segunda linha possui os dados do primeiro item e outros dados
+    QuebrarLinha(Arquivo.Strings[1], Item);
     if Item.Count = 13 then
     begin
       FVigenciaInicio := StrToDateDef(Item.Strings[8], 0.0);

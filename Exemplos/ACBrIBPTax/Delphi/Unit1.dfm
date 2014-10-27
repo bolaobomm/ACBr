@@ -311,6 +311,13 @@ object Form1: TForm1
       Height = 13
       Caption = 'Quantidade de itens: '
     end
+    object lbVigencia: TLabel
+      Left = 330
+      Top = 110
+      Width = 46
+      Height = 13
+      Caption = 'Vig'#234'ncia: '
+    end
     object edArquivo: TEdit
       Left = 12
       Top = 83
