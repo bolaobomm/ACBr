@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/10/2014
+[-] Alteração efetuada para sanar o problema de envio e consulta de situação do
+    lote de RPS para o provedor DBSeller.
+    por: Rodrigo Custódio
 [+] Adicionado a cidade Indiana/SP ao provedor SimplISS.
     por: jhmontoia
 [+] Adicionado a cidade Cotriguaçu/MT ao provedor Betha.

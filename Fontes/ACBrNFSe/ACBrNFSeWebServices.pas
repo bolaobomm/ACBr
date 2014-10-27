@@ -620,7 +620,7 @@ begin
  if not (FProvedor in [proGovBr, proSimplISS, proAbaco, proISSNet, pro4R, proIssDSF,  // proIssDSF incluido por Ailton Branco 16/07/2014
                        proFiorilli, proProdata, proCoplan, proThema, proVirtual,
                        proPVH, proFreire, proTecnos, proPronim, proPublica,
-                       proEgoverneISS, proActcon])
+                       proEgoverneISS, proActcon, proDBSeller])
   then begin
 
     if FProvedor = proSystemPro then
@@ -2690,7 +2690,7 @@ begin
  begin
    if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proDigifred, proProdata,
           proVitoria, proPVH, profintelISS, proSaatri, proSisPMJP, proCoplan, proISSDigital,
-          proISSDSF, proFiorilli, proFreire, proTecnos]) then
+          proISSDSF, proFiorilli, proFreire, proTecnos, proDBSeller]) then //adicionei o provedor DBSeller - Rodrigo Custódio
     begin
      Result := Self.ConsSitLote.Executar;
 
