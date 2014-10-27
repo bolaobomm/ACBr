@@ -818,6 +818,7 @@ begin
   5006200, // Nova Andradina/MS
   5100201, // Água Boa/MT
   5102686, // Campos de Júlio/MT
+  5103379, // Cotriguacu/MT
   5103502  // Diamantino/MT
          : Provedor := 'Betha';
 

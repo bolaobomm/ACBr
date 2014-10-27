@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/10/2014
+[+] Adicionado a cidade Cotriguaçu/MT ao provedor Betha.
+    por: Italo Jurisato Junior
 [-] Alterado varias units com o objetivo de sanar o problema do Valor Liquido Zerado
     ao imprimir o DANFSE.
     Espera-se que algora o problema esteja resolvido para todos os provedores e em
