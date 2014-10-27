@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/10/2014
+[-] Alteração para extrar o xml da NFS-e (provedor DBSeller).
+    por: Italo Jurisato Junior
 [-] Alteração efetuada para sanar o problema de envio e consulta de situação do
     lote de RPS para o provedor DBSeller.
     por: Rodrigo Custódio

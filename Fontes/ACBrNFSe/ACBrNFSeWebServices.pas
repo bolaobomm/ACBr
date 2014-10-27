@@ -3542,12 +3542,12 @@ begin
   Prefixo4 := FConfiguracoes.WebServices.Prefixo4;
 
   case FProvedor of
-   proBetha: Prefixo3 := '';
-   proSpeedGov:
-     begin
-       Prefixo3 := '';
-       Prefixo4 := '';
-     end;
+    proBetha:    Prefixo3 := '';
+    proDBSeller: Prefixo3 := 'ii:';
+    proSpeedGov: begin
+                   Prefixo3 := '';
+                   Prefixo4 := '';
+                 end;
   end;
 
   try
