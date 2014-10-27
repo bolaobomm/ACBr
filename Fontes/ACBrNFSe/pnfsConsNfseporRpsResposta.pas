@@ -302,24 +302,26 @@ begin
             ListaNfse.FCompNfse[i].FNfse.InfID.ID          := Leitor.rCampo(tcStr, 'Numero');
             ListaNfse.FCompNfse[i].FNFSe.Numero            := Leitor.rCampo(tcStr, 'Numero');
             ListaNfse.FCompNfse[i].FNFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
-            if FProvedor in [proFreire, proSpeedGov, proVitoria] 
-               then ListaNfse.FCompNfse[i].FNFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao')
-               else ListaNfse.FCompNfse[i].FNFSe.DataEmissao       := Leitor.rCampo(tcDatHor, 'DataEmissao');
 
-            ListaNfse.FCompNfse[i].FNFSe.ValoresNfse.BaseCalculo            := Leitor.rCampo(tcDe2, 'BaseCalculo');
-            ListaNfse.FCompNfse[i].FNFSe.ValoresNfse.Aliquota               := Leitor.rCampo(tcDe3, 'Aliquota');
-            ListaNfse.FCompNfse[i].FNFSe.ValoresNfse.ValorIss               := Leitor.rCampo(tcDe2, 'ValorIss');
-            ListaNfse.FCompNfse[i].FNFSe.ValoresNfse.ValorLiquidoNfse       := Leitor.rCampo(tcDe2, 'ValorLiquidoNfse');
+            if FProvedor in [proFreire, proSpeedGov, proVitoria]
+               then ListaNfse.FCompNfse[i].FNFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao')
+               else ListaNfse.FCompNfse[i].FNFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
+
+            ListaNfse.FCompNfse[i].FNFSe.ValoresNfse.BaseCalculo      := Leitor.rCampo(tcDe2, 'BaseCalculo');
+            ListaNfse.FCompNfse[i].FNFSe.ValoresNfse.Aliquota         := Leitor.rCampo(tcDe3, 'Aliquota');
+            ListaNfse.FCompNfse[i].FNFSe.ValoresNfse.ValorIss         := Leitor.rCampo(tcDe2, 'ValorIss');
+            ListaNfse.FCompNfse[i].FNFSe.ValoresNfse.ValorLiquidoNfse := Leitor.rCampo(tcDe2, 'ValorLiquidoNfse');
 
             ListaNfse.FCompNfse[i].FNFSe.NaturezaOperacao         := StrToNaturezaOperacao(ok, Leitor.rCampo(tcStr, 'NaturezaOperacao'));
             ListaNfse.FCompNfse[i].FNFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
             ListaNfse.FCompNfse[i].FNFSe.OptanteSimplesNacional   := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));
             ListaNfse.FCompNfse[i].FNFSe.IncentivadorCultural     := StrToSimNao(ok, Leitor.rCampo(tcStr, 'IncentivadorCultural'));
+            ListaNfse.FCompNfse[i].FNFSe.Competencia              := Leitor.rCampo(tcStr, 'Competencia');
 
-            ListaNfse.FCompNfse[i].FNFSe.Competencia       := Leitor.rCampo(tcStr, 'Competencia');
             if FProvedor = proISSNet
-               then ListaNfse.FCompNfse[i].FNFSe.NfseSubstituida   := ''
-               else ListaNfse.FCompNfse[i].FNFSe.NfseSubstituida   := Leitor.rCampo(tcStr, 'NfseSubstituida');
+               then ListaNfse.FCompNfse[i].FNFSe.NfseSubstituida := ''
+               else ListaNfse.FCompNfse[i].FNFSe.NfseSubstituida := Leitor.rCampo(tcStr, 'NfseSubstituida');
+
             ListaNfse.FCompNfse[i].FNFSe.OutrasInformacoes := Leitor.rCampo(tcStr, 'OutrasInformacoes');
             ListaNfse.FCompNfse[i].FNFSe.ValorCredito      := Leitor.rCampo(tcDe2, 'ValorCredito');
 
@@ -387,6 +389,30 @@ begin
                 ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.DescontoCondicionado   := Leitor.rCampo(tcDe2, 'DescontoCondicionado');
                 ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.DescontoIncondicionado := Leitor.rCampo(tcDe2, 'DescontoIncondicionado');
                end;
+
+              // Incluido por Italo em 27/10/2014
+              if ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorLiquidoNfse = 0 then
+                ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorLiquidoNfse := ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorServicos -
+                                                                                 ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.DescontoIncondicionado -
+                                                                                 ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.DescontoCondicionado -
+                                                                                 // Retenções Federais
+                                                                                 ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorPis -
+                                                                                 ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorCofins -
+                                                                                 ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorIr -
+                                                                                 ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorInss -
+                                                                                 ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorCsll -
+
+                                                                                 ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.OutrasRetencoes -
+                                                                                 ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorIssRetido;
+
+              if ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.BaseCalculo = 0 then
+                ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.BaseCalculo := ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorServicos -
+                                                                            ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorDeducoes -
+                                                                            ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.DescontoIncondicionado;
+
+              if ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorIss = 0 then
+                ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorIss := (ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.BaseCalculo *
+                                                                          ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.Aliquota)/100;
              end;
 
             // Grupo da TAG <PrestadorServico> ********************************************

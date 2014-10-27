@@ -404,7 +404,12 @@ begin
                                      FNFSe.Servico.Valores.ValorCofins + FNFSe.Servico.Valores.ValorInss +
                                      FNFSe.Servico.Valores.ValorIr + FNFSe.Servico.Valores.ValorCsll );
  rllOutrasRetencoes.Caption     := DFeUtil.FormatFloat( FNFSe.Servico.Valores.OutrasRetencoes );//Astrogildo em 13/12/12
+ 
+ rllValorIssRetido.Caption      := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorIssRetido );//Astrogildo em 13/12/12
 
+ rllValorLiquido.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorLiquidoNfse );//Astrogildo em 13/12/12
+ 
+ {
  If FNFSe.Servico.Valores.ValorIssRetido > 0 Then Begin
 
    rllValorIssRetido.Caption := DFeUtil.FormatFloat(FNFSe.Servico.Valores.ValorIssRetido);
@@ -437,6 +442,7 @@ begin
                     End;
    end;
  End;
+ }
 
  // TnfseNaturezaOperacao = ( noTributacaoNoMunicipio, noTributacaoForaMunicipio, noIsencao, noImune, noSuspensaDecisaoJudicial, noSuspensaProcedimentoAdministrativo )
  case FNFSe.NaturezaOperacao of

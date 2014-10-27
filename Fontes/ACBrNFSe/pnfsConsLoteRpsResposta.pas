@@ -399,6 +399,30 @@ begin
                   ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.DescontoCondicionado   := Leitor.rCampo(tcDe2, 'DescontoCondicionado');
                   ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.DescontoIncondicionado := Leitor.rCampo(tcDe2, 'DescontoIncondicionado');
                  end;
+
+                // Incluido por Italo em 27/10/2014
+                if ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorLiquidoNfse = 0 then
+                  ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorLiquidoNfse := ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorServicos -
+                                                                                   ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.DescontoIncondicionado -
+                                                                                   ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.DescontoCondicionado -
+                                                                                   // Retenções Federais
+                                                                                   ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorPis -
+                                                                                   ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorCofins -
+                                                                                   ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorIr -
+                                                                                   ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorInss -
+                                                                                   ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorCsll -
+
+                                                                                   ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.OutrasRetencoes -
+                                                                                   ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorIssRetido;
+
+                if ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.BaseCalculo = 0 then
+                  ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.BaseCalculo := ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorServicos -
+                                                                              ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorDeducoes -
+                                                                              ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.DescontoIncondicionado;
+
+                if ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorIss = 0 then
+                  ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorIss := (ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.BaseCalculo *
+                                                                            ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.Aliquota)/100;
                end;
 
               // Grupo da TAG <PrestadorServico> ********************************************
