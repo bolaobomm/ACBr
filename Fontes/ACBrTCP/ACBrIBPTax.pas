@@ -500,8 +500,8 @@ begin
         '<tabela>' + IntToStr(Integer(Itens[I].Tabela)) + '</tabela>' +
         '<aliqFedNac>' + FloatToString(Itens[I].FederalNacional) + '</aliqFedNac>' +
         '<aliqFedImp>' + FloatToString(Itens[I].FederalImportado) + '</aliqFedImp>' +
-        '<aliqEst>' + FloatToString(Itens[I].FederalImportado) + '</aliqEst>' +
-        '<aliqMun>' + FloatToString(Itens[I].FederalImportado) + '</aliqMun>' +
+        '<aliqEst>' + FloatToString(Itens[I].Estadual) + '</aliqEst>' +
+        '<aliqMun>' + FloatToString(Itens[I].Municipal) + '</aliqMun>' +
         '<descricao>' + ACBrUtil.ParseText(Itens[I].Descricao, False, False) + '</descricao>' +
       '</imposto>';
   end;
