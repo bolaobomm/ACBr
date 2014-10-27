@@ -416,9 +416,6 @@ object Form1: TForm1
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 3
-      Text = 
-        'svn://svn.code.sf.net/p/acbr/code/trunk/Exemplos/ACBrIBPTax/tabe' +
-        'la/AcspDeOlhoNoImpostoIbptV.0.0.2.csv'
     end
   end
   object PageControl1: TPageControl
@@ -486,15 +483,21 @@ object Form1: TForm1
     object tmpCadastroTabela: TIntegerField
       FieldName = 'Tabela'
     end
-    object tmpCadastroAliqNacional: TFloatField
-      FieldName = 'AliqNacional'
-    end
-    object tmpCadastroAliqInternacional: TFloatField
-      FieldName = 'AliqInternacional'
-    end
     object tmpCadastroDescricao: TStringField
       FieldName = 'Descricao'
       Size = 250
+    end
+    object tmpCadastroAliqFedNacional: TFloatField
+      FieldName = 'AliqFedNacional'
+    end
+    object tmpCadastroAliqFedImportado: TFloatField
+      FieldName = 'AliqFedImportado'
+    end
+    object tmpCadastroAliqEstadual: TFloatField
+      FieldName = 'AliqEstadual'
+    end
+    object tmpCadastroAliqMunicipal: TFloatField
+      FieldName = 'AliqMunicipal'
     end
   end
   object dtsCadastro: TDataSource

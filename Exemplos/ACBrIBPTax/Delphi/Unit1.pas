@@ -34,8 +34,6 @@ type
     tmpCadastroNCM: TStringField;
     tmpCadastroEx: TIntegerField;
     tmpCadastroTabela: TIntegerField;
-    tmpCadastroAliqNacional: TFloatField;
-    tmpCadastroAliqInternacional: TFloatField;
     ACBrIBPTax1: TACBrIBPTax;
     Label2: TLabel;
     edURL: TEdit;
@@ -47,6 +45,10 @@ type
     TabSheet2: TTabSheet;
     DBGrid1: TDBGrid;
     Memo1: TMemo;
+    tmpCadastroAliqFedNacional: TFloatField;
+    tmpCadastroAliqFedImportado: TFloatField;
+    tmpCadastroAliqEstadual: TFloatField;
+    tmpCadastroAliqMunicipal: TFloatField;
     procedure FormCreate(Sender: TObject);
     procedure btExportarClick(Sender: TObject);
     procedure btSairClick(Sender: TObject);
@@ -104,12 +106,14 @@ begin
         for I := 0 to ACBrIBPTax1.Itens.Count - 1 do
         begin
           tmpCadastro.Append;
-          tmpCadastroNCM.AsString              := ACBrIBPTax1.Itens[I].NCM;
-          tmpCadastroDescricao.AsString        := ACBrIBPTax1.Itens[I].Descricao;
-          tmpCadastroEx.AsString               := ACBrIBPTax1.Itens[I].Excecao;
-          tmpCadastroTabela.AsInteger          := Integer(ACBrIBPTax1.Itens[I].Tabela);
-          tmpCadastroAliqNacional.AsFloat      := ACBrIBPTax1.Itens[I].AliqNacional;
-          tmpCadastroAliqInternacional.AsFloat := ACBrIBPTax1.Itens[I].AliqImportado;
+          tmpCadastroNCM.AsString             := ACBrIBPTax1.Itens[I].NCM;
+          tmpCadastroDescricao.AsString       := ACBrIBPTax1.Itens[I].Descricao;
+          tmpCadastroEx.AsString              := ACBrIBPTax1.Itens[I].Excecao;
+          tmpCadastroTabela.AsInteger         := Integer(ACBrIBPTax1.Itens[I].Tabela);
+          tmpCadastroAliqFedNacional.AsFloat  := ACBrIBPTax1.Itens[I].FederalNacional;
+          tmpCadastroAliqFedImportado.AsFloat := ACBrIBPTax1.Itens[I].FederalImportado;
+          tmpCadastroAliqEstadual.AsFloat     := ACBrIBPTax1.Itens[I].Estadual;
+          tmpCadastroAliqMunicipal.AsFloat    := ACBrIBPTax1.Itens[I].Municipal;
           tmpCadastro.Post;
         end;
       finally
@@ -222,17 +226,19 @@ procedure TForm1.btnPesquisarClick(Sender: TObject);
 var
   ex, descricao: String;
   tabela: Integer;
-  aliqNac, aliqImp: Double;
+  aliqFedNac, aliqFedImp, aliqEst, aliqMun: Double;
 begin
-  if ACBrIBPTax1.Procurar(edNCM.Text, ex, descricao, tabela, aliqNac, aliqImp, ckbBuscaNCMParcial.Checked) then
+  if ACBrIBPTax1.Procurar(edNCM.Text, ex, descricao, tabela, aliqFedNac, aliqFedImp, aliqEst, aliqMun, ckbBuscaNCMParcial.Checked) then
   begin
     ShowMessage(
       'Código: '    + edNCM.Text  + sLineBreak +
       'Exceção: '   + ex + sLineBreak +
       'Descrição: ' + descricao + sLineBreak +
       'Tabela: '    + IntToStr(tabela) + sLineBreak +
-      'Aliq Nac: '  + FloatToStr(aliqNac) + sLineBreak +
-      'Aliq Imp: '  + FloatToStr(aliqImp)
+      'Aliq Federal Nacional: '  + FloatToStr(aliqFedNac) + sLineBreak +
+      'Aliq Federal Importado: '  + FloatToStr(aliqFedImp) + sLineBreak +
+      'Aliq Estadual: '  + FloatToStr(aliqEst) + sLineBreak +
+      'Aliq Municipal: '  + FloatToStr(aliqMun)
     );
   end
   else

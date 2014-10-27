@@ -57,7 +57,7 @@ type
 
   TACBrIBPTaxExporta = (exTXT, exCSV, exDSV, exXML, exHTML);
 
-  TACBrIBPTaxTabela = (tabNCM, tabNBS, tabLC116);
+  TACBrIBPTaxTabela = (tabNCM, tabNBS);
 
   TACBrIBPTaxErroImportacao = procedure(const ALinha: String; const AErro: String) of object;
 
@@ -66,16 +66,20 @@ type
     FTabela: TACBrIBPTaxTabela;
     FExcecao: String;
     FNCM: string;
-    FAliqNacional: Double;
-    FAliqImportado: Double;
     FDescricao: string;
+    FEstadual: Double;
+    FFederalNacional: Double;
+    FFederalImportado: Double;
+    FMunicipal: Double;
   public
     property NCM: string read FNCM write FNCM;
     property Descricao: string read FDescricao write FDescricao;
     property Excecao: String read FExcecao write FExcecao;
     property Tabela: TACBrIBPTaxTabela read FTabela write FTabela;
-    property AliqNacional: Double read FAliqNacional write FAliqNacional;
-    property AliqImportado: Double read FAliqImportado write FAliqImportado;
+    property FederalNacional: Double read FFederalNacional write FFederalNacional;
+    property FederalImportado: Double read FFederalImportado write FFederalImportado;
+    property Estadual: Double read FEstadual write FEstadual;
+    property Municipal: Double read FMunicipal write FMunicipal;
   end;
 
   TACBrIBPTaxRegistros = class(TObjectList)
@@ -92,9 +96,12 @@ type
   TACBrIBPTax = class(TACBrHTTP)
   private
     FArquivo: TStringList;
+    FChaveArquivo: String;
     FVersaoArquivo: String;
     FURLDownload: String;
     FItens: TACBrIBPTaxRegistros;
+    FVigenciaFim: TDateTime;
+    FVigenciaInicio: TDateTime;
     FOnErroImportacao: TACBrIBPTaxErroImportacao;
     procedure ExportarCSV(const AArquivo: String);
     procedure ExportarDSV(const AArquivo: String);
@@ -108,19 +115,23 @@ type
     constructor Create(AOwner: TComponent); override;
 
     function DownloadTabela: Boolean;
+
     function AbrirTabela(const AFileName: TFileName): Boolean; overload;
     function AbrirTabela(const AConteudoArquivo: TStream): Boolean; overload;
     function AbrirTabela(const AConteudoArquivo: TStringList): Boolean; overload;
     procedure Exportar(const AArquivo: String; ATipo: TACBrIBPTaxExporta); overload;
     procedure Exportar(const AArquivo, ADelimitador: String; const AQuoted: Boolean); overload;
     function Procurar(const ACodigo: String; var ex, descricao: String;
-      var tabela: Integer; var aliqNac, aliqImp: Double ;
-      const BuscaParcial: Boolean = False): Boolean;
+      var tabela: Integer; var aliqFedNac, aliqFedImp, aliqEstadual,
+      aliqMunicipal: Double ; const BuscaParcial: Boolean = False): Boolean;
 
     property Itens: TACBrIBPTaxRegistros read FItens;
   published
     property OnErroImportacao: TACBrIBPTaxErroImportacao read FOnErroImportacao write FOnErroImportacao;
-    property VersaoArquivo : String read FVersaoArquivo ;
+    property VersaoArquivo: String read FVersaoArquivo;
+    property ChaveArquivo: String read FChaveArquivo;
+    property VigenciaInicio: TDateTime read FVigenciaInicio;
+    property VigenciaFim: TDateTime read FVigenciaFim;
     property URLDownload: String read FURLDownload write FURLDownload;
     property Arquivo: TStringList read FArquivo write FArquivo;
   end;
@@ -138,7 +149,6 @@ begin
   case ATabela of
     tabNCM:   Result := '0';
     tabNBS:   Result := '1';
-    tabLC116: Result := '2';
   end;
 end;
 
@@ -149,9 +159,6 @@ begin
   else
   if ATabela = '1' then
     Result := tabNBS
-  else
-  if ATabela = '2' then
-    Result := tabLC116
   else
     raise EACBrIBPTax.CreateFmt('Tipo de tabela desconhecido "%s".', [ATabela]);
 end;
@@ -210,14 +217,19 @@ begin
   try
     // primeira linha contem os cabecalhos de campo e versão do arquivo
     QuebrarLinha(Arquivo.Strings[0], Item);
-    if Item.Count = 7 then
-      FVersaoArquivo := Item.Strings[6];
+    if Item.Count = 13 then
+    begin
+      FVigenciaInicio := StrToDateDef(Item.Strings[8], 0.0);
+      FVigenciaFim    := StrToDateDef(Item.Strings[9], 0.0);
+      FChaveArquivo   := Item.Strings[10];
+      FVersaoArquivo  := Item.Strings[11];
+    end;
 
     // proximas linhas contem os registros
     for I := 1 to Arquivo.Count - 1 do
     begin
       QuebrarLinha(Arquivo.Strings[I], Item);
-      if Item.Count = 7 then
+      if Item.Count = 13 then
       begin
         try
           // codigo;ex;tabela;descricao;aliqNac;aliqImp;0.0.2
@@ -227,8 +239,11 @@ begin
             Excecao       := Item.Strings[1];
             Tabela        := TACBrIBPTaxTabela(StrToInt(Trim(Item.Strings[2]))) ;
             Descricao     := Item.Strings[3];
-            AliqNacional  := StringToFloatDef(Item.Strings[4], 0.00);
-            AliqImportado := StringToFloatDef(Item.Strings[5], 0.00);
+
+            FederalNacional  := StringToFloatDef(Item.Strings[4], 0.00);
+            FederalImportado := StringToFloatDef(Item.Strings[5], 0.00);
+            Estadual         := StringToFloatDef(Item.Strings[6], 0.00);
+            Municipal        := StringToFloatDef(Item.Strings[7], 0.00);
           end;
         except
           on E: Exception do
@@ -312,7 +327,7 @@ begin
 end;
 
 function TACBrIBPTax.Procurar(const ACodigo: String; var ex, descricao: String;
-  var tabela: Integer; var aliqNac, aliqImp: Double ;
+  var tabela: Integer; var aliqFedNac, aliqFedImp, aliqEstadual, aliqMunicipal: Double ;
   const BuscaParcial: Boolean): Boolean;
 var
   I: Integer;
@@ -330,16 +345,18 @@ begin
       Igual := SameText(Trim(ACodigo), Trim(Itens[I].NCM));
 
     if Igual Then
-     begin
-       ex        := Itens[I].Excecao ;
-       descricao := Itens[I].Descricao;
-       tabela    := Integer(Itens[I].Tabela) ;
-       aliqNac   := Itens[I].AliqNacional ;
-       aliqImp   := Itens[I].AliqImportado ;
+    begin
+     ex            := Itens[I].Excecao;
+     descricao     := Itens[I].Descricao;
+     tabela        := Integer(Itens[I].Tabela);
+     aliqFedNac    := Itens[I].FederalNacional;
+     aliqFedImp    := Itens[I].FederalImportado;
+     aliqEstadual  := Itens[I].Estadual;
+     aliqMunicipal := Itens[I].Municipal;
 
-       Result := True;
-       Exit;
-     end;
+     Result := True;
+     Exit;
+    end;
   end;
 end;
 
@@ -387,8 +404,10 @@ begin
       AddQuoted(Itens[I].NCM) + ADelimitador +
       AddQuoted(Itens[I].Excecao) + ADelimitador +
       AddQuoted(IntToStr(Integer(Itens[I].Tabela))) + ADelimitador +
-      AddQuoted(FloatToString(Itens[I].AliqNacional)) + ADelimitador +
-      AddQuoted(FloatToString(Itens[I].AliqImportado)) + ADelimitador +
+      AddQuoted(FloatToString(Itens[I].FederalNacional)) + ADelimitador +
+      AddQuoted(FloatToString(Itens[I].FederalImportado)) + ADelimitador +
+      AddQuoted(FloatToString(Itens[I].Estadual)) + ADelimitador +
+      AddQuoted(FloatToString(Itens[I].Municipal)) + ADelimitador +
       AddQuoted(Itens[I].Descricao) + ADelimitador +
       sLineBreak;
   end;
@@ -412,8 +431,10 @@ begin
       PadL(Itens[I].NCM, 10) +
       PadL(Itens[I].Excecao, 2) +
       PadL(IntToStr(Integer(Itens[I].Tabela)), 1) +
-      PadR(FloatToString(Itens[I].AliqNacional * 100), 4, '0') +
-      PadR(FloatToString(Itens[I].AliqImportado * 100), 4, '0') +
+      PadR(FloatToString(Itens[I].FederalNacional * 100), 4, '0') +
+      PadR(FloatToString(Itens[I].FederalImportado * 100), 4, '0') +
+      PadR(FloatToString(Itens[I].Estadual * 100), 4, '0') +
+      PadR(FloatToString(Itens[I].Municipal * 100), 4, '0') +
       PadL(Itens[I].Descricao, 400) +
       sLineBreak;
   end;
@@ -448,8 +469,10 @@ begin
       AddAspasDuplas(Itens[I].NCM) + ',' +
       AddAspasDuplas(Itens[I].Excecao) + ',' +
       AddAspasDuplas(IntToStr(Integer(Itens[I].Tabela))) + ',' +
-      AddAspasDuplas(FloatToString(Itens[I].AliqNacional)) + ',' +
-      AddAspasDuplas(FloatToString(Itens[I].AliqImportado)) + ',' +
+      AddAspasDuplas(FloatToString(Itens[I].FederalNacional)) + ',' +
+      AddAspasDuplas(FloatToString(Itens[I].FederalImportado)) + ',' +
+      AddAspasDuplas(FloatToString(Itens[I].Estadual)) + ',' +
+      AddAspasDuplas(FloatToString(Itens[I].Municipal)) + ',' +
       AddAspasDuplas(Itens[I].Descricao) +
       sLineBreak;
   end;
@@ -474,8 +497,10 @@ begin
         '<ncm>' + Itens[I].NCM + '</ncm>' +
         '<ex>' + Itens[I].Excecao + '</ex>' +
         '<tabela>' + IntToStr(Integer(Itens[I].Tabela)) + '</tabela>' +
-        '<aliqNac>' + FloatToString(Itens[I].AliqNacional) + '</aliqNac>' +
-        '<aliqImp>' + FloatToString(Itens[I].AliqImportado) + '</aliqImp>' +
+        '<aliqFedNac>' + FloatToString(Itens[I].FederalNacional) + '</aliqFedNac>' +
+        '<aliqFedImp>' + FloatToString(Itens[I].FederalImportado) + '</aliqFedImp>' +
+        '<aliqEst>' + FloatToString(Itens[I].FederalImportado) + '</aliqEst>' +
+        '<aliqMun>' + FloatToString(Itens[I].FederalImportado) + '</aliqMun>' +
         '<descricao>' + ACBrUtil.ParseText(Itens[I].Descricao, False, False) + '</descricao>' +
       '</imposto>';
   end;
@@ -510,8 +535,10 @@ begin
     '          <th>NCM</th>' + slineBreak +
     '          <th>Exceção</th>' + slineBreak +
     '          <th>Tabela</th>' + slineBreak +
-    '          <th>Aliq. Nacional</th>' + slineBreak +
-    '          <th>Aliq. Importado</th>' + slineBreak +
+    '          <th>Aliq. Federal Nacional</th>' + slineBreak +
+    '          <th>Aliq. Federal Importado</th>' + slineBreak +
+    '          <th>Aliq. Estadual</th>' + slineBreak +
+    '          <th>Aliq. Municipal</th>' + slineBreak +
     '          <th>Descrição</th>' + slineBreak +
 		'        </tr>' + slineBreak;
 
@@ -522,8 +549,10 @@ begin
         '<td>' + Itens[I].NCM + '</td>' + slineBreak +
         '<td>' + Itens[I].Excecao + '</td>' + slineBreak +
         '<td>' + IntToStr(Integer(Itens[I].Tabela)) + '</td>' + slineBreak +
-        '<td>' + FloatToStr(Itens[I].AliqNacional) + '</td>' + slineBreak +
-        '<td>' + FloatToStr(Itens[I].AliqImportado) + '</td>' + slineBreak +
+        '<td>' + FloatToStr(Itens[I].FederalNacional) + '</td>' + slineBreak +
+        '<td>' + FloatToStr(Itens[I].FederalImportado) + '</td>' + slineBreak +
+        '<td>' + FloatToStr(Itens[I].Estadual) + '</td>' + slineBreak +
+        '<td>' + FloatToStr(Itens[I].Municipal) + '</td>' + slineBreak +
         '<td>' + ACBrUtil.ParseText(Itens[I].Descricao, False, False) + '</td>' + slineBreak +
       '</tr>' + slineBreak;
   end;

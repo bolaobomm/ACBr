@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/10/2014
+-- ACBrIBPTax --
+[*] alteração do componente ACBrIBPTax para ler as novas tabelas de imposto no cupom
+    por: regys silveira
+
 21/20/2014
 -- ACBrNCMs
 [*] Aplicado correção na váriavel que não era inicializada e formatado o código conforme solicitado
