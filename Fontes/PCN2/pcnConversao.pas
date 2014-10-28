@@ -1771,7 +1771,7 @@ end;
 
 function VersaoDFToStr(const t: TpcnVersaoDF): string;
 begin
-  result := EnumeradoToStr(t, '2.00', '3.00', '3.10'],
+  result := EnumeradoToStr(t, ['2.00', '3.00', '3.10'],
                               [ve200, ve300, ve310]);
 end;
 
