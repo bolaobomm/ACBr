@@ -1559,8 +1559,8 @@ begin
       ACBrNFe1.NotasFiscais.Clear;
       with ACBrNFe1.NotasFiscais.Add.NFe do
        begin
-         versao        :=                   INIRec.ReadString('infNFe','versao', '');
-         infNFe.versao := StringToFloatDef( INIRec.ReadString('infNFe','versao', '') ,0) ;
+         versao        :=                   INIRec.ReadString('infNFe','versao', VersaoDFToStr(ACBrNFe1.Configuracoes.Geral.VersaoDF));
+         infNFe.versao := StringToFloatDef( INIRec.ReadString('infNFe','versao', VersaoDFToStr(ACBrNFe1.Configuracoes.Geral.VersaoDF)),0) ;
 
          versao := infNFe.VersaoStr;
          versao := StringReplace(versao,'versao="','',[rfReplaceAll,rfIgnoreCase]);
