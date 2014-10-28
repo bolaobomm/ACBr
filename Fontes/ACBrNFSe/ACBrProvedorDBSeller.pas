@@ -98,7 +98,7 @@ begin
   ConfigCidade.Prefixo2      := '';
   ConfigCidade.Prefixo3      := '';
   ConfigCidade.Prefixo4      := '';
-  ConfigCidade.Identificador := 'Id';
+  ConfigCidade.Identificador := ' id'; // Deve-se deixar o espaço em branco para que a assinatura ocorra.
   ConfigCidade.QuebradeLinha := ';';
 
   case ACodCidade of

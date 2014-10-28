@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/10/2014
+[-] Alterado o indentificador para " id" com espaço em branco no inicio.
+    isso faz com que seja incluido o atributo ID todo em minusculo e ocorra a
+    assinatura digital (provedor DBSeller).
+    por: Rodrigo Custódio
 [-] Alteração para ler o endereço corretamente do xml da NFS-e (provedor DBSeller).
     por: Italo Jurisato Junior
 [+] Adicionado a cidade Araguari/MG ao provedor SimplISS.
