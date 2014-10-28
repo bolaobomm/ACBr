@@ -210,9 +210,9 @@ type
   TACBrTipoPagamento = TACBrIndPgto;
 
   /// Indicador do tipo do frete
-  TACBrIndFrt = (tfPorContaTerceiros,     // 0 - Por conta de terceiros
-                 tfPorContaEmitente,      // 1 - Por conta do emitente
-                 tfPorContaDestinatario,  // 2 - Por conta do destinatário
+  TACBrIndFrt = (tfPorContaEmitente,      // 0 - Por conta do emitente
+                 tfPorContaDestinatario,  // 1 - Por conta do destinatário
+                 tfPorContaTerceiros,     // 2 - Por conta de terceiros
                  tfSemCobrancaFrete,      // 9 - Sem cobrança de frete
                  tfNenhum                 // Preencher vazio
                  );
