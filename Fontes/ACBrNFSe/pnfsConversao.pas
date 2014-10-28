@@ -692,13 +692,14 @@ begin
 
         // Devemos informar aqui a lista de cidades que utilizam a versão 1
         // do layout da ABRASF mas ainda não possui um Web Service, ou seja,
-        // devemos apenas gerar o XML do RPS para ser lido site da prefeitura
-       -1
+        // devemos apenas gerar o XML do RPS para ser lido pelo site da prefeitura
+
+  2607901  //Jaboatão dos Guararapes/PE //gilvan
          : Provedor := 'ABRASFv1';
 
         // Devemos informar aqui a lista de cidades que utilizam a versão 2
         // do layout da ABRASF mas ainda não possui um Web Service, ou seja,
-        // devemos apenas gerar o XML do RPS para ser lido site da prefeitura
+        // devemos apenas gerar o XML do RPS para ser lido pelo site da prefeitura
        -2
          : Provedor := 'ABRASFv2';
 
@@ -1158,6 +1159,7 @@ begin
 
   5208004, // Formosa/GO
   5213103, // Mineiros/GO
+  5217302, // Pirenopolis/GO //Gilvan
   5218805  // Rio Verde/GO
          : Provedor := 'Prodata';
 

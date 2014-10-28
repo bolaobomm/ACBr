@@ -145,6 +145,11 @@ begin
             ConfigURL.HomNomeCidade := 'homologacao.mineiros.gdc.net.br:90';
             ConfigURL.ProNomeCidade := 'mineiros.gdc.net.br';
            end;
+//Gilvan		   
+  5217302: begin // Pirenopolis/GO
+            ConfigURL.HomNomeCidade := '177.2.108.194:8080';
+            ConfigURL.ProNomeCidade := '177.2.108.194:8080';
+           end;
   5218805: begin // Rio Verde/GO
             ConfigURL.HomNomeCidade := 'homologacao.rioverdegoias.com.br';
             ConfigURL.ProNomeCidade := 'online.rioverdegoias.com.br';
