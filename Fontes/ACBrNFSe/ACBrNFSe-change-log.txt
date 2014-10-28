@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/10/2014
+[-] Alteração para ler o endereço corretamente do xml da NFS-e (provedor DBSeller).
+    por: Italo Jurisato Junior
 [+] Adicionado a cidade Araguari/MG ao provedor SimplISS.
     por: Renato Henrique
 
