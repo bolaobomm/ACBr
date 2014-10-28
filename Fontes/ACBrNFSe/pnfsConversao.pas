@@ -1212,6 +1212,7 @@ begin
   2507507  // Joao Pessoa/PB
          : Provedor := 'SisPMJP';
 
+  3103504, // Araguari/MG
   3105103, // Bambuí/MG
   3137205, // Lagoa Da Prata/MG
   3148103, // Patrocinio/MG
