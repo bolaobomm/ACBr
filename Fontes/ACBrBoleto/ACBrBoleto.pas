@@ -756,7 +756,8 @@ type
                                 PedeConfirma: Boolean = False;
                                 AguardarEnvio: Boolean = False;
                                 NomeRemetente: String = '';
-                                TLS : Boolean = True);
+                                TLS : Boolean = True;
+                                HTML:Boolean = False);
 
     // enviar email.
     procedure EnviarEmailNormal(const sSmtpHost,
@@ -774,7 +775,8 @@ type
                                 PedeConfirma: Boolean = False;
                                 AguardarEnvio: Boolean = False;
                                 NomeRemetente: String = '';
-                                TLS : Boolean = True);
+                                TLS : Boolean = True;
+                                HTML:Boolean = False);
 
 
     procedure AdicionarMensagensPadroes(Titulo : TACBrTitulo; AStringList: TStrings);
@@ -1270,7 +1272,8 @@ procedure TACBrBoleto.EnviarEmail(const sSmtpHost,
                                       PedeConfirma: Boolean = False;
                                       AguardarEnvio: Boolean = False;
                                       NomeRemetente: String = '';
-                                      TLS : Boolean = True);
+                                      TLS : Boolean = True;
+                                      HTML:Boolean = False);
 var
   ThreadSMTP : TSendMailThread;
   m:TMimemess;
@@ -1285,7 +1288,11 @@ begin
   try
     p := m.AddPartMultipart('mixed', nil);
     if sMensagem <> nil then
-       m.AddPartText(sMensagem, p);
+//       m.AddPartText(sMensagem, p);
+      if HTML = true then
+         m.AddPartHTML(sMensagem, p)
+      else
+         m.AddPartText(sMensagem, p);
 
     if (EnviaPDF) then
      begin
@@ -1355,7 +1362,7 @@ end;
 
 procedure TACBrBoleto.EnviarEmailNormal(const sSmtpHost, sSmtpPort, sSmtpUser, sSmtpPasswd, sFrom, sTo, sAssunto: String;
   sMensagem: TStrings; SSL, EnviaPDF: Boolean; sCC, Anexos: TStrings; PedeConfirma, AguardarEnvio: Boolean; NomeRemetente: String;
-  TLS: Boolean);
+  TLS: Boolean; HTML:Boolean);
 var
   smtp: TSMTPSend;
   msg_lines: TStringList;
@@ -1370,7 +1377,12 @@ begin
   try
     p := m.AddPartMultipart('mixed', nil);
     if sMensagem <> nil then
-       m.AddPartText(sMensagem, p);
+//       m.AddPartText(sMensagem, p);
+      if HTML = true then
+         m.AddPartHTML(sMensagem, p)
+      else
+         m.AddPartText(sMensagem, p);
+
 
     if (EnviaPDF) then
      begin

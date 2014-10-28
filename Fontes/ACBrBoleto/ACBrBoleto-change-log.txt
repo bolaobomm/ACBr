@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/10/2014
+[+] Envio de HTML  no corpo do e-mail do Boleto
+http://www.projetoacbr.com.br/forum/index.php?/topic/18308-implementa%C3%A7%C3%A3o-de-envio-de-e-mail-normal/#entry115602
+
 Data: 24/10/2014
 [+] Envio de Boleto por e-mail sem uso de threads, igual possui no outros componentes ACBrCTe, ACBrNFe...
 http://www.projetoacbr.com.br/forum/index.php?/topic/18308-implementa%C3%A7%C3%A3o-de-envio-de-e-mail-normal/
