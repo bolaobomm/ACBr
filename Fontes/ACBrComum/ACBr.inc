@@ -61,7 +61,12 @@
 
 // Descomente a linha abaixo para usar o componente de comunicação SOAP do Delphi ao invés do ACBrHTTPReqResp(Funciona apenas com a versão CAPICOM) - Não é compatível com o Lazarus
 //--------------------------------------------------------------------------------
-//{$DEFINE SoapHTTP}
+{$DEFINE SoapHTTP}
+
+// Descomente a linha abaixo para usar os recursos de Collate e Botão Salvar do Preview do componente Danfe com Rave Reports
+//Essas opção só funcionam com versão do Rave Reports a partir de 5.1.x
+//--------------------------------------------------------------------------------
+//{$DEFINE Rave500_UP}
 
 // Ajusta FreePascal para o modo Delphi
 //------------------------------------------------------------------------------

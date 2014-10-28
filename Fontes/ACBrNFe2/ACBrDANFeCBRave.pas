@@ -521,7 +521,10 @@ begin
     DANFeRave.TitleStatus:='Status da Impressão';
     DANFeRave.SystemFiler.StatusFormat:='Gerando página %p';
     DANFeRave.SystemFiler.StreamMode:=smTempFile;
-    DANFeRave.SystemOptions:=[soShowStatus,soAllowPrintFromPreview,{soAllowSaveFromPreview,}soPreviewModal];
+    DANFeRave.SystemOptions:=[soShowStatus,soAllowPrintFromPreview,soPreviewModal];
+    {$IFDEF Rave500_UP}
+    DANFeRave.SystemOptions := DANFeRave.SystemOptions + [soAllowSaveFromPreview];
+    {$ENDIF}
     if not aMostrarStatus then
        DANFeRave.SystemOptions:=DANFeRave.SystemOptions - [soShowStatus];
     DANFeRave.SystemPreview.FormState:=wsMaximized;
@@ -533,7 +536,7 @@ begin
     DANFeRave.SystemPrinter.Units:=unMM;
     DANFeRave.SystemPrinter.UnitsFactor:=25.4;
     DANFeRave.SystemPrinter.Orientation:=aOrientacaoPapel;
-    {$IFNDEF RAVE50VCL} //JuaumKiko-Teste
+    {$IFDEF Rave500_UP}
       DANFeRave.SystemPrinter.Collate := True;
     {$ENDIF}
     DANFeRave.SystemSetups:=[ssAllowSetup,ssAllowCopies,ssAllowCollate,ssAllowDuplex,ssAllowDestPreview,ssAllowDestPrinter,ssAllowDestFile,ssAllowPrinterSetup,ssAllowPreviewSetup];
@@ -649,7 +652,10 @@ begin
     EventoRave.TitleStatus:='Status da Impressão';
     EventoRave.SystemFiler.StatusFormat:='Gerando página %p';
     EventoRave.SystemFiler.StreamMode:=smTempFile;
-    EventoRave.SystemOptions:=[soShowStatus,soAllowPrintFromPreview,{soAllowSaveFromPreview,}soPreviewModal];
+    EventoRave.SystemOptions:=[soShowStatus,soAllowPrintFromPreview,soPreviewModal];
+    {$IFDEF Rave500_UP}
+    EventoRave.SystemOptions := EventoRave.SystemOptions + [soAllowSaveFromPreview];
+    {$ENDIF}
     if not aMostrarStatus then
        EventoRave.SystemOptions:=EventoRave.SystemOptions - [soShowStatus];
     EventoRave.SystemPreview.FormState:=wsMaximized;
@@ -661,7 +667,7 @@ begin
     EventoRave.SystemPrinter.Units:=unMM;
     EventoRave.SystemPrinter.UnitsFactor:=25.4;
     EventoRave.SystemPrinter.Orientation:=aOrientacaoPapel;
-    {$IFNDEF RAVE50VCL} ////JuaumKiko-Teste
+    {$IFDEF Rave500_UP}
       DANFeRave.SystemPrinter.Collate := True;
     {$ENDIF}
     EventoRave.SystemSetups:=[ssAllowSetup,ssAllowCopies,ssAllowCollate,ssAllowDuplex,ssAllowDestPreview,ssAllowDestPrinter,ssAllowDestFile,ssAllowPrinterSetup,ssAllowPreviewSetup];
@@ -777,7 +783,10 @@ begin
     InutilizacaoRave.TitleStatus:='Status da Impressão';
     InutilizacaoRave.SystemFiler.StatusFormat:='Gerando página %p';
     InutilizacaoRave.SystemFiler.StreamMode:=smTempFile;
-    InutilizacaoRave.SystemOptions:=[soShowStatus,soAllowPrintFromPreview,{soAllowSaveFromPreview,}soPreviewModal];
+    InutilizacaoRave.SystemOptions:=[soShowStatus,soAllowPrintFromPreview,soPreviewModal];
+    {$IFDEF Rave500_UP}
+    InutilizacaoRave.SystemOptions := InutilizacaoRave.SystemOptions + [soAllowSaveFromPreview];
+    {$ENDIF}
     if not aMostrarStatus then
        InutilizacaoRave.SystemOptions:=InutilizacaoRave.SystemOptions - [soShowStatus];
     InutilizacaoRave.SystemPreview.FormState:=wsMaximized;
@@ -789,7 +798,7 @@ begin
     InutilizacaoRave.SystemPrinter.Units:=unMM;
     InutilizacaoRave.SystemPrinter.UnitsFactor:=25.4;
     InutilizacaoRave.SystemPrinter.Orientation:=aOrientacaoPapel;
-    {$IFNDEF RAVE50VCL} ////JuaumKiko-Teste
+    {$IFDEF Rave500_UP}
       InutilizacaoRave.SystemPrinter.Collate := True;
     {$ENDIF}
     InutilizacaoRave.SystemSetups:=[ssAllowSetup,ssAllowCopies,ssAllowCollate,ssAllowDuplex,ssAllowDestPreview,ssAllowDestPrinter,ssAllowDestFile,ssAllowPrinterSetup,ssAllowPreviewSetup];
