@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/10/2014
+[*] Alterações diversas efetuadas para o provedor ISSDsf.
+    por: Thiago Filiano
 [+] Adicionado a cidade Pirenópolis/GO ao provedor Prodata.
     por: Gilvan
 [-] Alterado o indentificador para " id" com espaço em branco no inicio.

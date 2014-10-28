@@ -769,8 +769,7 @@ begin
                '<transacao>' + Transacao + '</transacao>' +
                '<Versao>' + VersaoXML + '</Versao>' +
              '</Cabecalho>' +
-             //'<Lote  Id="Lote:' + NumeroLote + '">' +
-             '<Lote  Id="' + NumeroLote + '">' + //Alterado por Ailton 28/07/2017 Retirado o item "Lote" no provedor DSF da erro
+             '<Lote  Id="lote:' + NumeroLote + '">' +
                 Notas +
              '</Lote>';
 

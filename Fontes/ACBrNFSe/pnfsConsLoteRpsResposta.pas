@@ -768,97 +768,56 @@ begin
 
     if leitor.rExtrai(1, 'RetornoConsultaLote') <> '' then
     begin
-
       if (leitor.rExtrai(2, 'Cabecalho') <> '') then
       begin
          if (Leitor.rCampo(tcStr, 'Sucesso') = 'true') then
          begin
             if (Leitor.rCampo(tcInt, 'QtdNotasProcessadas') > 0) then
             begin
-
-               strAux := leitor.rExtrai(1, 'ListaNFSe');
-               if (strAux <> '') then
-               begin
-                  posI := pos('<ConsultaNFSe>', strAux);
-                  i := 0;
-                  while ( posI > 0 ) do begin
-                     count := pos('</ConsultaNFSe>', strAux) + 14;
-
-                     ListaNfse.FCompNfse.Add;
-                     LeitorAux := TLeitor.Create;
-                     leitorAux.Arquivo := copy(strAux, PosI, count);
-                     leitorAux.Grupo   := leitorAux.Arquivo;
-
-                     ListaNfse.FCompNfse[i].FNFSe.Numero            := leitorAux.rCampo(tcStr, 'NumeroNFe');
-                     ListaNfse.FCompNfse[i].FNFSe.CodigoVerificacao := leitorAux.rCampo(tcStr, 'CodigoVerificacao');
-                     ListaNfse.FCompNfse[i].FNFSe.DataEmissaoRps    := leitorAux.rCampo(tcDatHor, 'DataEmissaoRPS');
-
-                     LeitorAux.free;
-
-                     Delete(strAux, PosI, count);
-                     posI := pos('<ConsultaNFSe>', strAux);
-                     inc(i);
+              if leitor.rExtrai(1, 'ListaNFSe') <> '' then
+              begin
+                i:= 0;
+                while leitor.rExtrai(2, 'ConsultaNFSe', '', i + 1) <> '' do
+                  begin
+                    ListaNfse.FCompNfse.Add;
+                    ListaNfse.FCompNfse[i].FNFSe.Numero                 := leitor.rCampo(tcStr, 'NumeroNFe');
+                    ListaNfse.FCompNfse[i].FNFSe.CodigoVerificacao      := leitor.rCampo(tcStr, 'CodigoVerificacao');
+                    ListaNfse.FCompNfse[i].FNFSe.DataEmissao            := leitor.rCampo(tcDatHor, 'DataEmissaoRPS');
+                    ListaNfse.FCompNfse[i].FNFSe.IdentificacaoRps.Numero:= leitor.rCampo(tcStr, 'NumeroRPS');
+                    ListaNfse.FCompNfse[i].FNFSe.IdentificacaoRps.Serie := leitor.rCampo(tcStr, 'SerieRPS');
+                    inc(i);
                   end;
-               end;
+              end;
             end;
          end;
       end;
 
       i := 0 ;
-      if (leitor.rExtrai(1, 'Alertas') <> '') then
-      begin     
-         strAux := leitor.rExtrai(2, 'Alerta');
-         if (strAux <> '') then
-         begin
-            posI := pos('<Alerta>', strAux);
-            while ( posI > 0 ) do begin
-               count := pos('</Alerta>', strAux) + 7;
-
-               ListaNfse.FMsgRetorno.Add;
-               LeitorAux := TLeitor.Create;
-               leitorAux.Arquivo := copy(strAux, PosI, count);
-               leitorAux.Grupo   := leitorAux.Arquivo;
-
-               ListaNfse.FMsgRetorno[i].FCodigo  := leitorAux.rCampo(tcStr, 'Codigo');
-               ListaNfse.FMsgRetorno[i].Mensagem := leitorAux.rCampo(tcStr, 'Descricao');
-
-               LeitorAux.free;
-
-               Delete(strAux, PosI, count);
-               posI := pos('<Alerta>', strAux);
-               inc(i);
-            end;
-         end;
-      end;
-
-      if (leitor.rExtrai(1, 'Erros') <> '') then
+      if (leitor.rExtrai(2, 'Alertas') <> '') then
       begin
+        while Leitor.rExtrai(3, 'Alerta', '', i + 1) <> '' do
+        begin
+          ListaNfse.FMsgRetorno.Add;
+          ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+          ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
 
-         strAux := leitor.rExtrai(2, 'Erros');
-         if (strAux <> '') then
-         begin
-            posI := pos('<Erro>', strAux);
-
-            while ( posI > 0 ) do begin
-               count := pos('</Erro>', strAux) + 6;
-
-               ListaNfse.FMsgRetorno.Add;
-
-
-               LeitorAux := TLeitor.Create;
-               leitorAux.Arquivo := copy(strAux, PosI, count);
-               leitorAux.Grupo   := leitorAux.Arquivo;
-
-               ListaNfse.FMsgRetorno[i].FCodigo  := leitorAux.rCampo(tcStr, 'Codigo');
-               ListaNfse.FMsgRetorno[i].Mensagem := leitorAux.rCampo(tcStr, 'Descricao');
-               LeitorAux.free;
-
-               Delete(strAux, PosI, count);
-               posI := pos('<Erro>', strAux);
-               inc(i);
-            end;
-         end;
+          inc(i);
+        end;
       end;
+
+      i := 0 ;
+      if (leitor.rExtrai(2, 'Erros') <> '') then
+      begin
+        while Leitor.rExtrai(3, 'Erro', '', i + 1) <> '' do
+        begin
+          ListaNfse.FMsgRetorno.Add;
+          ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+          ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
+
+          inc(i);
+        end;
+      end;
+
       Result := True;
     end;
   except

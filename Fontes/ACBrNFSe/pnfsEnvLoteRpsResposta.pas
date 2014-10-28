@@ -271,9 +271,9 @@ begin
       end;
 
       i := 0;
-      if (leitor.rExtrai(2, 'Alertas') <> '') then
+      if (leitor.rExtrai(1, 'Alertas') <> '') then
       begin
-         strAux := leitor.rExtrai(2, 'Alertas');
+         strAux := leitor.rExtrai(1, 'Alertas');
          if (strAux <> '') then
          begin
             posI := pos('<Alerta>', strAux);
@@ -299,9 +299,9 @@ begin
          end;
       end;
 
-      if (leitor.rExtrai(2, 'Erros') <> '') then
+      if (leitor.rExtrai(1, 'Erros') <> '') then
       begin
-         strAux := leitor.rExtrai(2, 'Erros');
+         strAux := leitor.rExtrai(1, 'Erros');
          if (strAux <> '') then
          begin
             //i := 0 ;

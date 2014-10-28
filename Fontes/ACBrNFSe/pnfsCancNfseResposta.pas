@@ -55,6 +55,7 @@ type
     FNotasCanceladas: TNotasCanceladasCollection;
 
     procedure SetMsgRetorno(Value: TMsgRetornoCancCollection);
+    procedure SetNotasCanceladas(const Value: TNotasCanceladasCollection);
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -63,7 +64,7 @@ type
     property Sucesso: String                       read FSucesso    write FSucesso;
     property MsgCanc: String                       read FMsgCanc    write FMsgCanc;
     property MsgRetorno: TMsgRetornoCancCollection read FMsgRetorno write SetMsgRetorno;
-    property NotasCanceladas: TNotasCanceladasCollection read FNotasCanceladas write FNotasCanceladas;
+    property NotasCanceladas: TNotasCanceladasCollection read FNotasCanceladas write SetNotasCanceladas;
   end;
 
  TMsgRetornoCancCollection = class(TCollection)
@@ -137,12 +138,14 @@ constructor TInfCanc.Create;
 begin
   FPedido     := TPedidoCancelamento.Create;
   FMsgRetorno := TMsgRetornoCancCollection.Create(Self);
+  FNotasCanceladas := TNotasCanceladasCollection.Create(Self);
 end;
 
 destructor TInfCanc.Destroy;
 begin
   FPedido.Free;
   FMsgRetorno.Free;
+  FNotasCanceladas.Free;
 
   inherited;
 end;
@@ -150,6 +153,11 @@ end;
 procedure TInfCanc.SetMsgRetorno(Value: TMsgRetornoCancCollection);
 begin
   FMsgRetorno.Assign(Value);
+end;
+
+procedure TInfCanc.SetNotasCanceladas(const Value: TNotasCanceladasCollection);
+begin
+  FNotasCanceladas.Assign(Value);
 end;
 
 { TMsgRetornoCancCollection }
@@ -383,98 +391,48 @@ begin
          FInfCanc.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
       end;
 
-      strAux := leitor.rExtrai(2, 'NotasCanceladas');
-      if (strAux <> '') then
+      i := 0 ;
+      if (leitor.rExtrai(2, 'NotasCanceladas') <> '') then
       begin
-         i := 0 ;
-         posI := pos('<Nota>', strAux);
-
-         while ( posI > 0 ) do begin
-            count := pos('</Nota>', strAux) + 6;
-
-            inc(i);
-            FInfCanc.FNotasCanceladas.Add;
-
-            LeitorAux := TLeitor.Create;
-            leitorAux.Arquivo := copy(strAux, PosI, count);
-            leitorAux.Grupo   := leitorAux.Arquivo;
-
-            FInfCanc.FNotasCanceladas[i].InscricaoMunicipalPrestador := LeitorAux.rCampo(tcStr,'InscricaoMunicipalPrestador');
-            FInfCanc.FNotasCanceladas[i].NumeroNota                  := LeitorAux.rCampo(tcStr,'NumeroNota');
-            FInfCanc.FNotasCanceladas[i].CodigoVerficacao            := LeitorAux.rCampo(tcStr,'CodigoVerificacao');
-
-            LeitorAux.free;
-                                                                                                                   
-            Delete(strAux, PosI, count);                                                                           
-            posI := pos('<Nota>', strAux);
-         end;
+        while (Leitor.rExtrai(2, 'Nota', '', i + 1) <> '') do
+        begin
+          FInfCanc.FNotasCanceladas.Add;
+          FInfCanc.FNotasCanceladas[i].InscricaoMunicipalPrestador := Leitor.rCampo(tcStr, 'InscricaoMunicipalPrestador');
+          FInfCanc.FNotasCanceladas[i].NumeroNota                  := Leitor.rCampo(tcStr, 'NumeroNota');
+          FInfCanc.FNotasCanceladas[i].CodigoVerficacao            := LeitorAux.rCampo(tcStr,'CodigoVerificacao');
+          inc(i);
+        end;
       end;
 
       i := 0 ;
       if (leitor.rExtrai(2, 'Alertas') <> '') then
-      begin     
-         strAux := leitor.rExtrai(2, 'Alertas');
-         if (strAux <> '') then
-         begin
-            posI := pos('<Alerta>', strAux);
-
-            while ( posI > 0 ) do begin
-               count := pos('</Alerta>', strAux) + 7;
-
-               InfCanc.FMsgRetorno.Add;
-               inc(i);
-               
-               LeitorAux := TLeitor.Create;
-               leitorAux.Arquivo := copy(strAux, PosI, count);
-               leitorAux.Grupo   := leitorAux.Arquivo;
-
-               InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
-               InfCanc.FMsgRetorno[i].FMensagem := 'Alerta - ' + Leitor.rCampo(tcStr, 'Descricao');
-
-
-               LeitorAux.free;
-
-               Delete(strAux, PosI, count);
-               posI := pos('<Alerta>', strAux);
-            end;
-         end;
+      begin
+        while (Leitor.rExtrai(2, 'Alerta', '', i + 1) <> '') do
+        begin
+          InfCanc.FMsgRetorno.Add;
+          InfCanc.FMsgRetorno[i].FCodigo  := Leitor.rCampo(tcStr, 'Codigo');
+          InfCanc.FMsgRetorno[i].Mensagem := Leitor.rCampo(tcStr, 'Descricao');
+          inc(i);
+        end;
       end;
 
+      i := 0 ;
       if (leitor.rExtrai(2, 'Erros') <> '') then
       begin
-
-         strAux := leitor.rExtrai(2, 'Erros');
-         if (strAux <> '') then
-         begin
-            //i := 0 ;
-            posI := pos('<Erro>', strAux);
-
-            while ( posI > 0 ) do begin
-               count := pos('</Erro>', strAux) + 6;
-
-               InfCanc.FMsgRetorno.Add;
-               inc(i);
-
-               LeitorAux := TLeitor.Create;
-               leitorAux.Arquivo := copy(strAux, PosI, count);
-               leitorAux.Grupo   := leitorAux.Arquivo;
-
-               InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
-               InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
-
-               LeitorAux.free;
-
-               Delete(strAux, PosI, count);
-               posI := pos('<Erro>', strAux);
-            end;
-         end;
+        while (Leitor.rExtrai(2, 'Erro', '', i + 1) <> '') do
+        begin
+          InfCanc.FMsgRetorno.Add;
+          InfCanc.FMsgRetorno[i].FCodigo  := Leitor.rCampo(tcStr, 'Codigo');
+          InfCanc.FMsgRetorno[i].Mensagem := Leitor.rCampo(tcStr, 'Descricao');
+          inc(i);
+        end;
       end;
+
       Result := True;
     end;
   except
     result := False;
   end;
-
 end;
 
 function TretCancNFSe.LerXML_provedorEquiplano: Boolean;

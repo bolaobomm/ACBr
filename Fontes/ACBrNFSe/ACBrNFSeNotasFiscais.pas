@@ -1123,7 +1123,11 @@ begin
                          then Tipo := 5
                          else if pos('</listaRps>', ArquivoXML.Text) > 0
                               then Tipo := 6
-                              else Tipo := 0;
+                              else if pos('</RPS>', ArquivoXML.Text) > 0
+                                then Tipo := 7 //issDSF
+                                else if pos('</Nota>', ArquivoXML.Text) > 0
+                                  then Tipo := 8 //issDSF
+                                  else Tipo := 0;
 
   case Tipo of
    1: begin
@@ -1335,6 +1339,34 @@ begin
               LocNFSeR.Free;
             end;
           end;
+      end;
+   7: begin //IssDSF
+        while pos('</RPS>',ArquivoXML.Text) > 0 do
+          begin
+            XML            := Copy(ArquivoXML.Text, Pos('<RPS>', ArquivoXML.Text), Pos('</RPS>', ArquivoXML.Text) + 5);
+            ArquivoXML.Text:= Trim(Copy(ArquivoXML.Text, Pos('</RPS>', ArquivoXML.Text) + 6, Length(ArquivoXML.Text)));
+            try
+              LocNFSeR.Leitor.Arquivo := XML;
+              LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
+              LocNFSeR.TabServicosExt := self.Configuracoes.Arquivos.TabServicosExt;
+              LocNFSeR.LerXml;
+              Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
+            finally
+              LocNFSeR.Free;
+            end;
+          end;
+      end;
+   8: begin //IssDSF
+        try
+          LocNFSeR.Leitor.Arquivo := ArquivoXML.Text;
+          LocNFSeR.Provedor:= proIssDSF;
+          LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(ArquivoXML.Text);
+          LocNFSeR.TabServicosExt := self.Configuracoes.Arquivos.TabServicosExt;
+          LocNFSeR.LerXml;
+          Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
+        finally
+          LocNFSeR.Free;
+        end;
       end;
   end;
 

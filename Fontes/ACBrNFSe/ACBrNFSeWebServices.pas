@@ -1353,6 +1353,7 @@ var
  i         : Integer;
  vNotas    : WideString;
  URISig, URIRef, Separador : String;
+  Gerador: TGerador;
 begin
  vNotas := '';
 
@@ -1371,9 +1372,9 @@ begin
  if FServicoConRps <> ''
   then begin
    if (FProvedor = proIssDSF)
-    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' {+
-                          'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="' + FURLNS1 + ' ' +
-                          FHTTP_AG + FServicoConRps + '"'}
+    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' +
+                          'xmlns:tipos="http://localhost:8080/WsNFe2/tp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                          'xsi:schemaLocation="' + FURLNS1 + ' http://localhost:8080/WsNFe2/xsd/' + FServicoConRps + '"'
    else if (FProvedor = proEquiplano)
     then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="http://www.equiplano.com.br/esnfs" ' +
                           'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -1426,9 +1427,44 @@ begin
  FTagF := FProvedorClass.Gera_TagF(acConsNFSeRps, Prefixo3);
 
  if (FProvedor = proIssDSF ) then
-   for i := 0 to TNFSeConsultarNfseRPS(Self).FNotasFiscais.Count-1 do begin
-     vNotas :=  vNotas + TNFSeConsultarNfseRPS(Self).FNotasFiscais.Items[I].XML_Rps
+ begin
+   Gerador := TGerador.Create;
+   Gerador.ArquivoFormatoXML := '';
+
+   Gerador.wGrupoNFSe('NotaConsulta');
+   for i := 0 to TNFSeConsultarNfseRPS(Self).FNotasFiscais.Count-1 do
+   begin
+     with TNFSeConsultarNfseRPS(Self).FNotasFiscais.Items[I] do
+       if NFSe.Numero <> '' then
+       begin
+         Gerador.wGrupoNFSe('Nota Id="nota:' + NFSe.Numero + '"');
+         Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, TNFSeConsultarNfseRPS(Self).InscricaoMunicipal, ''); //NFSe.Prestador.InscricaoMunicipal
+         Gerador.wCampoNFSe(tcStr, '#1', 'NumeroNota', 01, 12, 1, SomenteNumeros(NFSe.Numero), '');
+         Gerador.wCampoNFSe(tcStr, '', 'CodigoVerificacao', 01, 255,  1, NFSe.CodigoVerificacao, '');
+         Gerador.wGrupoNFSe('/Nota');
+      end;
    end;
+   Gerador.wGrupoNFSe('/NotaConsulta');
+
+//   VERIFICAR UMA FORMA DE PREENCHER, APENAS SE EXISTIR RPS PARA CONSULTA!
+//   Gerador.wGrupoNFSe('RPSConsulta');
+//   for i := 0 to TNFSeConsultarNfseRPS(Self).FNotasFiscais.Count-1 do
+//   begin
+//     with TNFSeConsultarNfseRPS(Self).FNotasFiscais.Items[I] do
+//       if (NFSe.Numero = '') and (NFSe.IdentificacaoRps.Numero <> '') then
+//       begin
+//         Gerador.wGrupoNFSe('RPS Id="rps:' + NFSe.Numero + '"');
+//         Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, NFSe.Prestador.InscricaoMunicipal, '');
+//         Gerador.wCampoNFSe(tcStr, '#1', 'NumeroRPS', 01, 12, 1, SomenteNumeros(NFSe.IdentificacaoRps.Numero), '');
+//         Gerador.wCampoNFSe(tcStr, '', 'SeriePrestacao', 01, 2,  1, NFSe.IdentificacaoRps.Serie, '');
+//         Gerador.wGrupoNFSe('/RPS');
+//      end;
+//   end;
+//   Gerador.wGrupoNFSe('/RPSConsulta');
+
+   vNotas := Gerador.ArquivoFormatoXML;
+   Gerador.Free;
+ end;
 
  if FProvedorClass.GetAssinarXML(acConsNFSeRps)
   then begin
@@ -1436,7 +1472,7 @@ begin
     proIssDSF: FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPSDSF(Prefixo3, Prefixo4,
                                                          NameSpaceDad, VersaoXML,
                                                          CodCidadeToCodSiafi( strtointDef(TNFSeConsultarNfseRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
-                                                         TNFSeConsultarNfseRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj,
+                                                         SomenteNumeros(TNFSeConsultarNfseRPS(Self).Cnpj),
                                                          LowerCase(booltostr(TNFSeConsultarNfseRPS(Self).FNotasFiscais.Transacao, True)),
                                                          TNFSeConsultarNfseRPS(Self).FNotasFiscais.NumeroLote,
                                                          vNotas,
@@ -1744,6 +1780,7 @@ var
  i         : Integer;
  vNotas    : WideString;
  URISig, URIRef, Separador : String;
+ Gerador: TGerador;
 begin
  vNotas := '';
 
@@ -1762,9 +1799,11 @@ begin
  if FServicoCancelar <> ''
   then begin
    if (FProvedor = proIssDSF)
-    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' {+
-                          'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="' + FURLNS1 + ' ' +
-                          FHTTP_AG + FServicoCancelar + '"'}
+    then FNameSpaceDad :=  'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '"'
+                    + ' xmlns:tipos="http://localhost:8080/WsNFe2/tp"'
+                    + ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'
+                    + ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote  http://localhost:8080/WsNFe2/xsd/ReqCancelamentoNFSe.xsd"'
+
    else if (FProvedor = proEquiplano)
     then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="http://www.equiplano.com.br/esnfs" ' +
                           'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -1870,9 +1909,27 @@ begin
  FTagF := FProvedorClass.Gera_TagF(acCancelar, Prefixo3);
 
  if (FProvedor = proIssDSF ) then
-   for i := 0 to TNFSeCancelarNfse(Self).FNotasFiscais.Count-1 do begin
-     vNotas :=  vNotas + TNFSeCancelarNfse(Self).FNotasFiscais.Items[I].XML_Rps
+ begin
+   Gerador := TGerador.Create;
+   Gerador.ArquivoFormatoXML := '';
+
+   for i := 0 to TNFSeCancelarNfse(Self).FNotasFiscais.Count-1 do
+   begin
+     with TNFSeCancelarNfse(Self).FNotasFiscais.Items[I] do
+     begin
+       Gerador.wGrupoNFSe('Nota Id="nota:' + NFSe.Numero + '"');
+       Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, TNFSeCancelarNfse(Self).FIM, '');
+       Gerador.wCampoNFSe(tcStr, '#1', 'NumeroNota', 01, 12, 1, SomenteNumeros(NFSe.Numero), '');
+       Gerador.wCampoNFSe(tcStr, '', 'CodigoVerificacao', 01, 255,  1, NFSe.CodigoVerificacao, '');
+       Gerador.wCampoNFSe(tcStr, '', 'MotivoCancelamento', 01, 80, 1, NFSe.MotivoCancelamento, '');
+       Gerador.wGrupoNFSe('/Nota');
+     end;
    end;
+
+   vNotas := Gerador.ArquivoFormatoXML;
+
+   Gerador.Free;
+ end;
 
  if FProvedorClass.GetAssinarXML(acCancelar)
   then begin
@@ -3562,7 +3619,7 @@ begin
    else
      NFSeRetorno.LerXml;
 
-   if (FProvedor = proEquiplano) then
+   if (FProvedor in [proEquiplano, proIssDsf]) then
     begin
       FRetListaNfse := '';
 
@@ -3593,7 +3650,6 @@ begin
           for iNFRetorno:= 0 to NFSeRetorno.ListaNfse.CompNfse.Count - 1 do
             begin
               FNotasFiscais.Add;
-
               FNotasFiscais.Items[iNFRetorno].NFSe.Numero                   := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].NFSe.Numero;
               FNotasFiscais.Items[iNFRetorno].NFSe.CodigoVerificacao        := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].NFSe.CodigoVerificacao;
               FNotasFiscais.Items[iNFRetorno].NFSe.DataEmissao              := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].NFSe.DataEmissao;
@@ -3659,6 +3715,7 @@ begin
              FRetNfse := AnsiString(StringReplace(String(NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.XML), '<br>', '', [rfReplaceAll]))
            else
              FRetNfse := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.XML;
+
 //             FRetNfse := ParseText(NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.XML);
 
            k :=  Pos('<' + Prefixo4 + 'Nfse', FRetNfse);
@@ -3811,6 +3868,8 @@ var
  i, j         : Integer;
  PathSalvar   : String;
  NomeArq      : String;
+  iNFRetorno: Integer;
+  iNF: Integer;
 begin
  inherited Executar;
 
@@ -3888,7 +3947,51 @@ begin
   NFSeRetorno.TabServicosExt := FConfiguracoes.Arquivos.TabServicosExt;
 
   if (FProvedor = proIssDsf )then
-    Result := NFSeRetorno.LerXml_provedorIssDsf //falta homologar
+  begin
+    Result := NFSeRetorno.LerXml_provedorIssDsf;
+
+    if (FNotasFiscais.Count > 0) then
+    begin
+      for iNFRetorno:= 0 to NFSeRetorno.ListaNfse.CompNfse.Count - 1 do
+      begin
+        for iNF:= 0 to FNotasFiscais.Count - 1 do
+        begin
+          if (FNotasFiscais.Items[iNF].NFSe.IdentificacaoRps.Numero =
+              NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.IdentificacaoRps.Numero) then
+          begin
+            FNotasFiscais.Items[iNF].Confirmada                    := True;
+            FNotasFiscais.Items[iNF].NFSe.Numero                   := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].NFSe.Numero;
+            FNotasFiscais.Items[iNF].NFSe.CodigoVerificacao        := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].NFSe.CodigoVerificacao;
+            FNotasFiscais.Items[iNF].NFSe.DataEmissao              := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].NFSe.DataEmissao;
+            FNotasFiscais.Items[iNF].NFSe.IdentificacaoRps.Numero  := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].NFSe.IdentificacaoRps.Numero;
+            FNotasFiscais.Items[iNF].NFSe.NfseCancelamento.DataHora:= NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].NFSe.NfseCancelamento.DataHora;
+            FNotasFiscais.Items[iNF].NFSe.MotivoCancelamento       := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].NFSe.MotivoCancelamento;
+            FNotasFiscais.Items[iNF].NFSe.Status                   := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].NFSe.Status;
+            FNotasFiscais.Items[iNF].XML_NFSe                      := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.XML;
+
+
+            if FConfiguracoes.Arquivos.EmissaoPathNFSe then
+              PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].NFSe.DataEmissao)
+            else
+              PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
+
+            if FConfiguracoes.Arquivos.NomeLongoNFSe then
+              NomeArq := NotaUtil.GerarNomeNFSe(UFparaCodigo(NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.PrestadorServico.Endereco.UF),
+                                                NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.DataEmissao,
+                                                NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.PrestadorServico.IdentificacaoPrestador.Cnpj,
+                                                StrToIntDef(NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.Numero, 0)) + '-nfse.xml'
+            else
+              NomeArq := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.Numero + '-nfse.xml';
+
+            if FConfiguracoes.Geral.Salvar then
+              FConfiguracoes.Geral.Save(NomeArq, NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.XML, PathSalvar);
+
+            Break;
+          end;
+        end;
+      end;
+    end;
+  end
   else if (FProvedor = proEquiplano) then
     Result := NFSeRetorno.LerXML_provedorEquiplano
   else
@@ -4348,6 +4451,9 @@ begin
   NFSeRetorno.Leitor.Arquivo := FRetWS;
   if FProvedor = proEquiplano then
     NFSeRetorno.LerXML_provedorEquiplano
+  else
+  if FProvedor = proIssDSF then
+    NFSeRetorno.LerXml_provedorIssDsf
   else
     NFSeRetorno.LerXml;
 

@@ -1072,7 +1072,7 @@ begin
                                             [tdNenhum, tdMateriais, tdSubEmpreitada]);
             Gerador.wCampoNFSe(tcStr, '', 'TipoDeducao', 00, 255, 1, sTipoDeducao , '');
 
-            Gerador.wCampoNFSe(tcStr, '', 'CPFCNPJReferencia'   , 00, 14, 1, NFSe.Servico.Deducao.Items[i].CpfCnpjReferencia , '');
+            Gerador.wCampoNFSe(tcStr, '', 'CPFCNPJReferencia'   , 00, 14, 1, SomenteNumeros(NFSe.Servico.Deducao.Items[i].CpfCnpjReferencia) , '');
             Gerador.wCampoNFSe(tcStr, '', 'NumeroNFReferencia'  , 00, 10, 1, NFSe.Servico.Deducao.Items[i].NumeroNFReferencia, '');
             Gerador.wCampoNFSe(tcDe2, '', 'ValorTotalReferencia', 00, 18, 1, NFSe.Servico.Deducao.Items[i].ValorTotalReferencia, '');
             Gerador.wCampoNFSe(tcDe2, '', 'PercentualDeduzir'   , 00, 08, 1, NFSe.Servico.Deducao.Items[i].PercentualDeduzir, '');
@@ -1116,7 +1116,7 @@ begin
                      padL( NFSe.IdentificacaoRps.Serie, 5 , ' ') +
                      Poem_Zeros(NFSe.IdentificacaoRps.Numero, 12) +
                      FormatDateTime('yyyymmdd',NFse.DataEmissaoRps) +
-                     EnumeradoToStr( NFSe.OptanteSimplesNacional, ['H','G'], [snSim, snNao])+
+                     EnumeradoToStr( NFSe.OptanteSimplesNacional, ['H','T'], [snSim, snNao])+ //ANTES ERA 'G', THIAGO FILIANO
                      ' ' +
                      sSituacao +
                      sTipoRecolhimentoAssinaturaRPS +
@@ -1163,7 +1163,7 @@ begin
       //TO DO - formatar segundo padrao da cidade
       Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalTomador', 01, 11,  1, '', '');
 
-      Gerador.wCampoNFSe(tcStr, '', 'CPFCNPJTomador',             01, 14,  1, NFSe.Tomador.IdentificacaoTomador.CpfCnpj, '');
+      Gerador.wCampoNFSe(tcStr, '', 'CPFCNPJTomador',             01, 14,  1, SomenteNumeros(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '');
       Gerador.wCampoNFSe(tcStr, '', 'RazaoSocialTomador',         01, 120, 1, NFSe.Tomador.RazaoSocial, '');
       Gerador.wCampoNFSe(tcStr, '', 'DocTomadorEstrangeiro',      00, 20,  1, NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro, '');
 
@@ -1179,7 +1179,7 @@ begin
 
       Gerador.wCampoNFSe(tcStr, '', 'CidadeTomador',          01, 10,  1, CodCidadeToCodSiafi(strtoint64(NFSe.Tomador.Endereco.CodigoMunicipio)), '');
       Gerador.wCampoNFSe(tcStr, '', 'CidadeTomadorDescricao', 01, 50,  1, CodCidadeToCidade(strtoint64(NFSe.Tomador.Endereco.CodigoMunicipio)), '');
-      Gerador.wCampoNFSe(tcStr, '', 'CEPTomador',             01, 08,  1, NFSe.Tomador.Endereco.CEP, '');
+      Gerador.wCampoNFSe(tcStr, '', 'CEPTomador',             01, 08,  1, SomenteNumeros(NFSe.Tomador.Endereco.CEP), '');
       Gerador.wCampoNFSe(tcStr, '', 'EmailTomador',           01, 60,  1, NFSe.Tomador.Contato.Email, '');
 
       Gerador.wCampoNFSe(tcStr, '', 'CodigoAtividade',        01, 09,  1, NFSe.Servico.CodigoCnae, '');
@@ -1270,7 +1270,7 @@ begin
       else
          Gerador.wCampoNFSe(tcStr, '', 'MotCancelamento',00, 80, 0, NFSE.MotivoCancelamento, '');
 
-      Gerador.wCampoNFSe(tcStr, '', 'CpfCnpjIntermediario', 00, 14, 0, NFSe.IntermediarioServico.CpfCnpj, '');
+      Gerador.wCampoNFSe(tcStr, '', 'CpfCnpjIntermediario', 00, 14, 0, SomenteNumeros(NFSe.IntermediarioServico.CpfCnpj), '');
 
       GerarServico_Provedor_IssDsf;
 
@@ -1314,7 +1314,7 @@ begin
    Gerador.wCampoNFSe(tcStr, '', 'Complemento',                   01, 30,  0, NFSe.Tomador.Endereco.Complemento, '');
    Gerador.wCampoNFSe(tcStr, '', 'Bairro',                        01, 50,  1, NFSe.Tomador.Endereco.Bairro, '');
    Gerador.wCampoNFSe(tcStr, '', 'Cidade',                        01, 50,  1, NFSe.Tomador.Endereco.xMunicipio, '');
-   Gerador.wCampoNFSe(tcStr, '', 'CEP',                           01, 08,  1, NFSe.Tomador.Endereco.CEP, '');
+   Gerador.wCampoNFSe(tcStr, '', 'CEP',                           01, 08,  1, SomenteNumeros(NFSe.Tomador.Endereco.CEP), '');
    Gerador.wCampoNFSe(tcStr, '', 'Estado',                        01, 08,  1, NFSe.Tomador.Endereco.UF, '');
    Gerador.wCampoNFSe(tcStr, '', 'Pais',                          01, 08,  1, NFSe.Tomador.Endereco.xPais, '');
    Gerador.wGrupoNFSe('/Endereco');

@@ -1251,7 +1251,8 @@ begin
                      '<Transforms>'+
                       '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />'+
                       DFeUtil.SeSenao((AProvedor in [profintelISS, proGovBr, proPronim{Dalvan}, proISSNet]), '',
-                      '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
+                      '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315' +
+                      DFeUtil.SeSenao(AProvedor = proISSDSF, '#WithComments', '') + '" />') +
                      '</Transforms>'+
                      '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />'+
                      '<DigestValue></DigestValue>'+

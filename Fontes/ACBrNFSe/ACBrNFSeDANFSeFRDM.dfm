@@ -3,7 +3,8 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
   Height = 363
   Width = 580
   object frxReport: TfrxReport
-    Version = '4.15.10'
+    Tag = 1
+    Version = '5.1.1'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -11,7 +12,7 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
     PrintOptions.Printer = 'Padr'#227'o'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 41401.601407893500000000
-    ReportOptions.LastChange = 41579.627027037040000000
+    ReportOptions.LastChange = 41940.448342789350000000
     ScriptLanguage = 'PascalScript'
     StoreInDFM = False
     OnBeforePrint = frxReportBeforePrint
@@ -421,6 +422,9 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
       FieldName = 'Sistema'
       Size = 50
     end
+    object cdsParametrosUsuario: TStringField
+      FieldName = 'Usuario'
+    end
   end
   object frxParametros: TfrxDBDataset
     UserName = 'Parametros'
@@ -440,7 +444,8 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
       'LogoPrefCarregado=LogoPrefCarregado'
       'Nome_Prefeitura=Nome_Prefeitura'
       'Mensagem0=Mensagem0'
-      'Sistema=Sistema')
+      'Sistema=Sistema'
+      'Usuario=Usuario')
     OpenDataSource = False
     DataSet = cdsParametros
     BCDToCurrency = False
@@ -512,5 +517,43 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
       FieldName = 'Email'
       Size = 60
     end
+  end
+  object cdsItensServico: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 328
+    Top = 120
+    object cdsItensServicoDiscriminacaoServico: TStringField
+      FieldName = 'DiscriminacaoServico'
+      Size = 80
+    end
+    object cdsItensServicoQuantidade: TFloatField
+      FieldName = 'Quantidade'
+    end
+    object cdsItensServicoValorUnitario: TFloatField
+      FieldName = 'ValorUnitario'
+    end
+    object cdsItensServicoValorTotal: TFloatField
+      FieldName = 'ValorTotal'
+    end
+    object cdsItensServicoTributavel: TStringField
+      FieldName = 'Tributavel'
+      Size = 1
+    end
+  end
+  object frxItensServico: TfrxDBDataset
+    UserName = 'ItensServico'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'DiscriminacaoServico=DiscriminacaoServico'
+      'Quantidade=Quantidade'
+      'ValorUnitario=ValorUnitario'
+      'ValorTotal=ValorTotal'
+      'Tributavel=Tributavel')
+    OpenDataSource = False
+    DataSet = cdsItensServico
+    BCDToCurrency = False
+    Left = 400
+    Top = 120
   end
 end

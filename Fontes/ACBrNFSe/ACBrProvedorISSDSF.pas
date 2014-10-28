@@ -379,9 +379,8 @@ begin
                            ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
              '<soapenv:Body>' +
                '<dsf:consultarNFSeRps soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
-                 '<mensagemXml xsi:type="xsd:string">' +
-                   StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-                 '</mensagemXml>' +
+                 '<mensagemXml xsi:type="xsd:string"><![CDATA[' + DadosMsg +
+                 ']]></mensagemXml>' +
                '</dsf:consultarNFSeRps>' +
              '</soapenv:Body>' +
            '</soapenv:Envelope>';

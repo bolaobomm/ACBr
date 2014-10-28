@@ -98,6 +98,14 @@ type
     cdsParametrosNome_Prefeitura: TStringField;
     cdsParametrosMensagem0: TStringField;
     cdsParametrosSistema: TStringField;
+    cdsItensServico: TClientDataSet;
+    frxItensServico: TfrxDBDataset;
+    cdsItensServicoDiscriminacaoServico: TStringField;
+    cdsItensServicoQuantidade: TFloatField;
+    cdsItensServicoValorUnitario: TFloatField;
+    cdsItensServicoValorTotal: TFloatField;
+    cdsItensServicoTributavel: TStringField;
+    cdsParametrosUsuario: TStringField;
     constructor Create(AOwner: TComponent); override;
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
   private
@@ -107,10 +115,9 @@ type
     procedure CarregaPrestador;
     procedure CarregaTomador;
     procedure CarregaServicos;
-    procedure CarregaParametros;    
-    { Private declarations }
+    procedure CarregaItensServico;
+    procedure CarregaParametros;
   public
-    { Public declarations }
     property NFSe: TNFSe read FNFSe write FNFSe;
     property DANFSeClassOwner: TACBrNFSeDANFSeClass read FDANFSeClassOwner;
     procedure CarregaDados;
@@ -133,6 +140,7 @@ begin
   CarregaPrestador;
   CarregaTomador;
   CarregaServicos;
+  CarregaItensServico;
   CarregaParametros;
 end;
 
@@ -160,12 +168,36 @@ begin
 
       FieldByName('Competencia').AsString       := Competencia;
       FieldByName('NFSeSubstituida').AsString   := DFeUtil.FormatarNumeroDocumentoFiscal(NfseSubstituida);
-      FieldByName('NumeroNFSe').AsString        := DFeUtil.FormatarNumeroDocumentoFiscalNFSe(Numero);
+      FieldByName('NumeroNFSe').AsString        := DFeUtil.FormatarNumeroDocumentoFiscal(Numero);
       FieldByName('DataEmissao').AsString       := DFeUtil.FormatDateTime(DateTimeToStr(DataEmissao));
       FieldByName('CodigoVerificacao').AsString := CodigoVerificacao;
     end;
 
     Post;
+  end;
+end;
+
+procedure TdmACBrNFSeFR.CarregaItensServico;
+var
+  i: Integer;
+  dValorNota: Double;
+begin
+  with cdsItensServico do
+  begin
+    Close;
+    CreateDataSet;
+
+    for i := 0 to FNFSe.Servico.ItemServico.Count -1 do
+      with FNFSe.Servico.ItemServico.Items[i] do
+      begin
+        Append;
+        cdsItensServicoDiscriminacaoServico.AsString := Descricao;
+        cdsItensServicoQuantidade.AsInteger          := Quantidade;
+        cdsItensServicoValorUnitario.AsFloat         := ValorUnitario;
+        cdsItensServicoValorTotal.AsFloat            := ValorTotal;
+        cdsItensServicoTributavel.AsString           := SimNaoToStr(Tributavel);
+        Post;
+      end;
   end;
 end;
 
@@ -278,6 +310,11 @@ begin
       FieldByName('Sistema').AsString := DANFSeClassOwner.Sistema
     else
       FieldByName('Sistema').AsString := '';
+
+    if DANFSeClassOwner.Usuario <> '' then
+      FieldByName('Usuario').AsString := DANFSeClassOwner.Usuario
+    else
+      FieldByName('Usuario').AsString := '';
 
     Post;
   end;
