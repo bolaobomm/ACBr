@@ -933,14 +933,12 @@ begin
     for I := 0 to Self.Count - 1 do
     begin
       ArqTXT := Self.Items[I].GerarXML(ArqXML, Alertas, True);
-      loSTR.Text := loSTR.Text +
-                      copy(ArqTXT,14,length(ArqTXT));
       loSTR.Text := ArqTXT;
     end;
     
     if loSTR.Count > 0 then
     begin
-      loSTR.Strings[0]:='NOTA FISCAL|'+IntToStr(Self.Count);
+      loSTR.Insert(0,'NOTA FISCAL|'+IntToStr(Self.Count));
       J:=loSTR.Count;
       i:=0;
       while (I <= J-1) do
