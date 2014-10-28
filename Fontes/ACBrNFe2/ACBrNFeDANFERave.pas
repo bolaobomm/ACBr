@@ -919,7 +919,7 @@ begin
   dmDanfe.RvSystem1.SystemPrinter.Title:= 'NFe - Impressão do DANFE';
   dmDanfe.RvSystem1.SystemPrinter.Units:=unMM;
 
-  {$IFDEF RAVE500_UP}
+  {$IFDEF RaveCollate}
     dmDanfe.RvSystem1.SystemPrinter.Collate:=true;
   {$ENDIF}
 
@@ -980,7 +980,7 @@ begin
   dmDanfe.RvSystem1.DefaultDest := rdFile;
   dmDanfe.RvSystem1.DoNativeOutput:=false;
 
-  {$IFDEF RAVE500_UP}
+  {$IFDEF RaveCollate}
     dmDanfe.RvSystem1.SystemPrinter.Collate:=true;
   {$ENDIF}
 

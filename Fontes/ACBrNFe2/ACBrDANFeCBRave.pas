@@ -522,7 +522,7 @@ begin
     DANFeRave.SystemFiler.StatusFormat:='Gerando página %p';
     DANFeRave.SystemFiler.StreamMode:=smTempFile;
     DANFeRave.SystemOptions:=[soShowStatus,soAllowPrintFromPreview,soPreviewModal];
-    {$IFDEF Rave500_UP}
+    {$IFDEF RaveSaveFromPreview}
     DANFeRave.SystemOptions := DANFeRave.SystemOptions + [soAllowSaveFromPreview];
     {$ENDIF}
     if not aMostrarStatus then
@@ -536,7 +536,7 @@ begin
     DANFeRave.SystemPrinter.Units:=unMM;
     DANFeRave.SystemPrinter.UnitsFactor:=25.4;
     DANFeRave.SystemPrinter.Orientation:=aOrientacaoPapel;
-    {$IFDEF Rave500_UP}
+    {$IFDEF RaveCollate}
       DANFeRave.SystemPrinter.Collate := True;
     {$ENDIF}
     DANFeRave.SystemSetups:=[ssAllowSetup,ssAllowCopies,ssAllowCollate,ssAllowDuplex,ssAllowDestPreview,ssAllowDestPrinter,ssAllowDestFile,ssAllowPrinterSetup,ssAllowPreviewSetup];
@@ -653,7 +653,7 @@ begin
     EventoRave.SystemFiler.StatusFormat:='Gerando página %p';
     EventoRave.SystemFiler.StreamMode:=smTempFile;
     EventoRave.SystemOptions:=[soShowStatus,soAllowPrintFromPreview,soPreviewModal];
-    {$IFDEF Rave500_UP}
+    {$IFDEF RaveSaveFromPreview}
     EventoRave.SystemOptions := EventoRave.SystemOptions + [soAllowSaveFromPreview];
     {$ENDIF}
     if not aMostrarStatus then
@@ -667,7 +667,7 @@ begin
     EventoRave.SystemPrinter.Units:=unMM;
     EventoRave.SystemPrinter.UnitsFactor:=25.4;
     EventoRave.SystemPrinter.Orientation:=aOrientacaoPapel;
-    {$IFDEF Rave500_UP}
+    {$IFDEF RaveCollate}
       DANFeRave.SystemPrinter.Collate := True;
     {$ENDIF}
     EventoRave.SystemSetups:=[ssAllowSetup,ssAllowCopies,ssAllowCollate,ssAllowDuplex,ssAllowDestPreview,ssAllowDestPrinter,ssAllowDestFile,ssAllowPrinterSetup,ssAllowPreviewSetup];
@@ -784,7 +784,7 @@ begin
     InutilizacaoRave.SystemFiler.StatusFormat:='Gerando página %p';
     InutilizacaoRave.SystemFiler.StreamMode:=smTempFile;
     InutilizacaoRave.SystemOptions:=[soShowStatus,soAllowPrintFromPreview,soPreviewModal];
-    {$IFDEF Rave500_UP}
+    {$IFDEF RaveSaveFromPreview}
     InutilizacaoRave.SystemOptions := InutilizacaoRave.SystemOptions + [soAllowSaveFromPreview];
     {$ENDIF}
     if not aMostrarStatus then
@@ -798,7 +798,7 @@ begin
     InutilizacaoRave.SystemPrinter.Units:=unMM;
     InutilizacaoRave.SystemPrinter.UnitsFactor:=25.4;
     InutilizacaoRave.SystemPrinter.Orientation:=aOrientacaoPapel;
-    {$IFDEF Rave500_UP}
+    {$IFDEF RaveCollate}
       InutilizacaoRave.SystemPrinter.Collate := True;
     {$ENDIF}
     InutilizacaoRave.SystemSetups:=[ssAllowSetup,ssAllowCopies,ssAllowCollate,ssAllowDuplex,ssAllowDestPreview,ssAllowDestPrinter,ssAllowDestFile,ssAllowPrinterSetup,ssAllowPreviewSetup];

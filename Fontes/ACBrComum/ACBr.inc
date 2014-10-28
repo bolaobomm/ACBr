@@ -63,10 +63,12 @@
 //--------------------------------------------------------------------------------
 //{$DEFINE SoapHTTP}
 
-// Descomente a linha abaixo para usar os recursos de Collate e Botão Salvar do Preview do componente Danfe com Rave Reports
-//Essas opção só funcionam com versão do Rave Reports a partir de 5.1.x
+// Descomente as linhas abaixo para usar os recursos de Collate e/ou Botão Salvar do Preview do componente Danfe com Rave Reports
+// Essas opções funcionam dependendo da sua versão do Rave Reports. Verifique se sua versão suporta o recurso para não causar erro de compilação
 //--------------------------------------------------------------------------------
-//{$DEFINE Rave500_UP}
+//{$DEFINE RaveCollate}
+//{$DEFINE RaveSaveFromPreview}
+
 
 // Ajusta FreePascal para o modo Delphi
 //------------------------------------------------------------------------------
