@@ -530,7 +530,7 @@ begin
      // o Codigo CNAE tem que ser '6511102'
      // Servico.CodigoCnae                := '123'; // Informação Opcional
      Servico.CodigoTributacaoMunicipio := '118879';
-     Servico.Discriminacao             := 'discriminacao';
+     Servico.Discriminacao             := 'discriminacao I;discriminacao II';
 
      // Para o provedor ISS.NET em ambiente de Homologação
      // o Codigo do Municipio tem que ser '999'
