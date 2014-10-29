@@ -121,6 +121,7 @@ type
 
   TCTeStatusServico = Class(TWebServicesBase)
   private
+    Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
@@ -133,6 +134,7 @@ type
   public
     function Executar: Boolean; override;
 
+    property versao: String          read Fversao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb;
     property verAplic: String        read FverAplic;
     property cStat: Integer          read FcStat;
@@ -146,16 +148,17 @@ type
 
   TCTeRecepcao = Class(TWebServicesBase)
   private
-    FLote: String;
-    FRecibo: String;
     FCTes: TConhecimentos;
+    FRecibo: String;
     FTpAmb: TpcnTipoAmbiente;
+    Fversao: String;
     FverAplic: String;
     FcStat: Integer;
     FcUF: Integer;
     FxMotivo: String;
     FdhRecbto: TDateTime;
     FTMed: Integer;
+    FLote: String;
 
     function GetLote: String;
   public
@@ -163,6 +166,7 @@ type
     function Executar: Boolean; override;
 
     property Recibo: String          read FRecibo;
+    property versao: String          read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
     property verAplic: String        read FverAplic;
     property cStat: Integer          read FcStat;
@@ -180,6 +184,7 @@ type
     FChaveCte: String;
     FCTes: TConhecimentos;
     FCteRetorno: TRetConsReciCTe;
+    Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
@@ -195,6 +200,7 @@ type
     procedure Clear;
     function Executar: Boolean; override;
 
+    property versao: String              read Fversao;
     property TpAmb: TpcnTipoAmbiente     read FTpAmb;
     property verAplic: String            read FverAplic;
     property cStat: Integer              read FcStat;
@@ -212,6 +218,7 @@ type
   private
     FRecibo: String;
     FCTeRetorno: TRetConsReciCTe;
+    Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
@@ -225,6 +232,7 @@ type
     procedure Clear;
     function Executar: Boolean; override;
 
+    property versao: String              read Fversao;
     property TpAmb: TpcnTipoAmbiente     read FTpAmb;
     property verAplic: String            read FverAplic;
     property cStat: Integer              read FcStat;
@@ -242,6 +250,7 @@ type
     FProtocolo: WideString;
     FDhRecbto: TDateTime;
     FXMotivo: WideString;
+    Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
@@ -260,6 +269,7 @@ type
     property Protocolo: WideString                  read FProtocolo     write FProtocolo;
     property DhRecbto: TDateTime                    read FDhRecbto      write FDhRecbto;
     property XMotivo: WideString                    read FXMotivo       write FXMotivo;
+    property versao: String                         read Fversao;
     property TpAmb: TpcnTipoAmbiente                read FTpAmb;
     property verAplic: String                       read FverAplic;
     property cStat: Integer                         read FcStat;
@@ -275,6 +285,7 @@ type
     FCTeChave: WideString;
     FProtocolo: WideString;
     FJustificativa: WideString;
+    Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
@@ -288,6 +299,7 @@ type
     procedure Clear;
     function Executar: Boolean; override;
 
+    property versao: String              read Fversao;
     property TpAmb: TpcnTipoAmbiente     read FTpAmb;
     property verAplic: String            read FverAplic;
     property cStat: Integer              read FcStat;
@@ -311,6 +323,7 @@ type
     FNumeroInicial: Integer;
     FNumeroFinal: Integer;
     FJustificativa: WideString;
+    Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
@@ -333,6 +346,7 @@ type
     property NumeroInicial: Integer      read FNumeroInicial   write FNumeroInicial;
     property NumeroFinal: Integer        read FNumeroFinal     write FNumeroFinal;
     property Justificativa: WideString   read FJustificativa   write SetJustificativa;
+    property versao: String              read Fversao;
     property TpAmb: TpcnTipoAmbiente     read FTpAmb;
     property verAplic: String            read FverAplic;
     property cStat: Integer              read FcStat;
@@ -344,6 +358,7 @@ type
 
   TCTeConsultaCadastro = Class(TWebServicesBase)
   private
+    Fversao: String;
     FverAplic: String;
     FcStat: Integer;
     FxMotivo: String;
@@ -363,6 +378,7 @@ type
     procedure Clear;
     function Executar: Boolean; override;
 
+    property versao: String          read Fversao;
     property verAplic: String        read FverAplic;
     property cStat: Integer          read FcStat;
     property xMotivo: String         read FxMotivo;
@@ -1140,7 +1156,8 @@ begin
 
       TACBrCTe( FACBrCTe ).SetStatus( stCTeIdle );
 
-      aMsg := 'Ambiente : '+TpAmbToStr(CTeRetorno.tpAmb)+LineBreak+
+      aMsg := 'Versão Layout : '+CTeRetorno.versao+LineBreak+
+              'Ambiente : '+TpAmbToStr(CTeRetorno.tpAmb)+LineBreak+
               'Versão Aplicativo : '+CTeRetorno.verAplic+LineBreak+
               'Status Código : '+IntToStr(CTeRetorno.cStat)+LineBreak+
               'Status Descrição : '+CTeRetorno.xMotivo+LineBreak+
@@ -1156,6 +1173,7 @@ begin
       if Assigned(TACBrCTe( FACBrCTe ).OnGerarLog) then
          TACBrCTe( FACBrCTe ).OnGerarLog(aMsg);
 
+      Fversao    := CTeRetorno.versao;
       FtpAmb     := CTeRetorno.tpAmb;
       FverAplic  := CTeRetorno.verAplic;
       FcStat     := CTeRetorno.cStat;
@@ -1309,14 +1327,15 @@ begin
 
       TACBrCTe( FACBrCTe ).SetStatus( stCTeIdle );
 
-      aMsg := 'Ambiente : '+TpAmbToStr(CTeRetorno.tpAmb)+LineBreak+
-                      'Versão Aplicativo : '+CTeRetorno.verAplic+LineBreak+
-                      'Status Código : '+IntToStr(CTeRetorno.cStat)+LineBreak+
-                      'Status Descrição : '+CTeRetorno.xMotivo+LineBreak+
-                      'UF : '+CodigoParaUF(CTeRetorno.cUF)+LineBreak+
-                      'Recebimento : '+DFeUtil.SeSenao(CTeRetorno.InfRec.dhRecbto = 0, '', DateTimeToStr(CTeRetorno.InfRec.dhRecbto))+LineBreak+
-                      'Tempo Médio : '+IntToStr(CTeRetorno.infRec.tMed)+LineBreak+
-                      'Número Recibo: '+CTeRetorno.infRec.nRec;
+      aMsg := 'Versão Layout : '+CTeRetorno.versao+LineBreak+
+              'Ambiente : '+TpAmbToStr(CTeRetorno.tpAmb)+LineBreak+
+              'Versão Aplicativo : '+CTeRetorno.verAplic+LineBreak+
+              'Status Código : '+IntToStr(CTeRetorno.cStat)+LineBreak+
+              'Status Descrição : '+CTeRetorno.xMotivo+LineBreak+
+              'UF : '+CodigoParaUF(CTeRetorno.cUF)+LineBreak+
+              'Recebimento : '+DFeUtil.SeSenao(CTeRetorno.InfRec.dhRecbto = 0, '', DateTimeToStr(CTeRetorno.InfRec.dhRecbto))+LineBreak+
+              'Tempo Médio : '+IntToStr(CTeRetorno.infRec.tMed)+LineBreak+
+              'Número Recibo: '+CTeRetorno.infRec.nRec;
 
       if FConfiguracoes.WebServices.Visualizar then
         ShowMessage(aMsg);
@@ -1324,6 +1343,7 @@ begin
       if Assigned(TACBrCTe( FACBrCTe ).OnGerarLog) then
          TACBrCTe( FACBrCTe ).OnGerarLog(aMsg);
 
+      Fversao   := CTeRetorno.versao;
       FtpAmb    := CTeRetorno.tpAmb;
       FverAplic := CTeRetorno.verAplic;
       FcStat    := CTeRetorno.cStat;
@@ -1599,7 +1619,8 @@ function TCteRetRecepcao.Executar: Boolean;
 
       TACBrCTe( FACBrCTe ).SetStatus( stCTeIdle );
 
-      aMsg := 'Ambiente : '+TpAmbToStr(FCTeRetorno.TpAmb)+LineBreak+
+      aMsg := 'Versão Layout : '+FCTeRetorno.versao+LineBreak+
+              'Ambiente : '+TpAmbToStr(FCTeRetorno.TpAmb)+LineBreak+
               'Versão Aplicativo : '+FCTeRetorno.verAplic+LineBreak+
               'Recibo : '+FCTeRetorno.nRec+LineBreak+
               'Status Código : '+IntToStr(FCTeRetorno.cStat)+LineBreak+
@@ -1612,6 +1633,7 @@ function TCteRetRecepcao.Executar: Boolean;
       if Assigned(TACBrCTe( FACBrCTe ).OnGerarLog) then
          TACBrCTe( FACBrCTe ).OnGerarLog(aMsg);
 
+      Fversao   := FCTeRetorno.versao;
       FTpAmb    := FCTeRetorno.TpAmb;
       FverAplic := FCTeRetorno.verAplic;
       FcStat    := FCTeRetorno.cStat;
@@ -1802,7 +1824,8 @@ begin
 
    TACBrCTe( FACBrCTe ).SetStatus( stCTeIdle );
 
-   aMsg := 'Ambiente : '+TpAmbToStr(FCTeRetorno.TpAmb)+LineBreak+
+   aMsg := 'Versão Layout : '+FCTeRetorno.versao+LineBreak+
+           'Ambiente : '+TpAmbToStr(FCTeRetorno.TpAmb)+LineBreak+
            'Versão Aplicativo : '+FCTeRetorno.verAplic+LineBreak+
            'Recibo : '+FCTeRetorno.nRec+LineBreak+
            'Status Código : '+IntToStr(FCTeRetorno.cStat)+LineBreak+
@@ -1815,6 +1838,7 @@ begin
    if Assigned(TACBrCTe( FACBrCTe ).OnGerarLog) then
       TACBrCTe( FACBrCTe ).OnGerarLog(aMsg);
 
+   Fversao   := FCTeRetorno.versao;
    FTpAmb    := FCTeRetorno.TpAmb;
    FverAplic := FCTeRetorno.verAplic;
    FcStat    := FCTeRetorno.cStat;
@@ -1984,18 +2008,20 @@ begin
 
     // <retConsSitCTe> - Retorno da consulta da situação do CT-e
 
-    FTpAmb      := CTeRetorno.TpAmb;
-    FverAplic   := CTeRetorno.verAplic;
-    FcStat      := CTeRetorno.cStat;
-    FxMotivo    := CTeRetorno.xMotivo;
-    FcUF        := CTeRetorno.cUF;
-    FCTeChave   := CTeRetorno.chCTe;
-    FMsg        := CTeRetorno.XMotivo;
+    Fversao   := CTeRetorno.versao;
+    FTpAmb    := CTeRetorno.TpAmb;
+    FverAplic := CTeRetorno.verAplic;
+    FcStat    := CTeRetorno.cStat;
+    FxMotivo  := CTeRetorno.xMotivo;
+    FcUF      := CTeRetorno.cUF;
+    FCTeChave := CTeRetorno.chCTe;
+    FMsg      := CTeRetorno.XMotivo;
 
     // Verifica se o conhecimento está cancelado pelo método antigo. Se estiver,
     // então CTCancelado será True e já atribui Protocolo, Data e Mensagem
     if CTeRetorno.retCancCTe.cStat > 0 then
       begin
+        FretCancCTe.versao   := CTeRetorno.retCancCTe.versao;
         FretCancCTe.tpAmb    := CTeRetorno.retCancCTe.tpAmb;
         FretCancCTe.verAplic := CTeRetorno.retCancCTe.verAplic;
         FretCancCTe.cStat    := CTeRetorno.retCancCTe.cStat;
@@ -2114,7 +2140,8 @@ begin
 
     TACBrCTe( FACBrCTe ).SetStatus( stCteIdle );
 
-    aMsg := 'Identificador : '     + FCTeChave + LineBreak +
+    aMsg := 'Versao Layout : '     + Fversao + LineBreak +
+            'Identificador : '     + FCTeChave + LineBreak +
             'Ambiente : '          + TpAmbToStr(FTpAmb) + LineBreak +
             'Versão Aplicativo : ' + FverAplic + LineBreak+
             'Status Código : '     + IntToStr(FcStat) + LineBreak+
@@ -2538,7 +2565,9 @@ begin
     CTeRetorno.LerXml;
 
     TACBrCTe( FACBrCTe ).SetStatus( stCTeIdle );
-    aMsg := 'Identificador : '+ CTeRetorno.chCTe+LineBreak+
+
+    aMsg := 'Versão Layout : '+CTeRetorno.versao+LineBreak+
+            'Identificador : '+ CTeRetorno.Id+LineBreak+
             'Ambiente : '+TpAmbToStr(CTeRetorno.TpAmb)+LineBreak+
             'Versão Aplicativo : '+CTeRetorno.verAplic+LineBreak+
             'Status Código : '+IntToStr(CTeRetorno.cStat)+LineBreak+
@@ -2554,6 +2583,7 @@ begin
     if Assigned(TACBrCTe( FACBrCTe ).OnGerarLog) then
        TACBrCTe( FACBrCTe ).OnGerarLog(aMsg);
 
+    Fversao    := CTeRetorno.versao;
     FTpAmb     := CTeRetorno.TpAmb;
     FverAplic  := CTeRetorno.verAplic;
     FcStat     := CTeRetorno.cStat;
@@ -2776,7 +2806,8 @@ begin
     CTeRetorno.LerXml;
 
     TACBrCTe( FACBrCTe ).SetStatus( stCTeIdle );
-    aMsg := 'Ambiente : '+TpAmbToStr(CTeRetorno.TpAmb)+LineBreak+
+    aMsg := 'Versão Layout : '+CTeRetorno.versao+LineBreak+
+            'Ambiente : '+TpAmbToStr(CTeRetorno.TpAmb)+LineBreak+
             'Versão Aplicativo : '+CTeRetorno.verAplic+LineBreak+
             'Status Código : '+IntToStr(CTeRetorno.cStat)+LineBreak+
             'Status Descrição : '+CTeRetorno.xMotivo+LineBreak+
@@ -2788,6 +2819,7 @@ begin
     if Assigned(TACBrCTe( FACBrCTe ).OnGerarLog) then
        TACBrCTe( FACBrCTe ).OnGerarLog(aMsg);
 
+    Fversao    := CTeRetorno.versao;
     FTpAmb     := CTeRetorno.TpAmb;
     FverAplic  := CTeRetorno.verAplic;
     FcStat     := CTeRetorno.cStat;
@@ -2815,7 +2847,7 @@ begin
 //      if FConfiguracoes.Geral.Salvar then
 //         FConfiguracoes.Geral.Save(NomeArq + '-ProcInutCTe.xml', FXML_ProcInutCTe);
       if FConfiguracoes.Arquivos.Salvar then
-         FConfiguracoes.Geral.Save(NomeArq + '-ProcInutCTe.xml', FXML_ProcInutCTe,
+         FConfiguracoes.Geral.Save(NomeArq + '-procInutCTe.xml', FXML_ProcInutCTe,
                                    FConfiguracoes.Arquivos.GetPathInu );
     end;
 
@@ -2975,7 +3007,8 @@ begin
 
     TACBrCTe( FACBrCTe ).SetStatus( stCTeIdle );
 
-    aMsg := 'Versão Aplicativo : '+FRetConsCad.verAplic+LineBreak+
+    aMsg := 'Versão Layout : '+FRetConsCad.versao+LineBreak+
+            'Versão Aplicativo : '+FRetConsCad.verAplic+LineBreak+
             'Status Código : '+IntToStr(FRetConsCad.cStat)+LineBreak+
             'Status Descrição : '+FRetConsCad.xMotivo+LineBreak+
             'UF : '+CodigoParaUF(FRetConsCad.cUF)+LineBreak+
@@ -2987,6 +3020,7 @@ begin
     if Assigned(TACBrCTe( FACBrCTe ).OnGerarLog) then
        TACBrCTe( FACBrCTe ).OnGerarLog(aMsg);
 
+    Fversao   := FRetConsCad.versao;
     FverAplic := FRetConsCad.verAplic;
     FcStat    := FRetConsCad.cStat;
     FxMotivo  := FRetConsCad.xMotivo;
@@ -3135,13 +3169,16 @@ begin
 
   TACBrCTe( FACBrCTe ).SetStatus( stCTeEvento );
 
-  FPathArqEnv := IntToStr(FEvento.idLote)+'-ped-evento.xml';
+//  FPathArqEnv := IntToStr(FEvento.idLote)+'-ped-evento.xml';
+  FPathArqEnv := IntToStr(FEvento.idLote)+'-ped-eve.xml';
 
   if FConfiguracoes.Geral.Salvar then
     FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg);
 
+//  if FConfiguracoes.WebServices.Salvar then
+//    FConfiguracoes.Geral.Save(IntToStr(FEvento.idLote)+'-ped-evento-soap.xml', Texto);
   if FConfiguracoes.WebServices.Salvar then
-    FConfiguracoes.Geral.Save(IntToStr(FEvento.idLote)+'-ped-evento-soap.xml', Texto);
+    FConfiguracoes.Geral.Save(IntToStr(FEvento.idLote)+'-ped-eve-soap.xml', Texto);
 
   if FConfiguracoes.Arquivos.Salvar then
    begin
@@ -3205,22 +3242,25 @@ begin
     FEventoRetorno.LerXml;
 
     TACBrCTe( FACBrCTe ).SetStatus( stCTeIdle );
-    aMsg := 'Ambiente : '+TpAmbToStr(EventoRetorno.retEvento.Items[0].RetInfEvento.tpAmb)+LineBreak+
+    
+    aMsg := 'Versão Layout : '+EventoRetorno.versao+LineBreak+
+            'Ambiente : '+TpAmbToStr(EventoRetorno.retEvento.Items[0].RetInfEvento.tpAmb)+LineBreak+
             'Versão Aplicativo : '+EventoRetorno.retEvento.Items[0].RetInfEvento.verAplic+LineBreak+
             'Status Código : '+IntToStr(EventoRetorno.retEvento.Items[0].RetInfEvento.cStat)+LineBreak+
             'Status Descrição : '+EventoRetorno.retEvento.Items[0].RetInfEvento.xMotivo+LineBreak;
 
     if (EventoRetorno.retEvento.Count > 0) then
       aMsg := aMsg + 'Recebimento : '+DFeUtil.SeSenao(EventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento = 0,
-                                                       '',
-                                                       DateTimeToStr(EventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento));
+                                                      '',
+                                                      DateTimeToStr(EventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento));
 
     if FConfiguracoes.WebServices.Visualizar then
       ShowMessage(aMsg);
 
     if Assigned(TACBrCTe( FACBrCTe ).OnGerarLog) then
-       TACBrCTe( FACBrCTe ).OnGerarLog(aMsg);
+      TACBrCTe( FACBrCTe ).OnGerarLog(aMsg);
 
+    Fversao  := EventoRetorno.versao;
     FcStat   := EventoRetorno.retEvento.Items[0].RetInfEvento.cStat;
     FxMotivo := EventoRetorno.retEvento.Items[0].RetInfEvento.xMotivo;
     FMsg     := EventoRetorno.retEvento.Items[0].RetInfEvento.xMotivo;
@@ -3268,9 +3308,11 @@ begin
 
                 FEvento.Evento.Items[i].RetInfEvento.XML := Texto;
 
-                NomeArq := FEvento.Evento.Items[i].InfEvento.chCTe +
-                           FEvento.Evento.Items[i].InfEvento.TipoEvento +
-                           Format('%.2d', [FEvento.Evento.Items[i].InfEvento.nSeqEvento]) +
+//                NomeArq := FEvento.Evento.Items[i].InfEvento.chCTe +
+//                           FEvento.Evento.Items[i].InfEvento.TipoEvento +
+//                           Format('%.2d', [FEvento.Evento.Items[i].InfEvento.nSeqEvento]) +
+//                           '-procEventoCTe.xml';
+                NomeArq := StringReplace(FEvento.Evento.Items[i].InfEvento.Id, 'ID', '', [rfIgnoreCase]) +
                            '-procEventoCTe.xml';
 
                 if FConfiguracoes.Geral.Salvar then

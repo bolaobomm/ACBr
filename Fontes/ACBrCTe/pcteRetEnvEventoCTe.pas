@@ -83,23 +83,25 @@ type
 
   TRetEventoCTe = class(TPersistent)
   private
+    FLeitor: TLeitor;
     FidLote: Integer;
+    Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
-    FLeitor: TLeitor;
-    FcStat: Integer;
     FcOrgao: Integer;
+    FcStat: Integer;
     FxMotivo: String;
-    FretEvento: TRetInfEventoCollection;
     FInfEvento: TInfEvento;
+    FretEvento: TRetInfEventoCollection;
     FXML: AnsiString;
   public
     constructor Create;
     destructor Destroy; override;
     function LerXml: boolean;
   published
-    property idLote: Integer                    read FidLote    write FidLote;
     property Leitor: TLeitor                    read FLeitor    write FLeitor;
+    property idLote: Integer                    read FidLote    write FidLote;
+    property versao: String                     read Fversao    write Fversao;
     property tpAmb: TpcnTipoAmbiente            read FtpAmb     write FtpAmb;
     property verAplic: String                   read FverAplic  write FverAplic;
     property cOrgao: Integer                    read FcOrgao    write FcOrgao;
@@ -179,7 +181,7 @@ begin
     begin
       if Leitor.rExtrai(2, 'infEvento', '', i + 1) <> '' then
        begin
-         infEvento.ID         := Leitor.rAtributo('Id='); 
+         infEvento.Id         := Leitor.rAtributo('Id='); 
          infEvento.cOrgao     := Leitor.rCampo(tcInt, 'cOrgao');
          infEvento.tpAmb      := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
          infEvento.CNPJ       := Leitor.rCampo(tcStr, 'CNPJ');
@@ -227,6 +229,7 @@ begin
        (Leitor.rExtrai(1, 'retEventoCTe') <> '') or
        (Leitor.rExtrai(1, 'retEvento') <> '') then
     begin
+      Fversao   := Leitor.rAtributo('versao');
       (*
       FidLote   := Leitor.rCampo(tcInt, 'idLote');
       FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));

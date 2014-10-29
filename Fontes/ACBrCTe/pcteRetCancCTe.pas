@@ -57,21 +57,24 @@ type
   TRetCancCTe = class(TPersistent)
   private
     FLeitor: TLeitor;
+    Fversao: String;
+    FId: String;
     FtpAmb: TpcnTipoAmbiente;
-    FdhRecbto: TDateTime;
+    FverAplic: String;
     FcStat: Integer;
+    FxMotivo: String;
     FcUF: Integer;
     FchCTe: String;
-    FverAplic: String;
+    FdhRecbto: TDateTime;
     FnProt: String;
-    FxMotivo: String;
-    FId: String;
   public
     constructor Create;
     destructor Destroy; override;
     function LerXml: boolean;
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
+    property versao: String          read Fversao   write Fversao;
+    property Id: String              read FId       write FId;
     property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
     property verAplic: String        read FverAplic write FverAplic;
     property cStat: Integer          read FcStat    write FcStat;
@@ -80,7 +83,6 @@ type
     property chCTe: String           read FchCTe    write FchCTe;
     property dhRecbto: TDateTime     read FdhRecbto write FdhRecbto;
     property nProt: String           read FnProt    write FnProt;
-    property Id: String              read FId       write FId;
   end;
 
 implementation
@@ -104,6 +106,8 @@ var
 begin
   Result := False;
   try
+    Fversao := Leitor.rAtributo('versao');
+
     if Leitor.rExtrai(1, 'infCanc') <> '' then
     begin
       (*CR04 *)FId       := Leitor.rAtributo('Id=');

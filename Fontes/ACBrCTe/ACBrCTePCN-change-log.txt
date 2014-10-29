@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/10/2014
+[*] Incluido nas classes que contem as estruturas dos XML de retornos a propriedade
+    versao, para que esta receba o conteudo do atributo versao.
+    por: Italo Jurisato Junior
+
 24/10/2014
 [*] Alteração para apresentar todas as informações de InfQ em Fast Report
     http://www.projetoacbr.com.br/forum/index.php?/topic/2049-colocar-volume-no-cte-%C3%A9-possivel/

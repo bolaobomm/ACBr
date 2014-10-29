@@ -67,12 +67,13 @@ type
 
   TretEnvCTe = class(TPersistent)
   private
-    FtpAmb: TpcnTipoAmbiente;
-    FcStat: Integer;
     FLeitor: TLeitor;
-    FcUF: Integer;
+    Fversao: String;
+    FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
+    FcStat: Integer;
     FxMotivo: String;
+    FcUF: Integer;
     FinfRec: TInfREC;
   public
     constructor Create;
@@ -80,6 +81,7 @@ type
     function LerXml: boolean;
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
+    property versao: String          read Fversao   write Fversao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
     property verAplic: String        read FverAplic write FverAplic;
     property cStat: Integer          read FcStat    write FcStat;
@@ -114,6 +116,7 @@ begin
     Leitor.Grupo := Leitor.Arquivo;
     if leitor.rExtrai(1, 'retEnviCte') <> '' then
     begin
+               Fversao   := Leitor.rAtributo('versao');
       (*AR03 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*AR03a*)FcUF      := Leitor.rCampo(tcInt, 'cUF');
       (*AR04 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');

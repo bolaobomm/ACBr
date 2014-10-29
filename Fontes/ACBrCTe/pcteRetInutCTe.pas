@@ -56,10 +56,11 @@ type
 
   TRetInutCTe = class(TPersistent)
   private
+    FLeitor: TLeitor;
+    Fversao: String;
     FId: String;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
-    FLeitor: TLeitor;
     FcStat: Integer;
     FxMotivo: String;
     FxJust: String;
@@ -78,6 +79,7 @@ type
     function LerXml: boolean;
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
+    property versao: String          read Fversao   write Fversao;
     property Id: String              read FId       write FId;
     property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
     property verAplic: String        read FverAplic write FverAplic;
@@ -123,6 +125,7 @@ begin
 
     if (leitor.rExtrai(1, 'retInutCTe') <> '') or (leitor.rExtrai(1, 'infInut') <> '') then
     begin
+               Fversao   := Leitor.rAtributo('versao');
       (*DR05 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*DR06 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
       (*DR07 *)FcStat    := Leitor.rCampo(tcInt, 'cStat');

@@ -61,8 +61,8 @@ type
   TRetConsReciCTe = class(TPersistent)
   private
     FLeitor: TLeitor;
-    FtpAmb: TpcnTipoAmbiente;
     Fversao: String;
+    FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
     FnRec: String;
     FcStat: Integer;
@@ -77,8 +77,8 @@ type
     function LerXML: boolean;
   published
     property Leitor: TLeitor             read FLeitor   write FLeitor;
-    property tpAmb: TpcnTipoAmbiente     read FtpAmb    write FtpAmb;
     property versao: String              read Fversao   write Fversao;
+    property tpAmb: TpcnTipoAmbiente     read FtpAmb    write FtpAmb;
     property verAplic: String            read FverAplic write FverAplic;
     property nRec: String                read FnRec     write FnRec;
     property cStat: Integer              read FcStat    write FcStat;
@@ -175,6 +175,7 @@ begin
     begin
       Leitor.Grupo := Leitor.Arquivo;
 
+               Fversao   := Leitor.rAtributo('versao');
       (*BR03 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*BR04 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
       (*BR05 *)FnRec     := Leitor.rCampo(tcStr, 'nRec');
