@@ -248,6 +248,7 @@ type
     MenuItem39: TMenuItem;
     MenuItem40: TMenuItem;
     MenuItem41: TMenuItem;
+    MenuItem42: TMenuItem;
     mniRelatorioGerencialComFormatacao: TMenuItem;
     mSAT: TMenuItem;
     mTotalTroco: TMenuItem;
@@ -691,6 +692,7 @@ type
     procedure MenuItem38Click(Sender: TObject);
     procedure MenuItem39Click(Sender: TObject);
     procedure MenuItem40Click(Sender: TObject);
+    procedure MenuItem42Click(Sender: TObject);
     procedure miTesteArredondamentoClick(Sender: TObject);
     procedure miEstornoCCDClick(Sender : TObject) ;
     procedure miLeituraCMC7Click(Sender: TObject);
@@ -2476,6 +2478,22 @@ end;
 procedure TForm1.MenuItem40Click(Sender: TObject);
 begin
   LerINI;
+end;
+
+procedure TForm1.MenuItem42Click(Sender: TObject);
+begin
+  ACBrECF1.VendeItemEx( '1234', 'DESCRIÇÃO DO PRODUTO', 'FF', 1.123, 1.456,
+                        10, 'CX', '%', 'D', -1, '7890123456789', 3, 3, 'A',
+                        '48169090', '5102', 'INFORMAÇÃO ADICIONAL', 0.123, 0,
+                        '00', 0, 0, '900' );
+
+
+  Form1.mResp.Lines.Add( 'VendeItemEx( "1234", "DESCRIÇÃO DO PRODUTO", "FF", 1.123, 1.456, '+
+                         '10, "CX", "%", "D", -1, "7890123456789", 3, 3, "A", '+
+                         '"48169090", "5102", "INFORMAÇÃO ADICIONAL", 0.123, 0, '+
+                         '"00", 0, 0, "900"');
+
+  AtualizaMemos ;
 end;
 
 procedure TForm1.miTesteArredondamentoClick(Sender: TObject);

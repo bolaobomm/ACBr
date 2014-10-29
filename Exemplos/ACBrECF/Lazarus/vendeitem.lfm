@@ -15,7 +15,7 @@ object frVendeItem: TfrVendeItem
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Position = poMainFormCenter
-  LCLVersion = '0.9.31'
+  LCLVersion = '1.2.6.0'
   object Bevel1: TBevel
     Left = 8
     Height = 78
@@ -30,9 +30,9 @@ object frVendeItem: TfrVendeItem
   end
   object Label1: TLabel
     Left = 29
-    Height = 14
+    Height = 13
     Top = 24
-    Width = 34
+    Width = 33
     Alignment = taRightJustify
     Caption = '&Código'
     ParentColor = False
@@ -48,9 +48,9 @@ object frVendeItem: TfrVendeItem
   end
   object Label2: TLabel
     Left = 17
-    Height = 14
+    Height = 13
     Top = 56
-    Width = 49
+    Width = 48
     Alignment = taRightJustify
     Caption = '&Descrição'
     ParentColor = False
@@ -66,18 +66,18 @@ object frVendeItem: TfrVendeItem
   end
   object Label3: TLabel
     Left = 42
-    Height = 14
+    Height = 13
     Top = 88
-    Width = 18
+    Width = 17
     Alignment = taRightJustify
     Caption = '&Qtd'
     ParentColor = False
   end
   object Label4: TLabel
     Left = 201
-    Height = 14
+    Height = 13
     Top = 88
-    Width = 68
+    Width = 67
     Alignment = taRightJustify
     Caption = '&Preço Unitário'
     ParentColor = False
@@ -94,9 +94,9 @@ object frVendeItem: TfrVendeItem
   end
   object Label5: TLabel
     Left = 191
-    Height = 14
+    Height = 13
     Top = 120
-    Width = 77
+    Width = 76
     Alignment = taRightJustify
     Caption = '&Valor Aliq. ICMS'
     ParentColor = False
@@ -113,9 +113,9 @@ object frVendeItem: TfrVendeItem
   end
   object Label7: TLabel
     Left = 22
-    Height = 14
+    Height = 13
     Top = 120
-    Width = 41
+    Width = 40
     Alignment = taRightJustify
     Caption = '&Unidade'
     ParentColor = False
@@ -141,25 +141,25 @@ object frVendeItem: TfrVendeItem
   end
   object Label8: TLabel
     Left = 189
-    Height = 14
+    Height = 13
     Top = 143
-    Width = 48
+    Width = 47
     Caption = 'II = Isento'
     ParentColor = False
   end
   object Label9: TLabel
     Left = 189
-    Height = 14
+    Height = 13
     Top = 159
-    Width = 101
+    Width = 100
     Caption = 'NN = Não Incidencia'
     ParentColor = False
   end
   object Label10: TLabel
     Left = 189
-    Height = 14
+    Height = 13
     Top = 175
-    Width = 130
+    Width = 129
     Caption = 'FF = Substituição Tributária'
     ParentColor = False
   end
@@ -243,25 +243,25 @@ object frVendeItem: TfrVendeItem
   end
   object Label6: TLabel
     Left = 189
-    Height = 14
+    Height = 13
     Top = 191
-    Width = 88
+    Width = 87
     Caption = 'SI = Isento ISSQN'
     ParentColor = False
   end
   object Label11: TLabel
     Left = 189
-    Height = 14
+    Height = 13
     Top = 207
-    Width = 136
+    Width = 135
     Caption = 'SN = Não Incidencia ISSQN'
     ParentColor = False
   end
   object Label12: TLabel
     Left = 189
-    Height = 14
+    Height = 13
     Top = 223
-    Width = 136
+    Width = 135
     Caption = 'SF = Subst.Tributária ISSQN'
     ParentColor = False
   end

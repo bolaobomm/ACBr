@@ -153,7 +153,7 @@ object Form1: TForm1
   Menu = MainMenu1
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.2.4.0'
+  LCLVersion = '1.2.6.0'
   object StatusBar1: TStatusBar
     Left = 0
     Height = 23
@@ -173,9 +173,9 @@ object Form1: TForm1
     Height = 335
     Top = 0
     Width = 641
-    ActivePage = tsTagsImpressao
+    ActivePage = TabSheet3
     Align = alClient
-    TabIndex = 4
+    TabIndex = 3
     TabOrder = 0
     object tsECF: TTabSheet
       Caption = 'ECF'
@@ -803,13 +803,13 @@ object Form1: TForm1
     object TabSheet3: TTabSheet
       Caption = 'RFD'
       ClientHeight = 309
-      ClientWidth = 539
+      ClientWidth = 633
       ImageIndex = 2
       object PageControl2: TPageControl
         Left = 0
         Height = 254
         Top = 55
-        Width = 539
+        Width = 633
         ActivePage = TabSheet5
         Align = alClient
         TabIndex = 1
@@ -993,16 +993,16 @@ object Form1: TForm1
         object TabSheet5: TTabSheet
           Caption = 'ACBrRFD.INI'
           ClientHeight = 228
-          ClientWidth = 531
+          ClientWidth = 625
           object Panel4: TPanel
             Left = 0
             Height = 34
             Top = 194
-            Width = 531
+            Width = 625
             Align = alBottom
             BevelOuter = bvNone
             ClientHeight = 34
-            ClientWidth = 531
+            ClientWidth = 625
             TabOrder = 0
             object bRFDLer: TButton
               Left = 131
@@ -1027,7 +1027,7 @@ object Form1: TForm1
             Left = 0
             Height = 194
             Top = 0
-            Width = 531
+            Width = 625
             Align = alClient
             Font.Color = clBlack
             Font.Height = 12
@@ -1042,14 +1042,14 @@ object Form1: TForm1
         Left = 0
         Height = 55
         Top = 0
-        Width = 539
+        Width = 633
         Align = alTop
         BevelOuter = bvNone
         ClientHeight = 55
-        ClientWidth = 539
+        ClientWidth = 633
         TabOrder = 0
         object sbDirRFD: TSpeedButton
-          Left = 506
+          Left = 600
           Height = 22
           Top = 23
           Width = 23
@@ -1085,7 +1085,7 @@ object Form1: TForm1
           Left = 134
           Height = 18
           Top = 23
-          Width = 372
+          Width = 466
           Anchors = [akTop, akLeft, akRight]
           Font.Color = clBlack
           Font.Height = 11
@@ -4514,6 +4514,10 @@ object Form1: TForm1
       object VenderItem1: TMenuItem
         Caption = 'Vende Item'
         OnClick = VenderItem1Click
+      end
+      object MenuItem42: TMenuItem
+        Caption = 'Vende Item Extendido'
+        OnClick = MenuItem42Click
       end
       object CancelarItemVendido1: TMenuItem
         Caption = 'Cancela Item Vendido'
