@@ -754,7 +754,7 @@ begin
   end ;
 
   fpDevice.Serial.SendByte(ACK_PC);
-  GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- (Bloco) = '+Bloco ) ;
+  GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- (Bloco) = '+Bloco, True ) ;
   GravaLog('                TX -> ACK = '+IntToStr(ACK_PC)+' Falha: '+IntToStr(fsFalhasRX) ) ;
 
   if Result then
@@ -779,7 +779,7 @@ begin
 
   if MsgLog <> '' then
      GravaLog( '         VerificaFimLeitura, '+MsgLog+' Seq:'+IntToStr(Sequencia)+
-               ' Tipo:'+Tipo+' Tarefa:'+Tarefa+' Erro:'+IntToStr(Erro)+' - Bloco:'+Bloco  ) ;
+               ' Tipo:'+Tipo+' Tarefa:'+Tarefa+' Erro:'+IntToStr(Erro)+' - Bloco:'+Bloco, True  ) ;
 
 end;
 
@@ -809,7 +809,7 @@ begin
      try
         fpDevice.Serial.Purge ;          // Limpa buffer de Entrada e Saida //
         fpDevice.EnviaString( Cmd );     // Envia comando //
-        GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' TX -> (Status) '+Cmd ) ;
+        GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' TX -> (Status) '+Cmd, True ) ;
 
         wACK := fpDevice.Serial.RecvByte( TimeOut * 1000 ) ; // espera ACK chegar na Porta  //
         GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- ACK = '+IntToStr(wACK) ) ;
@@ -826,21 +826,21 @@ begin
               TempoLimite := IncSecond(now, TimeOut);
               try
                  Ret := fpDevice.Serial.RecvPacket(200) ;
-                 GravaLog('                RX <- '+IntToStr(I)+' = '+Ret ) ;
+                 GravaLog('                RX <- '+IntToStr(I)+' = '+Ret, True ) ;
               except
               end ;
 
               if Length( Ret ) > 0 then
               begin
                  // DEBUG
-                 GravaLog('                RX <- '+IntToStr(I)+' = '+Ret ) ;
+                 GravaLog('                RX <- '+IntToStr(I)+' = '+Ret, True ) ;
                  I := 0 ;
               end ;
 
               RetCmd := RetCmd + Ret ;
 
               // DEBUG
-              //GravaLog('         VerificaFimImpressao: I: '+IntToStr(I)+' Bloco Lido: '+RetCmd ) ;
+              //GravaLog('         VerificaFimImpressao: I: '+IntToStr(I)+' Bloco Lido: '+RetCmd, True ) ;
               // VerificaFimLeitura, aumenta o TimeOut se estiver respondendo OK
               Result :=  VerificaFimLeitura( RetCmd, TempoLimite) ;
            end ;
@@ -2956,6 +2956,8 @@ begin
     STX[1]+Seq[1]+Tarefa[1]+Tipo[1]+Secao[4]+Dados[N]+ETX[1]+CHK[1] }
   if Copy(RetCmd,3,2) = '34' then
      Result := copy( RetCmd, 10, Length(RetCmd)-11 ) ;
+
+  GravaLog('   Registrador: '+Registrador+' Retorno: '+Result, True);
 
   if pos('I8',Registrador) > 0 then  // Sem cache para Data/Hora
      exit ;

@@ -496,6 +496,23 @@ TACBrECFBematech = class( TACBrECFClass )
        Qtd : Double ; ValorUnitario : Double; ValorDescontoAcrescimo : Double = 0;
        Unidade : String = ''; TipoDescontoAcrescimo : String = '%';
        DescontoAcrescimo : String = 'D'; CodDepartamento: Integer = -1 ) ; override ;
+    procedure VendeItemEx(Codigo, Descricao: String; AliquotaICMS: String;
+      Qtd: Double; ValorUnitario: Double; ValorDescontoAcrescimo: Double;
+      Unidade: String; TipoDescontoAcrescimo: String;
+      DescontoAcrescimo: String; CodDepartamento: Integer; EAN13: String;
+      CasasDecimaisQtde: Integer; CasasDecimaisValor: Integer;
+      ArredondaTrunca: Char; NCM: String; CFOP: String;
+      InformacaoAdicional: String; TotalDosTributos: Double;
+      OrigemProduto: Integer; CST_ICMS: String;
+      ModalidadeBCICMS: Integer; PercentualReducaoBCICMS: Double;
+      CSOSN: String; ValorBaseCalculoSN: Double; ValorICMSRetidoSN: Double;
+      AliquotaCalculoCreditoSN: Double; ValorCreditoICMSSN: Double;
+      ItemListaServico: String; CodigoISS: String; NaturezaOperacaoISS: String;
+      IndicadorIncentivoFiscalISS: Integer; CodigoIBGE: String;
+      ModalidadeBCICMSST: Integer; PercentualMargemICMSST: Double;
+      PercentualReducaoBCICMSST: Double; ValorReducaoBCICMSST: Double;
+      AliquotaICMSST: Double; ValorICMSST: Double; ValorICMSDesonerado: Double;
+      MotivoDesoneracaoICMS: Integer); override;
     Procedure DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo : Double = 0;
        DescontoAcrescimo : String = 'D'; TipoDescontoAcrescimo : String = '%';
        NumItem : Integer = 0 ) ;  override ;
@@ -1246,7 +1263,7 @@ begin
            try
               RetCmd    := Trim( RetornaInfoECF( '60' )) ;
               fsSubModeloECF := copy(RetCmd,16,20) ;
-              fpTermica := (Pos('TH ',RetCmd) > 0) ;
+              fpTermica := (Pos('TH ',RetCmd) > 0) or (Pos('VIRTUAL ',RetCmd) > 0) ;
               fpMFD     := fpTermica ;
            except
            end ;
@@ -1627,8 +1644,9 @@ procedure TACBrECFBematech.VendeItem(Codigo, Descricao : String ;
   ValorDescontoAcrescimo : Double ; Unidade : String ;
   TipoDescontoAcrescimo : String ; DescontoAcrescimo : String ;
   CodDepartamento : Integer) ;
-Var QtdStr, ValorStr, AcrescimoStr, DescontoStr : String ;
-    CMD : Byte ;
+Var
+  QtdStr, ValorStr, AcrescimoStr, DescontoStr : String ;
+  CMD : Byte ;
 begin
   if Qtd > 9999 then
      raise EACBrECFCMDInvalido.Create( ACBrStr(
@@ -1752,6 +1770,87 @@ begin
      EnviaComando(chr(CMD) + Codigo + Descricao + AliquotaECF + QtdStr +
                ValorStr + DescontoStr ) ;
    end ;
+
+  fsTotalPago := 0 ;
+  fsTotalizadoresParciais := '' ;
+end;
+
+procedure TACBrECFBematech.VendeItemEx(Codigo, Descricao: String;
+  AliquotaICMS: String; Qtd: Double; ValorUnitario: Double;
+  ValorDescontoAcrescimo: Double; Unidade: String;
+  TipoDescontoAcrescimo: String; DescontoAcrescimo: String;
+  CodDepartamento: Integer; EAN13: String; CasasDecimaisQtde: Integer;
+  CasasDecimaisValor: Integer; ArredondaTrunca: Char; NCM: String;
+  CFOP: String; InformacaoAdicional: String; TotalDosTributos: Double;
+  OrigemProduto: Integer; CST_ICMS: String; ModalidadeBCICMS: Integer;
+  PercentualReducaoBCICMS: Double; CSOSN: String; ValorBaseCalculoSN: Double;
+  ValorICMSRetidoSN: Double; AliquotaCalculoCreditoSN: Double;
+  ValorCreditoICMSSN: Double; ItemListaServico: String; CodigoISS: String;
+  NaturezaOperacaoISS: String; IndicadorIncentivoFiscalISS: Integer;
+  CodigoIBGE: String; ModalidadeBCICMSST: Integer;
+  PercentualMargemICMSST: Double; PercentualReducaoBCICMSST: Double;
+  ValorReducaoBCICMSST: Double; AliquotaICMSST: Double; ValorICMSST: Double;
+  ValorICMSDesonerado: Double; MotivoDesoneracaoICMS: Integer);
+Var
+  Comando : String;
+begin
+  // TODO: Dúvidas:
+  // InformacaoAdicional, o manual fala 500 e no comando suporta 80;
+  // Não há parâmetros no CMD para informar os dados de ISS
+  // Quantas decimais considerar nos campos Numericos ?
+  
+  if Qtd > 9999 then
+     raise EACBrECFCMDInvalido.Create( ACBrStr(
+           'Quantidade deve ser inferior a 9999.') );
+
+  Comando := padL(Codigo, 14) +
+             padL(EAN13, 13) +
+             padL(Descricao, 120) +
+             padL(AliquotaICMS, 2) +
+             padL(Unidade,2) +
+             IntToStrZero( Round( Qtd * power(10, CasasDecimaisQtde)), 7) +
+             IntToStrZero( Round( ValorUnitario * power(10, CasasDecimaisValor)), 8) +
+             ArredondaTrunca +
+             TipoDescontoAcrescimo[1] +
+             IntToStrZero( Round( ValorDescontoAcrescimo * 100), 8) +
+             padL(NCM, 8) +
+             padL(CFOP, 4) +
+             padL(CST_ICMS, 2) +
+             IntToStr(OrigemProduto) +
+             padL(CSOSN, 3) +
+             IntToStrZero( Round( ValorBaseCalculoSN * 100), 8) +
+             IntToStrZero( Round( ValorICMSRetidoSN * 100), 8) +
+             padL( InformacaoAdicional, 80) +
+             DescontoAcrescimo[1] +
+             padR(Trim(CodigoIBGE), 7, '0') +
+             IntToStr(ModalidadeBCICMS) +
+             IntToStrZero( Round( PercentualReducaoBCICMS * 100), 4) +
+             IntToStr(ModalidadeBCICMSST) +
+             IntToStrZero( Round( PercentualMargemICMSST * 100), 4) +
+             IntToStrZero( Round( PercentualReducaoBCICMSST * 100), 4) +
+             IntToStrZero( Round( ValorReducaoBCICMSST * 100), 15) +
+             IntToStrZero( Round( AliquotaICMSST * 100), 4) +
+             IntToStrZero( Round( ValorICMSST * 100), 15) +
+             IntToStrZero( Round( ValorICMSDesonerado * 100), 15) +
+             IntToStrZero( MotivoDesoneracaoICMS, 2) +
+             IntToStrZero( Round( AliquotaCalculoCreditoSN * 100), 4) +
+             IntToStrZero( Round( ValorCreditoICMSSN * 100), 15) +
+             IntToStrZero( Round( TotalDosTributos * 100), 8) +
+             '00'+                   // CST do PIS
+             '000000000000000'+      // Base de cálculo do PIS
+             '0000'+                 // Alíquota do PIS
+             '000000000000000'+      // Valor do PIS
+             '000000000000000'+      // Quantidade vendida com PIS
+             '000000000000000'+      // Valor da alíquota do PIS em reais
+             '00'+                   // CST COFINS
+             '000000000000000'+      // Base de cálculo do COFINS
+             '0000'+                 // Alíquota do COFINS
+             '000000000000000'+      // Valor do COFINS
+             '000000000000000'+      // Quantidade vendida com COFINS
+             '000000000000000' ;      // Valor da alíquota do COFINS em reais
+
+  BytesResp := 0 ;
+  EnviaComando( #10 + Comando );
 
   fsTotalPago := 0 ;
   fsTotalizadoresParciais := '' ;

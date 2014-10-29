@@ -407,6 +407,15 @@ TACBrECF = class( TACBrComponent )
     function GetOnChequeEstado: TACBrECFOnChequeEstado;
     procedure SetOnChequeEstado(const Value: TACBrECFOnChequeEstado);
     function GetQuebraLinha(const Value :string):String;
+
+    procedure IniciaVendeItem(var Codigo, Descricao, AliquotaICMS, AliquotaECF: String;
+      var Qtd, ValorUnitario, ValorDescontoAcrescimo: Double;
+      var Unidade, TipoDescontoAcrescimo, DescontoAcrescimo: String;
+      var CodDepartamento: Integer);
+    procedure FinalizaVendeItem(Codigo, Descricao, AliquotaICMS, AliquotaECF: String;
+      Qtd: Double; ValorUnitario, ValorDescontoAcrescimo: Double;
+      Unidade, TipoDescontoAcrescimo, DescontoAcrescimo: String);
+
   protected
     fpUltimoEstadoObtido: TACBrECFEstado;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
@@ -592,6 +601,51 @@ TACBrECF = class( TACBrComponent )
        Qtd : Double ; ValorUnitario : Double; ValorDescontoAcrescimo : Double = 0;
        Unidade : String = 'UN'; TipoDescontoAcrescimo : String = '%';
        DescontoAcrescimo : String = 'D'; CodDepartamento: Integer = -1 ) ;
+
+    Procedure VendeItemEx( Codigo, Descricao : String; AliquotaICMS : String;
+           Qtd : Double ; ValorUnitario : Double; ValorDescontoAcrescimo : Double = 0;
+           Unidade : String = 'UN'; TipoDescontoAcrescimo : String = '%';
+           DescontoAcrescimo : String = 'D'; CodDepartamento: Integer = -1;
+           EAN13: String = '';              // Código Barras do Produto (GTIN-13)
+           CasasDecimaisQtde: Integer = 0;  // Se 0 assume o valor de DecimaisQtd
+           CasasDecimaisValor: Integer = 0; // Se 0 assume o valor de DecimaisPreco
+           ArredondaTrunca: Char = 'A';     // Se diferente de 'A' ou 'T' assume o valor de "Arredonda"
+           NCM: String = '';                // Código da Nomenclatura Comum do MERCOSUL
+           CFOP: String = '';               // Código Fiscal de Operações e Prestações
+           InformacaoAdicional: String = '';// Texto Livro, até 500 caracteres
+           TotalDosTributos: Double = 0;    // Valor da lei "De olho no Imposto)
+           OrigemProduto: Integer = 0;      // 0–Nacional; 1–Estrangeira Import.direta; 2–Estrangeira–Mercado interno
+
+           CST_ICMS: String = '';           // ICMS: Código de Situação Tributária
+           ModalidadeBCICMS: Integer = 0;   // ICMS: Modalidade Base de Calculo: 0 – Margem do valor agregado (%)
+                                            //                                   1 – Pauta (Valor)
+                                            //                                   2 – Preço tabelado máx. (Valor)
+                                            //                                   3 – Valor da operação
+           PercentualReducaoBCICMS: Double = 0; // ICMS:
+           CSOSN: String = '';                  // Simples Nacional: Código de Situação da Operação
+           ValorBaseCalculoSN: Double = 0;      // Simples Nacional: Base de Calculo
+           ValorICMSRetidoSN: Double = 0;       // Simples Nacional: Valor Retido para ICMS
+           AliquotaCalculoCreditoSN: Double = 0;// Simples Nacional:
+           ValorCreditoICMSSN: Double = 0;      // Simples Nacional:
+           ItemListaServico: String = '';   // Serviço apenas: código do serviço prestado: lista de serviços anexa à Lei Complementar nº 116,
+           CodigoISS: String = '';          // Serviço apenas: Código do Imposto Sobre Serviço
+           NaturezaOperacaoISS: String = '';// Serviço apenas: com os seguintes valores possíveis: '00' até '08',
+           IndicadorIncentivoFiscalISS: Integer = 1;  // Serviço apenas: para indicar se o estado é participante ou não da (Lei do Incentivo Fiscal – ISS), valores: 1 (participante) ou 2 (não participante)
+           CodigoIBGE: String = '';         // Serviço apenas: Código do município
+           ModalidadeBCICMSST: Integer = 0; // ICMS ST: Modalidade Base de Calculo, 0 – Preço tabelado ou máximo sugerido
+                                            //       Substituição Tributária        1 – Lista negativa (valor)
+                                            //                                      2 – Lista positiva (valor)
+                                            //                                      3 – Lista neutra (valor)
+                                            //                                      4 – Margem do valor agregado (%)
+                                            //                                      5 – Pauta (valor)
+           PercentualMargemICMSST: Double = 0;    // ICMS ST:
+           PercentualReducaoBCICMSST: Double = 0; // ICMS ST:
+           ValorReducaoBCICMSST: Double = 0;      // ICMS ST:
+           AliquotaICMSST: Double = 0;            // ICMS ST:
+           ValorICMSST: Double = 0;               // ICMS ST:
+           ValorICMSDesonerado: Double = 0;
+           MotivoDesoneracaoICMS: Integer = 9);   // 3 – Uso na agropecuária; 9 – Outros; 12 – Órgão de fomento e desenvolvimento agropecuário
+
     Procedure DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo : Double = 0;
        DescontoAcrescimo : String = 'D'; TipoDescontoAcrescimo : String = '%';
        NumItem : Integer = 0 ) ;
@@ -2542,12 +2596,97 @@ procedure TACBrECF.VendeItem(Codigo, Descricao: String; AliquotaICMS : String ;
   CodDepartamento: Integer);
 Var
   AliquotaECF : String ;
-  Aliquota    : TACBrECFAliquota ;
   Tratado     : Boolean;
-{$IFNDEF NOGUI}
-  Linha, Buffer, StrQtd, StrPreco, StrDescAcre : String ;
-  Total, PorcDesc, ValDesc : Double ;
-{$ENDIF}
+begin
+  AliquotaECF := '';
+  IniciaVendeItem(Codigo, Descricao, AliquotaICMS, AliquotaECF, Qtd, ValorUnitario,
+    ValorDescontoAcrescimo, Unidade, TipoDescontoAcrescimo, DescontoAcrescimo,
+    CodDepartamento);
+
+  try
+     Tratado := False;
+     fsECF.VendeItem( Codigo, CodificarPaginaDeCodigoECF( Descricao ),
+                      AliquotaECF, Qtd, ValorUnitario,
+                      ValorDescontoAcrescimo, Unidade, TipoDescontoAcrescimo,
+                      DescontoAcrescimo, CodDepartamento );
+  except
+     if Assigned( FOnErrorVendeItem ) then
+        FOnErrorVendeItem(Tratado);
+
+     if not Tratado then
+        raise;
+  end;
+
+  FinalizaVendeItem(Codigo, Descricao, AliquotaICMS, AliquotaECF, Qtd, ValorUnitario,
+    ValorDescontoAcrescimo, Unidade, TipoDescontoAcrescimo, DescontoAcrescimo);
+end;
+
+procedure TACBrECF.VendeItemEx(Codigo, Descricao: String; AliquotaICMS: String;
+  Qtd: Double; ValorUnitario: Double; ValorDescontoAcrescimo: Double;
+  Unidade: String; TipoDescontoAcrescimo: String; DescontoAcrescimo: String;
+  CodDepartamento: Integer; EAN13: String; CasasDecimaisQtde: Integer;
+  CasasDecimaisValor: Integer; ArredondaTrunca: Char; NCM: String;
+  CFOP: String; InformacaoAdicional: String; TotalDosTributos: Double;
+  OrigemProduto: Integer; CST_ICMS: String; ModalidadeBCICMS: Integer;
+  PercentualReducaoBCICMS: Double; CSOSN: String; ValorBaseCalculoSN: Double;
+  ValorICMSRetidoSN: Double; AliquotaCalculoCreditoSN: Double;
+  ValorCreditoICMSSN: Double; ItemListaServico: String; CodigoISS: String;
+  NaturezaOperacaoISS: String; IndicadorIncentivoFiscalISS: Integer;
+  CodigoIBGE: String; ModalidadeBCICMSST: Integer;
+  PercentualMargemICMSST: Double; PercentualReducaoBCICMSST: Double;
+  ValorReducaoBCICMSST: Double; AliquotaICMSST: Double; ValorICMSST: Double;
+  ValorICMSDesonerado: Double; MotivoDesoneracaoICMS: Integer);
+Var
+  AliquotaECF : String ;
+  Tratado     : Boolean;
+begin
+  AliquotaECF := '';
+  IniciaVendeItem(Codigo, Descricao, AliquotaICMS, AliquotaECF, Qtd, ValorUnitario,
+    ValorDescontoAcrescimo, Unidade, TipoDescontoAcrescimo, DescontoAcrescimo,
+    CodDepartamento);
+
+  if CasasDecimaisQtde = 0 then
+     CasasDecimaisQtde := Self.DecimaisQtd;
+
+  if CasasDecimaisValor = 0 then
+     CasasDecimaisValor := Self.DecimaisPreco;
+
+  if not (ArredondaTrunca in ['A','T']) then
+     ArredondaTrunca := IfThen(Self.Arredonda,'A','T')[1];
+
+  try
+     Tratado := False;
+     fsECF.VendeItemEx( Codigo, CodificarPaginaDeCodigoECF( Descricao ),
+                      AliquotaECF, Qtd, ValorUnitario,
+                      ValorDescontoAcrescimo, Unidade, TipoDescontoAcrescimo,
+                      DescontoAcrescimo, CodDepartamento,
+                      EAN13, CasasDecimaisQtde, CasasDecimaisValor,
+                      ArredondaTrunca, NCM, CFOP, InformacaoAdicional, TotalDosTributos,
+                      OrigemProduto, CST_ICMS, ModalidadeBCICMS, PercentualReducaoBCICMS,
+                      CSOSN, ValorBaseCalculoSN, ValorICMSRetidoSN,
+                      AliquotaCalculoCreditoSN, ValorCreditoICMSSN,
+                      ItemListaServico, CodigoISS, NaturezaOperacaoISS,
+                      IndicadorIncentivoFiscalISS, CodigoIBGE,
+                      ModalidadeBCICMSST, PercentualMargemICMSST, PercentualReducaoBCICMSST,
+                      ValorReducaoBCICMSST, AliquotaICMSST, ValorICMSST,
+                      ValorICMSDesonerado, MotivoDesoneracaoICMS);
+  except
+     if Assigned( FOnErrorVendeItem ) then
+        FOnErrorVendeItem(Tratado);
+
+     if not Tratado then
+        raise;
+  end;
+
+  FinalizaVendeItem(Codigo, Descricao, AliquotaICMS, AliquotaECF, Qtd, ValorUnitario,
+    ValorDescontoAcrescimo, Unidade, TipoDescontoAcrescimo, DescontoAcrescimo);
+end;
+
+
+procedure TACBrECF.IniciaVendeItem(var Codigo, Descricao, AliquotaICMS,
+  AliquotaECF: String; var Qtd, ValorUnitario, ValorDescontoAcrescimo: Double;
+  var Unidade, TipoDescontoAcrescimo, DescontoAcrescimo: String;
+  var CodDepartamento: Integer);
 begin
   AliquotaICMS      := UpperCase( Trim(AliquotaICMS) ) ;
   DescontoAcrescimo := UpperCase( Trim(DescontoAcrescimo) ) ;
@@ -2605,7 +2744,7 @@ begin
   else if copy(AliquotaICMS,1,2) = 'IS' then
      AliquotaECF := 'SI' + copy(AliquotaICMS,3,1);
 
-  Aliquota := AchaICMSAliquota( AliquotaECF ) ;
+  AchaICMSAliquota( AliquotaECF ) ;  // modifica AliquotaECF por referencia;
 
   { Verificando se precisa Arredondar por Qtd }
   if ArredondaPorQtd and (not Arredonda) then
@@ -2615,21 +2754,19 @@ begin
      fOnAntesVendeItem( Codigo, Descricao, AliquotaECF, Qtd, ValorUnitario,
                      ValorDescontoAcrescimo, Unidade, TipoDescontoAcrescimo,
                      DescontoAcrescimo);
+end;
 
-  try
-     Tratado := False;
-     fsECF.VendeItem( Codigo, CodificarPaginaDeCodigoECF( Descricao ),
-                      AliquotaECF, Qtd, ValorUnitario,
-                      ValorDescontoAcrescimo, Unidade, TipoDescontoAcrescimo,
-                      DescontoAcrescimo, CodDepartamento );
-  except
-     if Assigned( FOnErrorVendeItem ) then
-        FOnErrorVendeItem(Tratado);
-
-     if not Tratado then
-        raise;
-  end;
-
+procedure TACBrECF.FinalizaVendeItem(Codigo, Descricao, AliquotaICMS,
+  AliquotaECF: String; Qtd: Double; ValorUnitario,
+  ValorDescontoAcrescimo: Double; Unidade, TipoDescontoAcrescimo,
+  DescontoAcrescimo: String);
+Var
+  Aliquota : TACBrECFAliquota ;
+{$IFNDEF NOGUI}
+  Linha, Buffer, StrQtd, StrPreco, StrDescAcre : String ;
+  Total, PorcDesc, ValDesc : Double ;
+{$ENDIF}
+begin
   DoAtualizarValorGT;
 
   {$IFNDEF NOGUI}
@@ -2706,12 +2843,13 @@ begin
            '<td align=center>'+FormatFloat('##,##0.00',ValDesc)+'</td>'+
            '<td align=right>'+FormatFloat('###,##0.00',Total)+'</td></tr></table>') ;
      end ;
-
    end ;
   {$ENDIF}
 
   if Assigned( FOnDepoisVendeItem ) then
-     FOnDepoisVendeItem( Codigo, Descricao, AliquotaICMS, Qtd, ValorUnitario, ValorDescontoAcrescimo, Unidade, TipoDescontoAcrescimo, DescontoAcrescimo);
+     FOnDepoisVendeItem( Codigo, Descricao, AliquotaICMS, Qtd, ValorUnitario,
+                         ValorDescontoAcrescimo, Unidade, TipoDescontoAcrescimo,
+                         DescontoAcrescimo);
 
   if RFDAtivo then
   begin
@@ -2720,6 +2858,8 @@ begin
        'N' : AliquotaICMS := 'N1' ;
        'F' : AliquotaICMS := 'F1' ;
      else
+        Aliquota := AchaICMSAliquota( AliquotaECF ) ;
+
         if Aliquota <> nil then
            AliquotaICMS := IntToStrZero(Aliquota.Sequencia,2) + Aliquota.Tipo +
                            IntToStrZero(Round(Aliquota.Aliquota*100),4)
@@ -6619,7 +6759,9 @@ end;
 
 procedure TACBrECF.DAV_Abrir(const AEmissao: TDateTime; const ADescrDocumento,
   ANumero, ASituacao, AVendedor, AObservacao, ACNPJCPF, ANomeCliente,
-  AEndereco, ANumFabricacao, AMarca, AModelo, AAno, APlaca, ARenavam: String; const AIndice: Integer);
+  AEndereco: String; const ANumFabricacao: string; const AMarca: string;
+  const AModelo: string; const AAno: string; const APlaca: string;
+  const ARenavam: string; const AIndice: Integer);
 var
   TextoRel: TStringList;
 begin
