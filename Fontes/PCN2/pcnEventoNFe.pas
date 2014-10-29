@@ -57,6 +57,9 @@ uses
   pcnAuxiliar, pcnConversao;
 
 type
+  TRetchNFePendCollection     = class;
+  TRetchNFePendCollectionItem = class;
+
   TInfEvento      = class;
   TDestinatario   = class;
   TDetEvento      = class;
@@ -154,7 +157,24 @@ type
     property vST: Currency          read FvST         write FvST;
   end;
 
-  TRetInfEvento = class
+  TRetchNFePendCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TRetchNFePendCollectionItem;
+    procedure SetItem(Index: Integer; Value: TRetchNFePendCollectionItem);
+  public
+    constructor Create(AOwner: TRetInfEvento);
+    function Add: TRetchNFePendCollectionItem;
+    property Items[Index: Integer]: TRetchNFePendCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TRetchNFePendCollectionItem = class(TCollectionItem)
+  private
+    FChavePend: String;
+  published
+    property ChavePend: String read FChavePend write FChavePend;
+  end;
+
+  TRetInfEvento = class // (TPersistent)
   private
     FId: String;
     FtpAmb: TpcnTipoAmbiente;
@@ -171,27 +191,29 @@ type
     FcOrgaoAutor: Integer;
     FdhRegEvento: TDateTime;
     FnProt: String;
-    FchNFePend: String;
+    FchNFePend: TRetchNFePendCollection;
     FXML: AnsiString;
   public
+    constructor Create;
+    destructor Destroy; override;
   published
-    property Id: String              read FId          write FId;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb       write FtpAmb;
-    property verAplic: String        read FverAplic    write FverAplic;
-    property cOrgao: Integer         read FcOrgao      write FcOrgao;
-    property cStat: Integer          read FcStat       write FcStat;
-    property xMotivo: String         read FxMotivo     write FxMotivo;
-    property chNFe: String           read FchNFe       write FchNFe;
-    property tpEvento: TpcnTpEvento  read FtpEvento    write FtpEvento;
-    property xEvento: String         read FxEvento     write FxEvento;
-    property nSeqEvento: Integer     read FnSeqEvento  write FnSeqEvento;
-    property CNPJDest: String        read FCNPJDest    write FCNPJDest;
-    property emailDest: String       read FemailDest   write FemailDest;
-    property cOrgaoAutor: Integer    read FcOrgaoAutor write FcOrgaoAutor;
-    property dhRegEvento: TDateTime  read FdhRegEvento write FdhRegEvento;
-    property nProt: String           read FnProt       write FnProt;
-    property chNFePend: String       read FchNFePend   write FchNFePend;
-    property XML: AnsiString         read FXML         write FXML;
+    property Id: String                         read FId          write FId;
+    property tpAmb: TpcnTipoAmbiente            read FtpAmb       write FtpAmb;
+    property verAplic: String                   read FverAplic    write FverAplic;
+    property cOrgao: Integer                    read FcOrgao      write FcOrgao;
+    property cStat: Integer                     read FcStat       write FcStat;
+    property xMotivo: String                    read FxMotivo     write FxMotivo;
+    property chNFe: String                      read FchNFe       write FchNFe;
+    property tpEvento: TpcnTpEvento             read FtpEvento    write FtpEvento;
+    property xEvento: String                    read FxEvento     write FxEvento;
+    property nSeqEvento: Integer                read FnSeqEvento  write FnSeqEvento;
+    property CNPJDest: String                   read FCNPJDest    write FCNPJDest;
+    property emailDest: String                  read FemailDest   write FemailDest;
+    property cOrgaoAutor: Integer               read FcOrgaoAutor write FcOrgaoAutor;
+    property dhRegEvento: TDateTime             read FdhRegEvento write FdhRegEvento;
+    property nProt: String                      read FnProt       write FnProt;
+    property chNFePend: TRetchNFePendCollection read FchNFePend   write FchNFePend;
+    property XML: AnsiString                    read FXML         write FXML;
   end;
 
 implementation
@@ -302,6 +324,44 @@ begin
                 ' II - a correcao de dados cadastrais que implique mudanca' +
                 ' do remetente ou do destinatario; III - a data de emissao ou' +
                 ' de saida.'
+end;
+
+{ TRetchNFePendCollection }
+
+function TRetchNFePendCollection.Add: TRetchNFePendCollectionItem;
+begin
+  Result := TRetchNFePendCollectionItem(inherited Add);
+//  Result.create;
+end;
+
+constructor TRetchNFePendCollection.Create(AOwner: TRetInfEvento);
+begin
+  inherited Create(TRetchNFePendCollectionItem);
+end;
+
+function TRetchNFePendCollection.GetItem(
+  Index: Integer): TRetchNFePendCollectionItem;
+begin
+  Result := TRetchNFePendCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TRetchNFePendCollection.SetItem(Index: Integer;
+  Value: TRetchNFePendCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TRetInfEvento }
+
+constructor TRetInfEvento.Create;
+begin
+  FchNFePend := TRetchNFePendCollection.Create(Self);
+end;
+
+destructor TRetInfEvento.Destroy;
+begin
+  FchNFePend.Free;
+  inherited;
 end;
 
 end.
