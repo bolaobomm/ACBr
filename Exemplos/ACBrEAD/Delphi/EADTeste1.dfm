@@ -1,9 +1,9 @@
 object Form1: TForm1
-  Left = 300
-  Top = 240
+  Left = 284
+  Top = 171
+  Width = 915
+  Height = 538
   Caption = 'EAD Teste'
-  ClientHeight = 500
-  ClientWidth = 808
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,13 +17,13 @@ object Form1: TForm1
   object gbPrivKey: TGroupBox
     Left = 0
     Top = 0
-    Width = 808
+    Width = 899
     Height = 154
     Align = alTop
     Caption = 'Chave Privada'
     TabOrder = 0
     DesignSize = (
-      808
+      899
       154)
     object Label1: TLabel
       Left = 9
@@ -37,7 +37,7 @@ object Form1: TForm1
     object mPrivKey: TMemo
       Left = 9
       Top = 51
-      Width = 611
+      Width = 712
       Height = 94
       Anchors = [akLeft, akTop, akRight]
       Font.Charset = DEFAULT_CHARSET
@@ -51,12 +51,14 @@ object Form1: TForm1
       WordWrap = False
     end
     object btNovoParChaves: TBitBtn
-      Left = 629
+      Left = 735
       Top = 17
       Width = 149
       Height = 27
       Anchors = [akTop, akRight]
       Caption = 'Novo Par de Chaves'
+      TabOrder = 1
+      OnClick = btNovoParChavesClick
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         2000000000000004000000000000000000000000000000000000FF00FF00FF00
@@ -92,16 +94,16 @@ object Form1: TForm1
         F3FE4D9AEFFEF7F7F72EFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
         FF00FF00FF00E8E8E7A4B0B0B0E7ADACACE8D3D2D2BEE6E5E584FF00FF00FCFD
         FD0FFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00}
-      TabOrder = 1
-      OnClick = btNovoParChavesClick
     end
     object btLerPrivKey: TBitBtn
-      Left = 455
+      Left = 553
       Top = 17
       Width = 78
       Height = 27
       Anchors = [akTop, akRight]
       Caption = 'Ler'
+      TabOrder = 2
+      OnClick = btLerPrivKeyClick
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         2000000000000004000000000000000000000000000000000000FF00FF00FF00
@@ -137,25 +139,25 @@ object Form1: TForm1
         84FFA38B84FFA38B84FFA38B84FFD7D6D5FFFF00FF00FF00FF00C3BEBCFFA38B
         84FFA38B84FFA38B84FFA38B84FFA38B84FFA38B84FFC5C2C1FFFF00FF00FF00
         FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00}
-      TabOrder = 2
-      OnClick = btLerPrivKeyClick
     end
     object edArqPrivKey: TEdit
       Left = 62
       Top = 20
-      Width = 377
+      Width = 475
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 3
       Text = 'priv_key.pem'
     end
     object btGravarPrivKey: TBitBtn
-      Left = 542
+      Left = 640
       Top = 17
       Width = 78
       Height = 27
       Anchors = [akTop, akRight]
       Caption = 'Gravar'
+      TabOrder = 4
+      OnClick = btGravarPrivKeyClick
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         2000000000000004000000000000000000000000000000000000FF00FF000000
@@ -191,16 +193,16 @@ object Form1: TForm1
         D1FF8490D1FF848FD1FF8691D3FFE8D5BFFFE8D5BFFF000000FF000000470000
         00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
         00FF000000FF000000FF000000FF000000FF000000FF00000055}
-      TabOrder = 4
-      OnClick = btGravarPrivKeyClick
     end
     object btCalcModExp: TBitBtn
-      Left = 629
+      Left = 735
       Top = 56
       Width = 149
       Height = 27
       Anchors = [akTop, akRight]
       Caption = 'M'#243'dulo / Expoente'
+      TabOrder = 5
+      OnClick = btCalcModExpClick
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         2000000000000004000000000000000000000000000000000000FF00FF00FF00
@@ -236,16 +238,16 @@ object Form1: TForm1
         B7FFDB9B71FFAD4A1EFFA7543DFEF1E4E1FFFF00FF00FF00FF00FF00FF00FF00
         FF00FF00FF00FF00FF00E5C2ACFFC88158FEB35420FFB9561AFFB55118FFA644
         19FFB76D50FED9B4A6FFFF00FF00FF00FF00FF00FF00FF00FF00}
-      TabOrder = 5
-      OnClick = btCalcModExpClick
     end
     object btGerarXMLeECFc: TBitBtn
-      Left = 629
+      Left = 735
       Top = 88
       Width = 149
       Height = 27
       Anchors = [akTop, akRight]
       Caption = 'Gerar XML eECFc'
+      TabOrder = 6
+      OnClick = btGerarXMLeECFcClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
         18000000000000030000120B0000120B00000000000000000000FFFFFF000000
@@ -273,16 +275,16 @@ object Form1: TForm1
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF7F7F7FBFBFBF000000FFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFF01010100000000000000000000000000000000
         0000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-      TabOrder = 6
-      OnClick = btGerarXMLeECFcClick
     end
     object btCalcPubKey: TBitBtn
-      Left = 629
+      Left = 735
       Top = 120
       Width = 149
       Height = 27
       Anchors = [akTop, akRight]
       Caption = 'Calcular Chav.Publica'
+      TabOrder = 7
+      OnClick = btCalcPubKeyClick
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         2000000000000004000064000000640000000000000000000000000000000000
@@ -318,21 +320,19 @@ object Form1: TForm1
         001C000000630000007300000061000000190000000000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000}
-      TabOrder = 7
-      OnClick = btCalcPubKeyClick
     end
   end
   object gbPubKey: TGroupBox
     Left = 0
     Top = 154
-    Width = 808
+    Width = 899
     Height = 118
     Align = alTop
     Anchors = [akLeft, akRight]
     Caption = 'Chave P'#250'blica'
     TabOrder = 1
     DesignSize = (
-      808
+      899
       118)
     object Label4: TLabel
       Left = 9
@@ -344,11 +344,11 @@ object Form1: TForm1
       ParentColor = False
     end
     object mPubKey: TMemo
-      Left = 9
-      Top = 48
-      Width = 765
+      Left = 2
+      Top = 51
+      Width = 895
       Height = 65
-      Anchors = [akLeft, akTop, akRight, akBottom]
+      Align = alBottom
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -360,12 +360,14 @@ object Form1: TForm1
       WordWrap = False
     end
     object btLerPubKey: TBitBtn
-      Left = 417
+      Left = 523
       Top = 14
       Width = 78
       Height = 27
       Anchors = [akTop, akRight]
       Caption = 'Ler'
+      TabOrder = 1
+      OnClick = btLerPubKeyClick
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         2000000000000004000000000000000000000000000000000000FF00FF00FF00
@@ -401,25 +403,25 @@ object Form1: TForm1
         84FFA38B84FFA38B84FFA38B84FFD7D6D5FFFF00FF00FF00FF00C3BEBCFFA38B
         84FFA38B84FFA38B84FFA38B84FFA38B84FFA38B84FFC5C2C1FFFF00FF00FF00
         FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00}
-      TabOrder = 1
-      OnClick = btLerPubKeyClick
     end
     object edArqPubKey: TEdit
       Left = 62
       Top = 17
-      Width = 347
+      Width = 451
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 2
       Text = 'pub_key.pem'
     end
     object btGravarPubKey: TBitBtn
-      Left = 504
+      Left = 610
       Top = 14
       Width = 78
       Height = 27
       Anchors = [akTop, akRight]
       Caption = 'Gravar'
+      TabOrder = 3
+      OnClick = btGravarPubKeyClick
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         2000000000000004000000000000000000000000000000000000FF00FF000000
@@ -455,16 +457,16 @@ object Form1: TForm1
         D1FF8490D1FF848FD1FF8691D3FFE8D5BFFFE8D5BFFF000000FF000000470000
         00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
         00FF000000FF000000FF000000FF000000FF000000FF00000055}
-      TabOrder = 3
-      OnClick = btGravarPubKeyClick
     end
     object btGerarXMLeECFc1: TBitBtn
-      Left = 589
+      Left = 695
       Top = 14
       Width = 189
       Height = 27
       Anchors = [akTop, akRight]
       Caption = 'Calcular Chave de XML eECFc'
+      TabOrder = 4
+      OnClick = btGerarXMLeECFc1Click
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
         18000000000000030000120B0000120B00000000000000000000FFFFFF000000
@@ -492,20 +494,18 @@ object Form1: TForm1
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF7F7F7FBFBFBF000000FFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFF01010100000000000000000000000000000000
         0000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-      TabOrder = 4
-      OnClick = btGerarXMLeECFc1Click
     end
   end
   object gbArqEntrada: TGroupBox
     Left = 0
     Top = 272
-    Width = 808
+    Width = 899
     Height = 83
     Align = alTop
     Caption = 'Arquivo de Entrada'
     TabOrder = 2
     DesignSize = (
-      808
+      899
       83)
     object Label5: TLabel
       Left = 9
@@ -516,13 +516,33 @@ object Form1: TForm1
       Color = clBtnFace
       ParentColor = False
     end
+    object Label2: TLabel
+      Left = 78
+      Top = 40
+      Width = 45
+      Height = 13
+      Caption = 'Algoritimo'
+      Color = clBtnFace
+      ParentColor = False
+    end
+    object Label3: TLabel
+      Left = 145
+      Top = 40
+      Width = 29
+      Height = 13
+      Caption = 'Sa'#237'da'
+      Color = clBtnFace
+      ParentColor = False
+    end
     object btProcurarArqEntrada: TBitBtn
-      Left = 686
+      Left = 800
       Top = 14
       Width = 88
       Height = 27
       Anchors = [akTop, akRight]
       Caption = 'Procurar'
+      TabOrder = 0
+      OnClick = btProcurarArqEntradaClick
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         2000000000000004000000000000000000000000000000000000FF00FF00FF00
@@ -558,23 +578,23 @@ object Form1: TForm1
         DDFFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
         FF00FF00FF00CBAF9EFED6A578FED6A978FED1AC8DFED0BFB7FEF0ECECFFFF00
         FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00}
-      TabOrder = 0
-      OnClick = btProcurarArqEntradaClick
     end
     object edArqEntrada: TEdit
       Left = 62
       Top = 17
-      Width = 617
+      Width = 731
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 1
     end
     object btCalcEAD: TBitBtn
-      Left = 278
+      Left = 432
       Top = 48
-      Width = 120
+      Width = 110
       Height = 27
       Caption = 'Calcular EAD'
+      TabOrder = 2
+      OnClick = btCalcEADClick
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         2000000000000004000064000000640000000000000000000000000000000000
@@ -610,15 +630,15 @@ object Form1: TForm1
         E15D9393931E0000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000}
-      TabOrder = 2
-      OnClick = btCalcEADClick
     end
     object btCalcMD5: TBitBtn
-      Left = 176
+      Left = 216
       Top = 48
-      Width = 70
+      Width = 81
       Height = 27
-      Caption = 'Hash'
+      Caption = 'Calc.Hash'
+      TabOrder = 3
+      OnClick = btCalcMD5Click
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         2000000000000004000064000000640000000000000000000000000000000000
@@ -654,16 +674,16 @@ object Form1: TForm1
         9B1A5D5D5D030000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000}
-      TabOrder = 3
-      OnClick = btCalcMD5Click
     end
     object btAssinarArqEAD: TBitBtn
-      Left = 413
+      Left = 570
       Top = 48
-      Width = 176
+      Width = 157
       Height = 27
       Anchors = [akTop, akRight]
-      Caption = 'Assinar Arquivo com EAD'
+      Caption = 'Assinar Arq.com EAD'
+      TabOrder = 4
+      OnClick = btAssinarArqEADClick
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         2000000000000004000000000000000000000000000000000000FF00FF000000
@@ -699,16 +719,16 @@ object Form1: TForm1
         E0FFC1C1C1FF000000FF00000022FF00FF00FF00FF00FF00FF00FF00FF000000
         0022000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
         00FF000000FF0000001AFF00FF00FF00FF00FF00FF00FF00FF00}
-      TabOrder = 4
-      OnClick = btAssinarArqEADClick
     end
     object btVerifArqAssinado: TBitBtn
-      Left = 598
+      Left = 730
       Top = 48
-      Width = 176
+      Width = 158
       Height = 27
       Anchors = [akTop, akRight]
-      Caption = 'Verificar Arquivo Assinado'
+      Caption = 'Verificar Arq.Assinado'
+      TabOrder = 5
+      OnClick = btVerifArqAssinadoClick
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         2000000000000004000000000000000000000000000000000000FF00FF00FF00
@@ -744,24 +764,23 @@ object Form1: TForm1
         FF00FF00FF00FF00FF00000C00FF000C00FFFF00FF00FF00FF00FF00FF00FF00
         FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
         FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00}
-      TabOrder = 5
-      OnClick = btVerifArqAssinadoClick
     end
     object Button1: TButton
       Left = 9
       Top = 48
-      Width = 75
+      Width = 56
       Height = 25
       Caption = 'Vers'#227'o'
       TabOrder = 6
       OnClick = Button1Click
     end
     object cbxDgst: TComboBox
-      Left = 102
-      Top = 52
-      Width = 64
+      Left = 78
+      Top = 56
+      Width = 59
       Height = 21
       Style = csDropDownList
+      ItemHeight = 13
       ItemIndex = 2
       TabOrder = 7
       Text = 'md5'
@@ -771,13 +790,72 @@ object Form1: TForm1
         'md5'
         'rmd160'
         'sha'
-        'sha1')
+        'sha1'
+        'sha256')
+    end
+    object cbxOut: TComboBox
+      Left = 144
+      Top = 56
+      Width = 64
+      Height = 21
+      Style = csDropDownList
+      ItemHeight = 13
+      ItemIndex = 0
+      TabOrder = 8
+      Text = 'Hexa'
+      Items.Strings = (
+        'Hexa'
+        'Base64')
+    end
+    object btAssinar: TBitBtn
+      Left = 307
+      Top = 48
+      Width = 117
+      Height = 27
+      Caption = 'Calc.Assinatura'
+      TabOrder = 9
+      OnClick = btAssinarClick
+      Glyph.Data = {
+        36040000424D3604000000000000360000002800000010000000100000000100
+        2000000000000004000000000000000000000000000000000000FF00FF000000
+        0041000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+        00FF000000FF000000FF000000FF00000039FF00FF00FF00FF00FF00FF000000
+        00FFC2C2C2FFBDBDBDFFBDBDBDFFBDBDBDFFBCBCBCFFBCBCBCFFBBBBBBFFBBBB
+        BBFFBBBBBBFFBBBBBBFFA0A0A0FF000000D4FF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFE6E6E6FFE5E5E5FFE5E5E5FFE5E5E5FFE4E4E4FFE4E4E4FFE3E3
+        E3FFE3E3E3FFE3E3E3FFBBBBBBFF000000FFFF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFE7E7E7FFE7E7E7FFE6E6E6FFE6E6E6FFE6E6E6FFE5E5E5FFE5E5
+        E5FFE4E4E4FFE4E4E4FFBDBDBDFF000000FFFF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFE8E8E8FFC2C2C2FFE6E6E6FFC2C2C2FF000000FF000000FFE6E6
+        E6FFE6E6E6FFE5E5E5FFBEBEBEFF000000FFFF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFEAEAEAFFEAEAEAFFE9E9E9FFE9E9E9FF000000FF15414FFF0000
+        00FF000000FFE7E7E7FFBFBFBFFF000000FFFF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFEBEBEBFFC4C4C4FFC4C4C4FFC4C4C4FFE8E8E8FF000000FF74AE
+        D7FF305965FF000000FFC0C0C0FF000000FFFF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFEDEDEDFFECECECFFECECECFFECECECFFEBEBEBFF000000FF36D2
+        F6FF4DB4EFFF2B4F5CFF000000FF000000FFFF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFEEEEEEFFC9C9C9FFC9C9C9FFEEEEEEFFC9C9C9FFC9C9C9FF0000
+        00FF39DFF9FF44B2F4FF3E5D66FF000000FF00000025FF00FF00FF00FF000000
+        00FFFEFEFEFFEFEFEFFFEFEFEFFFEFEFEFFFEEEEEEFFEEEEEEFFEEEEEEFFEEEE
+        EEFF000000FF3BE9FCFF45B5F7FF345F6CFF000000FF00000030FF00FF000000
+        00FFFEFEFEFFF1F1F1FFCACACAFFCACACAFFCACACAFFCACACAFFEFEFEFFFCACA
+        CAFFC9C9C9FF000000FF3DEBFCFF44B5F7FF2E5461F5000000FFFF00FF000000
+        00FFFEFEFEFFF1F1F1FFF1F1F1FFF1F1F1FFF1F1F1FFF1F1F1FFF0F0F0FFE2E2
+        E2FF858585FF494B4BFF000000FF3BE7FBFF4DB6F2FF000000FFFF00FF000000
+        00FFFEFEFEFFF1F1F1FFCCCCCCFFCCCCCCFFCCCCCCFFF1F1F1FFF1F1F1FFADAD
+        ADFF767676FF5D5D5DFF404040FF000000FF000000FF0000004EFF00FF000000
+        00FFFEFEFEFFF1F1F1FFF1F1F1FFF1F1F1FFF1F1F1FFF1F1F1FFF1F1F1FFC3C3
+        C3FFFBFBFBFFA8A8A8FF000000FF0000001AFF00FF00FF00FF00FF00FF000000
+        00FFFEFEFEFFFEFEFEFFFEFEFEFFFEFEFEFFFEFEFEFFFEFEFEFFFDFDFDFFE0E0
+        E0FFC1C1C1FF000000FF00000022FF00FF00FF00FF00FF00FF00FF00FF000000
+        0022000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+        00FF000000FF0000001AFF00FF00FF00FF00FF00FF00FF00FF00}
     end
   end
   object GroupBox1: TGroupBox
     Left = 0
     Top = 355
-    Width = 808
+    Width = 899
     Height = 145
     Align = alClient
     Caption = 'Respostas'
@@ -785,7 +863,7 @@ object Form1: TForm1
     object mResp: TMemo
       Left = 2
       Top = 15
-      Width = 804
+      Width = 895
       Height = 128
       Align = alClient
       Font.Charset = DEFAULT_CHARSET

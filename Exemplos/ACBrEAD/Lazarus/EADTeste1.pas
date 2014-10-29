@@ -17,6 +17,7 @@ type
      btCalcEAD : TBitBtn ;
      btCalcMD5 : TBitBtn ;
      btAssinarArqEAD : TBitBtn ;
+     btAssinar: TBitBtn;
      btGerarXMLeECFc1 : TBitBtn ;
      btVerifArqAssinado : TBitBtn ;
      btGravarPubKey : TBitBtn ;
@@ -30,6 +31,7 @@ type
      btGravarPrivKey : TBitBtn ;
      Button1 : TButton ;
      cbxDgst : TComboBox ;
+     cbxOut: TComboBox;
      edArqPrivKey : TEdit ;
      edArqEntrada : TEdit ;
      edArqPubKey : TEdit ;
@@ -38,6 +40,8 @@ type
      gbPubKey : TGroupBox ;
      GroupBox1 : TGroupBox ;
      Label1 : TLabel ;
+     Label2: TLabel;
+     Label3: TLabel;
      Label4 : TLabel ;
      Label5 : TLabel ;
      mPrivKey : TMemo ;
@@ -48,6 +52,7 @@ type
      procedure ACBrEAD1GetChavePrivada(var Chave : AnsiString) ;
      procedure ACBrEAD1GetChavePublica(var Chave : AnsiString) ;
      procedure btAssinarArqEADClick(Sender : TObject) ;
+     procedure btAssinarClick(Sender: TObject);
      procedure btCalcPubKeyClick(Sender : TObject) ;
      procedure btGerarXMLeECFc1Click(Sender : TObject) ;
      procedure btGravarPrivKeyClick(Sender : TObject) ;
@@ -117,9 +122,19 @@ begin
 end;
 
 procedure TForm1.btCalcMD5Click(Sender : TObject) ;
+var
+  Saida: TACBrEADDgstOutput;
+  Resultado: AnsiString;
 begin
+   if cbxOut.ItemIndex > 0 then
+     Saida := outBase64
+   else
+     Saida := outHexa;
+
+   Resultado := ACBrEAD1.CalcularHashArquivo( edArqEntrada.Text, TACBrEADDgst( cbxDgst.ItemIndex ), Saida );
+
    mResp.Lines.Add('Calculando o HASH - "'+cbxDgst.Text+'" do arquivo: '+edArqEntrada.Text );
-   mResp.Lines.Add(UpperCase(cbxDgst.Text)+' = '+  ACBrEAD1.CalcularHashArquivo( edArqEntrada.Text, TACBrEADDgst( cbxDgst.ItemIndex ) ) );
+   mResp.Lines.Add(UpperCase(cbxDgst.Text)+' = '+ Resultado );
    mResp.Lines.Add('------------------------------');
 end;
 
@@ -226,6 +241,23 @@ begin
    EAD :=  ACBrEAD1.AssinarArquivoComEAD( edArqEntrada.Text, True ) ;
    mResp.Lines.Add('Arquivo alterado. Adicionado no final do arquivo a linha: ' );
    mResp.Lines.Add('EAD'+EAD);
+   mResp.Lines.Add('------------------------------');
+end;
+
+procedure TForm1.btAssinarClick(Sender: TObject);
+var
+  Saida: TACBrEADDgstOutput;
+  Resultado: AnsiString;
+begin
+   if cbxOut.ItemIndex > 0 then
+     Saida := outBase64
+   else
+     Saida := outHexa;
+
+   Resultado := ACBrEAD1.CalcularAssinaturaArquivo( edArqEntrada.Text, TACBrEADDgst( cbxDgst.ItemIndex ), Saida );
+
+   mResp.Lines.Add('Calculando a Assinatura - "'+cbxDgst.Text+'" do arquivo: '+edArqEntrada.Text );
+   mResp.Lines.Add(UpperCase(cbxDgst.Text)+' = '+ Resultado );
    mResp.Lines.Add('------------------------------');
 end;
 

@@ -28,7 +28,8 @@ package ACBrComum;
 requires
   rtl,
   vcl,
-  designide;
+  designide,
+  synapse;
 
 contains
   ACBrBase in '..\..\Fontes\ACBrComum\ACBrBase.pas',

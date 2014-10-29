@@ -76,7 +76,8 @@ const
      "OnGetChavePrivada" }
 
 type
-  TACBrEADDgst = (dgstMD2, dgstMD4, dgstMD5, dgstRMD160, dgstSHA, dgstSHA1) ;
+  TACBrEADDgst = (dgstMD2, dgstMD4, dgstMD5, dgstRMD160, dgstSHA, dgstSHA1, dgstSHA256) ;
+  TACBrEADDgstOutput = (outHexa, outBase64) ;
 
   TACBrEADCalc = procedure(Arquivo: String) of object ;
   TACBrEADGetChave = procedure(var Chave: AnsiString) of object ;
@@ -116,6 +117,10 @@ type
     function GetAbout: String;
 
     procedure VerificaNomeArquivo( NomeArquivo : String ) ;
+    function InternalDigest( const MS : TMemoryStream;
+       const Digest: TACBrEADDgst;
+       const OutputType: TACBrEADDgstOutput = outHexa;
+       const Assinar: Boolean =  False): AnsiString;
   public
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy  ; override;
@@ -141,13 +146,30 @@ type
     Function ConverteXMLeECFcParaOpenSSL( ArquivoXML: String) : AnsiString;
 
     function CalcularHashArquivo( const NomeArquivo: String;
-       const Digest: TACBrEADDgst ): AnsiString ; overload ;
+       const Digest: TACBrEADDgst;
+       const OutputType: TACBrEADDgstOutput = outHexa ): AnsiString ;
     function CalcularHash( const AString : AnsiString;
-       const Digest: TACBrEADDgst ): AnsiString ; overload ;
+       const Digest: TACBrEADDgst;
+       const OutputType: TACBrEADDgstOutput = outHexa ): AnsiString ; overload ;
     function CalcularHash( const AStringList : TStringList;
-       const Digest: TACBrEADDgst ): AnsiString ; overload ;
+       const Digest: TACBrEADDgst;
+       const OutputType: TACBrEADDgstOutput = outHexa ): AnsiString ; overload ;
     function CalcularHash( const MS : TMemoryStream;
-       const Digest: TACBrEADDgst ): AnsiString ; overload ;
+       const Digest: TACBrEADDgst;
+       const OutputType: TACBrEADDgstOutput = outHexa ): AnsiString ; overload ;
+
+    function CalcularAssinaturaArquivo( const NomeArquivo: String;
+       const Digest: TACBrEADDgst;
+       const OutputType: TACBrEADDgstOutput = outHexa ): AnsiString ; overload ;
+    function CalcularAssinatura( const AString : AnsiString;
+       const Digest: TACBrEADDgst;
+       const OutputType: TACBrEADDgstOutput = outHexa ): AnsiString ; overload ;
+    function CalcularAssinatura( const AStringList : TStringList;
+       const Digest: TACBrEADDgst;
+       const OutputType: TACBrEADDgstOutput = outHexa ): AnsiString ; overload ;
+    function CalcularAssinatura( const MS : TMemoryStream;
+       const Digest: TACBrEADDgst;
+       const OutputType: TACBrEADDgstOutput = outHexa ): AnsiString ; overload ;
 
     function CalcularEADArquivo( const NomeArquivo: String): AnsiString ; overload ;
     function CalcularEAD( const AString : AnsiString): AnsiString ; overload ;
@@ -169,6 +191,7 @@ type
 
 implementation
 
+uses synacode;
 
 function TACBrEAD.MD5FromFile(const APathArquivo: String): String;
 begin
@@ -571,7 +594,7 @@ begin
   end ;
 end ;
 
-Procedure TACBrEAD.CalcularModuloeExpoente( var Modulo, Expoente : AnsiString );
+procedure TACBrEAD.CalcularModuloeExpoente(var Modulo, Expoente: AnsiString);
 Var
   Bio : pBIO;
   Ver : String ;
@@ -617,7 +640,7 @@ begin
 end ;
 
 function TACBrEAD.CalcularHashArquivo(const NomeArquivo : String;
-   const Digest: TACBrEADDgst) : AnsiString ;
+   const Digest: TACBrEADDgst; const OutputType: TACBrEADDgstOutput ) : AnsiString ;
 Var
    MS : TMemoryStream ;
 begin
@@ -626,73 +649,95 @@ begin
   MS := TMemoryStream.Create;
   try
     MS.LoadFromFile( NomeArquivo );
-    Result := CalcularHash( MS, Digest );
+    Result := CalcularHash( MS, Digest, OutputType );
   finally
     MS.Free ;
   end ;
 end ;
 
 function TACBrEAD.CalcularHash(const AString : AnsiString;
-   const Digest: TACBrEADDgst) : AnsiString ;
+   const Digest: TACBrEADDgst; const OutputType: TACBrEADDgstOutput ) : AnsiString ;
 Var
    MS : TMemoryStream ;
 begin
   MS := TMemoryStream.Create;
   try
     MS.Write( Pointer(AString)^, Length(AString) );
-    Result := CalcularHash( MS, Digest );
+    Result := CalcularHash( MS, Digest, OutputType );
   finally
     MS.Free ;
   end ;
 end ;
 
 function TACBrEAD.CalcularHash(const AStringList : TStringList;
-   const Digest: TACBrEADDgst) : AnsiString ;
+   const Digest: TACBrEADDgst; const OutputType: TACBrEADDgstOutput ) : AnsiString ;
 Var
   MS : TMemoryStream ;
 begin
   MS := TMemoryStream.Create;
   try
     AStringList.SaveToStream( MS );
-    Result := CalcularHash( MS, Digest );
+    Result := CalcularHash( MS, Digest, OutputType );
   finally
     MS.Free ;
   end ;
 end ;
 
 function TACBrEAD.CalcularHash(const MS : TMemoryStream;
-   const Digest: TACBrEADDgst) : AnsiString ;
-Var
-  md : PEVP_MD ;
-  md_len: cardinal;
-  md_ctx: EVP_MD_CTX;
-  md_value_bin : array [0..EVP_MAX_MD_SIZE] of AnsiChar;
-  md_value_hex : array [0..1023] of AnsiChar;
-  NameDgst : PAnsiChar;
+   const Digest: TACBrEADDgst; const OutputType: TACBrEADDgstOutput ) : AnsiString ;
 begin
-  InitOpenSSL ;
-  Result   := '';
-  NameDgst := '';
-
-  case Digest of
-    dgstMD2    : NameDgst := 'md2';
-    dgstMD4    : NameDgst := 'md4';
-    dgstMD5    : NameDgst := 'md5';
-    dgstRMD160 : NameDgst := 'rmd160';
-    dgstSHA    : NameDgst := 'sha';
-    dgstSHA1   : NameDgst := 'sha1';
- end ;
-
-  MS.Position := 0;
-  md := EVP_get_digestbyname( NameDgst );
-  EVP_DigestInit( @md_ctx, md );
-  EVP_DigestUpdate( @md_ctx, MS.Memory, MS.Size );
-  EVP_DigestFinal( @md_ctx, @md_value_bin, {$IFNDEF USE_libeay32}@{$ENDIF}md_len);
-
-  BinToHex( md_value_bin, md_value_hex, md_len);
-  md_value_hex[2 * md_len] := #0;
-  Result := AnsiString(StrPas(md_value_hex));
+  Result := InternalDigest( MS, Digest, OutputType, False);
 end ;
+
+function TACBrEAD.CalcularAssinaturaArquivo(const NomeArquivo: String;
+  const Digest: TACBrEADDgst; const OutputType: TACBrEADDgstOutput): AnsiString;
+Var
+   MS : TMemoryStream ;
+begin
+  VerificaNomeArquivo( NomeArquivo );
+
+  MS := TMemoryStream.Create;
+  try
+    MS.LoadFromFile( NomeArquivo );
+    Result := CalcularAssinatura( MS, Digest, OutputType );
+  finally
+    MS.Free ;
+  end ;
+end;
+
+function TACBrEAD.CalcularAssinatura(const AString: AnsiString;
+  const Digest: TACBrEADDgst; const OutputType: TACBrEADDgstOutput): AnsiString;
+Var
+   MS : TMemoryStream ;
+begin
+  MS := TMemoryStream.Create;
+  try
+    MS.Write( Pointer(AString)^, Length(AString) );
+    Result := CalcularAssinatura( MS, Digest, OutputType );
+  finally
+    MS.Free ;
+  end ;
+end;
+
+function TACBrEAD.CalcularAssinatura(const AStringList: TStringList;
+  const Digest: TACBrEADDgst; const OutputType: TACBrEADDgstOutput): AnsiString;
+Var
+  MS : TMemoryStream ;
+begin
+  MS := TMemoryStream.Create;
+  try
+    AStringList.SaveToStream( MS );
+    Result := CalcularAssinatura( MS, Digest, OutputType );
+  finally
+    MS.Free ;
+  end ;
+end;
+
+function TACBrEAD.CalcularAssinatura(const MS: TMemoryStream; const Digest: TACBrEADDgst;
+  const OutputType: TACBrEADDgstOutput): AnsiString;
+begin
+  Result := InternalDigest(MS, Digest, OutputType, True);
+end;
 
 function TACBrEAD.CalcularEADArquivo(const NomeArquivo : String) : AnsiString ;
 Var
@@ -761,7 +806,7 @@ begin
 
   try
     MS.Position := 0;
-    md_len  := 0;
+    md_len := 0;
     md := EVP_get_digestbyname('md5');
     EVP_DigestInit( @md_ctx, md ) ;
     EVP_DigestUpdate( @md_ctx, MS.Memory, MS.Size ) ;
@@ -796,6 +841,56 @@ begin
   if not FileExists( NomeArquivo ) then
      raise EACBrEADException.Create( ACBrStr(AnsiString('Arquivo: ' + NomeArquivo + ' não encontrado!')) );
 end ;
+
+function TACBrEAD.InternalDigest(const MS: TMemoryStream;
+  const Digest: TACBrEADDgst; const OutputType: TACBrEADDgstOutput;
+  const Assinar: Boolean): AnsiString;
+Var
+  md : PEVP_MD ;
+  md_len: cardinal;
+  md_ctx: EVP_MD_CTX;
+  md_value_bin, md_value_hex : array [0..1023] of AnsiChar;
+  NameDgst : PAnsiChar;
+  ABinStr, Base64Str: AnsiString;
+begin
+  InitOpenSSL ;
+  NameDgst := '';
+  case Digest of
+    dgstMD2    : NameDgst := 'md2';
+    dgstMD4    : NameDgst := 'md4';
+    dgstMD5    : NameDgst := 'md5';
+    dgstRMD160 : NameDgst := 'rmd160';
+    dgstSHA    : NameDgst := 'sha';
+    dgstSHA1   : NameDgst := 'sha1';
+    dgstSHA256 : NameDgst := 'sha256';
+ end ;
+
+  if Assinar then
+     LerChavePrivada;
+
+  MS.Position := 0;
+  md_len := 0;
+  md := EVP_get_digestbyname( NameDgst );
+  EVP_DigestInit( @md_ctx, md );
+  EVP_DigestUpdate( @md_ctx, MS.Memory, MS.Size );
+  if Assinar then
+     EVP_SignFinal( @md_ctx, @md_value_bin, md_len, fsKey)
+  else
+     EVP_DigestFinal( @md_ctx, @md_value_bin, {$IFNDEF USE_libeay32}@{$ENDIF}md_len);
+
+  if OutputType = outBase64 then
+  begin
+    SetString( ABinStr, md_value_bin, md_len);
+    Base64Str := EncodeBase64( ABinStr );
+    Result := Trim(Base64Str);
+  end
+  else
+  begin
+    BinToHex( md_value_bin, md_value_hex, md_len);
+    md_value_hex[2 * md_len] := #0;
+    Result := AnsiString(StrPas(md_value_hex));
+  end;
+end;
 
 
 function TACBrEAD.AssinarArquivoComEAD(const NomeArquivo : String ;

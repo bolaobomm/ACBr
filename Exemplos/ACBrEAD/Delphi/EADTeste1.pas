@@ -43,6 +43,10 @@ type
      OpenDialog1 : TOpenDialog ;
     cbxDgst: TComboBox;
     btGerarXMLeECFc1: TBitBtn;
+    Label2: TLabel;
+    Label3: TLabel;
+    cbxOut: TComboBox;
+    btAssinar: TBitBtn;
      procedure btAssinarArqEADClick(Sender : TObject) ;
      procedure btCalcPubKeyClick(Sender : TObject) ;
      procedure btGravarPrivKeyClick(Sender : TObject) ;
@@ -59,13 +63,19 @@ type
      procedure Button1Click(Sender : TObject) ;
      procedure FormCreate(Sender : TObject) ;
     procedure btGerarXMLeECFc1Click(Sender: TObject);
-    procedure ACBrEAD1GetChavePrivada(var Chave: AnsiString);
-    procedure ACBrEAD1GetChavePublica(var Chave: AnsiString);
+    {$IFDEF UNICODE}
+     procedure ACBrEAD1GetChavePrivada(var Chave: AnsiString);
+     procedure ACBrEAD1GetChavePublica(var Chave: AnsiString);
+    {$ELSE}
+     procedure ACBrEAD1GetChavePrivada(var Chave: String);
+     procedure ACBrEAD1GetChavePublica(var Chave: String);
+    procedure btAssinarClick(Sender: TObject);
+    {$ENDIF}
   private
     { private declarations }
   public
     { public declarations }
-  end ; 
+  end ;
 
 var
   Form1 : TForm1 ; 
@@ -115,9 +125,36 @@ begin
 end;
 
 procedure TForm1.btCalcMD5Click(Sender : TObject) ;
+var
+  Saida: TACBrEADDgstOutput;
+  Resultado: AnsiString;
 begin
+   if cbxOut.ItemIndex > 0 then
+     Saida := outBase64
+   else
+     Saida := outHexa;
+
+   Resultado := ACBrEAD1.CalcularHashArquivo( edArqEntrada.Text, TACBrEADDgst( cbxDgst.ItemIndex ), Saida );
+
    mResp.Lines.Add('Calculando o HASH - "'+cbxDgst.Text+'" do arquivo: '+edArqEntrada.Text );
-   mResp.Lines.Add(UpperCase(cbxDgst.Text)+' = '+  ACBrEAD1.CalcularHashArquivo( edArqEntrada.Text, TACBrEADDgst( cbxDgst.ItemIndex ) ) );
+   mResp.Lines.Add(UpperCase(cbxDgst.Text)+' = '+ Resultado );
+   mResp.Lines.Add('------------------------------');
+end;
+
+procedure TForm1.btAssinarClick(Sender: TObject);
+var
+  Saida: TACBrEADDgstOutput;
+  Resultado: AnsiString;
+begin
+   if cbxOut.ItemIndex > 0 then
+     Saida := outBase64
+   else
+     Saida := outHexa;
+
+   Resultado := ACBrEAD1.CalcularAssinaturaArquivo( edArqEntrada.Text, TACBrEADDgst( cbxDgst.ItemIndex ), Saida );
+
+   mResp.Lines.Add('Calculando a Assinatura - "'+cbxDgst.Text+'" do arquivo: '+edArqEntrada.Text );
+   mResp.Lines.Add(UpperCase(cbxDgst.Text)+' = '+ Resultado );
    mResp.Lines.Add('------------------------------');
 end;
 
@@ -206,7 +243,11 @@ begin
       mPubKey.Lines.LoadFromFile( edArqPubKey.Text );
 end;
 
-procedure TForm1.ACBrEAD1GetChavePublica(var Chave: AnsiString);
+{$IFDEF UNICODE}
+ procedure TForm1.ACBrEAD1GetChavePublica(var Chave: AnsiString);
+{$ELSE}
+ procedure TForm1.ACBrEAD1GetChavePublica(var Chave: String);
+{$ENDIF}
 begin
   mResp.Lines.Add('  Lendo Chave Pública');
   Chave := mPubKey.Lines.Text;
@@ -277,7 +318,11 @@ begin
    end ;
 end;
 
+{$IFDEF UNICODE}
 procedure TForm1.ACBrEAD1GetChavePrivada(var Chave: AnsiString);
+{$ELSE}
+procedure TForm1.ACBrEAD1GetChavePrivada(var Chave: String);
+{$ENDIF}
 begin
   mResp.Lines.Add('  Lendo Chave Privada');
   Chave := mPrivKey.Lines.Text;

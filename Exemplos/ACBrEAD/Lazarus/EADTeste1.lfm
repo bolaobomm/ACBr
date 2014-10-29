@@ -1,29 +1,29 @@
 object Form1: TForm1
   Left = 297
-  Height = 495
+  Height = 514
   Top = 132
-  Width = 791
+  Width = 912
   Caption = 'EAD Teste'
-  ClientHeight = 495
-  ClientWidth = 791
+  ClientHeight = 514
+  ClientWidth = 912
   Font.Height = -11
   OnCreate = FormCreate
-  LCLVersion = '1.1'
+  LCLVersion = '1.2.6.0'
   object gbPrivKey: TGroupBox
     Left = 0
     Height = 154
     Top = 0
-    Width = 791
+    Width = 912
     Align = alTop
     Caption = 'Chave Privada'
     ClientHeight = 136
-    ClientWidth = 787
+    ClientWidth = 908
     TabOrder = 0
     object mPrivKey: TMemo
       Left = 9
       Height = 94
       Top = 35
-      Width = 611
+      Width = 732
       Anchors = [akTop, akLeft, akRight]
       Font.Height = -11
       Font.Name = 'Courier'
@@ -33,7 +33,7 @@ object Form1: TForm1
       WordWrap = False
     end
     object btNovoParChaves: TBitBtn
-      Left = 629
+      Left = 750
       Height = 27
       Top = 1
       Width = 149
@@ -79,7 +79,7 @@ object Form1: TForm1
       TabOrder = 1
     end
     object btLerPrivKey: TBitBtn
-      Left = 455
+      Left = 576
       Height = 27
       Top = 1
       Width = 78
@@ -128,7 +128,7 @@ object Form1: TForm1
       Left = 62
       Height = 21
       Top = 4
-      Width = 377
+      Width = 498
       Anchors = [akTop, akLeft, akRight]
       TabOrder = 3
       Text = 'priv_key.pem'
@@ -142,7 +142,7 @@ object Form1: TForm1
       ParentColor = False
     end
     object btGravarPrivKey: TBitBtn
-      Left = 542
+      Left = 663
       Height = 27
       Top = 1
       Width = 78
@@ -188,7 +188,7 @@ object Form1: TForm1
       TabOrder = 4
     end
     object btCalcModExp: TBitBtn
-      Left = 629
+      Left = 750
       Height = 27
       Top = 40
       Width = 149
@@ -234,7 +234,7 @@ object Form1: TForm1
       TabOrder = 5
     end
     object btGerarXMLeECFc: TBitBtn
-      Left = 629
+      Left = 750
       Height = 27
       Top = 72
       Width = 149
@@ -272,7 +272,7 @@ object Form1: TForm1
       TabOrder = 6
     end
     object btCalcPubKey: TBitBtn
-      Left = 629
+      Left = 750
       Height = 27
       Top = 104
       Width = 149
@@ -322,18 +322,18 @@ object Form1: TForm1
     Left = 0
     Height = 118
     Top = 154
-    Width = 791
+    Width = 912
     Align = alTop
     Anchors = [akLeft, akRight]
     Caption = 'Chave Pública'
     ClientHeight = 100
-    ClientWidth = 787
+    ClientWidth = 908
     TabOrder = 1
     object mPubKey: TMemo
       Left = 9
       Height = 65
       Top = 32
-      Width = 765
+      Width = 886
       Anchors = [akTop, akLeft, akRight, akBottom]
       Font.Height = -11
       Font.Name = 'Courier'
@@ -343,7 +343,7 @@ object Form1: TForm1
       WordWrap = False
     end
     object btLerPubKey: TBitBtn
-      Left = 414
+      Left = 535
       Height = 27
       Top = -2
       Width = 78
@@ -392,7 +392,7 @@ object Form1: TForm1
       Left = 62
       Height = 21
       Top = 1
-      Width = 337
+      Width = 458
       Anchors = [akTop, akLeft, akRight]
       TabOrder = 2
       Text = 'pub_key.pem'
@@ -406,7 +406,7 @@ object Form1: TForm1
       ParentColor = False
     end
     object btGravarPubKey: TBitBtn
-      Left = 502
+      Left = 623
       Height = 27
       Top = -2
       Width = 78
@@ -452,7 +452,7 @@ object Form1: TForm1
       TabOrder = 3
     end
     object btGerarXMLeECFc1: TBitBtn
-      Left = 589
+      Left = 710
       Height = 27
       Top = -2
       Width = 189
@@ -494,14 +494,14 @@ object Form1: TForm1
     Left = 0
     Height = 83
     Top = 272
-    Width = 791
+    Width = 912
     Align = alTop
     Caption = 'Arquivo de Entrada'
     ClientHeight = 65
-    ClientWidth = 787
+    ClientWidth = 908
     TabOrder = 2
     object btProcurarArqEntrada: TBitBtn
-      Left = 686
+      Left = 807
       Height = 27
       Top = -2
       Width = 88
@@ -544,15 +544,15 @@ object Form1: TForm1
         FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
       }
       OnClick = btProcurarArqEntradaClick
-      TabOrder = 0
+      TabOrder = 1
     end
     object edArqEntrada: TEdit
       Left = 62
       Height = 21
       Top = 1
-      Width = 617
+      Width = 738
       Anchors = [akTop, akLeft, akRight]
-      TabOrder = 1
+      TabOrder = 0
     end
     object Label5: TLabel
       Left = 9
@@ -563,10 +563,11 @@ object Form1: TForm1
       ParentColor = False
     end
     object btCalcEAD: TBitBtn
-      Left = 286
-      Height = 27
+      Left = 448
+      Height = 26
       Top = 32
-      Width = 120
+      Width = 111
+      AutoSize = True
       Caption = 'Calcular EAD'
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
@@ -605,14 +606,15 @@ object Form1: TForm1
         0000000000000000000000000000000000000000000000000000
       }
       OnClick = btCalcEADClick
-      TabOrder = 2
+      TabOrder = 7
     end
     object btCalcMD5: TBitBtn
-      Left = 182
-      Height = 27
+      Left = 224
+      Height = 26
       Top = 32
-      Width = 80
-      Caption = 'Hash'
+      Width = 96
+      AutoSize = True
+      Caption = 'Calc.Hash'
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         2000000000000004000064000000640000000000000000000000000000000000
@@ -650,15 +652,16 @@ object Form1: TForm1
         0000000000000000000000000000000000000000000000000000
       }
       OnClick = btCalcMD5Click
-      TabOrder = 3
+      TabOrder = 5
     end
     object btAssinarArqEAD: TBitBtn
-      Left = 413
-      Height = 27
+      Left = 576
+      Height = 26
       Top = 32
-      Width = 176
+      Width = 152
       Anchors = [akTop, akRight]
-      Caption = 'Assinar Arquivo com EAD'
+      AutoSize = True
+      Caption = 'Assinar Arq.com EAD'
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         2000000000000004000000000000000000000000000000000000FF00FF000000
@@ -696,15 +699,16 @@ object Form1: TForm1
         00FF000000FF0000001AFF00FF00FF00FF00FF00FF00FF00FF00
       }
       OnClick = btAssinarArqEADClick
-      TabOrder = 4
+      TabOrder = 8
     end
     object btVerifArqAssinado: TBitBtn
-      Left = 598
-      Height = 27
+      Left = 736
+      Height = 26
       Top = 32
-      Width = 176
+      Width = 159
       Anchors = [akTop, akRight]
-      Caption = 'Verificar Arquivo Assinado'
+      AutoSize = True
+      Caption = 'Verificar Arq.Assinado'
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         2000000000000004000000000000000000000000000000000000FF00FF00FF00
@@ -742,21 +746,22 @@ object Form1: TForm1
         FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
       }
       OnClick = btVerifArqAssinadoClick
-      TabOrder = 5
+      TabOrder = 9
     end
     object Button1: TButton
       Left = 9
-      Height = 25
+      Height = 23
       Top = 32
-      Width = 75
+      Width = 61
+      AutoSize = True
       Caption = 'Versão'
       OnClick = Button1Click
-      TabOrder = 6
+      TabOrder = 2
     end
     object cbxDgst: TComboBox
-      Left = 110
+      Left = 80
       Height = 21
-      Top = 36
+      Top = 40
       Width = 64
       ItemHeight = 13
       ItemIndex = 2
@@ -767,27 +772,105 @@ object Form1: TForm1
         'rmd160'
         'sha'
         'sha1'
+        'sha256'
       )
       Style = csDropDownList
-      TabOrder = 7
+      TabOrder = 3
       Text = 'md5'
+    end
+    object btAssinar: TBitBtn
+      Left = 322
+      Height = 26
+      Top = 32
+      Width = 124
+      AutoSize = True
+      Caption = 'Calc.Assinatura'
+      Glyph.Data = {
+        36040000424D3604000000000000360000002800000010000000100000000100
+        2000000000000004000000000000000000000000000000000000FF00FF000000
+        0041000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+        00FF000000FF000000FF000000FF00000039FF00FF00FF00FF00FF00FF000000
+        00FFC2C2C2FFBDBDBDFFBDBDBDFFBDBDBDFFBCBCBCFFBCBCBCFFBBBBBBFFBBBB
+        BBFFBBBBBBFFBBBBBBFFA0A0A0FF000000D4FF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFE6E6E6FFE5E5E5FFE5E5E5FFE5E5E5FFE4E4E4FFE4E4E4FFE3E3
+        E3FFE3E3E3FFE3E3E3FFBBBBBBFF000000FFFF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFE7E7E7FFE7E7E7FFE6E6E6FFE6E6E6FFE6E6E6FFE5E5E5FFE5E5
+        E5FFE4E4E4FFE4E4E4FFBDBDBDFF000000FFFF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFE8E8E8FFC2C2C2FFE6E6E6FFC2C2C2FF000000FF000000FFE6E6
+        E6FFE6E6E6FFE5E5E5FFBEBEBEFF000000FFFF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFEAEAEAFFEAEAEAFFE9E9E9FFE9E9E9FF000000FF15414FFF0000
+        00FF000000FFE7E7E7FFBFBFBFFF000000FFFF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFEBEBEBFFC4C4C4FFC4C4C4FFC4C4C4FFE8E8E8FF000000FF74AE
+        D7FF305965FF000000FFC0C0C0FF000000FFFF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFEDEDEDFFECECECFFECECECFFECECECFFEBEBEBFF000000FF36D2
+        F6FF4DB4EFFF2B4F5CFF000000FF000000FFFF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFEEEEEEFFC9C9C9FFC9C9C9FFEEEEEEFFC9C9C9FFC9C9C9FF0000
+        00FF39DFF9FF44B2F4FF3E5D66FF000000FF00000025FF00FF00FF00FF000000
+        00FFFEFEFEFFEFEFEFFFEFEFEFFFEFEFEFFFEEEEEEFFEEEEEEFFEEEEEEFFEEEE
+        EEFF000000FF3BE9FCFF45B5F7FF345F6CFF000000FF00000030FF00FF000000
+        00FFFEFEFEFFF1F1F1FFCACACAFFCACACAFFCACACAFFCACACAFFEFEFEFFFCACA
+        CAFFC9C9C9FF000000FF3DEBFCFF44B5F7FF2E5461F5000000FFFF00FF000000
+        00FFFEFEFEFFF1F1F1FFF1F1F1FFF1F1F1FFF1F1F1FFF1F1F1FFF0F0F0FFE2E2
+        E2FF858585FF494B4BFF000000FF3BE7FBFF4DB6F2FF000000FFFF00FF000000
+        00FFFEFEFEFFF1F1F1FFCCCCCCFFCCCCCCFFCCCCCCFFF1F1F1FFF1F1F1FFADAD
+        ADFF767676FF5D5D5DFF404040FF000000FF000000FF0000004EFF00FF000000
+        00FFFEFEFEFFF1F1F1FFF1F1F1FFF1F1F1FFF1F1F1FFF1F1F1FFF1F1F1FFC3C3
+        C3FFFBFBFBFFA8A8A8FF000000FF0000001AFF00FF00FF00FF00FF00FF000000
+        00FFFEFEFEFFFEFEFEFFFEFEFEFFFEFEFEFFFEFEFEFFFEFEFEFFFDFDFDFFE0E0
+        E0FFC1C1C1FF000000FF00000022FF00FF00FF00FF00FF00FF00FF00FF000000
+        0022000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+        00FF000000FF0000001AFF00FF00FF00FF00FF00FF00FF00FF00
+      }
+      OnClick = btAssinarClick
+      TabOrder = 6
+    end
+    object cbxOut: TComboBox
+      Left = 152
+      Height = 21
+      Top = 40
+      Width = 64
+      ItemHeight = 13
+      ItemIndex = 0
+      Items.Strings = (
+        'Hexa'
+        'Base64'
+      )
+      Style = csDropDownList
+      TabOrder = 4
+      Text = 'Hexa'
+    end
+    object Label2: TLabel
+      Left = 80
+      Height = 13
+      Top = 24
+      Width = 54
+      Caption = 'Algoritimo'
+      ParentColor = False
+    end
+    object Label3: TLabel
+      Left = 152
+      Height = 13
+      Top = 24
+      Width = 28
+      Caption = 'Saída'
+      ParentColor = False
     end
   end
   object GroupBox1: TGroupBox
     Left = 0
-    Height = 140
+    Height = 159
     Top = 355
-    Width = 791
+    Width = 912
     Align = alClient
     Caption = 'Respostas'
-    ClientHeight = 122
-    ClientWidth = 787
+    ClientHeight = 141
+    ClientWidth = 908
     TabOrder = 3
     object mResp: TMemo
       Left = 0
-      Height = 122
+      Height = 141
       Top = 0
-      Width = 787
+      Width = 908
       Align = alClient
       Font.Height = -11
       Font.Name = 'Courier'
