@@ -49,7 +49,7 @@ uses
      SOAPHTTPTrans, WinInet, ACBrCAPICOM_TLB,
      {SoapHTTPClient, }SOAPConst,{ JwaWinCrypt,}
   {$ENDIF}
-  pcnAuxiliar, pcnConversao,
+  pcnAuxiliar, pmdfeConversao, pcnConversao,
   ACBrMDFeConfiguracoes, ACBrMDFeManifestos, pmdfeRetConsReciMDFe,
   pmdfeProcMDFe, pmdfeConsReciMDFe, pmdfeEnvEventoMDFe, pmdfeRetEnvEventoMDFe,
   pmdfeRetEnvMDFe, pmdfeConsStatServ, pmdfeRetConsStatServ, pmdfeConsSitMDFe,
@@ -101,6 +101,7 @@ type
 
   TMDFeStatusServico = Class(TWebServicesBase)
   private
+    Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
@@ -113,6 +114,7 @@ type
   public
     function Executar: Boolean; override;
 
+    property versao: String          read Fversao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb;
     property verAplic: String        read FverAplic;
     property cStat: Integer          read FcStat;
@@ -129,6 +131,7 @@ type
     FLote: String;
     FRecibo: String;
     FMDFes: TManifestos;
+    Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
@@ -143,6 +146,7 @@ type
     constructor Create(AOwner: TComponent; AMDFes: TManifestos); reintroduce;
 
     property Recibo: String          read FRecibo;
+    property versao: String          read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
     property verAplic: String        read FverAplic;
     property cStat: Integer          read FcStat;
@@ -160,6 +164,7 @@ type
     FChaveMDFe: String;
     FMDFes: TManifestos;
     FMDFeRetorno: TRetConsReciMDFe;
+    Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
@@ -174,6 +179,7 @@ type
     constructor Create(AOwner: TComponent; AManifestos: TManifestos); reintroduce;
     destructor destroy; override;
 
+    property versao: String                read Fversao;
     property TpAmb: TpcnTipoAmbiente       read FTpAmb;
     property verAplic: String              read FverAplic;
     property cStat: Integer                read FcStat;
@@ -191,6 +197,7 @@ type
   private
     FRecibo: String;
     FMDFeRetorno: TRetConsReciMDFe;
+    Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
@@ -203,6 +210,7 @@ type
     constructor Create(AOwner: TComponent); reintroduce;
     destructor destroy; override;
 
+    property versao: String                read Fversao;
     property TpAmb: TpcnTipoAmbiente       read FTpAmb;
     property verAplic: String              read FverAplic;
     property cStat: Integer                read FcStat;
@@ -220,6 +228,7 @@ type
     FProtocolo: WideString;
     FDhRecbto: TDateTime;
     FXMotivo: WideString;
+    Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
@@ -236,6 +245,7 @@ type
     property Protocolo: WideString                    read FProtocolo write FProtocolo;
     property DhRecbto: TDateTime                      read FDhRecbto  write FDhRecbto;
     property XMotivo: WideString                      read FXMotivo   write FXMotivo;
+    property versao: String                           read Fversao;
     property TpAmb: TpcnTipoAmbiente                  read FTpAmb;
     property verAplic: String                         read FverAplic;
     property cStat: Integer                           read FcStat;
@@ -756,7 +766,8 @@ begin
 
       TACBrMDFe(FACBrMDFe).SetStatus( stMDFeIdle);
 
-      aMsg := 'Ambiente : '+TpAmbToStr(MDFeRetorno.tpAmb)+LineBreak+
+      aMsg := 'Versão Layout : '+MDFeRetorno.versao+LineBreak+
+              'Ambiente : '+TpAmbToStr(MDFeRetorno.tpAmb)+LineBreak+
               'Versão Aplicativo : '+MDFeRetorno.verAplic+LineBreak+
               'Status Código : '+IntToStr(MDFeRetorno.cStat)+LineBreak+
               'Status Descrição : '+MDFeRetorno.xMotivo+LineBreak+
@@ -765,13 +776,14 @@ begin
               'Tempo Médio : '+IntToStr(MDFeRetorno.TMed)+LineBreak+
               'Retorno : '+ DFeUtil.SeSenao(MDFeRetorno.dhRetorno = 0, '', DateTimeToStr(MDFeRetorno.dhRetorno))+LineBreak+
               'Observação : '+MDFeRetorno.xObs;
-              
+
       if FConfiguracoes.WebServices.Visualizar then
         ShowMessage(aMsg);
 
       if Assigned(TACBrMDFe(FACBrMDFe).OnGerarLog) then
          TACBrMDFe(FACBrMDFe).OnGerarLog(aMsg);
 
+      Fversao    := MDFeRetorno.versao;
       FtpAmb     := MDFeRetorno.tpAmb;
       FverAplic  := MDFeRetorno.verAplic;
       FcStat     := MDFeRetorno.cStat;
@@ -911,7 +923,8 @@ begin
 
       TACBrMDFe(FACBrMDFe).SetStatus(stMDFeIdle);
 
-      aMsg := 'Ambiente : '+TpAmbToStr(MDFeRetorno.tpAmb)+LineBreak+
+      aMsg := 'Versão Layout : '+MDFeRetorno.versao+LineBreak+
+              'Ambiente : '+TpAmbToStr(MDFeRetorno.tpAmb)+LineBreak+
               'Versão Aplicativo : '+MDFeRetorno.verAplic+LineBreak+
               'Status Código : '+IntToStr(MDFeRetorno.cStat)+LineBreak+
               'Status Descrição : '+MDFeRetorno.xMotivo+LineBreak+
@@ -926,6 +939,7 @@ begin
       if Assigned(TACBrMDFe(FACBrMDFe).OnGerarLog) then
          TACBrMDFe(FACBrMDFe).OnGerarLog(aMsg);
 
+      Fversao   := MDFeRetorno.versao;
       FtpAmb    := MDFeRetorno.tpAmb;
       FverAplic := MDFeRetorno.verAplic;
       FcStat    := MDFeRetorno.cStat;
@@ -1163,7 +1177,8 @@ function TMDFeRetRecepcao.Executar: Boolean;
 
       TACBrMDFe(FACBrMDFe).SetStatus(stMDFeIdle);
 
-      aMsg := 'Ambiente : '+TpAmbToStr(FMDFeRetorno.TpAmb)+LineBreak+
+      aMsg := 'Versão Layout : '+FMDFeRetorno.versao+LineBreak+
+              'Ambiente : '+TpAmbToStr(FMDFeRetorno.TpAmb)+LineBreak+
               'Versão Aplicativo : '+FMDFeRetorno.verAplic+LineBreak+
               'Recibo : '+FMDFeRetorno.nRec+LineBreak+
               'Status Código : '+IntToStr(FMDFeRetorno.cStat)+LineBreak+
@@ -1176,6 +1191,7 @@ function TMDFeRetRecepcao.Executar: Boolean;
       if Assigned(TACBrMDFe(FACBrMDFe).OnGerarLog) then
          TACBrMDFe(FACBrMDFe).OnGerarLog(aMsg);
 
+      Fversao   := FMDFeRetorno.versao;
       FTpAmb    := FMDFeRetorno.TpAmb;
       FverAplic := FMDFeRetorno.verAplic;
       FcStat    := FMDFeRetorno.cStat;
@@ -1341,7 +1357,8 @@ begin
 
    TACBrMDFe(FACBrMDFe).SetStatus(stMDFeIdle);
 
-   aMsg := 'Ambiente : '+TpAmbToStr(FMDFeRetorno.TpAmb)+LineBreak+
+   aMsg := 'Versão Layout : '+FMDFeRetorno.versao+LineBreak+
+           'Ambiente : '+TpAmbToStr(FMDFeRetorno.TpAmb)+LineBreak+
            'Versão Aplicativo : '+FMDFeRetorno.verAplic+LineBreak+
            'Recibo : '+FMDFeRetorno.nRec+LineBreak+
            'Status Código : '+IntToStr(FMDFeRetorno.cStat)+LineBreak+
@@ -1354,6 +1371,7 @@ begin
    if Assigned(TACBrMDFe(FACBrMDFe).OnGerarLog) then
       TACBrMDFe(FACBrMDFe).OnGerarLog(aMsg);
 
+   Fversao   := FMDFeRetorno.versao;
    FTpAmb    := FMDFeRetorno.TpAmb;
    FverAplic := FMDFeRetorno.verAplic;
    FcStat    := FMDFeRetorno.cStat;
@@ -1496,6 +1514,7 @@ begin
 
     // <retConsSitMDFe> - Retorno da consulta da situação do MDF-e
     // Este é o status oficial do MDF-e
+    Fversao    := MDFeRetorno.versao;
     FTpAmb     := MDFeRetorno.TpAmb;
     FverAplic  := MDFeRetorno.verAplic;
     FcStat     := MDFeRetorno.cStat;
@@ -1601,7 +1620,8 @@ begin
 
     TACBrMDFe(FACBrMDFe).SetStatus(stMDFeIdle);
 
-    aMsg := 'Identificador : ' + MDFeRetorno.protMDFe.chMDFe + LineBreak +
+    aMsg := 'Versão Layout : ' + MDFeRetorno.versao + LineBreak +
+            'Identificador : ' + MDFeRetorno.protMDFe.chMDFe + LineBreak +
             'Ambiente : ' + TpAmbToStr(MDFeRetorno.TpAmb) + LineBreak +
             'Versão Aplicativo : ' + MDFeRetorno.verAplic + LineBreak +
             'Status Código : ' + IntToStr(MDFeRetorno.CStat) + LineBreak +
@@ -1779,7 +1799,8 @@ begin
   Acao.Text := Texto;
 
   TACBrMDFe(FACBrMDFe).SetStatus(stMDFeEvento);
-  FPathArqEnv := IntToStr(FEvento.idLote)+ '-ped-evento.xml';
+//  FPathArqEnv := IntToStr(FEvento.idLote)+ '-ped-evento.xml';
+  FPathArqEnv := IntToStr(FEvento.idLote)+ '-ped-eve.xml';
 
   if FConfiguracoes.Geral.Salvar then
     FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg);
@@ -1792,8 +1813,10 @@ begin
            FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg, FConfiguracoes.Arquivos.GetPathMDFe(0));
   end;
 
+//  if FConfiguracoes.WebServices.Salvar then
+//    FConfiguracoes.Geral.Save(IntToStr(FEvento.idLote)+ '-ped-evento-soap.xml', Texto);
   if FConfiguracoes.WebServices.Salvar then
-    FConfiguracoes.Geral.Save(IntToStr(FEvento.idLote)+ '-ped-evento-soap.xml', Texto);
+    FConfiguracoes.Geral.Save(IntToStr(FEvento.idLote)+ '-ped-eve-soap.xml', Texto);
 
   {$IFDEF ACBrMDFeOpenSSL}
      Acao.SaveToStream(Stream);
@@ -1847,7 +1870,8 @@ begin
 
     TACBrMDFe(FACBrMDFe).SetStatus(stMDFeIdle);
 
-    aMsg := 'Ambiente : '+TpAmbToStr(EventoRetorno.retEvento.Items[0].RetInfEvento.tpAmb)+LineBreak+
+    aMsg := 'Versão Layout : '+EventoRetorno.versao+LineBreak+
+            'Ambiente : '+TpAmbToStr(EventoRetorno.retEvento.Items[0].RetInfEvento.tpAmb)+LineBreak+
             'Versão Aplicativo : '+EventoRetorno.retEvento.Items[0].RetInfEvento.verAplic+LineBreak+
             'Status Código : '+IntToStr(EventoRetorno.retEvento.Items[0].RetInfEvento.cStat)+LineBreak+
             'Status Descrição : '+EventoRetorno.retEvento.Items[0].RetInfEvento.xMotivo+LineBreak;
@@ -1863,6 +1887,7 @@ begin
     if Assigned(TACBrMDFe(FACBrMDFe).OnGerarLog) then
        TACBrMDFe(FACBrMDFe).OnGerarLog(aMsg);
 
+    Fversao  := EventoRetorno.versao;
     FcStat   := EventoRetorno.retEvento.Items[0].RetInfEvento.cStat;
     FxMotivo := EventoRetorno.retEvento.Items[0].RetInfEvento.xMotivo;
     FMsg     := EventoRetorno.retEvento.Items[0].RetInfEvento.xMotivo;
@@ -1910,10 +1935,11 @@ begin
 
                 FEvento.Evento.Items[i].RetInfEvento.XML := Texto;
 
-                NomeArq := FEvento.Evento.Items[i].InfEvento.chMDFe +
-                           FEvento.Evento.Items[i].InfEvento.TipoEvento +
-                           Format('%.2d', [FEvento.Evento.Items[i].InfEvento.nSeqEvento]) +
-                           '-procEventoMDFe.xml';
+//                NomeArq := FEvento.Evento.Items[i].InfEvento.chMDFe +
+//                           FEvento.Evento.Items[i].InfEvento.TipoEvento +
+//                           Format('%.2d', [FEvento.Evento.Items[i].InfEvento.nSeqEvento]) +
+//                           '-procEventoMDFe.xml';
+                NomeArq := Copy(FEvento.Evento.Items[i].InfEvento.id, 3, 52) + '-procEventoMDFe.xml';
 
                 if FConfiguracoes.Geral.Salvar then
                    FConfiguracoes.Geral.Save(NomeArq, Texto);

@@ -74,6 +74,7 @@ type
   TRetConsSitMDFe = class(TPersistent)
   private
     FLeitor: TLeitor;
+    Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
@@ -88,6 +89,7 @@ type
     function LerXml: Boolean;
   published
     property Leitor: TLeitor                          read FLeitor         write FLeitor;
+    property versao: String                           read Fversao         write Fversao;
     property tpAmb: TpcnTipoAmbiente                  read FtpAmb          write FtpAmb;
     property verAplic: String                         read FverAplic       write FverAplic;
     property cStat: Integer                           read FcStat          write FcStat;
@@ -127,6 +129,7 @@ begin
   try
     if leitor.rExtrai(1, 'retConsSitMDFe') <> '' then
     begin
+      Fversao   := Leitor.rAtributo('versao');
       FtpAmb    := StrToTpAmb(ok, leitor.rCampo(tcStr, 'tpAmb'));
       FverAplic := leitor.rCampo(tcStr, 'verAplic');
       FcStat    := leitor.rCampo(tcInt, 'cStat');

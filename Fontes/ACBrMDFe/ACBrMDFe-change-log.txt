@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/10/2014
+[*] Incluido nas classes que contem as estruturas dos XML de retornos a propriedade
+    versao, para que esta receba o conteudo do atributo versao.
+    por: Italo Jurisato Junior
+
 Data 20/10/2014
 [*] Alterado para imprimir o protocolo de autorização de um MDF-e emitido 
     inicialmente em Contingência.

@@ -74,23 +74,25 @@ type
 
   TRetEventoMDFe = class(TPersistent)
   private
+    FLeitor: TLeitor;
     FidLote: Integer;
+    Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
-    FLeitor: TLeitor;
     FcStat: Integer;
     FcOrgao: Integer;
     FxMotivo: String;
     FretEvento: TRetInfEventoCollection;
     FInfEvento: TInfEvento;
-    FXML: AnsiString;   //Gustavo Kato XML Completo do evento
+    FXML: AnsiString;  //Gustavo Kato XML Completo do evento
   public
     constructor Create;
     destructor Destroy; override;
     function LerXml: boolean;
   published
-    property idLote: Integer                    read FidLote    write FidLote;
     property Leitor: TLeitor                    read FLeitor    write FLeitor;
+    property idLote: Integer                    read FidLote    write FidLote;
+    property versao: String                     read Fversao    write Fversao;
     property tpAmb: TpcnTipoAmbiente            read FtpAmb     write FtpAmb;
     property verAplic: String                   read FverAplic  write FverAplic;
     property cOrgao: Integer                    read FcOrgao    write FcOrgao;
@@ -171,7 +173,7 @@ begin
     begin
       if Leitor.rExtrai(2, 'infEvento', '', i + 1) <> '' then
        begin
-         infEvento.ID         := Leitor.rCampo(tcStr, 'Id');
+         infEvento.Id         := Leitor.rAtributo('Id');
          infEvento.cOrgao     := Leitor.rCampo(tcInt, 'cOrgao');
          infEvento.tpAmb      := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
          infEvento.CNPJ       := Leitor.rCampo(tcStr, 'CNPJ');
@@ -199,6 +201,8 @@ begin
        (Leitor.rExtrai(1, 'retEventoMDFe') <> '') then
     begin
       i := 0;
+      Fversao := Leitor.rAtributo('versao');
+
       while Leitor.rExtrai(2, 'infEvento', '', i + 1) <> '' do
        begin
          FretEvento.Add;
