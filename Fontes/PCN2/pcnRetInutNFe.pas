@@ -64,6 +64,7 @@ type
 
   TRetInutNFe = class(TPersistent)
   private
+    Fversao: String;
     FId: String;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
@@ -86,6 +87,7 @@ type
     function LerXml: Boolean;
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
+    property versao: String          read Fversao   write Fversao;
     property Id: String              read FId       write FId;
     property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
     property verAplic: String        read FverAplic write FverAplic;
@@ -131,21 +133,20 @@ begin
 
     if (leitor.rExtrai(1, 'retInutNFe') <> '') or (leitor.rExtrai(1, 'infInut') <> '') then
     begin
-      (*DR05 *)FtpAmb := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+               Fversao   := Leitor.rAtributo('versao');
+      (*DR05 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*DR06 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
-      (*DR07 *)FcStat := Leitor.rCampo(tcInt, 'cStat');
-
-      (*DR08 *)FxMotivo := Leitor.rCampo(tcStr, 'xMotivo');
-
-      (*DR09 *)FcUF := Leitor.rCampo(tcInt, 'cUF');
-      (*DR10 *)Fano := Leitor.rCampo(tcInt, 'ano');
-      (*DR11 *)FCNPJ := Leitor.rCampo(tcStr, 'CNPJ');
-      (*DR12 *)FModelo := Leitor.rCampo(tcInt, 'mod');
-      (*DR13 *)FSerie := Leitor.rCampo(tcInt, 'serie');
-      (*DR14 *)FnNFIni := Leitor.rCampo(tcInt, 'nNFIni');
-      (*DR15 *)FnNFFin := Leitor.rCampo(tcInt, 'nNFFin');
+      (*DR07 *)FcStat    := Leitor.rCampo(tcInt, 'cStat');
+      (*DR08 *)FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+      (*DR09 *)FcUF      := Leitor.rCampo(tcInt, 'cUF');
+      (*DR10 *)Fano      := Leitor.rCampo(tcInt, 'ano');
+      (*DR11 *)FCNPJ     := Leitor.rCampo(tcStr, 'CNPJ');
+      (*DR12 *)FModelo   := Leitor.rCampo(tcInt, 'mod');
+      (*DR13 *)FSerie    := Leitor.rCampo(tcInt, 'serie');
+      (*DR14 *)FnNFIni   := Leitor.rCampo(tcInt, 'nNFIni');
+      (*DR15 *)FnNFFin   := Leitor.rCampo(tcInt, 'nNFFin');
       (*DR16 *)FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
-      (*DR17 *)FnProt := Leitor.rCampo(tcStr, 'nProt');
+      (*DR17 *)FnProt    := Leitor.rCampo(tcStr, 'nProt');
 
       //Criado pegar a Justificativa, caso seja um arquivo ProcInut
       if leitor.rExtrai(1, 'infInut') <> '' then

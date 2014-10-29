@@ -84,6 +84,7 @@ type
   TRetEventoNFe = class(TPersistent)
   private
     FidLote: Integer;
+    Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
     FLeitor: TLeitor;
@@ -100,6 +101,7 @@ type
   published
     property idLote: Integer                    read FidLote    write FidLote;
     property Leitor: TLeitor                    read FLeitor    write FLeitor;
+    property versao: String                     read Fversao    write Fversao;
     property tpAmb: TpcnTipoAmbiente            read FtpAmb     write FtpAmb;
     property verAplic: String                   read FverAplic  write FverAplic;
     property cOrgao: Integer                    read FcOrgao    write FcOrgao;
@@ -171,7 +173,8 @@ end;
 function TRetEventoNFe.LerXml: Boolean;
 var
   ok: Boolean;
-  i: Integer;
+  i, j: Integer;
+  chave: String;
 begin
   Result := False;
   i:=0;
@@ -228,6 +231,7 @@ begin
     if (Leitor.rExtrai(1, 'retEnvEvento') <> '') or
        (Leitor.rExtrai(1, 'retEvento') <> '') then
     begin
+               Fversao   := Leitor.rAtributo('versao');
       (*HR03 *)FidLote   := Leitor.rCampo(tcInt, 'idLote');
       (*HR04 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*HR05 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
@@ -260,7 +264,18 @@ begin
                   FretEvento.Items[i].FRetInfEvento.cOrgaoAutor := Leitor.rCampo(tcInt, 'cOrgaoAutor');
          (*HR25 *)FretEvento.Items[i].FRetInfEvento.dhRegEvento := Leitor.rCampo(tcDatHor, 'dhRegEvento');
          (*HR26 *)FretEvento.Items[i].FRetInfEvento.nProt       := Leitor.rCampo(tcStr, 'nProt');
-                  FretEvento.Items[i].FRetInfEvento.chNFePend   := Leitor.rCampo(tcStr, 'chNFePend');
+//                  FretEvento.Items[i].FRetInfEvento.chNFePend   := Leitor.rCampo(tcStr, 'chNFePend');
+
+         j := 0;
+         while  Leitor.rExtrai(3, 'chNFePend', '', j + 1) <> '' do
+          begin
+            FretEvento.Items[i].FRetInfEvento.chNFePend.Add;
+
+            FretEvento.Items[i].FRetInfEvento.chNFePend[j].ChavePend := Leitor.rCampo(tcStr, 'chNFePend');
+
+            inc(j);
+          end;
+
          inc(i);
        end;
       Result := True;

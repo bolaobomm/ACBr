@@ -83,6 +83,7 @@ type
   TRetConsSitNFe = class(TPersistent)
   private
     FLeitor: TLeitor;
+    Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
@@ -100,6 +101,7 @@ type
     function LerXml: Boolean;
   published
     property Leitor: TLeitor                        read FLeitor        write FLeitor;
+    property versao: String                         read Fversao        write Fversao;
     property tpAmb: TpcnTipoAmbiente                read FtpAmb         write FtpAmb;
     property verAplic: String                       read FverAplic      write FverAplic;
     property cStat: Integer                         read FcStat         write FcStat;
@@ -143,6 +145,7 @@ begin
   try
     if leitor.rExtrai(1, 'retConsSitNFe') <> '' then
     begin
+               Fversao   := Leitor.rAtributo('versao');
       (*ER03 *)FtpAmb    := StrToTpAmb(ok, leitor.rCampo(tcStr, 'tpAmb'));
       (*ER04 *)FverAplic := leitor.rCampo(tcStr, 'verAplic');
 

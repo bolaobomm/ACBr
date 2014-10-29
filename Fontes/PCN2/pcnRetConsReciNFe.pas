@@ -61,6 +61,7 @@ type
   TRetConsReciNFe = class(TPersistent)
   private
     FLeitor: TLeitor;
+    Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
     FnRec: String;
@@ -78,6 +79,7 @@ type
     function LerXML: Boolean;
   published
     property Leitor: TLeitor             read FLeitor   write FLeitor;
+    property versao: String              read Fversao   write Fversao;
     property tpAmb: TpcnTipoAmbiente     read FtpAmb    write FtpAmb;
     property verAplic: String            read FverAplic write FverAplic;
     property nRec: String                read FnRec     write FnRec;
@@ -171,10 +173,13 @@ var
 begin
   Result := False;
   try
+    Leitor.Grupo := Leitor.Arquivo;
+
     if Leitor.rExtrai(1, 'retConsReciNFe') <> '' then
     begin
-      Leitor.Grupo := Leitor.Arquivo;
+//      Leitor.Grupo := Leitor.Arquivo;
 
+               Fversao   := Leitor.rAtributo('versao');
       (*BR03 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*BR04 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
       (*BR04a*)FnRec     := Leitor.rCampo(tcStr, 'nRec');

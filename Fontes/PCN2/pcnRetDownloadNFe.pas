@@ -189,7 +189,7 @@ begin
     FXML := Self.Leitor.Arquivo;
     if (Leitor.rExtrai(1, 'retDownloadNFe') <> '') then
     begin
-      (*JR02 *)Fversao   := Leitor.rCampo(tcStr, 'versao');
+      (*JR02 *)Fversao   := Leitor.rAtributo('versao');
       (*JR03 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*JR04 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
       (*JR05 *)FcStat    := Leitor.rCampo(tcInt, 'cStat');

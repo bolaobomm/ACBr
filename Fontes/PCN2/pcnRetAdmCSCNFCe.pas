@@ -83,6 +83,7 @@ type
   TRetAdmCSCNFCe = class(TPersistent)
   private
     FLeitor: TLeitor;
+    Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
     FindOP: TpcnIndOperacao;
     FcStat: Integer;
@@ -94,6 +95,7 @@ type
     function LerXml: boolean;
   published
     property Leitor: TLeitor                  read FLeitor   write FLeitor;
+    property versao: String                   read Fversao   write Fversao;
     property tpAmb: TpcnTipoAmbiente          read FtpAmb    write FtpAmb;
     property indOP: TpcnIndOperacao           read FindOP    write FindOP;
     property cStat: Integer                   read FcStat    write FcStat;
@@ -167,6 +169,7 @@ begin
     Leitor.Grupo := Leitor.Arquivo;
     if leitor.rExtrai(1, 'retAdmCscNFCe') <> '' then
     begin
+      Fversao  := Leitor.rAtributo('versao');
       FtpAmb   := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       FindOp   := StrToIndOperacao(Ok, Leitor.rCampo(tcStr, 'indOp'));
       FcStat   := Leitor.rCampo(tcInt, 'cStat');

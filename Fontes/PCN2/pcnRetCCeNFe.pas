@@ -137,6 +137,7 @@ type
   TRetCCeNFe = class(TPersistent)
   private
     FidLote: Integer;
+    Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
     FLeitor: TLeitor;
@@ -151,6 +152,7 @@ type
   published
     property idLote: Integer                    read FidLote    write FidLote;
     property Leitor: TLeitor                    read FLeitor    write FLeitor;
+    property versao: String                     read Fversao    write Fversao;
     property tpAmb: TpcnTipoAmbiente            read FtpAmb     write FtpAmb;
     property verAplic: String                   read FverAplic  write FverAplic;
     property cOrgao: Integer                    read FcOrgao    write FcOrgao;
@@ -242,6 +244,7 @@ begin
   try
     if Leitor.rExtrai(1, 'retEnvEvento') <> '' then
     begin
+               Fversao   := Leitor.rAtributo('versao');
       (*HR03 *)FidLote   := Leitor.rCampo(tcInt, 'idLote');
       (*HR04 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*HR05 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');

@@ -61,6 +61,7 @@ type
   TRetConsCad = class(TPersistent)
   private
     FLeitor: TLeitor;
+    Fversao: String;
     FverAplic: String;
     FcStat: Integer;
     FxMotivo: String;
@@ -79,6 +80,7 @@ type
     function LerXML: Boolean;
   published
     property Leitor: TLeitor           read FLeitor   write FLeitor;
+    property versao: String            read Fversao   write Fversao;
     property verAplic: String          read FverAplic write FverAplic;
     property cStat: Integer            read FcStat    write FcStat;
     property xMotivo: String           read FxMotivo  write FxMotivo;
@@ -206,6 +208,10 @@ begin
   i := 0;
   Result := False;
   try
+    Leitor.Grupo := Leitor.Arquivo;
+    
+    Fversao := Leitor.rAtributo('versao');
+
     if Leitor.rExtrai(1, 'infCons') <> '' then
     begin
       // tratamento para quando o webservice não retorna os zeros a esquerda

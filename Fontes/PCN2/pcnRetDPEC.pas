@@ -57,6 +57,7 @@ type
   TRetDPEC = class(TPersistent)
   private
     FLeitor: TLeitor;
+    Fversao: String;
     FId: String;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
@@ -71,6 +72,7 @@ type
     function LerXml: Boolean;
   published
     property Leitor: TLeitor         read FLeitor    write FLeitor;
+    property versao: String          read Fversao    write Fversao;
     property Id: String              read FId        write FId;
     property tpAmb: TpcnTipoAmbiente read FtpAmb     write FtpAmb;
     property verAplic: String        read FverAplic  write FverAplic;
@@ -102,6 +104,10 @@ var
 begin
   Result := False;
   try
+    Leitor.Grupo := Leitor.Arquivo;
+
+    Fversao := Leitor.rAtributo('versao');
+    
     if Leitor.rExtrai(1, 'infDPECReg') <> '' then
     begin
       (*AR04 *)FId       := Leitor.rAtributo('infDPECReg Id=');
