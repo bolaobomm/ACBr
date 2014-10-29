@@ -268,7 +268,7 @@ begin
 
  if AProvedor = proDBSeller then
    DadosMsg := '<ConsultarSituacaoLoteRpsEnvio>' + DadosMsg + '</ConsultarSituacaoLoteRpsEnvio>';
-                
+
  Result := TagI + DadosMsg + TagF;
 
  if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, pro4R, proAgili,
@@ -613,6 +613,9 @@ begin
  end;
 
  Result := TagI + DadosMsg + TagF;
+
+ if AProvedor = proDBSeller then
+   Result := '<CancelarNfse>' + Result + '</CancelarNfse>';
 
  if AProvedor in [proNenhum, proABRASFv1, proABRASFv2] then Result := '';
 end;

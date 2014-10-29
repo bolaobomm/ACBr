@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/10/2014
+[*] Alterações na estrutura do XML de Cancelamento da NFS-e (provedor DBSeller).
+    por: Fabio Cavol Suhs
 [*] Alterações na estrutura do XML de consulta a situracao do lote e consulta ao
     lote (provedor DBSeller).
     por: Rodrigo Custório e Fabio Cavol Suhs
