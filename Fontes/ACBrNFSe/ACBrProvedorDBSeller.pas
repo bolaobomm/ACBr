@@ -153,13 +153,13 @@ begin
            end;
  end;
 
- ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br/webservice/index/homologacao';
- ConfigURL.HomConsultaLoteRPS    := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br/webservice/index/homologacao';
- ConfigURL.HomConsultaNFSeRPS    := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br/webservice/index/homologacao';
- ConfigURL.HomConsultaSitLoteRPS := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br/webservice/index/homologacao';
- ConfigURL.HomConsultaNFSe       := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br/webservice/index/homologacao';
- ConfigURL.HomCancelaNFSe        := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br/webservice/index/homologacao';
- ConfigURL.HomGerarNFSe          := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br/webservice/index/homologacao';
+ ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br:82/webservice/index/homologacao';
+ ConfigURL.HomConsultaLoteRPS    := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br:82/webservice/index/homologacao';
+ ConfigURL.HomConsultaNFSeRPS    := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br:82/webservice/index/homologacao';
+ ConfigURL.HomConsultaSitLoteRPS := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br:82/webservice/index/homologacao';
+ ConfigURL.HomConsultaNFSe       := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br:82/webservice/index/homologacao';
+ ConfigURL.HomCancelaNFSe        := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br:82/webservice/index/homologacao';
+ ConfigURL.HomGerarNFSe          := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br:82/webservice/index/homologacao';
 
  ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.' + ConfigURL.ProNomeCidade + '.gov.br/webservice/index/producao';
  ConfigURL.ProConsultaLoteRPS    := 'http://nfse.' + ConfigURL.ProNomeCidade + '.gov.br/webservice/index/producao';
@@ -203,8 +203,8 @@ function TProvedorDBSeller.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
 begin
  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
-   acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
-   acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
+   acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRps' + NameSpaceDad;
+   acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRps' + NameSpaceDad;
    acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + NameSpaceDad;
    acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseEnvio' + NameSpaceDad;
    acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + NameSpaceDad +
@@ -232,8 +232,8 @@ function TProvedorDBSeller.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiStr
 begin
  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
-   acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
-   acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
+   acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRps>';
+   acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRps>';
    acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfseRpsEnvio>';
    acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseEnvio>';
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
