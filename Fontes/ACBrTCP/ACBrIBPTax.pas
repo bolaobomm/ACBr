@@ -102,6 +102,7 @@ type
     FItens: TACBrIBPTaxRegistros;
     FVigenciaFim: TDateTime;
     FVigenciaInicio: TDateTime;
+    FFonte: String;
     FOnErroImportacao: TACBrIBPTaxErroImportacao;
     procedure ExportarCSV(const AArquivo: String);
     procedure ExportarDSV(const AArquivo: String);
@@ -128,6 +129,7 @@ type
     property Itens: TACBrIBPTaxRegistros read FItens;
   published
     property OnErroImportacao: TACBrIBPTaxErroImportacao read FOnErroImportacao write FOnErroImportacao;
+    property Fonte: String read FFonte;
     property VersaoArquivo: String read FVersaoArquivo;
     property ChaveArquivo: String read FChaveArquivo;
     property VigenciaInicio: TDateTime read FVigenciaInicio;
@@ -192,6 +194,9 @@ begin
   FArquivo := TStringList.Create;
   FURLDownload := '';
   FVersaoArquivo := '';
+  FFonte := '';
+  FVigenciaInicio := 0;
+  FVigenciaFim := 0;
   FOnErroImportacao := nil;
 end;
 
@@ -224,6 +229,7 @@ begin
       FVigenciaFim    := StrToDateDef(Item.Strings[9], 0.0);
       FChaveArquivo   := Item.Strings[10];
       FVersaoArquivo  := Item.Strings[11];
+      FFonte          := Item.Strings[12];
     end;
 
     // proximas linhas contem os registros
