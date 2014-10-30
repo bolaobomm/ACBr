@@ -684,13 +684,13 @@ begin
 
      AXML := copy(AXML, 1, pos('</'+ APrefixo3 + EnviarLoteRps + '>', AXML) - 1);
 
-     // Alterado por Italo em 07/08/2013 - incluido na lista o proAbaco
-     if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco, proIssDSF, proIssCuritiba, proFISSLex, proGovBR, proPublica, proPronim{Dalvan}])
+     if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco, proIssDSF,
+                                     proIssCuritiba, proFISSLex, proGovBR,
+                                     proPublica, proPronim])
       then AID := '>'
-      else if AProvedor = proNatal then AID := ' ' + Identificador + '="Ass_lote">'
+//      else if AProvedor = proNatal then AID := ' ' + Identificador + '="Ass_lote">'
       else AID := ' ' + Identificador + '="AssLote_' + URI + '">';
 
-     // Incluido por Italo em 07/08/2013
      if AProvedor in [proAbaco, proIssCuritiba, proFISSLex, proPublica]
       then URI := '';
 
