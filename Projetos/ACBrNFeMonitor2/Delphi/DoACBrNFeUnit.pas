@@ -269,13 +269,7 @@ begin
         else if Cmd.Metodo = 'imprimirdanfe' then
          begin
            OldMostrarPreview := ACBrNFe1.DANFE.MostrarPreview;
-           ConfiguraDANFe;
-           if ACBrNFe1.DANFE.MostrarPreview or (Cmd.Params(4) = '1') then
-            begin
-              Restaurar1.Click;
-              Application.BringToFront;
-              ACBrNFe1.DANFE.MostrarPreview := True;
-            end;
+
            ACBrNFe1.NotasFiscais.Clear;
            if FileExists(Cmd.Params(0)) or FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(0)) then
             begin
@@ -286,6 +280,14 @@ begin
             end
            else
               raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
+
+           ConfiguraDANFe;
+           if ACBrNFe1.DANFE.MostrarPreview or (Cmd.Params(4) = '1') then
+            begin
+              Restaurar1.Click;
+              Application.BringToFront;
+              ACBrNFe1.DANFE.MostrarPreview := True;
+            end;              
 
            if DFeUtil.NaoEstaVazio(Cmd.Params(1)) then
               ACBrNFe1.DANFE.Impressora := Cmd.Params(1)
