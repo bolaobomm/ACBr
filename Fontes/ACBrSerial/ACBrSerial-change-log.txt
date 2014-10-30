@@ -97,6 +97,26 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 30/10/2014   (por: DSA)
+-- ACBrECFEscECF --
+[-] Metodos de Leitura de MFD por DLL não recebiam valor da propriedade PathDLL
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=18392
+
+Data: 29/10/2014   (por: DSA)
+-- ACBrECF --
+[+] Adicionado o método: "VendeItemEx", que permite a passagem de parâmetros
+    necessários para a emissão de documentos fiscais eletrônicos.
+    Leia os parâmetros existentes e sua explicação em ACBrECF.pas, linha: 605
+[*] Refactoring em VendeItem, criando novos métodos que são compartilhados com
+    VendeItemEx. Criado os métodos: IniciaVendeItem e FinalizaVendeItem
+
+-- ACBrECFBematech --
+[+] Implementado suporte para o método VendeItemEx, compatibilizando com a
+    Plataforma Fiscal da Bematech, (usando o pacote 85/01)
+
+-- ACBrECFSwedaSTX --
+[*] Melhorias no gravação do LOG
+
 Data: 18/10/2014   (por: DSA)
 -- ACBrECFEscECF --
 [*] Aplicado workaround para o modelo Epson, na detectção do estado "estRequerZ"

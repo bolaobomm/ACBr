@@ -1353,11 +1353,14 @@ end ;
 
 function TACBrECFEscECF.CriarECFClassPorMarca: TACBrECFClass;
 begin
-  Result := nil;
+  Result := Nil;
   if IsBematech then
     Result := TACBrECFBematech.create(fpOwner)
   else if IsEpson then
-    Result := TACBrECFEpson.create(fpOwner)
+    Result := TACBrECFEpson.create(fpOwner);
+
+  if Result <> Nil then
+    Result.PathDLL := Self.PathDLL;
 end;
 
 function TACBrECFEscECF.RetornaInfoECF(Registrador: String): AnsiString;
