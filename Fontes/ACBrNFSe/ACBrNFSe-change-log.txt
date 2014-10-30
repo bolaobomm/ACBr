@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 30/10/2014
+[*] Alterado a URL do ambiente de homologação do provedor Publica.
+    por: Flavio Solvi
+[+] Adicionado a cidade Seberi/RS ao provedor Betha.
+    por: Alexandre Wener
 [-] Corrigido o problema de não realizar a assinatura do lote (provedor Natal).
     por: Italo Jurisato Junior
 

@@ -815,6 +815,7 @@ begin
   4305801, // Constantina/RS
   4309100, // Gramado/RS
   4318002, // São Borja/RS
+  4320206, // Seberi/RS
   4321907, // Tres Passos/RS
   5006200, // Nova Andradina/MS
   5100201, // Água Boa/MT

@@ -140,6 +140,14 @@ begin
  if ACodCidade = 4208203  // Itajaí/SC
   then begin
    ConfigURL.HomNomeCidade         := '';
+   ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse-teste.publica.inf.br/itajai_nfse_integracao/Services';
+   ConfigURL.HomConsultaLoteRPS    := 'http://nfse-teste.publica.inf.br/itajai_nfse_integracao/Services';
+   ConfigURL.HomConsultaNFSeRPS    := 'http://nfse-teste.publica.inf.br/itajai_nfse_integracao/Services';
+   ConfigURL.HomConsultaSitLoteRPS := 'http://nfse-teste.publica.inf.br/itajai_nfse_integracao/Services';
+   ConfigURL.HomConsultaNFSe       := 'http://nfse-teste.publica.inf.br/itajai_nfse_integracao/Services';
+   ConfigURL.HomCancelaNFSe        := 'http://nfse-teste.publica.inf.br/itajai_nfse_integracao/Services';
+   ConfigURL.HomGerarNFSe          := 'http://nfse-teste.publica.inf.br/itajai_nfse_integracao/Services';
+   (*
    ConfigURL.HomRecepcaoLoteRPS    := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
    ConfigURL.HomConsultaLoteRPS    := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
    ConfigURL.HomConsultaNFSeRPS    := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
@@ -147,7 +155,7 @@ begin
    ConfigURL.HomConsultaNFSe       := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
    ConfigURL.HomCancelaNFSe        := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
    ConfigURL.HomGerarNFSe          := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
-
+   *)
    ConfigURL.ProNomeCidade         := '';
    ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
    ConfigURL.ProConsultaLoteRPS    := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
