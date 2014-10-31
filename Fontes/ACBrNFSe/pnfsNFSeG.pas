@@ -694,7 +694,8 @@ begin
                   proEquiplano, proFIssLex, proGinfes, proGovBR, proIssCuritiba,
                   proIssIntel, proIssNet, proLexsom, proNatal, proProdemge,
                   proRJ, proSimplIss, proThema, proTiplan, proIssDSF, proAgili,
-                  proSpeedGov, proPronim, proActcon] then Result := '';
+                  proSpeedGov, proPronim, proActcon,
+                  proSalvador] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
@@ -712,7 +713,8 @@ begin
                   proISSIntel, proISSNet, proLexsom, proNatal, proProdemge,
                   proPublica, proRecife, proRJ, proSaatri, proFreire,
                   proSimplISS, proThema, proTiplan, proWebISS, proProdata,
-                  proAgili, proSpeedGov, proPronim, proVirtual] then Result := '';
+                  proAgili, proSpeedGov, proPronim, proVirtual,
+                  proSalvador] then Result := '';
 end;
 
 //-------------------------------------------------------------------------

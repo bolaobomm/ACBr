@@ -327,7 +327,6 @@ function TProvedorSalvador.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
- raise Exception.Create( 'Opção não implementada para este provedor.' );
 end;
 
 function TProvedorSalvador.GeraEnvelopeRecepcionarSincrono(URLNS: String;

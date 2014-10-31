@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/10/2014
+[-] Incluido o provedor Salvador para levantar exceção quando for utilizar os 
+    Web Services: GerarNFSe e EnviarLoteRpsSincrono.
+    Mototivo: O provedor não dispõe desses Web Services.
+    por: Italo Jurisato Junior
+
 30/10/2014
 [*] Alterado a URL do ambiente de homologação do provedor Publica.
     por: Flavio Solvi
