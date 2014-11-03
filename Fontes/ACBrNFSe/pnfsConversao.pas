@@ -694,7 +694,7 @@ begin
         // do layout da ABRASF mas ainda não possui um Web Service, ou seja,
         // devemos apenas gerar o XML do RPS para ser lido pelo site da prefeitura
 
-  2607901  //Jaboatão dos Guararapes/PE //gilvan
+  2607901  // Jaboatão dos Guararapes/PE 
          : Provedor := 'ABRASFv1';
 
         // Devemos informar aqui a lista de cidades que utilizam a versão 2
@@ -799,6 +799,7 @@ begin
   4215802, // São Bento do Sul/SC
   4216008, // São Carlos/SC
   4216305, // São João Batista/SC
+  4216503, // Sao Joaquim/SC
   4216909, // São Lourenço do Oeste/SC
   4217204, // São Miguel do Oeste/SC
   4217402, // Schroeder/SC
@@ -1007,7 +1008,7 @@ begin
 //  3511102, // Catanduva/SP
 //  3530300, // Mirassol/SP
   3541505, // Presidente Venceslau/SP
-//  4204004, //Catanduvas / SC
+//  4204004, // Catanduvas/SC
   4101408, // Apucarana/PR
   4102000, // Assis Chateaubriand/PR
 //  4205902, // Gaspar/SC
@@ -1033,7 +1034,7 @@ begin
   3530300, // Mirassol/SP
   4118501, // Pato Branco/PR
   4201307, // Araquari/SC
-  4204004, //Catanduvas / SC
+  4204004, // Catanduvas/SC
   4205902, // Gaspar/SC
   4210506, // Maravilha/SC
   4216602, // São José/SC
@@ -1160,14 +1161,14 @@ begin
 
   5208004, // Formosa/GO
   5213103, // Mineiros/GO
-  5217302, // Pirenopolis/GO //Gilvan
+  5217302, // Pirenopolis/GO 
   5218805  // Rio Verde/GO
          : Provedor := 'Prodata';
 
   4208203  // Itajai/SC
          : Provedor := 'Publica';
 
-  1100205 //Porto Velho/RO
+  1100205 // Porto Velho/RO
          : Provedor := 'PVH';
 
   2611606  // Recife/PE
@@ -1236,7 +1237,7 @@ begin
   2611101  // Petrolina/PE
          : Provedor := 'SpeedGov';
 
-  4306403, //Dois Irmãos/RS
+  4306403, // Dois Irmãos/RS
   4306809, // Encantado/RS
   4307609, // Estância Velha/RS
   4307807, // Estrela/RS
