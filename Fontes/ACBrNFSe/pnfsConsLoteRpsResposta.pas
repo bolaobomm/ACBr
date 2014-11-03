@@ -318,20 +318,23 @@ begin
               ListaNfse.FCompNfse[i].FNfse.InfID.ID          := Leitor.rCampo(tcStr, 'Numero');
               ListaNfse.FCompNfse[i].FNFSe.Numero            := Leitor.rCampo(tcStr, 'Numero');
               ListaNfse.FCompNfse[i].FNFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
-              if FProvedor in [proSpeedGov, proVitoria] then
-                ListaNfse.FCompNfse[i].FNFSe.DataEmissao       := Leitor.rCampo(tcDat, 'DataEmissao')
+
+              if FProvedor in [proSpeedGov, proVitoria, proDBSeller] then
+                ListaNfse.FCompNfse[i].FNFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao')
               else
-                ListaNfse.FCompNfse[i].FNFSe.DataEmissao       := Leitor.rCampo(tcDatHor, 'DataEmissao');
+                ListaNfse.FCompNfse[i].FNFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
 
               ListaNfse.FCompNfse[i].FNFSe.NaturezaOperacao         := StrToNaturezaOperacao(ok, Leitor.rCampo(tcStr, 'NaturezaOperacao'));
               ListaNfse.FCompNfse[i].FNFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
               ListaNfse.FCompNfse[i].FNFSe.OptanteSimplesNacional   := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));
               ListaNfse.FCompNfse[i].FNFSe.IncentivadorCultural     := StrToSimNao(ok, Leitor.rCampo(tcStr, 'IncentivadorCultural'));
+              ListaNfse.FCompNfse[i].FNFSe.Competencia              := Leitor.rCampo(tcStr, 'Competencia');
 
-              ListaNfse.FCompNfse[i].FNFSe.Competencia       := Leitor.rCampo(tcStr, 'Competencia');
-              if FProvedor = proISSNet
-               then ListaNfse.FCompNfse[i].FNFSe.NfseSubstituida   := ''
-               else ListaNfse.FCompNfse[i].FNFSe.NfseSubstituida   := Leitor.rCampo(tcStr, 'NfseSubstituida');
+              if FProvedor = proISSNet then
+                ListaNfse.FCompNfse[i].FNFSe.NfseSubstituida := ''
+              else
+                ListaNfse.FCompNfse[i].FNFSe.NfseSubstituida := Leitor.rCampo(tcStr, 'NfseSubstituida');
+
               ListaNfse.FCompNfse[i].FNFSe.OutrasInformacoes := Leitor.rCampo(tcStr, 'OutrasInformacoes');
               ListaNfse.FCompNfse[i].FNFSe.ValorCredito      := Leitor.rCampo(tcDe2, 'ValorCredito');
 

@@ -47,7 +47,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-01/11/2014
+03/11/2014
+[-] Correções para o provedor DBSeller.
+    por: Fabio Cavol Suhs
 [+] Adicionado a cidade São Joaquim/SC ao provedor Betha.
     por: Cleiton Silveira
 [-] Correções na geração de lotes modo sincrono para o provedor Tecnos.
