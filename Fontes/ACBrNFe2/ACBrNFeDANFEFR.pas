@@ -391,7 +391,7 @@ begin
 
 //    NomeArq := Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[0].InfEvento.id, 3, 52);
 
-    NomeArq := StringReplace(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 'ID', '', [rfIgnoreCase]);
+    NomeArq := StringReplace(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[0].InfEvento.id, 'ID', '', [rfIgnoreCase]);
 
     dmDanfe.frxPDFExport.FileName := PathWithDelim(Self.PathPDF) + NomeArq + '-procEventoNFe.pdf';
     dmDanfe.frxReport.Export(dmDanfe.frxPDFExport);

@@ -197,7 +197,7 @@ begin
 
 //    for I := 0 to TACBrCTe(ACBrCTe).Conhecimentos.Count - 1 do
 //    begin
-      NomeArq := StringReplace(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.id, 'ID', '', [rfIgnoreCase]);
+      NomeArq := StringReplace(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[0].InfEvento.id, 'ID', '', [rfIgnoreCase]);
 
       dmDacte.frxPDFExport.FileName := IncludeTrailingPathDelimiter(PathPDF) +
                                        NomeArq {dmDacte.CTe.procCTe.chCTe} +
