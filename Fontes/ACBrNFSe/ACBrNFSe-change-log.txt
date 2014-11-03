@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/11/2014
+[-] Correções na geração de lotes modo sincrono para o provedor Tecnos.
+    por: Italo Jurisato Junior
+
 31/10/2014
 [-] Incluido o provedor Salvador para levantar exceção quando for utilizar os 
     Web Services: GerarNFSe e EnviarLoteRpsSincrono.

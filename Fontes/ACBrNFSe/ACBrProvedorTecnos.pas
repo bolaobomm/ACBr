@@ -111,8 +111,8 @@ begin
  else
    ConfigCidade.AssinaRPS  := true;
 }
-  ConfigCidade.AssinaRPS  := False;
-  ConfigCidade.AssinaLote := True;
+  ConfigCidade.AssinaRPS  := True;
+  ConfigCidade.AssinaLote := False;
   
   Result := ConfigCidade;
 end;
@@ -121,18 +121,19 @@ function TProvedorTecnos.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho := '20.01';
- ConfigSchema.VersaoDados     := '20.01';
- ConfigSchema.VersaoXML       := '2';
- ConfigSchema.NameSpaceXML    := 'http://www.nfse-tecnos.com.br';
- ConfigSchema.Cabecalho       := 'nfse.xsd';
- ConfigSchema.ServicoEnviar   := 'nfse.xsd';
- ConfigSchema.ServicoConSit   := 'nfse.xsd';
- ConfigSchema.ServicoConLot   := 'nfse.xsd';
- ConfigSchema.ServicoConRps   := 'nfse.xsd';
- ConfigSchema.ServicoConNfse  := 'nfse.xsd';
- ConfigSchema.ServicoCancelar := 'nfse.xsd';
- ConfigSchema.DefTipos        := '';
+ ConfigSchema.VersaoCabecalho       := '20.01';
+ ConfigSchema.VersaoDados           := '20.01';
+ ConfigSchema.VersaoXML             := '2';
+ ConfigSchema.NameSpaceXML          := 'http://www.nfse-tecnos.com.br';
+ ConfigSchema.Cabecalho             := 'nfse.xsd';
+ ConfigSchema.ServicoEnviar         := 'nfse.xsd';
+ ConfigSchema.ServicoConSit         := 'nfse.xsd';
+ ConfigSchema.ServicoConLot         := 'nfse.xsd';
+ ConfigSchema.ServicoConRps         := 'nfse.xsd';
+ ConfigSchema.ServicoConNfse        := 'nfse.xsd';
+ ConfigSchema.ServicoCancelar       := 'nfse.xsd';
+ ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
+ ConfigSchema.DefTipos              := '';
  Result := ConfigSchema;
 end;
 

@@ -2539,6 +2539,14 @@ begin
                                '</Signature>'+
                               '</' + Prefixo4 + 'Rps>';
 
+      proTecnos: vNotas := vNotas +
+                              '<' + Prefixo4 + 'Rps>' +
+                               '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico' +
+                                 RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
+                                   '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico', '</' + Prefixo4 + 'tcDeclaracaoPrestacaoServico>') +
+                                   '</' + Prefixo4 + 'tcDeclaracaoPrestacaoServico>' +
+                              '</' + Prefixo4 + 'Rps>';
+
       proDigifred: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps ' +
                                  RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
