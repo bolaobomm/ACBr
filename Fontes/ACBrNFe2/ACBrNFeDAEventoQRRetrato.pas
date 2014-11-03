@@ -265,6 +265,11 @@ begin
                     qrlLinha2.Caption := 'Não possui valor fiscal, simples representação do Cancelamento indicado abaixo.';
                     qrlLinha3.Caption := 'CONSULTE A AUTENTICIDADE DO CANCELAMENTO NO SITE DA SEFAZ AUTORIZADORA.';
                    end;
+   teEPECNFe: begin
+               qrlLinha1.Caption := 'EVENTO PRÉVIO DE EMISSÃO EM CONTINGÊNCIA - EPEC';
+               qrlLinha2.Caption := 'Não possui valor fiscal, simples representação da EPEC indicada abaixo.';
+               qrlLinha3.Caption := 'CONSULTE A AUTENTICIDADE DA EPEC NO SITE DA SEFAZ VIRTUAL DE CONTINGÊNCIA DO RS/AN.';
+              end;
   end;
 end;
 
@@ -297,6 +302,7 @@ begin
       case InfEvento.tpEvento of
        teCCe:          qrlTituloEvento.Caption := 'CARTA DE CORREÇÃO ELETRÔNICA';
        teCancelamento: qrlTituloEvento.Caption := 'CANCELAMENTO';
+       teEPECNFe:      qrlTituloEvento.Caption := 'EVENTO PRÉVIO DE EMISSÃO EM CONTINGÊNCIA';
       end;
 
       qrlOrgao.Caption := IntToStr(InfEvento.cOrgao);
@@ -361,11 +367,14 @@ end;
 
 procedure TfrmNFeDAEventoQRRetrato.qrb_06_CondicoesBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
+var
+  i: Integer;
 begin
   inherited;
 
   PrintBand := (FEventoNFe.InfEvento.tpEvento = teCCe) or
                (FEventoNFe.InfEvento.tpEvento = teCancelamento) or
+               (FEventoNFe.InfEvento.tpEvento = teEPECNFe) or
                (FEventoNFe.InfEvento.tpAmb = taHomologacao);
 
   qrlMsgTeste.Visible := False;
@@ -379,9 +388,11 @@ begin
    end;
 
   qrmCondicoes.Visible := (FEventoNFe.InfEvento.tpEvento = teCCe) or
-                          (FEventoNFe.InfEvento.tpEvento = teCancelamento);
+                          (FEventoNFe.InfEvento.tpEvento = teCancelamento) or
+                          (FEventoNFe.InfEvento.tpEvento = teEPECNFe);
   qrmCondicoes.Enabled := (FEventoNFe.InfEvento.tpEvento = teCCe) or
-                          (FEventoNFe.InfEvento.tpEvento = teCancelamento);
+                          (FEventoNFe.InfEvento.tpEvento = teCancelamento) or
+                          (FEventoNFe.InfEvento.tpEvento = teEPECNFe);
 
   case FEventoNFe.InfEvento.tpEvento of
    teCCe: begin
@@ -398,6 +409,26 @@ begin
            qrmCondicoes.Lines.Clear;
            qrmCondicoes.Lines.Add('Protocolo da NFe Cancelada: ' + FEventoNFe.InfEvento.detEvento.nProt);
            qrmCondicoes.Lines.Add('Motivo do Cancelamento    : ' + FEventoNFe.InfEvento.detEvento.xJust);
+          end;
+   teEPECNFe: begin
+           lblTitulo_06.Caption := 'DESCRIÇÃO';
+           qrmCondicoes.Lines.Clear;
+           if FEventoNFe.RetInfEvento.cStat = 136 then
+           begin
+             qrmCondicoes.Lines.Add('Destinatário    : ' + FEventoNFe.InfEvento.detEvento.dest.CNPJCPF);
+             qrmCondicoes.Lines.Add('Valor da Nota   : ' + FormatFloat('#0.00', FEventoNFe.InfEvento.detEvento.vNF));
+             qrmCondicoes.Lines.Add('Valor do ICMS   : ' + FormatFloat('#0.00', FEventoNFe.InfEvento.detEvento.vICMS));
+             qrmCondicoes.Lines.Add('Valor do ICMS ST: ' + FormatFloat('#0.00', FEventoNFe.InfEvento.detEvento.vST));
+           end
+           else
+           begin
+             qrmCondicoes.Lines.Add('Motivo Rejeição: ' + FEventoNFe.RetInfEvento.xMotivo);
+             qrmCondicoes.Lines.Add('QTDE: ' + inttostr(FEventoNFe.RetInfEvento.chNFePend.Count));
+             for i := 0 to FEventoNFe.RetInfEvento.chNFePend.Count -1 do
+             begin
+               qrmCondicoes.Lines.Add('Chave Pendente : ' + FEventoNFe.RetInfEvento.chNFePend.Items[i].ChavePend);
+             end;
+           end;
           end;
   end;
 end;

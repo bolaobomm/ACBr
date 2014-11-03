@@ -128,63 +128,29 @@ begin
    begin
      for i:= 0 to TACBrNFe(ACBrNFe).NotasFiscais.Count-1 do
       begin
-        fqrDANFeQRRetrato.Imprimir(   TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe
-                                    , TACBrNFe(ACBrNFe)
-                                    , Logo
-                                    , Email
-                                    , ExibirResumoCanhoto
-                                    , Fax
-                                    , NumCopias
-                                    , Sistema
-                                    , Site
-                                    , Usuario
-                                    , MostrarPreview
-                                    , MargemSuperior
-                                    , MargemInferior
-                                    , MargemEsquerda
-                                    , MargemDireita
-                                    , CasasDecimais._qCom
-                                    , CasasDecimais._vUnCom
-                                    , Impressora
-                                    , ExibirResumoCanhoto_Texto
-                                    , ExpandirLogoMarca
-                                    , NFeCancelada
-                                    , LocalImpCanhoto 
-                                    , ImprimeItens
-                                    , ViaConsumidor
-                                    , vTroco
-                                    , ImprimirDescPorc
-                                    , ImprimirDetalhamentoEspecifico);
+        fqrDANFeQRRetrato.Imprimir(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe,
+                                   TACBrNFe(ACBrNFe), Logo, Email,
+                                   ExibirResumoCanhoto, Fax, NumCopias, Sistema,
+                                   Site, Usuario, MostrarPreview, MargemSuperior,
+                                   MargemInferior, MargemEsquerda, MargemDireita,
+                                   CasasDecimais._qCom, CasasDecimais._vUnCom,
+                                   Impressora, ExibirResumoCanhoto_Texto,
+                                   ExpandirLogoMarca, NFeCancelada,
+                                   LocalImpCanhoto, ImprimeItens, ViaConsumidor,
+                                   vTroco, ImprimirDescPorc,
+                                   ImprimirDetalhamentoEspecifico);
       end;
    end
   else
-     fqrDANFeQRRetrato.Imprimir(  NFe
-                                , TACBrNFe(ACBrNFe)
-                                , Logo
-                                , Email
-                                , ExibirResumoCanhoto
-                                , Fax
-                                , NumCopias
-                                , Sistema
-                                , Site
-                                , Usuario
-                                , MostrarPreview
-                                , MargemSuperior
-                                , MargemInferior
-                                , MargemEsquerda
-                                , MargemDireita
-                                , CasasDecimais._qCom
-                                , CasasDecimais._vUnCom
-                                , Impressora
-                                , ExibirResumoCanhoto_Texto
-                                , ExpandirLogoMarca
-                                , NFeCancelada
-                                , LocalImpCanhoto
-                                , ImprimeItens
-                                , ViaConsumidor
-                                , vTroco
-                                , ImprimirDescPorc
-                                , ImprimirDetalhamentoEspecifico);
+     fqrDANFeQRRetrato.Imprimir(NFe, TACBrNFe(ACBrNFe), Logo, Email,
+                                ExibirResumoCanhoto, Fax, NumCopias, Sistema,
+                                Site, Usuario, MostrarPreview, MargemSuperior,
+                                MargemInferior, MargemEsquerda, MargemDireita,
+                                CasasDecimais._qCom, CasasDecimais._vUnCom,
+                                Impressora, ExibirResumoCanhoto_Texto,
+                                ExpandirLogoMarca, NFeCancelada, LocalImpCanhoto,
+                                ImprimeItens, ViaConsumidor, vTroco,
+                                ImprimirDescPorc, ImprimirDetalhamentoEspecifico);
 
   fqrDANFeQRRetrato.Free;
 end;
@@ -223,66 +189,32 @@ begin
      for i:= 0 to TACBrNFe(ACBrNFe).NotasFiscais.Count-1 do
       begin
         NomeArq := StringReplace(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]);
-        NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'.pdf';
+        NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'-nfe.pdf';
 
-        fqrDANFeQRRetrato.SavePDF(  NomeArq
-                                  , TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe
-                                  , TACBrNFe(ACBrNFe)
-                                  , Logo
-                                  , Email
-                                  , ExibirResumoCanhoto
-                                  , Fax
-                                  , NumCopias
-                                  , Sistema
-                                  , Site
-                                  , Usuario
-                                  , MargemSuperior
-                                  , MargemInferior
-                                  , MargemEsquerda
-                                  , MargemDireita
-                                  , CasasDecimais._qCom
-                                  , CasasDecimais._vUnCom
-                                  , ExibirResumoCanhoto_Texto
-                                  , ExpandirLogoMarca
-                                  , NFeCancelada
-                                  , LocalImpCanhoto  
-                                  , ImprimeItens
-                                  , ViaConsumidor
-                                  , vTroco
-                                  , ImprimirDescPorc
-                                  , ImprimirDetalhamentoEspecifico);
+        fqrDANFeQRRetrato.SavePDF(NomeArq, TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe,
+                                  TACBrNFe(ACBrNFe), Logo, Email, ExibirResumoCanhoto,
+                                  Fax, NumCopias, Sistema, Site, Usuario,
+                                  MargemSuperior, MargemInferior, MargemEsquerda,
+                                  MargemDireita, CasasDecimais._qCom,
+                                  CasasDecimais._vUnCom, ExibirResumoCanhoto_Texto,
+                                  ExpandirLogoMarca, NFeCancelada, LocalImpCanhoto,
+                                  ImprimeItens, ViaConsumidor, vTroco,
+                                  ImprimirDescPorc, ImprimirDetalhamentoEspecifico);
       end;
    end
    else
    begin
      NomeArq := StringReplace(NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]);
-     NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'.pdf';
-     fqrDANFeQRRetrato.SavePDF( NomeArq
-                              , NFe
-                              , TACBrNFe(ACBrNFe)
-                              , Logo
-                              , Email
-                              , ExibirResumoCanhoto
-                              , Fax
-                              , NumCopias
-                              , Sistema
-                              , Site
-                              , Usuario
-                              , MargemSuperior
-                              , MargemInferior
-                              , MargemEsquerda
-                              , MargemDireita
-                              , CasasDecimais._qCom
-                              , CasasDecimais._vUnCom
-                              , ExibirResumoCanhoto_Texto
-                              , ExpandirLogoMarca
-                              , NFeCancelada
-                              , LocalImpCanhoto
-                              , ImprimeItens
-                              , ViaConsumidor
-                              , vTroco
-                              , ImprimirDescPorc
-                              , ImprimirDetalhamentoEspecifico);
+     NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'-nfe.pdf';
+
+     fqrDANFeQRRetrato.SavePDF(NomeArq, NFe, TACBrNFe(ACBrNFe), Logo, Email,
+                               ExibirResumoCanhoto, Fax, NumCopias, Sistema,
+                               Site, Usuario, MargemSuperior, MargemInferior,
+                               MargemEsquerda, MargemDireita, CasasDecimais._qCom,
+                               CasasDecimais._vUnCom, ExibirResumoCanhoto_Texto,
+                               ExpandirLogoMarca, NFeCancelada, LocalImpCanhoto,
+                               ImprimeItens, ViaConsumidor, vTroco,
+                               ImprimirDescPorc, ImprimirDetalhamentoEspecifico);
    end;
 
   fqrDANFeQRRetrato.Free;
@@ -305,17 +237,12 @@ begin
               if Copy(TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe.infNFe.ID, 4, 44) = TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.chNFe then
                 begin
                   frmNFeDAEventoQR.Imprimir(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
-                                         FLogo,
-                                         FNumCopias,
-                                         FSistema,
-                                         FUsuario,
-                                         FMostrarPreview,
-                                         FMargemSuperior,
-                                         FMargemInferior,
-                                         FMargemEsquerda,
-                                         FMargemDireita,
-                                         FImpressora,
-                                         TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe);
+                                            FLogo, FNumCopias, FSistema,
+                                            FUsuario, FMostrarPreview,
+                                            FMargemSuperior, FMargemInferior,
+                                            FMargemEsquerda, FMargemDireita,
+                                            FImpressora,
+                                            TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe);
                   Impresso := True;
                   Break;
                 end;
@@ -324,16 +251,10 @@ begin
           if Impresso = False then
             begin
               frmNFeDAEventoQR.Imprimir(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
-                                     FLogo,
-                                     FNumCopias,
-                                     FSistema,
-                                     FUsuario,
-                                     FMostrarPreview,
-                                     FMargemSuperior,
-                                     FMargemInferior,
-                                     FMargemEsquerda,
-                                     FMargemDireita,
-                                     FImpressora);
+                                        FLogo, FNumCopias, FSistema, FUsuario,
+                                        FMostrarPreview, FMargemSuperior,
+                                        FMargemInferior, FMargemEsquerda,
+                                        FMargemDireita, FImpressora);
             end;
         end;
     end
@@ -342,16 +263,10 @@ begin
       for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1) do
         begin
           frmNFeDAEventoQR.Imprimir(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
-                                 FLogo,
-                                 FNumCopias,
-                                 FSistema,
-                                 FUsuario,
-                                 FMostrarPreview,
-                                 FMargemSuperior,
-                                 FMargemInferior,
-                                 FMargemEsquerda,
-                                 FMargemDireita,
-                                 FImpressora);
+                                    FLogo, FNumCopias, FSistema, FUsuario,
+                                    FMostrarPreview, FMargemSuperior,
+                                    FMargemInferior, FMargemEsquerda,
+                                    FMargemDireita, FImpressora);
         end;
     end;
 
@@ -361,7 +276,7 @@ end;
 procedure TACBrNFeDANFEQR.ImprimirEVENTOPDF(NFe: TNFe);
 var
  i, j: Integer;
- sFile: String;
+ NomeArq: String;
  Impresso: Boolean;
 begin
   frmNFeDAEventoQR := TfrmNFeDAEventoQRRetrato.Create(Self);
@@ -370,12 +285,14 @@ begin
     begin
       for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1) do
         begin
-//          sFile := TACBrNFe(ACBrNFe).DANFe.PathPDF +
-//                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
-          sFile := TACBrNFe(ACBrNFe).DANFe.PathPDF +
-                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 09, 44) +
-                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 03, 06) +
-                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 53, 02) + 'evento.pdf';
+//          NomeArq := TACBrNFe(ACBrNFe).DANFe.PathPDF +
+//                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 09, 44) +
+//                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 03, 06) +
+//                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 53, 02) + 'evento.pdf';
+          NomeArq := TACBrNFe(ACBrNFe).DANFe.PathPDF +
+                     StringReplace(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 'ID', '', [rfIgnoreCase]) +
+                     '-procEventoNFe.pdf';
+
           Impresso := False;
 
           for j := 0 to (TACBrNFe(ACBrNFe).NotasFiscais.Count - 1) do
@@ -383,15 +300,10 @@ begin
               if Copy(TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe.infNFe.ID, 4, 44) = TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.chNFe then
                 begin
                   frmNFeDAEventoQR.SavePDF(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
-                                        FLogo,
-                                        sFile,
-                                        FSistema,
-                                        FUsuario,
-                                        FMargemSuperior,
-                                        FMargemInferior,
-                                        FMargemEsquerda,
-                                        FMargemDireita,
-                                        TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe);
+                                           FLogo, NomeArq, FSistema, FUsuario,
+                                           FMargemSuperior, FMargemInferior,
+                                           FMargemEsquerda, FMargemDireita,
+                                           TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe);
                   Impresso := True;
                   Break;
                 end;
@@ -400,14 +312,9 @@ begin
           if Impresso = False then
             begin
               frmNFeDAEventoQR.SavePDF(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
-                                    FLogo,
-                                    sFile,
-                                    FSistema,
-                                    FUsuario,
-                                    FMargemSuperior,
-                                    FMargemInferior,
-                                    FMargemEsquerda,
-                                    FMargemDireita);
+                                       FLogo, NomeArq, FSistema, FUsuario,
+                                       FMargemSuperior, FMargemInferior,
+                                       FMargemEsquerda, FMargemDireita);
             end;
         end;
     end
@@ -415,22 +322,18 @@ begin
     begin
       for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1) do
         begin
-//          sFile := TACBrNFe(ACBrNFe).DANFe.PathPDF +
-//                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
-          sFile := TACBrNFe(ACBrNFe).DANFe.PathPDF +
-                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 09, 44) +
-                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 03, 06) +
-                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 53, 02) + 'evento.pdf';
+//          NomeArq := TACBrNFe(ACBrNFe).DANFe.PathPDF +
+//                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 09, 44) +
+//                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 03, 06) +
+//                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 53, 02) + 'evento.pdf';
+          NomeArq := TACBrNFe(ACBrNFe).DANFe.PathPDF +
+                     StringReplace(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 'ID', '', [rfIgnoreCase]) +
+                     '-procEventoNFe.pdf';
 
           frmNFeDAEventoQR.SavePDF(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
-                                FLogo,
-                                sFile,
-                                FSistema,
-                                FUsuario,
-                                FMargemSuperior,
-                                FMargemInferior,
-                                FMargemEsquerda,
-                                FMargemDireita);
+                                   FLogo, NomeArq, FSistema, FUsuario,
+                                   FMargemSuperior, FMargemInferior,
+                                   FMargemEsquerda, FMargemDireita);
         end;
     end;
 
@@ -452,17 +355,17 @@ end;
 
 procedure TACBrNFeDANFEQR.ImprimirINUTILIZACAOPDF(NFe: TNFe);
 var
- sFile: String;
+ NomeArq: String;
 begin
   frmNFeDAInutQR := TfrmNFeDAInutQRRetrato.Create(Self);
 
-  sFile := StringReplace(TACBrNFe(ACBrNFe).InutNFe.ID, 'ID', '', [rfIgnoreCase]);
-  if sFile = '' then
-    sFile := StringReplace(TACBrNFe(ACBrNFe).InutNFe.InutNFe.Id, 'ID', '', [rfIgnoreCase]);
-  sFile := PathWithDelim(Self.PathPDF) + sFile + '-ProcInutNFe.pdf';
+  NomeArq := StringReplace(TACBrNFe(ACBrNFe).InutNFe.ID, 'ID', '', [rfIgnoreCase]);
+  if NomeArq = '' then
+    NomeArq := StringReplace(TACBrNFe(ACBrNFe).InutNFe.InutNFe.Id, 'ID', '', [rfIgnoreCase]);
+  NomeArq := PathWithDelim(Self.PathPDF) + NomeArq + '-procInutNFe.pdf';
 
   frmNFeDAInutQR.SavePDF(TACBrNFe(ACBrNFe),
-                         FLogo, sFile, FSistema, FUsuario,
+                         FLogo, NomeArq, FSistema, FUsuario,
                          FMargemSuperior, FMargemInferior,
                          FMargemEsquerda, FMargemDireita);
 

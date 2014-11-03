@@ -55,7 +55,7 @@ type
 
   TInfEvento = class
   private
-    FID: String;
+    FId: String;
     FtpAmbiente: TpcnTipoAmbiente;
     FCNPJ: String;
     FcOrgao: Integer;
@@ -75,7 +75,7 @@ type
     destructor Destroy; override;
     function DescricaoTipoEvento(TipoEvento:TpcnTpEvento): String;
 
-    property id: String              read FID             write FID;
+    property Id: String              read FId             write FId;
     property cOrgao: Integer         read getcOrgao       write FcOrgao;
     property tpAmb: TpcnTipoAmbiente read FtpAmbiente     write FtpAmbiente;
     property CNPJ: String            read FCNPJ           write FCNPJ;

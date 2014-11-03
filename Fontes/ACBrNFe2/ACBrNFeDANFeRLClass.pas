@@ -296,7 +296,7 @@ begin
         begin
           sFile := TACBrNFe(ACBrNFe).DANFE.PathPDF +
                    Copy(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe.infNFe.ID,
-                   4, 44) + '.pdf';
+                   4, 44) + '-nfe.pdf';
           frlDANFeRL.SavePDF(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe,
           FLogo, FMarcaDagua, FLarguraCodProd, FEmail, FExibeResumoCanhoto, FFax,
           FNumCopias, FSistema, FSite, FUsuario, sFile, FPosCanhoto, FFormularioContinuo,
@@ -311,7 +311,7 @@ begin
     end
   else
     begin
-      sFile := Self.PathPDF + Copy(NFe.infNFe.ID, 4, 44) + '.pdf';
+      sFile := Self.PathPDF + Copy(NFe.infNFe.ID, 4, 44) + '-nfe.pdf';
       frlDANFeRL.SavePDF(NFe,
       FLogo, FMarcaDagua, FLarguraCodProd, FEmail, FExibeResumoCanhoto, FFax,
       FNumCopias, FSistema, FSite, FUsuario, sFile, FPosCanhoto, FFormularioContinuo,
@@ -420,7 +420,10 @@ try
       for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1) do
         begin
           sFile := TACBrNFe(ACBrNFe).DANFE.PathPDF +
-          Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
+                   StringReplace(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 'ID', '', [rfIgnoreCase]) +
+                   '-procEventoNFe.pdf';
+
+//          Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
           Impresso := False;
 
           for j := 0 to (TACBrNFe(ACBrNFe).NotasFiscais.Count - 1) do
@@ -449,7 +452,9 @@ try
       for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1) do
         begin
           sFile := TACBrNFe(ACBrNFe).DANFE.PathPDF +
-          Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
+                   StringReplace(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 'ID', '', [rfIgnoreCase]) +
+                   '-procEventoNFe.pdf';
+//          Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
 
           frlDANFeEventoRL.SavePDF(Self, TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
           FLogo, FMarcadagua, sFile, FSistema, FUsuario, FFonte.FNome, FFonte.FNegrito,

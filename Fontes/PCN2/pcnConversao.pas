@@ -70,14 +70,14 @@ type
                     stNFeConsulta, stNFeCancelamento, stNFeInutilizacao, stNFeRecibo,
                     stNFeCadastro, stNFeEmail, stNFeEnvDPEC, stNFeConsultaDPEC,
                     stNFeCCe, stNFeEvento, stConsNFeDest, stDownloadNFe, stAdmCSCNFCe,
-                    stDistDFeInt);
+                    stDistDFeInt, stEnvioWebService);
 
   TStatusACBrCTe = (stCTeIdle, stCTeStatusServico, stCTeRecepcao, stCTeRetRecepcao,
                     stCTeConsulta, stCTeCancelamento, stCTeInutilizacao, stCTeRecibo,
-                    stCTeCadastro, stCTeEmail, stCTeCCe, stCTeEvento);
+                    stCTeCadastro, stCTeEmail, stCTeCCe, stCTeEvento, stCTeEnvioWebService);
 
   TStatusACBrMDFe = (stMDFeIdle, stMDFeStatusServico, stMDFeRecepcao, stMDFeRetRecepcao,
-                     stMDFeConsulta, stMDFeRecibo, stMDFeEmail, stMDFeEvento);
+                     stMDFeConsulta, stMDFeRecibo, stMDFeEmail, stMDFeEvento, stMDFeEnvioWebService);
 
   (* IMPORTANTE - Sempre que alterar um Tipo efetuar a atualização das funções de conversão correspondentes *)
   TLayOut = (LayNfeRecepcao, LayNfeRetRecepcao, LayNfeCancelamento,
@@ -91,8 +91,8 @@ type
                 LayCTeInutilizacao, LayCTeConsultaCT, LayCTeStatusServico,
                 LayCTeCadastro, LayCTeEvento, LayCTeEventoEPEC);
 
-  TLayOutMDFe = (LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta,
-                 LayMDFeStatusServico, LayMDFeEvento);
+//  TLayOutMDFe = (LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta,
+//                 LayMDFeStatusServico, LayMDFeEvento);
 
   TpcnSchema = (TsPL005c, TsPL006,
                 TsPL_CTe_103, TsPL_CTe_104,
@@ -209,7 +209,9 @@ type
   TpcnUnidCarga  = ( ucContainer, ucULD, ucPallet, ucOutros );
   TpcnindNegociavel = (inNaoNegociavel, inNegociavel);
   TpcnindIEDest = (inContribuinte, inIsento, inNaoContribuinte);
-  TpcnTipoViaTransp = (tvMaritima, tvFluvial, tvLacustre, tvAerea, tvPostal, tvFerroviaria, tvRodoviaria, tvConduto, tvMeiosProprios, tvEntradaSaidaFicta);
+  TpcnTipoViaTransp = (tvMaritima, tvFluvial, tvLacustre, tvAerea, tvPostal,
+                       tvFerroviaria, tvRodoviaria, tvConduto, tvMeiosProprios,
+                       tvEntradaSaidaFicta, tvCourier, tvHandcarry);
   TpcnTipoIntermedio = (tiContaPropria, tiContaOrdem, tiEncomenda);
   TpcnindISSRet = (iirSim, iirNao);
   TpcnindISS = (iiExigivel, iiNaoIncidencia, iiIsencao, iiExportacao, iiImunidade, iiExigSuspDecisaoJudicial, iiExigSuspProcessoAdm);
@@ -549,6 +551,7 @@ function StrToindIncentivo(var ok: boolean; const s: string): TpcnindIncentivo;
 function StrToVersaoDF(var ok: boolean; const s: string): TpcnVersaoDF;
 function VersaoDFToStr(const t: TpcnVersaoDF): string;
 function GetVersaoNFe(AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF; ALayOut: TLayOut): string;
+function GetVersaoCTe(AVersaoDF: TpcnVersaoDF; ALayOut: TLayOutCTe): string;
 
 function TipoAutorToStr(const t: TpcnTipoAutor ): string;
 function StrToTipoAutor(var ok: boolean; const s: string): TpcnTipoAutor;
@@ -1701,16 +1704,20 @@ end;
 
 function TipoViaTranspToStr(const t: TpcnTipoViaTransp ): string;
 begin
-  result := EnumeradoToStr(t, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-                              [tvMaritima, tvFluvial, tvLacustre, tvAerea, tvPostal, tvFerroviaria,
-                               tvRodoviaria, tvConduto, tvMeiosProprios, tvEntradaSaidaFicta]);
+  result := EnumeradoToStr(t, ['1', '2', '3', '4', '5', '6', '7', '8', '9',
+                               '10', '11', '12'],
+                              [tvMaritima, tvFluvial, tvLacustre, tvAerea, tvPostal,
+                               tvFerroviaria, tvRodoviaria, tvConduto, tvMeiosProprios,
+                               tvEntradaSaidaFicta, tvCourier, tvHandcarry]);
 end;
 
 function StrToTipoViaTransp(var ok: boolean; const s: string): TpcnTipoViaTransp;
 begin
-  result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-                                  [tvMaritima, tvFluvial, tvLacustre, tvAerea, tvPostal, tvFerroviaria,
-                                   tvRodoviaria, tvConduto, tvMeiosProprios, tvEntradaSaidaFicta]);
+  result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5', '6', '7', '8', '9',
+                                   '10', '11', '12'],
+                                  [tvMaritima, tvFluvial, tvLacustre, tvAerea, tvPostal,
+                                   tvFerroviaria, tvRodoviaria, tvConduto, tvMeiosProprios,
+                                   tvEntradaSaidaFicta, tvCourier, tvHandcarry]);
 end;
 
 function TipoIntermedioToStr(const t: TpcnTipoIntermedio ): string;
@@ -1878,6 +1885,27 @@ begin
                         LayAdministrarCSCNFCe: result := '1.00';
                        end;
                      end;
+             end;
+           end;
+  end;
+end;
+
+function GetVersaoCTe(AVersaoDF: TpcnVersaoDF; ALayOut: TLayOutCTe): string;
+begin
+  result := '';
+
+  case AVersaoDF of
+    ve200: begin
+             case ALayOut of
+               LayCTeStatusServico: result := '2.00';
+               LayCTeRecepcao:      result := '2.00';
+               LayCTeRetRecepcao:   result := '2.00';
+               LayCTeConsultaCT:    result := '2.00';
+               LayCTeCancelamento:  result := '1.04';
+               LayCTeInutilizacao:  result := '2.00';
+               LayCTeCadastro:      result := '2.00';
+               LayCTeEvento:        result := '2.00';
+               LayCTeEventoEPEC:    result := '2.00';
              end;
            end;
   end;

@@ -161,7 +161,7 @@ begin
 
     for I := 0 to TACBrCTe(ACBrCTe).Conhecimentos.Count - 1 do
     begin
-      dmDacte.frxPDFExport.FileName := IncludeTrailingPathDelimiter(PathPDF) + dmDacte.CTe.procCTe.chCTe + '.pdf';
+      dmDacte.frxPDFExport.FileName := IncludeTrailingPathDelimiter(PathPDF) + dmDacte.CTe.procCTe.chCTe + '-cte.pdf';
       dmDacte.frxReport.Export(dmDacte.frxPDFExport);
     end;
   end;
@@ -182,7 +182,8 @@ procedure TACBrCTeDACTEFR.ImprimirEVENTOPDF(CTE: TCTe);
 const
   TITULO_PDF = 'Conhecimento de Transporte Eletrônico - Evento';
 var
-  I: Integer;
+//  I: Integer;
+  NomeArq: String;
 begin
   if PrepareReportEvento then
   begin
@@ -194,11 +195,15 @@ begin
     dmDacte.frxPDFExport.Keywords   := TITULO_PDF;
     dmDacte.frxPDFExport.ShowDialog := False;
 
-    for I := 0 to TACBrCTe(ACBrCTe).Conhecimentos.Count - 1 do
-    begin
-      dmDacte.frxPDFExport.FileName := IncludeTrailingPathDelimiter(PathPDF) + dmDacte.CTe.procCTe.chCTe + '-evento.pdf';
+//    for I := 0 to TACBrCTe(ACBrCTe).Conhecimentos.Count - 1 do
+//    begin
+      NomeArq := StringReplace(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.id, 'ID', '', [rfIgnoreCase]);
+
+      dmDacte.frxPDFExport.FileName := IncludeTrailingPathDelimiter(PathPDF) +
+                                       NomeArq {dmDacte.CTe.procCTe.chCTe} +
+                                       '-procEventoCTe.pdf';
       dmDacte.frxReport.Export(dmDacte.frxPDFExport);
-    end;
+//    end;
   end;
 end;
 
@@ -271,7 +276,7 @@ begin
 
     if TACBrCTe(ACBrCTe).Conhecimentos.Count > 0 then
     begin
-      dmDacte.CTe                              := TACBrCTe(ACBrCTe).Conhecimentos.Items[0].CTe;
+      dmDacte.CTe := TACBrCTe(ACBrCTe).Conhecimentos.Items[0].CTe;
       dmDacte.CarregaDados;
     end;
 

@@ -1494,7 +1494,7 @@ begin
       FConfiguracoes.Geral.Save(FMDFeChave+'-sit.xml', FRetWS);
 
     if FConfiguracoes.WebServices.Salvar then
-      FConfiguracoes.Geral.Save(FMDFeChave+'-sit.xml-soap', FRetornoWS);
+      FConfiguracoes.Geral.Save(FMDFeChave+'-sit-soap.xml', FRetornoWS);
 
     MDFeRetorno.Leitor.Arquivo := FRetWS;
     MDFeRetorno.LerXML;
@@ -1939,7 +1939,9 @@ begin
 //                           FEvento.Evento.Items[i].InfEvento.TipoEvento +
 //                           Format('%.2d', [FEvento.Evento.Items[i].InfEvento.nSeqEvento]) +
 //                           '-procEventoMDFe.xml';
-                NomeArq := Copy(FEvento.Evento.Items[i].InfEvento.id, 3, 52) + '-procEventoMDFe.xml';
+//                NomeArq := Copy(FEvento.Evento.Items[i].InfEvento.id, 3, 52) + '-procEventoMDFe.xml';
+                NomeArq := StringReplace(FEvento.Evento.Items[i].InfEvento.Id, 'ID', '', [rfIgnoreCase]) +
+                           '-procEventoMDFe.xml';
 
                 if FConfiguracoes.Geral.Salvar then
                    FConfiguracoes.Geral.Save(NomeArq, Texto);

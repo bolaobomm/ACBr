@@ -927,6 +927,7 @@ begin
         CTe.infCTeNorm.rodo.valePed[i01].CNPJForn := Leitor.rCampo(tcStr, 'CNPJForn');
         CTe.infCTeNorm.rodo.valePed[i01].nCompra  := Leitor.rCampo(tcStr, 'nCompra');
         CTe.infCTeNorm.rodo.valePed[i01].CNPJPg   := Leitor.rCampo(tcStr, 'CNPJPg');
+        CTe.infCTeNorm.rodo.valePed[i01].vValePed := Leitor.rCampo(tcDe2, 'vValePed');
         inc(i01);
       end;
 

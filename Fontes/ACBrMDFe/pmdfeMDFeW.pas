@@ -330,13 +330,25 @@ begin
 end;
 
 procedure TMDFeW.GerarInfModal;
+var
+ versao: String;
 begin
+  versao := GetVersaoModalMDFe(VersaoDF, MDFe.Ide.modal);
+
+  case StrToInt(ModalToStr(MDFe.Ide.modal)) of
+   1: Gerador.wGrupo('infModal versaoModal="' + versao + '"', '#041');
+   2: Gerador.wGrupo('infModal versaoModal="' + versao + '"', '#041');
+   3: Gerador.wGrupo('infModal versaoModal="' + versao + '"', '#041');
+   4: Gerador.wGrupo('infModal versaoModal="' + versao + '"', '#041');
+  end;
+  (*
   case StrToInt(ModalToStr(MDFe.Ide.modal)) of
    1: Gerador.wGrupo('infModal versaoModal="' + MDFeModalRodo  + '"', '#041');
    2: Gerador.wGrupo('infModal versaoModal="' + MDFeModalAereo + '"', '#041');
    3: Gerador.wGrupo('infModal versaoModal="' + MDFeModalAqua  + '"', '#041');
    4: Gerador.wGrupo('infModal versaoModal="' + MDFeModalFerro + '"', '#041');
   end;
+  *)
   case StrToInt(ModalToStr(MDFe.Ide.modal)) of
    1: GerarRodo;   // Informações do Modal Rodoviário
    2: GerarAereo;  // Informações do Modal Aéreo
@@ -368,9 +380,9 @@ begin
   begin
     Gerador.wGrupo('prop', '#32');
 
-    if VersaoDF = ve100
-     then Gerador.wCampo(tcStr, '#35', 'RNTRC ', 08, 08, 1, SomenteNumeros(MDFe.Rodo.veicTracao.Prop.RNTRC), DSC_RNTRC)
-     else begin
+//    if VersaoDF = ve100
+//     then Gerador.wCampo(tcStr, '#35', 'RNTRC ', 08, 08, 1, SomenteNumeros(MDFe.Rodo.veicTracao.Prop.RNTRC), DSC_RNTRC)
+//     else begin
       Gerador.wCampoCNPJCPF('#11', '#12', MDFe.Rodo.veicTracao.Prop.CNPJCPF, CODIGO_BRASIL);
       Gerador.wCampo(tcStr, '#13', 'RNTRC ', 08, 08, 1, SomenteNumeros(MDFe.Rodo.veicTracao.Prop.RNTRC), DSC_RNTRC);
       Gerador.wCampo(tcStr, '#14', 'xNome ', 01, 60, 1, MDFe.Rodo.veicTracao.Prop.xNome, DSC_XNOME);
@@ -389,7 +401,7 @@ begin
       if not ValidarUF(MDFe.Rodo.veicTracao.Prop.UF) then
        Gerador.wAlerta('#16', 'UF', DSC_UF, ERR_MSG_INVALIDO);
       Gerador.wCampo(tcStr, '#17', 'tpProp ', 01, 01, 1, TpPropToStr(MDFe.Rodo.veicTracao.Prop.tpProp), DSC_TPPROP);
-     end;
+//     end;
 
     Gerador.wGrupo('/prop');
   end;
@@ -404,12 +416,12 @@ begin
   if MDFe.rodo.veicTracao.condutor.Count > 10 then
    Gerador.wAlerta('#18', 'condutor', '', ERR_MSG_MAIOR_MAXIMO + '10');
 
-   if VersaoDF = ve100a
-    then begin
+//   if VersaoDF = ve100a
+//    then begin
      Gerador.wCampo(tcStr, '#21', 'tpRod', 02, 02, 1, TpRodadoToStr(MDFe.Rodo.veicTracao.tpRod), '');
      Gerador.wCampo(tcStr, '#22', 'tpCar', 02, 02, 1, TpCarroceriaToStr(MDFe.Rodo.veicTracao.tpCar), '');
      Gerador.wCampo(tcStr, '#23', 'UF   ', 02, 02, 1, MDFe.Rodo.veicTracao.UF, DSC_CUF);
-    end;
+//    end;
 
   Gerador.wGrupo('/veicTracao');
 
@@ -429,9 +441,9 @@ begin
     begin
       Gerador.wGrupo('prop', '#30');
 
-      if VersaoDF = ve100
-       then Gerador.wCampo(tcStr, '#35', 'RNTRC ', 08, 08, 1, SomenteNumeros(MDFe.Rodo.veicReboque[i].Prop.RNTRC), DSC_RNTRC)
-       else begin
+//      if VersaoDF = ve100
+//       then Gerador.wCampo(tcStr, '#35', 'RNTRC ', 08, 08, 1, SomenteNumeros(MDFe.Rodo.veicReboque[i].Prop.RNTRC), DSC_RNTRC)
+//       else begin
         Gerador.wCampoCNPJCPF('#31', '#32', MDFe.Rodo.veicReboque[i].Prop.CNPJCPF, CODIGO_BRASIL);
         Gerador.wCampo(tcStr, '#33', 'RNTRC ', 08, 08, 1, SomenteNumeros(MDFe.Rodo.veicReboque[i].Prop.RNTRC), DSC_RNTRC);
         Gerador.wCampo(tcStr, '#34', 'xNome ', 01, 60, 1, MDFe.Rodo.veicReboque[i].Prop.xNome, DSC_XNOME);
@@ -450,15 +462,15 @@ begin
         if not ValidarUF(MDFe.Rodo.veicReboque[i].Prop.UF) then
          Gerador.wAlerta('#36', 'UF', DSC_UF, ERR_MSG_INVALIDO);
         Gerador.wCampo(tcStr, '#37', 'tpProp ', 01, 01, 1, TpPropToStr(MDFe.Rodo.veicReboque[i].Prop.tpProp), DSC_TPPROP);
-      end;
+//      end;
 
       Gerador.wGrupo('/prop');
     end;
-    if VersaoDF = ve100a then
-    begin
+//    if VersaoDF = ve100a then
+//    begin
       Gerador.wCampo(tcStr, '#38', 'tpCar   ', 02, 02, 1, TpCarroceriaToStr(MDFe.Rodo.veicReboque[i].tpCar), '');
       Gerador.wCampo(tcStr, '#39', 'UF      ', 02, 02, 1, MDFe.Rodo.veicReboque[i].UF, DSC_CUF);
-    end;
+//    end;
 
     Gerador.wGrupo('/veicReboque');
   end;

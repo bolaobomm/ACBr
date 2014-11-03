@@ -178,7 +178,7 @@ begin
       MDFe.Rodo.CIOT       := Leitor.rCampo(tcStr, 'CIOT');
       MDFe.Rodo.codAgPorto := Leitor.rCampo(tcStr, 'codAgPorto');
 
-      if Leitor.rExtrai(3, 'veicTracao') <> '' then
+      if (Leitor.rExtrai(3, 'veicTracao') <> '') or (Leitor.rExtrai(3, 'veicPrincipal') <> '')then
        begin
         MDFe.Rodo.veicTracao.cInt    := Leitor.rCampo(tcStr, 'cInt');
         MDFe.Rodo.veicTracao.placa   := Leitor.rCampo(tcStr, 'placa');

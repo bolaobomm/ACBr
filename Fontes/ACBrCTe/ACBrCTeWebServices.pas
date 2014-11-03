@@ -2650,7 +2650,7 @@ begin
 //         FConfiguracoes.Geral.Save(FCTeChave+'-ProcCancCTe.xml', FXML_ProcCancCTe);
 
       if FConfiguracoes.Arquivos.Salvar then
-         FConfiguracoes.Geral.Save(FCTeChave+'-ProcCancCTe.xml', FXML_ProcCancCTe, FConfiguracoes.Arquivos.GetPathCan );
+         FConfiguracoes.Geral.Save(FCTeChave+'-procCancCTe.xml', FXML_ProcCancCTe, FConfiguracoes.Arquivos.GetPathCan );
     end;
 
   finally

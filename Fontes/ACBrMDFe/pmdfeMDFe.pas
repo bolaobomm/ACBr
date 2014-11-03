@@ -132,9 +132,9 @@ type
 
   TinfMDFe = class(TPersistent)
   private
-    FID: String;
+    FId: String;
   published
-    property ID: String read FID write FID;
+    property Id: String read FId write FId;
   end;
 
   TinfMunCarregaCollection = class(TCollection)

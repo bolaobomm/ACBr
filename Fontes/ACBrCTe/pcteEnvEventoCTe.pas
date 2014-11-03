@@ -143,12 +143,12 @@ begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.wGrupo('eventoCTe ' + NAME_SPACE_CTE + ' versao="' + CTeEventoCTe + '"');
 
-  Evento.Items[0].InfEvento.id := 'ID'+ Evento.Items[0].InfEvento.TipoEvento +
+  Evento.Items[0].InfEvento.Id := 'ID'+ Evento.Items[0].InfEvento.TipoEvento +
                                         SomenteNumeros(Evento.Items[0].InfEvento.chCTe) +
                                         Format('%.2d', [Evento.Items[0].InfEvento.nSeqEvento]);
 
-  Gerador.wGrupo('infEvento Id="' + Evento.Items[0].InfEvento.id + '"');
-  if Length(Evento.Items[0].InfEvento.id) < 54
+  Gerador.wGrupo('infEvento Id="' + Evento.Items[0].InfEvento.Id + '"');
+  if Length(Evento.Items[0].InfEvento.Id) < 54
    then Gerador.wAlerta('EP04', 'ID', '', 'ID de Evento inválido');
 
   Gerador.wCampo(tcInt, 'EP05', 'cOrgao', 1, 2, 1, Evento.Items[0].InfEvento.cOrgao);
@@ -293,7 +293,7 @@ begin
      Result := RetEventoCTe.LerXml;
      with FEvento.Add do
       begin
-        infEvento.ID         := RetEventoCTe.InfEvento.id;
+        infEvento.Id         := RetEventoCTe.InfEvento.Id;
         InfEvento.cOrgao     := RetEventoCTe.InfEvento.cOrgao;
         infEvento.tpAmb      := RetEventoCTe.InfEvento.tpAmb;
         infEvento.CNPJ       := RetEventoCTe.InfEvento.CNPJ;

@@ -51,6 +51,9 @@ type
   TMDFeTpEmitente = (teTransportadora, teTranspCargaPropria);
   TMDFeModal      = (moRodoviario, moAereo, moAquaviario, moFerroviario);
   TMDFeVersao     = (ve100, ve100a);
+  TLayOutMDFe     = (LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta,
+                     LayMDFeStatusServico, LayMDFeEvento);
+
 
 const
 
@@ -126,6 +129,9 @@ function StrToTpEmitente(var ok: Boolean; const s: String): TMDFeTpEmitente;
 function ModalToStr(const t: TMDFeModal): String;
 function StrToModal(var ok: Boolean; const s: String): TMDFeModal;
 
+function GetVersaoMDFe(AVersaoDF: TMDFeVersao; ALayOut: TLayOutMDFe): string;
+function GetVersaoModalMDFe(AVersaoDF: TMDFeVersao; AModal: TMDFeModal): string;
+
 implementation
 
 function StrToEnumerado(var ok: boolean; const s: string; const AString:
@@ -183,6 +189,41 @@ begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4'],
                            [moRodoviario, moAereo, moAquaviario, moFerroviario]);
+end;
+
+function GetVersaoMDFe(AVersaoDF: TMDFeVersao; ALayOut: TLayOutMDFe): string;
+begin
+  result := '';
+
+  case AVersaoDF of
+    ve100,
+    ve100a: begin
+              case ALayOut of
+                LayMDFeStatusServico: result := '1.00';
+                LayMDFeRecepcao:      result := '1.00';
+                LayMDFeRetRecepcao:   result := '1.00';
+                LayMDFeConsulta:      result := '1.00';
+                LayMDFeEvento:        result := '1.00';
+              end;
+            end;
+  end;
+end;
+
+function GetVersaoModalMDFe(AVersaoDF: TMDFeVersao; AModal: TMDFeModal): string;
+begin
+  result := '';
+
+  case AVersaoDF of
+    ve100,
+    ve100a: begin
+              case AModal of
+                moRodoviario:  result := '1.00';
+                moAereo:       result := '1.00';
+                moAquaviario:  result := '1.00';
+                moFerroviario: result := '1.00';
+              end;
+            end;
+  end;
 end;
 
 end.

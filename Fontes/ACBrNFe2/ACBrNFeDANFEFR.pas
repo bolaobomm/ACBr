@@ -344,7 +344,9 @@ begin
 
     for I := 0 to TACBrNFe(ACBrNFe).NotasFiscais.Count - 1 do
     begin
-      dmDanfe.frxPDFExport.FileName := PathPDF + StringReplace(UpperCase(dmDanfe.NFe.infNFe.ID),'NFE','', [rfReplaceAll, rfIgnoreCase]) + '.pdf';
+      dmDanfe.frxPDFExport.FileName := PathPDF +
+                                       StringReplace(UpperCase(dmDanfe.NFe.infNFe.ID),'NFE','', [rfReplaceAll, rfIgnoreCase]) +
+                                       '-nfe.pdf';
       dmDanfe.frxReport.Export(dmDanfe.frxPDFExport);
     end;
   end;
@@ -387,9 +389,11 @@ begin
     NomeArq := NomeArq + TACBrNFe(ACBrNFe).EventoNFe.Evento[0].InfEvento.chNFe;
     }
 
-    NomeArq := Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[0].InfEvento.id, 3, 52);
-    
-    dmDanfe.frxPDFExport.FileName := PathWithDelim(Self.PathPDF) + NomeArq + 'evento.pdf';
+//    NomeArq := Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[0].InfEvento.id, 3, 52);
+
+    NomeArq := StringReplace(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 'ID', '', [rfIgnoreCase]);
+
+    dmDanfe.frxPDFExport.FileName := PathWithDelim(Self.PathPDF) + NomeArq + '-procEventoNFe.pdf';
     dmDanfe.frxReport.Export(dmDanfe.frxPDFExport);
   end;
 end;

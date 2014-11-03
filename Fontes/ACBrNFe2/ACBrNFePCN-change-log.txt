@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/10/2014
+[*] Alterações realizadas conforme NT ACBr 2014/001
+    por: Italo Jurisato Junior
+
 29/10/2014
 [*] Incluido nas classes que contem as estruturas dos XML de retornos a propriedade
     versao, para que esta receba o conteudo do atributo versao.

@@ -50,7 +50,7 @@ uses
 {$ELSE}
   StrUtils, Activex,
 {$ENDIF}
-  ACBrMDFeConfiguracoes, pcnConversao, pmdfeMDFe;
+  ACBrMDFeConfiguracoes, pmdfeConversao, pcnConversao, pmdfeMDFe;
 
 {$IFDEF ACBrMDFeOpenSSL}
 const
