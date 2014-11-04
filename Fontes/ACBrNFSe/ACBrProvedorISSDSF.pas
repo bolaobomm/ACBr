@@ -224,12 +224,12 @@ begin
      end;
     3303500: // Nova Iguacu/RJ
      begin
-       ConfigURL.ProRecepcaoLoteRPS    := 'http://www.issmaisfacil.com.br/WsNFe2/LoteRps.jws?wsdl';
-       ConfigURL.ProConsultaLoteRPS    := 'http://www.issmaisfacil.com.br/WsNFe2/LoteRps.jws?wsdl';
-       ConfigURL.ProConsultaNFSeRPS    := 'http://www.issmaisfacil.com.br/WsNFe2/LoteRps.jws?wsdl';
-       ConfigURL.ProConsultaSitLoteRPS := 'http://www.issmaisfacil.com.br/WsNFe2/LoteRps.jws?wsdl';
-       ConfigURL.ProConsultaNFSe       := 'http://www.issmaisfacil.com.br/WsNFe2/LoteRps.jws?wsdl';
-       ConfigURL.ProCancelaNFSe        := 'http://www.issmaisfacil.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.ProRecepcaoLoteRPS    := 'http://www.notamaisfacil.novaiguacu.rj.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.ProConsultaLoteRPS    := 'http://www.notamaisfacil.novaiguacu.rj.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.ProConsultaNFSeRPS    := 'http://www.notamaisfacil.novaiguacu.rj.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.ProConsultaSitLoteRPS := 'http://www.notamaisfacil.novaiguacu.rj.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.ProConsultaNFSe       := 'http://www.notamaisfacil.novaiguacu.rj.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.ProCancelaNFSe        := 'http://www.notamaisfacil.novaiguacu.rj.gov.br/WsNFe2/LoteRps.jws?wsdl';
      end;
     2211001: // Teresina/PI
      begin
