@@ -178,30 +178,57 @@ begin
    case ACodCidade of
     3509502:
      begin // Campinas/SP
+       ConfigURL.HomRecepcaoLoteRPS    := 'http://issdigital.campinas.sp.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaLoteRPS    := 'http://issdigital.campinas.sp.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaNFSeRPS    := 'http://issdigital.campinas.sp.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaSitLoteRPS := 'http://issdigital.campinas.sp.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaNFSe       := 'http://issdigital.campinas.sp.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomCancelaNFSe        := 'http://issdigital.campinas.sp.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaSeqRPS     := 'http://issdigital.campinas.sp.gov.br/WsNFe2/LoteRps.jws?wsdl';
+
        ConfigURL.ProRecepcaoLoteRPS    := 'http://issdigital.campinas.sp.gov.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaLoteRPS    := 'http://issdigital.campinas.sp.gov.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaNFSeRPS    := 'http://issdigital.campinas.sp.gov.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaSitLoteRPS := 'http://issdigital.campinas.sp.gov.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaNFSe       := 'http://issdigital.campinas.sp.gov.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProCancelaNFSe        := 'http://issdigital.campinas.sp.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.ProConsultaSeqRPS     := 'http://issdigital.campinas.sp.gov.br/WsNFe2/LoteRps.jws?wsdl';
      end;
     3170206: // Uberlandia/MG
      begin
+       ConfigURL.HomRecepcaoLoteRPS    := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaLoteRPS    := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaNFSeRPS    := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaSitLoteRPS := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaNFSe       := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomCancelaNFSe        := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaSeqRPS     := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/LoteRps.jws?wsdl';
+
        ConfigURL.ProRecepcaoLoteRPS    := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaLoteRPS    := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaNFSeRPS    := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaSitLoteRPS := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaNFSe       := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProCancelaNFSe        := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.ProConsultaSeqRPS     := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/LoteRps.jws?wsdl';
      end;
     1501402: // Belem/PA
      begin
+       ConfigURL.HomRecepcaoLoteRPS    := 'http://www.issdigitalbel.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaLoteRPS    := 'http://www.issdigitalbel.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaNFSeRPS    := 'http://www.issdigitalbel.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaSitLoteRPS := 'http://www.issdigitalbel.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaNFSe       := 'http://www.issdigitalbel.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomCancelaNFSe        := 'http://www.issdigitalbel.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaSeqRPS     := 'http://www.issdigitalbel.com.br/WsNFe2/LoteRps.jws?wsdl';
+
        ConfigURL.ProRecepcaoLoteRPS    := 'http://www.issdigitalbel.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaLoteRPS    := 'http://www.issdigitalbel.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaNFSeRPS    := 'http://www.issdigitalbel.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaSitLoteRPS := 'http://www.issdigitalbel.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaNFSe       := 'http://www.issdigitalbel.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProCancelaNFSe        := 'http://www.issdigitalbel.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.ProConsultaSeqRPS     := 'http://www.issdigitalbel.com.br/WsNFe2/LoteRps.jws?wsdl';
      end;
     5002704: // Campo Grande/MS
      begin
@@ -224,39 +251,75 @@ begin
      end;
     3303500: // Nova Iguacu/RJ
      begin
+       ConfigURL.HomRecepcaoLoteRPS    := 'http://www.notamaisfacil.novaiguacu.rj.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaLoteRPS    := 'http://www.notamaisfacil.novaiguacu.rj.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaNFSeRPS    := 'http://www.notamaisfacil.novaiguacu.rj.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaSitLoteRPS := 'http://www.notamaisfacil.novaiguacu.rj.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaNFSe       := 'http://www.notamaisfacil.novaiguacu.rj.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomCancelaNFSe        := 'http://www.notamaisfacil.novaiguacu.rj.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaSeqRPS     := 'http://www.notamaisfacil.novaiguacu.rj.gov.br/WsNFe2/LoteRps.jws?wsdl'; 
+
        ConfigURL.ProRecepcaoLoteRPS    := 'http://www.notamaisfacil.novaiguacu.rj.gov.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaLoteRPS    := 'http://www.notamaisfacil.novaiguacu.rj.gov.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaNFSeRPS    := 'http://www.notamaisfacil.novaiguacu.rj.gov.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaSitLoteRPS := 'http://www.notamaisfacil.novaiguacu.rj.gov.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaNFSe       := 'http://www.notamaisfacil.novaiguacu.rj.gov.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProCancelaNFSe        := 'http://www.notamaisfacil.novaiguacu.rj.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.ProConsultaSeqRPS     := 'http://www.notamaisfacil.novaiguacu.rj.gov.br/WsNFe2/LoteRps.jws?wsdl'; 
      end;
     2211001: // Teresina/PI
      begin
+       ConfigURL.HomRecepcaoLoteRPS    := 'http://www.issdigitalthe.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaLoteRPS    := 'http://www.issdigitalthe.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaNFSeRPS    := 'http://www.issdigitalthe.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaSitLoteRPS := 'http://www.issdigitalthe.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaNFSe       := 'http://www.issdigitalthe.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomCancelaNFSe        := 'http://www.issdigitalthe.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaSeqRPS     := 'http://www.issdigitalthe.com.br/WsNFe2/LoteRps.jws?wsdl';
+
        ConfigURL.ProRecepcaoLoteRPS    := 'http://www.issdigitalthe.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaLoteRPS    := 'http://www.issdigitalthe.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaNFSeRPS    := 'http://www.issdigitalthe.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaSitLoteRPS := 'http://www.issdigitalthe.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaNFSe       := 'http://www.issdigitalthe.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProCancelaNFSe        := 'http://www.issdigitalthe.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.ProConsultaSeqRPS     := 'http://www.issdigitalthe.com.br/WsNFe2/LoteRps.jws?wsdl';
      end;
     2111300: // Sao Luis/MA
      begin
+       ConfigURL.HomRecepcaoLoteRPS    := 'http://www.issdigitalslz.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaLoteRPS    := 'http://www.issdigitalslz.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaNFSeRPS    := 'http://www.issdigitalslz.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaSitLoteRPS := 'http://www.issdigitalslz.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaNFSe       := 'http://www.issdigitalslz.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomCancelaNFSe        := 'http://www.issdigitalslz.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaSeqRPS     := 'http://www.issdigitalslz.com.br/WsNFe2/LoteRps.jws?wsdl';
+
        ConfigURL.ProRecepcaoLoteRPS    := 'http://www.issdigitalslz.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaLoteRPS    := 'http://www.issdigitalslz.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaNFSeRPS    := 'http://www.issdigitalslz.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaSitLoteRPS := 'http://www.issdigitalslz.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaNFSe       := 'http://www.issdigitalslz.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProCancelaNFSe        := 'http://www.issdigitalslz.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.ProConsultaSeqRPS     := 'http://www.issdigitalslz.com.br/WsNFe2/LoteRps.jws?wsdl';
      end;
     3552205: // Sorocaba/SP
      begin
+       ConfigURL.HomRecepcaoLoteRPS    := 'http://www.issdigitalsod.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaLoteRPS    := 'http://www.issdigitalsod.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaNFSeRPS    := 'http://www.issdigitalsod.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaSitLoteRPS := 'http://www.issdigitalsod.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaNFSe       := 'http://www.issdigitalsod.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomCancelaNFSe        := 'http://www.issdigitalsod.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaSeqRPS     := 'http://www.issdigitalsod.com.br/WsNFe2/LoteRps.jws?wsdl';
+
        ConfigURL.ProRecepcaoLoteRPS    := 'http://www.issdigitalsod.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaLoteRPS    := 'http://www.issdigitalsod.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaNFSeRPS    := 'http://www.issdigitalsod.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaSitLoteRPS := 'http://www.issdigitalsod.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaNFSe       := 'http://www.issdigitalsod.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProCancelaNFSe        := 'http://www.issdigitalsod.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.ProConsultaSeqRPS     := 'http://www.issdigitalsod.com.br/WsNFe2/LoteRps.jws?wsdl';
      end;
   end;
   Result := ConfigURL;
