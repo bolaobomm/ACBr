@@ -67,11 +67,14 @@ const
 
 type
 
-  { TACBrSATExtratoESCPOS }
+   TACBrSATMarcaImpressora = (iEpson, iBematech);
 
+  { TACBrSATExtratoESCPOS }
   TACBrSATExtratoESCPOS = class( TACBrSATExtratoClass )
   private
     FDevice : TACBrDevice ;
+    FMarcaImpressora: TACBrSATMarcaImpressora;
+    FLinhasEntreCupons : Integer ;
     FLinhaCmd : String;
     FBuffer : TStringList;
 
@@ -86,6 +89,7 @@ type
     procedure GerarObsContribuinte(Resumido : Boolean = False );
     procedure GerarRodape(CortaPapel: Boolean = True; Cancelamento: Boolean = False);
     procedure GerarDadosCancelamento;
+    procedure PulaLinhas( NumLinhas : Integer = 0 );
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -95,6 +99,8 @@ type
     procedure ImprimirExtratoCancelamento(ACFe : TCFe = nil; ACFeCanc: TCFeCanc = nil); override;
   published
     property Device : TACBrDevice read FDevice ;
+    property MarcaImpressora: TACBrSATMarcaImpressora read FMarcaImpressora write FMarcaImpressora default iEpson ;
+    property LinhasEntreCupons : Integer read FLinhasEntreCupons write FLinhasEntreCupons default 16 ;
   end ;
 
 procedure Register;
@@ -138,6 +144,8 @@ begin
   FDevice.Porta := 'COM1';
 
   FBuffer := TStringList.Create;
+  FMarcaImpressora := iEpson;
+  FLinhasEntreCupons := 16;
 end;
 
 destructor TACBrSATExtratoESCPOS.Destroy;
@@ -354,6 +362,8 @@ end;
 procedure TACBrSATExtratoESCPOS.GerarRodape(CortaPapel: Boolean = True; Cancelamento: Boolean = False);
 var
   qrcode : string;
+  cCaracter : AnsiString;
+  i, cTam1, cTam2 : Integer;
 begin
   FBuffer.Add(cCmdFonteNormal+'------------------------------------------------');
   if Cancelamento then
@@ -382,33 +392,47 @@ begin
                                       Trim(CFe.Dest.CNPJCPF),
                                       CFe.ide.assinaturaQRCODE );
 
-    FLinhaCmd := chr(29)+'(k'+chr(4)+chr(0)+'1A2'+chr(0)+
-                 chr(29)+'(k'+chr(3)+chr(0)+'1C'+chr(4)+
-                 chr(29)+'(k'+chr(3)+chr(0)+'1E0'+
-                 chr(29)+'(k'+Int2TB(length(qrcode)+3)+'1P0'+qrcode+
-                 chr(29)+'(k'+chr(3)+chr(0)+'1Q0';
+    if MarcaImpressora = iBematech then
+     begin
+        for i := 1 to length(qrcode) do
+         begin
+            cCaracter := cCaracter + Chr(Ord(qrcode[i]));
+         end;
+
+        if (length(qrcode) > 255) then
+         begin
+           cTam1 := length(qrcode) mod 255;
+           cTam2 := length(qrcode) div 255;
+         end
+        else
+         begin
+           cTam1 := length(qrcode);
+           cTam2 := 0;
+         end;
+
+        FLinhaCmd :=  chr(27) + chr(97) + chr(1) +
+                      chr(29) + chr(107) + chr(81) +
+                      chr(3) + chr(8) +
+                      chr(8) + chr(1) +
+                      chr(cTam1) +
+                      chr(cTam2) +
+                      cCaracter;
+     end
+    else
+     begin
+       FLinhaCmd := chr(29)+'(k'+chr(4)+chr(0)+'1A2'+chr(0)+
+                    chr(29)+'(k'+chr(3)+chr(0)+'1C'+chr(4)+
+                    chr(29)+'(k'+chr(3)+chr(0)+'1E0'+
+                    chr(29)+'(k'+Int2TB(length(qrcode)+3)+'1P0'+qrcode+
+                    chr(29)+'(k'+chr(3)+chr(0)+'1Q0';
+     end;               
     FBuffer.Add(FLinhaCmd);
   end;
 
   if CortaPapel then
   begin
-    FBuffer.Add('');
-    FBuffer.Add('');
-    FBuffer.Add('');
-    FBuffer.Add('');
-    FBuffer.Add('');
-    FBuffer.Add('');
-    FBuffer.Add('');
-    FBuffer.Add('');
-    FBuffer.Add('');
-    FBuffer.Add('');
-    FBuffer.Add('');
-    FBuffer.Add('');
-    FBuffer.Add('');
-    FBuffer.Add('');
-    FBuffer.Add('');
-    FBuffer.Add('');
-
+    PulaLinhas;
+    
     FBuffer.Add(cCmdCortaPapel);
   end;
 end;
@@ -451,24 +475,22 @@ begin
     FBuffer.Add(FLinhaCmd);
   end;
 
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
+  PulaLinhas;
 
   FBuffer.Add(cCmdCortaPapel);
+end;
+
+procedure TACBrSATExtratoESCPOS.PulaLinhas(NumLinhas: Integer);
+var
+  i : integer;
+begin
+  if NumLinhas = 0 then
+     NumLinhas := LinhasEntreCupons ;
+
+  for i:=0 to NumLinhas do
+   begin
+     FBuffer.Add('');
+   end
 end;
 
 

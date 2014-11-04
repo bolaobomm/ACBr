@@ -65,9 +65,13 @@ const
       cCmdCortaPapel = #29+'V1';      
 
 type
+  TACBrNFeMarcaImpressora = (iEpson, iBematech);
+
   TACBrNFeDANFeESCPOS = class( TACBrNFeDANFEClass )
   private
     FDevice : TACBrDevice ;
+    FMarcaImpressora: TACBrNFeMarcaImpressora;
+    FLinhasEntreCupons : Integer ;
     FLinhaCmd : String;
     FBuffer : TStringList;
 
@@ -83,6 +87,7 @@ type
     procedure GerarObsFisco;
     procedure GerarDadosConsumidor;
     procedure GerarRodape(CortaPapel: Boolean = True; Cancelamento: Boolean = False);
+    procedure PulaLinhas( NumLinhas : Integer = 0 );
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -90,6 +95,8 @@ type
     procedure ImprimirDANFEResumido(NFE : TNFe = nil); override ;
   published
     property Device : TACBrDevice read FDevice ;
+    property MarcaImpressora: TACBrNFeMarcaImpressora read FMarcaImpressora write FMarcaImpressora default iEpson ;
+    property LinhasEntreCupons : Integer read FLinhasEntreCupons write FLinhasEntreCupons default 21 ;
   end ;
 
 procedure Register;
@@ -129,6 +136,8 @@ begin
   FDevice.Porta := 'COM1';
 
   FBuffer := TStringList.Create;
+  FMarcaImpressora := iEpson;
+  FLinhasEntreCupons := 21; 
 end;
 
 destructor TACBrNFeDANFeESCPOS.Destroy;
@@ -329,40 +338,13 @@ end;
 procedure TACBrNFeDANFeESCPOS.GerarRodape(CortaPapel: Boolean = True; Cancelamento: Boolean = False);
 var
   qrcode : string;
+  cCaracter : String;
+  i, cTam1, cTam2 : Integer;  
 begin
   FBuffer.Add(cCmdFonteNormal+'------------------------------------------------');
   FLinhaCmd := cCmdAlinhadoCentro+'Consulta via leitor de QR Code';
   FBuffer.Add(FLinhaCmd);
   FBuffer.Add(' ');
-
-
-{  qrcode := NotaUtil.GetURLConsultaNFCe(FpNFe.Ide.cUF,StrToInt(TpAmbToStr(FpNFe.ide.tpAmb)));
-  qrcode := qrcode + 'chNFe='+OnlyNumber(FpNFe.infNFe.ID) + '&';
-  qrcode := qrcode + 'nVersao=100' + '&';
-  qrcode := qrcode + 'tpAmb='+ TpAmbToStr(FpNFe.Ide.tpAmb) + '&';
-
-  if FpNFe.Dest.idEstrangeiro <> '' then
-   begin
-     qrcode := qrcode + 'cDest'+FpNFe.Dest.idEstrangeiro+ '&';
-   end
-  else
-   begin
-     if Length(Trim(FpNFe.Dest.CNPJCPF)) > 11 then
-       qrcode := qrcode + 'cDest'+FpNFe.Dest.CNPJCPF+ '&'
-     else
-      begin
-       if Length(Trim(FpNFe.Dest.CNPJCPF)) = 11 then
-          qrcode := qrcode + 'cDest'+FpNFe.Dest.CNPJCPF+ '&';
-      end;
-   end;
-
-  qrcode := qrcode + 'dhEmi='  + AsciiToHex(DateTimeTodh(FpNFe.Ide.dEmi) + GetUTC(CodigoParaUF(FpNFe.ide.cUF), FpNFe.Ide.dEmi)) + '&';
-  qrcode := qrcode + 'vNF='    + DFeUtil.FormatFloat(FpNFe.Total.ICMSTot.vNF,'0.00') + '&';
-  qrcode := qrcode + 'vICMS='  + DFeUtil.FormatFloat(FpNFe.Total.ICMSTot.vICMS,'0.00') + '&';
-  qrcode := qrcode + 'digVal=' + AsciiToHex(FpNFe.procNFe.digVal)+ '&';
-  qrcode := qrcode + 'cIdToken=' + '123456'+ '&';
-  qrcode := qrcode + 'cHashQRCode=' + FpNFe.procNFe.digVal;  }
-
 
   qrcode := NotaUtil.GetURLQRCode( FpNFe.ide.cUF, FpNFe.ide.tpAmb,
                                    FpNFe.infNFe.ID,
@@ -373,40 +355,64 @@ begin
                                    TACBrNFe( ACBrNFe ).Configuracoes.Geral.IdToken,
                                    TACBrNFe( ACBrNFe ).Configuracoes.Geral.Token);
 
-  FLinhaCmd := chr(29)+'(k'+chr(4)+chr(0)+'1A2'+chr(0)+
-               chr(29)+'(k'+chr(3)+chr(0)+'1C'+chr(4)+
-               chr(29)+'(k'+chr(3)+chr(0)+'1E0'+
-               chr(29)+'(k'+Int2TB(length(qrcode)+3)+'1P0'+qrcode+
-               chr(29)+'(k'+chr(3)+chr(0)+'1Q0';
+
+  if MarcaImpressora = iBematech then
+   begin
+     for i := 1 to length(qrcode) do
+      begin
+         cCaracter := cCaracter + Chr(Ord(qrcode[i]));
+      end;
+
+     if (length(qrcode) > 255) then
+      begin
+        cTam1 := length(qrcode) mod 255;
+        cTam2 := length(qrcode) div 255;
+      end
+     else
+      begin
+        cTam1 := length(qrcode);
+        cTam2 := 0;
+      end;
+
+     FLinhaCmd :=  chr(27) + chr(97) + chr(1) +
+                   chr(29) + chr(107) + chr(81) +
+                   chr(3) + chr(8) +
+                   chr(8) + chr(1) +
+                   chr(cTam1) +
+                   chr(cTam2) +
+                   cCaracter;
+   end
+  else
+   begin
+     FLinhaCmd := chr(29)+'(k'+chr(4)+chr(0)+'1A2'+chr(0)+
+                  chr(29)+'(k'+chr(3)+chr(0)+'1C'+chr(4)+
+                  chr(29)+'(k'+chr(3)+chr(0)+'1E0'+
+                  chr(29)+'(k'+Int2TB(length(qrcode)+3)+'1P0'+qrcode+
+                  chr(29)+'(k'+chr(3)+chr(0)+'1Q0';
+   end;
+
   FBuffer.Add(FLinhaCmd);
 
   FBuffer.Add('');
   FBuffer.Add('');
   FBuffer.Add(cCmdFontePequena+('Protocolo de Autorização:'+Trim(FpNFe.procNFe.nProt)+' '+DFeUtil.SeSenao(FpNFe.procNFe.dhRecbto<>0,DateTimeToStr(FpNFe.procNFe.dhRecbto),''))+cCmdFonteNormal);
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
-  FBuffer.Add('');
+  PulaLinhas;
 
   if CortaPapel then
      FBuffer.Add(cCmdCortaPapel);
+end;
+
+procedure TACBrNFeDANFeESCPOS.PulaLinhas(NumLinhas: Integer);
+var
+  i : integer;
+begin
+  if NumLinhas = 0 then
+     NumLinhas := LinhasEntreCupons ;
+
+  for i:=0 to NumLinhas do
+   begin
+     FBuffer.Add('');
+   end
 end;
 
 procedure TACBrNFeDANFeESCPOS.ImprimePorta(AString: AnsiString);
