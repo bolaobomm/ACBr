@@ -773,9 +773,12 @@ begin
                 daTIF: FieldByName('Tipo').AsString:='TIF';
                 daOutros: FieldByName('Tipo').AsString:='OUTROS';
               end;
-              FieldByName('Serie').AsString:=idDocAnt.Items[i].idDocAntPap.Items[ii].serie;
-              FieldByName('nDoc').AsString:=intToStr(idDocAnt.Items[i].idDocAntPap.Items[ii].nDoc);
-              FieldByName('dEmi').AsString:=FormatDateTime('dd/mm/yyyy',idDocAnt.Items[i].idDocAntPap.Items[ii].dEmi);
+//              FieldByName('Serie').AsString:=idDocAnt.Items[i].idDocAntPap.Items[ii].serie;
+//              FieldByName('nDoc').AsString:=intToStr(idDocAnt.Items[i].idDocAntPap.Items[ii].nDoc);
+//              FieldByName('dEmi').AsString:=FormatDateTime('dd/mm/yyyy',idDocAnt.Items[i].idDocAntPap.Items[ii].dEmi);
+              FieldByName('Serie').AsString:=idDocAnt.Items[ii].idDocAntPap.Items[iii].serie;
+              FieldByName('nDoc').AsString:=intToStr(idDocAnt.Items[ii].idDocAntPap.Items[iii].nDoc);
+              FieldByName('dEmi').AsString:=FormatDateTime('dd/mm/yyyy',idDocAnt.Items[ii].idDocAntPap.Items[iii].dEmi);
             end;
             post;
           end;
