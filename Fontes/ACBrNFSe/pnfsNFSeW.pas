@@ -202,7 +202,7 @@ begin
                          StrToInt(SomenteNumeros(FNFSe.IdentificacaoRps.Numero)));
 
   proTecnos: FNFSe.InfID.ID := '1' + //Fixo - Lote Sincrono
-                         FormatDateTime('yyyy', FNFSe.DataEmissao) +
+ //                        FormatDateTime('yyyy', FNFSe.DataEmissao) +
                          SomenteNumeros(FNFSe.Prestador.Cnpj) +
 //                         IntToStrZero(StrToIntDef(FNFSe.NumeroLote, 1), 16);
                          IntToStrZero(StrToIntDef(FNFSe.IdentificacaoRps.Numero, 1), 16);
