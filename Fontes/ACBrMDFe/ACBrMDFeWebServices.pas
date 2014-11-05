@@ -990,6 +990,7 @@ function TMDFeRetRecepcao.Confirma(AInfProt: TProtMDFeCollection): Boolean;
 var
   i, j: Integer;
 //  AProcMDFe: TProcMDFe;
+  chave: String;
 begin
   Result := False;
 
@@ -998,7 +999,9 @@ begin
   begin
     for j := 0 to FMDFes.Count-1 do
     begin
-      if AInfProt.Items[i].chMDFe = StringReplace(FMDFes.Items[j].MDFe.InfMDFe.Id,'MDFe','',[rfIgnoreCase]) then
+      chave := StringReplace(FMDFes.Items[j].MDFe.InfMDFe.Id, 'MDFe', '', [rfIgnoreCase]);
+
+      if AInfProt.Items[i].chMDFe = chave then
        begin
          FMDFes.Items[j].Confirmada             := (AInfProt.Items[i].cStat = 100); // 100 = Autorizao o Uso
          FMDFes.Items[j].Msg                    := AInfProt.Items[i].xMotivo;
@@ -1037,10 +1040,10 @@ begin
           end;
          *)
          if FConfiguracoes.Arquivos.Salvar then
-            if FConfiguracoes.Arquivos.EmissaoPathMDFe then
-               FMDFes.Items[j].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathMDFe(FMDFes.Items[j].MDFe.Ide.dhEmi))+StringReplace(FMDFes.Items[j].MDFe.InfMDFe.Id,'MDFe','',[rfIgnoreCase])+'-mdfe.xml')
-            else
-               FMDFes.Items[j].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathMDFe)+StringReplace(FMDFes.Items[j].MDFe.InfMDFe.Id,'MDFe','',[rfIgnoreCase])+'-mdfe.xml');
+           if FConfiguracoes.Arquivos.EmissaoPathMDFe then
+             FMDFes.Items[j].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathMDFe(FMDFes.Items[j].MDFe.Ide.dhEmi))+chave+'-mdfe.xml')
+           else
+             FMDFes.Items[j].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathMDFe)+chave+'-mdfe.xml');
          break;
        end;
     end;
@@ -1200,10 +1203,11 @@ function TMDFeRetRecepcao.Executar: Boolean;
       FxMotivo  := FMDFeRetorno.xMotivo;
 
       Result := FMDFeRetorno.CStat = 105; // 105 = Lote em Processamento
+
       if FMDFeRetorno.CStat = 104 then    // 104 = Lote Processado
       begin
-         FMsg     := FMDFeRetorno.ProtMDFe.Items[0].xMotivo;
-         FxMotivo := FMDFeRetorno.ProtMDFe.Items[0].xMotivo;
+        FMsg     := FMDFeRetorno.ProtMDFe.Items[0].xMotivo;
+        FxMotivo := FMDFeRetorno.ProtMDFe.Items[0].xMotivo;
       end;
 
     finally
@@ -1234,24 +1238,25 @@ begin
   while Processando do
   begin
     if TACBrMDFe(FACBrMDFe).Configuracoes.WebServices.IntervaloTentativas > 0 then
-       sleep(TACBrMDFe(FACBrMDFe).Configuracoes.WebServices.IntervaloTentativas)
+      sleep(TACBrMDFe(FACBrMDFe).Configuracoes.WebServices.IntervaloTentativas)
     else
-       sleep(vCont);
+      sleep(vCont);
 
     if qTent > TACBrMDFe(FACBrMDFe).Configuracoes.WebServices.Tentativas then
       break;
 
     qTent := qTent + 1;
   end;
+
   TACBrMDFe(FACBrMDFe).SetStatus(stMDFeIdle);
 
   if FMDFeRetorno.CStat = 104 then  // 104 = Lote Processado
-   begin
+  begin
     Result     := Confirma(FMDFeRetorno.ProtMDFe);
     fChaveMDFe := FMDFeRetorno.ProtMDFe.Items[0].chMDFe;
     fProtocolo := FMDFeRetorno.ProtMDFe.Items[0].nProt;
     fcStat     := FMDFeRetorno.ProtMDFe.Items[0].cStat;
-   end;
+  end;
 end;
 
 { TMDFeRecibo }

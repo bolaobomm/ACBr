@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/11/2014
+[*] Mais algumas alterações realizadas conforme NT ACBr 2014/001
+    por: Italo Jurisato Junior
+
 31/10/2014
 [*] Alterações realizadas conforme NT ACBr 2014/001
     por: Italo Jurisato Junior
