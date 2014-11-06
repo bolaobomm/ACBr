@@ -47,6 +47,10 @@ type
     Image1: TImage;
     LabAtualizarCaptcha: TLabel;
     ckRemoverEspacosDuplos: TCheckBox;
+    ListCNAE2: TListBox;
+    Label15: TLabel;
+    EditCNAE1: TEdit;
+    Label16: TLabel;
     procedure LabAtualizarCaptchaClick(Sender: TObject);
     procedure ButBuscarClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -66,6 +70,8 @@ implementation
 {$R *.dfm}
 
 procedure TF_Principal.ButBuscarClick(Sender: TObject);
+var
+  I: Integer;
 begin
   if EditCaptcha.Text <> '' then
   begin
@@ -88,6 +94,11 @@ begin
       EditUF.Text          := ACBrConsultaCNPJ1.UF;
       EditCEP.Text         := ACBrConsultaCNPJ1.CEP;
       EditSituacao.Text    := ACBrConsultaCNPJ1.Situacao;
+      EditCNAE1.Text       := ACBrConsultaCNPJ1.CNAE1;
+
+      ListCNAE2.Clear;
+      for I := 0 to ACBrConsultaCNPJ1.CNAE2.Count - 1 do
+        ListCNAE2.Items.Add(ACBrConsultaCNPJ1.CNAE2[I]);
     end;
   end
   else

@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/11/2014
+-- ACBrConsultaCNPJ --
+[*] Alterado o codigo CNAE2 para mostrar um ou mais CNAEs, algumas empresas possuem mais 
+    de um CNAE secundário. por (regys.silveira)
+
 27/10/2014
 -- ACBrIBPTax --
 [*] alteração do componente ACBrIBPTax para ler as novas tabelas de imposto no cupom

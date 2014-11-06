@@ -63,7 +63,7 @@ type
     FRazaoSocial: String;
     FFantasia: String;
     FCNAE1: String;
-    FCNAE2: String;
+    FCNAE2: TStringList;
     FEndereco: String;
     FNumero: String;
     FComplemento: String;
@@ -83,6 +83,8 @@ type
     function Consulta(const ACNPJ, ACaptcha: String;
       ARemoverEspacosDuplos: Boolean = False): Boolean;
     procedure Clear;
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
   published
     property CNPJ: String Read FCNPJ Write FCNPJ;
     property EmpresaTipo: String Read FEmpresaTipo;
@@ -90,7 +92,7 @@ type
     property RazaoSocial: String Read FRazaoSocial;
     property Fantasia: String Read FFantasia;
     property CNAE1: String Read FCNAE1;
-    property CNAE2: String Read FCNAE2;
+    property CNAE2: TStringList Read FCNAE2;
     property Endereco: String Read FEndereco;
     property Numero: String Read FNumero;
     property Complemento: String Read FComplemento;
@@ -216,6 +218,7 @@ var
   Post: TStringStream;
   Erro: String;
   Resposta : TStringList;
+  StrAux: String;
 begin
   Erro := ACBrValidadorValidarCNPJ( ACNPJ ) ;
   if Erro <> '' then
@@ -250,7 +253,7 @@ begin
         RemoveEmptyLines( Resposta );
 
         //DEBUG:
-        //Resposta.SaveToFile('c:\temp\cnpj.txt');
+        //Resposta.SaveToFile('d:\cnpj.txt');
 
         FCNPJ         := LerCampo(Resposta,'NÚMERO DE INSCRIÇÃO');
         if FCNPJ <> '' then
@@ -259,7 +262,6 @@ begin
         FRazaoSocial  := LerCampo(Resposta,'NOME EMPRESARIAL');
         FFantasia     := LerCampo(Resposta,'TÍTULO DO ESTABELECIMENTO (NOME DE FANTASIA)');
         FCNAE1        := LerCampo(Resposta,'CÓDIGO E DESCRIÇÃO DA ATIVIDADE ECONÔMICA PRINCIPAL');
-        FCNAE2        := LerCampo(Resposta,'CÓDIGO E DESCRIÇÃO DAS ATIVIDADES ECONÔMICAS SECUNDÁRIAS');
         FEndereco     := LerCampo(Resposta,'LOGRADOURO');
         FNumero       := LerCampo(Resposta,'NÚMERO');
         FComplemento  := LerCampo(Resposta,'COMPLEMENTO');
@@ -272,6 +274,16 @@ begin
         FSituacao     := LerCampo(Resposta,'SITUAÇÃO CADASTRAL');
         FDataSituacao := StrToDateDef(LerCampo(Resposta,'DATA DA SITUAÇÃO CADASTRAL'),0);
         FNaturezaJuridica := LerCampo(Resposta,'CÓDIGO E DESCRIÇÃO DA NATUREZA JURÍDICA');
+
+        FCNAE2.Clear;
+        StrAux := LerCampo(Resposta,'CÓDIGO E DESCRIÇÃO DAS ATIVIDADES ECONÔMICAS SECUNDÁRIAS');
+        FCNAE2.Add(ACBrUtil.RemoverEspacosDuplos(StrAux));
+        repeat
+          strAux := LerCampo(Resposta, StrAux);
+          if StrAux <> '' then
+            FCNAE2.Add(ACBrUtil.RemoverEspacosDuplos(StrAux));
+        until StrAux = '';
+
       finally
         Resposta.Free;
       end ;
@@ -300,6 +312,18 @@ begin
   end;
 end;
 
+constructor TACBrConsultaCNPJ.Create(AOwner: TComponent);
+begin
+  inherited;
+  FCNAE2 := TStringList.Create;
+end;
+
+destructor TACBrConsultaCNPJ.Destroy;
+begin
+  FCNAE2.Free;
+  inherited;
+end;
+
 procedure TACBrConsultaCNPJ.Clear;
 begin
   FNaturezaJuridica := '';
@@ -308,7 +332,6 @@ begin
   FRazaoSocial      := '';
   FFantasia         := '';
   FCNAE1            := '';
-  FCNAE2            := '';
   FEndereco         := '';
   FNumero           := '';
   FComplemento      := '';
@@ -319,6 +342,8 @@ begin
   FSituacao         := '';
   FCNPJ             := '';
   FDataSituacao     := 0;
+
+  FCNAE2.Clear;
 end;
 
 end.
