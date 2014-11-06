@@ -204,9 +204,9 @@ begin
  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRps' + NameSpaceDad;
-   acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
-   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + NameSpaceDad;
-   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseEnvio' + NameSpaceDad;
+   acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRps' + NameSpaceDad;
+   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRps' + NameSpaceDad;
+   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfse' + NameSpaceDad;
    acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + NameSpaceDad +
                              '<' + Prefixo3 + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
@@ -233,9 +233,9 @@ begin
  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRps>';
-   acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
-   acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfseRpsEnvio>';
-   acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseEnvio>';
+   acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRps>';
+   acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfseRps>';
+   acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfse>';
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '';

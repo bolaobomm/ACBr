@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/11/2014
+[-] Alterações necessárias para funcionar o provedor DBSeller.
+    por: Diogo
+
 03/11/2014
 [-] Correção na montagem do Id para o provedor Tecnos.
     por: Rodrigo de Souza Crovador

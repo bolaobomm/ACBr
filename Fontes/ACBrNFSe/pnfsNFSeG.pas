@@ -384,6 +384,9 @@ begin
 
              '</' + Prefixo3 + 'Prestador>';
 
+ if AProvedor = proDBSeller then
+   DadosMsg := '<ConsultarNfseRpsEnvio>' + DadosMsg + '</ConsultarNfseRpsEnvio>';
+
  Result := TagI + DadosMsg + TagF;
 
  if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proVirtual] then Result := '';
