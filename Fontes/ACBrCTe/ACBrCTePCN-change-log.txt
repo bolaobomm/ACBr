@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/11/2014
+[*] Ajustes no DACTE e DA Eventos para Fortes
+    Por: Wanderson Pereira
+
 05/11/2014
 [*] Caso o valor informado a propriedade cPais for zero será alterado para 1058.
     Conforme solicitado por Geferson no post:

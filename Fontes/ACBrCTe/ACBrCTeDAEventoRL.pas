@@ -155,8 +155,8 @@ begin
       else
         RLCTeEvento.Print;
     finally
-      RLCTeEvento.Free;
-      RLCTeEvento := nil;
+  //    RLCTeEvento.Free;
+  //    RLCTeEvento := nil;
       Free;
     end;
 end;
@@ -216,7 +216,7 @@ end;
 
 procedure TfrmCTeDAEventoRL.FormDestroy(Sender: TObject);
 begin
-  RLPrinter.Free;
+//  RLPrinter.Free;
   RLCTeEvento.Free;
   FreeAndNil(cdsDocumentos);
 end;

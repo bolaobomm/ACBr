@@ -698,7 +698,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       Left = 26
       Top = 263
       Width = 742
-      Height = 157
+      Height = 188
       BandType = btHeader
       Color = clWhite
       ParentColor = False
@@ -707,7 +707,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 0
         Top = 2
         Width = 741
-        Height = 153
+        Height = 183
         Brush.Style = bsClear
       end
       object rlsLinhaH02: TRLDraw
@@ -728,7 +728,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rlsLinhaV01: TRLDraw
         Left = 174
-        Top = 94
+        Top = 124
         Width = 3
         Height = 60
         Angle = 90.000000000000000000
@@ -739,7 +739,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 332
         Top = 2
         Width = 1
-        Height = 152
+        Height = 182
         Angle = 90.000000000000000000
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -804,7 +804,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Width = 94
         Height = 62
         Center = True
-        Stretch = True
+        Scaled = True
       end
       object rlsLinhaH04: TRLDraw
         Left = 0
@@ -1045,24 +1045,6 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         ParentFont = False
         Transparent = False
       end
-      object rllPageNumber: TRLLabel
-        Left = 466
-        Top = 42
-        Width = 42
-        Height = 15
-        Alignment = taCenter
-        AutoSize = False
-        Caption = '00/00'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
-        Transparent = False
-      end
       object RLLabel33: TRLLabel
         Left = 510
         Top = 34
@@ -1126,26 +1108,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         ParentColor = False
         ParentFont = False
         Transparent = False
-      end
-      object RLLabel2: TRLLabel
-        Left = 4
-        Top = 127
-        Width = 81
-        Height = 8
-        Caption = 'TOMADOR DO SERVI'#199'O'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-        Transparent = False
-      end
+      end      
       object rllTipoCte: TRLLabel
         Left = 4
-        Top = 107
+        Top = 137
         Width = 76
         Height = 15
         AutoSize = False
@@ -1158,25 +1124,9 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         ParentColor = False
         ParentFont = False
       end
-      object RLLabel9: TRLLabel
-        Left = 178
-        Top = 127
-        Width = 58
-        Height = 8
-        Caption = 'FORMA DE PGTO'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-        Transparent = False
-      end
       object rllTipoServico: TRLLabel
         Left = 178
-        Top = 107
+        Top = 137
         Width = 91
         Height = 15
         AutoSize = False
@@ -1191,7 +1141,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLLabel28: TRLLabel
         Left = 4
-        Top = 174
+        Top = 156
         Width = 81
         Height = 8
         Caption = 'TOMADOR DO SERVI'#199'O'
@@ -1207,8 +1157,8 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rllTomaServico: TRLLabel
         Left = 4
-        Top = 184
-        Width = 81
+        Top = 166
+        Width = 150
         Height = 15
         AutoSize = False
         Color = clWhite
@@ -1222,7 +1172,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLLabel78: TRLLabel
         Left = 178
-        Top = 174
+        Top = 156
         Width = 83
         Height = 8
         Caption = 'FORMA DE PAGAMENTO'
@@ -1238,8 +1188,8 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rllFormaPagamento: TRLLabel
         Left = 178
-        Top = 184
-        Width = 73
+        Top = 166
+        Width = 150
         Height = 15
         AutoSize = False
         Color = clWhite
@@ -1253,7 +1203,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rllDescricao: TRLLabel
         Left = 334
-        Top = 174
+        Top = 156
         Width = 56
         Height = 8
         Caption = 'N'#176' PROTOCOLO'
@@ -1269,7 +1219,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rllProtocolo: TRLLabel
         Left = 336
-        Top = 184
+        Top = 166
         Width = 402
         Height = 15
         Alignment = taCenter
@@ -1315,10 +1265,11 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLDraw88: TRLDraw
         Left = 0
-        Top = 172
+        Top = 154
         Width = 740
         Height = 1
         Brush.Style = bsClear
+        DrawKind = dkLine
       end
       object rllVariavel1: TRLLabel
         Left = 344
@@ -1396,17 +1347,9 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         ParentFont = False
         Transparent = False
       end
-      object RLDraw28: TRLDraw
-        Left = 0
-        Top = 94
-        Width = 332
-        Height = 1
-        Brush.Style = bsClear
-        DrawKind = dkLine
-      end
       object RLLabel199: TRLLabel
         Left = 178
-        Top = 97
+        Top = 127
         Width = 61
         Height = 8
         Caption = 'TIPO DO SERVI'#199'O'
@@ -1422,7 +1365,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLLabel200: TRLLabel
         Left = 4
-        Top = 97
+        Top = 127
         Width = 46
         Height = 8
         Caption = 'TIPO DO CT-E'
@@ -1436,35 +1379,21 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         ParentFont = False
         Transparent = False
       end
-      object rlTomadorServico: TRLLabel
-        Left = 4
-        Top = 137
-        Width = 149
-        Height = 15
+      object RLSystemInfo1: TRLSystemInfo
+        Left = 468
+        Top = 42
+        Width = 38
+        Height = 13
+        Alignment = taCenter
         AutoSize = False
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
+        Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -9
+        Font.Height = -11
         Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentColor = False
+        Font.Style = [fsBold]
+        Info = itPagePreview
         ParentFont = False
-      end
-      object rlFormaPgto: TRLLabel
-        Left = 178
-        Top = 137
-        Width = 131
-        Height = 15
-        AutoSize = False
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
+        Text = '0#/0#'
       end
     end
     object rlb_10_ModRodFracionado: TRLBand
@@ -2737,7 +2666,6 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Width = 77
         Height = 13
         AutoSize = False
-        Caption = 'rlFoneExped'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -4536,6 +4464,19 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = []
         ParentColor = False
+        ParentFont = False
+      end
+      object RLSystemInfo2: TRLSystemInfo
+        Left = 143
+        Top = 0
+        Width = 27
+        Height = 12
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        Info = itNow
         ParentFont = False
       end
     end
@@ -6942,6 +6883,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 39
         Width = 1
         Height = 52
+		Angle = 90.000000000000000000
         Brush.Style = bsClear
         DrawKind = dkLine
       end
@@ -6950,7 +6892,8 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 39
         Width = 1
         Height = 52
-        Brush.Style = bsClear
+        Angle = 90.000000000000000000        
+		Brush.Style = bsClear
         DrawKind = dkLine
       end
       object RLDraw94: TRLDraw

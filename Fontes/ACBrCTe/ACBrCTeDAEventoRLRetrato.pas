@@ -531,10 +531,10 @@ begin
 
   rlCTeEvento.Title := 'Evento: ' + FormatFloat('000,000,000', FEventoCTe.InfEvento.nSeqEvento);
 
-  rlCTeEvento.Margins.TopMargin := FMargemSuperior * 100;
-  rlCTeEvento.Margins.BottomMargin := FMargemInferior * 100;
-  rlCTeEvento.Margins.LeftMargin := FMargemEsquerda * 100;
-  rlCTeEvento.Margins.RightMargin := FMargemDireita * 100;
+  rlCTeEvento.Margins.TopMargin := FMargemSuperior * 10;
+  rlCTeEvento.Margins.BottomMargin := FMargemInferior * 10;
+  rlCTeEvento.Margins.LeftMargin := FMargemEsquerda * 10;
+  rlCTeEvento.Margins.RightMargin := FMargemDireita * 10;
 end;
 
 end.

@@ -12,7 +12,6 @@ object frmCTeDAEventoRL: TfrmCTeDAEventoRL
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.3'
   object RLCTeEvento: TRLReport
     Left = 2
     Height = 1123
@@ -33,9 +32,6 @@ object frmCTeDAEventoRL: TfrmCTeDAEventoRL
   end
   object RLPDFFilter1: TRLPDFFilter
     DocumentInfo.Creator = 'FortesReport (Open Source) v3.24(B14)  \251 Copyright © 1999-2008 Fortes Informática'
-    DocumentInfo.ModDate = 0
-    ViewerOptions = []
-    FontEncoding = feNoEncoding
     DisplayName = 'Documento PDF'
     left = 351
     top = 39

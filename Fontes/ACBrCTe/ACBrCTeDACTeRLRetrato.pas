@@ -92,8 +92,6 @@ type
     rllTipoCte: TRLLabel;
     rllDescricao: TRLLabel;
     rlLabel77: TRLLabel;
-    rlLabel2: TRLLabel;
-    rlLabel9: TRLLabel;
     rllTipoServico: TRLLabel;
     rlLabel28: TRLLabel;
     rllTomaServico: TRLLabel;
@@ -587,11 +585,10 @@ type
     rlDocOrig_serie2: TRLMemo;
     rlDocOrig_cpf2: TRLMemo;
     rlDocOrig_tpDoc2: TRLMemo;
-    RLDraw28: TRLDraw;
     RLLabel199: TRLLabel;
     RLLabel200: TRLLabel;
-    rlTomadorServico: TRLLabel;
-    rlFormaPgto: TRLLabel;
+    RLSystemInfo1: TRLSystemInfo;
+    RLSystemInfo2: TRLSystemInfo;
     procedure rlb_01_ReciboBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
     procedure rlb_02_CabecalhoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
     procedure rlb_03_DadosDACTeBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
@@ -1105,7 +1102,7 @@ begin
   rllModelo.Caption  := FCTe.Ide.modelo;
   rllSerie.Caption   := IntToStr(FCTe.Ide.serie);  //FormatFloat( '000', FCTe.Ide.serie);
   rllNumCte.Caption  := FormatFloat('000,000,000', FCTe.Ide.nCT);
-  rllPageNumber.Caption   := format('%2.2d', [RLCTe.PageNumber]) + '/' + format('%2.2d', [FTotalPages]);
+//  rllPageNumber.Caption   := format('%2.2d', [RLCTe.PageNumber]) + '/' + format('%2.2d', [FTotalPages]);
 //  rllPageNumber.Caption   := format('%2.2d', [RLCTe.PageNumber]) + '/' + format('%2.2d', [RLCTe.rlPrinter.PageCount]);
   rllEmissao.Caption      := DFeUtil.FormatDateTime(DateTimeToStr(FCTe.Ide.dhEmi));
   rlbCodigoBarras.Caption := Copy(FCTe.InfCTe.Id, 4, 44);
@@ -1147,15 +1144,15 @@ begin
   if FCTe.Ide.Toma4.xNome = '' then
   begin
     rllTomaServico.Caption   := TpTomadorToStrText(FCTe.Ide.Toma03.Toma);
-    rlTomadorServico.Caption := TpTomadorToStrText(FCTe.Ide.Toma03.Toma);
+//    rlTomadorServico.Caption := TpTomadorToStrText(FCTe.Ide.Toma03.Toma);
   end
   else
   begin
     rllTomaServico.Caption   := TpTomadorToStrText(FCTe.Ide.Toma4.toma);
-    rlTomadorServico.Caption := TpTomadorToStrText(FCTe.Ide.Toma4.toma);
+//    rlTomadorServico.Caption := TpTomadorToStrText(FCTe.Ide.Toma4.toma);
   end;                                                                   
   rllFormaPagamento.Caption := tpforPagToStrText(FCTe.Ide.forPag);
-  rlFormaPgto.Caption       := tpforPagToStrText(FCTe.Ide.forPag);
+//  rlFormaPgto.Caption       := tpforPagToStrText(FCTe.Ide.forPag);
 
   // Normal **************************************************************
   if FCTe.Ide.tpEmis in [teNormal, teSCAN, teSVCSP, teSVCRS] then
@@ -2338,7 +2335,8 @@ begin
   PrintBand := RLCTe.PageNumber = 1;
 
   rlLabel15.Visible := FImprimeHoraSaida;
-
+  RLSystemInfo2.Visible := FImprimeHoraSaida;
+  
   if (FSistema <> '') or (FUsuario <> '') then
     rllblSistema.Caption := FSistema + ' - ' + FUsuario
   else
@@ -2364,7 +2362,7 @@ begin
     rlb_18_Recibo.Enabled := ((FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento)) and
       (FCTe.Ide.modal <> mdAereo) and (FPosRecibo = prRodape);
     if rlb_18_Recibo.Enabled then
-      rlb_18_Recibo.Height := 68
+      rlb_18_Recibo.Height := 97
     else
       rlb_18_Recibo.Height := 0;
   end;

@@ -177,7 +177,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Top = 2
         Width = 290
         Alignment = taCenter
-        Caption = 'CARTA DE CORRE√á√ÉO ELETR√îNICA'
+        Caption = 'CARTA DE CORRE«√O ELETR‘NICA'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -16
@@ -197,7 +197,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Top = 24
         Width = 382
         Alignment = taCenter
-        Caption = 'N√£o possui valor fiscal, simples representa√ß√£o da CC-e indicada abaixo.'
+        Caption = 'N„o possui valor fiscal, simples representaÁ„o da CC-e indicada abaixo.'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -13
@@ -216,7 +216,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Top = 45
         Width = 646
         Alignment = taCenter
-        Caption = 'CONSULTE A AUTENTICIDADE DA CARTA DE CORRE√á√ÉO ELETR√îNICA NO SITE DA SEFAZ AUTORIZADORA.'
+        Caption = 'CONSULTE A AUTENTICIDADE DA CARTA DE CORRE«√O ELETR‘NICA NO SITE DA SEFAZ AUTORIZADORA.'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -13
@@ -263,7 +263,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Height = 12
         Top = 0
         Width = 140
-        Caption = 'DATA E HORA DA IMPRESS√ÉO: '
+        Caption = 'DATA E HORA DA IMPRESS√O: '
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
@@ -373,7 +373,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Height = 8
         Top = 18
         Width = 27
-        Caption = 'ORG√ÉO'
+        Caption = 'ORG√O'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -409,7 +409,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Height = 8
         Top = 51
         Width = 83
-        Caption = 'DESCRI√á√ÉO DO EVENTO'
+        Caption = 'DESCRI«√O DO EVENTO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -443,7 +443,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Height = 8
         Top = 83
         Width = 54
-        Caption = 'N¬∞ PROTOCOLO'
+        Caption = 'N∞ PROTOCOLO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -491,7 +491,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Height = 13
         Top = 2
         Width = 203
-        Caption = 'CARTA DE CORRE√á√ÉO ELETR√îNICA'
+        Caption = 'CARTA DE CORRE«√O ELETR‘NICA'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -11
@@ -558,7 +558,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Height = 8
         Top = 18
         Width = 133
-        Caption = 'DATA E HORA DE EMISS√ÉO DO EVENTO'
+        Caption = 'DATA E HORA DE EMISS√O DO EVENTO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -629,7 +629,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Height = 8
         Top = 50
         Width = 82
-        Caption = 'SEQU√äNCIA DO EVENTO'
+        Caption = 'SEQU NCIA DO EVENTO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -887,7 +887,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Height = 8
         Top = 84
         Width = 78
-        Caption = 'INSCRI√á√ÉO ESTADUAL'
+        Caption = 'INSCRI«√O ESTADUAL'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -923,7 +923,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Height = 8
         Top = 84
         Width = 38
-        Caption = 'MUNIC√çPIO'
+        Caption = 'MUNICÕçPIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -941,7 +941,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Height = 8
         Top = 52
         Width = 39
-        Caption = 'ENDERE√áO'
+        Caption = 'ENDERE«O'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -959,7 +959,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Height = 8
         Top = 19
         Width = 79
-        Caption = 'NOME / RAZ√ÉO SOCIAL'
+        Caption = 'NOME / RAZ√O SOCIAL'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -1163,7 +1163,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Height = 13
         Top = 2
         Width = 138
-        Caption = 'TOMADOR DO SERVI√áO'
+        Caption = 'TOMADOR DO SERVI«O'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -11
@@ -1195,7 +1195,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Height = 8
         Top = 19
         Width = 79
-        Caption = 'NOME / RAZ√ÉO SOCIAL'
+        Caption = 'NOME / RAZ√O SOCIAL'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -1229,7 +1229,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Height = 8
         Top = 52
         Width = 39
-        Caption = 'ENDERE√áO'
+        Caption = 'ENDERE«O'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -1263,7 +1263,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Height = 8
         Top = 84
         Width = 38
-        Caption = 'MUNIC√çPIO'
+        Caption = 'MUNICÕçPIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -1434,7 +1434,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Height = 8
         Top = 84
         Width = 78
-        Caption = 'INSCRI√á√ÉO ESTADUAL'
+        Caption = 'INSCRI«√O ESTADUAL'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -1598,7 +1598,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Height = 13
         Top = 2
         Width = 117
-        Caption = 'CONDI√á√ïES DE USO'
+        Caption = 'CONDIC’ES DE USO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -11
@@ -1618,7 +1618,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Top = 43
         Width = 718
         Alignment = taCenter
-        Caption = 'AMBIENTE DE HOMOLOGA√á√ÉO - SEM VALOR FISCAL'
+        Caption = 'AMBIENTE DE HOMOLOGA«√O - SEM VALOR FISCAL'
         Color = clWhite
         Font.Color = clGray
         Font.Height = -27
@@ -1875,7 +1875,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Height = 13
         Top = 2
         Width = 70
-        Caption = 'CORRE√á√ÉO'
+        Caption = 'CORRE«√O'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -11
@@ -1933,7 +1933,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Height = 13
         Top = 2
         Width = 303
-        Caption = 'CONHECIMENTO DE TRANSPORTE ELETR√îNICO - CT-e'
+        Caption = 'CONHECIMENTO DE TRANSPORTE ELETR‘NICO - CT-e'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -11
@@ -2005,7 +2005,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Top = 19
         Width = 22
         Alignment = taCenter
-        Caption = 'S√âRIE'
+        Caption = 'S…RIE'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -2045,7 +2045,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Width = 70
         Alignment = taCenter
         AutoSize = False
-        Caption = 'N√öMERO'
+        Caption = 'N⁄MERO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -2120,7 +2120,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Top = 19
         Width = 95
         AutoSize = False
-        Caption = 'DATA E HORA DE EMISS√ÉO'
+        Caption = 'DATA E HORA DE EMISS√O'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
