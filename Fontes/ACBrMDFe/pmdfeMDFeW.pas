@@ -265,7 +265,7 @@ begin
   begin
     Gerador.wGrupo('infMunCarrega', '#020');
     Gerador.wCampo(tcInt, '#021', 'cMunCarrega', 07, 07, 1, MDFe.Ide.infMunCarrega[i].cMunCarrega, DSC_CMUNCARREGA);
-    Gerador.wCampo(tcStr, '#022', 'xMunCarrega', 01, 60, 1, MDFe.Ide.infMunCarrega[i].xMunCarrega, DSC_XMUNCARREGA);
+    Gerador.wCampo(tcStr, '#022', 'xMunCarrega', 02, 60, 1, MDFe.Ide.infMunCarrega[i].xMunCarrega, DSC_XMUNCARREGA);
     Gerador.wGrupo('/infMunCarrega');
   end;
   if MDFe.Ide.infMunCarrega.Count > 50 then
@@ -294,7 +294,7 @@ begin
   if (FOpcoes.ValidarInscricoes)
    then if not ValidarIE(MDFe.Emit.IE, MDFe.Emit.enderEmit.UF) then
          Gerador.wAlerta('#027', 'IE', DSC_IE, ERR_MSG_INVALIDO);
-  Gerador.wCampo(tcStr, '#028', 'xNome', 01, 60, 1, MDFe.Emit.xNome, DSC_XNOME);
+  Gerador.wCampo(tcStr, '#028', 'xNome', 02, 60, 1, MDFe.Emit.xNome, DSC_XNOME);
   Gerador.wCampo(tcStr, '#029', 'xFant', 01, 60, 0, MDFe.Emit.xFant, DSC_XFANT);
 
   GerarEnderEmit;
@@ -312,10 +312,10 @@ begin
                                       MDFe.Emit.enderEmit.xMun,
                                       MDFe.Emit.EnderEmit.cMun);
   Gerador.wGrupo('enderEmit', '#030');
-  Gerador.wCampo(tcStr, '#031', 'xLgr   ', 01, 60, 1, MDFe.Emit.enderEmit.xLgr, DSC_XLGR);
+  Gerador.wCampo(tcStr, '#031', 'xLgr   ', 02, 60, 1, MDFe.Emit.enderEmit.xLgr, DSC_XLGR);
   Gerador.wCampo(tcStr, '#032', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, MDFe.Emit.enderEmit.nro), DSC_NRO);
   Gerador.wCampo(tcStr, '#033', 'xCpl   ', 01, 60, 0, MDFe.Emit.enderEmit.xCpl, DSC_XCPL);
-  Gerador.wCampo(tcStr, '#034', 'xBairro', 01, 60, 1, MDFe.Emit.enderEmit.xBairro, DSC_XBAIRRO);
+  Gerador.wCampo(tcStr, '#034', 'xBairro', 02, 60, 1, MDFe.Emit.enderEmit.xBairro, DSC_XBAIRRO);
   Gerador.wCampo(tcInt, '#035', 'cMun   ', 07, 07, 1, cMun, DSC_CMUN);
   if not ValidarMunicipio(MDFe.Emit.EnderEmit.cMun) then
     Gerador.wAlerta('#035', 'cMun', DSC_CMUN, ERR_MSG_INVALIDO);
@@ -385,21 +385,22 @@ begin
 //     else begin
       Gerador.wCampoCNPJCPF('#11', '#12', MDFe.Rodo.veicTracao.Prop.CNPJCPF, CODIGO_BRASIL);
       Gerador.wCampo(tcStr, '#13', 'RNTRC ', 08, 08, 1, SomenteNumeros(MDFe.Rodo.veicTracao.Prop.RNTRC), DSC_RNTRC);
-      Gerador.wCampo(tcStr, '#14', 'xNome ', 01, 60, 1, MDFe.Rodo.veicTracao.Prop.xNome, DSC_XNOME);
+      Gerador.wCampo(tcStr, '#14', 'xNome ', 02, 60, 1, MDFe.Rodo.veicTracao.Prop.xNome, DSC_XNOME);
 
-      if MDFe.Rodo.veicTracao.Prop.IE <> ''
-       then begin
-        if MDFe.Rodo.veicTracao.Prop.IE = 'ISENTO'
-         then Gerador.wCampo(tcStr, '#15', 'IE ', 00, 14, 1, MDFe.Rodo.veicTracao.Prop.IE, DSC_IE)
-         else Gerador.wCampo(tcStr, '#15', 'IE ', 02, 14, 1, SomenteNumeros(MDFe.Rodo.veicTracao.Prop.IE), DSC_IE);
-        if (FOpcoes.ValidarInscricoes)
-         then if not ValidarIE(MDFe.Rodo.veicTracao.Prop.IE, MDFe.Rodo.veicTracao.Prop.UF) then
-          Gerador.wAlerta('#15', 'IE', DSC_IE, ERR_MSG_INVALIDO);
-       end;
+      if MDFe.Rodo.veicTracao.Prop.IE <> '' then
+      begin
+        if MDFe.Rodo.veicTracao.Prop.IE = 'ISENTO' then
+          Gerador.wCampo(tcStr, '#15', 'IE ', 00, 14, 1, MDFe.Rodo.veicTracao.Prop.IE, DSC_IE)
+        else
+          Gerador.wCampo(tcStr, '#15', 'IE ', 02, 14, 1, SomenteNumeros(MDFe.Rodo.veicTracao.Prop.IE), DSC_IE);
+        if (FOpcoes.ValidarInscricoes) then
+          if not ValidarIE(MDFe.Rodo.veicTracao.Prop.IE, MDFe.Rodo.veicTracao.Prop.UF) then
+            Gerador.wAlerta('#15', 'IE', DSC_IE, ERR_MSG_INVALIDO);
+        Gerador.wCampo(tcStr, '#16', 'UF     ', 02, 02, 1, MDFe.Rodo.veicTracao.Prop.UF, DSC_CUF);
+        if not ValidarUF(MDFe.Rodo.veicTracao.Prop.UF) then
+          Gerador.wAlerta('#16', 'UF', DSC_UF, ERR_MSG_INVALIDO);
+      end;
 
-      Gerador.wCampo(tcStr, '#16', 'UF     ', 02, 02, 1, MDFe.Rodo.veicTracao.Prop.UF, DSC_CUF);
-      if not ValidarUF(MDFe.Rodo.veicTracao.Prop.UF) then
-       Gerador.wAlerta('#16', 'UF', DSC_UF, ERR_MSG_INVALIDO);
       Gerador.wCampo(tcStr, '#17', 'tpProp ', 01, 01, 1, TpPropToStr(MDFe.Rodo.veicTracao.Prop.tpProp), DSC_TPPROP);
 //     end;
 
@@ -409,7 +410,7 @@ begin
   for i := 0 to MDFe.rodo.veicTracao.condutor.Count - 1 do
   begin
     Gerador.wGrupo('condutor', '#18');
-    Gerador.wCampo(tcStr, '#19', 'xNome', 01, 60, 1, MDFe.rodo.veicTracao.condutor[i].xNome, DSC_XNOME);
+    Gerador.wCampo(tcStr, '#19', 'xNome', 02, 60, 1, MDFe.rodo.veicTracao.condutor[i].xNome, DSC_XNOME);
     Gerador.wCampo(tcStr, '#20', 'CPF  ', 11, 11, 1, MDFe.rodo.veicTracao.condutor[i].CPF, DSC_CPF);
     Gerador.wGrupo('/condutor');
   end;
@@ -446,7 +447,7 @@ begin
 //       else begin
         Gerador.wCampoCNPJCPF('#31', '#32', MDFe.Rodo.veicReboque[i].Prop.CNPJCPF, CODIGO_BRASIL);
         Gerador.wCampo(tcStr, '#33', 'RNTRC ', 08, 08, 1, SomenteNumeros(MDFe.Rodo.veicReboque[i].Prop.RNTRC), DSC_RNTRC);
-        Gerador.wCampo(tcStr, '#34', 'xNome ', 01, 60, 1, MDFe.Rodo.veicReboque[i].Prop.xNome, DSC_XNOME);
+        Gerador.wCampo(tcStr, '#34', 'xNome ', 02, 60, 1, MDFe.Rodo.veicReboque[i].Prop.xNome, DSC_XNOME);
 
         if MDFe.Rodo.veicReboque[i].Prop.IE <> ''
          then begin
@@ -608,7 +609,7 @@ begin
     Gerador.wCampo(tcInt, '#046', 'cMunDescarga', 07, 07, 1, MDFe.infDoc.infMunDescarga[i].cMunDescarga, DSC_CMUN);
     if not ValidarMunicipio(MDFe.infDoc.infMunDescarga[i].cMunDescarga) then
       Gerador.wAlerta('#045', 'cMunDescarga', DSC_CMUN, ERR_MSG_INVALIDO);
-    Gerador.wCampo(tcStr, '#046', 'xMunDescarga', 01, 60, 1, MDFe.infDoc.infMunDescarga[i].xMunDescarga, DSC_XMUN);
+    Gerador.wCampo(tcStr, '#046', 'xMunDescarga', 02, 60, 1, MDFe.infDoc.infMunDescarga[i].xMunDescarga, DSC_XMUN);
 
     // Alterado por Italo em 21/03/2013
     // Conforme NT 2013/001
@@ -663,8 +664,8 @@ begin
 
            Gerador.wGrupo('/infCTe');
          end;
-         if MDFe.infDoc.infMunDescarga[i].infCTe.Count > 2000 then
-          Gerador.wAlerta('#048', 'infCTe', '', ERR_MSG_MAIOR_MAXIMO + '2000');
+         if MDFe.infDoc.infMunDescarga[i].infCTe.Count > 4000 then
+          Gerador.wAlerta('#048', 'infCTe', '', ERR_MSG_MAIOR_MAXIMO + '4000');
 
          for j := 0 to MDFe.infDoc.infMunDescarga[i].infCT.Count - 1 do
          begin
@@ -712,8 +713,8 @@ begin
 
            Gerador.wGrupo('/infCT');
          end;
-         if MDFe.infDoc.infMunDescarga[i].infCT.Count > 2000 then
-          Gerador.wAlerta('#051', 'infCT', '', ERR_MSG_MAIOR_MAXIMO + '2000');
+         if MDFe.infDoc.infMunDescarga[i].infCT.Count > 4000 then
+          Gerador.wAlerta('#051', 'infCT', '', ERR_MSG_MAIOR_MAXIMO + '4000');
        end;
      // Se Tipo de Emitente for Transporte de Carga Própria
      // só pode relacionar os grupos de documentos NF-e e NT
@@ -768,8 +769,8 @@ begin
 
            Gerador.wGrupo('/infNFe');
          end;
-         if MDFe.infDoc.infMunDescarga[i].infNFe.Count > 2000 then
-          Gerador.wAlerta('#057', 'infNFe', '', ERR_MSG_MAIOR_MAXIMO + '2000');
+         if MDFe.infDoc.infMunDescarga[i].infNFe.Count > 4000 then
+          Gerador.wAlerta('#057', 'infNFe', '', ERR_MSG_MAIOR_MAXIMO + '4000');
 
          for j := 0 to MDFe.infDoc.infMunDescarga[i].infNF.Count - 1 do
          begin
@@ -819,8 +820,8 @@ begin
 
            Gerador.wGrupo('/infNF');
          end;
-         if MDFe.infDoc.infMunDescarga[i].infNF.Count > 2000 then
-          Gerador.wAlerta('#060', 'infNF', '', ERR_MSG_MAIOR_MAXIMO + '2000');
+         if MDFe.infDoc.infMunDescarga[i].infNF.Count > 4000 then
+          Gerador.wAlerta('#060', 'infNF', '', ERR_MSG_MAIOR_MAXIMO + '4000');
        end;
     end;
 
@@ -870,8 +871,8 @@ begin
 
          Gerador.wGrupo('/infMDFeTransp');
        end;
-       if MDFe.infDoc.infMunDescarga[i].infMDFeTransp.Count > 2000 then
-        Gerador.wAlerta('#057', 'infMDFeTransp', '', ERR_MSG_MAIOR_MAXIMO + '2000');
+       if MDFe.infDoc.infMunDescarga[i].infMDFeTransp.Count > 4000 then
+        Gerador.wAlerta('#057', 'infMDFeTransp', '', ERR_MSG_MAIOR_MAXIMO + '4000');
      end;
 
     Gerador.wGrupo('/infMunDescarga');
