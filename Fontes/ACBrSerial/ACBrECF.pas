@@ -6926,7 +6926,7 @@ begin
     TextoRel.Add('');
     TextoRel.Add('');
     TextoRel.Add('</linha_dupla>');
-    TextoRel.Add('<ce>É VEDADA A AUTENTIÇÃO DESTE DOCUMENTO</ce>');
+    TextoRel.Add('<ce>É VEDADA A AUTENTICAÇÃO DESTE DOCUMENTO</ce>');
     TextoRel.Add('</linha_dupla>');
     TextoRel.Add('');
     TextoRel.Add('');
