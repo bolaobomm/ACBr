@@ -47,7 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-09/11/2014
+06/11/2014
+[+] Inclusão de novas cidades no provedor Betha.
+[-] Correção na unit pnfsCancNfseResposta.
+    Por: Italo Jurisato Junior
 [-] Alterações necessárias para funcionar o provedor DBSeller.
     por: Diogo
 

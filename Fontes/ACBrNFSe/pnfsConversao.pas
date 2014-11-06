@@ -813,10 +813,12 @@ begin
   4219606, // Xavantina/SC
   4219705, // Xaxim/SC
   4302105, // Bento Gonçalves/RS
+  4304630, // Capao Da Canoa/RS
   4305801, // Constantina/RS
   4309100, // Gramado/RS
   4318002, // São Borja/RS
   4320206, // Seberi/RS
+  4321501, // Torres/RS
   4321907, // Tres Passos/RS
   5006200, // Nova Andradina/MS
   5100201, // Água Boa/MT

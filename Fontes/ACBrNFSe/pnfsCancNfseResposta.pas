@@ -399,7 +399,7 @@ begin
           FInfCanc.FNotasCanceladas.Add;
           FInfCanc.FNotasCanceladas[i].InscricaoMunicipalPrestador := Leitor.rCampo(tcStr, 'InscricaoMunicipalPrestador');
           FInfCanc.FNotasCanceladas[i].NumeroNota                  := Leitor.rCampo(tcStr, 'NumeroNota');
-          FInfCanc.FNotasCanceladas[i].CodigoVerficacao            := LeitorAux.rCampo(tcStr,'CodigoVerificacao');
+          FInfCanc.FNotasCanceladas[i].CodigoVerficacao            := Leitor.rCampo(tcStr,'CodigoVerificacao');
           inc(i);
         end;
       end;
