@@ -492,7 +492,7 @@ object F_Principal: TF_Principal
     object EditCNPJ: TMaskEdit
       Left = 361
       Top = 31
-      Width = 263
+      Width = 261
       Height = 41
       EditMask = '00.000.000/0000-00;1;_'
       Font.Charset = DEFAULT_CHARSET
@@ -503,7 +503,7 @@ object F_Principal: TF_Principal
       MaxLength = 18
       ParentFont = False
       TabOrder = 0
-      Text = '00.063.960/0046-00'
+      Text = '  .   .   /    -  '
     end
     object Panel3: TPanel
       Left = 9
