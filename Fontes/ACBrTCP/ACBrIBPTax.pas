@@ -102,7 +102,6 @@ type
     FItens: TACBrIBPTaxRegistros;
     FVigenciaFim: TDateTime;
     FVigenciaInicio: TDateTime;
-    FFonte: String;
     FOnErroImportacao: TACBrIBPTaxErroImportacao;
     procedure ExportarCSV(const AArquivo: String);
     procedure ExportarDSV(const AArquivo: String);
@@ -129,7 +128,6 @@ type
     property Itens: TACBrIBPTaxRegistros read FItens;
   published
     property OnErroImportacao: TACBrIBPTaxErroImportacao read FOnErroImportacao write FOnErroImportacao;
-    property Fonte: String read FFonte;
     property VersaoArquivo: String read FVersaoArquivo;
     property ChaveArquivo: String read FChaveArquivo;
     property VigenciaInicio: TDateTime read FVigenciaInicio;
@@ -194,7 +192,6 @@ begin
   FArquivo := TStringList.Create;
   FURLDownload := '';
   FVersaoArquivo := '';
-  FFonte := '';
   FVigenciaInicio := 0;
   FVigenciaFim := 0;
   FOnErroImportacao := nil;
@@ -223,20 +220,19 @@ begin
     // primeira linha contem os cabecalhos de campo e versão do arquivo
     // segunda linha possui os dados do primeiro item e outros dados
     QuebrarLinha(Arquivo.Strings[1], Item);
-    if Item.Count = 13 then
+    if Item.Count = 12 then
     begin
       FVigenciaInicio := StrToDateDef(Item.Strings[8], 0.0);
       FVigenciaFim    := StrToDateDef(Item.Strings[9], 0.0);
       FChaveArquivo   := Item.Strings[10];
       FVersaoArquivo  := Item.Strings[11];
-      FFonte          := Item.Strings[12];
     end;
 
     // proximas linhas contem os registros
     for I := 1 to Arquivo.Count - 1 do
     begin
       QuebrarLinha(Arquivo.Strings[I], Item);
-      if Item.Count = 13 then
+      if Item.Count = 12 then
       begin
         try
           // codigo;ex;tabela;descricao;aliqNac;aliqImp;0.0.2

@@ -50,7 +50,7 @@ type
     tmpCadastroAliqEstadual: TFloatField;
     tmpCadastroAliqMunicipal: TFloatField;
     lbVigencia: TLabel;
-    lblFonte: TLabel;
+    lblChave: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btExportarClick(Sender: TObject);
     procedure btSairClick(Sender: TObject);
@@ -101,7 +101,7 @@ begin
     begin
       lVersao.Caption := 'Versão: ' + ACBrIBPTax1.VersaoArquivo;
       lbVigencia.Caption := 'Vigência: ' + Format('%s a %s', [DateToStr(ACBrIBPTax1.VigenciaInicio), DateToStr(ACBrIBPTax1.VigenciaFim)]);
-      lblFonte.Caption := 'Fonte: ' + ACBrIBPTax1.Fonte;
+      lblChave.Caption := 'Chave: ' + ACBrIBPTax1.ChaveArquivo;
 
       tmpCadastro.Close;
       tmpCadastro.CreateDataSet;

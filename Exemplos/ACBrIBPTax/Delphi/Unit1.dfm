@@ -318,12 +318,12 @@ object Form1: TForm1
       Height = 13
       Caption = 'Vig'#234'ncia: '
     end
-    object lblFonte: TLabel
+    object lblChave: TLabel
       Left = 547
       Top = 110
-      Width = 35
+      Width = 38
       Height = 13
-      Caption = 'Fonte: '
+      Caption = 'Chave: '
     end
     object edArquivo: TEdit
       Left = 12
@@ -488,30 +488,46 @@ object Form1: TForm1
     Left = 45
     Top = 190
     object tmpCadastroNCM: TStringField
+      DisplayWidth = 10
       FieldName = 'NCM'
       Size = 8
     end
     object tmpCadastroEx: TIntegerField
+      DisplayWidth = 3
       FieldName = 'Ex'
     end
     object tmpCadastroTabela: TIntegerField
+      DisplayWidth = 8
       FieldName = 'Tabela'
     end
     object tmpCadastroDescricao: TStringField
+      DisplayWidth = 50
       FieldName = 'Descricao'
       Size = 250
     end
     object tmpCadastroAliqFedNacional: TFloatField
+      DisplayLabel = 'Nacional'
+      DisplayWidth = 12
       FieldName = 'AliqFedNacional'
+      DisplayFormat = ',#0.00 %'
     end
     object tmpCadastroAliqFedImportado: TFloatField
+      DisplayLabel = 'Importado'
+      DisplayWidth = 12
       FieldName = 'AliqFedImportado'
+      DisplayFormat = ',#0.00 %'
     end
     object tmpCadastroAliqEstadual: TFloatField
+      DisplayLabel = 'Estadual'
+      DisplayWidth = 12
       FieldName = 'AliqEstadual'
+      DisplayFormat = ',#0.00 %'
     end
     object tmpCadastroAliqMunicipal: TFloatField
+      DisplayLabel = 'Municipal'
+      DisplayWidth = 12
       FieldName = 'AliqMunicipal'
+      DisplayFormat = ',#0.00 %'
     end
   end
   object dtsCadastro: TDataSource
