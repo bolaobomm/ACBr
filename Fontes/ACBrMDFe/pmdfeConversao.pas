@@ -52,7 +52,7 @@ type
   TMDFeModal      = (moRodoviario, moAereo, moAquaviario, moFerroviario);
   TMDFeVersao     = (ve100, ve100a);
   TLayOutMDFe     = (LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta,
-                     LayMDFeStatusServico, LayMDFeEvento);
+                     LayMDFeStatusServico, LayMDFeEvento, LayMDFeConsNaoEnc);
 
 
 const
@@ -204,6 +204,7 @@ begin
                 LayMDFeRetRecepcao:   result := '1.00';
                 LayMDFeConsulta:      result := '1.00';
                 LayMDFeEvento:        result := '1.00';
+                LayMDFeConsNaoEnc:    result := '1.00';
               end;
             end;
   end;

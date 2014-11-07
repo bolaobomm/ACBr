@@ -276,7 +276,7 @@ begin
        begin
           TACBrMDFe(TManifestos(Collection).ACBrMDFe).DAMDFE.ImprimirDAMDFEPDF(MDFe);
           NomeArq :=  StringReplace(MDFe.infMDFe.ID,'MDFe', '', [rfIgnoreCase]);
-          NomeArq := PathWithDelim(TACBrMDFe(TManifestos(Collection).ACBrMDFe).DAMDFE.PathPDF)+NomeArq+'.pdf';
+          NomeArq := PathWithDelim(TACBrMDFe(TManifestos(Collection).ACBrMDFe).DAMDFE.PathPDF)+NomeArq+'-mdfe.pdf';
           AnexosEmail.Add(NomeArq);
        end;
     end;
@@ -287,7 +287,7 @@ begin
                                                            AnexosEmail, PedeConfirma,
                                                            AguardarEnvio, NomeRemetente,
                                                            TLS, StreamMDFe,
-                                                           copy(MDFe.infMDFe.ID, (length(MDFe.infMDFe.ID)-44)+1, 44)+'-MDFe.xml',
+                                                           copy(MDFe.infMDFe.ID, (length(MDFe.infMDFe.ID)-44)+1, 44)+'-mdfe.xml',
                                                            UsarThread, HTML);
  finally
     AnexosEmail.Free;

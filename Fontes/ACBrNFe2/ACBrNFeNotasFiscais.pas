@@ -323,7 +323,7 @@ begin
        begin
           TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).DANFE.ImprimirDANFEPDF(NFe);
           NomeArq :=  StringReplace(NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]);
-          NomeArq := PathWithDelim(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).DANFE.PathPDF)+NomeArq+'.pdf';
+          NomeArq := PathWithDelim(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).DANFE.PathPDF)+NomeArq+'-nfe.pdf';
           AnexosEmail.Add(NomeArq);
        end;
     end;
@@ -343,7 +343,7 @@ begin
                 NomeRemetente,
                 TLS,
                 StreamNFe,
-                copy(NFe.infNFe.ID, (length(NFe.infNFe.ID)-44)+1, 44)+'-NFe.xml',
+                copy(NFe.infNFe.ID, (length(NFe.infNFe.ID)-44)+1, 44)+'-nfe.xml',
                 UsarThread,
                 HTML);
  finally
@@ -759,30 +759,6 @@ begin
           Erros := Erros + '794-Rejeição: NF-e com indicativo de NFC-e com entrega a domicílio'+sLineBreak;
 
      end;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     Self.Items[i].RegrasdeNegocios := Erros;
     if Erros <> '' then

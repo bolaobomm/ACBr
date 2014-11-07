@@ -282,6 +282,7 @@ const
   MDFeEnviMDFe     = '1.00';
   MDFeConsReciMDFe = '1.00';
   MDFeConsSitMDFe  = '1.00';
+  MDFeConsNaoEnc   = '1.00';
   MDFeEventoMDFe   = '1.00';
 
   MDFeModalRodo    = '1.00';

@@ -124,6 +124,7 @@ type
     function Enviar(ALote: Integer; Imprimir:Boolean = True): Boolean; overload;
     function Enviar(ALote: String; Imprimir: Boolean = True): Boolean; overload;
     function Consultar: Boolean;
+    function ConsultarMDFeNaoEnc(ACNPJ: String): Boolean;
     function EnviarEventoMDFe(idLote: Integer): Boolean;
 
     property WebServices: TWebServices read FWebServices write FWebServices;
@@ -302,6 +303,11 @@ begin
   end;
 
   Result := True;
+end;
+
+function TACBrMDFe.ConsultarMDFeNaoEnc(ACNPJ: String): Boolean;
+begin
+  Result := WebServices.ConsultaMDFeNaoEnc(ACNPJ);
 end;
 
 function TACBrMDFe.Enviar(ALote: Integer; Imprimir:Boolean = True): Boolean;
@@ -613,11 +619,11 @@ begin
       if DAMDFE <> nil then
       begin
         ImprimirEventoPDF;
-//        NomeArq := StringReplace(EventoMDFe.Evento[0].InfEvento.id,'ID', '', [rfIgnoreCase]);
-        NomeArq := Copy(EventoMDFe.Evento[0].InfEvento.id, 09, 44) +
-                   Copy(EventoMDFe.Evento[0].InfEvento.id, 03, 06) +
-                   Copy(EventoMDFe.Evento[0].InfEvento.id, 53, 02);
-        NomeArq := PathWithDelim(DAMDFE.PathPDF) + NomeArq + 'evento.pdf';
+        NomeArq := StringReplace(EventoMDFe.Evento[0].InfEvento.id,'ID', '', [rfIgnoreCase]);
+//        NomeArq := Copy(EventoMDFe.Evento[0].InfEvento.id, 09, 44) +
+//                   Copy(EventoMDFe.Evento[0].InfEvento.id, 03, 06) +
+//                   Copy(EventoMDFe.Evento[0].InfEvento.id, 53, 02);
+        NomeArq := PathWithDelim(DAMDFE.PathPDF) + NomeArq + '-procEventoMDFe.pdf';
         AnexosEmail.Add(NomeArq);
       end;
     end;

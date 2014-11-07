@@ -288,7 +288,7 @@ begin
        begin
           TACBrCTe(TConhecimentos(Collection).ACBrCTe).DACTE.ImprimirDACTEPDF(CTe);
           NomeArq :=  StringReplace(CTe.infCTe.ID,'CTe', '', [rfIgnoreCase]);
-          NomeArq := PathWithDelim(TACBrCTe(TConhecimentos(Collection).ACBrCTe).DACTE.PathPDF)+NomeArq+'.pdf';
+          NomeArq := PathWithDelim(TACBrCTe(TConhecimentos(Collection).ACBrCTe).DACTE.PathPDF)+NomeArq+'-cte.pdf';
           AnexosEmail.Add(NomeArq);
        end;
     end;
@@ -296,7 +296,7 @@ begin
                 sSmtpUser, sSmtpPasswd, sFrom, sTo, sAssunto, sMensagem, SSL,
                 sCC, AnexosEmail, PedeConfirma, AguardarEnvio, NomeRemetente,
                 TLS, StreamCTe,
-                copy(CTe.infCTe.ID, (length(CTe.infCTe.ID)-44)+1, 44) + '-CTe.xml',
+                copy(CTe.infCTe.ID, (length(CTe.infCTe.ID)-44)+1, 44) + '-cte.xml',
                 UsarThread, HTML);
  finally
     AnexosEmail.Free;

@@ -50,10 +50,11 @@ uses
      {SoapHTTPClient, }SOAPConst,{ JwaWinCrypt,}
   {$ENDIF}
   pcnAuxiliar, pmdfeConversao, pcnConversao,
-  ACBrMDFeConfiguracoes, ACBrMDFeManifestos, pmdfeRetConsReciMDFe,
-  pmdfeProcMDFe, pmdfeConsReciMDFe, pmdfeEnvEventoMDFe, pmdfeRetEnvEventoMDFe,
-  pmdfeRetEnvMDFe, pmdfeConsStatServ, pmdfeRetConsStatServ, pmdfeConsSitMDFe,
-  pmdfeRetConsSitMDFe, ActiveX;
+  ACBrMDFeConfiguracoes, ACBrMDFeManifestos,
+  pmdfeProcMDFe, pmdfeConsStatServ, pmdfeRetConsStatServ, pmdfeRetEnvMDFe,
+  pmdfeConsReciMDFe, pmdfeRetConsReciMDFe, pmdfeConsSitMDFe, pmdfeRetConsSitMDFe,
+  pmdfeEnvEventoMDFe, pmdfeRetEnvEventoMDFe, pmdfeConsMDFeNaoEnc,
+  pmdfeRetConsMDFeNaoEnc, ActiveX;
 
 type
 
@@ -65,6 +66,7 @@ type
     procedure DoMDFeRetRecepcao;
     procedure DoMDFeRecibo;
     procedure DoMDFeEnvEvento;
+    procedure DoMDFeConsultaMDFeNaoEnc;
 
     {$IFDEF ACBrMDFeOpenSSL}
        procedure ConfiguraHTTP(HTTP: THTTPSend; Action: AnsiString);
@@ -277,6 +279,31 @@ type
     property EventoRetorno: TRetEventoMDFe read FEventoRetorno;
   end;
 
+  TMDFeConsultaMDFeNaoEnc = Class(TWebServicesBase)
+  private
+    FCNPJ: String;
+    Fversao: String;
+    FtpAmb: TpcnTipoAmbiente;
+    FverAplic: String;
+    FcStat: Integer;
+    FxMotivo: String;
+    FcUF: Integer;
+    FInfMDFe: TRetInfMDFeCollection;
+  public
+    constructor Create(AOwner: TComponent); reintroduce;
+    destructor Destroy; override;
+    function Executar: Boolean; override;
+
+    property CNPJ: String                   read FCNPJ write FCNPJ;
+    property versao: String                 read Fversao;
+    property tpAmb: TpcnTipoAmbiente        read FtpAmb;
+    property verAplic: String               read FverAplic;
+    property cStat: Integer                 read FcStat;
+    property xMotivo: String                read FxMotivo;
+    property cUF: Integer                   read FcUF;
+    property InfMDFe: TRetInfMDFeCollection read FInfMDFe;
+  end;
+
   TWebServices = Class(TWebServicesBase)
   private
     FACBrMDFe: TComponent;
@@ -285,20 +312,23 @@ type
     FRetorno: TMDFeRetRecepcao;
     FRecibo: TMDFeRecibo;
     FConsulta: TMDFeConsulta;
+    FConsMDFeNaoEnc: TMDFeConsultaMDFeNaoEnc;
     FEnvEvento: TMDFeEnvEvento;
   public
     constructor Create(AFMDFe: TComponent); reintroduce;
     destructor Destroy; override;
     function Envia(ALote: Integer): Boolean; overload;
     function Envia(ALote: String): Boolean; overload;
+    function ConsultaMDFeNaoEnc(ACNPJ: String): Boolean;
 //  published
-    property ACBrMDFe: TComponent              read FACBrMDFe      write FACBrMDFe;
-    property StatusServico: TMDFeStatusServico read FStatusServico write FStatusServico;
-    property Enviar: TMDFeRecepcao             read FEnviar        write FEnviar;
-    property Retorno: TMDFeRetRecepcao         read FRetorno       write FRetorno;
-    property Recibo: TMDFeRecibo               read FRecibo        write FRecibo;
-    property Consulta: TMDFeConsulta           read FConsulta      write FConsulta;
-    property EnvEvento: TMDFeEnvEvento         read FEnvEvento     write FEnvEvento;
+    property ACBrMDFe: TComponent                    read FACBrMDFe       write FACBrMDFe;
+    property StatusServico: TMDFeStatusServico       read FStatusServico  write FStatusServico;
+    property Enviar: TMDFeRecepcao                   read FEnviar         write FEnviar;
+    property Retorno: TMDFeRetRecepcao               read FRetorno        write FRetorno;
+    property Recibo: TMDFeRecibo                     read FRecibo         write FRecibo;
+    property Consulta: TMDFeConsulta                 read FConsulta       write FConsulta;
+    property ConsMDFeNaoEnc: TMDFeConsultaMDFeNaoEnc read FConsMDFeNaoEnc write FConsMDFeNaoEnc;
+    property EnvEvento: TMDFeEnvEvento               read FEnvEvento      write FEnvEvento;
   end;
 
 implementation
@@ -587,6 +617,26 @@ begin
   end;
 end;
 
+procedure TWebServicesBase.DoMDFeConsultaMDFeNaoEnc;
+var
+  ConsMDFeNaoEnc: TConsMDFeNaoEnc;
+begin
+  ConsMDFeNaoEnc := TConsMDFeNaoEnc.Create;
+  try
+    ConsMDFeNaoEnc.TpAmb := TpcnTipoAmbiente(FConfiguracoes.WebServices.AmbienteCodigo-1);
+    ConsMDFeNaoEnc.CNPJ  := TMDFeConsultaMDFeNaoEnc(Self).CNPJ;
+
+    ConsMDFeNaoEnc.GerarXML;
+
+    FDadosMsg := ConsMDFeNaoEnc.Gerador.ArquivoFormatoXML;
+  //  FDadosMsg := StringReplace(FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll]);
+  //  FDadosMsg := StringReplace(FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll]);
+  //  FDadosMsg := StringReplace(FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll]);
+  finally
+    ConsMDFeNaoEnc.Free;
+  end;
+end;
+
 function TWebServicesBase.Executar: Boolean;
 begin
   Result := False;
@@ -608,6 +658,8 @@ begin
     DoMDFeConsulta
   else if Self is TMDFeEnvEvento then
     DoMDFeEnvEvento
+  else if self is TMDFeConsultaMDFeNaoEnc then
+    DoMDFeConsultaMDFeNaoEnc
 end;
 
 procedure TWebServicesBase.LoadURL;
@@ -622,6 +674,8 @@ begin
     FURL := MDFeUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayMDFeConsulta)
   else if self is TMDFeEnvEvento then
     FURL := MDFeUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayMDFeEvento)
+  else if self is TMDFeConsultaMDFeNaoEnc then
+    FURL := MDFeUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayMDFeConsNaoEnc)
 end;
 
 { TWebServices }
@@ -629,13 +683,14 @@ end;
 constructor TWebServices.Create(AFMDFe: TComponent);
 begin
  inherited Create(AFMDFe);
-  FACBrMDFe      := TACBrMDFe(AFMDFe);
-  FStatusServico := TMDFeStatusServico.Create(AFMDFe);
-  FEnviar        := TMDFeRecepcao.Create(AFMDFe, TACBrMDFe(AFMDFe).Manifestos);
-  FRetorno       := TMDFeRetRecepcao.Create(AFMDFe, TACBrMDFe(AFMDFe).Manifestos);
-  FRecibo        := TMDFeRecibo.create(AFMDFe);
-  FConsulta      := TMDFeConsulta.Create(AFMDFe);
-  FEnvEvento     := TMDFeEnvEvento.Create(AFMDFe,TACBrMDFe(AFMDFe).EventoMDFe);
+  FACBrMDFe       := TACBrMDFe(AFMDFe);
+  FStatusServico  := TMDFeStatusServico.Create(AFMDFe);
+  FEnviar         := TMDFeRecepcao.Create(AFMDFe, TACBrMDFe(AFMDFe).Manifestos);
+  FRetorno        := TMDFeRetRecepcao.Create(AFMDFe, TACBrMDFe(AFMDFe).Manifestos);
+  FRecibo         := TMDFeRecibo.create(AFMDFe);
+  FConsulta       := TMDFeConsulta.Create(AFMDFe);
+  FConsMDFeNaoEnc := TMDFeConsultaMDFeNaoEnc.Create(AFMDFe);
+  FEnvEvento      := TMDFeEnvEvento.Create(AFMDFe,TACBrMDFe(AFMDFe).EventoMDFe);
 end;
 
 destructor TWebServices.Destroy;
@@ -645,6 +700,7 @@ begin
   FRetorno.Free;
   FRecibo.Free;
   FConsulta.Free;
+  FConsMDFeNaoEnc.Free;
   FEnvEvento.Free;
   inherited;
 end;
@@ -658,20 +714,35 @@ function TWebServices.Envia(ALote: String): Boolean;
 begin
   self.Enviar.FLote := ALote;
   if not(Self.Enviar.Executar) then
-     begin
-       if Assigned(TACBrMDFe(FACBrMDFe).OnGerarLog) then
-          TACBrMDFe(FACBrMDFe).OnGerarLog(Self.Enviar.Msg);
-       raise Exception.Create(Self.Enviar.Msg);
-     end;
+  begin
+    if Assigned(TACBrMDFe(FACBrMDFe).OnGerarLog) then
+      TACBrMDFe(FACBrMDFe).OnGerarLog(Self.Enviar.Msg);
+    raise Exception.Create(Self.Enviar.Msg);
+  end;
 
   Self.Retorno.Recibo := Self.Enviar.Recibo;
   if not(Self.Retorno.Executar) then
-     begin
-       if Assigned(TACBrMDFe(FACBrMDFe).OnGerarLog) then
-          TACBrMDFe(FACBrMDFe).OnGerarLog(Self.Retorno.Msg);
-       raise Exception.Create(Self.Retorno.Msg);
-     end;
+  begin
+    if Assigned(TACBrMDFe(FACBrMDFe).OnGerarLog) then
+      TACBrMDFe(FACBrMDFe).OnGerarLog(Self.Retorno.Msg);
+    raise Exception.Create(Self.Retorno.Msg);
+  end;
+
   Result := true;
+end;
+
+function TWebServices.ConsultaMDFeNaoEnc(ACNPJ: String): Boolean;
+begin
+  self.ConsMDFeNaoEnc.FCNPJ := ACNPJ;
+
+  Result := (Self.ConsMDFeNaoEnc.Executar);
+
+  if not Result then
+  begin
+    if Assigned(TACBrMDFe(FACBrMDFe).OnGerarLog) then
+      TACBrMDFe(FACBrMDFe).OnGerarLog(Self.ConsMDFeNaoEnc.Msg);
+    raise Exception.Create(Self.ConsMDFeNaoEnc.Msg);
+  end;
 end;
 
 { TMDFeStatusServico }
@@ -1985,6 +2056,186 @@ begin
        HTTP.Free;
     {$ELSE}
        ReqResp.Free;
+    {$ENDIF}
+    Acao.Free;
+    Stream.Free;
+    DFeUtil.ConfAmbiente;
+    TACBrMDFe(FACBrMDFe).SetStatus(stMDFeIdle);
+  end;
+end;
+
+{ TMDFeConsultaMDFeNaoEnc }
+
+constructor TMDFeConsultaMDFeNaoEnc.Create(AOwner: TComponent);
+begin
+  FInfMDFe := TRetInfMDFeCollection.Create(AOwner);
+end;
+
+destructor TMDFeConsultaMDFeNaoEnc.Destroy;
+begin
+  if Assigned(FInfMDFe) then
+    FInfMDFe.Free;
+end;
+
+(*
+constructor TMDFeConsulta.Create(AOwner: TComponent);
+begin
+  FConfiguracoes  := TConfiguracoes(TACBrMDFe(AOwner).Configuracoes);
+  FACBrMDFe       := TACBrMDFe(AOwner);
+  FprotMDFe       := TProcMDFe.Create;
+  FprocEventoMDFe := TRetEventoMDFeCollection.Create(AOwner);
+end;
+
+destructor TMDFeConsulta.Destroy;
+begin
+  FprotMDFe.Free;
+  if Assigned(FprocEventoMDFe) then
+    FprocEventoMDFe.Free;
+end;
+*)
+function TMDFeConsultaMDFeNaoEnc.Executar: Boolean;
+var
+  MDFeRetorno: TRetConsMDFeNaoEnc;
+  i: Integer;
+  aMsg: String;
+  Texto: String;
+  Acao: TStringList;
+  Stream: TMemoryStream;
+  StrStream: TStringStream;
+  {$IFDEF ACBrMDFeOpenSSL}
+     HTTP: THTTPSend;
+  {$ELSE}
+     ReqResp: THTTPReqResp;
+  {$ENDIF}
+begin
+  inherited Executar;
+
+  Result := False;
+  
+  Acao   := TStringList.Create;
+  Stream := TMemoryStream.Create;
+
+  Texto := '<?xml version="1.0" encoding="utf-8"?>';
+  Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
+  Texto := Texto +   '<soap12:Header>';
+  Texto := Texto +     '<mdfeCabecMsg xmlns="http://www.portalfiscal.inf.br/mdfe/wsdl/MDFeConsNaoEnc">';
+  Texto := Texto +       '<cUF>'+IntToStr(FConfiguracoes.WebServices.UFCodigo)+'</cUF>';
+  Texto := Texto +       '<versaoDados>'+MDFeconsNaoEnc+'</versaoDados>';
+  Texto := Texto +     '</mdfeCabecMsg>';
+  Texto := Texto +   '</soap12:Header>';
+  Texto := Texto +   '<soap12:Body>';
+  Texto := Texto +     '<mdfeDadosMsg xmlns="http://www.portalfiscal.inf.br/mdfe/wsdl/MDFeConsNaoEnc">';
+  Texto := Texto +       FDadosMsg;
+  Texto := Texto +     '</mdfeDadosMsg>';
+  Texto := Texto +   '</soap12:Body>';
+  Texto := Texto + '</soap12:Envelope>';
+
+  Acao.Text := Texto;
+
+  TACBrMDFe(FACBrMDFe).SetStatus(stMDFeConsulta);
+
+  if FConfiguracoes.Geral.Salvar then
+    FConfiguracoes.Geral.Save(FormaTDateTime('yyyymmddhhnnss',Now)+'-ped-cons.xml', FDadosMsg);
+
+  if FConfiguracoes.WebServices.Salvar then
+    FConfiguracoes.Geral.Save(FormaTDateTime('yyyymmddhhnnss',Now)+'-ped-cons-soap.xml', Texto);
+
+  {$IFDEF ACBrMDFeOpenSSL}
+     Acao.SaveToStream(Stream);
+     HTTP := THTTPSend.Create;
+  {$ELSE}
+     ReqResp := THTTPReqResp.Create(nil);
+     ConfiguraReqResp(ReqResp);
+     ReqResp.URL := Trim(FURL);
+     ReqResp.UseUTF8InHeader := True;
+     ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/mdfe/wsdl/MDFeConsNaoEnc/mdfeConsNaoEncMDF';
+  {$ENDIF}
+
+  try
+    try
+      {$IFDEF ACBrMDFeOpenSSL}
+         HTTP.Document.LoadFromStream(Stream);
+         ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/mdfe/wsdl/MDFeConsNaoEnc/mdfeConsNaoEncMDF"');
+         HTTP.HTTPMethod('POST', FURL);
+         StrStream := TStringStream.Create('');
+         StrStream.CopyFrom(HTTP.Document, 0);
+
+         FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+         FRetWS := SeparaDados(FRetornoWS, 'mdfeConsNaoEncMDFResult');
+         StrStream.Free;
+      {$ELSE}
+         ReqResp.Execute(Acao.Text, Stream);
+         StrStream := TStringStream.Create('');
+         StrStream.CopyFrom(Stream, 0);
+         FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+         FRetWS := SeparaDados(FRetornoWS, 'mdfeConsNaoEncMDFResult');
+         StrStream.Free;
+      {$ENDIF}
+
+      if FConfiguracoes.Geral.Salvar then
+        FConfiguracoes.Geral.Save(FormaTDateTime('yyyymmddhhnnss',Now)+'-cons.xml', FRetWS);
+
+      if FConfiguracoes.WebServices.Salvar then
+        FConfiguracoes.Geral.Save(FormaTDateTime('yyyymmddhhnnss',Now)+'-cons-soap.xml', FRetornoWS);
+
+      MDFeRetorno := TRetConsMDFeNaoEnc.Create;
+      MDFeRetorno.Leitor.Arquivo := FRetWS;
+      MDFeRetorno.LerXml;
+
+      TACBrMDFe(FACBrMDFe).SetStatus( stMDFeIdle);
+
+      aMsg := 'Versão Layout : '+MDFeRetorno.versao+LineBreak+
+              'Ambiente : '+TpAmbToStr(MDFeRetorno.tpAmb)+LineBreak+
+              'Versão Aplicativo : '+MDFeRetorno.verAplic+LineBreak+
+              'Status Código : '+IntToStr(MDFeRetorno.cStat)+LineBreak+
+              'Status Descrição : '+MDFeRetorno.xMotivo+LineBreak+
+              'UF : '+CodigoParaUF(MDFeRetorno.cUF)+LineBreak;
+
+      if FConfiguracoes.WebServices.Visualizar then
+        ShowMessage(aMsg);
+
+      if Assigned(TACBrMDFe(FACBrMDFe).OnGerarLog) then
+         TACBrMDFe(FACBrMDFe).OnGerarLog(aMsg);
+
+      Fversao    := MDFeRetorno.versao;
+      FtpAmb     := MDFeRetorno.tpAmb;
+      FverAplic  := MDFeRetorno.verAplic;
+      FcStat     := MDFeRetorno.cStat;
+      FxMotivo   := MDFeRetorno.xMotivo;
+      FcUF       := MDFeRetorno.cUF;
+
+      for i := 0 to MDFeRetorno.InfMDFe.Count -1 do
+      begin
+       FinfMDFe.Add;
+       FinfMDFe.Items[i].chMDFe := MDFeRetorno.InfMDFe.Items[i].chMDFe;
+       FinfMDFe.Items[i].nProt  := MDFeRetorno.InfMDFe.Items[i].nProt;
+      end;
+
+      FMsg := MDFeRetorno.XMotivo;
+
+      // 111 = MDF-e não encerrados localizados
+      // 112 = MDF-e não encerrados não localizados
+      Result := (MDFeRetorno.CStat in [111, 112]);
+
+      MDFeRetorno.Free;
+
+    except on E: Exception do
+      begin
+       if Assigned(TACBrMDFe(FACBrMDFe).OnGerarLog) then
+          TACBrMDFe(FACBrMDFe).OnGerarLog('WebService Consulta MDF-e não Encerrados:'+LineBreak+
+                                          '- Inativo ou Inoperante tente novamente.'+LineBreak+
+                                          '- '+E.Message);
+       raise Exception.Create('WebService Consulta MDF-e não Encerrados:'+LineBreak+
+                              '- Inativo ou Inoperante tente novamente.'+LineBreak+
+                              '- '+E.Message);
+      end;
+    end;
+
+  finally
+    {$IFDEF ACBrMDFeOpenSSL}
+       HTTP.Free;
+    {$ELSE}
+      ReqResp.Free;
     {$ENDIF}
     Acao.Free;
     Stream.Free;

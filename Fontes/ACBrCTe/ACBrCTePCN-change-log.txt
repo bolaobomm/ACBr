@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/11/2014
+[*] Alterações realizadas conforme NT ACBr 2014/001
+    por: Italo Jurisato Junior
+
 06/11/2014
 [*] Ajustes no DACTE e DA Eventos para Fortes
     Por: Wanderson Pereira
