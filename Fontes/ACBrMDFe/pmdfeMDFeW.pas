@@ -457,11 +457,11 @@ begin
           if (FOpcoes.ValidarInscricoes)
            then if not ValidarIE(MDFe.Rodo.veicReboque[i].Prop.IE, MDFe.Rodo.veicReboque[i].Prop.UF) then
             Gerador.wAlerta('#35', 'IE', DSC_IE, ERR_MSG_INVALIDO);
+          Gerador.wCampo(tcStr, '#36', 'UF     ', 02, 02, 1, MDFe.Rodo.veicReboque[i].Prop.UF, DSC_CUF);
+          if not ValidarUF(MDFe.Rodo.veicReboque[i].Prop.UF) then
+           Gerador.wAlerta('#36', 'UF', DSC_UF, ERR_MSG_INVALIDO);
          end;
 
-        Gerador.wCampo(tcStr, '#36', 'UF     ', 02, 02, 1, MDFe.Rodo.veicReboque[i].Prop.UF, DSC_CUF);
-        if not ValidarUF(MDFe.Rodo.veicReboque[i].Prop.UF) then
-         Gerador.wAlerta('#36', 'UF', DSC_UF, ERR_MSG_INVALIDO);
         Gerador.wCampo(tcStr, '#37', 'tpProp ', 01, 01, 1, TpPropToStr(MDFe.Rodo.veicReboque[i].Prop.tpProp), DSC_TPPROP);
 //      end;
 
