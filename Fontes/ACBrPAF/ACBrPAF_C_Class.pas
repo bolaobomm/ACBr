@@ -183,7 +183,7 @@ begin
                                            IfThen(STATUS_ABASTECIMENTO = 'EMITIDO CF', LFill(DATA, 'yyyymmdd'), RFill('',8)) +
                                            IfThen(STATUS_ABASTECIMENTO = 'EMITIDO CF', LFill(HORA, 'hhmmss'), RFill('',6)) +
                                            //IfThen(STATUS_ABASTECIMENTO = 'EMITIDO CF', LFill(COO, 6), RFill('',6)) +
-                                           LFill(COO, 6) +
+                                           LFill(COO, 9) +
                                            //IfThen(STATUS_ABASTECIMENTO = 'EMITIDO NF', LFill(NRO_NOTA_FISCAL, 6), RFill('',6)) +
                                            LFill(NRO_NOTA_FISCAL, 6) +
                                            LFill(VOLUME, 10, 3) +
