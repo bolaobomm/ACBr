@@ -149,7 +149,7 @@ begin
   4303103: begin // Cachoeirinha/RS
             ConfigURL.HomNomeCidade := 'nfsehomologacao.cachoeirinha.rs.gov.br/nfse';
             ConfigURL.ProNomeCidade := 'nfse.cachoeirinha.rs.gov.br/nfse';
-            sHTTPPro := 'https://';
+            sHTTPPro := 'http://';
            end;
   4307708: begin // Esteio/Rs
             ConfigURL.HomNomeCidade := 'grp.esteio.rs.gov.br/nfsehml';

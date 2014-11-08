@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/11/2014
+[-] Correção para o provedor thema na cidade de Cachoeirinha/RS, foi posto https mas é http
+	http://www.projetoacbr.com.br/forum/index.php?/topic/18533-erro-em-acbrprovedorthema-cachoeirinha-rs/
+	por : Alex
+	
 06/11/2014
 [+] Inclusão de novas cidades no provedor Betha.
 [-] Correção na unit pnfsCancNfseResposta.
