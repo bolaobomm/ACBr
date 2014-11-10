@@ -662,6 +662,8 @@ begin
         end;
     end;
 
+  // registro P1
+  PreencherHeader(ACBrPAF.PAF_P.RegistroP1);
   //P2
   ACBrPAF.PAF_P.RegistroP2.Clear;
   for I := 1 to 5 do
@@ -681,6 +683,8 @@ begin
         end;
     end;
 
+  // registro E1
+  PreencherHeader(ACBrPAF.PAF_E.RegistroE1);
   //E2
   ACBrPAF.PAF_E.RegistroE2.Clear;
   for I := 1 to 5 do
@@ -709,6 +713,8 @@ begin
       RegistroValido:= True;
     end;
 
+  // registro D1
+  PreencherHeader(ACBrPAF.PAF_D.RegistroD1);
   //D2 - DAV
   ACBrPAF.PAF_D.RegistroD2.Clear;
   for I := 1 to 5 do
