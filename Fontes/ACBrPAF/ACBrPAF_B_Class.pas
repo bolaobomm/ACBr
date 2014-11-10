@@ -171,7 +171,7 @@ begin
                                            RFill(BICO, 3) +
                                            LFill(DATA, 'yyyymmdd') +
                                            LFill(HORA, 'hhmmss') +
-                                           RFill(MOTIVO, 50) +
+                                           RFill(MOTIVO, 50, ifThen(RegistroValido, ' ', '?')) +
                                            LFill(CNPJ_EMPRESA, 14) +
                                            LFill(CPF_TECNICO, 11) +
                                            RFill(NRO_LACRE_ANTES, 15) +
