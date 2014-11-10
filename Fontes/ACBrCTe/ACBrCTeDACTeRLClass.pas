@@ -265,7 +265,8 @@ begin
       Impresso := False;
       for j := 0 to (TACBrCTe(ACBrCTe).Conhecimentos.Count - 1) do
       begin
-        if Copy(TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe.infCTe.ID, 4, 44) = TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.chCTe then
+//        if Copy(TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe.infCTe.ID, 4, 44) = TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.chCTe then
+        if StringReplace(TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe.infCTe.Id, 'CTe', '', [rfIgnoreCase]) = TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.chCTe then
         begin
           frmCTeDAEventoRL.Imprimir(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
             FLogo,
@@ -343,7 +344,8 @@ begin
 
       for j := 0 to (TACBrCTe(ACBrCTe).Conhecimentos.Count - 1) do
       begin
-        if Copy(TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe.infCTe.ID, 4, 44) = TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.chCTe then
+//        if Copy(TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe.infCTe.ID, 4, 44) = TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.chCTe then
+        if StringReplace(TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe.infCTe.Id, 'CTe', '', [rfIgnoreCase]) = TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.chCTe then
         begin
           frmCTeDAEventoRL.SavePDF(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
             FLogo,

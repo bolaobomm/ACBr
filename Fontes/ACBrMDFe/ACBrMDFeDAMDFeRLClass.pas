@@ -207,8 +207,9 @@ begin
         Impresso := False;
         for j := 0 to (TACBrMDFe(ACBrMDFe).Manifestos.Count - 1) do
         begin
-          if Copy(TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe.infMDFe.ID, 5, 44) =
-            TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
+//          if Copy(TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe.infMDFe.ID, 5, 44) =
+//            TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
+          if StringReplace(TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe.infMDFe.ID, 'MDFe', '', [rfIgnoreCase]) = TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
           begin
             frmMDFeDAEventoRL.Imprimir(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
               FLogo,
@@ -285,8 +286,9 @@ begin
 
         for j := 0 to (TACBrMDFe(ACBrMDFe).Manifestos.Count - 1) do
         begin
-          if Copy(TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe.infMDFe.ID, 5, 44) =
-            TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
+//          if Copy(TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe.infMDFe.ID, 5, 44) =
+//            TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
+          if StringReplace(TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe.infMDFe.ID, 'MDFe', '', [rfIgnoreCase]) = TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
           begin
             frmMDFeDAEventoRL.SavePDF(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
               FLogo,

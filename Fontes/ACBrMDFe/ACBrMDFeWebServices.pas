@@ -1770,9 +1770,9 @@ begin
             if FConfiguracoes.Arquivos.Salvar and wAtualiza then
             begin
               if FConfiguracoes.Arquivos.EmissaoPathMDFe then
-                 TACBrMDFe(FACBrMDFe).Manifestos.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathMDFe(TACBrMDFe(FACBrMDFe).Manifestos.Items[i].MDFe.Ide.dhEmi))+StringReplace(TACBrMDFe(FACBrMDFe).Manifestos.Items[i].MDFe.InfMDFe.Id,'MDFe','',[rfIgnoreCase])+'-mdfe.xml')
+                 TACBrMDFe(FACBrMDFe).Manifestos.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathMDFe(TACBrMDFe(FACBrMDFe).Manifestos.Items[i].MDFe.Ide.dhEmi))+StringReplace(TACBrMDFe(FACBrMDFe).Manifestos.Items[i].MDFe.InfMDFe.Id, 'MDFe', '', [rfIgnoreCase]) + '-mdfe.xml')
               else
-                 TACBrMDFe(FACBrMDFe).Manifestos.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathMDFe)+StringReplace(TACBrMDFe(FACBrMDFe).Manifestos.Items[i].MDFe.InfMDFe.Id,'MDFe','',[rfIgnoreCase])+'-mdfe.xml');
+                 TACBrMDFe(FACBrMDFe).Manifestos.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathMDFe)+StringReplace(TACBrMDFe(FACBrMDFe).Manifestos.Items[i].MDFe.InfMDFe.Id, 'MDFe', '', [rfIgnoreCase]) + '-mdfe.xml');
             end;
 
             break;

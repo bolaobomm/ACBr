@@ -275,8 +275,8 @@ begin
        if TACBrMDFe(TManifestos(Collection).ACBrMDFe).DAMDFE <> nil then
        begin
           TACBrMDFe(TManifestos(Collection).ACBrMDFe).DAMDFE.ImprimirDAMDFEPDF(MDFe);
-          NomeArq :=  StringReplace(MDFe.infMDFe.ID,'MDFe', '', [rfIgnoreCase]);
-          NomeArq := PathWithDelim(TACBrMDFe(TManifestos(Collection).ACBrMDFe).DAMDFE.PathPDF)+NomeArq+'-mdfe.pdf';
+          NomeArq := StringReplace(MDFe.infMDFe.ID,'MDFe', '', [rfIgnoreCase]);
+          NomeArq := PathWithDelim(TACBrMDFe(TManifestos(Collection).ACBrMDFe).DAMDFE.PathPDF) + NomeArq + '-mdfe.pdf';
           AnexosEmail.Add(NomeArq);
        end;
     end;
@@ -287,7 +287,7 @@ begin
                                                            AnexosEmail, PedeConfirma,
                                                            AguardarEnvio, NomeRemetente,
                                                            TLS, StreamMDFe,
-                                                           copy(MDFe.infMDFe.ID, (length(MDFe.infMDFe.ID)-44)+1, 44)+'-mdfe.xml',
+                                                           copy(MDFe.infMDFe.ID, (length(MDFe.infMDFe.ID)-44)+1, 44) + '-mdfe.xml',
                                                            UsarThread, HTML);
  finally
     AnexosEmail.Free;
@@ -380,7 +380,7 @@ begin
      end;
 
      if FConfiguracoes.Geral.Salvar then
-       FConfiguracoes.Geral.Save(StringReplace(Self.Items[i].MDFe.infMDFe.ID, 'MDFe', '', [rfIgnoreCase])+'-MDFe.xml', vAssinada);
+       FConfiguracoes.Geral.Save(StringReplace(Self.Items[i].MDFe.infMDFe.ID, 'MDFe', '', [rfIgnoreCase]) + '-mdfe.xml', vAssinada);
 
      if DFeUtil.NaoEstaVazio(Self.Items[i].NomeArq) then
        FConfiguracoes.Geral.Save(ExtractFileName(Self.Items[i].NomeArq), vAssinada, ExtractFilePath(Self.Items[i].NomeArq));
@@ -560,7 +560,7 @@ begin
            PathArquivo := TACBrMDFe(FACBrMDFe).Configuracoes.Geral.PathSalvar
         else
            PathArquivo := ExtractFilePath(PathArquivo);
-        CaminhoArquivo := PathWithDelim(PathArquivo) + copy(TACBrMDFe(FACBrMDFe).Manifestos.Items[i].MDFe.inFMDFe.ID, (length(TACBrMDFe(FACBrMDFe).Manifestos.Items[i].MDFe.inFMDFe.ID)-44)+1, 44)+'-MDFe.xml';
+        CaminhoArquivo := PathWithDelim(PathArquivo) + copy(TACBrMDFe(FACBrMDFe).Manifestos.Items[i].MDFe.inFMDFe.ID, (length(TACBrMDFe(FACBrMDFe).Manifestos.Items[i].MDFe.inFMDFe.ID)-44)+1, 44)+'-mdfe.xml';
         TACBrMDFe(FACBrMDFe).Manifestos.Items[i].SaveToFile(CaminhoArquivo)
      end;
  except

@@ -217,7 +217,7 @@ begin
      Result := True;
      ArqTXT := GerarXML(ArqXML, Alertas);
      if DFeUtil.EstaVazio(CaminhoArquivo) then
-        CaminhoArquivo := PathWithDelim(TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.PathSalvar) + copy(CTe.infCTe.ID, (length(CTe.infCTe.ID)-44)+1, 44)+'-CTe.xml';
+        CaminhoArquivo := PathWithDelim(TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.PathSalvar) + copy(CTe.infCTe.ID, (length(CTe.infCTe.ID)-44)+1, 44)+'-cte.xml';
 
      if DFeUtil.EstaVazio(CaminhoArquivo) or not DirectoryExists(ExtractFilePath(CaminhoArquivo)) then
         raise EACBrCTeException.Create('Caminho Inválido: ' + CaminhoArquivo);
@@ -287,8 +287,8 @@ begin
        if TACBrCTe(TConhecimentos(Collection).ACBrCTe).DACTE <> nil then
        begin
           TACBrCTe(TConhecimentos(Collection).ACBrCTe).DACTE.ImprimirDACTEPDF(CTe);
-          NomeArq :=  StringReplace(CTe.infCTe.ID,'CTe', '', [rfIgnoreCase]);
-          NomeArq := PathWithDelim(TACBrCTe(TConhecimentos(Collection).ACBrCTe).DACTE.PathPDF)+NomeArq+'-cte.pdf';
+          NomeArq := StringReplace(CTe.infCTe.ID,'CTe', '', [rfIgnoreCase]);
+          NomeArq := PathWithDelim(TACBrCTe(TConhecimentos(Collection).ACBrCTe).DACTE.PathPDF) + NomeArq + '-cte.pdf';
           AnexosEmail.Add(NomeArq);
        end;
     end;
@@ -408,7 +408,7 @@ begin
      end;
 
      if FConfiguracoes.Geral.Salvar then
-       FConfiguracoes.Geral.Save(StringReplace(Self.Items[i].CTe.infCTe.ID, 'CTe', '', [rfIgnoreCase])+'-CTe.xml', vAssinada);
+       FConfiguracoes.Geral.Save(StringReplace(Self.Items[i].CTe.infCTe.ID, 'CTe', '', [rfIgnoreCase]) + '-cte.xml', vAssinada);
 
      if DFeUtil.NaoEstaVazio(Self.Items[i].NomeArq) then
        FConfiguracoes.Geral.Save(ExtractFileName(Self.Items[i].NomeArq), vAssinada, ExtractFilePath(Self.Items[i].NomeArq));
@@ -587,7 +587,7 @@ begin
         else
            PathArquivo := ExtractFilePath(PathArquivo);
         CaminhoArquivo := PathWithDelim(PathArquivo) +
-                          copy(TACBrCTe(FACBrCTe).Conhecimentos.Items[i].CTe.inFCTe.ID, (length(TACBrCTe(FACBrCTe).Conhecimentos.Items[i].CTe.inFCTe.ID)-44)+1, 44)+'-CTe.xml';
+                          copy(TACBrCTe(FACBrCTe).Conhecimentos.Items[i].CTe.inFCTe.ID, (length(TACBrCTe(FACBrCTe).Conhecimentos.Items[i].CTe.inFCTe.ID)-44)+1, 44)+'-cte.xml';
         TACBrCTe(FACBrCTe).Conhecimentos.Items[i].SaveToFile(CaminhoArquivo)
      end;
  except

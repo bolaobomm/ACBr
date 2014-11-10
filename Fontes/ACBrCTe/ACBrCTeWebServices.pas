@@ -1429,7 +1429,7 @@ begin
   begin
     for j := 0 to FCTes.Count-1 do
     begin
-      if AInfProt.Items[i].chCTe = StringReplace(FCTes.Items[j].CTe.InfCTe.Id,'CTe','',[rfIgnoreCase]) then
+      if AInfProt.Items[i].chCTe = StringReplace(FCTes.Items[j].CTe.InfCTe.Id,'CTe', '', [rfIgnoreCase]) then
        begin
          FCTes.Items[j].Confirmada           := (AInfProt.Items[i].cStat = 100); // 100 = Autorizao o Uso
          FCTes.Items[j].Msg                  := AInfProt.Items[i].xMotivo;
@@ -1468,9 +1468,9 @@ begin
           end;
          if FConfiguracoes.Arquivos.Salvar then
             if FConfiguracoes.Arquivos.EmissaoPathCTe then
-               FCTes.Items[j].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathCTe(FCTes.Items[j].CTe.Ide.dhEmi))+StringReplace(FCTes.Items[j].CTe.InfCTe.Id,'CTe','',[rfIgnoreCase])+'-cte.xml')
+               FCTes.Items[j].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathCTe(FCTes.Items[j].CTe.Ide.dhEmi))+StringReplace(FCTes.Items[j].CTe.InfCTe.Id, 'CTe', '', [rfIgnoreCase])+'-cte.xml')
             else
-               FCTes.Items[j].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathCTe)+StringReplace(FCTes.Items[j].CTe.InfCTe.Id,'CTe','',[rfIgnoreCase])+'-cte.xml');
+               FCTes.Items[j].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathCTe)+StringReplace(FCTes.Items[j].CTe.InfCTe.Id, 'CTe', '', [rfIgnoreCase])+'-cte.xml');
          break;
        end;
     end;
@@ -2180,7 +2180,7 @@ begin
 
     for i := 0 to TACBrCTe( FACBrCTe ).Conhecimentos.Count-1 do
      begin
-        if StringReplace(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.infCTe.ID,'CTe','',[rfIgnoreCase]) = FCTeChave then
+        if StringReplace(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.infCTe.ID, 'CTe', '', [rfIgnoreCase]) = FCTeChave then
          begin
             watualiza := true;
             if ((CTeRetorno.CStat = 101) and // 101 = Cancelamento Homologado
@@ -2298,9 +2298,9 @@ begin
             if FConfiguracoes.Arquivos.Salvar and wAtualiza then
             begin
               if FConfiguracoes.Arquivos.EmissaoPathCTe then
-                 TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathCTe(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.Ide.dhEmi))+StringReplace(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.InfCTe.Id,'CTe','',[rfIgnoreCase])+'-cte.xml')
+                 TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathCTe(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.Ide.dhEmi))+StringReplace(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.InfCTe.Id, 'CTe', '', [rfIgnoreCase]) +'-cte.xml')
               else
-                 TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathCTe)+StringReplace(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.InfCTe.Id,'CTe','',[rfIgnoreCase])+'-cte.xml');
+                 TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathCTe)+StringReplace(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.InfCTe.Id, 'CTe', '', [rfIgnoreCase]) + '-cte.xml');
             end;
 
             if FConfiguracoes.Arquivos.Salvar and (FRetCTeDFe <> '') then
@@ -2597,7 +2597,7 @@ begin
 
     for i := 0 to TACBrCTe( FACBrCTe ).Conhecimentos.Count-1 do
      begin
-        if StringReplace(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.infCTe.ID,'CTe','',[rfIgnoreCase]) = CTeRetorno.chCTE then
+        if StringReplace(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.infCTe.ID, 'CTe', '', [rfIgnoreCase]) = CTeRetorno.chCTE then
          begin
            if (FConfiguracoes.Geral.AtualizarXMLCancelado) then
            begin
@@ -2621,9 +2621,9 @@ begin
                  else
                  begin
                     if FConfiguracoes.Arquivos.EmissaoPathCTe then
-                       TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathCTe(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.Ide.dhEmi))+StringReplace(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.InfCTe.Id,'CTe','',[rfIgnoreCase])+'-cte.xml')
+                       TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathCTe(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.Ide.dhEmi))+StringReplace(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.InfCTe.Id, 'CTe', '', [rfIgnoreCase])+'-cte.xml')
                     else
-                       TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathCTe)+StringReplace(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.InfCTe.Id,'CTe','',[rfIgnoreCase])+'-cte.xml');
+                       TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathCTe)+StringReplace(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.InfCTe.Id, 'CTe', '', [rfIgnoreCase]) + '-cte.xml');
                  end;
               end;
             end;
