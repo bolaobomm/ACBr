@@ -168,6 +168,8 @@ TACBrECFEpson = class( TACBrECFClass )
        {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
 
     procedure Ativar_Epson ;
+    function FinalidadeParaTipo(AFinalidade: TACBrECFFinalizaArqMFD): Integer;
+    function FinalidadeParaSintegra(AFinalidade: TACBrECFFinalizaArqMFD): Integer;
 
     procedure LoadDLLFunctions;
     procedure AbrePortaSerialDLL;
@@ -1089,6 +1091,36 @@ begin
      end;
   end ;
 end ;
+
+function TACBrECFEpson.FinalidadeParaTipo(AFinalidade: TACBrECFFinalizaArqMFD): Integer;
+var
+  Tipo: Integer ;
+begin
+  case AFinalidade of
+     finMF          : Tipo := 1;
+     finMFD, finNFP : Tipo := 2;
+     finTDM, finRFD : Tipo := 3;
+     finNFPTDM      : Tipo := 11;
+  else
+     Tipo := 3;
+  end ;
+
+  Result := Tipo;
+end;
+
+function TACBrECFEpson.FinalidadeParaSintegra(AFinalidade: TACBrECFFinalizaArqMFD): Integer;
+var
+  Sintegra: Integer ;
+begin
+  case AFinalidade of
+     finSintegra : Sintegra := 127;
+     finSPED     : Sintegra := 256;
+  else
+     Sintegra := 0;  // 0 = Nao Gera Sintegra
+  end ;
+
+  Result := Sintegra;
+end;
 
 procedure TACBrECFEpson.Ativar;
 begin
@@ -3610,7 +3642,7 @@ procedure TACBrECFEpson.ArquivoMFD_DLL(DataInicial, DataFinal: TDateTime;
   NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet;
   Finalidade: TACBrECFFinalizaArqMFD);
 Var
-  Resp, Tipo : Integer ;
+  Resp, Tipo, Sintegra : Integer ;
   ArqTmp, DiaIni, DiaFim : AnsiString ;
   OldAtivo : Boolean ;
 begin
@@ -3619,12 +3651,8 @@ begin
   ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr' ;
   DeleteFiles( ArqTmp + '_???.txt' ) ;
 
-  case Finalidade of
-     finMF  : Tipo := 1;
-     finMFD : Tipo := 2;
-  else
-     Tipo := 3;
-  end ;
+  Tipo     := FinalidadeParaTipo( Finalidade );
+  Sintegra := FinalidadeParaSintegra( Finalidade );
 
   OldAtivo := Ativo ;
   try
@@ -3638,7 +3666,7 @@ begin
                                         0,                // 0 = Faixa em Datas
                                         0,                // 0 = Sem Espelhos
                                         Tipo,
-                                        0,                // 0 = Nao Gera Sintegra
+                                        Sintegra,
                                         ArqTmp );
     if (Resp <> 0) then
       raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar EPSON_Obter_Dados_MF_MFD.'+sLineBreak+
@@ -3664,7 +3692,7 @@ procedure TACBrECFEpson.ArquivoMFD_DLL(ContInicial, ContFinal: Integer;
   Finalidade: TACBrECFFinalizaArqMFD;
   TipoContador: TACBrECFTipoContador);
 Var
-  Resp, Tipo : Integer ;
+  Resp, Tipo, Sintegra : Integer ;
   ArqTmp, CooIni, CooFim : AnsiString ;
   OldAtivo : Boolean ;
 begin
@@ -3676,12 +3704,8 @@ begin
 
   LoadDLLFunctions ;
 
-  case Finalidade of
-     finMF  : Tipo := 1;
-     finMFD : Tipo := 2;
-  else
-     Tipo := 3;
-  end ;
+  Tipo     := FinalidadeParaTipo( Finalidade );
+  Sintegra := FinalidadeParaSintegra( Finalidade );
 
   ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr' ;
   DeleteFiles( ArqTmp + '_???.txt' ) ;
@@ -3698,7 +3722,7 @@ begin
                                         IfThen( TipoContador = tpcCOO, 2, 1),
                                         0,                // 0 = Sem Espelhos
                                         Tipo,
-                                        0,                // 0 = Nao Gera Sintegra
+                                        Sintegra,
                                         ArqTmp );
     if (Resp <> 0) then
       raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar EPSON_Obter_Dados_MF_MFD.'+sLineBreak+
