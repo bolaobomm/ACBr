@@ -250,7 +250,7 @@ begin
      Result := True;
      ArqTXT := GerarXML(ArqXML, Alertas, SalvaTXT);
      if DFeUtil.EstaVazio(CaminhoArquivo) then
-        CaminhoArquivo := PathWithDelim(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.PathSalvar)+copy(NFe.infNFe.ID, (length(NFe.infNFe.ID)-44)+1, 44)+'-NFe.xml';
+        CaminhoArquivo := PathWithDelim(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.PathSalvar)+copy(NFe.infNFe.ID, (length(NFe.infNFe.ID)-44)+1, 44)+'-nfe.xml';
 
      if DFeUtil.EstaVazio(CaminhoArquivo) or not DirectoryExists(ExtractFilePath(CaminhoArquivo)) then
         raise EACBrNFeException.Create('Caminho Inválido: ' + CaminhoArquivo);

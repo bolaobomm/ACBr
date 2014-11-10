@@ -234,7 +234,8 @@ begin
           Impresso := False;
           for j := 0 to (TACBrNFe(ACBrNFe).NotasFiscais.Count - 1) do
             begin
-              if Copy(TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe.infNFe.ID, 4, 44) = TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.chNFe then
+//              if Copy(TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe.infNFe.ID, 4, 44) = TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.chNFe then
+              if StringReplace(TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]) = TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.chNFe then
                 begin
                   frmNFeDAEventoQR.Imprimir(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
                                             FLogo, FNumCopias, FSistema,
@@ -297,7 +298,8 @@ begin
 
           for j := 0 to (TACBrNFe(ACBrNFe).NotasFiscais.Count - 1) do
             begin
-              if Copy(TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe.infNFe.ID, 4, 44) = TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.chNFe then
+//              if Copy(TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe.infNFe.ID, 4, 44) = TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.chNFe then
+              if StringReplace(TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]) = TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.chNFe then
                 begin
                   frmNFeDAEventoQR.SavePDF(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
                                            FLogo, NomeArq, FSistema, FUsuario,

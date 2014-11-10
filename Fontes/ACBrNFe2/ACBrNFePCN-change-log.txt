@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/11/2014
+[-] Correções baseado nos relatos de Mauricio Guedes, nomes dos arquivos após ler
+    o XML usando o LoadFromStream.
+    por: Italo Jurisato Junior
+
 07/11/2014
 [*] Alterações realizadas conforme NT ACBr 2014/001
     por: Italo Jurisato Junior
