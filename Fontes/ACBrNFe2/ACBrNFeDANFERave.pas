@@ -1002,7 +1002,7 @@ begin
          dmDanfe.NFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe;
 
          NomeArq := StringReplace(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]);
-         NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'.pdf';
+         NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'-nfe.pdf';
 
          dmDanfe.RvSystem1.OutputFileName := NomeArq;
          ExecutaReport;
@@ -1012,7 +1012,7 @@ begin
    begin
       dmDanfe.NFe := NFE;
       NomeArq := StringReplace(NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]);
-      NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'.pdf';
+      NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'-nfe.pdf';
 
       dmDanfe.RvSystem1.OutputFileName := NomeArq;
       ExecutaReport;

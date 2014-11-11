@@ -263,7 +263,7 @@ begin
       else
          NomeArq := StringReplace(NFE.infNFe.ID,'NFe', '', [rfIgnoreCase]);
 
-      NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'.pdf';
+      NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'-nfe.pdf';
 
       ImprimirDANFeRave(TACBrNFe(ACBrNFe),
                        Site,
@@ -365,7 +365,7 @@ begin
       ExisteLogoMarca := CarregaLogoMarca(LogoMarcaEmpresa);
 
       NomeArq := StringReplace(TACBrNFe(ACBrNFe).EventoNFe.Evento[0].InfEvento.id,'ID', '', [rfIgnoreCase]);
-      NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'evento.pdf';
+      NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'-procEventoNFe.pdf';
 
       ImprimirEventoRave(TACBrNFe(ACBrNFe),
                        Site,
@@ -443,7 +443,7 @@ begin
       ExisteLogoMarca := CarregaLogoMarca(LogoMarcaEmpresa);
 
       NomeArq := StringReplace(TACBrNFe(ACBrNFe).InutNFe.ID,'ID', '', [rfIgnoreCase]);
-      NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'-ProcInutNFe.pdf';
+      NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'-procInutNFe.pdf';
 
       ImprimirInutilizacaoRave(TACBrNFe(ACBrNFe),
                        Site,
