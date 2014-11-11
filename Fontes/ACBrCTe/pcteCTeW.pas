@@ -1800,7 +1800,7 @@ begin
         Gerador.wAlerta('#22', 'UF', DSC_UF, ERR_MSG_INVALIDO);
       Gerador.wGrupo('/enderFerro');
 
-      Gerador.wGrupo('/ferroSub');
+      Gerador.wGrupo('/ferroEnv');
     end;
 
    end;
@@ -1818,6 +1818,7 @@ begin
     Gerador.wCampo(tcStr, '#26', 'tpVag  ', 03, 03, 0, CTe.infCTeNorm.ferrov.detVag.Items[i].tpVag, DSC_TPVAG);
     Gerador.wCampo(tcDe2, '#27', 'pesoR  ', 01, 05, 1, CTe.infCTeNorm.ferrov.detVag.Items[i].pesoR, DSC_PESOR);
     Gerador.wCampo(tcDe2, '#28', 'pesoBC ', 01, 05, 1, CTe.infCTeNorm.ferrov.detVag.Items[i].pesoBC, DSC_PESOBC);
+    Gerador.wGrupo('/detVag');
    end;
 
   if CTe.infCTeNorm.ferrov.detVag.Count > 990 then

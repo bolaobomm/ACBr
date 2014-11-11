@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/11/2014
+[-] Correções para o modal ferroviário, os grupos: ferroEnv e detVag não 
+    estavam sendo fechados corretamente.
+    por: Danilo Ziza
+
 10/11/2014
 [-] Correções baseado nos relatos de Mauricio Guedes, nomes dos arquivos após ler
     o XML usando o LoadFromStream.
