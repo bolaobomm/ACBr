@@ -39,7 +39,7 @@ Símbolo : Significado
 
 12/11/2014
 -- ACBrConsultaCPF --  (por: DSA)
-[*] Correções para suportar o novo mecanismo de captch.
+[*] Correções para suportar o novo mecanismo de Captcha.
 [*] Correções nos Demos de Delphi e Lazarus para suportar a Imagem em PNG
 
 -- ACBrSocket --
