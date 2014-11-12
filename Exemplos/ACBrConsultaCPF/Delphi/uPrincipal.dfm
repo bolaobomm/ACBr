@@ -294,7 +294,7 @@ object frmPrincipal: TfrmPrincipal
   end
   object ACBrConsultaCPF1: TACBrConsultaCPF
     ProxyPort = '8080'
-    Left = 310
+    Left = 302
     Top = 170
   end
 end

@@ -77,20 +77,16 @@ end;
 procedure TfrmPrincipal.LabAtualizarCaptchaClick(Sender: TObject);
 var
   Stream: TMemoryStream;
-  Jpg: TJPEGImage;
 begin
   Stream := TMemoryStream.Create;
-  Jpg := TJPEGImage.Create;
   try
     ACBrConsultaCPF1.Captcha(Stream);
-    Jpg.LoadFromStream(Stream);
-    Image1.Picture.Assign(Jpg);
+    Image1.Picture.LoadFromStream(Stream);
 
     EditCaptcha.Clear;
     EditCaptcha.SetFocus;
   finally
     Stream.Free;
-    Jpg.Free;
   end;
 end;
 

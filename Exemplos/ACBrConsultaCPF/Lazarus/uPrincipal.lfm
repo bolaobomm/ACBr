@@ -15,7 +15,7 @@ object frmPrincipal: TfrmPrincipal
   KeyPreview = True
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.3'
+  LCLVersion = '1.2.6.0'
   object Panel2: TPanel
     Left = 0
     Height = 188
@@ -31,7 +31,7 @@ object frmPrincipal: TfrmPrincipal
       Left = 10
       Height = 16
       Top = 15
-      Width = 140
+      Width = 139
       Caption = 'Nome da Pessoa Física'
       Font.Color = clWindowText
       Font.Height = -13
@@ -276,7 +276,6 @@ object frmPrincipal: TfrmPrincipal
     top = 208
   end
   object ACBrConsultaCPF1: TACBrConsultaCPF
-    ProxyPort = '8080'
     left = 310
     top = 170
   end
