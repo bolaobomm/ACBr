@@ -45,188 +45,214 @@ unit ACBrNCMs;
 interface
 
 uses
-	Classes, SysUtils, contnrs, ACBrSocket, ACBrUtil;
+  Classes, SysUtils, contnrs, ACBrSocket, ACBrUtil;
 
 type
-	EACBrNcmException = class(Exception);
+  EACBrNcmException = class(Exception);
 
-	TACBrNCM = class
-	private
-		fCodigoNcm   : string;
-		fDescricaoNcm: String;
+  TACBrNCM = class
+  private
+    fCodigoNcm: string;
+    fDescricaoNcm: string;
 
-	public
-		property CodigoNcm   : string read fCodigoNcm write fCodigoNcm;
-		property DescricaoNcm: string read fDescricaoNcm write fDescricaoNcm;
-	end;
+  public
+    property CodigoNcm: string read fCodigoNcm write fCodigoNcm;
+    property DescricaoNcm: string read fDescricaoNcm write fDescricaoNcm;
+  end;
 
-	TACBrNCMsClass = class(TObjectList)
-	protected
-		procedure SetObject(Index: integer; Item: TACBrNCM);
-		function GetObject(Index: integer): TACBrNCM;
-	public
-		function Add(Obj: TACBrNCM): integer;
-		function New: TACBrNCM;
-		property Objects[Index: integer]: TACBrNCM read GetObject
-			write SetObject; default;
-	end;
+  { TACBrNCMsList }
 
-	TACBrNCMs = class(TACBrHTTP)
-	private
-		fNcms       : TACBrNCMsClass;
-		fUrlConsulta: string;
-	public
-		constructor Create(AOwner: TComponent); override;
-		destructor Destroy; override;
-		procedure ListarNcms(codigoCapitulo: String = '');
-		function validar(const CodigoNcm: String): Boolean;
-		property Ncms: TACBrNCMsClass read fNcms write fNcms;
-	published
-		property UrlConsulta: string read fUrlConsulta write fUrlConsulta;
-	end;
+  TACBrNCMsList = class(TObjectList)
+  protected
+    procedure SetObject(Index: integer; Item: TACBrNCM);
+    function GetObject(Index: integer): TACBrNCM;
+  public
+    function Add(Obj: TACBrNCM): integer;
+    function New: TACBrNCM;
+    property Objects[Index: integer]: TACBrNCM read GetObject write SetObject; default;
+    procedure SaveToFile(AFileName: String);
+  end;
+
+  TACBrNCMs = class(TACBrHTTP)
+  private
+    fNcms: TACBrNCMsList;
+    fUrlConsulta: string;
+  public
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
+    procedure ListarNcms(codigoCapitulo: string = '');
+    function Validar(const CodigoNcm: string): boolean;
+    function DescricaoNcm(const CodigoNcm: string): string;
+    property NCMS: TACBrNCMsList read fNcms write fNcms;
+  published
+    property UrlConsulta: string read fUrlConsulta write fUrlConsulta;
+  end;
 
 implementation
 
 constructor TACBrNCMs.Create(AOwner: TComponent);
 begin
-	inherited;
-	fNcms := TACBrNCMsClass.Create;
-	fNcms.Clear;
-	fUrlConsulta :=
-		'http://www4.receita.fazenda.gov.br/simulador/PesquisarNCM.jsp?';
+  inherited;
+  fNcms := TACBrNCMsList.Create;
+  fNcms.Clear;
+  fUrlConsulta :=
+    'http://www4.receita.fazenda.gov.br/simulador/PesquisarNCM.jsp?';
 end;
 
-procedure TACBrNCMsClass.SetObject(Index: integer; Item: TACBrNCM);
+procedure TACBrNCMsList.SetObject(Index: integer; Item: TACBrNCM);
 begin
-	inherited SetItem(Index, Item);
+  inherited SetItem(Index, Item);
 end;
 
-function TACBrNCMsClass.GetObject(Index: integer): TACBrNCM;
+function TACBrNCMsList.GetObject(Index: integer): TACBrNCM;
 begin
-	Result := inherited GetItem(Index) as TACBrNCM;
+  Result := inherited GetItem(Index) as TACBrNCM;
 end;
 
-function TACBrNCMsClass.New: TACBrNCM;
+function TACBrNCMsList.New: TACBrNCM;
 begin
-	Result := TACBrNCM.Create;
-	Add(Result);
+  Result := TACBrNCM.Create;
+  Add(Result);
 end;
 
-function TACBrNCMsClass.Add(Obj: TACBrNCM): integer;
+procedure TACBrNCMsList.SaveToFile(AFileName: String);
+Var
+  SL : TStringList;
+  I: Integer;
 begin
-	Result := inherited Add(Obj);
+  SL := TStringList.Create;
+  try
+    for I := 0 to Count - 1 do
+      SL.Add( Objects[i].CodigoNcm + ';' + Objects[i].DescricaoNcm );
+
+    SL.SaveToFile(AFileName);
+  finally
+    SL.Free;
+  end;
+end;
+
+function TACBrNCMsList.Add(Obj: TACBrNCM): integer;
+begin
+  Result := inherited Add(Obj);
 end;
 
 destructor TACBrNCMs.Destroy;
 begin
-	fNcms.Free;
-	inherited Destroy;
+  fNcms.Free;
+  inherited Destroy;
 end;
 
-procedure TACBrNCMs.ListarNcms(codigoCapitulo: String = '');
+procedure TACBrNCMs.ListarNcms(codigoCapitulo: string = '');
 var
-	Buffer, Texto: String;
-	SL1          : TStringList;
-	i, Cont      : integer;
+  Buffer, Texto: string;
+  SL1: TStringList;
+  i, Cont: integer;
 
-	function CopyDeAte(Texto, TextIni, TextFim: string): string;
-	var
-		ContIni, ContFim: integer;
-	begin
-		Result := '';
-		if (Pos(TextFim, Texto) <> 0) and (Pos(TextIni, Texto) <> 0) then
-		begin
-			ContIni := Pos(TextIni, Texto) + Length(TextIni);
-			ContFim := Pos(TextFim, Texto);
-			Result  := Copy(Texto, ContIni, ContFim - ContIni);
-		end;
-	end;
+  function CopyDeAte(Texto, TextIni, TextFim: string): string;
+  var
+    ContIni, ContFim: integer;
+  begin
+    Result := '';
+    if (Pos(TextFim, Texto) <> 0) and (Pos(TextIni, Texto) <> 0) then
+    begin
+      ContIni := Pos(TextIni, Texto) + Length(TextIni);
+      ContFim := Pos(TextFim, Texto);
+      Result := Copy(Texto, ContIni, ContFim - ContIni);
+    end;
+  end;
 
-	Procedure CarregaResultado;
-	Var
-		Texto: String;
-		i    : integer;
-	Begin
-		Buffer := Self.RespHTTP.Text;
-		Buffer := StringReplace(Buffer, '&lt;', '<', [rfReplaceAll]);
-		Buffer := StringReplace(Buffer, '&gt;', '>' + sLineBreak, [rfReplaceAll]);
+  procedure CarregaResultado;
+  var
+    Texto: string;
+    i: integer;
+  begin
+    Buffer := Self.RespHTTP.Text;
+    Buffer := StringReplace(Buffer, '&lt;', '<', [rfReplaceAll]);
+    Buffer := StringReplace(Buffer, '&gt;', '>' + sLineBreak, [rfReplaceAll]);
 
-		try
-			SL1      := TStringList.Create;
-			SL1.Text := Buffer;
-			for i    := 0 to SL1.Count - 1 do
-			Begin
-				Texto := CopyDeAte(SL1[i], 'codNCM.value=', '</a>');
-				if Trim(Texto) <> '' then
-				Begin
-					with Ncms.New do
-					begin
-						CodigoNcm    := Trim(Copy(Texto, 13, 8));
-						DescricaoNcm := Trim(Copy(Texto, 24, Length(Texto)));
-					End;
-				End;
-			End;
-		finally
-			SL1.Free;
-		end;
-	End;
+    try
+      SL1 := TStringList.Create;
+      SL1.Text := Buffer;
+      for i := 0 to SL1.Count - 1 do
+      begin
+        Texto := CopyDeAte(SL1[i], 'codNCM.value=', '</a>');
+        if Trim(Texto) <> '' then
+        begin
+          with Ncms.New do
+          begin
+            CodigoNcm := Trim(Copy(Texto, 13, 8));
+            DescricaoNcm := Trim(Copy(Texto, 24, Length(Texto)));
+          end;
+        end;
+      end;
+    finally
+      SL1.Free;
+    end;
+  end;
 
 begin
-	if Trim(codigoCapitulo) <> '' then
-	Begin
-		try
-			Self.HTTPGet(fUrlConsulta + 'codigo=' + Copy(codigoCapitulo, 1, 2) +
-				'&codigoCapitulo=' + Copy(codigoCapitulo, 1, 2) +
-				'&codigoPosicao=&button=Exibir+NCMs');
-		except
-			on E: Exception do
-			begin
-				raise EACBrNcmException.Create('Erro ao consultar Ncm' + #13#10 +
-					E.Message);
-			end;
-		end;
+  if Trim(codigoCapitulo) <> '' then
+  begin
+    try
+      Self.HTTPGet(fUrlConsulta + 'codigo=' + Copy(codigoCapitulo, 1, 2) +
+        '&codigoCapitulo=' + Copy(codigoCapitulo, 1, 2) +
+        '&codigoPosicao=&button=Exibir+NCMs');
+    except
+      on E: Exception do
+      begin
+        raise EACBrNcmException.Create('Erro ao consultar Ncm' + #13#10 + E.Message);
+      end;
+    end;
 
-		CarregaResultado;
-	End
-	Else
-	Begin
-		Cont := 0;
-		while Cont < 98 do
-		Begin
-			Inc(Cont);
-
-			try
-				Self.HTTPGet(fUrlConsulta + 'codigo=' + FormatFloat('00', Cont) +
-					'&codigoCapitulo=' + FormatFloat('00', Cont) +
-					'&codigoPosicao=&button=Exibir+NCMs');
-			except
-				on E: Exception do
-				begin
-					raise EACBrNcmException.Create('Erro ao consultar Ncm' + #13#10 +
-						E.Message);
-				end;
-			end;
-
-			CarregaResultado;
-		End;
-	End;
+    CarregaResultado;
+  end
+  else
+  begin
+    Cont := 0;
+    while Cont < 98 do
+    begin
+      Inc(Cont);
+      try
+        Self.HTTPGet(fUrlConsulta + 'codigo=' + FormatFloat('00', Cont) +
+          '&codigoCapitulo=' + FormatFloat('00', Cont) +
+          '&codigoPosicao=&button=Exibir+NCMs');
+      except
+        on E: Exception do
+        begin
+          raise EACBrNcmException.Create('Erro ao consultar Ncm' + #13#10 + E.Message);
+        end;
+      end;
+      CarregaResultado;
+    end;
+  end;
 end;
 
-function TACBrNCMs.validar(const CodigoNcm: String): Boolean;
-Var
-	i: integer;
-Begin
-	Result := False;
-	ListarNcms(Copy(CodigoNcm, 1, 2));
+function TACBrNCMs.validar(const CodigoNcm: string): boolean;
+var
+  i: integer;
+begin
+  Result := False;
+  ListarNcms(Copy(CodigoNcm, 1, 2));
+  for i := 0 to Ncms.Count - 1 do
+    if Ncms[i].CodigoNcm = CodigoNcm then
+    begin
+      Result := True;
+      Break;
+    end;
+end;
 
-	for i := 0 to Ncms.Count - 1 do
-	Begin
-		if Ncms[i].CodigoNcm = CodigoNcm then
-		Begin
-			Result := True;
-			Break;
-		End;
-	End;
-End;
+function TACBrNCMs.descricaoNcm(const CodigoNcm: string): string;
+var
+  i: integer;
+begin
+  Result := '';
+  ListarNcms(Copy(CodigoNcm, 1, 2));
+  for i := 0 to Ncms.Count - 1 do
+    if Ncms[i].CodigoNcm = CodigoNcm then
+    begin
+      Result := Ncms[i].DescricaoNcm;
+      Break;
+    end;
+end;
 
 end.
