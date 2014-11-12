@@ -3428,6 +3428,9 @@ function TACBrECF.GetRodapeImposto: String;
 var
   VlImposto: Double;
   VlPercentual: Double;
+  VlImpostoFederal, VlImpostoEstadual, VlImpostoMunicipal: Double;
+  VlPercentualFederal, VlPercentualEstadual, VlPercentualMunicipal: Double;
+  InformouValorAproxFederal, InformouValorAproxEstadual, InformouValorAproxMunicipal: Boolean;
 begin
   Result := '';
   if InfoRodapeCupom.Imposto.ValorAproximado > 0 then
@@ -3453,6 +3456,70 @@ begin
         FormatFloat('(,#0.00%)', VlPercentual) +
         IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', ' Fonte:' + InfoRodapeCupom.Imposto.Fonte, '');
     end;
+  end
+  else
+  begin
+    InformouValorAproxFederal   := (InfoRodapeCupom.Imposto.ValorAproximadoFederal > 0);
+    InformouValorAproxEstadual  := (InfoRodapeCupom.Imposto.ValorAproximadoEstadual > 0);
+    InformouValorAproxMunicipal := (InfoRodapeCupom.Imposto.ValorAproximadoMunicipal > 0);
+
+    if InformouValorAproxFederal or InformouValorAproxEstadual or InformouValorAproxMunicipal then
+    begin
+      // valor aproximado informado pelo usuário
+      VlImpostoFederal := InfoRodapeCupom.Imposto.ValorAproximadoFederal;
+      VlImpostoEstadual := InfoRodapeCupom.Imposto.ValorAproximadoEstadual;
+      VlImpostoMunicipal := InfoRodapeCupom.Imposto.ValorAproximadoMunicipal;
+
+      // valor aproximado percentual (Não utilizado nas sugestões do IBPT no momento...)
+      VlPercentualFederal := VlImpostoFederal / Subtotal * 100;
+      VlPercentualEstadual := VlImpostoEstadual / Subtotal * 100;
+      VlPercentualMunicipal := VlImpostoMunicipal / Subtotal * 100;
+
+      // impressão do texto
+      // se o usuário informou a propriedade Texto, utilizar
+      // se não imprimir como no IBPT
+      if Trim(InfoRodapeCupom.Imposto.Texto) <> '' then
+      begin
+        Result := Format(InfoRodapeCupom.Imposto.Texto, [VlImpostoFederal, VlPercentualFederal, VlImpostoEstadual, VlPercentualEstadual, VlImpostoMunicipal, VlPercentualMunicipal]);
+      end
+      else
+      begin
+        if InfoRodapeCupom.Imposto.ModoCompacto  then
+        begin
+          // IBPT opção 2
+          // Impressão supercompacta caso informe os tres impostos.
+          if InformouValorAproxEstadual and InformouValorAproxMunicipal then
+          begin
+            Result := 'Trib aprox R$:' +
+              FormatFloat(',#0.00', VlImpostoFederal)   + ' Fed, '+
+              FormatFloat(',#0.00', VlImpostoEstadual)  + ' Est e '+
+              FormatFloat(',#0.00', VlImpostoMunicipal) + ' Mun'+
+              IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', sLineBreak + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '');
+          end
+          else
+          begin
+            Result := 'Trib aprox R$:' +
+              FormatFloat(',#0.00', VlImpostoFederal) + ' Federal e '+
+              IfThen(InformouValorAproxEstadual, FormatFloat(',#0.00', VlImpostoEstadual) + ' Estadual', '') +
+              IfThen(InformouValorAproxEstadual, FormatFloat(',#0.00', VlImpostoMunicipal) + ' Municipal', '') +
+              IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', sLineBreak + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '');
+          end;
+        end
+        else
+        begin
+          // IBPT opção 1
+          Result := 'Você pagou aproximadamente:' + sLineBreak +
+            'R$ ' + FormatFloat(',#0.00', VlImpostoFederal) + ' de tributos federais'+ sLineBreak +
+            // FormatFloat(' (,#0.00%)', VlPercentualFederal)
+            'R$ ' + FormatFloat(',#0.00', VlImpostoEstadual) + ' de tributos estaduais'+ sLineBreak +
+            // FormatFloat(' (,#0.00%)', VlPercentualEstadual)
+            'R$ ' + FormatFloat(',#0.00', VlImpostoMunicipal) + ' de tributos municipais'+
+            // FormatFloat(' (,#0.00%)', VlPercentualMunicipal)
+            IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', sLineBreak + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '');
+        end;
+      end;
+    end;
+
   end;
 end;
 

@@ -109,11 +109,19 @@ type
 TACBrECFRodapeImposto = class( TPersistent )
   private
     fsValorAproximado: Double;
+    fsValorAproximadoFederal: Double;
+    fsValorAproximadoEstadual: Double;
+    fsValorAproximadoMunicipal: Double;
     fsFonte: String;
     fsTexto: String;
+    FModoCompacto: Boolean;
   published
     property Texto: String read fsTexto write fsTexto;
     property ValorAproximado: Double read fsValorAproximado write fsValorAproximado stored false;
+    property ValorAproximadoFederal: Double read fsValorAproximadoFederal write fsValorAproximadoFederal stored False;
+    property ValorAproximadoEstadual: Double read fsValorAproximadoEstadual write fsValorAproximadoEstadual stored False;
+    property ValorAproximadoMunicipal: Double read fsValorAproximadoMunicipal write fsValorAproximadoMunicipal stored False;
+    property ModoCompacto: Boolean read FModoCompacto write FModoCompacto;
     property Fonte: String read fsFonte  write fsFonte  stored false;
 end;
 
@@ -4922,7 +4930,11 @@ begin
   fsNotaLegalDF.fsValorISS  := 0.00;
 
   fsImposto.ValorAproximado := 0.00;
+  fsImposto.ValorAproximadoFederal := 0.00;
+  fsImposto.ValorAproximadoEstadual := 0.00;
+  fsImposto.ValorAproximadoMunicipal := 0.00;
   fsImposto.Fonte := '';
+  fsImposto.ModoCompacto := False;
 end;
 
 { TACBRRodapeAbastecimento }

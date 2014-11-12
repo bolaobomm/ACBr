@@ -97,6 +97,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 12/11/2014
+-- ACBrECF --
+[+] Ajustes para impressão dos impostos separados por esfera seguindo os novos
+    modelos disponibilizados pelo IBPT. Exemplo do FechaCupom no ECFTeste (Delphi)
+    foi alterado para exemplificar o uso. A compatibilidade foi mantida.
+    (por: EMBarbosa e clever-x)
+
 Data: 10/11/2014   (por: DSA)
 -- ACBrECFEpson --
 [*] Ajuste nos métodos ArquivoMFD_DLL para suportar a "finSintegra"
