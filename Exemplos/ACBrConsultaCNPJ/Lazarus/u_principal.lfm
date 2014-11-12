@@ -1,22 +1,22 @@
 object Fprincipal: TFprincipal
-  Left = 388
-  Height = 475
-  Top = 152
-  Width = 705
+  Left = 344
+  Height = 500
+  Top = 65
+  Width = 706
   Caption = 'Consulta de CNPJ'
-  ClientHeight = 475
-  ClientWidth = 705
+  ClientHeight = 500
+  ClientWidth = 706
   OnCreate = FormCreate
   OnShow = FormShow
-  LCLVersion = '1.1'
+  LCLVersion = '1.2.6.0'
   object Panel2: TPanel
     Left = 9
-    Height = 305
+    Height = 329
     Top = 168
     Width = 695
     BevelInner = bvRaised
     BevelOuter = bvLowered
-    ClientHeight = 305
+    ClientHeight = 329
     ClientWidth = 695
     TabOrder = 0
     object Label2: TLabel
@@ -319,9 +319,9 @@ object Fprincipal: TFprincipal
       TabOrder = 12
     end
     object Label16: TLabel
-      Left = 311
+      Left = 8
       Height = 16
-      Top = 201
+      Top = 248
       Width = 43
       Caption = 'CNAE2'
       Font.Color = clWindowText
@@ -330,21 +330,10 @@ object Fprincipal: TFprincipal
       ParentColor = False
       ParentFont = False
     end
-    object EditCNAE2: TEdit
-      Left = 311
-      Height = 24
-      Top = 219
-      Width = 313
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Tahoma'
-      ParentFont = False
-      TabOrder = 13
-    end
     object Label17: TLabel
-      Left = 8
+      Left = 305
       Height = 16
-      Top = 248
+      Top = 203
       Width = 100
       Caption = 'Natureza Juridica'
       Font.Color = clWindowText
@@ -354,14 +343,27 @@ object Fprincipal: TFprincipal
       ParentFont = False
     end
     object EditNaturezaJuridica: TEdit
-      Left = 8
+      Left = 305
       Height = 24
-      Top = 264
-      Width = 615
+      Top = 219
+      Width = 319
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Tahoma'
       ParentFont = False
+      TabOrder = 13
+    end
+    object EditCNAE2: TMemo
+      Left = 2
+      Height = 63
+      Top = 264
+      Width = 691
+      Align = alBottom
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      ScrollBars = ssAutoBoth
       TabOrder = 14
     end
   end
@@ -532,7 +534,6 @@ object Fprincipal: TFprincipal
     top = 288
   end
   object ACBrConsultaCNPJ1: TACBrConsultaCNPJ
-    ProxyPort = '8080'
     left = 404
     top = 196
   end

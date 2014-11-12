@@ -21,7 +21,7 @@ type
     EditCEP: TEdit;
     EditCidade: TEdit;
     EditCNAE1 : TEdit ;
-    EditCNAE2 : TEdit ;
+    EditCNAE2: TMemo;
     EditNaturezaJuridica : TEdit ;
     EditCNPJ: TMaskEdit;
     EditComplemento: TEdit;
@@ -96,7 +96,7 @@ begin
       EditCEP.Text         := ACBrConsultaCNPJ1.CEP;
       EditSituacao.Text    := ACBrConsultaCNPJ1.Situacao;
       EditCNAE1.Text       := ACBrConsultaCNPJ1.CNAE1;
-      EditCNAE2.Text       := ACBrConsultaCNPJ1.CNAE2;
+      EditCNAE2.Lines.Text := ACBrConsultaCNPJ1.CNAE2.Text;
       EditNaturezaJuridica.Text := ACBrConsultaCNPJ1.NaturezaJuridica;
     end;
   end
