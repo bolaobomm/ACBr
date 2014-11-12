@@ -56,14 +56,13 @@ type
 
   TACBrConsultaCPF = class(TACBrHTTP)
   private
-    FViewState: String;
     FNome: String;
     FSituacao: String;
     FCPF: String;
     FDigitoVerificador: String;
     FEmissao: String;
     FCodCtrlControle: String;
-    Function GetCaptchaURL: String;
+    FTokenCaptcha: String;
 
     function VerificarErros(Str: String): String;
     function LerCampo(Texto: TStringList; NomeCampo: String): String;
@@ -102,42 +101,34 @@ begin
     Result:= '';
 end;
 
-function TACBrConsultaCPF.GetCaptchaURL : String ;
-var
-  URL, Html: String;
-begin
-  try
-    Self.HTTPGet('http://www.receita.fazenda.gov.br/aplicacoes/atcta/cpf/consultapublica.asp');
-    Html := Self.RespHTTP.Text;
-
-    URL := 'http://www.receita.fazenda.gov.br' +
-           StrEntreStr(Html, 'alt='+
-                        QuotedStr(ACBrStr('Imagem com os caracteres anti robô')) + ' src='+'''', '''');
-
-    FViewState := StrEntreStr(Html, '<input type=hidden id=viewstate name=viewstate value='+'''', '''');
-
-    Result := StringReplace(URL, 'amp;', '', []);
-  except
-    on E: Exception do
-    begin
-      raise EACBrConsultaCPFException.Create('Erro na hora de obter a URL do captcha.'+#13#10+E.Message);
-    end;
-  end;
-end;
-
 procedure TACBrConsultaCPF.Captcha(Stream: TStream);
+var
+  Img64, ImgBin, DataClientID: AnsiString;
+  P: Integer;
 begin
   try
-    HTTPGet(GetCaptchaURL);
+    DataClientID := '41ff278aba054a4cb14ab7a03d2f4c4d';
+    HTTPPost('http://captcha2.servicoscorporativos.serpro.gov.br/captcha/1.0.0/imagem', DataClientID);
     if HttpSend.ResultCode = 200 then
     begin
-      HTTPSend.Document.Position := 0;
-      Stream.CopyFrom(HttpSend.Document, HttpSend.Document.Size);
+      Img64 := RespHTTP.Text;
+      P := pos('@',Img64);
+      if P > 0 then
+      begin
+        FTokenCaptcha := copy(Img64,1,P-1);
+        Img64         := copy(Img64,P+1,Length(Img64)-Length(FTokenCaptcha)+2);
+      end
+      else
+         raise Exception.Create('');
+
+      ImgBin := DecodeBase64(Img64);
+      Stream.Write(Pointer(ImgBin)^,Length(ImgBin));
       Stream.Position := 0;
     end;
-  Except on E: Exception do begin
-    raise EACBrConsultaCPFException.Create('Erro na hora de fazer o download da imagem do captcha.'+#13#10+E.Message);
-  end;
+  Except
+    on E: Exception do begin
+      raise EACBrConsultaCPFException.Create('Erro na hora de fazer o download da imagem do captcha.'+#13#10+E.Message);
+    end;
   end;
 end;
 
@@ -197,15 +188,13 @@ begin
   if Erro <> '' then
      raise EACBrConsultaCPFException.Create(Erro);
 
+  //txtCPF=11122334410&txtToken_captcha_serpro_gov_br=299218104152138191166941752496584741018616278361624164&txtTexto_captcha_serpro_gov_br=ZCI8B9&Enviar=Consultar
   Post:= TStringStream.Create('');
   try
-    Post.WriteString('origem=comprovante&');
-    Post.WriteString('viewstate=' + EncodeURLElement(fviewstate)+'&');
     Post.WriteString('txtCPF='+OnlyNumber(ACPF)+'&');
-    Post.WriteString('captcha='+Trim(ACaptcha)+'&');
-    Post.WriteString('captchaAudio=&');
-    Post.WriteString('Enviar=Consultar&');
-    Post.WriteString('search_type=CPF');
+    Post.WriteString('txtToken_captcha_serpro_gov_br='+FTokenCaptcha+'&');
+    Post.WriteString('txtTexto_captcha_serpro_gov_br='+Trim(ACaptcha)+'&');
+    Post.WriteString('Enviar=Consultar');
     Post.Position:= 0;
 
     HttpSend.Clear;

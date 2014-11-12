@@ -194,7 +194,7 @@ TACBrHTTP = class( TACBrComponent )
     function AjustaParam(AParam : String) : String ;
     procedure HTTPGet( AURL : String) ; virtual ;
     Procedure HTTPPost( AURL : String ) ; overload; virtual ;
-    Procedure HTTPPost( AURL : String; APostData : String  ) ; overload; virtual ;
+    Procedure HTTPPost( AURL : String; APostData : AnsiString  ) ; overload; virtual ;
     procedure HTTPPut(AURL: String);
     procedure HTTPMethod( Method, AURL : String ); virtual ;
 
@@ -634,7 +634,7 @@ begin
   HTTPMethod( 'PUT', AURL ) ;
 end ;
 
-procedure TACBrHTTP.HTTPPost(AURL : String ; APostData : String) ;
+procedure TACBrHTTP.HTTPPost(AURL : String ; APostData : AnsiString) ;
 begin
   HTTPSend.Clear;
   HTTPSend.Document.Write(Pointer(APostData)^,Length(APostData));

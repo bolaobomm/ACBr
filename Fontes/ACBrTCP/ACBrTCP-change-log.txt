@@ -37,6 +37,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/11/2014
+-- ACBrConsultaCPF --  (por: DSA)
+[*] Correções para suportar o novo mecanismo de captch.
+[*] Correções nos Demos de Delphi e Lazarus para suportar a Imagem em PNG
+
+-- ACBrSocket --
+[*] Ajustes em HTTPPost() para evitar perda de caracteres no formulário de envio
+
 07/11/2014
 -- ACBrIBPTax --
 [*] alteração do componente ACBrIBPTax para ler as novas tabelas de imposto no cupom,
