@@ -49,21 +49,6 @@ uses Classes, SysUtils,
      ACBrNFeDANFEClass, ACBrDevice, ACBrUtil,
      pcnNFe, pcnConversao, pcnAuxiliar, ACBrDFeUtil;
 
-const
-      cCmdImpZera = #27+'@';
-      cCmdEspacoLinha = #27+'3'+#14;
-      cCmdPagCod = #27+'t'+#39;
-      cCmdImpNegrito = #27+'E1';
-      cCmdImpFimNegrito = #27+'E2';
-      cCmdImpExpandido = #29+'!'+#16;
-      cCmdImpFimExpandido = #29+'!'+#0;
-      cCmdFonteNormal = #27+'M0';
-      cCmdFontePequena = #27+'M1';
-      cCmdAlinhadoEsquerda = #27+'a0';
-      cCmdAlinhadoCentro = #27+'a1';
-      cCmdAlinhadoDireita = #27+'a2';
-      cCmdCortaPapel = #29+'V1';      
-
 type
   TACBrNFeMarcaImpressora = (iEpson, iBematech);
 
@@ -74,6 +59,20 @@ type
     FLinhasEntreCupons : Integer ;
     FLinhaCmd : String;
     FBuffer : TStringList;
+
+    cCmdImpZera : String;
+    cCmdEspacoLinha : String;
+    cCmdPagCod : String;
+    cCmdImpNegrito : String;
+    cCmdImpFimNegrito : String;
+    cCmdImpExpandido : String;
+    cCmdImpFimExpandido : String;
+    cCmdFonteNormal : String;
+    cCmdFontePequena : String;
+    cCmdAlinhadoEsquerda : String;
+    cCmdAlinhadoCentro : String;
+    cCmdAlinhadoDireita : String;
+    cCmdCortaPapel : String;
 
     procedure ImprimePorta( AString : AnsiString ) ;
   protected
@@ -151,6 +150,39 @@ end;
 
 procedure TACBrNFeDANFeESCPOS.GerarCabecalho;
 begin
+  if MarcaImpressora = iBematech then
+   begin
+     cCmdImpZera     := #27+'@'+#29#249#32#48 ; //#27+'@' Inicializa impressora, demais selecionam ESC/Bema temporariamente
+     cCmdEspacoLinha := #27+'3'+#14;  //Verificar comando BEMA/POS
+     cCmdPagCod      := #27+'t'+#4;
+     cCmdImpNegrito  := #27#78#3;
+     cCmdImpFimNegrito := #27#78#2;
+     cCmdImpExpandido  := #27#87#1;
+     cCmdImpFimExpandido := #27#87#0;
+     cCmdFonteNormal   := #18;
+     cCmdFontePequena  := #15;
+     cCmdAlinhadoEsquerda := #27+'a0';
+     cCmdAlinhadoCentro   := #27+'a1';
+     cCmdAlinhadoDireita  := #27+'a2'; //Verificar comando BEMA/POS
+     cCmdCortaPapel       := #27+'w'+#29#249#31#49; //#27+'w' corta papel, demais voltam a configuração da impressora
+   end
+  else
+   begin
+      cCmdImpZera     := #27+'@';
+      cCmdEspacoLinha := #27+'3'+#14;
+      cCmdPagCod      := #27+'t'+#39;
+      cCmdImpNegrito  := #27+'E1';
+      cCmdImpFimNegrito := #27+'E2';
+      cCmdImpExpandido  := #29+'!'+#16;
+      cCmdImpFimExpandido := #29+'!'+#0;
+      cCmdFonteNormal   := #27+'M0';
+      cCmdFontePequena  := #27+'M1';
+      cCmdAlinhadoEsquerda := #27+'a0';
+      cCmdAlinhadoCentro   := #27+'a1';
+      cCmdAlinhadoDireita  := #27+'a2';
+      cCmdCortaPapel       := #29+'V1';
+   end;
+
   FLinhaCmd := cCmdImpZera+cCmdEspacoLinha+cCmdPagCod+cCmdFonteNormal+cCmdAlinhadoCentro;
   FBuffer.clear;
   FBuffer.Add(FLinhaCmd+chr(29)+'(L'+chr(6)+chr(0)+'0E  '+chr(1)+chr(1)); // Imprimindo logo já gravado na memória
