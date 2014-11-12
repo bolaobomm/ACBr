@@ -369,8 +369,8 @@ begin
   if Mascara <> '' then
      strCurMascara := Mascara;
 
-  // Se o parametro Nulo = true e Value = 0, será retornado '|'
-  if (Value = Null) or (Value=Unassigned) then
+  // Se o parametro Value = Null, será retornado '|'
+  if (Value = Null) then
   begin
      Result := FDelimitador;
      Exit;
