@@ -892,6 +892,8 @@ begin
          Ide.UFIni   := INIRec.ReadString('ide', 'UFIni', '');
          Ide.UFFim   := INIRec.ReadString('ide', 'UFFim', '');
 
+         Ide.dhIniViagem := NotaUtil.StringToDateTime(INIRec.ReadString('ide', 'dhIniViagem', '0'));
+
          I := 1;
          while true do
           begin
@@ -943,16 +945,27 @@ begin
 
           if INIRec.ReadString('Rodo', 'RNTRC', '') <> '' then
           begin
-            Rodo.RNTRC := INIRec.ReadString('Rodo', 'RNTRC', '');
-            Rodo.CIOT  := INIRec.ReadString('Rodo', 'CIOT', '');
+            Rodo.RNTRC      := INIRec.ReadString('Rodo', 'RNTRC', '');
+            Rodo.CIOT       := INIRec.ReadString('Rodo', 'CIOT', '');
+            Rodo.codAgPorto := INIRec.ReadString('Rodo', 'codAgPorto', '');
 
-            rodo.veicTracao.cInt  := INIRec.ReadString('veicTracao', 'cInt', '');
-            rodo.veicTracao.placa := INIRec.ReadString('veicTracao', 'placa', '');
-            rodo.veicTracao.tara  := INIRec.ReadInteger('veicTracao', 'tara', 0);
-            rodo.veicTracao.capKG := INIRec.ReadInteger('veicTracao', 'capKG', 0);
-            rodo.veicTracao.capM3 := INIRec.ReadInteger('veicTracao', 'capM3', 0);
-            rodo.veicTracao.UF    := INIRec.ReadString('veicTracao', 'UF', '');
+            rodo.veicTracao.cInt    := INIRec.ReadString('veicTracao', 'cInt', '');
+            rodo.veicTracao.placa   := INIRec.ReadString('veicTracao', 'placa', '');
+            rodo.veicTracao.RENAVAM := INIRec.ReadString('veicTracao', 'RENAVAM', '');
+            rodo.veicTracao.tara    := INIRec.ReadInteger('veicTracao', 'tara', 0);
+            rodo.veicTracao.capKG   := INIRec.ReadInteger('veicTracao', 'capKG', 0);
+            rodo.veicTracao.capM3   := INIRec.ReadInteger('veicTracao', 'capM3', 0);
+
+            rodo.veicTracao.prop.CNPJCPF := INIRec.ReadString('veicTracao', 'CNPJCPF', '');
+            rodo.veicTracao.prop.RNTRC   := INIRec.ReadString('veicTracao', 'RNRTC', '');
+            rodo.veicTracao.prop.xNome   := INIRec.ReadString('veicTracao', 'xNome', '');
+            rodo.veicTracao.prop.IE      := INIRec.ReadString('veicTracao', 'IE', '');
+            rodo.veicTracao.prop.UF      := INIRec.ReadString('veicTracao', 'UFProp', '');
+            rodo.veicTracao.prop.tpProp  := StrToTpProp(OK, INIRec.ReadString('veicTracao', 'tpProp', '0'));
+
             rodo.veicTracao.tpRod := StrToTpRodado(OK, INIRec.ReadString('veicTracao', 'tpRod', '00'));
+            rodo.veicTracao.tpCar := StrToTpCarroceria(OK, INIRec.ReadString('veicTracao', 'tpCar', '00'));
+            rodo.veicTracao.UF    := INIRec.ReadString('veicTracao', 'UF', '');
 
             I := 1;
             while true do
@@ -963,11 +976,21 @@ begin
                   break;
                with rodo.veicReboque.Add do
                 begin
-                  cInt  := INIRec.ReadString(sSecao, 'cInt', '');
-                  placa := INIRec.ReadString(sSecao, 'placa', '');
-                  tara  := INIRec.ReadInteger(sSecao, 'tara', 0);
-                  capKG := INIRec.ReadInteger(sSecao, 'capKG', 0);
-                  capM3 := INIRec.ReadInteger(sSecao, 'capM3', 0);
+                  cInt    := INIRec.ReadString(sSecao, 'cInt', '');
+                  placa   := INIRec.ReadString(sSecao, 'placa', '');
+                  RENAVAM := INIRec.ReadString(sSecao, 'RENAVAM', '');
+                  tara    := INIRec.ReadInteger(sSecao, 'tara', 0);
+                  capKG   := INIRec.ReadInteger(sSecao, 'capKG', 0);
+                  capM3   := INIRec.ReadInteger(sSecao, 'capM3', 0);
+
+                  prop.CNPJCPF := INIRec.ReadString(sSecao, 'CNPJCPF', '');
+                  prop.RNTRC   := INIRec.ReadString(sSecao, 'RNRTC', '');
+                  prop.xNome   := INIRec.ReadString(sSecao, 'xNome', '');
+                  prop.IE      := INIRec.ReadString(sSecao, 'IE', '');
+                  prop.UF      := INIRec.ReadString(sSecao, 'UFProp', '');
+                  prop.tpProp  := StrToTpProp(OK, INIRec.ReadString(sSecao, 'tpProp', '0'));
+
+                  tpCar := StrToTpCarroceria(OK, INIRec.ReadString(sSecao, 'tpCar', '00'));
                   UF    := INIRec.ReadString(sSecao, 'UF', '');
                 end;
                Inc(I);
@@ -1320,7 +1343,10 @@ begin
           end;
 
          tot.qCTe   := INIRec.ReadInteger('tot', 'qCTe', 0);
+         tot.qCT    := INIRec.ReadInteger('tot', 'qCT', 0);
          tot.qNFe   := INIRec.ReadInteger('tot', 'qNFe', 0);
+         tot.qNF    := INIRec.ReadInteger('tot', 'qNF', 0);
+         tot.qMDFe  := INIRec.ReadInteger('tot', 'qMDFe', 0);
          tot.vCarga := StringToFloatDef(INIRec.ReadString('tot', 'vCarga', ''), 0);
          tot.cUnid  := StrToUnidMed(OK, INIRec.ReadString('tot', 'cUnid', '00'));
          tot.qCarga := StringToFloatDef(INIRec.ReadString('tot', 'qCarga', ''), 0);
@@ -1328,13 +1354,28 @@ begin
          I := 1;
          while true do
           begin
-            sSecao := 'lacre' + IntToStrZero(I, 3);
+            sSecao := 'lacres' + IntToStrZero(I, 3);
             sFim   := INIRec.ReadString(sSecao, 'nLacre', 'FIM');
             if sFim = 'FIM' then
                break;
             with lacres.Add do
              begin
                nLacre := sFim;
+             end;
+            Inc(I);
+          end;
+
+         I := 1;
+         while true do
+          begin
+            sSecao := 'autXML' + IntToStrZero(I, 2);
+            sFim   := INIRec.ReadString(sSecao, 'CNPJCPF', 'FIM');
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+               break;
+
+            with autXML.Add do
+             begin
+               CNPJCPF := sFim;
              end;
             Inc(I);
           end;

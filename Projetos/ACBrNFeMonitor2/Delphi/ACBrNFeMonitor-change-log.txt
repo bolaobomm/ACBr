@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/11/2014
+[*] : Incluido campos na procedure GerarIniMDFe.
+      Campos obrigatórios e opcionais, deixando desta forma mais completo.
+      Por: Italo Jurisato Junior
+
 17/10/2014
 [*] : Correção na função setversaodf, estava buscando o indice mas não estava repassando ao componente para alterar!
 
