@@ -96,4 +96,10 @@ object dm: Tdm
     left = 417
     top = 80
   end
+  object ACBrNCMs1: TACBrNCMs
+    ProxyPort = '8080'
+    UrlConsulta = 'http://www4.receita.fazenda.gov.br/simulador/PesquisarNCM.jsp?'
+    left = 240
+    top = 80
+  end
 end

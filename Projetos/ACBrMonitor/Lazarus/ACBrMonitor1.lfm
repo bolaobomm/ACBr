@@ -18,7 +18,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnShortCut = FormShortCut
   Position = poScreenCenter
   ShowHint = True
-  LCLVersion = '1.2.4.0'
+  LCLVersion = '1.2.6.0'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -962,10 +962,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
       Height = 265
       Top = 9
       Width = 598
-      ActivePage = TabSheet3
+      ActivePage = tsNcm
       Align = alBottom
       Images = ImageList1
-      TabIndex = 14
+      TabIndex = 15
       TabOrder = 0
       object tsMonitor: TTabSheet
         Caption = '&Monitor'
@@ -1383,10 +1383,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
           Height = 235
           Top = 0
           Width = 590
-          ActivePage = tsCadUsuario
+          ActivePage = tsCadSwH
           Align = alClient
           Images = ImageList1
-          TabIndex = 1
+          TabIndex = 0
           TabOrder = 0
           object tsCadSwH: TTabSheet
             Caption = 'Sw.House'
@@ -1397,16 +1397,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 0
               Height = 205
               Top = 0
-              Width = 1582
-              ActivePage = tsCadSwChaveRSA
+              Width = 582
+              ActivePage = tsCadSwDados
               Align = alClient
               Images = ImageList1
-              TabIndex = 1
+              TabIndex = 0
               TabOrder = 0
               object tsCadSwDados: TTabSheet
                 Caption = 'Dados Cadastrais'
                 ClientHeight = 175
-                ClientWidth = 1574
+                ClientWidth = 574
                 ImageIndex = 19
                 object Label83: TLabel
                   AnchorSideLeft.Control = edSH_RazaoSocial
@@ -1425,14 +1425,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 12
                   Height = 25
                   Top = 18
-                  Width = 422
+                  Width = 0
                   Anchors = [akTop, akLeft, akRight]
                   TabOrder = 0
                 end
                 object Label84: TLabel
                   AnchorSideLeft.Control = edSH_COO
                   AnchorSideTop.Control = Label83
-                  Left = 444
+                  Left = 22
                   Height = 17
                   Top = 1
                   Width = 28
@@ -1444,10 +1444,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   AnchorSideLeft.Side = asrBottom
                   AnchorSideTop.Control = edSH_RazaoSocial
                   Cursor = crIBeam
-                  Left = 444
+                  Left = 22
                   Height = 25
                   Top = 18
-                  Width = 107
+                  Width = 0
                   Anchors = [akTop, akLeft, akRight]
                   BorderSpacing.Left = 10
                   OnKeyPress = edOnlyNumbers
@@ -1456,7 +1456,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object Label85: TLabel
                   AnchorSideLeft.Control = edSH_IM
                   AnchorSideTop.Control = Label87
-                  Left = 444
+                  Left = 22
                   Height = 17
                   Top = 44
                   Width = 81
@@ -1469,10 +1469,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   AnchorSideRight.Control = edSH_COO
                   AnchorSideRight.Side = asrBottom
                   Cursor = crIBeam
-                  Left = 444
+                  Left = 22
                   Height = 25
                   Top = 61
-                  Width = 107
+                  Width = 0
                   Anchors = [akTop, akLeft, akRight]
                   OnKeyPress = edOnlyNumbers
                   TabOrder = 2
@@ -1485,7 +1485,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 215
                   Height = 25
                   Top = 61
-                  Width = 219
+                  Width = 0
                   Anchors = [akTop, akLeft, akRight]
                   BorderSpacing.Left = 10
                   OnKeyPress = edOnlyNumbers
@@ -1543,7 +1543,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 12
                   Height = 25
                   Top = 104
-                  Width = 301
+                  Width = 0
                   Anchors = [akTop, akLeft, akRight]
                   OnChange = edSH_AplicativoChange
                   TabOrder = 5
@@ -1551,7 +1551,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object Label89: TLabel
                   AnchorSideLeft.Control = edSH_NumeroAP
                   AnchorSideTop.Control = Label88
-                  Left = 323
+                  Left = 22
                   Height = 17
                   Top = 87
                   Width = 48
@@ -1563,10 +1563,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   AnchorSideLeft.Side = asrBottom
                   AnchorSideTop.Control = edSH_Aplicativo
                   Cursor = crIBeam
-                  Left = 323
+                  Left = 22
                   Height = 25
                   Top = 104
-                  Width = 112
+                  Width = 0
                   Anchors = [akTop, akLeft, akRight]
                   BorderSpacing.Left = 10
                   OnChange = edSH_NumeroAPChange
@@ -1575,7 +1575,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object Label90: TLabel
                   AnchorSideLeft.Control = edSH_VersaoAP
                   AnchorSideTop.Control = Label88
-                  Left = 444
+                  Left = 22
                   Height = 17
                   Top = 87
                   Width = 41
@@ -1588,17 +1588,17 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   AnchorSideRight.Control = edSH_IM
                   AnchorSideRight.Side = asrBottom
                   Cursor = crIBeam
-                  Left = 444
+                  Left = 22
                   Height = 25
                   Top = 104
-                  Width = 107
+                  Width = 0
                   Anchors = [akTop, akLeft, akRight]
                   TabOrder = 7
                 end
                 object Label91: TLabel
                   AnchorSideLeft.Control = edSH_Linha1
                   AnchorSideTop.Control = Label92
-                  Left = 323
+                  Left = 22
                   Height = 17
                   Top = 130
                   Width = 41
@@ -1612,10 +1612,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   AnchorSideRight.Control = edSH_VersaoAP
                   AnchorSideRight.Side = asrBottom
                   Cursor = crIBeam
-                  Left = 323
+                  Left = 22
                   Height = 25
                   Top = 147
-                  Width = 228
+                  Width = 0
                   Anchors = [akTop, akLeft, akRight]
                   BorderSpacing.Left = 10
                   TabOrder = 8
@@ -1639,7 +1639,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 12
                   Height = 25
                   Top = 147
-                  Width = 301
+                  Width = 0
                   Anchors = [akTop, akLeft, akRight]
                   TabOrder = 9
                 end
@@ -1647,13 +1647,13 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object tsCadSwChaveRSA: TTabSheet
                 Caption = 'Chave RSA'
                 ClientHeight = 175
-                ClientWidth = 1574
+                ClientWidth = 574
                 ImageIndex = 18
                 object mRSAKey: TMemo
                   Left = 0
                   Height = 140
                   Top = 0
-                  Width = 1574
+                  Width = 574
                   Align = alTop
                   Font.Height = 12
                   Font.Name = 'Fixedsys'
@@ -1674,7 +1674,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object bRSAPrivKey: TButton
                   AnchorSideTop.Side = asrCenter
-                  Left = 1145
+                  Left = 145
                   Height = 27
                   Top = 146
                   Width = 145
@@ -1687,7 +1687,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object bRSAPubKey: TButton
                   AnchorSideTop.Side = asrCenter
-                  Left = 1300
+                  Left = 300
                   Height = 27
                   Top = 146
                   Width = 137
@@ -1700,7 +1700,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object bRSAeECFc: TButton
                   AnchorSideTop.Side = asrCenter
-                  Left = 1441
+                  Left = 441
                   Height = 27
                   Top = 146
                   Width = 121
@@ -3392,7 +3392,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           Left = 0
           Height = 235
           Top = 0
-          Width = 1590
+          Width = 590
           ActivePage = tsRFDConfig
           Align = alClient
           TabIndex = 0
@@ -3400,14 +3400,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
           object tsRFDConfig: TTabSheet
             Caption = 'Geral'
             ClientHeight = 205
-            ClientWidth = 1582
+            ClientWidth = 582
             ImageIndex = 3
             object sbDirRFD: TSpeedButton
               AnchorSideLeft.Control = edRFDDir
               AnchorSideLeft.Side = asrBottom
               AnchorSideTop.Control = edRFDDir
               AnchorSideTop.Side = asrCenter
-              Left = 1405
+              Left = 405
               Height = 22
               Hint = 'Abre o diretÃ³rio RFD'
               Top = 41
@@ -3447,13 +3447,13 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Height = 25
               Hint = 'DiretÃ³rio para gravaÃ§Ã£o dos arquivos da RFD.'#13#10'Se nada for especificado serÃ¡ criado um subdiretÃ³rio '#13#10'"RFD" dentro da pasta do ACBrMonitor'#13#10#13#10'Para modifica-lo o componente ECF deve estar desativado'
               Top = 40
-              Width = 1238
+              Width = 238
               Anchors = [akTop, akLeft, akRight]
               Enabled = False
               TabOrder = 1
             end
             object bRFDMF: TBitBtn
-              Left = 1444
+              Left = 444
               Height = 27
               Hint = 'Captura dados Memoria Fiscal.'#13#10#13#10'Ãštil para ajudar a preencher os campos '#13#10'de ACBrRFD.ini'
               Top = 30
@@ -3496,11 +3496,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 8
               Height = 109
               Top = 85
-              Width = 1546
+              Width = 546
               Anchors = [akTop, akLeft, akRight]
               Caption = 'ECF'
               ClientHeight = 91
-              ClientWidth = 1542
+              ClientWidth = 542
               TabOrder = 4
               object Label43: TLabel
                 Left = 16
@@ -3522,7 +3522,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 176
                 Height = 23
                 Top = 13
-                Width = 1285
+                Width = 285
                 Anchors = [akTop, akLeft, akRight]
                 ItemHeight = 17
                 OnChange = cbRFDModeloChange
@@ -3530,7 +3530,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 TabOrder = 0
               end
               object Label45: TLabel
-                Left = 1480
+                Left = 480
                 Height = 17
                 Top = -3
                 Width = 39
@@ -3542,7 +3542,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 AnchorSideLeft.Control = Label45
                 AnchorSideTop.Control = cbRFDModelo
                 AnchorSideTop.Side = asrCenter
-                Left = 1480
+                Left = 480
                 Height = 23
                 Top = 13
                 Width = 49
@@ -3571,7 +3571,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 AnchorSideTop.Control = deRFDDataSwBasico
                 AnchorSideTop.Side = asrCenter
                 AnchorSideRight.Control = deRFDDataSwBasico
-                Left = 1062
+                Left = 62
                 Height = 17
                 Top = 62
                 Width = 266
@@ -3585,7 +3585,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 AnchorSideTop.Control = deRFDDataSwBasico
                 AnchorSideTop.Side = asrCenter
                 Cursor = crIBeam
-                Left = 1479
+                Left = 479
                 Height = 25
                 Hint = 'Informe aqui a data do ultimo atestado de intervenÃ§Ã£o tÃ©cnica '#13#10'em que houve atualizaÃ§Ã£o do Sofware BÃ¡sico '#13#10' (numero de versÃ£o acrescido)'
                 Top = 58
@@ -3602,7 +3602,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object deRFDDataSwBasico: TDateEdit
                 Cursor = crIBeam
-                Left = 1331
+                Left = 331
                 Height = 25
                 Hint = 'Informe aqui a data do ultimo atestado de intervenÃ§Ã£o tÃ©cnica'#13#10'em que houve atualizaÃ§Ã£o do Sofware BÃ¡sico'#13#10' (numero de versÃ£o acrescido)'
                 Top = 58
@@ -4102,9 +4102,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
           Height = 235
           Top = 0
           Width = 590
-          ActivePage = tsContaBancaria
+          ActivePage = tsCedente
           Align = alClient
-          TabIndex = 1
+          TabIndex = 0
           TabOrder = 0
           object tsCedente: TTabSheet
             Caption = 'Cedente'
@@ -4798,7 +4798,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               ParentColor = False
             end
           end
-          object TabSheet1: TTabSheet
+          object tsRemessaRetorno: TTabSheet
             Caption = 'Remessa\Retorno'
             ClientHeight = 205
             ClientWidth = 582
@@ -4900,7 +4900,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               ParentColor = False
             end
           end
-          object TabSheet2: TTabSheet
+          object tsBoletoEmail: TTabSheet
             Caption = 'E-mail Boleto'
             ClientHeight = 205
             ClientWidth = 582
@@ -5510,7 +5510,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
         end
       end
-      object TabSheet3: TTabSheet
+      object tsSEDEX: TTabSheet
         Caption = 'Sedex'
         ClientHeight = 235
         ClientWidth = 590
@@ -5819,6 +5819,69 @@ object FrmACBrMonitor: TFrmACBrMonitor
           TabOrder = 15
         end
       end
+      object tsNcm: TTabSheet
+        Caption = 'NCM'
+        ClientHeight = 235
+        ClientWidth = 590
+        ImageIndex = 25
+        object Label106: TLabel
+          Left = 43
+          Height = 17
+          Top = 31
+          Width = 30
+          Caption = 'NCM'
+          ParentColor = False
+        end
+        object edtNcmNumero: TEdit
+          Left = 77
+          Height = 21
+          Top = 29
+          Width = 121
+          Font.Height = -11
+          ParentFont = False
+          TabOrder = 0
+        end
+        object bNcmConsultar: TButton
+          Left = 240
+          Height = 25
+          Top = 27
+          Width = 75
+          Caption = 'Consultar'
+          OnClick = bNcmConsultarClick
+          TabOrder = 1
+        end
+        object deNcmSalvar: TDirectoryEdit
+          Left = 77
+          Height = 25
+          Hint = 'Diretorio onde salvar a lista'
+          Top = 123
+          Width = 319
+          ShowHidden = False
+          ButtonWidth = 23
+          NumGlyphs = 1
+          Anchors = [akTop, akLeft, akRight]
+          MaxLength = 0
+          TabOrder = 2
+        end
+        object Label107: TLabel
+          Left = 21
+          Height = 17
+          Top = 127
+          Width = 52
+          Caption = 'Diretorio'
+          ParentColor = False
+        end
+        object bDownloadLista: TButton
+          Left = 432
+          Height = 25
+          Top = 123
+          Width = 120
+          Anchors = [akTop, akRight]
+          Caption = 'Download Lista'
+          OnClick = bDownloadListaClick
+          TabOrder = 3
+        end
+      end
     end
   end
   object ACBrECF1: TACBrECF
@@ -5862,7 +5925,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     left = 53
     top = 24
     Bitmap = {
-      4C69190000001000000010000000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      4C691A0000001000000010000000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
       FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
       FF00FFFFFF00FFFFFF00FFFFFF00FEFEFEFFFFFFFF00FFFFFF00FFFFFF00FFFF
       FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FEFEFEFFFFFFFF00FFFF
@@ -6662,7 +6725,39 @@ object FrmACBrMonitor: TFrmACBrMonitor
       C1FF5397C7FF52A0CEFF4EA5D2FF4BADD8FFDBF0F8FFFFFFFF00FFFFFF00FFFF
       FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
       FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-      FF00FFFFFF00FFFFFF00FFFFFF00
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00C1BF
+      E9FF4B4AC3FF332FBCFFDDDCF5FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00E8E7F5FF9392DBFF4845C3FF201D
+      B6FF211FB7FF1F1DB6FF4B49C5FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00E3E3F3FF4646C1FF1513B4FF1A18B5FF2220
+      B8FF2422B8FF2422B8FF1916B5FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FCFB
+      FEFFEBEAF9FFFFFFFF00FFFFFF00B6B9DDFF292DA9FF2625B9FF2522B8FF2523
+      B9FF2422B8FF2523B9FF2422B9FFFFFFFF00FFFFFF00EDEDF8FFA0A0DCFF5251
+      C3FF403FBFFFD9D9F2FFFFFFFF00A7A9D4FF3A3F9FFF3537A8FF2523B8FF2523
+      B9FF2523B9FF2523B9FF2423B9FFECECF3FF9C9CD3FF403FB6FF1818AFFF1A19
+      B2FF1615B1FF7776D3FFFFFFFF00F8F8F8FF8F91C3FF4345A5FF2523B8FF2523
+      B9FF2523B9FF2523B9FF2624BCFF4442A5FF1D1DA2FF1E1DACFF2324B4FF2525
+      B7FF2323B6FF2826BAFFA6A5E0FFE3E2F5FFAAAADFFF2E2CB5FF2422B9FF2524
+      BAFF2624BAFF2624BCFF3A3BBAFF24239AFF2727A7FF2726AFFF2425B4FF2525
+      B7FF1D1CB4FF1C1AB5FF2220B7FF3432BCFF2421B8FF2422BAFF2624BAFF2624
+      BAFF2624BAFF2221BAFF6768C2FF5A58AAFF2827A7FF2726B0FF2525B4FF2424
+      B6FF4E4CC4FF3D3CC0FF201EB8FF1816B5FF2120B8FF2522BAFF1D1AB8FF201E
+      B8FF2624BBFF1F1EB8FF5D5CCCFFA2A3D0FF4240AAFF2223B0FF2525B4FF2625
+      B7FFD2D1EDFFD0CFEEFF4543C2FFACABE2FF4644C4FF221EB9FF4D4AC6FF3D3D
+      C2FF201FB9FF2221BAFF1211B5FFDFE0EFFF7878BFFF2526ACFF2325B4FF3233
+      BCFFDDDCF1FFFFFFFF009D9BDFFFFBFBFCFF5251C8FF908FDAFFF1F1F7FFE7E7
+      F5FF6D6BD0FF4241C3FF7A79D4FFFFFFFF00B9B9DBFF4444B1FF2021B5FF4345
+      C1FFECEBF6FFDBDAF2FFFBFAFAFFE4E4F5FF5857CAFFF0F0F9FF8A89D9FF7A78
+      D4FF8280D7FF7E7CD5FFFFFFFF00FFFFFF00FFFFFCFF7879C0FF1E1FB1FF5759
+      C9FFFFFFFF007371D2FFF3F3F9FFE0E0F4FF5150C8FFF9F9FDFF5B5BCEFF4543
+      C4FF3A38C2FF9492DDFFF7F7FBFFCCCDE5FF9B9BD4FF4646B7FF2324B4FF3536
+      BDFF6B6BCFFF322FBFFF8584D8FFA4A4E2FF2B29BDFFB2B3E4FFE9E9F7FFF6F7
+      FAFF7576D3FFAFB0E6FFD1D2EFFF2727A0FF1D1EA8FF2223B4FF2829B8FF2423
+      B8FF1C1AB7FF2624BBFF211EBAFF2220BAFF2524BCFF302FBEFF7373D3FF6E6F
+      D2FF2727BDFF9191DCFF8B8BDAFF2B2BA9FF2A2BB1FF2828B5FF2928BBFF2D2C
+      C2FF2A28BFFF2927BDFF2827BDFF2826BCFF2927BDFF2423BCFF1B1AB9FF1B1B
+      B9FF2725BEFF201EBCFF2523BCFF
     }
   end
   object ACBrCHQ1: TACBrCHQ
@@ -7011,5 +7106,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
     UrlConsulta = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?'
     left = 406
     top = 72
+  end
+  object ACBrNCMs1: TACBrNCMs
+    ProxyPort = '8080'
+    UrlConsulta = 'http://www4.receita.fazenda.gov.br/simulador/PesquisarNCM.jsp?'
+    left = 240
+    top = 80
   end
 end

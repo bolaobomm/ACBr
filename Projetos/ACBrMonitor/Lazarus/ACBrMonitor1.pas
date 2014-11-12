@@ -42,7 +42,7 @@ uses
   Dialogs, ExtCtrls, Menus, Buttons, StdCtrls, ComCtrls, Controls, Graphics,
   Spin, MaskEdit, EditBtn, ACBrBAL, ACBrETQ, ACBrSocket, ACBrCEP, ACBrIBGE,
   blcksock, ACBrValidador, ACBrGIF, ACBrBoleto, ACBrBoletoFCFortesFr, ACBrEAD, 
-  ACBrMail, ACBrSedex, Printers;
+  ACBrMail, ACBrSedex, ACBrNCMs, Printers;
 
 const
   {$I versao.txt}
@@ -66,6 +66,7 @@ type
     ACBrGIF1 : TACBrGIF ;
     ACBrIBGE1 : TACBrIBGE ;
     ACBrMail1: TACBrMail;
+    ACBrNCMs1: TACBrNCMs;
     ACBrSedex1: TACBrSedex;
     ACBrValidador1 : TACBrValidador ;
     ApplicationProperties1: TApplicationProperties;
@@ -101,6 +102,8 @@ type
     bSedexRastrear: TButton;
     bTCAtivar: TBitBtn;
     bSedexTestar: TButton;
+    bNcmConsultar: TButton;
+    bDownloadLista: TButton;
     cbBALModelo: TComboBox;
     cbBALPorta: TComboBox;
     cbCEPWebService: TComboBox;
@@ -153,6 +156,8 @@ type
     cbxSedexMaoPropria: TComboBox;
     cbxSedexFormato: TComboBox;
     cbxSedexAvisoReceb: TComboBox;
+    deNcmSalvar: TDirectoryEdit;
+    edtNcmNumero: TEdit;
     edtSedexContrato: TEdit;
     edtSedexValorDeclarado: TEdit;
     edtSedexSenha: TEdit;
@@ -251,6 +256,8 @@ type
     Label103: TLabel;
     Label104: TLabel;
     Label105: TLabel;
+    Label106: TLabel;
+    Label107: TLabel;
     Label11: TLabel;
     Label12: TLabel;
     Label13: TLabel;
@@ -451,9 +458,10 @@ type
     pTopRespostas: TPanel;
     Splitter1: TSplitter;
     TabControl1: TTabControl;
-    TabSheet1: TTabSheet;
-    TabSheet2: TTabSheet;
-    TabSheet3: TTabSheet;
+    tsRemessaRetorno: TTabSheet;
+    tsBoletoEmail: TTabSheet;
+    tsSEDEX: TTabSheet;
+    tsNcm: TTabSheet;
     tsEmail: TTabSheet;
     tsContaBancaria: TTabSheet;
     tsECFParamI: TTabSheet;
@@ -498,8 +506,10 @@ type
     procedure ApplicationProperties1Minimize(Sender: TObject);
     procedure ApplicationProperties1Restore(Sender: TObject);
     procedure bCEPTestarClick(Sender : TObject) ;
+    procedure bDownloadListaClick(Sender: TObject);
     procedure bEmailTestarConfClick(Sender: TObject);
     procedure bIBGETestarClick(Sender : TObject) ;
+    procedure bNcmConsultarClick(Sender: TObject);
     procedure bRSAeECFcClick(Sender : TObject) ;
     procedure bSedexRastrearClick(Sender: TObject);
     procedure bSedexTestarClick(Sender: TObject);
@@ -714,7 +724,7 @@ uses IniFiles, TypInfo, LCLType, strutils,
   {$IFDEF LINUX} unix, baseunix, termio, {$ENDIF}
   ACBrECFNaoFiscal, ACBrUtil, ACBrConsts, Math, Sobre, DateUtils,
   ConfiguraSerial,
-  DoECFBemafi32, DoECFObserver, DoETQUnit, DoEmailUnit, DoSedexUnit;
+  DoECFBemafi32, DoECFObserver, DoETQUnit, DoEmailUnit, DoSedexUnit, DoNcmUnit;
 
 {$R *.lfm}
 
@@ -1036,6 +1046,26 @@ begin
   end ;
 end;
 
+procedure TFrmACBrMonitor.bDownloadListaClick(Sender: TObject);
+Var
+  DirNcmSalvar : String ;
+begin
+  if (deNcmSalvar.Text = '') then
+    DirNcmSalvar := ExtractFilePath( Application.ExeName )
+  else
+    DirNcmSalvar := PathWithoutDelim( deNcmSalvar.Text );
+
+  DirNcmSalvar := DirNcmSalvar + PathDelim+ 'ListaNCM.csv';
+
+  with ACBrNCMs1 do
+  begin
+    ListarNcms();
+    NCMS.SaveToFile( DirNcmSalvar );
+  end;
+
+  mResp.Lines.Add( 'Arquivo salvo em: '+DirNcmSalvar );
+end;
+
 procedure TFrmACBrMonitor.bEmailTestarConfClick(Sender: TObject);
 var
   Teste : String;
@@ -1156,6 +1186,26 @@ begin
 
      MessageDlg(AMsg,mtInformation,[mbOK],0);
   end ;
+end;
+
+procedure TFrmACBrMonitor.bNcmConsultarClick(Sender: TObject);
+Var
+  AMsg : String ;
+  I : Integer ;
+begin
+  AMsg := '';
+  with ACBrNCMs1 do
+  begin
+    if (Length(OnlyNumber(edtNcmNumero.Text))<>8) then
+      raise Exception.Create( 'O codigo do NCM deve conter 8 Caracteres' );
+
+    if validar(OnlyNumber(edtNcmNumero.Text)) then
+       AMsg := 'OK: NCM Valido'
+     else
+       AMsg := 'Erro: NCM Invalido';
+  end;
+
+  mResp.Lines.Add(AMsg);
 end;
 
 procedure TFrmACBrMonitor.bRSAeECFcClick(Sender : TObject) ;
@@ -1836,6 +1886,8 @@ begin
     {Parametro Sedex}
     edtSedexContrato.Text    := Ini.ReadString('SEDEX', 'Contrato', '');
     edtSedexSenha.Text       := LeINICrypt(Ini,'SEDEX', 'SenhaSedex', _C);
+    {Parametro NCM}
+    deNcmSalvar.Text         := Ini.ReadString('NCM', 'DirNCMSalvar','');
   finally
     Ini.Free;
   end;
@@ -1994,7 +2046,19 @@ begin
   begin
     CodContrato := edtSedexContrato.Text;
     Senha       := edtSedexSenha.Text;
+    ProxyHost   := edCONProxyHost.Text;
+    ProxyPort   := edCONProxyPort.Text;
+    ProxyUser   := edCONProxyUser.Text;
+    ProxyPass   := edCONProxyPass.Text;
   end;
+
+  with ACBrNCMs1 do
+  begin
+    ProxyHost  := edCONProxyHost.Text;
+    ProxyPort  := edCONProxyPort.Text;
+    ProxyUser  := edCONProxyUser.Text;
+    ProxyPass  := edCONProxyPass.Text;
+  end ;
 
   with ACBrBoleto1 do
   begin
@@ -2164,6 +2228,16 @@ begin
                            'para proteger sua Chave Privada');
   end;
 
+  if Trim(deNcmSalvar.Text) <> '' then
+  begin
+    if not DirectoryExists(deNcmSalvar.Text) then
+    begin
+      PageControl1.ActivePageIndex := 15;
+      deNcmSalvar.SetFocus;
+      raise Exception.Create('Diretorio para salvar arquivo de NCM nao encontrado.');
+    end;
+  end;
+
   Ini := TIniFile.Create(ACBrMonitorINI);
   try
     // Verificando se modificou o Modo de Monitoramento //
@@ -2281,6 +2355,9 @@ begin
     { Parametros Sedex }
     Ini.WriteString(  'SEDEX', 'Contrato', edtSedexContrato.Text);
     GravaINICrypt(Ini,'SEDEX', 'SenhaSedex', edtSedexSenha.Text, _C);
+
+    { Parametros NCM }
+    ini.WriteString('NCM', 'DirNCMSalvar', PathWithoutDelim(deNcmSalvar.Text));
   finally
     Ini.Free;
   end;
@@ -2612,7 +2689,9 @@ begin
         else if fsCmd.Objeto = 'EMAIL' then
           DoEmail(fsCmd)
         else if fsCmd.Objeto = 'SEDEX' then
-          DoSedex(fsCmd);
+          DoSedex(fsCmd)
+        else if fsCmd.Objeto = 'NCM' then
+          DoNcm(fsCmd);
 
         // Atualiza Memo de Entrada //
         mCmd.Lines.Assign( fsProcessar );
