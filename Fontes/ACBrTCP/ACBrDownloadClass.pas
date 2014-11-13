@@ -320,7 +320,8 @@ begin
        case fDownloadStatus of
          stStop:
          begin
-            DeleteFile(fFilePart);
+            if not DeleteFile(fFilePart) then
+              raise Exception.Create(Format('Não foi possível excluir o arquivo: %s', [fFilePart]));
          end;
          stPause:
          begin
@@ -332,9 +333,12 @@ begin
             // o arquivo com o nome.ext.part para tentar continuar de onde parou
             if (fResultCode = 200) or (fResultCode = 206) or (fResultCode = 226) then
             begin
-               sFileName := Copy(fFilePart, 1, Length(fFilePart) -5);
-               DeleteFile(sFileName);
-               RenameFile(fFilePart, sFileName);
+              sFileName := Copy(fFilePart, 1, Length(fFilePart) -5);
+              if FileExists(sFileName) then
+                if not DeleteFile(sFileName) then
+                  raise Exception.Create(Format('Não foi possível excluir o arquivo: %s', [sFileName]));
+              if not RenameFile(fFilePart, sFileName) then
+                raise Exception.Create(Format('Não foi possível renomear o arquivo: %s para %s', [fFilePart, sFileName]));
             end;
          end
        end;
