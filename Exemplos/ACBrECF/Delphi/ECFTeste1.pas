@@ -1691,10 +1691,15 @@ begin
 end;
 
 procedure TForm1.ProgramaComprovanteNAOFiscal1Click(Sender: TObject);
-Var cDescricao, cTipo : String ;
+Var cDescricao, cTipo, cPosicao : String ;
 begin
   cDescricao := 'CARTAO' ;
   cTipo      := '' ;
+  cPosicao   := '';
+
+  if not InputQuery('Programaçao de Comprovantes NAO Fiscais (CNF)',
+                    'Entre com a posição:', cPosicao ) then
+     exit ;
 
   if not InputQuery('Programaçao de Comprovantes NAO Fiscais (CNF)',
                     'Entre com a Descriçao:', cDescricao ) then
@@ -1727,7 +1732,7 @@ begin
                          cTipo ) then
           exit ;
 
-    ecfSweda, ecfQuattro :
+    ecfSweda, ecfSwedaSTX, ecfQuattro :
        if not InputQuery('Comprovantes NAO Fiscal '+ACBrECF1.ModeloStr,
                          'Entre com a String do parametro "Tipo".'+sLineBreak+
                          '&  Criaçao de um novo Grupo (Titulo)'+sLineBreak+
@@ -1759,7 +1764,7 @@ begin
                 'Confirma a operação ?',mtConfirmation,mbYesNoCancel,0) <> mrYes then
      exit ;
 
-  ACBrECF1.ProgramaComprovanteNaoFiscal(cDescricao,cTipo);
+  ACBrECF1.ProgramaComprovanteNaoFiscal(cDescricao,cTipo,cPosicao);
   CarregaComprovantesNAOFiscais1Click(Sender);
 end;
 

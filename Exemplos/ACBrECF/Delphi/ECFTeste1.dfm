@@ -5,7 +5,6 @@ object Form1: TForm1
   Height = 447
   VertScrollBar.Range = 59
   ActiveControl = PageControl1
-  AutoScroll = False
   Caption = 'Teste de Impressora Fiscal'
   Color = clBtnFace
   Constraints.MinHeight = 400
@@ -25,7 +24,7 @@ object Form1: TForm1
   TextHeight = 13
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 370
+    Top = 369
     Width = 790
     Height = 19
     Panels = <
@@ -43,7 +42,7 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 790
-    Height = 330
+    Height = 329
     ActivePage = TabSheet4
     Align = alClient
     TabOrder = 1
@@ -52,7 +51,7 @@ object Form1: TForm1
       ImageIndex = 3
       DesignSize = (
         782
-        302)
+        301)
       object SbArqLog: TSpeedButton
         Left = 759
         Top = 216
@@ -141,7 +140,6 @@ object Form1: TForm1
         Width = 105
         Height = 21
         Style = csDropDownList
-        ItemHeight = 13
         TabOrder = 0
         OnChange = cbxModeloChange
         Items.Strings = (
@@ -163,7 +161,6 @@ object Form1: TForm1
         Top = 25
         Width = 105
         Height = 21
-        ItemHeight = 13
         TabOrder = 1
         Text = 'Procurar'
         OnChange = cbxPortaChange
@@ -272,9 +269,6 @@ object Form1: TForm1
         Cancel = True
         Caption = 'Serial'
         Default = True
-        ModalResult = 1
-        TabOrder = 11
-        OnClick = btSerialClick
         Glyph.Data = {
           36030000424D3603000000000000360000002800000010000000100000000100
           1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
@@ -302,6 +296,9 @@ object Form1: TForm1
           FFFFFFFFFFFFFFFFFFFFFFFF5050004A4A4A3232323232323232323232325032
           00FFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+        ModalResult = 1
+        TabOrder = 11
+        OnClick = btSerialClick
       end
       object chDescricaoGrande: TCheckBox
         Left = 195
@@ -379,7 +376,6 @@ object Form1: TForm1
         Width = 47
         Height = 21
         Style = csDropDownList
-        ItemHeight = 13
         TabOrder = 19
         OnChange = cbxModeloChange
         Items.Strings = (
@@ -447,7 +443,7 @@ object Form1: TForm1
         Left = 0
         Top = 71
         Width = 782
-        Height = 231
+        Height = 230
         Align = alClient
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -478,7 +474,7 @@ object Form1: TForm1
         Left = 0
         Top = 41
         Width = 782
-        Height = 261
+        Height = 260
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
@@ -486,7 +482,7 @@ object Form1: TForm1
           Left = 0
           Top = 0
           Width = 782
-          Height = 261
+          Height = 260
           Align = alClient
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
@@ -504,11 +500,11 @@ object Form1: TForm1
           Left = 0
           Top = 0
           Width = 782
-          Height = 261
+          Height = 260
           Align = alClient
           TabOrder = 1
           ControlData = {
-            4C000000D2500000FA1A00000000000000000000000000000000000000000000
+            4C000000D2500000DF1A00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126208000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -561,7 +557,7 @@ object Form1: TForm1
         Left = 0
         Top = 55
         Width = 782
-        Height = 247
+        Height = 246
         ActivePage = TabSheet6
         Align = alClient
         TabOrder = 1
@@ -733,7 +729,7 @@ object Form1: TForm1
           Caption = 'ACBrRFD.INI'
           object Panel4: TPanel
             Left = 0
-            Top = 185
+            Top = 184
             Width = 774
             Height = 34
             Align = alBottom
@@ -762,7 +758,7 @@ object Form1: TForm1
             Left = 0
             Top = 0
             Width = 774
-            Height = 185
+            Height = 184
             Align = alClient
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBlack
@@ -860,7 +856,7 @@ object Form1: TForm1
       end
       object mRZ: TMemo
         Left = 0
-        Top = 55
+        Top = 54
         Width = 782
         Height = 247
         Align = alBottom
@@ -893,7 +889,7 @@ object Form1: TForm1
         Left = 0
         Top = 0
         Width = 782
-        Height = 234
+        Height = 233
         Align = alClient
         Caption = 'Op'#231#245'es do Menu fiscal'
         TabOrder = 0
@@ -1022,7 +1018,7 @@ object Form1: TForm1
       end
       object pgcMenuFiscalTipo: TPageControl
         Left = 0
-        Top = 234
+        Top = 233
         Width = 782
         Height = 68
         ActivePage = tbsMenuFiscalTipoData
@@ -1135,7 +1131,7 @@ object Form1: TForm1
       ImageIndex = 6
       DesignSize = (
         782
-        302)
+        301)
       object Label28: TLabel
         Left = 84
         Top = 24
@@ -1212,7 +1208,7 @@ object Form1: TForm1
       end
       object MemoTesteTags: TMemo
         Left = 0
-        Top = 98
+        Top = 97
         Width = 782
         Height = 204
         Align = alBottom
@@ -1313,7 +1309,7 @@ object Form1: TForm1
   end
   object pBotoes: TPanel
     Left = 0
-    Top = 330
+    Top = 329
     Width = 790
     Height = 40
     Cursor = crHelp
@@ -1541,9 +1537,6 @@ object Form1: TForm1
       Cancel = True
       Caption = 'Ativar'
       Default = True
-      ModalResult = 1
-      TabOrder = 0
-      OnClick = bAtivarClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
         18000000000000030000120B0000120B00000000000000000000FFFFFFFFFFFF
@@ -1571,6 +1564,9 @@ object Form1: TForm1
         21218C3131943131943131943131943131943131943131943131943131943131
         94292994181884FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+      ModalResult = 1
+      TabOrder = 0
+      OnClick = bAtivarClick
     end
   end
   object MainMenu1: TMainMenu
