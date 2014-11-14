@@ -87,7 +87,7 @@ type
                     proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov,
                     proVitoria, proMitra, ProTecnos, proPronim, proActcon, proEL,
                     proEgoverneISS, proSisPMJP, proSystemPro, proSalvador,
-                    proAraucaria, proDBSeller, proLexsom, proABRASFv1, proABRASFv2 );
+                    proDBSeller, proLexsom, proABRASFv1, proABRASFv2 );
 
   TnfseAcao = ( acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe, acCancelar, acGerar, acRecSincrono, acConsSecRps );
 
@@ -398,7 +398,7 @@ begin
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
                             '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
                             'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon',
-                            'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Salvador', 'Araucaria', 'DBSeller',
+                            'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Salvador', 'DBSeller',
                             'Lexsom', 'ABRASFv1', 'ABRASFv2'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
@@ -407,7 +407,7 @@ begin
                             proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
                             proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
                             proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP, proSystemPro,
-                            proSalvador, proAraucaria, proDBSeller, proLexsom, proABRASFv1, proABRASFv2]);
+                            proSalvador, proDBSeller, proLexsom, proABRASFv1, proABRASFv2]);
 end;
 
 function StrToProvedor(var ok: boolean; const s: string):TnfseProvedor;
@@ -419,7 +419,7 @@ begin
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
                             '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
                             'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon',
-                            'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Salvador', 'Araucaria', 'DBSeller',
+                            'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Salvador', 'DBSeller',
                             'Lexsom', 'ABRASFv1', 'ABRASFv2'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
@@ -428,7 +428,7 @@ begin
                             proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
                             proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
                             proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP, proSystemPro,
-                            proSalvador, proAraucaria, proDBSeller, proLexsom, proABRASFv1, proABRASFv2]);
+                            proSalvador, proDBSeller, proLexsom, proABRASFv1, proABRASFv2]);
 end;
 
 // Condição de pagamento ******************************************************
@@ -724,9 +724,6 @@ begin
   5105150 // Juina/MT
 //  5106224  // Nova Mutum/MT
          : Provedor := 'Agili';
-
-  4101804 // Araucaria/PR
-         : Provedor := 'Araucaria';
 
   3302254, // Itatiaia/RJ
   3303955, // Pinheiral/RJ
@@ -1026,6 +1023,7 @@ begin
   4321709  // Tres Coroas/RS
          : Provedor := 'GovBR';
 
+  4101804, // Araucaria/PR
   4108304  // Foz Do Iguacu/PR
          : Provedor := 'Lexsom';
 

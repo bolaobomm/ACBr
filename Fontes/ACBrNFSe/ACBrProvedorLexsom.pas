@@ -131,6 +131,10 @@ var
  ConfigURL: TConfigURL;
 begin
   case ACodCidade of
+    4101804: begin // Araucaria/PR
+               ConfigURL.HomNomeCidade := 'araucaria.pr';
+               ConfigURL.ProNomeCidade := 'araucaria.pr';
+             end;
     4108304: begin // Foz Do Iguacu/PR
                ConfigURL.HomNomeCidade := 'pmfi.pr';
                ConfigURL.ProNomeCidade := 'pmfi.pr';

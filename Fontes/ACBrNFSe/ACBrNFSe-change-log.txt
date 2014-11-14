@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/11/2014
+[*] Removido o provedor Araucaria, motivo a cidade Araucaria/PR se utiliza do
+    provedor Lexsom, efetua alterações em diversos fontes para atenter a cidade.
+    Por: ELJAK
 [*] Alterado as URLs de produção da cidade de Assis (provedor Pronim)
     Por: Márcio Lopes
 [*] Alterado a forma de obter o código da cidade ao realizar as consultas

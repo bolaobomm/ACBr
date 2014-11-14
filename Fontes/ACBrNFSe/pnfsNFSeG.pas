@@ -177,7 +177,7 @@ begin
                DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + IdLote + '"', '') +
 
                // Não Incluir a versão para os provedores abaixo
-               DFeUtil.SeSenao(AProvedor in [proAbaco, proAraucaria, proBetha, proDBSeller,
+               DFeUtil.SeSenao(AProvedor in [proAbaco, proBetha, proDBSeller,
                                              proGinfes, proGoiania, proGovBR, proIssCuritiba,
                                              proISSNET, proLexsom, proNatal, proRecife, proRJ,
                                              proSimplISS, proThema, proTiplan, proAgili,
@@ -692,7 +692,7 @@ begin
   end;
  end;
 
- if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proAraucaria,
+ if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, 
                   proBetha, proBetim, proBHIss, proDBSeller, proDigifred,
                   proEquiplano, proFIssLex, proGinfes, proGovBR, proIssCuritiba,
                   proIssIntel, proIssNet, proLexsom, proNatal, proProdemge,
@@ -709,7 +709,7 @@ begin
                                    VersaoDados, VersaoXML, NumeroLote, CNPJ, IM,
                                    QtdeNotas, Notas, TagI, TagF, AProvedor);
 
- if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proAraucaria,
+ if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, 
                   proBetha, proBetim, proBHISS, proDBSeller, proDigifred,
                   proEquiplano, profintelISS, proFISSLex, proGinfes, proGoiania,
                   proGovBR, proGovDigital, proIssCuritiba, proISSDigital,

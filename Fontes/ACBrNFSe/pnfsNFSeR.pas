@@ -731,7 +731,6 @@ begin
    case FProvedor of
     proABRASFv1,
     proAbaco,
-    proAraucaria,
     proBetha,
     proBHISS,
     proDBSeller,
@@ -1594,7 +1593,6 @@ begin
  case FProvedor of
   proABRASFv1,
   proAbaco,
-  proAraucaria,
   proBetha,
   proBHISS,
   proDBSeller,
