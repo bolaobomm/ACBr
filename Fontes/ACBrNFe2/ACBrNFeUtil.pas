@@ -968,13 +968,14 @@ begin
   else
    begin
     case ALayOut of
-      LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.fazenda.pr.gov.br/nfce/NFeAutorizacao3', 'https://homologacao.nfce.fazenda.pr.gov.br/nfce/NFeAutorizacao3');
+      LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.fazenda.pr.gov.br/nfce/NFeAutorizacao3',    'https://homologacao.nfce.fazenda.pr.gov.br/nfce/NFeAutorizacao3');
       LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.fazenda.pr.gov.br/nfce/NFeRetAutorizacao3', 'https://homologacao.nfce.fazenda.pr.gov.br/nfce/NFeRetAutorizacao3');
-      LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.fazenda.pr.gov.br/nfce/NFeInutilizacao3', 'https://homologacao.nfce.fazenda.pr.gov.br/nfce/NFeInutilizacao3');
-      LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.fazenda.pr.gov.br/nfce/NFeConsulta3', 'https://homologacao.nfce.fazenda.pr.gov.br/nfce/NFeConsulta3');
-      LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.fazenda.pr.gov.br/nfce/NFeStatusServico3', 'https://homologacao.nfce.fazenda.pr.gov.br/nfce/NFeStatusServico3');
+      LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.fazenda.pr.gov.br/nfce/NFeInutilizacao3',   'https://homologacao.nfce.fazenda.pr.gov.br/nfce/NFeInutilizacao3');
+      LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.fazenda.pr.gov.br/nfce/NFeConsulta3',       'https://homologacao.nfce.fazenda.pr.gov.br/nfce/NFeConsulta3');
+      LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.fazenda.pr.gov.br/nfce/NFeStatusServico3',  'https://homologacao.nfce.fazenda.pr.gov.br/nfce/NFeStatusServico3');
       LayNFeCCe,
-      LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.fazenda.pr.gov.br/nfce/NFeRecepcaoEvento', 'https://homologacao.nfce.fazenda.pr.gov.br/nfce/NFeRecepcaoEvento');
+      LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.fazenda.pr.gov.br/nfce/NFeRecepcaoEvento',  'https://homologacao.nfce.fazenda.pr.gov.br/nfce/NFeRecepcaoEvento');
+
       LayAdministrarCSCNFCe: Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
     end;
    end;
@@ -2020,7 +2021,7 @@ begin
    31: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //MG
    15: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PA
    25: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PB
-   41: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PR
+   41: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.fazenda.pr.gov.br/', 'http://www.fazenda.pr.gov.br/'); //PR
    26: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PE
    22: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PI
    33: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www.sefaz.rs.gov.br/NFE/NFE-COM.aspx',               'https://www.sefaz.rs.gov.br/NFE/NFE-COM.aspx');              // RJ
@@ -2064,7 +2065,7 @@ begin
    31: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // MG
    15: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PA
    25: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PB
-   41: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PR
+   41: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'www.dfeportal.fazenda.pr.gov.br/dfe-portal/rest/servico/consultaNFCe?', 'www.dfeportal.fazenda.pr.gov.br/dfe-portal/rest/servico/consultaNFCe?'); // PR
    26: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PE
    22: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PI
 //   33: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www.sefaz.rs.gov.br/NFE/NFE-COM.aspx',              'https://www.sefaz.rs.gov.br/NFE/NFE-COM.aspx');              // RJ
