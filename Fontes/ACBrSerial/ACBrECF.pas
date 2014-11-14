@@ -3431,6 +3431,7 @@ var
   VlImpostoFederal, VlImpostoEstadual, VlImpostoMunicipal: Double;
   VlPercentualFederal, VlPercentualEstadual, VlPercentualMunicipal: Double;
   InformouValorAproxFederal, InformouValorAproxEstadual, InformouValorAproxMunicipal: Boolean;
+  SubtotalSemImpostos: Double;
 begin
   Result := '';
   if InfoRodapeCupom.Imposto.ValorAproximado > 0 then
@@ -3501,20 +3502,23 @@ begin
             Result := 'Trib aprox R$:' +
               FormatFloat(',#0.00', VlImpostoFederal) + ' Federal e '+
               IfThen(InformouValorAproxEstadual, FormatFloat(',#0.00', VlImpostoEstadual) + ' Estadual', '') +
-              IfThen(InformouValorAproxEstadual, FormatFloat(',#0.00', VlImpostoMunicipal) + ' Municipal', '') +
+              IfThen(InformouValorAproxMunicipal, FormatFloat(',#0.00', VlImpostoMunicipal) + ' Municipal', '') +
               IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', sLineBreak + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '');
           end;
         end
         else
         begin
           // IBPT opção 1
+          SubtotalSemImpostos := Subtotal - (VlImpostoFederal + VlImpostoEstadual + VlImpostoMunicipal);
+
           Result := 'Você pagou aproximadamente:' + sLineBreak +
-            'R$ ' + FormatFloat(',#0.00', VlImpostoFederal) + ' de tributos federais'+ sLineBreak +
+            'R$ ' + FormatFloat(',#0.00', VlImpostoFederal) + ' de tributos federais'+
             // FormatFloat(' (,#0.00%)', VlPercentualFederal)
-            'R$ ' + FormatFloat(',#0.00', VlImpostoEstadual) + ' de tributos estaduais'+ sLineBreak +
+            IfThen(InformouValorAproxEstadual,  sLineBreak + 'R$ ' + FormatFloat(',#0.00', VlImpostoEstadual) + ' de tributos estaduais', '') +
             // FormatFloat(' (,#0.00%)', VlPercentualEstadual)
-            'R$ ' + FormatFloat(',#0.00', VlImpostoMunicipal) + ' de tributos municipais'+
+            IfThen(InformouValorAproxMunicipal, sLineBreak + 'R$ ' + FormatFloat(',#0.00', VlImpostoMunicipal) + ' de tributos municipais', '') +
             // FormatFloat(' (,#0.00%)', VlPercentualMunicipal)
+            sLineBreak + 'R$ ' + FormatFloat(',#0.00', SubtotalSemImpostos) + ' pelos produtos/serviços'+
             IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', sLineBreak + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '');
         end;
       end;
