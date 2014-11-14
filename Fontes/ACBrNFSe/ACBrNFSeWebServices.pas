@@ -1322,7 +1322,7 @@ begin
    case FProvedor of
     proIssDSF: FDadosMsg := TNFSeG.Gera_DadosMsgConsLoteDSF(Prefixo3, Prefixo4,
                                                       NameSpaceDad, VersaoXML,
-                                                      CodCidadeToCodSiafi(strtointDef(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
+                                                      CodCidadeToCodSiafi(FConfiguracoes.WebServices.CodigoMunicipio),
                                                       TNFSeConsultarLoteRPS(Self).Cnpj,
                                                       TNFSeConsultarLoteRPS(Self).Protocolo,
                                                       FTagI, FTagF);
@@ -1471,12 +1471,12 @@ begin
    case FProvedor of
     proIssDSF: FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPSDSF(Prefixo3, Prefixo4,
                                                          NameSpaceDad, VersaoXML,
-                                                         CodCidadeToCodSiafi( strtointDef(TNFSeConsultarNfseRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
+                                                         CodCidadeToCodSiafi(FConfiguracoes.WebServices.CodigoMunicipio),
                                                          SomenteNumeros(TNFSeConsultarNfseRPS(Self).Cnpj),
                                                          LowerCase(booltostr(TNFSeConsultarNfseRPS(Self).FNotasFiscais.Transacao, True)),
                                                          TNFSeConsultarNfseRPS(Self).FNotasFiscais.NumeroLote,
                                                          vNotas,
-                                                         '', ''); 
+                                                         '', '');
     proEquiplano: FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPSEquiplano(FConfiguracoes.WebServices.CodigoMunicipio,
                                                                TNFSeConsultarNfseRPS(Self).Numero,
                                                                SomenteNumeros(TNFSeConsultarNfseRPS(Self).FCnpj),
