@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/11/2014
+[*] Incluido as URLs de Consulta as NF-e Destinadas e Download de NF-e para a 
+    SEFAZ-RS como consta na Relação de Serviços Web do Portal Nacional da NF-e.
+    por: Italo Jurisato Junior
+
 11/11/2014
 [*] Alterações realizadas conforme NT ACBr 2014/001 nas Units: ACBrNFeDANFERave e
     ACBrNFeDANFERaveCB

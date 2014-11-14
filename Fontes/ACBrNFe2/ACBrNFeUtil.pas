@@ -1035,6 +1035,10 @@ begin
 
       LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/NfeAutorizacao/NFeAutorizacao.asmx',            'https://homologacao.nfe.sefaz.rs.gov.br/ws/NfeAutorizacao/NFeAutorizacao.asmx');
       LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/NfeRetAutorizacao/NfeRetAutorizacao.asmx',      'https://homologacao.nfe.sefaz.rs.gov.br/ws/NfeRetAutorizacao/NfeRetAutorizacao.asmx');
+
+      // Incluido por Italo em 14/11/2014
+      LayNfeConsNFeDest  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/nfeConsultaDest/nfeConsultaDest.asmx',            'https://homologacao.nfe.sefaz.rs.gov.br/ws/nfeConsultaDest/nfeConsultaDest.asmx');
+      LayNfeDownloadNFe  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/nfeDownloadNF/nfeDownloadNF.asmx',                'https://homologacao.nfe.sefaz.rs.gov.br/ws/nfeDownloadNF/nfeDownloadNF.asmx');
     end;
    end
   else
@@ -1999,6 +2003,8 @@ end;
 
 class function NotaUtil.GetURLConsultaNFCe(const AUF : Integer; AAmbiente : TpcnTipoAmbiente) : String;
 begin
+  // As URLs abaixo são impressas no DANFE NFC-e e servem para que o
+  // consumidor possa realizar a consulta mediante a digitação da chave de acesso.
   case AUF of
    12: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.sefaznet.ac.gov.br/nfce/', 'http://hml.sefaznet.ac.gov.br/nfce/'); //AC
    27: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //AL
@@ -2040,6 +2046,9 @@ var
  cIdToken, cTokenHom, cTokenPro, sToken,
  sEntrada, cHashQRCode, urlUF: String;
 begin
+  // As URLs abaixo são utilizadas para compor a URL do QR-Code que é gerado
+  // e impresso no DANFE NFC-e e serve para que o consumidor possa través de
+  // um leitor de QR-Code ter acesso ao DANFE completo da NFC-e
   case AUF of
    12: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.sefaznet.ac.gov.br/nfe', 'http://hml.sefaznet.ac.gov.br/nfce'); // AC
    27: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // AL
