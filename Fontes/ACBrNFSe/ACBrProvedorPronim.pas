@@ -259,12 +259,12 @@ begin
             ConfigURL.HomCancelaNFSe        := 'http://nfseteste.assis.sp.gov.br/NFSEWSTESTE/Services.svc';
 
             ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.assis.sp.gov.br/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://nfse.assis.sp.gov.br/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.assis.sp.gov.br/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.assis.sp.gov.br/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://nfse.assis.sp.gov.br/NFSEWS/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://nfse.assis.sp.gov.br/NFSEWS/Services.svc';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://189.57.228.200/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://189.57.228.200/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://189.57.228.200/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://189.57.228.200/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://189.57.228.200/NFSEWS/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://189.57.228.200/NFSEWS/Services.svc';
            end;
   4118501: begin // Pato Branco/PR
             ConfigURL.HomNomeCidade         := '';
