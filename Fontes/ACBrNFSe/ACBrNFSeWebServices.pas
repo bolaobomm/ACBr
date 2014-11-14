@@ -617,10 +617,11 @@ begin
  CertContext := Cert as ICertContext;
  CertContext.Get_CertContext(Integer(PCertContext));
 
- if not (FProvedor in [proGovBr, proSimplISS, proAbaco, proISSNet, pro4R, proIssDSF,  // proIssDSF incluido por Ailton Branco 16/07/2014
+ // proIssDSF incluido por Ailton Branco 16/07/2014
+ if not (FProvedor in [proGovBr, proSimplISS, proAbaco, proISSNet, pro4R, proIssDSF,
                        proFiorilli, proProdata, proCoplan, proThema, proVirtual,
                        proPVH, proFreire, proTecnos, proPronim, proPublica,
-                       proEgoverneISS, proActcon, proDBSeller])
+                       proEgoverneISS, proActcon, proDBSeller, proLexsom])
   then begin
 
     if FProvedor = proSystemPro then
