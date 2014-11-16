@@ -279,8 +279,9 @@ TACBrECFEscECF = class( TACBrECFClass )
     Procedure ProgramaFormaPagamento( var Descricao: String;
        PermiteVinculado : Boolean = true; Posicao : String = '' ) ; override ;
     function AchaFPGDescricao( Descricao : String;
-       BuscaExata : Boolean = False; IgnorarCase : Boolean = True ) :
-       TACBrECFFormaPagamento ; override ;
+       BuscaExata : Boolean = False;
+       IgnorarCase : Boolean = True;
+       IgnorarAcentos : Boolean = False) : TACBrECFFormaPagamento ; override ;
 
     { Relatório Gerencial (RG) }
     procedure CarregaRelatoriosGerenciais ; override ;
@@ -2488,11 +2489,12 @@ begin
   CarregaFormasPagamento;
 end;
 
-function TACBrECFEscECF.AchaFPGDescricao(Descricao : String ;
-   BuscaExata : Boolean ; IgnorarCase : Boolean) : TACBrECFFormaPagamento ;
+function TACBrECFEscECF.AchaFPGDescricao(Descricao: String;
+  BuscaExata: Boolean; IgnorarCase: Boolean; IgnorarAcentos: Boolean
+  ): TACBrECFFormaPagamento;
 begin
   Descricao := AjustaDescricao( Descricao );
-  Result    := inherited AchaFPGDescricao(Descricao, BuscaExata, IgnorarCase) ;
+  Result    := inherited AchaFPGDescricao(Descricao, BuscaExata, IgnorarCase, IgnorarAcentos) ;
 end ;
 
 procedure TACBrECFEscECF.CarregaRelatoriosGerenciais;

@@ -392,8 +392,9 @@ TACBrECFNaoFiscal = class( TACBrECFClass )
     procedure CarregaFormasPagamento ; override ;
     procedure LerTotaisFormaPagamento ; override ;
     function AchaFPGDescricao( Descricao : String;
-       BuscaExata : Boolean = False; IgnorarCase : Boolean = True  ) :
-       TACBrECFFormaPagamento ; override ;
+       BuscaExata : Boolean = False;
+       IgnorarCase : Boolean = True;
+       IgnorarAcentos : Boolean = False) : TACBrECFFormaPagamento ; override ;
     Procedure ProgramaFormaPagamento( var Descricao: String;
        PermiteVinculado : Boolean = true; Posicao : String = '' ) ; override ;
 
@@ -2596,16 +2597,17 @@ begin
 end;
 
 function TACBrECFNaoFiscal.AchaFPGDescricao(Descricao: String;
-       BuscaExata : Boolean; IgnorarCase : Boolean ) : TACBrECFFormaPagamento;
+  BuscaExata: Boolean; IgnorarCase: Boolean; IgnorarAcentos: Boolean
+  ): TACBrECFFormaPagamento;
 begin
-  result := inherited AchaFPGDescricao(Descricao, BuscaExata, IgnorarCase) ;
+  result := inherited AchaFPGDescricao(Descricao, BuscaExata, IgnorarCase, IgnorarAcentos) ;
 
   { Na impressora Nao Fiscal podemos programas as Formas de Pagamento
     dinamicamente. }
   if (Result = nil) then
   begin
      ProgramaFormaPagamento( Descricao ) ;
-     result := inherited AchaFPGDescricao(Descricao, BuscaExata, IgnorarCase) ;
+     result := inherited AchaFPGDescricao(Descricao, BuscaExata, IgnorarCase, IgnorarAcentos) ;
   end ;
 end;
 

@@ -97,6 +97,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 15/11/2014
+-- ACBrECF --   (por: DSA)
+[*] Adicionado o parâmetro "IgnorarAcentos: Boolean = False" no método
+    AchaFPGDescricao
+
 Data: 14/11/2014   (por: Elton)
 -- ACBrECF --  
 [-] Correção do rodapé para impostos separados. Era impresso impostos municipais no 

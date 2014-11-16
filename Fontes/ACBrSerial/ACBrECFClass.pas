@@ -972,8 +972,9 @@ TACBrECFClass = class
     procedure LerTotaisFormaPagamento ; virtual ;
     Property FormasPagamento : TACBrECFFormasPagamento read GetFormasPagamentos;
     function AchaFPGDescricao( Descricao : String;
-       BuscaExata : Boolean = False; IgnorarCase : Boolean = True ) :
-       TACBrECFFormaPagamento ; virtual ;
+       BuscaExata : Boolean = False;
+       IgnorarCase : Boolean = True;
+       IgnorarAcentos : Boolean = False) : TACBrECFFormaPagamento ; virtual ;
     function AchaFPGIndice( Indice : String ) : TACBrECFFormaPagamento ;
        virtual ;
     Procedure ProgramaFormaPagamento( var Descricao: String;
@@ -3516,8 +3517,8 @@ begin
   Result := fpFormasPagamentos ;
 end;
 
-function TACBrECFClass.AchaFPGDescricao(Descricao: String;
- BuscaExata : Boolean; IgnorarCase : Boolean ) : TACBrECFFormaPagamento;
+function TACBrECFClass.AchaFPGDescricao(Descricao: String; BuscaExata: Boolean;
+  IgnorarCase: Boolean; IgnorarAcentos: Boolean): TACBrECFFormaPagamento;
  var Tamanho, A : Integer ;
      DescrECF : String ;
 begin
@@ -3527,16 +3528,21 @@ begin
   with fpFormasPagamentos do
   begin
      Descricao := TrimRight( Descricao ) ;
+     if IgnorarAcentos then
+        Descricao := TiraAcentos( Descricao );
      if IgnorarCase then
         Descricao := UpperCase( Descricao ) ;
+
      Tamanho := Length( Descricao ) ;
      For A := 0 to Count -1 do
      begin
         DescrECF := TrimRight( Objects[A].Descricao ) ;
         if not BuscaExata then
            DescrECF := LeftStr( DescrECF, Tamanho) ;
+        if IgnorarAcentos then
+           DescrECF := TiraAcentos( DescrECF );
         if IgnorarCase then
-           DescrECF := UpperCase(DescrECF) ;
+           DescrECF := UpperCase( DescrECF ) ;
 
         if DescrECF = Descricao then
         begin

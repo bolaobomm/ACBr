@@ -585,8 +585,9 @@ TACBrECFBematech = class( TACBrECFClass )
     procedure CarregaFormasPagamento ; override ;
     procedure LerTotaisFormaPagamento ; override ;
     function AchaFPGDescricao( Descricao : String;
-       BuscaExata : Boolean = False; IgnorarCase : Boolean = True ) :
-       TACBrECFFormaPagamento ; override ;
+       BuscaExata : Boolean = False;
+       IgnorarCase : Boolean = True;
+       IgnorarAcentos : Boolean = False) : TACBrECFFormaPagamento ; override ;
     Procedure ProgramaFormaPagamento( var Descricao: String;
        PermiteVinculado : Boolean = true; Posicao : String = '' ) ; override ;
 
@@ -2104,8 +2105,9 @@ begin
   CarregaRelatoriosGerenciais;
 end ;
 
-function TACBrECFBematech.AchaFPGDescricao( Descricao: String;
-  BuscaExata : Boolean; IgnorarCase : Boolean ): TACBrECFFormaPagamento;
+function TACBrECFBematech.AchaFPGDescricao(Descricao: String;
+  BuscaExata: Boolean; IgnorarCase: Boolean; IgnorarAcentos: Boolean
+  ): TACBrECFFormaPagamento;
 begin
   { A Bematech permite programas as Formas de Pagamento dinâmicamente.
     Na MP20 A cada Reduçao Z as Formas programadas dinâmicamente sao zeradas.
@@ -2119,7 +2121,7 @@ begin
   if (not fs25MFD) then
      ProgramaFormaPagamento( Descricao ) ;
 
-  result := inherited AchaFPGDescricao(Descricao,BuscaExata,IgnorarCase) ;
+  result := inherited AchaFPGDescricao(Descricao,BuscaExata,IgnorarCase,IgnorarAcentos) ;
 end;
 
 procedure TACBrECFBematech.ProgramaFormaPagamento( var Descricao: String;

@@ -536,8 +536,9 @@ TACBrECF = class( TACBrComponent )
     procedure CarregaFormasPagamento ;
     procedure LerTotaisFormaPagamento ;
     function AchaFPGDescricao( Descricao : String;
-       BuscaExata : Boolean = False; IgnorarCase : Boolean = True ) :
-       TACBrECFFormaPagamento ;
+       BuscaExata : Boolean = False;
+       IgnorarCase : Boolean = True;
+       IgnorarAcentos : Boolean = False) : TACBrECFFormaPagamento ;
     function AchaFPGIndice( Indice : String ) : TACBrECFFormaPagamento ;
     Procedure ProgramaFormaPagamento( var Descricao: String;
        PermiteVinculado : Boolean = true; Posicao : String = '') ;
@@ -4611,13 +4612,13 @@ begin
   fsECF.LerTotaisFormaPagamento ;
 end;
 
-function TACBrECF.AchaFPGDescricao(Descricao: String; BuscaExata : Boolean;
-   IgnorarCase : Boolean ): TACBrECFFormaPagamento;
+function TACBrECF.AchaFPGDescricao(Descricao: String; BuscaExata: Boolean;
+  IgnorarCase: Boolean; IgnorarAcentos: Boolean): TACBrECFFormaPagamento;
 begin
   if ComandoLOG = '' then
      ComandoLOG := 'AchaFPGDescricao( '+Descricao+', '+BoolToStr(BuscaExata)+', '+
-                                                    BoolToStr(IgnorarCase)+' )' ;
-  Result := fsECF.AchaFPGDescricao( Descricao, BuscaExata, IgnorarCase ) ;
+                   BoolToStr(IgnorarCase)+', ' +BoolToStr(IgnorarAcentos)+' )';
+  Result := fsECF.AchaFPGDescricao( Descricao, BuscaExata, IgnorarCase, IgnorarAcentos  ) ;
 end;
 
 function TACBrECF.AchaFPGIndice(Indice: String): TACBrECFFormaPagamento;
