@@ -3226,7 +3226,10 @@ begin
      fsRFD.FechaCupom ;
 
   if Assigned( fOnDepoisFechaCupom ) then
+  begin
+     Observacao := DecodificarPaginaDeCodigoECF(Observacao);
      fOnDepoisFechaCupom( Observacao, IndiceBMP);
+  end;
 
   fsMensagemRodape := '' ;
   Consumidor.Zera ;
@@ -4030,8 +4033,10 @@ begin
   {$ENDIF}
 
   if Assigned( FOnDepoisFechaNaoFiscal ) then
+  begin
+     Observacao := DecodificarPaginaDeCodigoECF(Observacao);
      FOnDepoisFechaNaoFiscal(Observacao, IndiceBMP);
-
+  end;
 end;
 
 procedure TACBrECF.CorrigeEstadoErro(ReducaoZ: Boolean);

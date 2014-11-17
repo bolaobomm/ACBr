@@ -97,6 +97,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 17/11/2014
+-- ACBrECF --    (por: DSA)
+[-] Aplicando Conversão de Encoding no parâmetro "Observacao" antes de chamar:
+    "OnDepoisFechaCupom" e "OnDepoisFechaNaoFiscal".
+    Antes o parâmetro era informado com o Encoding do ECF
+
 Data: 15/11/2014
 -- ACBrECF --   (por: DSA)
 [*] Adicionado o parâmetro "IgnorarAcentos: Boolean = False" no método
