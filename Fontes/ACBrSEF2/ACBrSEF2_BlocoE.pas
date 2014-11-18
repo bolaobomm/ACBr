@@ -73,6 +73,7 @@ type
   TRegistroSEFE520List = class;
   TRegistroSEFE525List = class;
   TRegistroSEFE540List = class;
+  TRegistroSEFE550List = class;
   TRegistroSEFE560List = class;
                  
  //LINHA E001: ABERTURA DO BLOCO E
@@ -730,7 +731,7 @@ type
   private
     fIND_MRO     : Integer;
     fIND_OPER    : Integer;
-    fDT_DOC      : Integer;
+    fDT_DOC      : TDateTime;
     fQTD_LCTO    : Integer;
     fCOP         : String;
     fNUM_LCTO    : String;
@@ -753,7 +754,7 @@ type
   public
     property IND_MRO     : Integer read	fIND_MRO      write fIND_MRO;      // Indicador do resumo: 0- Total diário por COP 1- Total por COP  2- Total diário
     property IND_OPER    : Integer read	fIND_OPER     write fIND_OPER;     // Indicador de operação: 0- Entrada ou aquisição 1- Saída ou prestação
-    property DT_DOC      : Integer read fDT_DOC       write fDT_DOC;       // Data dos documentos
+    property DT_DOC      : TDateTime read fDT_DOC       write fDT_DOC;       // Data dos documentos
     property QTD_LCTO    : Integer read	fQTD_LCTO     write fQTD_LCTO;     // Quantidade de lançamentos com repercussão por tipo de resumo
     property COP         : String  read	fCOP          write fCOP;          // Código da classe da operação ou prestação, conforme a tabela indicada no item 4.2.2.1
     property NUM_LCTO    : String  read	fNUM_LCTO     write fNUM_LCTO;     // Número ou código de identificação única do lançamento contábil
@@ -935,20 +936,20 @@ type
     fVL_AJ : Double;
     fNUM_DA : String;
     fNUM_PROC : String;
-    fIND_PROC : Integer;
+    fIND_PROC : String;
     fDESC_PROC : String;
     fCOD_INF_OBS : String;
-    fIND_AP : Integer;
+    fIND_AP : String;
   public
     property UF_AJ        : String   read fUF_AJ        write fUF_AJ;         //  Sigla da unidade da Federação a que se refere o ajuste
     property COD_AJ       : Integer  read fCOD_AJ       write fCOD_AJ;        //  Código do ajuste da apuração do ICMS, conforme a tabela indi-cada no item 5.2.1
     property VL_AJ        : Double   read fVL_AJ        write fVL_AJ;         //  Valor do ajuste da apuração
     property NUM_DA       : String   read fNUM_DA       write fNUM_DA;        //  Número do documento de arrecadação estadual, se houver
     property NUM_PROC     : String   read fNUM_PROC     write fNUM_PROC;      //  Número do processo vinculado ao ajuste, se houver
-    property IND_PROC     : Integer  read fIND_PROC     write fIND_PROC;      //  Indicador da origem do processo: 0- Administração estadual 1- Justiça Federal 2- Justiça Estadual 9- Outros
+    property IND_PROC     : String   read fIND_PROC     write fIND_PROC;      //  Indicador da origem do processo: 0- Administração estadual 1- Justiça Federal 2- Justiça Estadual 9- Outros
     property DESC_PROC    : String   read fDESC_PROC    write fDESC_PROC;     //  Descrição do processo que embasou o lançamento
     property COD_INF_OBS  : String   read fCOD_INF_OBS  write fCOD_INF_OBS;   //  Código de referência à observação (campo 02 da Linha 0450)
-    property IND_AP       : Integer  read fIND_AP       write fIND_AP;        //  Indicador da sub-apuração do Prodepe: 1- item não incentivado (sub-apuração 1) 2- item incentivado (sub-apuração 2) 3- item incentivado (sub-apuração 3) ... _9- item incentivado (sub-apuração _9)
+    property IND_AP       : string  read fIND_AP       write fIND_AP;        //  Indicador da sub-apuração do Prodepe: 1- item não incentivado (sub-apuração 1) 2- item incentivado (sub-apuração 2) 3- item incentivado (sub-apuração 3) ... _9- item incentivado (sub-apuração _9)
   end;
 
   // Registro E350 - Lista
@@ -973,7 +974,7 @@ type
     fVL_ICMS_REC : Double;
     fDT_VCTO : TDateTime;
     fNUM_PROC : String;
-    fIND_PROC : Integer;
+    fIND_PROC : String;
     fDESCR_PROC : String;
     fCOD_INF_OBS : String;
    public
@@ -984,7 +985,7 @@ type
       property VL_ICMS_REC : Double      read fVL_ICMS_REC    write fVL_ICMS_REC;   // Valor da obrigação a recolher
       property DT_VCTO     : TDateTime   read fDT_VCTO        write fDT_VCTO ;      // Data de vencimento da obrigação
       property NUM_PROC    : String      read fNUM_PROC       write fNUM_PROC ;     // Número do processo vinculado à obrigação, se houver
-      property IND_PROC    : Integer     read fIND_PROC       write fIND_PROC ;     // Indicador da origem do processo: 0- Administração estadual 1- Justiça Federal 2- Justiça Estadual 9- Outros
+      property IND_PROC    : String     read fIND_PROC       write fIND_PROC ;     // Indicador da origem do processo: 0- Administração estadual 1- Justiça Federal 2- Justiça Estadual 9- Outros
       property DESCR_PROC  : String      read fDESCR_PROC     write fDESCR_PROC ;   // Descrição do processo que embasou o lançamento
       property COD_INF_OBS : String      read fCOD_INF_OBS    write fCOD_INF_OBS;   // Código de referência à observação (campo 02 da Linha 0450)
     end;
@@ -1007,6 +1008,7 @@ type
     fRegistroE520: TRegistroSEFE520List;
     fRegistroE525: TRegistroSEFE525List;
     fRegistroE540: TRegistroSEFE540List;
+    fRegistroE550: TRegistroSEFE550List;
     fRegistroE560: TRegistroSEFE560List;
   public
     constructor Create; virtual;
@@ -1016,6 +1018,7 @@ type
     property RegistroE520: TRegistroSEFE520List read fRegistroE520 write fRegistroE520;
     property RegistroE525: TRegistroSEFE525List read fRegistroE525 write fRegistroE525;
     property RegistroE540: TRegistroSEFE540List read fRegistroE540 write fRegistroE540;
+    property RegistroE550: TRegistroSEFE550List read fRegistroE550 write fRegistroE550;
     property RegistroE560: TRegistroSEFE560List read fRegistroE560 write fRegistroE560;
   end;
 
@@ -1130,24 +1133,53 @@ type
     property notas[Index: Integer]: TRegistroSEFE540 read Getnotas write SetNotas;
   end;
 
+    //LINHA E550: AJUSTES DA APURAÇÃO DO IPI
+  TRegistroSEFE550 = class
+  private
+    FCOD_AJ: String;
+    FDESCR_AJ: String;
+    FCOD_INF_OBS: string;
+    FNUM_DOC: String;
+    FVL_AJ: Double;
+    FIND_DOC: String;
+  public
+  property COD_AJ      : String  read FCOD_AJ      write FCOD_AJ;       //Código do ajuste da apuração do IPI, conforme a tabela externa indicada no item 3.3.1
+  property VL_AJ       : Double  read FVL_AJ       write FVL_AJ;        //Valor do ajuste
+  property IND_DOC     : String read FIND_DOC     write FIND_DOC;      //Indicador da origem do documento vinculado ao ajuste: 0- Processo judicial 1- Processo administrativo 2- PER/DCOMP 9- Outros
+  property NUM_DOC     : String  read FNUM_DOC     write FNUM_DOC;      //Número do documento, processo ou declaração vinculada ao ajuste, se houver
+  property DESCR_AJ    : String  read FDESCR_AJ    write FDESCR_AJ;     //Descrição detalhada do ajuste
+  property COD_INF_OBS : string  read FCOD_INF_OBS write FCOD_INF_OBS;  //Código de referência à observação (campo 02 da Linha 0450)
+  end;
+
+  // Registro E550 - Lista
+  TRegistroSEFE550List = class(TACBrSEFIIRegistros)
+  private
+    function GetNotas(Index: Integer): TRegistroSEFE550;
+    procedure SetNotas(Index: Integer;  const Value: TRegistroSEFE550);
+  public
+    function New(AOwner: TRegistroSEFE500): TRegistroSEFE550;
+    property notas[Index: Integer]: TRegistroSEFE550 read Getnotas write SetNotas;
+  end;
+
+
   TRegistroSEFE560 = class
   private
-    fCOD_OR_IPI  : Integer;   //Código da obrigação do IPI a recolher	C	4	-
+    fCOD_OR_IPI  : string;   //Código da obrigação do IPI a recolher	C	4	-
     fPER_REF     : String;    //PER_REF	Período fiscal de referência	N	6	-		O
     fCOD_REC_IPI : string;    //Código de receita do IPI, conforme a tabela externa indicada no item 3.3.1	N	4	-		O
     fVL_IPI_REC	 : Double;    //Valor da obrigação a recolher	N	-	2		O
     fDT_VCTO     : TDateTime;	//Data de vencimento da obrigação	N	8	-
-    fIND_DOC	   : integer;   //"Indicador da origem do processo vinculado à obrigação: 0- Processo judicial 1- Processo administrativo 2- PER/DCOMP 9- Outros"	N	1	-
-    fNUM_DOC	   : string;    //Número do documento, processo ou declaração vinculada à obrigação, se houver	C	-	-	25
+    fIND_DOC	 : String;   //"Indicador da origem do processo vinculado à obrigação: 0- Processo judicial 1- Processo administrativo 2- PER/DCOMP 9- Outros"	N	1	-
+    fNUM_DOC	 : string;    //Número do documento, processo ou declaração vinculada à obrigação, se houver	C	-	-	25
     fDESCR_AJ    : string;    //Descrição detalhada do ajuste	C	-	-	60
     fCOD_INF_OBS : string;    //Código de referência à observação (campo 02 da Linha 0450)	C	-	-	9
    public
-      property COD_OR_IPI  : Integer     read fCOD_OR_IPI     write fCOD_OR_IPI;
+      property COD_OR_IPI  : string      read fCOD_OR_IPI     write fCOD_OR_IPI;
       property PER_REF     : String      read fPER_REF        write fPER_REF;
       property COD_REC_IPI : String      read fCOD_REC_IPI    write fCOD_REC_IPI;
       property VL_IPI_REC  : Double      read fVL_IPI_REC     write fVL_IPI_REC;
       property DT_VCTO     : TDateTime   read fDT_VCTO        write fDT_VCTO;
-      property IND_DOC     : Integer     read fIND_DOC        write fIND_DOC;
+      property IND_DOC     : String      read fIND_DOC        write fIND_DOC;
       property NUM_DOC     : String      read fNUM_DOC        write fNUM_DOC;
       property DESCR_AJ    : String      read fDESCR_AJ       write fDESCR_AJ;
       property COD_INF_OBS : String      read fCOD_INF_OBS    write fCOD_INF_OBS;
@@ -1698,6 +1730,7 @@ begin
    FRegistroE520 := TRegistroSEFE520List.Create;
    FRegistroE525 := TRegistroSEFE525List.Create;
    FRegistroE540 := TRegistroSEFE540List.Create;
+   FRegistroE550 := TRegistroSEFE550List.Create;
    FRegistroE560 := TRegistroSEFE560List.Create;
 end;
 
@@ -1706,6 +1739,7 @@ begin
    FRegistroE520.Free;
    FRegistroE525.Free;
    FRegistroE540.Free;
+   FRegistroE550.Free;
    FRegistroE560.Free;
    inherited Destroy;
 end;
@@ -1760,6 +1794,25 @@ end;
 procedure TRegistroSEFE105List.SetItem(Index: Integer; const Value: TRegistroSEFE105);
 begin
    Put(Index, Value);
+end;
+
+{ TRegistroSEFE550List }
+
+function TRegistroSEFE550List.GetNotas(Index: Integer): TRegistroSEFE550;
+begin
+  Result := TRegistroSEFE550(Get(Index));
+end;
+
+function TRegistroSEFE550List.New(AOwner: TRegistroSEFE500): TRegistroSEFE550;
+begin
+   Result := TRegistroSEFE550.Create;
+   Add(Result);
+end;
+
+procedure TRegistroSEFE550List.SetNotas(Index: Integer;
+  const Value: TRegistroSEFE550);
+begin
+  Put(Index, Value);
 end;
 
 end.

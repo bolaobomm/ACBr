@@ -979,6 +979,16 @@ begin
         QTD_REG_BLC := Bloco_E.RegistroE540Count;
       end;
     end;
+    if Bloco_E.RegistroE550Count > 0 then
+    begin
+      with New do
+      begin
+        REG_BLC := 'E550';
+        QTD_REG_BLC := Bloco_E.RegistroE550Count;
+      end;
+    end;
+
+
     if Bloco_E.RegistroE560Count > 0 then
     begin
       with New do

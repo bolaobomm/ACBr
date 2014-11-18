@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 18/11/2014
+-- ACBrSEF2
+[+] Adicionado o registro E550 e correções
+    http://www.projetoacbr.com.br/forum/index.php?/topic/18640-sef-pernambuco-n%C3%A3o-importa-os-valores-dos-arquivos/#entry117868
+
 Data: 30/04/2014
 -- ACBrSEF2
 [+] Adicionado o Bloco H para o SEF2 (Marcelo Santos)
