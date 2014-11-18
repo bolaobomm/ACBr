@@ -53,6 +53,8 @@ const
 
 type
 
+TACBrECFClassHack = class ( TACBrECFClass );
+
 { TACBrECFEscECFRET }
 
 TACBrECFEscECFRET = class
@@ -149,6 +151,7 @@ TACBrECFEscECF = class( TACBrECFClass )
     fsACK    : Boolean;
     fsSincronizou : Boolean;
     fsTentouSincronizar : Boolean;
+    fsDeviceParams : String;
 
     fsSPR            : Byte;
     fsPAF            : AnsiString ;
@@ -181,6 +184,7 @@ TACBrECFEscECF = class( TACBrECFClass )
     Procedure LeRespostasMemoria;
 
     function CriarECFClassPorMarca : TACBrECFClass;
+    procedure DestruirECFClass( AECFClass: TACBrECFClass );
 
  protected
     function VerificaFimLeitura(var Retorno: AnsiString;
@@ -657,6 +661,7 @@ begin
   fpMFD       := True ;
   fpTermica   := True ;
   fpIdentificaConsumidorRodape := True ;
+  fsDeviceParams := '';
 
   { Variaveis internas dessa classe }
   fsNumVersao     := '' ;
@@ -716,6 +721,7 @@ begin
 
   fpMFD     := True ;
   fpTermica := True ;
+  fsDeviceParams := '';
 
   RespostasComando.Clear;
 
@@ -1355,13 +1361,44 @@ end ;
 function TACBrECFEscECF.CriarECFClassPorMarca: TACBrECFClass;
 begin
   Result := Nil;
+  fsDeviceParams := '';
+
   if IsBematech then
     Result := TACBrECFBematech.create(fpOwner)
   else if IsEpson then
+  begin
     Result := TACBrECFEpson.create(fpOwner);
+    with TACBrECFClassHack( Result ) do
+    begin
+      fpDevice.Desativar;
+      fsDeviceParams := fpDevice.Porta+':'+fpDevice.ParamsString;
+      fpDevice.Porta := 'USB';         // Força DLL em USB
+      fpDevice.Baud  := 115200;
+    end;
+  end;
 
   if Result <> Nil then
+  begin
     Result.PathDLL := Self.PathDLL;
+    Result.ArqLOG  := Self.ArqLOG;
+  end;
+end;
+
+procedure TACBrECFEscECF.DestruirECFClass(AECFClass: TACBrECFClass);
+var
+  P: Integer;
+begin
+  AECFClass.Free;
+
+  if fsDeviceParams <> '' then
+  begin
+     P := pos(':',fsDeviceParams);
+     fpDevice.Porta        := copy(fsDeviceParams,1,P-1);
+     fpDevice.ParamsString := copy(fsDeviceParams,P+1,Length(fsDeviceParams));
+     fsDeviceParams := '';
+  end;
+
+  Self.Ativar;
 end;
 
 function TACBrECFEscECF.RetornaInfoECF(Registrador: String): AnsiString;
@@ -1895,8 +1932,7 @@ begin
     Self.Desativar;
     ECFClass.EspelhoMFD_DLL(DataInicial, DataFinal, NomeArquivo, Documentos);
   finally
-    ECFClass.Free;
-    Self.Ativar;
+    DestruirECFClass( ECFClass );
   end;
 end;
 
@@ -1914,8 +1950,7 @@ begin
     Self.Desativar;
     ECFClass.EspelhoMFD_DLL(COOInicial, COOFinal, NomeArquivo, Documentos);
   finally
-    ECFClass.Free;
-    Self.Ativar;
+    DestruirECFClass( ECFClass );
   end;
 end;
 
@@ -1934,8 +1969,7 @@ begin
     Self.Desativar;
     ECFClass.ArquivoMFD_DLL(DataInicial, DataFinal, NomeArquivo, Documentos, Finalidade);
   finally
-    ECFClass.Free;
-    Self.Ativar;
+    DestruirECFClass( ECFClass );
   end;
 end;
 
@@ -1954,8 +1988,7 @@ begin
     Self.Desativar;
     ECFClass.ArquivoMFD_DLL(ContInicial, ContFinal, NomeArquivo, Documentos, Finalidade, TipoContador);
   finally
-    ECFClass.Free;
-    Self.Ativar;
+    DestruirECFClass( ECFClass );
   end;
 end;
 
@@ -1972,8 +2005,7 @@ begin
     Self.Desativar;
     ECFClass.ArquivoMF_DLL(NomeArquivo);
   finally
-    ECFClass.Free;
-    Self.Ativar;
+    DestruirECFClass( ECFClass );
   end;
 end;
 
@@ -1990,8 +2022,7 @@ begin
     Self.Desativar;
     ECFClass.ArquivoMFD_DLL(NomeArquivo);
   finally
-    ECFClass.Free;
-    Self.Ativar;
+    DestruirECFClass( ECFClass );
   end;
 end;
 

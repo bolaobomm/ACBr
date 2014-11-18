@@ -97,6 +97,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 18/11/2014
+-- ACBrECFEscECF --    (por: DSA)
+[-] Correção nos métodos de Captura de MF/MFD usando a DLL, para o modelo da Epson
+
 Data: 17/11/2014
 -- ACBrECF --    (por: DSA)
 [-] Aplicando Conversão de Encoding no parâmetro "Observacao" antes de chamar:
