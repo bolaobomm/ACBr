@@ -2859,7 +2859,7 @@ begin
        'N' : AliquotaICMS := 'N1' ;
        'F' : AliquotaICMS := 'F1' ;
      else
-        Aliquota := AchaICMSAliquota( AliquotaECF ) ;
+        Aliquota := AchaICMSAliquota( AliquotaICMS ) ;
 
         if Aliquota <> nil then
            AliquotaICMS := IntToStrZero(Aliquota.Sequencia,2) + Aliquota.Tipo +
