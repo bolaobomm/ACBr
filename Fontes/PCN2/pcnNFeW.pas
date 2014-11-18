@@ -893,7 +893,11 @@ begin
     Gerador.wCampo(tcInt, 'I27', 'nSeqAdic   ', 01, 03, 1, nfe.Det[i].Prod.DI[j].adi[k].nSeqAdi, DSC_NSEQADIC);
     Gerador.wCampo(tcStr, 'I28', 'cFabricante', 01, 60, 1, nfe.Det[i].Prod.DI[j].adi[k].cFabricante, DSC_CFABRICANTE);
     Gerador.wCampo(tcDe2, 'I29', 'vDescDI    ', 00, 15, 0, nfe.Det[i].Prod.DI[j].adi[k].vDescDI, DSC_VDESCDI);
-    Gerador.wCampo(tcStr, 'I29a', 'nDraw     ', 11, 11, 0, nfe.Det[i].Prod.DI[j].adi[k].nDraw, DSC_NDRAW);
+    // O número do Ato Concessório de Suspensão deve ser preenchido com 11 dígitos
+    // (AAAANNNNNND) e o número do Ato Concessório de Drawback Isenção deve ser
+    // preenchido com 9 dígitos (AANNNNNND).
+    // (Observação incluída na NT 2013/005 v. 1.10)
+    Gerador.wCampo(tcStr, 'I29a', 'nDraw     ', 09, 11, 0, nfe.Det[i].Prod.DI[j].adi[k].nDraw, DSC_NDRAW);
     if trim(nfe.Det[i].Prod.DI[j].adi[k].nDraw) <> '' then
       if not DFeUtil.ValidaDrawback(nfe.Det[i].Prod.DI[j].adi[k].nDraw) then
         Gerador.wAlerta('I29a', 'nDraw', DSC_NDRAW, ERR_MSG_INVALIDO);
@@ -910,14 +914,18 @@ begin
   for j := 0 to nfe.Det[i].Prod.detExport.Count - 1 do
   begin
     Gerador.wGrupo('detExport', 'I50');
-    Gerador.wCampo(tcStr, 'I51', 'nDraw      ', 11, 11, 0, nfe.Det[i].Prod.detExport[j].nDraw, DSC_NDRAW);
+    // O número do Ato Concessório de Suspensão deve ser preenchido com 11 dígitos
+    // (AAAANNNNNND) e o número do Ato Concessório de Drawback Isenção deve ser
+    // preenchido com 9 dígitos (AANNNNNND).
+    // (Observação incluída na NT 2013/005 v. 1.10)
+    Gerador.wCampo(tcStr, 'I51', 'nDraw      ', 09, 11, 0, nfe.Det[i].Prod.detExport[j].nDraw, DSC_NDRAW);
     if trim(nfe.Det[i].Prod.detExport[j].nDraw) <> '' then
       if not DFeUtil.ValidaDrawback(nfe.Det[i].Prod.detExport[j].nDraw) then
         Gerador.wAlerta('I51', 'nDraw', DSC_NDRAW, ERR_MSG_INVALIDO);
 
     if nfe.Det[i].Prod.detExport[j].nRE <> '' then
     begin
-      Gerador.wGrupo('exportInd', 'I51');
+      Gerador.wGrupo('exportInd', 'I52');
       Gerador.wCampo(tcStr, 'I53', 'nRE    ', 12, 12, 1, nfe.Det[i].Prod.detExport[j].nRE, DSC_NRE);
       if not DFeUtil.ValidaRE(nfe.Det[i].Prod.detExport[j].nRE) then
         Gerador.wAlerta('I53', 'nRE', DSC_NRE, ERR_MSG_INVALIDO);
