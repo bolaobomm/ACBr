@@ -838,6 +838,7 @@ var
  URI       : String;
  Separador : String;
  DataInicial, DataFinal : TDateTime;
+ TotalServicos, TotalDeducoes: Double;
 begin
  vNotas := '';
 
@@ -1012,6 +1013,8 @@ begin
                   DataInicial := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao;
                 if TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao > dataFinal then
                   DataFinal := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao;
+                TotalServicos := TotalServicos + TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorServicos;
+                TotalDeducoes := TotalDeducoes + TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorDeducoes;
                end;
 
               FDadosMsg := TNFSeG.Gera_DadosMsgEnviarLoteDSF(Prefixo3, Prefixo4,
@@ -1024,8 +1027,8 @@ begin
                                                       TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial,
                                                       LowerCase(booltostr(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Transacao, True)),
                                                       IntToStr(TNFSeEnviarLoteRps(Self).FNotasFiscais.Count),
-                                                      FormatFloat('0.00', TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorServicos),
-                                                      FormatFloat('0.00', TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorDeducoes),
+                                                      FormatFloat('0.00', TotalServicos),
+                                                      FormatFloat('0.00', TotalDeducoes),
                                                       DataInicial, DataFinal,
                                                       vNotas,
                                                       FTagI, FTagF);
