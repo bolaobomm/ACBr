@@ -1603,7 +1603,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 329
         Width = 88
         Height = 14
-        Caption = 'Pagador/Avalista:'
+        Caption = 'Sacador/Avalista:'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -2588,7 +2588,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 330
         Width = 88
         Height = 14
-        Caption = 'Pagador/Avalista:'
+        Caption = 'Sacador/Avalista:'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -3295,7 +3295,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 268
         Width = 88
         Height = 14
-        Caption = 'Pagador/Avalista:'
+        Caption = 'Sacador/Avalista:'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
