@@ -48,6 +48,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/11/2014
+[*] : Incluido os demais modais na procedure GerarIniMDFe.
+      Deixando desta forma mais completo.
+      Incluido as linhas na function GerarMDFeIni com a finalidade de
+      gerar o arquivo INI com base em um XML carregado.
+      Obs: em ambas as rotinas ainda falta muita coisa para ser implementada. 
+      Por: Italo Jurisato Junior
+
 12/11/2014
 [*] : Incluido campos na procedure GerarIniMDFe.
       Campos obrigatórios e opcionais, deixando desta forma mais completo.
