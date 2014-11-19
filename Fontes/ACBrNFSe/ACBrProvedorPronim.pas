@@ -145,296 +145,311 @@ var
  ConfigURL: TConfigURL;
 begin
  case ACodCidade of
-   4210506: begin // Maravilha/SC
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaLoteRPS    := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaSitLoteRPS := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSe       := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomCancelaNFSe        := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
-
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
-           end;
-
-  4216602: begin // São José/SC
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.pmsj.sc.gov.br:90/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaLoteRPS    := 'http://nfse.pmsj.sc.gov.br:90/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://nfse.pmsj.sc.gov.br:90/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaSitLoteRPS := 'http://nfse.pmsj.sc.gov.br:90/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSe       := 'http://nfse.pmsj.sc.gov.br:90/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomCancelaNFSe        := 'http://nfse.pmsj.sc.gov.br:90/NFSEWSTESTE/Services.svc';
-
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.pmsj.sc.gov.br:90/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://nfse.pmsj.sc.gov.br:90/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.pmsj.sc.gov.br:90/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.pmsj.sc.gov.br:90/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://nfse.pmsj.sc.gov.br:90/NFSEWS/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://nfse.pmsj.sc.gov.br:90/NFSEWS/Services.svc';
-           end;
-
   3118601: begin // Contagem/MG
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://teste.contagem.mg.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaLoteRPS    := 'http://teste.contagem.mg.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://teste.contagem.mg.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaSitLoteRPS := 'http://teste.contagem.mg.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSe       := 'http://teste.contagem.mg.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomCancelaNFSe        := 'http://teste.contagem.mg.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomNomeCidade         := '';
+             ConfigURL.HomRecepcaoLoteRPS    := 'http://teste.contagem.mg.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaLoteRPS    := 'http://teste.contagem.mg.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSeRPS    := 'http://teste.contagem.mg.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaSitLoteRPS := 'http://teste.contagem.mg.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSe       := 'http://teste.contagem.mg.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomCancelaNFSe        := 'http://teste.contagem.mg.gov.br/NFSEWSTESTE/Services.svc';
 
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.contagem.mg.gov.br/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://nfse.contagem.mg.gov.br/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.contagem.mg.gov.br/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.contagem.mg.gov.br/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://nfse.contagem.mg.gov.br/NFSEWS/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://nfse.contagem.mg.gov.br/NFSEWS/Services.svc';
-           end;
-  3304706: begin // Santo Antonio de Padua/RJ
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://177.67.128.86/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaLoteRPS    := 'http://177.67.128.86/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://177.67.128.86/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaSitLoteRPS := 'http://177.67.128.86/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSe       := 'http://177.67.128.86/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomCancelaNFSe        := 'http://177.67.128.86/NFSEWSTESTE/Services.svc';
-
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://177.67.128.86/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://177.67.128.86/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://177.67.128.86/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://177.67.128.86/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://177.67.128.86/NFSEWS/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://177.67.128.86/NFSEWS/Services.svc';
-           end;
-  3511102: begin // Catanduva/SP por fnietto
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.catanduva.sp.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaLoteRPS    := 'http://nfse.catanduva.sp.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://nfse.catanduva.sp.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaSitLoteRPS := 'http://nfse.catanduva.sp.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSe       := 'http://nfse.catanduva.sp.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomCancelaNFSe        := 'http://nfse.catanduva.sp.gov.br/NFSEWSTESTE/Services.svc';
-
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.catanduva.sp.gov.br/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://nfse.catanduva.sp.gov.br/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.catanduva.sp.gov.br/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.catanduva.sp.gov.br/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://nfse.catanduva.sp.gov.br/NFSEWS/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://nfse.catanduva.sp.gov.br/NFSEWS/Services.svc';
-           end;
-  3530300: begin // Mirassol/SP por Daniel Junior
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWSteste/Services.svc';
-            ConfigURL.HomConsultaLoteRPS    := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWSteste/Services.svc';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWSteste/Services.svc';
-            ConfigURL.HomConsultaSitLoteRPS := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWSteste/Services.svc';
-            ConfigURL.HomConsultaNFSe       := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWSteste/Services.svc';
-            ConfigURL.HomCancelaNFSe        := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWSteste/Services.svc';
-
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWS/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWS/Services.svc';
-           end;
-  3504008: begin // Assis/SP
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://nfseteste.assis.sp.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaLoteRPS    := 'http://nfseteste.assis.sp.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://nfseteste.assis.sp.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaSitLoteRPS := 'http://nfseteste.assis.sp.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSe       := 'http://nfseteste.assis.sp.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomCancelaNFSe        := 'http://nfseteste.assis.sp.gov.br/NFSEWSTESTE/Services.svc';
-
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://189.57.228.200/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://189.57.228.200/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://189.57.228.200/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://189.57.228.200/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://189.57.228.200/NFSEWS/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://189.57.228.200/NFSEWS/Services.svc';
-           end;
-  4118501: begin // Pato Branco/PR
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaSitLoteRPS := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSe       := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomCancelaNFSe        := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
-
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
-           end;
-  4201307: begin // Araquari/SC
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaLoteRPS    := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaSitLoteRPS := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSe       := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomCancelaNFSe        := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
-
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
-           end;
-  4205902: begin // Gaspar/SC
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaLoteRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaSitLoteRPS := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSe       := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomCancelaNFSe        := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';
-
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
-           end;
-  4308102: begin // Feliz/RS
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://187.84.56.69:8082/nfsewsteste/Services.svc';
-            ConfigURL.HomConsultaLoteRPS    := 'http://187.84.56.69:8082/nfsewsteste/Services.svc';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://187.84.56.69:8082/nfsewsteste/Services.svc';
-            ConfigURL.HomConsultaSitLoteRPS := 'http://187.84.56.69:8082/nfsewsteste/Services.svc';
-            ConfigURL.HomConsultaNFSe       := 'http://187.84.56.69:8082/nfsewsteste/Services.svc';
-            ConfigURL.HomCancelaNFSe        := 'http://187.84.56.69:8082/nfsewsteste/Services.svc';
-
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://187.84.56.68:8081/nfsews/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://187.84.56.68:8081/nfsews/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://187.84.56.68:8081/nfsews/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://187.84.56.68:8081/nfsews/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://187.84.56.68:8081/nfsews/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://187.84.56.68:8081/nfsews/Services.svc';
-           end;
-  4309407: begin // Guapore/RS
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaLoteRPS    := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaSitLoteRPS := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSe       := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomCancelaNFSe        := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
-
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://177.20.255.244/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://177.20.255.244/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://177.20.255.244/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://177.20.255.244/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://177.20.255.244/NFSEWS/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://177.20.255.244/NFSEWS/Services.svc';
-           end;
-  4310207: begin // Ijui/RS
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://ambienteteste.ijui.rs.gov.br/nfsewsteste/Services.svc';
-            ConfigURL.HomConsultaLoteRPS    := 'http://ambienteteste.ijui.rs.gov.br/nfsewsteste/Services.svc';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://ambienteteste.ijui.rs.gov.br/nfsewsteste/Services.svc';
-            ConfigURL.HomConsultaSitLoteRPS := 'http://ambienteteste.ijui.rs.gov.br/nfsewsteste/Services.svc';
-            ConfigURL.HomConsultaNFSe       := 'http://ambienteteste.ijui.rs.gov.br/nfsewsteste/Services.svc';
-            ConfigURL.HomCancelaNFSe        := 'http://ambienteteste.ijui.rs.gov.br/nfsewsteste/Services.svc';
-
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
-           end;
-  4320800: begin // Soledade/RS
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := '';
-            ConfigURL.HomConsultaLoteRPS    := '';
-            ConfigURL.HomConsultaNFSeRPS    := '';
-            ConfigURL.HomConsultaSitLoteRPS := '';
-            ConfigURL.HomConsultaNFSe       := '';
-            ConfigURL.HomCancelaNFSe        := '';
-
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://177.101.230.30/nfsews/services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://177.101.230.30/nfsews/services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://177.101.230.30/nfsews/services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://177.101.230.30/nfsews/services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://177.101.230.30/nfsews/services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://177.101.230.30/nfsews/services.svc';
-           end;
-  4322400: begin // Uruguaiana/RS
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaLoteRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaSitLoteRPS := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSe       := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomCancelaNFSe        := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
-
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
-           end;
-  4204004: begin // Catanduvas / SC
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaLoteRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaSitLoteRPS := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSe       := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomCancelaNFSe        := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
-
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
+             ConfigURL.ProNomeCidade         := '';
+             ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.contagem.mg.gov.br/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaLoteRPS    := 'http://nfse.contagem.mg.gov.br/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.contagem.mg.gov.br/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.contagem.mg.gov.br/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSe       := 'http://nfse.contagem.mg.gov.br/NFSEWS/Services.svc';
+             ConfigURL.ProCancelaNFSe        := 'http://nfse.contagem.mg.gov.br/NFSEWS/Services.svc';
            end;
   3143302: begin // Montes Claros/MG
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://nfeteste.montesclaros.mg.gov.br:8081/nfsewsteste/Services.svc';
-            ConfigURL.HomConsultaLoteRPS    := 'http://nfeteste.montesclaros.mg.gov.br:8081/nfsewsteste/Services.svc';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://nfeteste.montesclaros.mg.gov.br:8081/nfsewsteste/Services.svc';
-            ConfigURL.HomConsultaSitLoteRPS := 'http://nfeteste.montesclaros.mg.gov.br:8081/nfsewsteste/Services.svc';
-            ConfigURL.HomConsultaNFSe       := 'http://nfeteste.montesclaros.mg.gov.br:8081/nfsewsteste/Services.svc';
-            ConfigURL.HomCancelaNFSe        := 'http://nfeteste.montesclaros.mg.gov.br:8081/nfsewsteste/Services.svc';
+             ConfigURL.HomNomeCidade         := '';
+             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfeteste.montesclaros.mg.gov.br:8081/nfsewsteste/Services.svc';
+             ConfigURL.HomConsultaLoteRPS    := 'http://nfeteste.montesclaros.mg.gov.br:8081/nfsewsteste/Services.svc';
+             ConfigURL.HomConsultaNFSeRPS    := 'http://nfeteste.montesclaros.mg.gov.br:8081/nfsewsteste/Services.svc';
+             ConfigURL.HomConsultaSitLoteRPS := 'http://nfeteste.montesclaros.mg.gov.br:8081/nfsewsteste/Services.svc';
+             ConfigURL.HomConsultaNFSe       := 'http://nfeteste.montesclaros.mg.gov.br:8081/nfsewsteste/Services.svc';
+             ConfigURL.HomCancelaNFSe        := 'http://nfeteste.montesclaros.mg.gov.br:8081/nfsewsteste/Services.svc';
 
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://nfe.montesclaros.mg.gov.br:8082/NFSEws/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://nfe.montesclaros.mg.gov.br:8082/NFSEws/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://nfe.montesclaros.mg.gov.br:8082/NFSEws/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://nfe.montesclaros.mg.gov.br:8082/NFSEws/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://nfe.montesclaros.mg.gov.br:8082/NFSEws/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://nfe.montesclaros.mg.gov.br:8082/NFSEws/Services.svc';
+             ConfigURL.ProNomeCidade         := '';
+             ConfigURL.ProRecepcaoLoteRPS    := 'http://nfe.montesclaros.mg.gov.br:8082/NFSEws/Services.svc';
+             ConfigURL.ProConsultaLoteRPS    := 'http://nfe.montesclaros.mg.gov.br:8082/NFSEws/Services.svc';
+             ConfigURL.ProConsultaNFSeRPS    := 'http://nfe.montesclaros.mg.gov.br:8082/NFSEws/Services.svc';
+             ConfigURL.ProConsultaSitLoteRPS := 'http://nfe.montesclaros.mg.gov.br:8082/NFSEws/Services.svc';
+             ConfigURL.ProConsultaNFSe       := 'http://nfe.montesclaros.mg.gov.br:8082/NFSEws/Services.svc';
+             ConfigURL.ProCancelaNFSe        := 'http://nfe.montesclaros.mg.gov.br:8082/NFSEws/Services.svc';
+           end;
+  3304706: begin // Santo Antonio de Padua/RJ
+             ConfigURL.HomNomeCidade         := '';
+             ConfigURL.HomRecepcaoLoteRPS    := 'http://177.67.128.86/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaLoteRPS    := 'http://177.67.128.86/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSeRPS    := 'http://177.67.128.86/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaSitLoteRPS := 'http://177.67.128.86/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSe       := 'http://177.67.128.86/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomCancelaNFSe        := 'http://177.67.128.86/NFSEWSTESTE/Services.svc';
+
+             ConfigURL.ProNomeCidade         := '';
+             ConfigURL.ProRecepcaoLoteRPS    := 'http://177.67.128.86/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaLoteRPS    := 'http://177.67.128.86/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSeRPS    := 'http://177.67.128.86/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaSitLoteRPS := 'http://177.67.128.86/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSe       := 'http://177.67.128.86/NFSEWS/Services.svc';
+             ConfigURL.ProCancelaNFSe        := 'http://177.67.128.86/NFSEWS/Services.svc';
+           end;
+  3504008: begin // Assis/SP
+             ConfigURL.HomNomeCidade         := '';
+             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfseteste.assis.sp.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaLoteRPS    := 'http://nfseteste.assis.sp.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSeRPS    := 'http://nfseteste.assis.sp.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaSitLoteRPS := 'http://nfseteste.assis.sp.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSe       := 'http://nfseteste.assis.sp.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomCancelaNFSe        := 'http://nfseteste.assis.sp.gov.br/NFSEWSTESTE/Services.svc';
+
+             ConfigURL.ProNomeCidade         := '';
+             ConfigURL.ProRecepcaoLoteRPS    := 'http://189.57.228.200/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaLoteRPS    := 'http://189.57.228.200/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSeRPS    := 'http://189.57.228.200/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaSitLoteRPS := 'http://189.57.228.200/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSe       := 'http://189.57.228.200/NFSEWS/Services.svc';
+             ConfigURL.ProCancelaNFSe        := 'http://189.57.228.200/NFSEWS/Services.svc';
+           end;
+  3505609: begin // Barrinha/SP
+             ConfigURL.HomNomeCidade         := '';
+             ConfigURL.HomRecepcaoLoteRPS    := 'http://186.232.87.226:90/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaLoteRPS    := 'http://186.232.87.226:90/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSeRPS    := 'http://186.232.87.226:90/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaSitLoteRPS := 'http://186.232.87.226:90/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSe       := 'http://186.232.87.226:90/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomCancelaNFSe        := 'http://186.232.87.226:90/NFSEWSTESTE/Services.svc';
+             ConfigURL.ProNomeCidade         := '';
+
+             ConfigURL.ProRecepcaoLoteRPS    := 'http://186.232.87.226:90/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaLoteRPS    := 'http://186.232.87.226:90/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSeRPS    := 'http://186.232.87.226:90/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaSitLoteRPS := 'http://186.232.87.226:90/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSe       := 'http://186.232.87.226:90/NFSEWS/Services.svc';
+             ConfigURL.ProCancelaNFSe        := 'http://186.232.87.226:90/NFSEWS/Services.svc';
+           end;
+  3511102: begin // Catanduva/SP
+             ConfigURL.HomNomeCidade         := '';
+             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.catanduva.sp.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaLoteRPS    := 'http://nfse.catanduva.sp.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSeRPS    := 'http://nfse.catanduva.sp.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaSitLoteRPS := 'http://nfse.catanduva.sp.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSe       := 'http://nfse.catanduva.sp.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomCancelaNFSe        := 'http://nfse.catanduva.sp.gov.br/NFSEWSTESTE/Services.svc';
+
+             ConfigURL.ProNomeCidade         := '';
+             ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.catanduva.sp.gov.br/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaLoteRPS    := 'http://nfse.catanduva.sp.gov.br/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.catanduva.sp.gov.br/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.catanduva.sp.gov.br/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSe       := 'http://nfse.catanduva.sp.gov.br/NFSEWS/Services.svc';
+             ConfigURL.ProCancelaNFSe        := 'http://nfse.catanduva.sp.gov.br/NFSEWS/Services.svc';
+           end;
+  3530300: begin // Mirassol/SP
+             ConfigURL.HomNomeCidade         := '';
+             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWSteste/Services.svc';
+             ConfigURL.HomConsultaLoteRPS    := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWSteste/Services.svc';
+             ConfigURL.HomConsultaNFSeRPS    := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWSteste/Services.svc';
+             ConfigURL.HomConsultaSitLoteRPS := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWSteste/Services.svc';
+             ConfigURL.HomConsultaNFSe       := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWSteste/Services.svc';
+             ConfigURL.HomCancelaNFSe        := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWSteste/Services.svc';
+
+             ConfigURL.ProNomeCidade         := '';
+             ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaLoteRPS    := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSe       := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWS/Services.svc';
+             ConfigURL.ProCancelaNFSe        := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWS/Services.svc';
+           end;
+  4118501: begin // Pato Branco/PR
+             ConfigURL.HomNomeCidade         := '';
+             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSeRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaSitLoteRPS := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSe       := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomCancelaNFSe        := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
+
+             ConfigURL.ProNomeCidade         := '';
+             ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
+             ConfigURL.ProConsultaLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
+             ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
+             ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
+             ConfigURL.ProConsultaNFSe       := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
+             ConfigURL.ProCancelaNFSe        := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
+           end;
+  4201307: begin // Araquari/SC
+             ConfigURL.HomNomeCidade         := '';
+             ConfigURL.HomRecepcaoLoteRPS    := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaLoteRPS    := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSeRPS    := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaSitLoteRPS := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSe       := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomCancelaNFSe        := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
+
+             ConfigURL.ProNomeCidade         := '';
+             ConfigURL.ProRecepcaoLoteRPS    := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaLoteRPS    := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSeRPS    := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaSitLoteRPS := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSe       := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
+             ConfigURL.ProCancelaNFSe        := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
+           end;
+  4204004: begin // Catanduvas / SC
+             ConfigURL.HomNomeCidade         := '';
+             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaLoteRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSeRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaSitLoteRPS := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSe       := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomCancelaNFSe        := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
+
+             ConfigURL.ProNomeCidade         := '';
+             ConfigURL.ProRecepcaoLoteRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaLoteRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSeRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaSitLoteRPS := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSe       := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
+             ConfigURL.ProCancelaNFSe        := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
+           end;
+  4205902: begin // Gaspar/SC
+             ConfigURL.HomNomeCidade         := '';
+             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaLoteRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSeRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaSitLoteRPS := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSe       := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomCancelaNFSe        := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';
+
+             ConfigURL.ProNomeCidade         := '';
+             ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaLoteRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSe       := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
+             ConfigURL.ProCancelaNFSe        := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
+           end;
+  4210506: begin // Maravilha/SC
+             ConfigURL.HomNomeCidade         := '';
+             ConfigURL.HomRecepcaoLoteRPS    := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaLoteRPS    := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSeRPS    := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaSitLoteRPS := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSe       := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomCancelaNFSe        := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
+
+             ConfigURL.ProNomeCidade         := '';
+             ConfigURL.ProRecepcaoLoteRPS    := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaLoteRPS    := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSeRPS    := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaSitLoteRPS := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSe       := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
+             ConfigURL.ProCancelaNFSe        := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
+           end;
+  4216602: begin // São José/SC
+             ConfigURL.HomNomeCidade         := '';
+             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.pmsj.sc.gov.br:90/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaLoteRPS    := 'http://nfse.pmsj.sc.gov.br:90/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSeRPS    := 'http://nfse.pmsj.sc.gov.br:90/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaSitLoteRPS := 'http://nfse.pmsj.sc.gov.br:90/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSe       := 'http://nfse.pmsj.sc.gov.br:90/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomCancelaNFSe        := 'http://nfse.pmsj.sc.gov.br:90/NFSEWSTESTE/Services.svc';
+
+             ConfigURL.ProNomeCidade         := '';
+             ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.pmsj.sc.gov.br:90/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaLoteRPS    := 'http://nfse.pmsj.sc.gov.br:90/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.pmsj.sc.gov.br:90/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.pmsj.sc.gov.br:90/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSe       := 'http://nfse.pmsj.sc.gov.br:90/NFSEWS/Services.svc';
+             ConfigURL.ProCancelaNFSe        := 'http://nfse.pmsj.sc.gov.br:90/NFSEWS/Services.svc';
+           end;
+  4308102: begin // Feliz/RS
+             ConfigURL.HomNomeCidade         := '';
+             ConfigURL.HomRecepcaoLoteRPS    := 'http://187.84.56.69:8082/nfsewsteste/Services.svc';
+             ConfigURL.HomConsultaLoteRPS    := 'http://187.84.56.69:8082/nfsewsteste/Services.svc';
+             ConfigURL.HomConsultaNFSeRPS    := 'http://187.84.56.69:8082/nfsewsteste/Services.svc';
+             ConfigURL.HomConsultaSitLoteRPS := 'http://187.84.56.69:8082/nfsewsteste/Services.svc';
+             ConfigURL.HomConsultaNFSe       := 'http://187.84.56.69:8082/nfsewsteste/Services.svc';
+             ConfigURL.HomCancelaNFSe        := 'http://187.84.56.69:8082/nfsewsteste/Services.svc';
+
+             ConfigURL.ProNomeCidade         := '';
+             ConfigURL.ProRecepcaoLoteRPS    := 'http://187.84.56.68:8081/nfsews/Services.svc';
+             ConfigURL.ProConsultaLoteRPS    := 'http://187.84.56.68:8081/nfsews/Services.svc';
+             ConfigURL.ProConsultaNFSeRPS    := 'http://187.84.56.68:8081/nfsews/Services.svc';
+             ConfigURL.ProConsultaSitLoteRPS := 'http://187.84.56.68:8081/nfsews/Services.svc';
+             ConfigURL.ProConsultaNFSe       := 'http://187.84.56.68:8081/nfsews/Services.svc';
+             ConfigURL.ProCancelaNFSe        := 'http://187.84.56.68:8081/nfsews/Services.svc';
+           end;
+  4309407: begin // Guapore/RS
+             ConfigURL.HomNomeCidade         := '';
+             ConfigURL.HomRecepcaoLoteRPS    := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaLoteRPS    := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSeRPS    := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaSitLoteRPS := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSe       := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomCancelaNFSe        := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
+
+             ConfigURL.ProNomeCidade         := '';
+             ConfigURL.ProRecepcaoLoteRPS    := 'http://177.20.255.244/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaLoteRPS    := 'http://177.20.255.244/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSeRPS    := 'http://177.20.255.244/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaSitLoteRPS := 'http://177.20.255.244/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSe       := 'http://177.20.255.244/NFSEWS/Services.svc';
+             ConfigURL.ProCancelaNFSe        := 'http://177.20.255.244/NFSEWS/Services.svc';
+           end;
+  4310207: begin // Ijui/RS
+             ConfigURL.HomNomeCidade         := '';
+             ConfigURL.HomRecepcaoLoteRPS    := 'http://ambienteteste.ijui.rs.gov.br/nfsewsteste/Services.svc';
+             ConfigURL.HomConsultaLoteRPS    := 'http://ambienteteste.ijui.rs.gov.br/nfsewsteste/Services.svc';
+             ConfigURL.HomConsultaNFSeRPS    := 'http://ambienteteste.ijui.rs.gov.br/nfsewsteste/Services.svc';
+             ConfigURL.HomConsultaSitLoteRPS := 'http://ambienteteste.ijui.rs.gov.br/nfsewsteste/Services.svc';
+             ConfigURL.HomConsultaNFSe       := 'http://ambienteteste.ijui.rs.gov.br/nfsewsteste/Services.svc';
+             ConfigURL.HomCancelaNFSe        := 'http://ambienteteste.ijui.rs.gov.br/nfsewsteste/Services.svc';
+
+             ConfigURL.ProNomeCidade         := '';
+             ConfigURL.ProRecepcaoLoteRPS    := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
+             ConfigURL.ProConsultaLoteRPS    := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
+             ConfigURL.ProConsultaNFSeRPS    := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
+             ConfigURL.ProConsultaSitLoteRPS := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
+             ConfigURL.ProConsultaNFSe       := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
+             ConfigURL.ProCancelaNFSe        := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
+           end;
+  4320800: begin // Soledade/RS
+             ConfigURL.HomNomeCidade         := '';
+             ConfigURL.HomRecepcaoLoteRPS    := '';
+             ConfigURL.HomConsultaLoteRPS    := '';
+             ConfigURL.HomConsultaNFSeRPS    := '';
+             ConfigURL.HomConsultaSitLoteRPS := '';
+             ConfigURL.HomConsultaNFSe       := '';
+             ConfigURL.HomCancelaNFSe        := '';
+
+             ConfigURL.ProNomeCidade         := '';
+             ConfigURL.ProRecepcaoLoteRPS    := 'http://177.101.230.30/nfsews/services.svc';
+             ConfigURL.ProConsultaLoteRPS    := 'http://177.101.230.30/nfsews/services.svc';
+             ConfigURL.ProConsultaNFSeRPS    := 'http://177.101.230.30/nfsews/services.svc';
+             ConfigURL.ProConsultaSitLoteRPS := 'http://177.101.230.30/nfsews/services.svc';
+             ConfigURL.ProConsultaNFSe       := 'http://177.101.230.30/nfsews/services.svc';
+             ConfigURL.ProCancelaNFSe        := 'http://177.101.230.30/nfsews/services.svc';
+           end;
+  4322400: begin // Uruguaiana/RS
+             ConfigURL.HomNomeCidade         := '';
+             ConfigURL.HomRecepcaoLoteRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaLoteRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSeRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaSitLoteRPS := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomConsultaNFSe       := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
+             ConfigURL.HomCancelaNFSe        := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
+
+             ConfigURL.ProNomeCidade         := '';
+             ConfigURL.ProRecepcaoLoteRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaLoteRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSeRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaSitLoteRPS := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
+             ConfigURL.ProConsultaNFSe       := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
+             ConfigURL.ProCancelaNFSe        := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
            end;
  end;
 
