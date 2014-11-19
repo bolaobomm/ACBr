@@ -41,7 +41,8 @@ interface
 
 uses
   SysUtils, Classes, frxBarcode, frxClass, frxExportPDF, frxDBSet, DB, DBClient,
-  ACBrMDFeDAMDFeClass, pmdfeMDFe, ACBrMDFe, ACBrMDFeUtil, pcnConversao, pmdfeConversao, Dialogs, pmdfeEnvEventoMDFe;
+  ACBrMDFeDAMDFeClass, pmdfeMDFe, ACBrMDFe, ACBrMDFeUtil, pcnConversao,
+  pmdfeConversao, Dialogs, pmdfeEnvEventoMDFe, StrUtils;
 
 type
   TDMACBrMDFeDAMDFEFR = class(TDataModule)
@@ -106,6 +107,9 @@ implementation
 
 uses
   ACBrDFeUtil;
+
+type
+  TSplitResult = array of string;
 
 {$R *.dfm}
 
@@ -685,7 +689,75 @@ begin
   end;
 end;
 
+function SubstrCount(const ASubString, AString: string): Integer;
+var
+  i: integer;
+begin
+  Result := -1;
+  i := 0;
+  repeat
+    Inc(Result);
+    i := PosEx(ASubString, AString, i + 1);
+  until i = 0;
+end;
+
+function Split(const ADelimiter, AString: string): TSplitResult;
+var
+  Step: ^string;
+  Chr: PChar;
+  iPos, iLast, iDelLen, iLen, x: integer;
+label
+  EndLoop;
+begin
+  SetLength(Result, SubstrCount(ADelimiter, AString) + 1);
+  if High(Result) = 0 then
+    Result[0] := AString
+  else
+  begin
+    iDelLen := PCardinal(Cardinal(ADelimiter) - SizeOf(Cardinal))^;
+    iLen := PCardinal(Cardinal(AString) - SizeOf(Cardinal))^;
+    Step := @Result[0];
+    iLast := 0;
+    iPos := 0;
+    repeat
+      if iPos + iDelLen > iLen then
+      begin
+        if iLast <> iPos then
+          iPos := iLen;
+      end else
+        for x := 1 to iDelLen do
+          if AString[iPos + x] <> ADelimiter[x] then
+            goto EndLoop;
+
+      if iPos - iLast > 0 then
+      begin
+        SetLength(Step^, iPos - iLast);
+        Chr := PChar(Step^);
+        for x := 1 to PCardinal(Cardinal(Step^) - SizeOf(Cardinal))^ do
+        begin
+          Chr^ := AString[iLast + x];
+          Inc(Chr);
+        end;
+      end else
+        Step^ := '';
+
+      Cardinal(Step) := Cardinal(Step) + SizeOf(Cardinal);
+      iLast := iPos + iDelLen;
+
+      EndLoop:
+      Inc(iPos);
+    until iLast >= iLen;
+  end;
+end;
+
 procedure TDMACBrMDFeDAMDFEFR.CarregaIdentificacao;
+var
+  vTemp:TStringList;
+  wObs:String;
+  Campos:TSplitResult;
+  IndexCampo:Integer;
+  TmpStr:String;
+  BufferObs:String;
 begin
   with cdsIdentificacao, FieldDefs do
   begin
@@ -759,13 +831,32 @@ begin
       FieldByName('qNFe').AsInteger    := qNFe;
       FieldByName('qNF').AsInteger     := qNF;
       FieldByName('qMDFe').AsInteger   := qMDFe;
-//      FieldByName('qCarga').AsCurrency := qCarga;
       if cUnid = uTon then
         FieldByName('qCarga').AsCurrency := qCarga * 1000
       else
         FieldByName('qCarga').AsCurrency := qCarga;
     end;
-    FieldByName('OBS').AsString := FMDFe.infAdic.infCpl;
+
+    // Incluido por Paulo Hostert em 18/11/2014.
+    wObs := FMDFe.infAdic.infCpl;
+    vTemp := TStringList.Create;
+    try
+      if Trim(wObs) <> '' then
+      begin
+        Campos := Split(';', wObs);
+        for IndexCampo := 0 to Length(Campos) - 1 do
+          vTemp.Add(Trim(Campos[IndexCampo]));
+
+        TmpStr := vTemp.Text;
+        BufferObs := TmpStr;
+      end
+      else
+        BufferObs := '';
+    finally
+      vTemp.Free;
+    end;
+    FieldByName('OBS').AsString := BufferObs;
+
     Post;
   end;
 end;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/11/2014
+[*] Ajuste no campo observação para que ocorra quebra de linha ao encontrar ";"
+    Alteração realizada no DAMDFE - Fast Report
+    por: Paulo Hostert
+
 10/11/2014
 [-] Correções baseado nos relatos de Mauricio Guedes, nomes dos arquivos após ler
     o XML usando o LoadFromStream.
