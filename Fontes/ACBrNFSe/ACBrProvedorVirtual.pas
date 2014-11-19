@@ -276,15 +276,16 @@ end;
 function TProvedorVirtual.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ DadosMsg := SeparaDados( DadosMsg, 'GerarNfseEnvio' );
  result := '<?xml version="1.0" encoding="utf-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
             '<S:Body>' +
-//             '<GerarNfse.Execute xmlns="http://tempuri.org/">' +
              '<gerarnfse_barradogarcas.Execute>' +
-              '<Entrada>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '<Entrada xmlns="http://www.abrasf.org.br/nfse.xsd">' +
+                DadosMsg +
+//                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</Entrada>' +
              '</gerarnfse_barradogarcas.Execute>' +
             '</S:Body>' +

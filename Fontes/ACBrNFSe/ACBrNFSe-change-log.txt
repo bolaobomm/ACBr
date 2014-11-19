@@ -47,7 +47,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-18/11/2014
+19/11/2014
+[*] Alterações visando fazer funcionar o provedor Virtua.
+    Por: Italo Jurisato Junior
 [*] Incluido a cidade de Barrinha/SP (provedor Pronim)
     Por: Marcelo Petrucio
 
