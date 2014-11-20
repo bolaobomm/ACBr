@@ -36,6 +36,8 @@
 |*
 |* 04/04/2013:  André Ferreira de Moraes
 |*   Inicio do desenvolvimento
+|* 20/11/2014:  Welkson Renny de Medeiros
+|*   Contribuições para impressão na Bematech e Daruma
 ******************************************************************************}
 {$I ACBr.inc}
 unit ACBrNFeDANFeESCPOS;
@@ -50,14 +52,14 @@ uses Classes, SysUtils,
      pcnNFe, pcnConversao, pcnAuxiliar, ACBrDFeUtil;
 
 type
-  TACBrNFeMarcaImpressora = (iEpson, iBematech);
+  TACBrNFeMarcaImpressora = (iEpson, iBematech, iDaruma);
 
   TACBrNFeDANFeESCPOS = class( TACBrNFeDANFEClass )
   private
     FDevice : TACBrDevice ;
     FMarcaImpressora: TACBrNFeMarcaImpressora;
     FLinhasEntreCupons : Integer ;
-    FLinhaCmd : String;
+    FLinhaCmd : AnsiString;
     FBuffer : TStringList;
 
     cCmdImpZera : String;
@@ -73,6 +75,7 @@ type
     cCmdAlinhadoCentro : String;
     cCmdAlinhadoDireita : String;
     cCmdCortaPapel : String;
+    cCmdImprimeLogo : String;
 
     procedure ImprimePorta( AString : AnsiString ) ;
   protected
@@ -87,6 +90,7 @@ type
     procedure GerarDadosConsumidor;
     procedure GerarRodape(CortaPapel: Boolean = True; Cancelamento: Boolean = False);
     procedure PulaLinhas( NumLinhas : Integer = 0 );
+    function  ParseTextESCPOS( Text: AnsiString ): AnsiString;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -118,6 +122,16 @@ begin
              AnsiChar(chr( StrToInt('$'+copy(AHexStr,1,2) ) )) ;
   AHexStr := Result;
 end;
+
+function TACBrNFeDANFeESCPOS.ParseTextESCPOS( Text: AnsiString ): AnsiString;
+begin
+  //codifica linhas de texto com UTF-8 para evitar erros de acentuação na Bematech
+  if MarcaImpressora = iBematech then
+      Result := UTF8Encode(Text)
+  else
+      Result := Text;    
+end;
+
 
 { TACBrNFeDANFeESCPOS }
 
@@ -154,7 +168,7 @@ begin
    begin
      cCmdImpZera     := #27+'@'+#29#249#32#48 ; //#27+'@' Inicializa impressora, demais selecionam ESC/Bema temporariamente
      cCmdEspacoLinha := #27+'3'+#14;  //Verificar comando BEMA/POS
-     cCmdPagCod      := #27+'t'+#4;
+     cCmdPagCod      := #27+'t'+#8;   //codepage UTF-8
      cCmdImpNegrito  := #27#78#3;
      cCmdImpFimNegrito := #27#78#2;
      cCmdImpExpandido  := #27#87#1;
@@ -165,6 +179,24 @@ begin
      cCmdAlinhadoCentro   := #27+'a1';
      cCmdAlinhadoDireita  := #27+'a2'; //Verificar comando BEMA/POS
      cCmdCortaPapel       := #27+'w'+#29#249#31#49; //#27+'w' corta papel, demais voltam a configuração da impressora
+     cCmdImprimeLogo      := '';
+   end
+  else if MarcaImpressora = iDaruma then
+   begin
+     cCmdImpZera     := #27+'@';
+     cCmdEspacoLinha := #27+'2';
+     cCmdPagCod      := '';      //pelo aplicativo da Daruma (Tool) selecione ISO 8859-1 (TODO: tentar implementar essa mudança via código)  
+     cCmdImpNegrito  := #27#69;
+     cCmdImpFimNegrito := #27#70;
+     cCmdImpExpandido  := #27 + 'W' + #1;
+     cCmdImpFimExpandido := #27 + 'W' + #0;
+     cCmdFonteNormal   := #20;
+     cCmdFontePequena  := #15;
+     cCmdAlinhadoEsquerda := #27#106#0;
+     cCmdAlinhadoCentro   := #27#106#1;
+     cCmdAlinhadoDireita  := #27#106#2;
+     cCmdCortaPapel       := #27#109;
+     cCmdImprimeLogo      := '';
    end
   else
    begin
@@ -181,35 +213,36 @@ begin
       cCmdAlinhadoCentro   := #27+'a1';
       cCmdAlinhadoDireita  := #27+'a2';
       cCmdCortaPapel       := #29+'V1';
+      cCmdImprimeLogo      := #29+'(L'#6#0+'0E  '+#1#1;
    end;
 
-  FLinhaCmd := cCmdImpZera+cCmdEspacoLinha+cCmdPagCod+cCmdFonteNormal+cCmdAlinhadoCentro;
   FBuffer.clear;
-  FBuffer.Add(FLinhaCmd+chr(29)+'(L'+chr(6)+chr(0)+'0E  '+chr(1)+chr(1)); // Imprimindo logo já gravado na memória
+  FLinhaCmd := cCmdImpZera+cCmdEspacoLinha+cCmdPagCod+cCmdFonteNormal+cCmdAlinhadoCentro;
+  FBuffer.Add(FLinhaCmd+cCmdImprimeLogo); // Imprimindo logo já gravado na memória
 
 //  FLinhaCmd := cCmdAlinhadoCentro+cCmdImpNegrito+FpCFe.Emit.xFant+cCmdImpFimNegrito;
 //  FBuffer.Add(FLinhaCmd);
   FBuffer.Add(cCmdImpNegrito+FpNFe.Emit.xNome+cCmdImpFimNegrito);
   FLinhaCmd := cCmdImpNegrito+cCmdFontePequena+
-              ('CNPJ:'+DFeUtil.FormatarCNPJ(FpNFe.Emit.CNPJCPF)+'   '+
+              ParseTextESCPOS('CNPJ:'+DFeUtil.FormatarCNPJ(FpNFe.Emit.CNPJCPF)+'   '+
               'Inscrição Estadual:'+Trim(FpNFe.Emit.IE))+cCmdImpFimNegrito;
   FBuffer.Add(FLinhaCmd);
 
-  FBuffer.Add(cCmdFontePequena+Trim(FpNFe.Emit.EnderEmit.xLgr)+' '+
+  FBuffer.Add(cCmdFontePequena+ParseTextESCPOS(Trim(FpNFe.Emit.EnderEmit.xLgr)+' '+
               Trim(FpNFe.Emit.EnderEmit.nro)+' '+
               Trim(FpNFe.Emit.EnderEmit.xCpl)+' '+
               Trim(FpNFe.Emit.EnderEmit.xBairro)+'-'+
-              Trim(FpNFe.Emit.EnderEmit.xMun));
+              Trim(FpNFe.Emit.EnderEmit.xMun)));
 
 
   FBuffer.Add(cCmdAlinhadoEsquerda+cCmdFonteNormal+'------------------------------------------------');
 
   FLinhaCmd := cCmdFonteNormal+cCmdAlinhadoCentro+cCmdImpNegrito+
-                 'DANFE NFC-e - Documento Auxiliar';
+                 ParseTextESCPOS('DANFE NFC-e - Documento Auxiliar');
   FBuffer.Add(FLinhaCmd);
-  FLinhaCmd := ('da Nota Fiscal Eletrônica para Consumidor Final');
+  FLinhaCmd := ParseTextESCPOS('da Nota Fiscal Eletrônica para Consumidor Final');
   FBuffer.Add(FLinhaCmd);
-  FLinhaCmd := ('Não permite aproveitamento de crédito de ICMS')+cCmdImpFimNegrito;
+  FLinhaCmd := ParseTextESCPOS('Não permite aproveitamento de crédito de ICMS')+cCmdImpFimNegrito;
   FBuffer.Add(FLinhaCmd);
 end;
 
@@ -218,7 +251,7 @@ var
   i : integer;
 begin
   FBuffer.Add(cCmdFonteNormal+'------------------------------------------------');
-  FBuffer.Add(('#|COD|DESCRIÇÃO|QTD|UN|VL UN R$|VL TOTAL R$'));
+  FBuffer.Add(ParseTextESCPOS('#|COD|DESCRIÇÃO|QTD|UN|VL UN R$|VL TOTAL R$'));
   FBuffer.Add('------------------------------------------------');
 
   for i:=0 to FpNFe.Det.Count - 1 do
@@ -232,20 +265,20 @@ begin
 
      FLinhaCmd := FLinhaCmd + '|' + FormatFloat('#,###,##0.00',FpNFe.Det.Items[i].Prod.vProd)+' ';
 
-     FLinhaCmd := padS(FLinhaCmd,64, '|');
+     FLinhaCmd := ParseTextESCPOS(padS(FLinhaCmd,64, '|'));
 
      FBuffer.Add(cCmdAlinhadoEsquerda+cCmdFontePequena+FLinhaCmd);
 
      if FpNFe.Det.Items[i].Prod.vDesc > 0 then
       begin
-        FBuffer.Add(padS('desconto|'+FormatFloat('-#,###,##0.00',FpNFe.Det.Items[i].Prod.vDesc),64, '|'));
-        FBuffer.Add(padS(('valor líquido|')+FormatFloat('#,###,##0.00',(FpNFe.Det.Items[i].Prod.qCom*FpNFe.Det.Items[i].Prod.vUnCom)-FpNFe.Det.Items[i].Prod.vDesc),64, '|'));
+        FBuffer.Add(ParseTextESCPOS(padS('desconto|'+FormatFloat('-#,###,##0.00',FpNFe.Det.Items[i].Prod.vDesc),64, '|')));
+        FBuffer.Add(ParseTextESCPOS(padS(('valor líquido|')+FormatFloat('#,###,##0.00',(FpNFe.Det.Items[i].Prod.qCom*FpNFe.Det.Items[i].Prod.vUnCom)-FpNFe.Det.Items[i].Prod.vDesc),64, '|')));
       end;
 
      if FpNFe.Det.Items[i].Prod.vOutro > 0 then
       begin
-        FBuffer.Add(padS('outros|'+FormatFloat('-#,###,##0.00',FpNFe.Det.Items[i].Prod.vOutro),64, '|'));
-        FBuffer.Add(padS(('valor líquido|')+FormatFloat('#,###,##0.00',(FpNFe.Det.Items[i].Prod.qCom*FpNFe.Det.Items[i].Prod.vUnCom)+FpNFe.Det.Items[i].Prod.vOutro),64, '|'));
+        FBuffer.Add(ParseTextESCPOS(padS('outros|'+FormatFloat('-#,###,##0.00',FpNFe.Det.Items[i].Prod.vOutro),64, '|')));
+        FBuffer.Add(ParseTextESCPOS(padS(('valor líquido|')+FormatFloat('#,###,##0.00',(FpNFe.Det.Items[i].Prod.qCom*FpNFe.Det.Items[i].Prod.vUnCom)+FpNFe.Det.Items[i].Prod.vOutro),64, '|')));
       end;
    end;
   FBuffer.Add(cCmdAlinhadoEsquerda+cCmdFonteNormal);
@@ -254,19 +287,19 @@ end;
 procedure TACBrNFeDANFeESCPOS.GerarTotais(Resumido: Boolean);
 begin
   FBuffer.Add(cCmdFonteNormal+'------------------------------------------------');
-  FBuffer.Add(cCmdFontePequena+padS('QTD. TOTAL DE ITENS|'+IntToStrZero(FpNFe.Det.Count,3),64, '|'));
+  FBuffer.Add(cCmdFontePequena+ParseTextESCPOS(padS('QTD. TOTAL DE ITENS|'+IntToStrZero(FpNFe.Det.Count,3),64, '|')));
   if not Resumido then
    begin
      if (FpNFe.Total.ICMSTot.vDesc > 0) or (FpNFe.Total.ICMSTot.vOutro > 0) then
-        FBuffer.Add(cCmdFontePequena+padS('Subtotal|'+FormatFloat('#,###,##0.00',FpNFe.Total.ICMSTot.vProd),64, '|'));
+        FBuffer.Add(cCmdFontePequena+ParseTextESCPOS(padS('Subtotal|'+FormatFloat('#,###,##0.00',FpNFe.Total.ICMSTot.vProd),64, '|')));
      if FpNFe.Total.ICMSTot.vDesc > 0 then
-        FBuffer.Add(cCmdFontePequena+padS('Descontos|'+FormatFloat('-#,###,##0.00',FpNFe.Total.ICMSTot.vDesc),64, '|'));
+        FBuffer.Add(cCmdFontePequena+ParseTextESCPOS(padS('Descontos|'+FormatFloat('-#,###,##0.00',FpNFe.Total.ICMSTot.vDesc),64, '|')));
      if FpNFe.Total.ICMSTot.vOutro > 0 then
-        FBuffer.Add(cCmdFontePequena+padS(('Acréscimos|')+FormatFloat('+#,###,##0.00',FpNFe.Total.ICMSTot.vOutro),64, '|'));
+        FBuffer.Add(cCmdFontePequena+ParseTextESCPOS(padS(('Acréscimos|')+FormatFloat('+#,###,##0.00',FpNFe.Total.ICMSTot.vOutro),64, '|')));
    end;
 
   FLinhaCmd := cCmdAlinhadoEsquerda+cCmdImpExpandido+
-               padS('TOTAL R$|'+FormatFloat('#,###,##0.00',FpNFe.Total.ICMSTot.vNF),32, '|')+
+               ParseTextESCPOS(padS('TOTAL R$|'+FormatFloat('#,###,##0.00',FpNFe.Total.ICMSTot.vNF),32, '|'))+
                cCmdImpFimExpandido;
   FBuffer.Add(FLinhaCmd);
 end;
@@ -277,16 +310,16 @@ var
   Total, Troco : Real;
 begin
   Total := 0;
-  FBuffer.Add(cCmdFontePequena+padS('FORMA DE PAGAMENTO '+'|'+' Valor Pago',64, '|'));
+  FBuffer.Add(cCmdFontePequena+ParseTextESCPOS(padS('FORMA DE PAGAMENTO '+'|'+' Valor Pago',64, '|')));
   for i:=0 to FpNFe.pag.Count - 1 do
    begin
-     FBuffer.Add(cCmdFontePequena+padS(FormaPagamentoToDescricao(FpNFe.pag.Items[i].tPag)+'|'+FormatFloat('#,###,##0.00',FpNFe.pag.Items[i].vPag),64, '|'));
+     FBuffer.Add(cCmdFontePequena+ParseTextESCPOS(padS(FormaPagamentoToDescricao(FpNFe.pag.Items[i].tPag)+'|'+FormatFloat('#,###,##0.00',FpNFe.pag.Items[i].vPag),64, '|')));
      Total := Total + FpNFe.pag.Items[i].vPag;
    end;
 
   Troco := Total - FpNFe.Total.ICMSTot.vNF;
   if Troco > 0 then
-     FBuffer.Add(cCmdFontePequena+padS('Troco R$|'+FormatFloat('#,###,##0.00',Troco),64, '|'));
+     FBuffer.Add(cCmdFontePequena+ParseTextESCPOS(padS('Troco R$|'+FormatFloat('#,###,##0.00',Troco),64, '|')));
   FBuffer.Add(cCmdFonteNormal+'------------------------------------------------');
 end;
 
@@ -294,8 +327,8 @@ procedure TACBrNFeDANFeESCPOS.GerarTotTrib;
 begin
   if FpNFe.Total.ICMSTot.vTotTrib > 0 then
    begin
-     FBuffer.Add(cCmdFontePequena+padS(('Informação dos Tributos Totais Incidentes |')+cCmdImpNegrito+FormatFloat('#,###,##0.00',FpNFe.Total.ICMSTot.vTotTrib),66, '|'));
-     FBuffer.Add(cCmdImpFimNegrito+'(Lei Federal 12.741/2012)');
+     FBuffer.Add(cCmdFontePequena+ParseTextESCPOS(padS('Informação dos Tributos Totais Incidentes |'+cCmdImpNegrito+FormatFloat('#,###,##0.00',FpNFe.Total.ICMSTot.vTotTrib),66, '|')));
+     FBuffer.Add(cCmdImpFimNegrito+ParseTextESCPOS('(Lei Federal 12.741/2012)'));
      FBuffer.Add(cCmdFonteNormal+'------------------------------------------------');
    end;
 end;
@@ -305,27 +338,27 @@ begin
   if FpNFe.ide.tpAmb = taHomologacao then
    begin
      FLinhaCmd := cCmdFontePequena+cCmdAlinhadoCentro+cCmdImpNegrito+
-                 ('EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
+                 ParseTextESCPOS('EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
    end
   else
    begin
      if FpNFe.Ide.tpEmis <> teNormal then
         FLinhaCmd := cCmdFonteNormal+cCmdAlinhadoCentro+cCmdImpNegrito+
-                 ('EMITIDA EM CONTINGÊNCIA')
+                 ParseTextESCPOS('EMITIDA EM CONTINGÊNCIA')
      else
         FLinhaCmd := cCmdFonteNormal+cCmdAlinhadoCentro+cCmdImpNegrito+
-                 ('ÁREA DE MENSAGEM FISCAL');
+                 ParseTextESCPOS('ÁREA DE MENSAGEM FISCAL');
    end;
 
   FBuffer.Add(FLinhaCmd);
 
   FLinhaCmd := cCmdImpFimNegrito+cCmdFontePequena+cCmdAlinhadoCentro+
-               ('Número '+IntToStrZero(FpNFe.Ide.nNF,9)+
+               ParseTextESCPOS('Número '+IntToStrZero(FpNFe.Ide.nNF,9)+
                ' Série '+IntToStrZero(FpNFe.Ide.serie,3)+
                ' Emissão '+DateTimeToStr(FpNFe.ide.dEmi)) ;
   FBuffer.Add(FLinhaCmd);
-  FBuffer.Add(cCmdAlinhadoCentro+cCmdFontePequena+'Consulte pela Chave de Acesso em '+NotaUtil.GetURLConsultaNFCe(FpNFe.Ide.cUF,FpNFe.ide.tpAmb));
-  FBuffer.Add(cCmdAlinhadoCentro+cCmdFonteNormal+'CHAVE DE ACESSO');
+  FBuffer.Add(cCmdAlinhadoCentro+cCmdFontePequena+ParseTextESCPOS('Consulte pela Chave de Acesso em ')+NotaUtil.GetURLConsultaNFCe(FpNFe.Ide.cUF,FpNFe.ide.tpAmb));
+  FBuffer.Add(cCmdAlinhadoCentro+cCmdFonteNormal+ParseTextESCPOS('CHAVE DE ACESSO'));
   FLinhaCmd :=  cCmdAlinhadoCentro+cCmdFontePequena+DFeUtil.FormatarChaveAcesso(OnlyNumber(FpNFe.infNFe.ID))+cCmdFonteNormal;
   FBuffer.Add(FLinhaCmd);
 
@@ -335,34 +368,36 @@ end;
 procedure TACBrNFeDANFeESCPOS.GerarDadosConsumidor;
 begin
   FLinhaCmd := cCmdFonteNormal+cCmdAlinhadoCentro+cCmdImpNegrito+
-               'CONSUMIDOR'+cCmdImpFimNegrito;
+               ParseTextESCPOS('CONSUMIDOR')+cCmdImpFimNegrito;
   FBuffer.Add(FLinhaCmd);
+
+  FLinhaCmd := ParseTextESCPOS('CNPJ/CPF/ID Estrangeiro -');
 
   if (FpNFe.Dest.idEstrangeiro = '') and
      (FpNFe.Dest.CNPJCPF = '') then
    begin
-      FLinhaCmd := 'CONSUMIDOR NÃO IDENTIFICADO';
+      FLinhaCmd := ParseTextESCPOS('CONSUMIDOR NÃO IDENTIFICADO');
    end
   else if FpNFe.Dest.idEstrangeiro <> '' then
    begin
-     FLinhaCmd := 'CNPJ/CPF/ID Estrangeiro -'+FpNFe.Dest.idEstrangeiro+' '+FpNFe.Dest.xNome;
+     FLinhaCmd := FLinhaCmd+FpNFe.Dest.idEstrangeiro+' '+FpNFe.Dest.xNome;
    end
   else
    begin
      if Length(trim(FpNFe.Dest.CNPJCPF)) > 11 then
-        FLinhaCmd := 'CNPJ/CPF/ID Estrangeiro -'+DFeUtil.FormatarCNPJ(FpNFe.Dest.CNPJCPF)
+        FLinhaCmd := FLinhaCmd+DFeUtil.FormatarCNPJ(FpNFe.Dest.CNPJCPF)
      else
-        FLinhaCmd := 'CNPJ/CPF/ID Estrangeiro -'+DFeUtil.FormatarCPF(FpNFe.Dest.CNPJCPF);
+        FLinhaCmd := FLinhaCmd+DFeUtil.FormatarCPF(FpNFe.Dest.CNPJCPF);
 
      FLinhaCmd := FLinhaCmd+' '+FpNFe.Dest.xNome;
    end;
 
   FBuffer.Add(cCmdFontePequena+FLinhaCmd);
-  FBuffer.Add(cCmdFontePequena+Trim(FpNFe.Dest.EnderDest.xLgr)+' '+
+  FBuffer.Add(cCmdFontePequena+ParseTextESCPOS(Trim(FpNFe.Dest.EnderDest.xLgr)+' '+
               Trim(FpNFe.Dest.EnderDest.nro)+' '+
               Trim(FpNFe.Dest.EnderDest.xCpl)+' '+
               Trim(FpNFe.Dest.EnderDest.xBairro)+' '+
-              Trim(FpNFe.Dest.EnderDest.xMun));
+              Trim(FpNFe.Dest.EnderDest.xMun)));
 
 end;
 
@@ -371,10 +406,11 @@ procedure TACBrNFeDANFeESCPOS.GerarRodape(CortaPapel: Boolean = True; Cancelamen
 var
   qrcode : string;
   cCaracter : String;
-  i, cTam1, cTam2 : Integer;  
+  i, cTam1, cTam2 : Integer;
+  bMenos, bMais, iQtdBytes, iLargMod, iNivelCorrecao : Integer;
 begin
   FBuffer.Add(cCmdFonteNormal+'------------------------------------------------');
-  FLinhaCmd := cCmdAlinhadoCentro+'Consulta via leitor de QR Code';
+  FLinhaCmd := cCmdAlinhadoCentro+ParseTextESCPOS('Consulta via leitor de QR Code');
   FBuffer.Add(FLinhaCmd);
   FBuffer.Add(' ');
 
@@ -414,6 +450,17 @@ begin
                    chr(cTam2) +
                    cCaracter;
    end
+  else if MarcaImpressora = iDaruma then
+   begin
+     iQtdBytes := Length(qrcode);
+     iLargMod := 4;
+     bMenos := iQtdBytes shr 8;
+     bMais := iQtdBytes AND 255 + 2;
+     iNivelCorrecao := (Ord('M'));
+
+     FLinhaCmd := #27 + #129 + chr(bMais) + chr(bMenos) + chr(iLargMod) +
+                   chr(iNivelCorrecao) + qrcode;
+   end
   else
    begin
      FLinhaCmd := chr(29)+'(k'+chr(4)+chr(0)+'1A2'+chr(0)+
@@ -427,7 +474,7 @@ begin
 
   FBuffer.Add('');
   FBuffer.Add('');
-  FBuffer.Add(cCmdFontePequena+('Protocolo de Autorização:'+Trim(FpNFe.procNFe.nProt)+' '+DFeUtil.SeSenao(FpNFe.procNFe.dhRecbto<>0,DateTimeToStr(FpNFe.procNFe.dhRecbto),''))+cCmdFonteNormal);
+  FBuffer.Add(cCmdFontePequena+(ParseTextESCPOS('Protocolo de Autorização:')+Trim(FpNFe.procNFe.nProt)+' '+DFeUtil.SeSenao(FpNFe.procNFe.dhRecbto<>0,DateTimeToStr(FpNFe.procNFe.dhRecbto),''))+cCmdFonteNormal);
   PulaLinhas;
 
   if CortaPapel then
