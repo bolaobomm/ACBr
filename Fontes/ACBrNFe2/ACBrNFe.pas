@@ -129,7 +129,7 @@ type
     function Enviar(ALote: String; Imprimir: Boolean = True; Sincrono: Boolean = False): Boolean; overload;
     function Cancelamento(AJustificativa:WideString): Boolean;
     function Consultar: Boolean;
-    function EnviarCartaCorrecao(idLote : Integer): Boolean;
+//    function EnviarCartaCorrecao(idLote : Integer): Boolean;
     function EnviarEventoNFe(idLote : Integer): Boolean;
     function ConsultaNFeDest(CNPJ: String;
                              IndNFe: TpcnIndicadorNFe;
@@ -347,7 +347,7 @@ begin
 
   for i := 0 to Self.NotasFiscais.Count-1 do
   begin
-    WebServices.Consulta.NFeChave := copy(self.NotasFiscais.Items[i].NFe.infNFe.ID, (length(self.NotasFiscais.Items[i].NFe.infNFe.ID)-44)+1, 44);
+    WebServices.Consulta.NFeChave := OnlyNumber(self.NotasFiscais.Items[i].NFe.infNFe.ID);
     WebServices.Consulta.Executar;
   end;
   Result := True;
@@ -395,7 +395,7 @@ begin
      end;
   end;
 end;
-
+       {
 function TACBrNFe.EnviarCartaCorrecao(idLote: Integer): Boolean;
 begin
   if CartaCorrecao.CCe.Evento.Count <= 0 then
@@ -424,7 +424,7 @@ begin
     raise EACBrNFeException.Create(WebServices.CartaCorrecao.Msg);
   end;
 end;
-
+           }
 function TACBrNFe.EnviarEventoNFe(idLote: Integer): Boolean;
 var
   i: integer;
