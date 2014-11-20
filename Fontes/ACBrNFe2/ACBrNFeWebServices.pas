@@ -1160,7 +1160,7 @@ begin
      Stream := TMemoryStream.Create;
      StrStream := TStringStream.Create('');
      try
-       ReqResp.Execute(FEnvelopeSoap, Stream);  // Dispara exceptions no caso de erro
+       ReqResp.Execute;//(FEnvelopeSoap, Stream);  // Dispara exceptions no caso de erro
        StrStream.CopyFrom(Stream, 0);
        FRetornoWS := StrStream.DataString;
      finally
