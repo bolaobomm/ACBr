@@ -186,6 +186,7 @@ type
     FEmissaoPathNFe  : Boolean;
     FSalvarEvento : Boolean;
     FSepararCNPJ : Boolean;
+    FSepararModelo : Boolean;
     FPathNFe  : String;
     FPathCan  : String;
     FPathInu  : String;
@@ -209,6 +210,7 @@ type
     property EmissaoPathNFe: Boolean read FEmissaoPathNFe write FEmissaoPathNFe default False;
     property SalvarCCeCanEvento: Boolean read FSalvarEvento write FSalvarEvento default False;
     property SepararPorCNPJ: Boolean read FSepararCNPJ write FSepararCNPJ default False ;
+    property SepararPorModelo: Boolean read FSepararModelo write FSepararModelo default False ;    
     property PathNFe : String read FPathNFe  write FPathNFe;
     property PathCan : String read FPathCan  write FPathCan;
     property PathInu : String read FPathInu  write FPathInu;
@@ -671,6 +673,14 @@ begin
   if FSepararCNPJ then
      Dir := PathWithDelim(Dir)+TConfiguracoes( Self.Owner ).Certificados.CNPJ;
 
+  if FSepararModelo then
+   begin
+     if TConfiguracoes( Self.Owner ).Geral.ModeloDF = moNFCe then
+        Dir := PathWithDelim(Dir)+'NFCe'
+     else
+        Dir := PathWithDelim(Dir)+'NFe';
+   end;
+
   if FMensal then
    begin
      Data := Now;
@@ -704,6 +714,14 @@ begin
 
   if FSepararCNPJ then
      Dir := PathWithDelim(Dir)+TConfiguracoes( Self.Owner ).Certificados.CNPJ;
+
+  if FSepararModelo then
+   begin
+     if TConfiguracoes( Self.Owner ).Geral.ModeloDF = moNFCe then
+        Dir := PathWithDelim(Dir)+'NFCe'
+     else
+        Dir := PathWithDelim(Dir)+'NFe';
+   end;
 
   if FMensal then
    begin
@@ -739,6 +757,14 @@ begin
   if FSepararCNPJ then
      Dir := PathWithDelim(Dir)+TConfiguracoes( Self.Owner ).Certificados.CNPJ;
 
+  if FSepararModelo then
+   begin
+     if TConfiguracoes( Self.Owner ).Geral.ModeloDF = moNFCe then
+        Dir := PathWithDelim(Dir)+'NFCe'
+     else
+        Dir := PathWithDelim(Dir)+'NFe';
+   end;
+
   if FMensal then
    begin
      Data := Now;
@@ -771,7 +797,15 @@ begin
      Dir := FPathEvento;
 
   if FSepararCNPJ then
-     Dir := PathWithDelim(Dir)+TConfiguracoes( Self.Owner ).Certificados.CNPJ;     
+     Dir := PathWithDelim(Dir)+TConfiguracoes( Self.Owner ).Certificados.CNPJ;
+
+  if FSepararModelo then
+   begin
+     if TConfiguracoes( Self.Owner ).Geral.ModeloDF = moNFCe then
+        Dir := PathWithDelim(Dir)+'NFCe'
+     else
+        Dir := PathWithDelim(Dir)+'NFe';
+   end;
 
   if FMensal then
    begin
@@ -817,6 +851,14 @@ begin
   if FSepararCNPJ then
      Dir := PathWithDelim(Dir)+TConfiguracoes( Self.Owner ).Certificados.CNPJ;
 
+  if FSepararModelo then
+   begin
+     if TConfiguracoes( Self.Owner ).Geral.ModeloDF = moNFCe then
+        Dir := PathWithDelim(Dir)+'NFCe'
+     else
+        Dir := PathWithDelim(Dir)+'NFe';
+   end;
+
   if FMensal then
    begin
      Data := Now;
@@ -851,6 +893,14 @@ begin
   if FSepararCNPJ then
      Dir := PathWithDelim(Dir)+TConfiguracoes( Self.Owner ).Certificados.CNPJ;
 
+  if FSepararModelo then
+   begin
+     if TConfiguracoes( Self.Owner ).Geral.ModeloDF = moNFCe then
+        Dir := PathWithDelim(Dir)+'NFCe'
+     else
+        Dir := PathWithDelim(Dir)+'NFe';
+   end;
+
   if FMensal then
    begin
      Data := Now;
@@ -882,7 +932,15 @@ begin
      Dir := FPathNFe;
 
   if FSepararCNPJ then
-     Dir := PathWithDelim(Dir)+TConfiguracoes( Self.Owner ).Certificados.CNPJ;     
+     Dir := PathWithDelim(Dir)+TConfiguracoes( Self.Owner ).Certificados.CNPJ;
+
+  if FSepararModelo then
+   begin
+     if TConfiguracoes( Self.Owner ).Geral.ModeloDF = moNFCe then
+        Dir := PathWithDelim(Dir)+'NFCe'
+     else
+        Dir := PathWithDelim(Dir)+'NFe';
+   end;
 
   if FMensal then
    begin
