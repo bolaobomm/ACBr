@@ -599,16 +599,25 @@ begin
   begin
     NotasFiscais.Items[0].NFe.InfAdic.infCpl := NotasFiscais.Items[0].NFe.InfAdic.infCpl + Observacao;
 
-    Enviar(NotasFiscais.Items[0].NFe.Ide.nNF,false,true);
-
-    if WebServices.Enviar.cStat <> 100 then
+    if Configuracoes.Geral.FormaEmissao = teOffLine then
     begin
-      cStat   := IntToStr(WebServices.Enviar.cStat);
-      xMotivo := ACBrStrToAnsi(WebServices.Enviar.xMotivo );
+      NotasFiscais.Valida;
+      NotasFiscais.Assinar;
+      NotasFiscais.Items[0].Confirmada := True;
+    end
+    else
+    begin
+      Enviar(NotasFiscais.Items[0].NFe.Ide.nNF,false,true);
 
-      raise EACBrNFeException.Create( 'Erro ao enviar Dados da Venda:' + sLineBreak +
-        'cStat: '+cStat + sLineBreak +
-        'xMotivo: '+xMotivo );
+      if WebServices.Enviar.cStat <> 100 then
+      begin
+        cStat   := IntToStr(WebServices.Enviar.cStat);
+        xMotivo := ACBrStrToAnsi(WebServices.Enviar.xMotivo );
+
+        raise EACBrNFeException.Create( 'Erro ao enviar Dados da Venda:' + sLineBreak +
+          'cStat: '+cStat + sLineBreak +
+          'xMotivo: '+xMotivo );
+      end;
     end;
 
     ChaveCupom := NotasFiscais.Items[0].NFe.infNFe.ID;

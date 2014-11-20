@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/11/2014
+[*] Acerto para envio off-line da NFC-e usando ACBrECFVirtualNFCe
+    http://www.projetoacbr.com.br/forum/index.php?/topic/18486-d%C3%BAvidas-acbrecfvirtualnfce/
+
 14/11/2014
 [+] Adicionas URLs de consulta da NFC-e pela chave e QR-Code para o estado do paraná
     http://www.projetoacbr.com.br/forum/index.php?/topic/18569-nfc-e-erro-url-n%C3%A3o-dispon%C3%ADvel-para-o-estado-solicitado/#entry117722
