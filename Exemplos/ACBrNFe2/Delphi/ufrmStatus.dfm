@@ -52,13 +52,7 @@ object frmStatus: TfrmStatus
       Height = 24
       Align = alClient
       Color = clGray
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -15
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
       ParentColor = False
-      ParentFont = False
       Layout = tlCenter
     end
   end
