@@ -127,7 +127,7 @@ type
     destructor Destroy; override;
     function Enviar(ALote: Integer; Imprimir: Boolean = True; Sincrono: Boolean = False): Boolean; overload;
     function Enviar(ALote: String; Imprimir: Boolean = True; Sincrono: Boolean = False): Boolean; overload;
-    function Cancelamento(AJustificativa:WideString): Boolean;
+    function Cancelamento(AJustificativa:WideString; ALote: Integer = 0): Boolean;
     function Consultar: Boolean;
     function EnviarCartaCorrecao(idLote : Integer): Boolean;
     function EnviarEventoNFe(idLote : Integer): Boolean;
@@ -310,11 +310,42 @@ begin
 end;
 
 function TACBrNFe.Cancelamento(
-  AJustificativa: WideString): Boolean;
+  AJustificativa: WideString; ALote: Integer = 0): Boolean;
 var
   i : Integer;
 begin
-  raise EACBrNFeException.Create('ERRO: Use o cancelamento por evento.');
+  if Self.NotasFiscais.Count = 0 then
+   begin
+      if Assigned(Self.OnGerarLog) then
+         Self.OnGerarLog('ERRO: Nenhuma Nota Fiscal Eletrônica Informada!');
+      raise EACBrNFeException.Create('Nenhuma Nota Fiscal Eletrônica Informada!');
+   end;
+
+  for i:= 0 to self.NotasFiscais.Count-1 do
+  begin
+    Self.WebServices.Consulta.NFeChave := OnlyNumber(self.NotasFiscais.Items[i].NFe.infNFe.ID);
+
+    if not Self.WebServices.Consulta.Executar then
+       raise Exception.Create(Self.WebServices.Consulta.Msg);
+
+    Self.EventoNFe.Evento.Clear;
+    with Self.EventoNFe.Evento.Add do
+     begin
+       infEvento.CNPJ   := copy(DFeUtil.LimpaNumero(Self.WebServices.Consulta.NFeChave),7,14);
+       infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(Self.WebServices.Consulta.NFeChave),1,2),0);
+       infEvento.dhEvento := now;
+       infEvento.tpEvento := teCancelamento;
+       infEvento.chNFe := Self.WebServices.Consulta.NFeChave;
+       infEvento.detEvento.nProt := Self.WebServices.Consulta.Protocolo;
+       infEvento.detEvento.xJust := AJustificativa;
+     end;
+     try
+        Self.EnviarEventoNFe(ALote);
+     except
+        raise Exception.Create(Self.WebServices.EnvEvento.EventoRetorno.xMotivo);
+     end;
+  end;
+  Result := True;
 end;
 
 function TACBrNFe.Consultar: Boolean;
@@ -783,7 +814,7 @@ begin
       if DANFE <> nil then
       begin
         ImprimirEventoPDF;
-        NomeArq := StringReplace(EventoNFe.Evento[0].InfEvento.id,'ID', '', [rfIgnoreCase]);
+        NomeArq := OnlyNumber(EventoNFe.Evento[0].InfEvento.id);
 //        NomeArq := Copy(EventoNFe.Evento[0].InfEvento.id, 09, 44) +
 //                   Copy(EventoNFe.Evento[0].InfEvento.id, 03, 06) +
 //                   Copy(EventoNFe.Evento[0].InfEvento.id, 53, 02);
