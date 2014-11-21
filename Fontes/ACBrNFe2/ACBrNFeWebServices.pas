@@ -1549,7 +1549,7 @@ begin
       begin
         if pos(chNFe, TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].NFe.infNFe.ID) > 0  then
         begin
-          if TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.signature.DigestValue <> NFeRetorno.protNFe.digVal then
+          if TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.signature.DigestValue <> FNFeRetornoSincrono.protNFe.digVal then
            begin
              raise EACBrNFeException.Create('DigestValue do documento '+
                                              OnlyNumber(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.infNFe.ID)+
