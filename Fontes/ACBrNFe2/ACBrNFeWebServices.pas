@@ -1157,16 +1157,21 @@ begin
      SetLength(FRetornoWS, HTTP.Document.Size);
      HTTP.Document.ReadBuffer(FRetornoWS[1], HTTP.Document.Size);
     {$ELSE}
-     Stream := TMemoryStream.Create;
-     StrStream := TStringStream.Create('');
-     try
-       ReqResp.Execute;//(FEnvelopeSoap, Stream);  // Dispara exceptions no caso de erro
-       StrStream.CopyFrom(Stream, 0);
-       FRetornoWS := StrStream.DataString;
-     finally
-       StrStream.Free;
-       Stream.Free;
-     end;
+      {$IFDEF SoapHTTP}
+        Stream := TMemoryStream.Create;
+        StrStream := TStringStream.Create('');
+        try
+          ReqResp.Execute(FEnvelopeSoap, Stream);  // Dispara exceptions no caso de erro
+          StrStream.CopyFrom(Stream, 0);
+          FRetornoWS := StrStream.DataString;
+        finally
+          StrStream.Free;
+          Stream.Free;
+        end;
+      {$ELSE}
+        ReqResp.Data := FEnvelopeSoap;
+        FRetornoWS := ReqResp.Execute;
+      {$ENDIF}
     {$ENDIF}
     FRetornoWS := ParseText(FRetornoWS, True, True ); // Resposta sempre é UTF8
   finally
