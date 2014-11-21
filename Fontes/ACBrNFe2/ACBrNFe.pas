@@ -129,7 +129,7 @@ type
     function Enviar(ALote: String; Imprimir: Boolean = True; Sincrono: Boolean = False): Boolean; overload;
     function Cancelamento(AJustificativa:WideString): Boolean;
     function Consultar: Boolean;
-//    function EnviarCartaCorrecao(idLote : Integer): Boolean;
+    function EnviarCartaCorrecao(idLote : Integer): Boolean;
     function EnviarEventoNFe(idLote : Integer): Boolean;
     function ConsultaNFeDest(CNPJ: String;
                              IndNFe: TpcnIndicadorNFe;
@@ -314,24 +314,7 @@ function TACBrNFe.Cancelamento(
 var
   i : Integer;
 begin
-  raise EACBrNFeException.Create('Cancelamento somente por evento.');
-(*
-  if Self.NotasFiscais.Count = 0 then
-   begin
-      if Assigned(Self.OnGerarLog) then
-         Self.OnGerarLog('ERRO: Nenhuma Nota Fiscal Eletrônica Informada!');
-      raise EACBrNFeException.Create('Nenhuma Nota Fiscal Eletrônica Informada!');
-   end;
-
-  for i:= 0 to self.NotasFiscais.Count-1 do
-  begin
-    WebServices.Cancelamento.NFeChave := copy(self.NotasFiscais.Items[i].NFe.infNFe.ID, (length(self.NotasFiscais.Items[i].NFe.infNFe.ID)-44)+1, 44);
-    WebServices.Consulta.NFeChave := WebServices.Cancelamento.NFeChave;
-    WebServices.Cancela(AJustificativa);
-  end;
-
-  Result := true;
-*)
+  raise EACBrNFeException.Create('ERRO: Use o cancelamento por evento.');
 end;
 
 function TACBrNFe.Consultar: Boolean;
@@ -395,36 +378,35 @@ begin
      end;
   end;
 end;
-       {
+
 function TACBrNFe.EnviarCartaCorrecao(idLote: Integer): Boolean;
+var
+  i : integer;
 begin
-  if CartaCorrecao.CCe.Evento.Count <= 0 then
+  EventoNFe.Evento.Clear;
+  for i:= 0 to CartaCorrecao.CCe.Evento.Count do
    begin
-      if Assigned(Self.OnGerarLog) then
-         Self.OnGerarLog('ERRO: Nenhuma CC-e adicionada ao Lote');
-      raise EACBrNFeException.Create('ERRO: Nenhuma CC-e adicionada ao Lote');
-     exit;
+     with EventoNFe.Evento.Add do
+      begin
+        infEvento.id       := CartaCorrecao.CCe.Evento[i].InfEvento.id;
+        infEvento.cOrgao   := CartaCorrecao.CCe.Evento[i].InfEvento.cOrgao;
+        infEvento.tpAmb    := CartaCorrecao.CCe.Evento[i].InfEvento.tpAmb;
+        infEvento.CNPJ     := CartaCorrecao.CCe.Evento[i].InfEvento.CNPJ;
+        infEvento.chNFe    := CartaCorrecao.CCe.Evento[i].InfEvento.chNFe;
+        infEvento.dhEvento := CartaCorrecao.CCe.Evento[i].InfEvento.dhEvento;
+        infEvento.tpEvento := teCCe;
+        infEvento.nSeqEvento   := CartaCorrecao.CCe.Evento[i].InfEvento.nSeqEvento;
+        infEvento.versaoEvento := CartaCorrecao.CCe.Evento[i].InfEvento.versaoEvento;
+        infEvento.detEvento.versao     := CartaCorrecao.CCe.Evento[i].InfEvento.detEvento.versao;
+        infEvento.detEvento.descEvento := CartaCorrecao.CCe.Evento[i].InfEvento.detEvento.descEvento;
+        infEvento.detEvento.xCondUso   := CartaCorrecao.CCe.Evento[i].InfEvento.detEvento.xCondUso;
+        infEvento.detEvento.xCorrecao  := CartaCorrecao.CCe.Evento[i].InfEvento.detEvento.xCorrecao;
+      end;
    end;
 
-  if CartaCorrecao.CCe.Evento.Count > 20 then
-   begin
-      if Assigned(Self.OnGerarLog) then
-         Self.OnGerarLog('ERRO: Conjunto de Eventos transmitidos (máximo de 20) excedido. Quantidade atual: '+IntToStr(CartaCorrecao.CCe.Evento.Count));
-      raise EACBrNFeException.Create('ERRO: Conjunto de Eventos transmitidos (máximo de 20) excedido. Quantidade atual: '+IntToStr(CartaCorrecao.CCe.Evento.Count));
-     exit;
-   end;
-
-  WebServices.CartaCorrecao.idLote := idLote;
-  //if not(WebServices.CartaCorrecao.Executar) then
-  Result := WebServices.CartaCorrecao.Executar;
-  if not Result then
-  begin
-    if Assigned(Self.OnGerarLog) then
-      Self.OnGerarLog(WebServices.CartaCorrecao.Msg);
-    raise EACBrNFeException.Create(WebServices.CartaCorrecao.Msg);
-  end;
+  EnviarEventoNFe(idLote);
 end;
-           }
+
 function TACBrNFe.EnviarEventoNFe(idLote: Integer): Boolean;
 var
   i: integer;
