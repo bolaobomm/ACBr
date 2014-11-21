@@ -72,7 +72,7 @@ uses Classes, SysUtils,
   {$ENDIF}
   pcnNFe, pcnNFeW,
   pcnRetConsReciNFe, pcnRetConsCad, pcnAuxiliar, pcnConversao, pcnRetDPEC,
-  pcnProcNFe, pcnRetCancNFe, {pcnCCeNFe, pcnRetCCeNFe,}
+  pcnProcNFe, pcnRetCancNFe,
   pcnEnvEventoNFe, pcnRetEnvEventoNFe, pcnRetConsSitNFe,
   pcnConsNFeDest, pcnRetConsNFeDest,
   pcnDownloadNFe, pcnRetDownloadNFe,
@@ -1549,6 +1549,12 @@ begin
       begin
         if pos(chNFe, TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].NFe.infNFe.ID) > 0  then
         begin
+          if TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.signature.DigestValue <> NFeRetorno.protNFe.digVal then
+           begin
+             raise EACBrNFeException.Create('DigestValue do documento '+
+                                             OnlyNumber(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.infNFe.ID)+
+                                             ' não confere.');
+           end;        
           TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].Confirmada           := (FNFeRetornoSincrono.protNFe.cStat in [100, 150]);
           TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].Msg                  := FNFeRetornoSincrono.protNFe.xMotivo;
           TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].NFe.procNFe.tpAmb    := FNFeRetornoSincrono.tpAmb;
@@ -1744,6 +1750,12 @@ begin
     begin
       if pos(AInfProt.Items[I].chNFe, FNotasFiscais.Items[J].NFe.InfNFe.Id) > 0 then
       begin
+        if FNotasFiscais.Items[i].NFe.signature.DigestValue <> AInfProt.Items[I].digVal then
+         begin
+           raise EACBrNFeException.Create('DigestValue do documento '+
+                                           OnlyNumber(FNotasFiscais.Items[i].NFe.infNFe.ID)+
+                                           ' não confere.');
+         end;
         FNotasFiscais.Items[J].Confirmada           := (AInfProt.Items[I].cStat in [100, 150]);
         FNotasFiscais.Items[J].Msg                  := AInfProt.Items[I].xMotivo;
         FNotasFiscais.Items[J].NFe.procNFe.tpAmb    := AInfProt.Items[I].tpAmb;
@@ -2291,7 +2303,7 @@ begin
 
     for i:= 0 to TACBrNFe( FACBrNFe ).NotasFiscais.Count-1 do
     begin
-      if pos(String(FNFeChave), TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.infNFe.ID) > 0 then
+      if (OnlyNumber(FNFeChave) = OnlyNumber(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.infNFe.ID)) then
       begin
         Atualiza := True;
         if ((NFeRetorno.CStat in [101, 151, 155]) and
@@ -2301,6 +2313,12 @@ begin
         TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].Confirmada := (NFeRetorno.cStat in [100, 150]);
         if Atualiza then
         begin
+          if TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.signature.DigestValue <> NFeRetorno.protNFe.digVal then
+           begin
+             raise EACBrNFeException.Create('DigestValue do documento '+
+                                             OnlyNumber(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.infNFe.ID)+
+                                             ' não confere.');
+           end;
           TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].Msg                  := NFeRetorno.xMotivo;
           TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.tpAmb    := NFeRetorno.tpAmb;
           TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.verAplic := NFeRetorno.verAplic;
