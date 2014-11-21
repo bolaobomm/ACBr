@@ -1133,9 +1133,9 @@ begin
 
   if (( NFe.Det[i].Imposto.ISSQN.cSitTrib <> ISSQNcSitTribVazio ) or (( NFe.infNFe.Versao > 3 ) and ( nfe.Det[i].Imposto.ISSQN.cListServ <> '' ))) then
    begin
-      (**)GerarDetImpostoISSQN(i);
       if NFe.infNFe.Versao >= 3 then
         (**)GerarDetImpostoIPI(i);
+      (**)GerarDetImpostoISSQN(i);
    end
   else
    begin
