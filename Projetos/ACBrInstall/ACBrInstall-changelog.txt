@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/11/2014
+[*] Modificado para adicionar ao Library path somente o diretorio dcu e 
+    adicionado corretamente do browser path o caminho das unit
+	por: Juliomar Marchetti
+
 02/10/2014
 ----------
 [+] Adicionado novo componente para impressão do DANFSe em Rave Report para compilar
