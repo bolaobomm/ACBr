@@ -1,10 +1,10 @@
 object Form1: TForm1
-  Left = 297
-  Height = 514
-  Top = 132
+  Left = 554
+  Height = 537
+  Top = 135
   Width = 912
   Caption = 'EAD Teste'
-  ClientHeight = 514
+  ClientHeight = 537
   ClientWidth = 912
   Font.Height = -11
   OnCreate = FormCreate
@@ -492,12 +492,12 @@ object Form1: TForm1
   end
   object gbArqEntrada: TGroupBox
     Left = 0
-    Height = 83
+    Height = 112
     Top = 272
     Width = 912
     Align = alTop
     Caption = 'Arquivo de Entrada'
-    ClientHeight = 65
+    ClientHeight = 94
     ClientWidth = 908
     TabOrder = 2
     object btProcurarArqEntrada: TBitBtn
@@ -563,11 +563,14 @@ object Form1: TForm1
       ParentColor = False
     end
     object btCalcEAD: TBitBtn
-      Left = 448
+      AnchorSideLeft.Control = btVerifArqAssinado
+      AnchorSideRight.Control = btVerifArqAssinado
+      AnchorSideRight.Side = asrBottom
+      Left = 736
       Height = 26
-      Top = 32
-      Width = 111
-      AutoSize = True
+      Top = 64
+      Width = 159
+      Anchors = [akTop, akLeft, akRight]
       Caption = 'Calcular EAD'
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
@@ -609,12 +612,15 @@ object Form1: TForm1
       TabOrder = 7
     end
     object btCalcMD5: TBitBtn
-      Left = 224
+      AnchorSideLeft.Control = btAssinar
+      AnchorSideRight.Control = btAssinar
+      AnchorSideRight.Side = asrBottom
+      Left = 240
       Height = 26
       Top = 32
-      Width = 96
-      AutoSize = True
-      Caption = 'Calc.Hash'
+      Width = 144
+      Anchors = [akTop, akLeft, akRight]
+      Caption = 'Calcular Hash'
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         2000000000000004000064000000640000000000000000000000000000000000
@@ -655,12 +661,14 @@ object Form1: TForm1
       TabOrder = 5
     end
     object btAssinarArqEAD: TBitBtn
-      Left = 576
+      AnchorSideLeft.Control = btRemoverEAD
+      AnchorSideRight.Control = btRemoverEAD
+      AnchorSideRight.Side = asrBottom
+      Left = 552
       Height = 26
       Top = 32
-      Width = 152
-      Anchors = [akTop, akRight]
-      AutoSize = True
+      Width = 171
+      Anchors = [akTop, akLeft, akRight]
       Caption = 'Assinar Arq.com EAD'
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
@@ -707,7 +715,6 @@ object Form1: TForm1
       Top = 32
       Width = 159
       Anchors = [akTop, akRight]
-      AutoSize = True
       Caption = 'Verificar Arq.Assinado'
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
@@ -751,7 +758,7 @@ object Form1: TForm1
     object Button1: TButton
       Left = 9
       Height = 23
-      Top = 32
+      Top = 56
       Width = 61
       AutoSize = True
       Caption = 'Versão'
@@ -759,9 +766,9 @@ object Form1: TForm1
       TabOrder = 2
     end
     object cbxDgst: TComboBox
-      Left = 80
+      Left = 96
       Height = 21
-      Top = 40
+      Top = 56
       Width = 64
       ItemHeight = 13
       ItemIndex = 2
@@ -779,12 +786,12 @@ object Form1: TForm1
       Text = 'md5'
     end
     object btAssinar: TBitBtn
-      Left = 322
+      Left = 240
       Height = 26
-      Top = 32
-      Width = 124
+      Top = 64
+      Width = 144
       AutoSize = True
-      Caption = 'Calc.Assinatura'
+      Caption = 'Calcular Assinatura'
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         2000000000000004000000000000000000000000000000000000FF00FF000000
@@ -825,9 +832,9 @@ object Form1: TForm1
       TabOrder = 6
     end
     object cbxOut: TComboBox
-      Left = 152
+      Left = 168
       Height = 21
-      Top = 40
+      Top = 56
       Width = 64
       ItemHeight = 13
       ItemIndex = 0
@@ -840,35 +847,82 @@ object Form1: TForm1
       Text = 'Hexa'
     end
     object Label2: TLabel
-      Left = 80
+      Left = 96
       Height = 13
-      Top = 24
+      Top = 40
       Width = 54
       Caption = 'Algoritimo'
       ParentColor = False
     end
     object Label3: TLabel
-      Left = 152
+      Left = 168
       Height = 13
-      Top = 24
+      Top = 40
       Width = 28
       Caption = 'Saída'
       ParentColor = False
     end
+    object btRemoverEAD: TBitBtn
+      Left = 552
+      Height = 26
+      Top = 64
+      Width = 171
+      Anchors = [akTop, akRight]
+      AutoSize = True
+      Caption = 'Remover Assinatura EAD'
+      Glyph.Data = {
+        36040000424D3604000000000000360000002800000010000000100000000100
+        2000000000000004000000000000000000000000000000000000E6E6E600CECE
+        CE0000000000B1E2FF00B1E2FF00B1E2FF00B1E2FF006BC6FF0000000000CECE
+        CE00E6E6E600E6E6E600E6E6E600E6E6E600E6E6E600E6E6E600DADADA000000
+        0000B1E2FF00B1E2FF00B1E2FF00B1E2FF00B1E2FF00B1E2FF006BC6FF000000
+        0000CECECE00E6E6E600E6E6E600E6E6E600E6E6E600E6E6E60056565600B1E2
+        FF00B1E2FF00B1E2FF00B1E2FF00B1E2FF00B1E2FF00B1E2FF006BC6FF000000
+        00005656560092929200C0C0C000CECECE00E6E6E600E6E6E60056565600B1E2
+        FF0000000000B1E2FF00B1E2FF00B1E2FF00B1E2FF00B1E2FF00B1E2FF000000
+        0000F2F2F200565656005656560092929200CECECE00E6E6E60056565600B1E2
+        FF0000000000B1E2FF0000000000B1E2FF0000000000B1E2FF0000000000F2F2
+        F200FFFFFF0086868600FFFFFF005656560092929200CECECE00DADADA005656
+        560056565600B1E2FF0000000000B1E2FF0000000000B1E2FF0000000000F2F2
+        F200FFFFFF0086868600FFFFFF00FFFFFF0056565600C0C0C000F2F2F200DADA
+        DA0056565600B1E2FF0000000000565656005656560056565600F2F2F200FFFF
+        FF00FFFFFF005656560086868600868686008686860056565600F2F2F200F2F2
+        F20056565600B1E2FF0000000000F2F2F200FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00F2F2F20086868600F2F2F200F2F2
+        F20056565600B1E2FF0000000000F2F2F200FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00F2F2F20086868600F2F2F200F2F2
+        F20056565600B1E2FF0000000000F2F2F200FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0086868600F2F2F200F2F2
+        F2006E6E6E005656560086868600FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0086868600F2F2F200F2F2
+        F20086868600FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0086868600F2F2F200F2F2
+        F20086868600FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0086868600F2F2F200F2F2
+        F20086868600FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0086868600F2F2F200F2F2
+        F20086868600FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0086868600F2F2F200F2F2
+        F200A4A0A000A4A0A000A4A0A000A4A0A000A4A0A000A4A0A000A4A0A000A4A0
+        A000A4A0A000A4A0A000A4A0A000A4A0A000A4A0A0006E6E6E00
+      }
+      OnClick = btRemoverEADClick
+      TabOrder = 10
+    end
   end
   object GroupBox1: TGroupBox
     Left = 0
-    Height = 159
-    Top = 355
+    Height = 133
+    Top = 384
     Width = 912
     Align = alClient
     Caption = 'Respostas'
-    ClientHeight = 141
+    ClientHeight = 115
     ClientWidth = 908
     TabOrder = 3
     object mResp: TMemo
       Left = 0
-      Height = 141
+      Height = 115
       Top = 0
       Width = 908
       Align = alClient
@@ -880,9 +934,19 @@ object Form1: TForm1
       WordWrap = False
     end
   end
+  object ProgressBar1: TProgressBar
+    Left = 0
+    Height = 20
+    Top = 517
+    Width = 912
+    Align = alBottom
+    TabOrder = 4
+    Visible = False
+  end
   object ACBrEAD1: TACBrEAD
     OnGetChavePrivada = ACBrEAD1GetChavePrivada
     OnGetChavePublica = ACBrEAD1GetChavePublica
+    OnProgress = ACBrEAD1Progress
     left = 184
     top = 80
   end

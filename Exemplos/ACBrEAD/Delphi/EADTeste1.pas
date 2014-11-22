@@ -5,7 +5,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Buttons, Menus, ACBrEAD ;
+  Buttons, Menus, ACBrEAD, ComCtrls ;
 
 type
 
@@ -47,7 +47,8 @@ type
     Label3: TLabel;
     cbxOut: TComboBox;
     btAssinar: TBitBtn;
-     procedure btAssinarArqEADClick(Sender : TObject) ;
+    btRemoverAssinatura: TBitBtn;
+    ProgressBar1: TProgressBar;
      procedure btCalcPubKeyClick(Sender : TObject) ;
      procedure btGravarPrivKeyClick(Sender : TObject) ;
      procedure btGravarPubKeyClick(Sender : TObject) ;
@@ -62,15 +63,19 @@ type
      procedure btVerifArqAssinadoClick(Sender : TObject) ;
      procedure Button1Click(Sender : TObject) ;
      procedure FormCreate(Sender : TObject) ;
-    procedure btGerarXMLeECFc1Click(Sender: TObject);
+     procedure btGerarXMLeECFc1Click(Sender: TObject);
     {$IFDEF UNICODE}
      procedure ACBrEAD1GetChavePrivada(var Chave: AnsiString);
      procedure ACBrEAD1GetChavePublica(var Chave: AnsiString);
     {$ELSE}
      procedure ACBrEAD1GetChavePrivada(var Chave: String);
      procedure ACBrEAD1GetChavePublica(var Chave: String);
-    procedure btAssinarClick(Sender: TObject);
     {$ENDIF}
+     procedure btAssinarClick(Sender: TObject);
+    procedure btAssinarArqEADClick(Sender: TObject);
+    procedure btRemoverAssinaturaClick(Sender: TObject);
+    procedure ACBrEAD1Progress(const PosByte, TotalSize: Int64);
+
   private
     { private declarations }
   public
@@ -82,7 +87,7 @@ var
 
 implementation
 
-Uses FileCtrl, ACBrUtil ;
+Uses FileCtrl, ACBrUtil, DateUtils ;
 
 {$R *.dfm}
 
@@ -118,9 +123,13 @@ begin
 end;
 
 procedure TForm1.btCalcEADClick(Sender : TObject) ;
+Var
+  tStart : TDateTime;
 begin
+   tStart := Now;
    mResp.Lines.Add('Calculando o EAD do arquivo: '+edArqEntrada.Text );
    mResp.Lines.Add('EAD = '+ ACBrEAD1.CalcularEADArquivo( edArqEntrada.Text ) );
+   mResp.Lines.Add('Tempo Gasto: '+IntToStr(SecondsBetween(tStart, Now))+ ' segundos');
    mResp.Lines.Add('------------------------------');
 end;
 
@@ -128,16 +137,19 @@ procedure TForm1.btCalcMD5Click(Sender : TObject) ;
 var
   Saida: TACBrEADDgstOutput;
   Resultado: AnsiString;
+  tStart : TDateTime;
 begin
    if cbxOut.ItemIndex > 0 then
      Saida := outBase64
    else
      Saida := outHexa;
 
+   tStart := Now;
    Resultado := ACBrEAD1.CalcularHashArquivo( edArqEntrada.Text, TACBrEADDgst( cbxDgst.ItemIndex ), Saida );
 
    mResp.Lines.Add('Calculando o HASH - "'+cbxDgst.Text+'" do arquivo: '+edArqEntrada.Text );
    mResp.Lines.Add(UpperCase(cbxDgst.Text)+' = '+ Resultado );
+   mResp.Lines.Add('Tempo Gasto: '+IntToStr(SecondsBetween(tStart, Now))+ ' segundos');
    mResp.Lines.Add('------------------------------');
 end;
 
@@ -145,16 +157,19 @@ procedure TForm1.btAssinarClick(Sender: TObject);
 var
   Saida: TACBrEADDgstOutput;
   Resultado: AnsiString;
+  tStart : TDateTime;
 begin
    if cbxOut.ItemIndex > 0 then
      Saida := outBase64
    else
      Saida := outHexa;
 
+   tStart := Now;
    Resultado := ACBrEAD1.CalcularAssinaturaArquivo( edArqEntrada.Text, TACBrEADDgst( cbxDgst.ItemIndex ), Saida );
 
    mResp.Lines.Add('Calculando a Assinatura - "'+cbxDgst.Text+'" do arquivo: '+edArqEntrada.Text );
    mResp.Lines.Add(UpperCase(cbxDgst.Text)+' = '+ Resultado );
+   mResp.Lines.Add('Tempo Gasto: '+IntToStr(SecondsBetween(tStart, Now))+ ' segundos');
    mResp.Lines.Add('------------------------------');
 end;
 
@@ -206,7 +221,10 @@ begin
 end;
 
 procedure TForm1.btVerifArqAssinadoClick(Sender : TObject) ;
+Var
+  tStart : TDateTime;
 begin
+   tStart := Now;
    mResp.Lines.Add('Verificando a Assinatura do arquivo: '+edArqEntrada.Text+' usando a Chave Pública' );
    if ACBrEAD1.VerificarEADArquivo( edArqEntrada.Text ) then
       mResp.Lines.Add( 'Verificação OK'  )
@@ -217,6 +235,7 @@ begin
       mResp.Lines.Add( '- O EAD foi calculado corretamente (por outro programa) ? ' ) ;
     end ;
 
+   mResp.Lines.Add('Tempo Gasto: '+IntToStr(SecondsBetween(tStart, Now))+ ' segundos');
    mResp.Lines.Add('------------------------------');
 end;
 
@@ -251,17 +270,6 @@ end;
 begin
   mResp.Lines.Add('  Lendo Chave Pública');
   Chave := mPubKey.Lines.Text;
-end;
-
-procedure TForm1.btAssinarArqEADClick(Sender : TObject) ;
-var
-   EAD : String ;
-begin
-   mResp.Lines.Add('Assinando o arquivo: '+edArqEntrada.Text+' com o registro EAD' );
-   EAD :=  ACBrEAD1.AssinarArquivoComEAD( edArqEntrada.Text , True ) ;
-   mResp.Lines.Add('Arquivo alterado. Adicionado no final do arquivo a linha: ' );
-   mResp.Lines.Add('EAD'+EAD);
-   mResp.Lines.Add('------------------------------');
 end;
 
 procedure TForm1.btCalcPubKeyClick(Sender : TObject) ;
@@ -343,6 +351,47 @@ begin
      mResp.Lines.Add('------------------------------');
   end ;
   OpenDialog1.Filter := '';
+end;
+
+procedure TForm1.btAssinarArqEADClick(Sender: TObject);
+var
+  EAD : AnsiString ;
+  tStart : TDateTime;
+begin
+   tStart := Now;
+   mResp.Lines.Add('Assinando o arquivo: '+edArqEntrada.Text+' com o registro EAD' );
+   EAD := ACBrEAD1.AssinarArquivoComEAD( edArqEntrada.Text, True ) ;
+   mResp.Lines.Add('Arquivo alterado. Adicionado no final do arquivo a linha: ' );
+   mResp.Lines.Add(EAD);
+   mResp.Lines.Add('Tempo Gasto: '+IntToStr(SecondsBetween(tStart, Now))+ ' segundos');
+   mResp.Lines.Add('------------------------------');
+end;
+
+procedure TForm1.btRemoverAssinaturaClick(Sender: TObject);
+var
+  EAD : AnsiString ;
+  tStart : TDateTime;
+begin
+   tStart := Now;
+   mResp.Lines.Add('Removendo assinatura EAD do arquivo: '+edArqEntrada.Text );
+   EAD := ACBrEAD1.RemoveEADArquivo( edArqEntrada.Text ) ;
+   mResp.Lines.Add('Arquivo alterado. Removido do final do arquivo a linha: ' );
+   mResp.Lines.Add(EAD);
+   mResp.Lines.Add('Tempo Gasto: '+IntToStr(SecondsBetween(tStart, Now))+ ' segundos');
+   mResp.Lines.Add('------------------------------');
+end;
+
+procedure TForm1.ACBrEAD1Progress(const PosByte, TotalSize: Int64);
+var
+  aPos :Integer;
+begin
+  aPos := trunc(PosByte / TotalSize * 100);
+
+  if (aPos = 0) or (aPos > ProgressBar1.Position) then
+  begin
+     ProgressBar1.Position := aPos;
+     ProgressBar1.Visible  := (ProgressBar1.Position < 100)
+  end;
 end;
 
 end.

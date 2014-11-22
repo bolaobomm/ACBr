@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 284
   Top = 171
   Width = 915
-  Height = 538
+  Height = 592
   Caption = 'EAD Teste'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -500,13 +500,13 @@ object Form1: TForm1
     Left = 0
     Top = 272
     Width = 899
-    Height = 83
+    Height = 115
     Align = alTop
     Caption = 'Arquivo de Entrada'
     TabOrder = 2
     DesignSize = (
       899
-      83)
+      115)
     object Label5: TLabel
       Left = 9
       Top = 24
@@ -517,8 +517,8 @@ object Form1: TForm1
       ParentColor = False
     end
     object Label2: TLabel
-      Left = 78
-      Top = 40
+      Left = 102
+      Top = 56
       Width = 45
       Height = 13
       Caption = 'Algoritimo'
@@ -526,8 +526,8 @@ object Form1: TForm1
       ParentColor = False
     end
     object Label3: TLabel
-      Left = 145
-      Top = 40
+      Left = 169
+      Top = 56
       Width = 29
       Height = 13
       Caption = 'Sa'#237'da'
@@ -588,9 +588,9 @@ object Form1: TForm1
       TabOrder = 1
     end
     object btCalcEAD: TBitBtn
-      Left = 432
-      Top = 48
-      Width = 110
+      Left = 730
+      Top = 80
+      Width = 158
       Height = 27
       Caption = 'Calcular EAD'
       TabOrder = 2
@@ -632,9 +632,9 @@ object Form1: TForm1
         0000000000000000000000000000000000000000000000000000}
     end
     object btCalcMD5: TBitBtn
-      Left = 216
+      Left = 241
       Top = 48
-      Width = 81
+      Width = 117
       Height = 27
       Caption = 'Calc.Hash'
       TabOrder = 3
@@ -676,7 +676,7 @@ object Form1: TForm1
         0000000000000000000000000000000000000000000000000000}
     end
     object btAssinarArqEAD: TBitBtn
-      Left = 570
+      Left = 546
       Top = 48
       Width = 157
       Height = 27
@@ -766,8 +766,8 @@ object Form1: TForm1
         FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00}
     end
     object Button1: TButton
-      Left = 9
-      Top = 48
+      Left = 17
+      Top = 64
       Width = 56
       Height = 25
       Caption = 'Vers'#227'o'
@@ -775,8 +775,8 @@ object Form1: TForm1
       OnClick = Button1Click
     end
     object cbxDgst: TComboBox
-      Left = 78
-      Top = 56
+      Left = 102
+      Top = 72
       Width = 59
       Height = 21
       Style = csDropDownList
@@ -794,8 +794,8 @@ object Form1: TForm1
         'sha256')
     end
     object cbxOut: TComboBox
-      Left = 144
-      Top = 56
+      Left = 168
+      Top = 72
       Width = 64
       Height = 21
       Style = csDropDownList
@@ -808,8 +808,8 @@ object Form1: TForm1
         'Base64')
     end
     object btAssinar: TBitBtn
-      Left = 307
-      Top = 48
+      Left = 241
+      Top = 80
       Width = 117
       Height = 27
       Caption = 'Calc.Assinatura'
@@ -851,12 +851,57 @@ object Form1: TForm1
         0022000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
         00FF000000FF0000001AFF00FF00FF00FF00FF00FF00FF00FF00}
     end
+    object btRemoverAssinatura: TBitBtn
+      Left = 546
+      Top = 80
+      Width = 157
+      Height = 27
+      Anchors = [akTop, akRight]
+      Caption = 'Remover Assinatura EAD'
+      TabOrder = 10
+      OnClick = btRemoverAssinaturaClick
+      Glyph.Data = {
+        36040000424D3604000000000000360000002800000010000000100000000100
+        2000000000000004000000000000000000000000000000000000FF00FF000000
+        0041000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+        00FF000000FF000000FF000000FF00000039FF00FF00FF00FF00FF00FF000000
+        00FFC2C2C2FFBDBDBDFFBDBDBDFFBDBDBDFFBCBCBCFFBCBCBCFFBBBBBBFFBBBB
+        BBFFBBBBBBFFBBBBBBFFA0A0A0FF000000D4FF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFE6E6E6FFE5E5E5FFE5E5E5FFE5E5E5FFE4E4E4FFE4E4E4FFE3E3
+        E3FFE3E3E3FFE3E3E3FFBBBBBBFF000000FFFF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFE7E7E7FFE7E7E7FFE6E6E6FFE6E6E6FFE6E6E6FFE5E5E5FFE5E5
+        E5FFE4E4E4FFE4E4E4FFBDBDBDFF000000FFFF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFE8E8E8FFC2C2C2FFE6E6E6FFC2C2C2FF000000FF000000FFE6E6
+        E6FFE6E6E6FFE5E5E5FFBEBEBEFF000000FFFF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFEAEAEAFFEAEAEAFFE9E9E9FFE9E9E9FF000000FF15414FFF0000
+        00FF000000FFE7E7E7FFBFBFBFFF000000FFFF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFEBEBEBFFC4C4C4FFC4C4C4FFC4C4C4FFE8E8E8FF000000FF74AE
+        D7FF305965FF000000FFC0C0C0FF000000FFFF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFEDEDEDFFECECECFFECECECFFECECECFFEBEBEBFF000000FF36D2
+        F6FF4DB4EFFF2B4F5CFF000000FF000000FFFF00FF00FF00FF00FF00FF000000
+        00FFFDFDFDFFEEEEEEFFC9C9C9FFC9C9C9FFEEEEEEFFC9C9C9FFC9C9C9FF0000
+        00FF39DFF9FF44B2F4FF3E5D66FF000000FF00000025FF00FF00FF00FF000000
+        00FFFEFEFEFFEFEFEFFFEFEFEFFFEFEFEFFFEEEEEEFFEEEEEEFFEEEEEEFFEEEE
+        EEFF000000FF3BE9FCFF45B5F7FF345F6CFF000000FF00000030FF00FF000000
+        00FFFEFEFEFFF1F1F1FFCACACAFFCACACAFFCACACAFFCACACAFFEFEFEFFFCACA
+        CAFFC9C9C9FF000000FF3DEBFCFF44B5F7FF2E5461F5000000FFFF00FF000000
+        00FFFEFEFEFFF1F1F1FFF1F1F1FFF1F1F1FFF1F1F1FFF1F1F1FFF0F0F0FFE2E2
+        E2FF858585FF494B4BFF000000FF3BE7FBFF4DB6F2FF000000FFFF00FF000000
+        00FFFEFEFEFFF1F1F1FFCCCCCCFFCCCCCCFFCCCCCCFFF1F1F1FFF1F1F1FFADAD
+        ADFF767676FF5D5D5DFF404040FF000000FF000000FF0000004EFF00FF000000
+        00FFFEFEFEFFF1F1F1FFF1F1F1FFF1F1F1FFF1F1F1FFF1F1F1FFF1F1F1FFC3C3
+        C3FFFBFBFBFFA8A8A8FF000000FF0000001AFF00FF00FF00FF00FF00FF000000
+        00FFFEFEFEFFFEFEFEFFFEFEFEFFFEFEFEFFFEFEFEFFFEFEFEFFFDFDFDFFE0E0
+        E0FFC1C1C1FF000000FF00000022FF00FF00FF00FF00FF00FF00FF00FF000000
+        0022000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+        00FF000000FF0000001AFF00FF00FF00FF00FF00FF00FF00FF00}
+    end
   end
   object GroupBox1: TGroupBox
     Left = 0
-    Top = 355
+    Top = 387
     Width = 899
-    Height = 145
+    Height = 150
     Align = alClient
     Caption = 'Respostas'
     TabOrder = 3
@@ -864,7 +909,7 @@ object Form1: TForm1
       Left = 2
       Top = 15
       Width = 895
-      Height = 128
+      Height = 133
       Align = alClient
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -877,9 +922,20 @@ object Form1: TForm1
       WordWrap = False
     end
   end
+  object ProgressBar1: TProgressBar
+    Left = 0
+    Top = 537
+    Width = 899
+    Height = 17
+    Align = alBottom
+    TabOrder = 4
+    Visible = False
+  end
   object ACBrEAD1: TACBrEAD
+    BufferSize = 32768
     OnGetChavePrivada = ACBrEAD1GetChavePrivada
     OnGetChavePublica = ACBrEAD1GetChavePublica
+    OnProgress = ACBrEAD1Progress
     Left = 184
     Top = 80
   end
