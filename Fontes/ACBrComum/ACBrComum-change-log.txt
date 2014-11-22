@@ -39,6 +39,36 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+Data: 21/11/2014
+-- ACBrEAD --        (por: DSA)
+[+] Adicionada Propriedade "BufferSize: Integer" default 32768
+    ( Valor de Bytes a serem lidos a cada interação nos Calculos )
+[+] Adicionado evento: OnProgress = procedure(const PosByte, TotalSize: Int64)
+    ( Chamado a cada Interação do Calculo )
+[*] Métodos: RemoveEAD, VerificarEAD, CalcularHash, CalcularAssinatura, CalcularEAD
+    modificados para receber um tipo TStream ao inves de apenas TMemoryStream
+[*] Métodos: CalcularHashArquivo, CalcularAssinaturaArquivo, CalcularEADArquivo
+    modificados, para permitir o calculo Hashs e Digest em arquivos gigantescos,
+    e diminuir o consumo de memória
+[-] Corrigido Bug no método CalcularEAD(const AStream: TStream) que sempre
+    adicionava "LineBreak" no calculo do Hash do arquivo.
+[*] Método AssinarArquivoComEAD modificado para verificar se precisa adicionar
+    "LineBreak" no final do Arquivo, antes de calcular o EAD.
+[+] Adicionado os métodos: LeEADArquivo(const NomeArquivo: String): AnsiString;
+    LeEAD(AStream: TStream): AnsiString; que Retornam o EAD encontrado no
+    final do arquivo, se o mesmo existir.
+[*] Refactoring em CalcularEAD(const AStream: TStream), para usar o método
+    "InternalDigest"
+[*] Métodos InternalDigest modificado para permitir o calculo em Streams
+    genéricos e arquivos gigantescos
+[*] Método "VerificarEAD" modificado para permitir o calculo em Streams
+    genéricos e arquivos gigantescos
+
+-- EADTeste --
+[*] Demos de Delphi e Lazarus modificados para demonstrar as novas propriedades
+    métodos e eventos.
+
+
 Data: 29/10/2014
 -- ACBrEAD --        (por: DSA)
 [+] Adicionado suporte ao algorítimo sha256

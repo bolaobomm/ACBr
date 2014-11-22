@@ -55,6 +55,7 @@ uses
 
 const
    CACBrEAD_Versao = '0.3.0' ;
+   CBufferSize = 32768;
    cRFDRSAKey = '-----BEGIN RSA PRIVATE KEY-----' + sLineBreak +
                 'MIICXQIBAAKBgQCtpPqcoOX4rwgdoKi6zJwPX9PA2iX2KxgvyxjE+daI5ZmYxcg0'+ sLineBreak +
                 'NScjX59nXRaLmtltVRfsRc1n4+mLSXiWMh3jIbw+TWn+GXKQhS2GitpLVhO3A6Ns'+ sLineBreak +
@@ -81,6 +82,7 @@ type
 
   TACBrEADCalc = procedure(Arquivo: String) of object ;
   TACBrEADGetChave = procedure(var Chave: AnsiString) of object ;
+  TACBrEADOnProgress = procedure(const PosByte, TotalSize: Int64) of object ;
 
   EACBrEADException = class(Exception);
 
@@ -90,11 +92,13 @@ type
   private
     fsOnGetChavePrivada: TACBrEADGetChave;
     fsOnGetChavePublica : TACBrEADGetChave ;
+    fsOnProgress: TACBrEADOnProgress;
 
     fsInicializado : Boolean ;
 
     fsKey : pEVP_PKEY ;
     fsIsXMLeECFc : Boolean ;
+    fsBufferSize: Integer;
 
     function GetOpenSSL_Version: String;
     procedure InitOpenSSL ;
@@ -115,9 +119,10 @@ type
     function BioToStr( ABio : pBIO) : String ;
 
     function GetAbout: String;
+    procedure SetBufferSize(AValue: Integer);
 
     procedure VerificaNomeArquivo( NomeArquivo : String ) ;
-    function InternalDigest( const MS : TMemoryStream;
+    function InternalDigest( const AStream : TStream;
        const Digest: TACBrEADDgst;
        const OutputType: TACBrEADDgstOutput = outHexa;
        const Assinar: Boolean =  False): AnsiString;
@@ -127,17 +132,6 @@ type
 
     Procedure GerarChaves( var AChavePublica : AnsiString;
        var AChavePrivada : AnsiString ) ;
-
-    function AssinarArquivoComEAD( const NomeArquivo: String;
-       RemoveEADSeExistir : Boolean = False ) : AnsiString ;
-    Procedure RemoveEADArquivo( const NomeArquivo: String) ;
-    Function RemoveEAD( MS : TMemoryStream ) : String;
-
-    function VerificarEADArquivo( const NomeArquivo: String): Boolean ; overload ;
-    function VerificarEAD( const AString : AnsiString): Boolean ; overload ;
-    function VerificarEAD( const AStringList : TStringList): Boolean ; overload ;
-    function VerificarEAD(const MS : TMemoryStream ; EAD : String = '') : Boolean ;
-      overload ;
 
     Function GerarXMLeECFc(const NomeSwHouse, Diretorio: String): Boolean; overload;
     Function GerarXMLeECFc(const NomeSwHouse: String): AnsiString; overload;
@@ -154,7 +148,7 @@ type
     function CalcularHash( const AStringList : TStringList;
        const Digest: TACBrEADDgst;
        const OutputType: TACBrEADDgstOutput = outHexa ): AnsiString ; overload ;
-    function CalcularHash( const MS : TMemoryStream;
+    function CalcularHash( const AStream : TStream;
        const Digest: TACBrEADDgst;
        const OutputType: TACBrEADDgstOutput = outHexa ): AnsiString ; overload ;
 
@@ -167,14 +161,29 @@ type
     function CalcularAssinatura( const AStringList : TStringList;
        const Digest: TACBrEADDgst;
        const OutputType: TACBrEADDgstOutput = outHexa ): AnsiString ; overload ;
-    function CalcularAssinatura( const MS : TMemoryStream;
+    function CalcularAssinatura( const AStream : TStream;
        const Digest: TACBrEADDgst;
        const OutputType: TACBrEADDgstOutput = outHexa ): AnsiString ; overload ;
 
     function CalcularEADArquivo( const NomeArquivo: String): AnsiString ; overload ;
     function CalcularEAD( const AString : AnsiString): AnsiString ; overload ;
     function CalcularEAD( const AStringList : TStringList): AnsiString ; overload ;
-    function CalcularEAD( const MS : TMemoryStream): AnsiString ; overload ;
+    function CalcularEAD( const AStream: TStream): AnsiString; overload;
+
+    function AssinarArquivoComEAD( const NomeArquivo: String;
+       RemoveEADSeExistir : Boolean = False ) : AnsiString ;
+
+    Function RemoveEADArquivo( const NomeArquivo: String): AnsiString ;
+    Function RemoveEAD( AStream : TStream ): AnsiString;
+
+    Function LeEADArquivo( const NomeArquivo: String): AnsiString;
+    Function LeEAD( AStream : TStream ) : AnsiString;
+
+    function VerificarEADArquivo( const NomeArquivo: String): Boolean ; overload ;
+    function VerificarEAD( const AString : AnsiString): Boolean ; overload ;
+    function VerificarEAD( const AStringList : TStringList): Boolean ; overload ;
+    function VerificarEAD(const AStream : TStream ; EAD : String = '') : Boolean ;
+      overload ;
 
     property OpenSSL_Version : String read GetOpenSSL_Version ;
 
@@ -182,11 +191,13 @@ type
     function MD5FromString(const AString: String): String;
   published
     property About: String read GetAbout stored False;
+    property BufferSize: Integer read fsBufferSize write SetBufferSize default CBufferSize;
 
     property OnGetChavePrivada: TACBrEADGetChave read fsOnGetChavePrivada
        write fsOnGetChavePrivada;
     property OnGetChavePublica: TACBrEADGetChave read fsOnGetChavePublica
        write fsOnGetChavePublica;
+    property OnProgress: TACBrEADOnProgress read fsOnProgress write fsOnProgress;
   end;
 
 implementation
@@ -210,15 +221,27 @@ begin
    Result := 'ACBrEAD Ver: ' + CACBrEAD_Versao;
 end;
 
+procedure TACBrEAD.SetBufferSize(AValue: Integer);
+begin
+  if fsBufferSize = AValue then Exit;
+
+  if AValue < 1024 then
+     fsBufferSize := 1024
+  else
+     fsBufferSize := AValue;
+end;
+
 constructor TACBrEAD.Create(AOwner : TComponent) ;
 begin
    inherited Create(AOwner) ;
 
    fsInicializado := False ;
    fsIsXMLeECFc   := False ;
+   fsBufferSize   := CBufferSize ;
 
-   fsOnGetChavePrivada := nil;
-   fsOnGetChavePublica := nil;
+   fsOnGetChavePrivada := Nil;
+   fsOnGetChavePublica := Nil;
+   fsOnProgress        := Nil ;
 end ;
 
 destructor TACBrEAD.Destroy ;
@@ -642,16 +665,15 @@ end ;
 function TACBrEAD.CalcularHashArquivo(const NomeArquivo : String;
    const Digest: TACBrEADDgst; const OutputType: TACBrEADDgstOutput ) : AnsiString ;
 Var
-   MS : TMemoryStream ;
+   FS : TFileStream ;
 begin
   VerificaNomeArquivo( NomeArquivo );
 
-  MS := TMemoryStream.Create;
+  FS := TFileStream.Create(NomeArquivo, fmOpenRead or fmShareDenyWrite);
   try
-    MS.LoadFromFile( NomeArquivo );
-    Result := CalcularHash( MS, Digest, OutputType );
+    Result := CalcularHash( FS, Digest, OutputType );
   finally
-    MS.Free ;
+    FS.Free ;
   end ;
 end ;
 
@@ -683,25 +705,24 @@ begin
   end ;
 end ;
 
-function TACBrEAD.CalcularHash(const MS : TMemoryStream;
-   const Digest: TACBrEADDgst; const OutputType: TACBrEADDgstOutput ) : AnsiString ;
+function TACBrEAD.CalcularHash(const AStream: TStream;
+  const Digest: TACBrEADDgst; const OutputType: TACBrEADDgstOutput): AnsiString;
 begin
-  Result := InternalDigest( MS, Digest, OutputType, False);
+  Result := InternalDigest( AStream, Digest, OutputType, False);
 end ;
 
 function TACBrEAD.CalcularAssinaturaArquivo(const NomeArquivo: String;
   const Digest: TACBrEADDgst; const OutputType: TACBrEADDgstOutput): AnsiString;
 Var
-   MS : TMemoryStream ;
+   FS : TFileStream ;
 begin
   VerificaNomeArquivo( NomeArquivo );
 
-  MS := TMemoryStream.Create;
+  FS := TFileStream.Create(NomeArquivo, fmOpenRead or fmShareDenyWrite);
   try
-    MS.LoadFromFile( NomeArquivo );
-    Result := CalcularAssinatura( MS, Digest, OutputType );
+    Result := CalcularAssinatura( FS, Digest, OutputType );
   finally
-    MS.Free ;
+    FS.Free ;
   end ;
 end;
 
@@ -733,24 +754,24 @@ begin
   end ;
 end;
 
-function TACBrEAD.CalcularAssinatura(const MS: TMemoryStream; const Digest: TACBrEADDgst;
-  const OutputType: TACBrEADDgstOutput): AnsiString;
+function TACBrEAD.CalcularAssinatura(const AStream: TStream;
+  const Digest: TACBrEADDgst; const OutputType: TACBrEADDgstOutput): AnsiString;
 begin
-  Result := InternalDigest(MS, Digest, OutputType, True);
+  Result := InternalDigest(AStream, Digest, OutputType, True);
 end;
 
 function TACBrEAD.CalcularEADArquivo(const NomeArquivo : String) : AnsiString ;
 Var
-   MS : TMemoryStream ;
+   FS : TFileStream ;
 begin
   VerificaNomeArquivo( NomeArquivo );
 
-  MS := TMemoryStream.Create;
+  FS := TFileStream.Create(NomeArquivo, fmOpenRead or fmShareDenyWrite);
   try
-    MS.LoadFromFile( NomeArquivo );
-    Result := CalcularEAD( MS );
+    FS.Position := 0;
+    Result := CalcularEAD( FS );
   finally
-    MS.Free ;
+    FS.Free ;
   end ;
 end ;
 
@@ -780,57 +801,9 @@ begin
   end ;
 end ;
 
-function TACBrEAD.CalcularEAD(const MS : TMemoryStream) : AnsiString ;
-Var
-  md : PEVP_MD ;
-  md_len: cardinal;
-  md_ctx: EVP_MD_CTX;
-  //md5_bin : array [0..15] of AnsiChar;
-  md_value_hex : array [0..1023] of AnsiChar;
-  EADCrypt : array [0..127] of AnsiChar;
-  LB : AnsiString ;
-  Buffer: AnsiChar;
+function TACBrEAD.CalcularEAD(const AStream: TStream): AnsiString;
 begin
-  Result := '';
-  // Verificando se já existe LF no final do arquivo //
-  Buffer := #0;
-  MS.Seek(-1, soFromEnd);  // vai para EOF - 1
-  MS.Read(Buffer, 1);
-  if Buffer <> LF then
-  begin
-     LB := sLineBreak;
-     MS.Write(Pointer(LB)^,Length(LB));
-  end ;
-
-  LerChavePrivada;
-
-  try
-    MS.Position := 0;
-    md_len := 0;
-    md := EVP_get_digestbyname('md5');
-    EVP_DigestInit( @md_ctx, md ) ;
-    EVP_DigestUpdate( @md_ctx, MS.Memory, MS.Size ) ;
-    EVP_SignFinal( @md_ctx, @EADCrypt, md_len, fsKey);
-
-    (*
-    // Calculando o Bloco EAD e criptografando-o semelhante ao EVP_SignFinal //
-
-    EVP_DigestFinal( @md_ctx, @md5_bin, {$IFNDEF USE_libeay32}@{$ENDIF}md_len);
-    EAD := padL( #16 + copy(StrPas(md5_bin),0,md_len), 128, #0) ;
-    EADCrypt := StringOfChar(#0,128);
-    md_len := RSA_private_encrypt( 128, @EAD, @EADCrypt, fsKey.pkey.rsa, RSA_NO_PADDING );
-
-    *)
-    if md_len <> 128 then
-       raise EACBrEADException.Create( 'Erro ao criptografar EAD');
-
-    BinToHex( EADCrypt, md_value_hex, md_len);
-    md_value_hex[2 * md_len] := #0;
-    Result := AnsiString(StrPas(md_value_hex));
-
-  finally
-     LiberarChave;
-  end ;
+  Result := InternalDigest( AStream, dgstMD5, outHexa, True );
 end ;
 
 procedure TACBrEAD.VerificaNomeArquivo( NomeArquivo : String ) ;
@@ -842,7 +815,7 @@ begin
      raise EACBrEADException.Create( ACBrStr(AnsiString('Arquivo: ' + NomeArquivo + ' não encontrado!')) );
 end ;
 
-function TACBrEAD.InternalDigest(const MS: TMemoryStream;
+function TACBrEAD.InternalDigest(const AStream: TStream;
   const Digest: TACBrEADDgst; const OutputType: TACBrEADDgstOutput;
   const Assinar: Boolean): AnsiString;
 Var
@@ -852,6 +825,9 @@ Var
   md_value_bin, md_value_hex : array [0..1023] of AnsiChar;
   NameDgst : PAnsiChar;
   ABinStr, Base64Str: AnsiString;
+  Memory: Pointer;
+  PosStream: Int64;
+  BytesRead: LongInt;
 begin
   InitOpenSSL ;
   NameDgst := '';
@@ -868,27 +844,49 @@ begin
   if Assinar then
      LerChavePrivada;
 
-  MS.Position := 0;
-  md_len := 0;
-  md := EVP_get_digestbyname( NameDgst );
-  EVP_DigestInit( @md_ctx, md );
-  EVP_DigestUpdate( @md_ctx, MS.Memory, MS.Size );
-  if Assinar then
-     EVP_SignFinal( @md_ctx, @md_value_bin, md_len, fsKey)
-  else
-     EVP_DigestFinal( @md_ctx, @md_value_bin, {$IFNDEF USE_libeay32}@{$ENDIF}md_len);
+  PosStream := 0;
+  AStream.Position := 0;
+  GetMem(Memory, BufferSize);
+  try
+    md_len := 0;
+    md := EVP_get_digestbyname( NameDgst );
+    EVP_DigestInit( @md_ctx, md );
+    if Assigned( fsOnProgress ) then
+       fsOnProgress( PosStream, AStream.Size );
 
-  if OutputType = outBase64 then
-  begin
-    SetString( ABinStr, md_value_bin, md_len);
-    Base64Str := EncodeBase64( ABinStr );
-    Result := Trim(Base64Str);
-  end
-  else
-  begin
-    BinToHex( md_value_bin, md_value_hex, md_len);
-    md_value_hex[2 * md_len] := #0;
-    Result := AnsiString(StrPas(md_value_hex));
+    while (PosStream < AStream.Size) do
+    begin
+       BytesRead := AStream.Read(Memory^,BufferSize);
+       if BytesRead <= 0 then
+          Break;
+
+       EVP_DigestUpdate( @md_ctx, Memory, BytesRead ) ;
+       PosStream := PosStream + BytesRead;
+
+       if Assigned( fsOnProgress ) then
+          fsOnProgress( PosStream, AStream.Size );
+    end;
+
+    if Assinar then
+       EVP_SignFinal( @md_ctx, @md_value_bin, md_len, fsKey)
+    else
+       EVP_DigestFinal( @md_ctx, @md_value_bin, {$IFNDEF USE_libeay32}@{$ENDIF}md_len);
+
+    if OutputType = outBase64 then
+    begin
+      SetString( ABinStr, md_value_bin, md_len);
+      Base64Str := EncodeBase64( ABinStr );
+      Result := Trim(Base64Str);
+    end
+    else
+    begin
+      BinToHex( md_value_bin, md_value_hex, md_len);
+      md_value_hex[2 * md_len] := #0;
+      Result := AnsiString(StrPas(md_value_hex));
+    end;
+  finally
+    Freemem(Memory);
+    LiberarChave;
   end;
 end;
 
@@ -896,89 +894,120 @@ end;
 function TACBrEAD.AssinarArquivoComEAD(const NomeArquivo : String ;
   RemoveEADSeExistir : Boolean) : AnsiString ;
 Var
-  MS : TMemoryStream ;
+  FS : TFileStream ;
+  LB : AnsiString ;
+  Buffer: AnsiChar;
+  Ret: Integer;
 begin
   // Abrindo o arquivo com FileStream //
-  MS := TMemoryStream.Create;
+  FS := TFileStream.Create(NomeArquivo, fmOpenReadWrite or fmShareDenyWrite);
   try
-     MS.LoadFromFile( NomeArquivo );
-
      if RemoveEADSeExistir then
-        RemoveEAD( MS );
+        RemoveEAD( FS );
 
-     Result := CalcularEAD( MS );
+     // Verificando se já existe LF no final do arquivo //
+     Buffer := #0;
+     FS.Seek(-1, soFromEnd);  // vai para EOF - 1
+     FS.Read(Buffer, 1);
+     if Buffer <> LF then
+     begin
+        LB := sLineBreak;
+        Ret := FS.Write(Pointer(LB)^,Length(LB));
+        if Ret <= 0 then
+          raise EACBrEADException.Create('Erro ao gravar LineBreak');
+     end ;
+
+     Result := 'EAD'+CalcularEAD( FS );
 
      if Result <> '' then
      begin
-        MS.Seek(0,soFromEnd);
-        MS.Write(Pointer('EAD'+Result)^,Length(Result)+3);
-
-        MS.SaveToFile( NomeArquivo );
+       FS.Seek(0,soFromEnd);
+       FS.Write(Pointer(Result)^,Length(Result));
      end ;
   finally
-     MS.Free ;
+     FS.Free ;
   end;
 end;
 
-procedure TACBrEAD.RemoveEADArquivo(const NomeArquivo : String) ;
+function TACBrEAD.RemoveEADArquivo(const NomeArquivo: String): AnsiString;
 Var
-  MS : TMemoryStream ;
-  EAD : AnsiString;
+  FS : TFileStream ;
 begin
   VerificaNomeArquivo( NomeArquivo );
 
-  MS := TMemoryStream.Create;
+  FS := TFileStream.Create(NomeArquivo, fmOpenReadWrite or fmShareDenyWrite);
   try
-    MS.LoadFromFile( NomeArquivo );
-    EAD := AnsiString( RemoveEAD( MS ) );
-    if EAD <> '' then
-       MS.SaveToFile( NomeArquivo );
+    Result := RemoveEAD( FS ) ;
   finally
-    MS.Free;
+    FS.Free;
   end;
 end ;
 
-function TACBrEAD.RemoveEAD(MS : TMemoryStream) : String ;
+function TACBrEAD.RemoveEAD(AStream: TStream): AnsiString;
+begin
+  Result := LeEAD( AStream );
+
+  // Removendo o EAD do MemoryStream //
+  if Length(Result) > 0 then
+     AStream.Size := AStream.Size - Length(Result) ;
+end ;
+
+function TACBrEAD.LeEADArquivo(const NomeArquivo: String): AnsiString;
+Var
+  FS : TFileStream ;
+begin
+  VerificaNomeArquivo( NomeArquivo );
+
+  FS := TFileStream.Create(NomeArquivo, fmOpenRead or fmShareDenyWrite);
+  try
+    Result := LeEAD( FS ) ;
+  finally
+    FS.Free;
+  end;
+end;
+
+function TACBrEAD.LeEAD(AStream: TStream): AnsiString;
 Var
   Buffer: array[0..259] of AnsiChar;
 begin
+  Result := '';
+
   // Verificando se tem CRLF no final da linha do EAD //
   Buffer := #0;
-  MS.Seek(-1, soFromEnd);  // vai para EOF - 1
-  MS.Read(Buffer, 1);
+  AStream.Seek(-1, soFromEnd);  // vai para EOF - 1
+  AStream.Read(Buffer, 1);
   while (Buffer[0] in [CR, LF]) do
   begin
+     Result := Buffer[0] + Result;
+
      Buffer := #0;
-     MS.Seek(-2, soFromCurrent);  // Volta 2
-     MS.Read(Buffer, 1);
+     AStream.Seek(-2, soFromCurrent);  // Volta 2 bytes
+     AStream.Read(Buffer, 1);
   end ;
 
   // Procurando por ultimo EAD //
   Buffer[0] := #0;
-  MS.Seek(-259,soFromCurrent);     // 259 = Tamanho da Linha EAD
-  MS.Read(Buffer, 259 );
-  Result := UpperCase( Trim( String( Buffer ) ) );
+  AStream.Seek(-259,soFromCurrent);     // 259 = Tamanho da Linha EAD
+  AStream.Read(Buffer, 259 );
+  Result := UpperCase( Trim( String( Buffer ) ) ) + Result;
 
-  // Removendo o EAD do MemoryStream //
-  if copy(Result,1,3) = 'EAD' then
-     MS.Size := MS.Position-259
-  else
+  // Achou o EAD no MemoryStream //
+  if copy(Result,1,3) <> 'EAD' then
      Result := '';
-end ;
+end;
 
 function TACBrEAD.VerificarEADArquivo(const NomeArquivo : String) : Boolean ;
 Var
-  MS : TMemoryStream ;
+  FS : TFileStream ;
 begin
   VerificaNomeArquivo( NomeArquivo );
 
-  MS := TMemoryStream.Create;
+  FS := TFileStream.Create(NomeArquivo, fmOpenRead or fmShareDenyWrite);
   try
-    MS.LoadFromFile( NomeArquivo );
-    Result := VerificarEAD( MS );
+    Result := VerificarEAD( FS );
   finally
-    MS.Free;
-  end;
+    FS.Free ;
+  end ;
 end ;
 
 function TACBrEAD.VerificarEAD(const AString : AnsiString) : Boolean ;
@@ -997,49 +1026,55 @@ end ;
 function TACBrEAD.VerificarEAD(const AStringList : TStringList) : Boolean ;
 Var
   MS : TMemoryStream ;
-  EAD : AnsiString ;
+  EAD : String ;
   SLBottom : Integer ;
 begin
   if AStringList.Count < 1 then
      raise EACBrEADException.Create( ACBrStr('Conteudo Informado é vazio' ) );
 
   SLBottom := AStringList.Count-1;                 // Pega a última linha do arquivo,
-  EAD := AnsiString( AStringList[ SLBottom ] ) ;   // pois ela contem o EAD, e depois,
+  EAD := AStringList[ SLBottom ]  ;                // pois ela contem o EAD, e depois,
   AStringList.Delete( SLBottom );                  // remove a linha do EAD
 
   MS := TMemoryStream.Create;
   try
     AStringList.SaveToStream( MS );
-    Result := VerificarEAD( MS, String( EAD ) );
+    Result := VerificarEAD( MS, EAD );
   finally
     MS.Free ;
   end ;
 end ;
 
-function TACBrEAD.VerificarEAD(const MS : TMemoryStream ; EAD : String
-  ) : Boolean ;
+function TACBrEAD.VerificarEAD(const AStream: TStream; EAD: String): Boolean;
 Var
   md : PEVP_MD ;
   md_len: cardinal;
   md_ctx: EVP_MD_CTX;
   EAD_crypt, EAD_decrypt : array [0..127] of AnsiChar;
   md5_bin : array [0..15] of AnsiChar;
-  Ret : LongInt ;
+  Ret, BytesToRead, BytesReaded : LongInt ;
+  Memory: Pointer;
+  StreamSize, PosStream, BytesToEnd: Int64;
+  EADAnsi : AnsiString;
 begin
-  //Result := False;
-
   EAD := Trim(EAD);
+
+  StreamSize := AStream.Size ;
 
   // Não enviou EAD ?, então ache e Remova a linha do EAD no MemoryStream
   if EAD = '' then
-     EAD := RemoveEAD( MS );
+  begin
+     EADAnsi := LeEAD( AStream );
+     StreamSize := StreamSize - Length(EADAnsi);
+     EAD := Trim(String(EADAnsi))  // Remove CR,LF, se houver..
+  end;
 
   // Remove "EAD" do inicio da linha
   if UpperCase(String(copy(EAD,1,3))) = 'EAD' then
      EAD := copy(EAD,4,Length(EAD));
 
   if EAD = '' then
-     raise EACBrEADException.Create( ACBrStr('Registro EAD não informado') );
+     raise EACBrEADException.Create( ACBrStr('Registro EAD não informado ou não existe no final do Arquivo') );
 
   // Convertendo o EAD para binário //
   md_len := trunc(Length(EAD) / 2);
@@ -1049,12 +1084,38 @@ begin
 
   LerChavePublica;
 
+  PosStream := 0;
+  AStream.Position := 0;
+  GetMem(Memory, BufferSize);
   try
     // Fazendo verificação tradicional de SignDigest
-    MS.Position := 0;
     md := EVP_get_digestbyname('md5');
     EVP_DigestInit( @md_ctx, md ) ;
-    EVP_DigestUpdate( @md_ctx, MS.Memory, MS.Size ) ;
+    if Assigned( fsOnProgress ) then
+       fsOnProgress( PosStream, StreamSize );
+
+    while (PosStream < StreamSize) do
+    begin
+       BytesToEnd := (StreamSize - PosStream);
+
+       if BytesToEnd > BufferSize then
+          BytesToRead := BufferSize
+       else if BytesToEnd <= 0 then
+          Break
+       else
+          BytesToRead := BytesToEnd;
+
+       BytesReaded := AStream.Read(Memory^,BytesToRead);
+       if BytesReaded <= 0 then
+          Break;
+
+       EVP_DigestUpdate( @md_ctx, Memory, BytesReaded ) ;
+       PosStream := PosStream + BytesReaded;
+
+       if Assigned( fsOnProgress ) then
+          fsOnProgress( PosStream, StreamSize );
+    end;
+
     Ret := EVP_VerifyFinal( @md_ctx, @EAD_crypt, md_len, fsKey) ;
 
     Result := (Ret = 1);
@@ -1073,7 +1134,7 @@ begin
        if md_len <> 128 then
           raise EACBrEADException.Create('Erro ao descriptografar EAD');
 
-       Result := (pos( md5_bin, EAD_decrypt ) > 0) ;
+       Result := (Pos( md5_bin, EAD_decrypt ) > 0) ;
     end ;
 
     if (not Result)  then
@@ -1096,9 +1157,12 @@ begin
     end ;
 
   finally
-     LiberarChave;
+    Freemem(Memory);
+    LiberarChave;
   end ;
 end ;
 
 end.
+
+
 
