@@ -539,9 +539,9 @@ begin
                if NFSe.OptanteSimplesNacional = snSim
                  then Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '');
             end
-          else if FProvedor in [proFiorilli, proTecnos, proCoplan, proProdata]
+          else if FProvedor in [proFiorilli, proTecnos, proProdata]
             then Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '')
-          else if FProvedor in [proDigifred]
+          else if FProvedor in [proDigifred, proCoplan]
             then Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '')
           else Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
    end;

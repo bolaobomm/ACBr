@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/11/2014
+[*] Alterado a forma de gerar a TAG Aliquota quando o provedor for Coplan.
+    Por: Italo Jurisato Junior
 [+] Incluido a cidade Vila Velha/ES ao provedor Vitória.
     Por: Rodrigo
 [*] Incluido no DANFSE em Fast Report o controle de quebra de linha no campo
