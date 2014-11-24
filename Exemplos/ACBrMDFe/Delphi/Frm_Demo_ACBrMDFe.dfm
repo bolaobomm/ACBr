@@ -93,7 +93,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         Top = 15
         Width = 277
         Height = 360
-        ActivePage = TabSheet1
+        ActivePage = TabSheet3
         Align = alClient
         MultiLine = True
         TabOrder = 0
@@ -334,9 +334,9 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
             object Label6: TLabel
               Left = 8
               Top = 16
-              Width = 121
+              Width = 231
               Height = 13
-              Caption = 'Selecione UF de Destino:'
+              Caption = 'Selecione UF da SEFAZ-Autorizadora (Emitente):'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
               Font.Height = -11
