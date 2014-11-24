@@ -49,8 +49,7 @@ procedure GerarIniNFe( AStr: WideString ) ;
 function GerarNFeIni( XML : WideString ) : WideString;
 procedure EnviarEmail(const sSmtpHost, sSmtpPort, sSmtpUser, sSmtpPasswd, sFrom, sTo, sAssunto, sAttachment, sAttachment2: String; sMensagem : TStrings; SSL, TLS : Boolean; sCopias: String='');
 procedure EnviarEmailIndy(const sSmtpHost, sSmtpPort, sSmtpUser, sSmtpPasswd, sFrom, sTo, sAssunto, sAttachment, sAttachment2: String; sMensagem : TStrings; SSL, TLS : Boolean; sCopias: String='');
-procedure GerarIniCCe( AStr: WideString ) ;
-procedure GerarIniEvento( AStr: WideString ) ;
+procedure GerarIniEvento( AStr: WideString; CCe : Boolean = False ) ;
 
 implementation
 
@@ -242,7 +241,7 @@ begin
                  raise Exception.Create(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.xMotivo);
               end;
             end
-           else
+        {   else
             begin
               ACBrNFe1.WebServices.Cancelamento.NFeChave      := ACBrNFe1.WebServices.Consulta.NFeChave;
               ACBrNFe1.WebServices.Cancelamento.Protocolo     := ACBrNFe1.WebServices.Consulta.Protocolo;
@@ -264,7 +263,7 @@ begin
               except
                  raise Exception.Create(ACBrNFe1.WebServices.Cancelamento.Msg);
               end;
-            end;
+            end; }
          end
         else if Cmd.Metodo = 'imprimirdanfe' then
          begin
@@ -870,6 +869,8 @@ begin
                            Restaurar1.Click;
                            Application.BringToFront;
                          end;
+
+                        ConfiguraDANFe; 
                         ACBrNFe1.DANFE.Impressora := cbxImpressora.Text;
                         if ACBrNFe1.NotasFiscais.Items[i].Confirmada and (Cmd.Params(2) = '1') then
                          begin
@@ -885,60 +886,15 @@ begin
             end;
          end
 
-        else if (Cmd.Metodo = 'cartadecorrecao')then
-         begin
-           ACBrNFe1.CartaCorrecao.CCe.Evento.Clear;
-
-           GerarIniCCe( Cmd.Params(0) );
-
-           ACBrNFe1.EnviarCartaCorrecao(ACBrNFe1.CartaCorrecao.CCe.idLote);
-
-           if ACBrNFe1.Configuracoes.Geral.Salvar then
-            begin
-              Cmd.Resposta :=  Cmd.Resposta+
-              'Arquivo='+ACBrNFe1.WebServices.CartaCorrecao.PathArqResp;
-            end;
-           Cmd.Resposta := Cmd.Resposta+sLineBreak+
-                           'idLote='   +IntToStr(ACBrNFe1.WebServices.CartaCorrecao.CCeRetorno.idLote)+sLineBreak+
-                           'tpAmb='    +TpAmbToStr(ACBrNFe1.WebServices.CartaCorrecao.CCeRetorno.tpAmb)+sLineBreak+
-                           'verAplic=' +ACBrNFe1.WebServices.CartaCorrecao.CCeRetorno.verAplic+sLineBreak+
-                           'cOrgao='   +IntToStr(ACBrNFe1.WebServices.CartaCorrecao.CCeRetorno.cOrgao)+sLineBreak+
-                           'cStat='    +IntToStr(ACBrNFe1.WebServices.CartaCorrecao.CCeRetorno.cStat)+sLineBreak+
-                           'xMotivo='  +ACBrNFe1.WebServices.CartaCorrecao.CCeRetorno.xMotivo+sLineBreak;
-           for I:= 0 to ACBrNFe1.WebServices.CartaCorrecao.CCeRetorno.retEvento.Count-1 do
-            begin
-
-              Cmd.Resposta := Cmd.Resposta+sLineBreak+
-               '[EVENTO'+Trim(IntToStrZero(I+1,3))+']'+sLineBreak+
-               'tpAmb='     +TpAmbToStr(ACBrNFe1.WebServices.CartaCorrecao.CCeRetorno.retEvento.Items[I].RetInfEvento.tpAmb)+sLineBreak+
-               'verAplic='  +ACBrNFe1.WebServices.CartaCorrecao.CCeRetorno.retEvento.Items[I].RetInfEvento.verAplic+sLineBreak+
-               'cOrgao='    +IntToStr(ACBrNFe1.WebServices.CartaCorrecao.CCeRetorno.retEvento.Items[I].RetInfEvento.cOrgao)+sLineBreak+
-               'cStat='     +IntToStr(ACBrNFe1.WebServices.CartaCorrecao.CCeRetorno.retEvento.Items[I].RetInfEvento.cStat)+sLineBreak+
-               'xMotivo='   +ACBrNFe1.WebServices.CartaCorrecao.CCeRetorno.retEvento.Items[I].RetInfEvento.xMotivo+sLineBreak+
-               'chNFe='     +ACBrNFe1.WebServices.CartaCorrecao.CCeRetorno.retEvento.Items[I].RetInfEvento.chNFe+sLineBreak+
-               'tpEvento='  +IntToStr(ACBrNFe1.WebServices.CartaCorrecao.CCeRetorno.retEvento.Items[I].RetInfEvento.tpEvento)+sLineBreak+
-               'xEvento='   +ACBrNFe1.WebServices.CartaCorrecao.CCeRetorno.retEvento.Items[I].RetInfEvento.xEvento+sLineBreak+
-               'nSeqEvento='+IntToStr(ACBrNFe1.WebServices.CartaCorrecao.CCeRetorno.retEvento.Items[I].RetInfEvento.nSeqEvento)+sLineBreak+
-               'CNPJDest='  +ACBrNFe1.WebServices.CartaCorrecao.CCeRetorno.retEvento.Items[I].RetInfEvento.CNPJDest+sLineBreak+
-               'dhRegEvento='+DateTimeToStr(ACBrNFe1.WebServices.CartaCorrecao.CCeRetorno.retEvento.Items[I].RetInfEvento.dhRegEvento)+sLineBreak+
-               'nProt='     +ACBrNFe1.WebServices.CartaCorrecao.CCeRetorno.retEvento.Items[I].RetInfEvento.nProt+sLineBreak;
-            end;
-         end
-
-        else if (Cmd.Metodo = 'enviarevento')then
+        else if (Cmd.Metodo = 'enviarevento') or  (Cmd.Metodo = 'cartadecorrecao') then
          begin
            Cmd.Resposta := '';
            ACBrNFe1.EventoNFe.Evento.Clear;
 
-           GerarIniEvento( Cmd.Params(0) );
+           GerarIniEvento( Cmd.Params(0), (Cmd.Metodo = 'cartadecorrecao') );
 
            ACBrNFe1.EnviarEventoNFe(ACBrNFe1.EventoNFe.idLote);
 
-           if ACBrNFe1.Configuracoes.Geral.Salvar then
-            begin
-              Cmd.Resposta :=  Cmd.Resposta+
-              'Arquivo='+ACBrNFe1.WebServices.EnvEvento.PathArqResp;
-            end;
            Cmd.Resposta := Cmd.Resposta+sLineBreak+
                            'idLote='   +IntToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.idLote)+sLineBreak+
                            'tpAmb='    +TpAmbToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.tpAmb)+sLineBreak+
@@ -1685,7 +1641,7 @@ begin
           end;
 
          Dest.idEstrangeiro     := INIRec.ReadString(  'Destinatario','idEstrangeiro','');
-         Dest.CNPJCPF           := INIRec.ReadString(  'Destinatario','CNPJ'       ,INIRec.ReadString(  'Destinatario','CNPJCPF'       ,''));
+         Dest.CNPJCPF           := INIRec.ReadString(  'Destinatario','CNPJ'       ,INIRec.ReadString(  'Destinatario','CNPJCPF',INIRec.ReadString(  'Destinatario','CPF','')));
          Dest.xNome             := INIRec.ReadString(  'Destinatario','NomeRazao'  ,INIRec.ReadString(  'Destinatario','xNome'  ,''));
          Dest.indIEDest         := StrToindIEDest(OK,INIRec.ReadString( 'Destinatario','indIEDest','1'));
          Dest.IE                := INIRec.ReadString(  'Destinatario','IE'         ,'');
@@ -3354,59 +3310,7 @@ begin
   end;
 end;
 
-procedure GerarIniCCe( AStr: WideString ) ;
-var
-  I      : Integer;
-  sSecao, sFim : String;
-  INIRec : TMemIniFile ;
-  SL     : TStringList;
-begin
- INIRec := TMemIniFile.create( 'cce.ini' ) ;
-
- SL := TStringList.Create;
- if FilesExists(Astr) then
-    SL.LoadFromFile(AStr)
- else
-    Sl.Text := ConvertStrRecived( Astr );
-
- INIRec.SetStrings( SL );
- SL.Free ;
-
- with frmAcbrNfeMonitor do
-  begin
-   try
-     ACBrNFe1.CartaCorrecao.CCe.idLote := INIRec.ReadInteger( 'CCE','idLote' ,0);
-     ACBrNFe1.CartaCorrecao.CCe.Evento.Clear;
-     I := 1 ;
-     while true do
-      begin
-        sSecao := 'EVENTO'+IntToStrZero(I,3) ;
-        sFim   := INIRec.ReadString(  sSecao,'chNFe'  ,'FIM');
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-           break ;
-
-        with ACBrNFe1.CartaCorrecao.CCe.Evento.Add do
-         begin
-           infEvento.chNFe  := INIRec.ReadString(  sSecao,'chNFe' ,'');
-           infEvento.cOrgao := INIRec.ReadInteger( sSecao,'cOrgao' ,0);
-           infEvento.CNPJ   := INIRec.ReadString(  sSecao,'CNPJ' ,'');
-           infEvento.dhEvento :=  NotaUtil.StringToDateTime(INIRec.ReadString(  sSecao,'dhEvento' ,''));
-           infEvento.tpEvento := 110110;
-           infEvento.nSeqEvento := INIRec.ReadInteger( sSecao,'nSeqEvento' ,1);
-           infEvento.versaoEvento := INIRec.ReadString(  sSecao,'versaoEvento' ,'1.00');;
-           infEvento.detEvento.descEvento := 'Carta de Correção';
-           infEvento.detEvento.xCorrecao := INIRec.ReadString(  sSecao,'xCorrecao' ,'');
-           infEvento.detEvento.xCondUso := ''; //Texto fixo conforme NT 2011.003 -  http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=tsiloeZ6vBw=
-         end;
-        Inc(I);
-      end;
-   finally
-      INIRec.Free ;
-   end;
- end;
-end;
-
-procedure GerarIniEvento( AStr: WideString ) ;
+procedure GerarIniEvento( AStr: WideString; CCe : Boolean = False ) ;
 var
   I      : Integer;
   sSecao, sFim : String;
@@ -3428,7 +3332,7 @@ begin
  with frmAcbrNfeMonitor do
   begin
    try
-     ACBrNFe1.EventoNFe.idLote := INIRec.ReadInteger( 'EVENTO','idLote' ,0);
+     ACBrNFe1.EventoNFe.idLote := INIRec.ReadInteger( 'EVENTO','idLote' ,INIRec.ReadInteger( 'CCE','idLote',0));
      ACBrNFe1.EventoNFe.Evento.Clear;
      I := 1 ;
      while true do
@@ -3444,10 +3348,18 @@ begin
            infEvento.cOrgao := INIRec.ReadInteger( sSecao,'cOrgao' ,0);
            infEvento.CNPJ   := INIRec.ReadString(  sSecao,'CNPJ' ,'');
            infEvento.dhEvento :=  NotaUtil.StringToDateTime(INIRec.ReadString(  sSecao,'dhEvento' ,''));
-           infEvento.tpEvento := StrToTpEvento(ok,INIRec.ReadString(  sSecao,'tpEvento' ,''));
+           if CCe then
+            begin
+              infEvento.tpEvento := teCCe;
+              infEvento.detEvento.descEvento := 'Carta de Correção';
+            end
+           else
+            begin
+             infEvento.tpEvento := StrToTpEvento(ok,INIRec.ReadString(  sSecao,'tpEvento' ,''));
+             infEvento.detEvento.descEvento := INIRec.ReadString(  sSecao,'descEvento' ,'');
+            end;
            infEvento.nSeqEvento   := INIRec.ReadInteger( sSecao,'nSeqEvento' ,1);
            infEvento.versaoEvento := INIRec.ReadString(  sSecao,'versaoEvento' ,'1.00');;
-           infEvento.detEvento.descEvento := INIRec.ReadString(  sSecao,'descEvento' ,'');
            infEvento.detEvento.xCorrecao  := INIRec.ReadString(  sSecao,'xCorrecao' ,'');
            infEvento.detEvento.xCondUso   := INIRec.ReadString(  sSecao,'xCondUso' ,''); //Texto fixo conforme NT 2011.003 -  http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=tsiloeZ6vBw=
            infEvento.detEvento.nProt      := INIRec.ReadString(  sSecao,'nProt' ,'');

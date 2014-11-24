@@ -51,8 +51,8 @@ begin
     Result  := NotaUtil.GetURL(frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.WebServices.UFCodigo, frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.WebServices.AmbienteCodigo, frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo, LayNfeRetRecepcao)
   else if WebService is TNFeConsulta then
     Result  := NotaUtil.GetURL(frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.WebServices.UFCodigo, frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.WebServices.AmbienteCodigo, frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo, LayNfeConsulta)
-  else if WebService is TNFeCancelamento then
-    Result  := NotaUtil.GetURL(frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.WebServices.UFCodigo, frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.WebServices.AmbienteCodigo, frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo, LayNfeCancelamento)
+//  else if WebService is TNFeCancelamento then
+//    Result  := NotaUtil.GetURL(frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.WebServices.UFCodigo, frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.WebServices.AmbienteCodigo, frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo, LayNfeCancelamento)
   else if WebService is TNFeInutilizacao then
     Result  := NotaUtil.GetURL(frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.WebServices.UFCodigo, frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.WebServices.AmbienteCodigo, frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo, LayNfeInutilizacao)
   else if WebService is TNFeConsultaCadastro then
@@ -61,8 +61,8 @@ begin
     Result  := NotaUtil.GetURL(frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.WebServices.UFCodigo, frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.WebServices.AmbienteCodigo, frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo, LayNfeEnvDPEC)
   else if WebService is TNFeConsultaDPEC then
     Result  := NotaUtil.GetURL(frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.WebServices.UFCodigo, frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.WebServices.AmbienteCodigo, frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo, LayNfeConsultaDPEC)
-  else if WebService is TNFeCartaCorrecao then
-    Result  := NotaUtil.GetURL(frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.WebServices.UFCodigo, frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.WebServices.AmbienteCodigo, frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo, LayNFeCCe)
+//  else if WebService is TNFeCartaCorrecao then
+//    Result  := NotaUtil.GetURL(frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.WebServices.UFCodigo, frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.WebServices.AmbienteCodigo, frmAcbrNfeMonitor.ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo, LayNFeCCe)
   else if WebService is TNFeEnvEvento then
   begin
     //Verificação necessária pois somente os eventos de Cancelamento e CCe serão tratados pela SEFAZ do estado
@@ -88,8 +88,8 @@ begin
     Result  := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetRecepcao2'
   else if WebService is TNFeConsulta then
     Result  := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeConsulta2'
-  else if WebService is TNFeCancelamento then
-    Result  := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeCancelamento2'
+//  else if WebService is TNFeCancelamento then
+//    Result  := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeCancelamento2'
   else if WebService is TNFeInutilizacao then
     Result  := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeInutilizacao2'
   else if WebService is TNFeConsultaCadastro then
@@ -116,8 +116,8 @@ begin
     Result  := frmAcbrNfeMonitor.ACBrNFe1.WebServices.Retorno
   else if pos('<consSitNFe',XML) > 0 then
     Result  := frmAcbrNfeMonitor.ACBrNFe1.WebServices.Consulta
-  else if pos('<cancNFe',XML) > 0 then
-    Result  := frmAcbrNfeMonitor.ACBrNFe1.WebServices.Cancelamento
+//  else if pos('<cancNFe',XML) > 0 then
+//    Result  := frmAcbrNfeMonitor.ACBrNFe1.WebServices.Cancelamento
   else if pos('<inutNFe',XML) > 0 then
     Result  := frmAcbrNfeMonitor.ACBrNFe1.WebServices.Inutilizacao
   else if pos('<ConsCad',XML) > 0 then
@@ -143,7 +143,7 @@ var
   Eventos, Evento, Lote, EventosAssinados: AnsiString;
   Notas, NFe, NFesAssinadas: AnsiString;
 begin
- if (WebService is TNFeCancelamento) or
+ if {(WebService is TNFeCancelamento) or}
     (WebService is TNFeEnvEvento) or
     (WebService is TNFeInutilizacao) or
     (WebService is TNFeEnvDPEC) or
