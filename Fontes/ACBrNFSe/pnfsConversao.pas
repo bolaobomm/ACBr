@@ -1276,7 +1276,8 @@ begin
   5101803  // Barra do Garcas/MT
          : Provedor := 'Virtual';
 
-  3205309 // Vitória/ES
+  3205200, // Vila Velha/ES
+  3205309  // Vitória/ES
          : Provedor := 'Vitoria';
 
   1100049, // Cacoal/RO

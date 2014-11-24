@@ -135,6 +135,27 @@ var
  ConfigURL: TConfigURL;
 begin
  case ACodCidade of
+  3205200: begin // Vila Velha/ES
+             ConfigURL.HomNomeCidade         := 'https://issonline.vilavelha.es.gov.br/SistemaISS/WebServiceHomologa';
+             ConfigURL.HomRecepcaoLoteRPS    := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
+             ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
+             ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
+             ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
+             ConfigURL.HomConsultaNFSe       := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
+             ConfigURL.HomCancelaNFSe        := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
+             ConfigURL.HomGerarNFSe          := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
+             ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
+
+             ConfigURL.ProNomeCidade         := 'https://issonline.vilavelha.es.gov.br/SistemaISS/WebService';
+             ConfigURL.ProRecepcaoLoteRPS    := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
+             ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
+             ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
+             ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
+             ConfigURL.ProConsultaNFSe       := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
+             ConfigURL.ProCancelaNFSe        := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
+             ConfigURL.ProGerarNFSe          := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
+             ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
+           end;
   3205309: begin // Vitória/ES
              ConfigURL.HomNomeCidade         := 'https://wsnfsehomologa.vitoria.es.gov.br';
              ConfigURL.HomRecepcaoLoteRPS    := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
