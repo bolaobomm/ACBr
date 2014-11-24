@@ -835,18 +835,21 @@ end;
 
 function TWebServicesBase.EhAutorizacao: Boolean;
 begin
-  Result := (FConfiguracoes.Geral.ModeloDF = moNFCe) or
-            (FConfiguracoes.Geral.VersaoDF = ve310);
-
-{ if not Result then
-  begin
-    // Até o momento somente as UF: AC-Acre, AM-Amazonas, MA-Maranhão,
-    // MT-Mato Grosso, RN-Rio Grande do Norte, RS-Rio Grande do Sul e
-    // SE-Sergipe participam do projeto da NFC-e
-    Result := (FConfiguracoes.Geral.ModeloDF = moNFCe) and
-              (FConfiguracoes.Geral.VersaoDF = ve310) and
-              not (FConfiguracoes.WebServices.UFCodigo in [13]);
-  end;}
+  case FConfiguracoes.Geral.ModeloDF of
+   moNFe:  begin
+            if (FConfiguracoes.Geral.VersaoDF = ve310) then
+               Result := True
+            else
+               Result := False;
+           end;
+   moNFCe: begin
+            if (FConfiguracoes.Geral.VersaoDF = ve310) and not
+               (FConfiguracoes.WebServices.UFCodigo in [13])  then // AM
+               Result := True
+            else
+               Result := False;
+           end;
+  end;
 end;
 
 procedure TWebServicesBase.AssinarXML(AXML: String; MsgErro: String);
@@ -1457,7 +1460,9 @@ var
   vNotas: WideString;
   indSinc, Versao: String;
 begin
-  if FLayout = LayNfeAutorizacao then
+  if (FLayout = LayNfeAutorizacao) or
+     (FConfiguracoes.Geral.ModeloDF = moNFCe) or
+     (FConfiguracoes.Geral.VersaoDF = ve310) then
     indSinc := '<indSinc>' + IfThen(FSincrono, '1', '0') + '</indSinc>'
   else
     indSinc := '';
@@ -1504,7 +1509,7 @@ begin
   else
     FRetWS := SeparaDados( FRetornoWS, 'nfeRecepcaoLote2Result' );
 
-  if FSincrono and (FLayout = LayNfeAutorizacao) then
+  if ((FConfiguracoes.Geral.ModeloDF = moNFCe) or (FConfiguracoes.Geral.VersaoDF = ve310)) and FSincrono then
   begin
     FNFeRetornoSincrono := TRetConsSitNFe.Create;
 
@@ -1543,7 +1548,7 @@ begin
 
     NomeArquivo := PathWithDelim(FConfiguracoes.Geral.PathSalvar) + chNFe;
 
-    if FNFeRetornoSincrono.cStat = 104 then
+    if Result then
     begin
       for I := 0 to TACBrNFe( FACBrNFe ).NotasFiscais.Count-1 do
       begin
