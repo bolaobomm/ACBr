@@ -377,7 +377,9 @@ begin
       FieldByName('xItemListaServico').AsString         := xItemListaServico;
       FieldByName('CodigoCnae').AsString                := CodigoCnae;
       FieldByName('CodigoTributacaoMunicipio').AsString := CodigoTributacaoMunicipio;
-      FieldByName('Discriminacao').AsString             := StringReplace(Discriminacao, ';', #13, [rfReplaceAll]);
+      //FieldByName('Discriminacao').AsString             := StringReplace(Discriminacao, ';', #13, [rfReplaceAll]);
+	  FieldByName('Discriminacao').AsString := StringReplace(Discriminacao, TACBrNFSe(DANFSeClassOwner.ACBrNFSe).Configuracoes.WebServices.QuebradeLinha, #13, [rfReplaceAll, rfIgnoreCase]);
+	  
       FieldByName('CodigoPais').AsString                := IntToStr(CodigoPais);
       FieldByName('NumeroProcesso').AsString            := NumeroProcesso;
 //      FieldByName('ResponsavelRetencao').AsString       := DFeUtil.SeSenao(ResponsavelRetencao = rtPrestador,'0','1');
