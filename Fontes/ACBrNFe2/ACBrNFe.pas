@@ -415,7 +415,7 @@ var
   i : integer;
 begin
   EventoNFe.Evento.Clear;
-  for i:= 0 to CartaCorrecao.CCe.Evento.Count do
+  for i:= 0 to CartaCorrecao.CCe.Evento.Count-1 do
    begin
      with EventoNFe.Evento.Add do
       begin
