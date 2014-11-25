@@ -1073,7 +1073,7 @@ begin
            Aquav.tpEmb      := INIRec.ReadString('aquav', 'tpEmb', '');
            Aquav.cEmbar     := INIRec.ReadString('aquav', 'cEmbar', '');
            Aquav.xEmbar     := INIRec.ReadString('aquav', 'xEmbar', '');
-           Aquav.nViag      := INIRec.ReadString('aquav', 'nviag', '');
+           Aquav.nViagem    := INIRec.ReadString('aquav', 'nViagem', '');
            Aquav.cPrtEmb    := INIRec.ReadString('aquav', 'cPrtEmb', '');
            Aquav.cPrtDest   := INIRec.ReadString('aquav', 'cPrtDest', '');
 
@@ -1102,7 +1102,7 @@ begin
              with Aquav.infTermDescarreg.Add do
              begin
                cTermDescarreg := sFim;
-               xTermRescarreg := INIRec.ReadString(sSecao, 'xTermDescarreg', '');
+               xTermDescarreg := INIRec.ReadString(sSecao, 'xTermDescarreg', '');
              end;
              inc(I);
            end;
@@ -1131,7 +1131,7 @@ begin
              with Aquav.infUnidCargaVazia.Add do
              begin
                idUnidCargaVazia := sFim;
-               tpUnidCargaVazia := StrToUnidCarga(OK, INIRec.ReadString(sSecao, 'tpUnidCargaVazia', '1');
+               tpUnidCargaVazia := StrToUnidCarga(OK, INIRec.ReadString(sSecao, 'tpUnidCargaVazia', '1'));
              end;
              inc(I);
            end;
@@ -1335,7 +1335,7 @@ begin
 
            with ide.infMunCarrega.Items[i] do
            begin
-             INIRec.WriteString(sSecao, 'cMunCarrega', cMunCarrega);
+             INIRec.WriteInteger(sSecao, 'cMunCarrega', cMunCarrega);
              INIRec.WriteString(sSecao, 'xMunCarrega', xMunCarrega);
            end;
          end;
@@ -1389,7 +1389,7 @@ begin
 
            with infDoc.infMunDescarga.Items[i] do
            begin
-             INIRec.WriteString(sSecao, 'cMunDescarga', cMunDescarga);
+             INIRec.WriteInteger(sSecao, 'cMunDescarga', cMunDescarga);
              INIRec.WriteString(sSecao, 'xMunDescarga', xMunDescarga);
 
              for j := 0 to infDoc.infMunDescarga.Items[i].infCTe.Count -1 do
@@ -1436,9 +1436,9 @@ begin
          INIRec.WriteInteger('tot', 'qCTe', tot.qCTe);
          INIRec.WriteInteger('tot', 'qNFe', tot.qNFe);
          INIRec.WriteInteger('tot', 'qMDFe', tot.qMDFe);
-         INIRec.WriteString( 'tot', 'vCarga', tot.vCarga);
-         INIRec.WriteString( 'tot', 'cUnid', UnidMedToStr(MDFe.tot.cUnid));
-         INIRec.WriteString( 'tot', 'qCarga', tot.qCarga);
+         INIRec.WriteFloat( 'tot', 'vCarga', tot.vCarga);
+         INIRec.WriteString( 'tot', 'cUnid', UnidMedToStr(tot.cUnid));
+         INIRec.WriteFloat( 'tot', 'qCarga', tot.qCarga);
 
           for i := 0 to lacres.Count - 1 do
           begin
@@ -1454,10 +1454,10 @@ begin
             sSecao := 'autXML' + IntToStrZero(I+1, 3);
             with autXML.Items[i] do
             begin
-              if CNPJ <> '' then
-                INIRec.WriteString(sSecao, 'CNPJCPF', CNPJ)
-              else if CPF <> '' then
-                     INIRec.WriteString(sSecao, 'CNPJCPF', CPF);
+//              if CNPJCPF <> '' then
+                INIRec.WriteString(sSecao, 'CNPJCPF', CNPJCPF)
+//              else if CPF <> '' then
+//                     INIRec.WriteString(sSecao, 'CNPJCPF', CPF);
             end;
           end;
 

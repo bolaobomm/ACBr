@@ -1748,7 +1748,7 @@ begin
      else
       begin
         ACBrNFe1.Cancelamento(vAux);
-        ExibeResp(ACBrNFe1.WebServices.Cancelamento.RetWS);
+        ExibeResp(ACBrNFe1.WebServices.EnvEvento.RetWS);
       end;
   end;
 end;

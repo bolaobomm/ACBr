@@ -48,6 +48,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/11/2014
+[-] : Correção de erros de compilação 
+	Por : Juliomar Marchetti
+	
 18/11/2014
 [*] : Incluido os demais modais na procedure GerarIniMDFe.
       Deixando desta forma mais completo.

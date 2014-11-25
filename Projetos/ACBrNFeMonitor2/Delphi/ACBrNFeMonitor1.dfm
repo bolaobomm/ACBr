@@ -6585,6 +6585,8 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     ExpandirDadosAdicionaisAuto = False
     MostrarSetup = False
     TributosPercentual = ptValorProdutos
+    ImprimirDesconto = True
+    ImprimirTributosItem = False
     Left = 201
     Top = 25
   end
