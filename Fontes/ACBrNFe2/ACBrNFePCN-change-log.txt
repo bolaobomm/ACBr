@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/11/2014
+[*] A bando com o valor aproximado dos tributos só será gerada no DANFE NFC-e 
+    (Quick Report) caso o valor de vTotTrib <> 0.
+    Por: Italo Jurisato Junior
+
 20/11/2014
 [*] Acerto para envio off-line da NFC-e usando ACBrECFVirtualNFCe
     http://www.projetoacbr.com.br/forum/index.php?/topic/18486-d%C3%BAvidas-acbrecfvirtualnfce/

@@ -595,8 +595,8 @@ var
  Perc: Double;
 begin
   inherited;
-//  PrintBand := QRNFe.PageNumber = 1;
 
+  PrintBand := (FNFE.Total.ICMSTot.vTotTrib <> 0);
   Perc := (FNFE.Total.ICMSTot.vTotTrib / FNFE.Total.ICMSTot.vNF) * 100;
   qrlTributos.Caption := 'Val Aprox. dos Tributos: ' +
                          DFeUtil.FormatFloat(FNFE.Total.ICMSTot.vTotTrib) +
