@@ -352,7 +352,7 @@ begin
 
            try
               ACBrNFe1.NotasFiscais.ImprimirPDF;
-              ArqPDF := StringReplace(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID,'NFe','',[rfIgnoreCase])+'.pdf';
+              ArqPDF := OnlyNumber(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID)+'-nfe.pdf';
               Cmd.Resposta := 'Arquivo criado em: '+ PathWithDelim(ACBrNFe1.DANFE.PathPDF) +
                               ArqPDF ;
            except
@@ -438,8 +438,8 @@ begin
 
            try
               ACBrNFe1.ImprimirEventoPDF;
-              ArqPDF := StringReplace(ACBrNFe1.EventoNFe.Evento[0].InfEvento.id,'ID', '', [rfIgnoreCase]);
-              ArqPDF := PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ArqPDF+'evento.pdf';
+              ArqPDF := OnlyNumber(ACBrNFe1.EventoNFe.Evento[0].InfEvento.id);
+              ArqPDF := PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ArqPDF+'-procEventoNFe.pdf';
               Cmd.Resposta := 'Arquivo criado em: ' + ArqPDF ;
            except
               raise Exception.Create('Erro ao criar o arquivo PDF');
@@ -1110,8 +1110,8 @@ begin
                  ACBrNFe1.NotasFiscais.ImprimirPDF;
                  ArqPDF := ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID ;
 
-                 ArqPDF := StringReplace(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]);
-                 ArqPDF := PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ArqPDF+'.pdf';
+                 ArqPDF := OnlyNumber(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID);
+                 ArqPDF := PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ArqPDF+'-nfe.pdf';
               except
                  raise Exception.Create('Erro ao criar o arquivo PDF');
               end;
@@ -1174,8 +1174,8 @@ begin
               try
                  ACBrNFe1.ImprimirEventoPDF;
 
-                 ArqPDF := StringReplace(ACBrNFe1.EventoNFe.Evento[0].InfEvento.id,'ID', '', [rfIgnoreCase]);
-                 ArqPDF := PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ArqPDF+'evento.pdf';
+                 ArqPDF := OnlyNumber(ACBrNFe1.EventoNFe.Evento[0].InfEvento.id);
+                 ArqPDF := PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ArqPDF+'-procEventoNFe.pdf';
               except
                  raise Exception.Create('Erro ao criar o arquivo PDF');
               end;
