@@ -1798,6 +1798,7 @@ begin
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
     NotaUtil.ConfAmbiente;
+    ConfiguraDANFe;
     ACBrNFe1.NotasFiscais.Imprimir;
   end;
 end;
