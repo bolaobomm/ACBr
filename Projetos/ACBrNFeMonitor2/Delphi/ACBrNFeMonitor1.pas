@@ -292,6 +292,8 @@ type
     ACBrMDFeDAMDFEQR1: TACBrMDFeDAMDFEQR;
     ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL;
     rgLocalCanhoto: TRadioGroup;
+    rgModoImpressaoEvento: TRadioGroup;
+    cbxSepararporModelo: TCheckBox;
     procedure DoACBrTimer(Sender: TObject);
     procedure edOnlyNumbers(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
@@ -578,6 +580,11 @@ begin
          begin
            mResp.Lines.Add('Monitorando Arquivos em: '+ExtractFilePath(ArqEntTXT));
            mResp.Lines.Add('Respostas gravadas em: '+ExtractFilePath(ArqSaiTXT));
+           if ExtractFilePath(ArqEntTXT) = ExtractFilePath(ArqSaiTXT) then
+            begin
+              mResp.Lines.Add('ATENÇÃO: Use diretórios diferentes para entrada e saída.');
+              raise Exception.Create('Use diretórios diferentes para entrada e saída.');
+            end;
          end
         else
          begin
@@ -836,7 +843,7 @@ begin
 
      cbUF.ItemIndex       := cbUF.Items.IndexOf(Ini.ReadString( 'WebService','UF','SP')) ;
      rgTipoAmb.ItemIndex  := Ini.ReadInteger( 'WebService','Ambiente'  ,0) ;
-     cbVersaoWS.ItemIndex := cbVersaoWS.Items.IndexOf(Ini.ReadString( 'WebService','Vesao','2.00')) ;
+     cbVersaoWS.ItemIndex := cbVersaoWS.Items.IndexOf(Ini.ReadString( 'WebService','Versao','2.00')) ;
      ACBrNFe1.Configuracoes.WebServices.UF         := cbUF.Text;
      ACBrNFe1.Configuracoes.WebServices.Ambiente   := StrToTpAmb(Ok,IntToStr(rgTipoAmb.ItemIndex+1));
      ACBrNFe1.Configuracoes.Geral.VersaoDF  := StrToVersaoDF(ok,cbVersaoWS.Text);
@@ -933,6 +940,7 @@ begin
 
      ACBrNFe1.DANFE.LocalImpCanhoto := rgLocalCanhoto.ItemIndex;
      rgModeloDANFeNFCE.ItemIndex   := Ini.ReadInteger('NFCe','Modelo'   ,0) ;
+     rgModoImpressaoEvento.ItemIndex   := Ini.ReadInteger('NFCe','ModoImpressaoEvento'   ,0) ;
 
      ConfiguraDANFe;
 
@@ -996,6 +1004,7 @@ begin
      cbxEmissaoPathNFe.Checked  := Ini.ReadBool(   'Arquivos','EmissaoPathNFe',false);
      cbxSalvaCCeCancelamentoPathEvento.Checked  := Ini.ReadBool(   'Arquivos','SalvarCCeCanPathEvento',false);
      cbxSepararPorCNPJ.Checked  := Ini.ReadBool(   'Arquivos','SepararPorCNPJ',false);
+     cbxSepararporModelo.Checked  := Ini.ReadBool(   'Arquivos','SepararPorModelo',false);
      edtPathNFe.Text            := Ini.ReadString( 'Arquivos','PathNFe'    ,'') ;
      edtPathCan.Text            := Ini.ReadString( 'Arquivos','PathCan'    ,'') ;
      edtPathInu.Text            := Ini.ReadString( 'Arquivos','PathInu'    ,'') ;
@@ -1009,6 +1018,7 @@ begin
      ACBrNFe1.Configuracoes.Arquivos.EmissaoPathNFe   := cbxEmissaoPathNFe.Checked;
      ACBrNFe1.Configuracoes.Arquivos.SalvarCCeCanEvento := cbxSalvaCCeCancelamentoPathEvento.Checked;
      ACBrNFe1.Configuracoes.Arquivos.SepararPorCNPJ   := cbxSepararPorCNPJ.Checked;
+     ACBrNFe1.Configuracoes.Arquivos.SepararPorModelo := cbxSepararporModelo.Checked;
      ACBrNFe1.Configuracoes.Arquivos.PathNFe  := edtPathNFe.Text;
      ACBrNFe1.Configuracoes.Arquivos.PathCan  := edtPathCan.Text;
      ACBrNFe1.Configuracoes.Arquivos.PathInu  := edtPathInu.Text;
@@ -1099,7 +1109,7 @@ begin
 
      Ini.WriteString( 'WebService','UF'         ,cbUF.Text) ;
      Ini.WriteInteger('WebService','Ambiente'   ,rgTipoAmb.ItemIndex) ;
-     Ini.WriteString( 'WebService','Vesao'      ,cbVersaoWS.Text) ;
+     Ini.WriteString( 'WebService','Versao'     ,cbVersaoWS.Text) ;
      Ini.WriteBool(   'WebService','AjustarAut' ,cbxAjustarAut.Checked) ;
      Ini.WriteString( 'WebService','Aguardar'   ,edtAguardar.Text) ;
      Ini.WriteString( 'WebService','Tentativas' ,edtTentativas.Text) ;
@@ -1155,7 +1165,8 @@ begin
      Ini.WriteInteger('DANFE','Fonte'         ,rgTipoFonte.ItemIndex) ;
      Ini.WriteInteger('DANFE','LocalCanhoto'  ,rgLocalCanhoto.ItemIndex);
 
-     Ini.WriteInteger('NFCe','Modelo'   ,rgModeloDANFeNFCE.ItemIndex) ;
+     Ini.WriteInteger('NFCe','Modelo'              ,rgModeloDANFeNFCE.ItemIndex) ;
+     Ini.WriteInteger('NFCe','ModoImpressaoEvento' ,rgModoImpressaoEvento.ItemIndex) ;
 
      Ini.WriteBool(   'Arquivos','Salvar'     ,cbxSalvarArqs.Checked);
      Ini.WriteBool(   'Arquivos','PastaMensal',cbxPastaMensal.Checked);
@@ -1163,6 +1174,7 @@ begin
      Ini.WriteBool(   'Arquivos','EmissaoPathNFe',cbxEmissaoPathNFe.Checked);
      Ini.WriteBool(   'Arquivos','SalvarCCeCanPathEvento',cbxSalvaCCeCancelamentoPathEvento.Checked);
      Ini.WriteBool(   'Arquivos','SepararPorCNPJ',cbxSepararPorCNPJ.Checked);
+     Ini.WriteBool(   'Arquivos','SepararPorModelo',cbxSepararporModelo.Checked);
      Ini.WriteString( 'Arquivos','PathNFe'    ,edtPathNFe.Text) ;
      Ini.WriteString( 'Arquivos','PathCan'    ,edtPathCan.Text) ;
      Ini.WriteString( 'Arquivos','PathInu'    ,edtPathInu.Text) ;
@@ -1223,7 +1235,7 @@ end;
 procedure TfrmAcbrNfeMonitor.Processar;
 var
   Linha : WideString;
-  ArqSefaz : Boolean;
+  ArqSefaz, ComandoACBr : Boolean;
   Arquivo : TStringList;
 begin
   if NewLines <> '' then
@@ -1264,7 +1276,13 @@ begin
                end
             end;
 
-           if not cbModoXML.Checked or ArqSefaz then
+           ComandoACBr := False;
+
+           if (copy(UpperCase(Linha),1,4) = 'NFE.') and
+              (copy(UpperCase(Linha),1,4) = 'CTE.') then
+              ComandoACBr := True;
+
+           if not cbModoXML.Checked or ArqSefaz or ComandoACBr then
             begin
               Cmd.Comando := Linha ;
               
@@ -1972,6 +1990,7 @@ begin
      cbxEmissaoPathNFe.Enabled  := True;
      cbxSalvaCCeCancelamentoPathEvento.Enabled  := True;
      cbxSepararPorCNPJ.Enabled  := True;
+     cbxSepararporModelo.Enabled := True;
      edtPathNFe.Enabled   := True;
      edtPathCan.Enabled   := True;
      edtPathInu.Enabled   := True;
@@ -1991,7 +2010,8 @@ begin
      cbxAdicionaLiteral.Enabled := False;
      cbxEmissaoPathNFe.Enabled  := False;
      cbxSalvaCCeCancelamentoPathEvento.Enabled  := False;
-     cbxSepararPorCNPJ.Enabled  := False;     
+     cbxSepararPorCNPJ.Enabled  := False;
+     cbxSepararporModelo.Enabled := False;      
      edtPathNFe.Enabled   := False;
      edtPathCan.Enabled   := False;
      edtPathInu.Enabled   := False;
@@ -2163,19 +2183,19 @@ var
 begin
   if ACBrNFe1.NotasFiscais.Count > 0 then
    begin
-     if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 55 then
-      begin
-        if rgModeloDanfe.ItemIndex = 0 then
-           ACBrNFe1.DANFE := ACBrNFeDANFERave1
-        else
-           ACBrNFe1.DANFE := ACBrNFeDANFERaveCB1;
-      end
-     else
+     if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 65 then
       begin
         if rgModeloDANFeNFCE.ItemIndex = 0 then
            ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1
         else
            ACBrNFe1.DANFE := ACBrNFeDANFeESCPOS1;
+      end
+     else
+      begin
+        if rgModeloDanfe.ItemIndex = 0 then
+           ACBrNFe1.DANFE := ACBrNFeDANFERave1
+        else
+           ACBrNFe1.DANFE := ACBrNFeDANFERaveCB1;
       end
    end;
 

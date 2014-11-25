@@ -393,6 +393,18 @@ begin
                  raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
             end;
 
+           ConfiguraDANFe;
+
+           if rgModoImpressaoEvento.ItemIndex = 0 then
+              ACBrNFe1.DANFE := ACBrNFeDANFERaveCB1
+           else
+            begin
+              if rgModeloDANFeNFCE.ItemIndex = 0 then
+                 ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1
+              else
+                 ACBrNFe1.DANFE := ACBrNFeDANFeESCPOS1;
+            end;
+
            if DFeUtil.NaoEstaVazio(Cmd.Params(2)) then
               ACBrNFe1.DANFE.Impressora := Cmd.Params(2)
            else
@@ -435,6 +447,13 @@ begin
               if DFeUtil.NaoEstaVazio(Cmd.Params(1)) then
                  raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
             end;
+
+           ConfiguraDANFe;
+
+           if rgModoImpressaoEvento.ItemIndex = 0 then
+              ACBrNFe1.DANFE := ACBrNFeDANFERaveCB1
+           else
+              ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1;
 
            try
               ACBrNFe1.ImprimirEventoPDF;

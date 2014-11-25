@@ -4133,7 +4133,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
       Top = 1
       Width = 569
       Height = 261
-      ActivePage = DANFE
+      ActivePage = Diretorios
       Align = alClient
       Style = tsFlatButtons
       TabOrder = 0
@@ -5486,6 +5486,18 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               TabOrder = 0
               OnClick = rgModeloDanfeClick
             end
+            object rgModoImpressaoEvento: TRadioGroup
+              Left = 6
+              Top = 35
+              Width = 187
+              Height = 33
+              Caption = 'Modo de Impress'#227'o do Evento'
+              Columns = 2
+              Items.Strings = (
+                'A4'
+                'Bobina')
+              TabOrder = 1
+            end
           end
         end
       end
@@ -5494,7 +5506,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         ImageIndex = 6
         object sbPathNFe: TSpeedButton
           Left = 258
-          Top = 74
+          Top = 86
           Width = 23
           Height = 24
           Glyph.Data = {
@@ -5515,21 +5527,21 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
         object Label32: TLabel
           Left = 6
-          Top = 60
+          Top = 72
           Width = 94
           Height = 13
           Caption = 'Pasta Arquivos NFe'
         end
         object Label33: TLabel
           Left = 6
-          Top = 100
+          Top = 112
           Width = 142
           Height = 13
           Caption = 'Pasta Arquivos Cancelamento'
         end
         object sbPathCan: TSpeedButton
           Left = 258
-          Top = 114
+          Top = 126
           Width = 23
           Height = 24
           Glyph.Data = {
@@ -5550,14 +5562,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
         object Label34: TLabel
           Left = 288
-          Top = 60
+          Top = 72
           Width = 127
           Height = 13
           Caption = 'Pasta Arquivos Inutiliza'#231#227'o'
         end
         object sbPathInu: TSpeedButton
           Left = 531
-          Top = 74
+          Top = 86
           Width = 23
           Height = 24
           Glyph.Data = {
@@ -5578,14 +5590,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
         object Label35: TLabel
           Left = 288
-          Top = 100
+          Top = 112
           Width = 103
           Height = 13
           Caption = 'Pasta Arquivos DPEC'
         end
         object sbPathDPEC: TSpeedButton
           Left = 531
-          Top = 114
+          Top = 126
           Width = 23
           Height = 24
           Glyph.Data = {
@@ -5606,14 +5618,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
         object Label28: TLabel
           Left = 6
-          Top = 180
+          Top = 192
           Width = 117
           Height = 13
           Caption = 'Salvar arquivos PDF em:'
         end
         object sbPathPDF: TSpeedButton
           Left = 259
-          Top = 194
+          Top = 206
           Width = 23
           Height = 24
           Glyph.Data = {
@@ -5634,14 +5646,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
         object Label46: TLabel
           Left = 6
-          Top = 140
+          Top = 152
           Width = 192
           Height = 13
           Caption = 'Pasta Arquivos CC-e - Carta de Corre'#231#227'o'
         end
         object sbPathCCe: TSpeedButton
           Left = 258
-          Top = 154
+          Top = 166
           Width = 23
           Height = 24
           Glyph.Data = {
@@ -5662,14 +5674,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
         object Label47: TLabel
           Left = 288
-          Top = 140
+          Top = 152
           Width = 108
           Height = 13
           Caption = 'Pasta Arquivos Evento'
         end
         object sbPathEvento: TSpeedButton
           Left = 530
-          Top = 154
+          Top = 166
           Width = 23
           Height = 24
           Glyph.Data = {
@@ -5690,10 +5702,52 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
         object edtPathCCe: TEdit
           Left = 6
-          Top = 156
+          Top = 168
           Width = 252
           Height = 21
+          TabOrder = 11
+        end
+        object edtPathNFe: TEdit
+          Left = 6
+          Top = 88
+          Width = 252
+          Height = 21
+          TabOrder = 7
+        end
+        object edtPathCan: TEdit
+          Left = 6
+          Top = 128
+          Width = 252
+          Height = 21
+          TabOrder = 9
+        end
+        object edtPathInu: TEdit
+          Left = 288
+          Top = 88
+          Width = 244
+          Height = 21
+          TabOrder = 8
+        end
+        object edtPathDPEC: TEdit
+          Left = 288
+          Top = 128
+          Width = 244
+          Height = 21
           TabOrder = 10
+        end
+        object edtPathPDF: TEdit
+          Left = 6
+          Top = 208
+          Width = 252
+          Height = 21
+          TabOrder = 13
+        end
+        object edtPathEvento: TEdit
+          Left = 288
+          Top = 168
+          Width = 244
+          Height = 21
+          TabOrder = 12
         end
         object cbxSalvarArqs: TCheckBox
           Left = 6
@@ -5706,55 +5760,20 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
         object cbxPastaMensal: TCheckBox
           Left = 6
-          Top = 20
+          Top = 18
           Width = 210
           Height = 17
           Caption = 'Criar Pastas Mensalmente'
-          TabOrder = 2
+          TabOrder = 1
           OnClick = cbxPastaMensalClick
         end
         object cbxAdicionaLiteral: TCheckBox
           Left = 6
-          Top = 40
+          Top = 36
           Width = 210
           Height = 17
           Caption = 'Adicionar Literal no nome das pastas'
-          TabOrder = 4
-        end
-        object edtPathNFe: TEdit
-          Left = 6
-          Top = 76
-          Width = 252
-          Height = 21
-          TabOrder = 6
-        end
-        object edtPathCan: TEdit
-          Left = 6
-          Top = 116
-          Width = 252
-          Height = 21
-          TabOrder = 8
-        end
-        object edtPathInu: TEdit
-          Left = 288
-          Top = 76
-          Width = 244
-          Height = 21
-          TabOrder = 7
-        end
-        object edtPathDPEC: TEdit
-          Left = 288
-          Top = 116
-          Width = 244
-          Height = 21
-          TabOrder = 9
-        end
-        object edtPathPDF: TEdit
-          Left = 6
-          Top = 196
-          Width = 252
-          Height = 21
-          TabOrder = 12
+          TabOrder = 2
         end
         object cbxEmissaoPathNFe: TCheckBox
           Left = 288
@@ -5763,32 +5782,33 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Height = 17
           Caption = 'Salvar NFe pelo campo Data de Emiss'#227'o'
           Enabled = False
-          TabOrder = 1
-        end
-        object edtPathEvento: TEdit
-          Left = 288
-          Top = 156
-          Width = 244
-          Height = 21
-          TabOrder = 11
+          TabOrder = 4
         end
         object cbxSalvaCCeCancelamentoPathEvento: TCheckBox
           Left = 288
-          Top = 20
+          Top = 18
           Width = 233
           Height = 17
           Caption = 'Salvar Arqs Canc./CCe na pasta Eventos'
           Enabled = False
-          TabOrder = 3
+          TabOrder = 5
         end
         object cbxSepararPorCNPJ: TCheckBox
           Left = 288
-          Top = 40
+          Top = 36
           Width = 233
           Height = 17
           Caption = 'Separar Arqs pelo CNPJ do Certificado'
           Enabled = False
-          TabOrder = 5
+          TabOrder = 6
+        end
+        object cbxSepararporModelo: TCheckBox
+          Left = 6
+          Top = 54
+          Width = 219
+          Height = 17
+          Caption = 'Separar Arqs pelo Modelo(NFe/NFCe)'
+          TabOrder = 3
         end
       end
       object Testes: TTabSheet
