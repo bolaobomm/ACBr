@@ -3308,7 +3308,8 @@ begin
   inherited SalvarEnvio;
 
   if FConfiguracoes.Arquivos.Salvar then
-    FConfiguracoes.Geral.Save(FArqEnv, FDadosMsg, GerarPathEvento);
+    FConfiguracoes.Geral.Save(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
+                              FDadosMsg, GerarPathEvento);
 end;
 
 procedure TNFeEnvEvento.SalvarResposta;
@@ -3316,7 +3317,8 @@ begin
   inherited SalvarResposta;
 
   if FConfiguracoes.Arquivos.Salvar then
-    FConfiguracoes.Geral.Save(FArqEnv, FDadosMsg, GerarPathEvento);
+    FConfiguracoes.Geral.Save(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
+                              FDadosMsg, GerarPathEvento);
 end;
 
 function TNFeEnvEvento.GerarMsgLog: AnsiString;
