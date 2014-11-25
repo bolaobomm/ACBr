@@ -778,7 +778,6 @@ begin
     Gerador.wGrupo('det nItem="' + IntToStr(nfe.Det[i].Prod.nItem) + '"', 'H01');
     Gerador.gtCampo('nItem', IntToStr(nfe.Det[i].Prod.nItem));
     (**)GerarDetProd(i);
-    (**)GerarDetProddetExport(i);    
     (**)GerarDetImposto(i);
 
     if nfe.Det[i].pDevol > 0 then
@@ -818,6 +817,7 @@ begin
   if NFe.infNFe.Versao >= 2 then
      Gerador.wCampo(tcStr, 'I17b', 'indTot  ', 01, 01, 1, indTotToStr(nfe.Det[i].Prod.IndTot), DSC_INDTOT);
   (**)GerarDetProdDI(i);
+  (**)GerarDetProddetExport(i);  
   Gerador.wCampo(tcStr, 'I30', 'xPed       ', 01, 15, 0, nfe.Det[i].Prod.xPed, DSC_XPED);
   Gerador.wCampo(tcInt, 'I31', 'nItemPed   ', 01, 06, 0, nfe.Det[i].Prod.nItemPed, DSC_NITEMPED);
   Gerador.wCampo(tcStr, 'I70', 'nFCI       ', 36, 36, 0, nfe.Det[i].Prod.nFCI, DSC_NFCI);
