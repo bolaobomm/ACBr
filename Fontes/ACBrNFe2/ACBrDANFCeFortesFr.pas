@@ -701,6 +701,9 @@ var
 begin
   {$IFDEF FPC}
    LoadPortugueseStrings;
+  {$ELSE}
+   // Evitando mensagem de versão do fortes //
+   SetVersion( CommercialVersion, ReleaseVersion, CommentVersion );
   {$ENDIF}
 
   frACBrNFeDANFCeFortesFr := TACBrNFeDANFCeFortesFr.Create(Self);
