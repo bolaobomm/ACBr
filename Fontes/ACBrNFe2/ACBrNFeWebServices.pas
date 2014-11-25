@@ -1554,7 +1554,8 @@ begin
       begin
         if pos(chNFe, TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].NFe.infNFe.ID) > 0  then
         begin
-          if TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.signature.DigestValue <> FNFeRetornoSincrono.protNFe.digVal then
+          if (TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.signature.DigestValue <> FNFeRetornoSincrono.protNFe.digVal) and
+             (FNFeRetornoSincrono.protNFe.digVal <> '') then
            begin
              raise EACBrNFeException.Create('DigestValue do documento '+
                                              OnlyNumber(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.infNFe.ID)+
@@ -1755,7 +1756,8 @@ begin
     begin
       if pos(AInfProt.Items[I].chNFe, FNotasFiscais.Items[J].NFe.InfNFe.Id) > 0 then
       begin
-        if FNotasFiscais.Items[i].NFe.signature.DigestValue <> AInfProt.Items[I].digVal then
+        if (FNotasFiscais.Items[i].NFe.signature.DigestValue <> AInfProt.Items[I].digVal) and
+           (AInfProt.Items[I].digVal <> '') then
          begin
            raise EACBrNFeException.Create('DigestValue do documento '+
                                            OnlyNumber(FNotasFiscais.Items[i].NFe.infNFe.ID)+
@@ -2318,7 +2320,8 @@ begin
         TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].Confirmada := (NFeRetorno.cStat in [100, 150]);
         if Atualiza then
         begin
-          if TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.signature.DigestValue <> NFeRetorno.protNFe.digVal then
+          if (TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.signature.DigestValue <> NFeRetorno.protNFe.digVal) and
+             (NFeRetorno.protNFe.digVal <> '') then
            begin
              raise EACBrNFeException.Create('DigestValue do documento '+
                                              OnlyNumber(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.infNFe.ID)+
