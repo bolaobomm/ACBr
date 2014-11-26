@@ -80,7 +80,8 @@ uses
  StrUtils, Dialogs,
  ACBrUtil, ACBrNFe, ACBrNFeUtil,
  ACBrNFeDANFeQRRetrato, ACBrNFeDANFeQRPaisagem, ACBrNFeDANFeQRSimplificado,
- ACBrNFeDANFeQRNFCe, ACBrNFeDAEventoQRRetrato, ACBrNFeDAInutQRRetrato;
+ ACBrNFeDANFeQRNFCe, ACBrNFeDANFeQRNFCeA4, ACBrNFeDAEventoQRRetrato,
+ ACBrNFeDAInutQRRetrato;
 
 var
  frmNFeDAEventoQR : TfrmNFeDAEventoQR;
@@ -103,21 +104,12 @@ var
   sProt : String;
 begin
   case TipoDANFe of
-    tiRetrato:      begin
-                     fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
-                    end;
-    tiPaisagem:     begin
-                     fqrDANFeQRRetrato := TfqrDANFeQRPaisagem.Create(Self);
-                    end;
-    tiSimplificado: begin
-                     fqrDANFeQRRetrato := TfqrDANFeQRSimplificado.Create(Self);
-                    end;
-    tiNFCe:         begin
-                     fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
-                    end;
-    else            begin // tiRetrato
-                     fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
-                    end;
+    tiRetrato:      fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
+    tiPaisagem:     fqrDANFeQRRetrato := TfqrDANFeQRPaisagem.Create(Self);
+    tiSimplificado: fqrDANFeQRRetrato := TfqrDANFeQRSimplificado.Create(Self);
+    tiNFCe:         fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
+    tiNFCeA4:       fqrDANFeQRRetrato := TfqrDANFeQRNFCeA4.Create(Self);
+    else            fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self); // tiRetrato
   end;
 
 //  fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
@@ -138,7 +130,8 @@ begin
                                    ExpandirLogoMarca, NFeCancelada,
                                    LocalImpCanhoto, ImprimeItens, ViaConsumidor,
                                    vTroco, ImprimirDescPorc,
-                                   ImprimirDetalhamentoEspecifico);
+                                   ImprimirDetalhamentoEspecifico,
+                                   ImprimirTotalLiquido);
       end;
    end
   else
@@ -150,7 +143,8 @@ begin
                                 Impressora, ExibirResumoCanhoto_Texto,
                                 ExpandirLogoMarca, NFeCancelada, LocalImpCanhoto,
                                 ImprimeItens, ViaConsumidor, vTroco,
-                                ImprimirDescPorc, ImprimirDetalhamentoEspecifico);
+                                ImprimirDescPorc, ImprimirDetalhamentoEspecifico,
+                                ImprimirTotalLiquido);
 
   fqrDANFeQRRetrato.Free;
 end;
@@ -163,21 +157,12 @@ var
   sProt : String;
 begin
   case TipoDANFe of
-    tiRetrato:      begin
-                     fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
-                    end;
-    tiPaisagem:     begin
-                     fqrDANFeQRRetrato := TfqrDANFeQRPaisagem.Create(Self);
-                    end;
-    tiSimplificado: begin
-                     fqrDANFeQRRetrato := TfqrDANFeQRSimplificado.Create(Self);
-                    end;
-    tiNFCe:         begin
-                     fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
-                    end;
-    else            begin // tiRetrato
-                     fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
-                    end;
+    tiRetrato:      fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
+    tiPaisagem:     fqrDANFeQRRetrato := TfqrDANFeQRPaisagem.Create(Self);
+    tiSimplificado: fqrDANFeQRRetrato := TfqrDANFeQRSimplificado.Create(Self);
+    tiNFCe:         fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
+    tiNFCeA4:       fqrDANFeQRRetrato := TfqrDANFeQRNFCeA4.Create(Self);
+    else            fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self); // tiRetrato
   end;
 
 //  fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
@@ -199,7 +184,8 @@ begin
                                   CasasDecimais._vUnCom, ExibirResumoCanhoto_Texto,
                                   ExpandirLogoMarca, NFeCancelada, LocalImpCanhoto,
                                   ImprimeItens, ViaConsumidor, vTroco,
-                                  ImprimirDescPorc, ImprimirDetalhamentoEspecifico);
+                                  ImprimirDescPorc, ImprimirDetalhamentoEspecifico,
+                                  ImprimirTotalLiquido);
       end;
    end
    else
@@ -214,7 +200,8 @@ begin
                                CasasDecimais._vUnCom, ExibirResumoCanhoto_Texto,
                                ExpandirLogoMarca, NFeCancelada, LocalImpCanhoto,
                                ImprimeItens, ViaConsumidor, vTroco,
-                               ImprimirDescPorc, ImprimirDetalhamentoEspecifico);
+                               ImprimirDescPorc, ImprimirDetalhamentoEspecifico,
+                               ImprimirTotalLiquido);
    end;
 
   fqrDANFeQRRetrato.Free;

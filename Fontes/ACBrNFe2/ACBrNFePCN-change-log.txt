@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/11/2014
+[*] Utilizacao da propriedade ImprimirTotalLiquido nos DANFEs (Quick Report).
+    Por: fpasqueto
+[+] Implementado o DANFE NFC-e (Quick Report) tamanho A4.
+    Criado o valor tiNFCeA4 para que o DANFE A4 seja impresso em vez de bobina.
+    Por: Italo Jurisato Junior
 [*] Na impressão do Evento (Quick Report) será checado o modelo, caso seja 55
     será impresso NF-e caso contrario NFC-e.
     Por: Italo Jurisato Junior

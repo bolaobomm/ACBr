@@ -116,7 +116,8 @@ type
 
   TpcnIndicadorPagamento = (ipVista, ipPrazo, ipOutras);
   TpcnTipoNFe = (tnEntrada, tnSaida);
-  TpcnTipoImpressao = (tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado, tiNFCe, tiMsgEletronica);
+  TpcnTipoImpressao = (tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado,
+                       tiNFCe, tiMsgEletronica, tiNFCeA4);
   TpcnPercentualTributos = (ptValorProdutos, ptValorNF, ptPersonalizado);
 
   TpcnTipoEmissao = (teNormal, teContingencia, teSCAN, teDPEC, teFSDA, teSVCAN, teSVCRS, teSVCSP, teOffLine);
@@ -675,14 +676,16 @@ end;
 // B21 - Formato de Impressão do DANFE *****************************************
 function TpImpToStr(const t: TpcnTipoImpressao): string;
 begin
-  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5'],
-                              [tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado, tiNFCe, tiMsgEletronica]);
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5', '4'],
+                              [tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado,
+                               tiNFCe, tiMsgEletronica, tiNFCeA4]);
 end;
 
 function StrToTpImp(var ok: boolean; const s: string): TpcnTipoImpressao;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5'],
-                                  [tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado, tiNFCe, tiMsgEletronica]);
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5', '4'],
+                                  [tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado,
+                                   tiNFCe, tiMsgEletronica, tiNFCeA4]);
 end;
 
 function PercTribToStr(const t: TpcnPercentualTributos): string;

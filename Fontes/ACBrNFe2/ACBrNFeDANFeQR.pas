@@ -103,6 +103,7 @@ type
     FLocalImpCanhoto    : Integer;
     FImprimirDescPorc    : Boolean; //incluido por Fernando pasqueto 11/07/2014
     FImprimirDetalhamentoEspecifico : Boolean; //incluido por Fernando pasqueto 15/07/2014
+    FImprimirTotalLiquido: Boolean; //incluido Fernando Pasqueto 29/10/2014
     // Incluido por Italo em 27/03/2014
     // Destinado exclusivamente ao DANFE da NFC-e
     FImprimeItens: Boolean;
@@ -144,7 +145,8 @@ type
                              AViaConsumidor       : Boolean  = True;
                              AvTroco              : Currency = 0.0;
                              AImprimirDescPorc    : Boolean  = False;
-                             AImprimirDetalhamentoEspecifico : Boolean  = False);
+                             AImprimirDetalhamentoEspecifico : Boolean  = False;
+                             AImprimirTotalLiquido: Boolean = False);
 
     class procedure SavePDF(AFile                : String;
                             ANFe                 : TNFe;
@@ -171,7 +173,8 @@ type
                             AViaConsumidor       : Boolean  = True;
                             AvTroco              : Currency = 0.0;
                             AImprimirDescPorc    : Boolean  = False;
-                            AImprimirDetalhamentoEspecifico : Boolean  = False);
+                            AImprimirDetalhamentoEspecifico : Boolean  = False;
+                            AImprimirTotalLiquido: Boolean = False);
   end;
 
 implementation
@@ -210,7 +213,8 @@ class procedure TfqrDANFeQR.Imprimir(ANFe                 : TNFe;
                                      AViaConsumidor       : Boolean  = True;
                                      AvTroco              : Currency = 0.0;
                                      AImprimirDescPorc    : Boolean  = False;
-                                     AImprimirDetalhamentoEspecifico : Boolean  = False);
+                                     AImprimirDetalhamentoEspecifico : Boolean  = False;
+                                     AImprimirTotalLiquido: Boolean = False);
 begin
   with Create ( nil ) do
      try
@@ -240,6 +244,7 @@ begin
         FvTroco              := AvTroco;
         FImprimirDescPorc    := AImprimirDescPorc;
         FImprimirDetalhamentoEspecifico := AImprimirDetalhamentoEspecifico;
+        FImprimirTotalLiquido:= AImprimirTotalLiquido;
 
         Printer := TPrinter.Create;
 
@@ -308,7 +313,8 @@ class procedure TfqrDANFeQR.SavePDF(AFile                : String;
                                     AViaConsumidor       : Boolean  = True;
                                     AvTroco              : Currency = 0.0;
                                     AImprimirDescPorc    : Boolean  = False;
-                                    AImprimirDetalhamentoEspecifico : Boolean  = False);
+                                    AImprimirDetalhamentoEspecifico : Boolean  = False;
+                                    AImprimirTotalLiquido: Boolean = False);
 {$IFDEF QReport_PDF}
 var
   qf : TQRPDFDocumentFilter;
@@ -343,6 +349,7 @@ begin
         FvTroco              := AvTroco;
         FImprimirDescPorc    := AImprimirDescPorc;
         FImprimirDetalhamentoEspecifico := AImprimirDetalhamentoEspecifico;
+        FImprimirTotalLiquido:= AImprimirTotalLiquido;
         
         for i := 0 to ComponentCount -1 do
           begin

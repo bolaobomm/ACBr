@@ -238,6 +238,7 @@ begin
   FTamanhoFonte_DemaisCampos := 10;
   FProdutosPorPagina := 0;
   FImprimirDetalhamentoEspecifico := true;
+  FImprimirTotalLiquido:= True;
   FNFeCancelada := False;
   FLocalImpCanhoto := 0;
   FCasasDecimais := TCasasDecimais.Create(self);

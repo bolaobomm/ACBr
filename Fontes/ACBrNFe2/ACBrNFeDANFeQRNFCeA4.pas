@@ -44,7 +44,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrNFeDANFeQRNFCe;
+unit ACBrNFeDANFeQRNFCeA4;
 
 interface
 
@@ -60,7 +60,7 @@ uses
 
 type
 
-  TfqrDANFeQRNFCe = class(TfqrDANFeQR)
+  TfqrDANFeQRNFCeA4 = class(TfqrDANFeQR)
     cdsItens: TClientDataSet;
     cdsItensCODIGO: TStringField;
     cdsItensDESCRICAO: TStringField;
@@ -82,7 +82,6 @@ type
     qrb04_Totais: TQRBand;
     qrb07_Consumidor: TQRChildBand;
     QRLabel17: TQRLabel;
-    qrlURLSefaz: TQRLabel;
     QRLabel19: TQRLabel;
     QRLabel142: TQRLabel;
     QRLabel143: TQRLabel;
@@ -181,7 +180,7 @@ var
    FProtocoloNFE: String;
    nItemControle: Integer;
 
-procedure TfqrDANFeQRNFCe.QRNFeBeforePrint(Sender: TCustomQuickRep;
+procedure TfqrDANFeQRNFCeA4.QRNFeBeforePrint(Sender: TCustomQuickRep;
   var PrintReport: Boolean);
 var
  nRestItens: Integer;
@@ -217,7 +216,7 @@ begin
   QRNFe.Page.RightMargin  := FMargemDireita  * 100;
 end;
 
-procedure TfqrDANFeQRNFCe.qrmProdutoDescricaoPrint(sender: TObject;
+procedure TfqrDANFeQRNFCeA4.qrmProdutoDescricaoPrint(sender: TObject;
   var Value: string);
 var
  intTamanhoDescricao,
@@ -255,7 +254,7 @@ begin
    then Value := Value + #13 + 'InfAd: ' + cdsItensINFADIPROD.AsString;
 end;
 
-procedure TfqrDANFeQRNFCe.Itens;
+procedure TfqrDANFeQRNFCeA4.Itens;
 var
  nItem: Integer;
  sCST, sBCICMS, sALIQICMS, sVALORICMS, sALIQIPI, sVALORIPI: String;
@@ -439,12 +438,12 @@ begin
   cdsItens.First;
 end;
 
-procedure TfqrDANFeQRNFCe.ProtocoloNFE( const sProtocolo : String );
+procedure TfqrDANFeQRNFCeA4.ProtocoloNFE( const sProtocolo : String );
 begin
   FProtocoloNFE := sProtocolo;
 end;
 
-procedure TfqrDANFeQRNFCe.qrb01_EmitenteBeforePrint(Sender: TQRCustomBand;
+procedure TfqrDANFeQRNFCeA4.qrb01_EmitenteBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 begin
   inherited;
@@ -484,7 +483,7 @@ begin
    end;
 end;
 
-procedure TfqrDANFeQRNFCe.qrb02_DadosFixosDanfeBeforePrint(Sender: TQRCustomBand;
+procedure TfqrDANFeQRNFCeA4.qrb02_DadosFixosDanfeBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 var
  strChaveContingencia: String;
@@ -496,7 +495,7 @@ begin
   FTotalPages := HrTotalPages;
 end;
 
-procedure TfqrDANFeQRNFCe.qrb03a_Cab_ItensBeforePrint(
+procedure TfqrDANFeQRNFCeA4.qrb03a_Cab_ItensBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
@@ -505,7 +504,7 @@ begin
 
 end;
 
-procedure TfqrDANFeQRNFCe.qrb03b_Desc_ItensBeforePrint(Sender: TQRCustomBand;
+procedure TfqrDANFeQRNFCeA4.qrb03b_Desc_ItensBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 begin
   inherited;
@@ -526,7 +525,7 @@ begin
 //     nItemControle := 0;
 end;
 
-procedure TfqrDANFeQRNFCe.qrb03c_Lin_ItensBeforePrint(
+procedure TfqrDANFeQRNFCeA4.qrb03c_Lin_ItensBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
@@ -534,7 +533,7 @@ begin
 //  qrb03c_Lin_Itens.Enabled := FImprimeItens;
 end;
 
-procedure TfqrDANFeQRNFCe.qrb04_TotaisBeforePrint(Sender: TQRCustomBand;
+procedure TfqrDANFeQRNFCeA4.qrb04_TotaisBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 var
  i: Integer;
@@ -592,7 +591,7 @@ begin
    end;
 end;
 
-procedure TfqrDANFeQRNFCe.qrb05_TributosBeforePrint(Sender: TQRCustomBand;
+procedure TfqrDANFeQRNFCeA4.qrb05_TributosBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 var
  Perc: Double;
@@ -606,7 +605,7 @@ begin
                          '(' + DFeUtil.FormatFloat(Perc) + '%)(Fonte: IBPT)';
 end;
 
-procedure TfqrDANFeQRNFCe.qrb05a_InfComplementarBeforePrint(
+procedure TfqrDANFeQRNFCeA4.qrb05a_InfComplementarBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
@@ -616,7 +615,7 @@ begin
   qrmInfComp.Lines.Add(FNFE.InfAdic.infCpl);
 end;
 
-procedure TfqrDANFeQRNFCe.qrb06_ChaveBeforePrint(Sender: TQRCustomBand;
+procedure TfqrDANFeQRNFCeA4.qrb06_ChaveBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 begin
   inherited;
@@ -659,7 +658,7 @@ begin
   qrlChave.Caption := NotaUtil.FormatarChaveAcesso(Copy(FNFe.InfNFe.Id, 4, 44));
 end;
 
-procedure TfqrDANFeQRNFCe.qrb07_ConsumidorBeforePrint(Sender: TQRCustomBand;
+procedure TfqrDANFeQRNFCeA4.qrb07_ConsumidorBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 begin
   inherited;
@@ -681,7 +680,7 @@ begin
              else qrlDestCNPJ.lines.Add('CONSUMIDOR NÃO IDENTIFICADO');
 end;
 
-procedure TfqrDANFeQRNFCe.qrb08_QRCodeBeforePrint(Sender: TQRCustomBand;
+procedure TfqrDANFeQRNFCeA4.qrb08_QRCodeBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 var
  QRCodeBitmap: TBitmap;

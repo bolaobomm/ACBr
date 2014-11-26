@@ -92,7 +92,7 @@
 
 unit ACBrNFeDANFeQRRetrato;
 
-interface
+interface                    
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
@@ -1006,7 +1006,12 @@ begin
           else cdsItens.FieldByName('VALORDESC').AsString := FormatFloat('###,###,###,##0.00', vDesc);
 
           cdsItens.FieldByName('UNIDADE').AsString := UCom;
-          cdsItens.FieldByName('TOTAL').AsString := FormatFloat('###,###,###,##0.00', vProd);
+          //Fernando Pasqueto para imprimir total liquido
+          if (FImprimirTotalLiquido) and (vDesc > 0) then
+            begin
+            cdsItens.FieldByName('TOTAL').AsString := FormatFloat('###,###,###,##0.00', vProd - vDesc);
+            end
+          else cdsItens.FieldByName('TOTAL').AsString := FormatFloat('###,###,###,##0.00', vProd);
 
           //==============================================================================
           // Em contato com o pessoal da Receita Estadual, foi informado que Ambos os regimes
