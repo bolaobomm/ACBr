@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/11/2014
+[*] Na function TratarRespostaFinal, dentro do for J o if que compara o conteudo
+    da propriedade DigestValue com digVal estava utilizando indice [i] em vez de [J]
+    ao ler o conteudo de DigestValue.
+    Foi feita a correção e mais algumas melhorias.
+    Por: Italo Jurisato Junior
+
 25/11/2014
 [*] A bando com o valor aproximado dos tributos só será gerada no DANFE NFC-e 
     (Quick Report) caso o valor de vTotTrib <> 0.
