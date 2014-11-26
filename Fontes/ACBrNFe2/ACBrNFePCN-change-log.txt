@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/11/2014
+[*] Na impressão do Evento (Quick Report) será checado o modelo, caso seja 55
+    será impresso NF-e caso contrario NFC-e.
+    Por: Italo Jurisato Junior
 [*] Na function TratarRespostaFinal, dentro do for J o if que compara o conteudo
     da propriedade DigestValue com digVal estava utilizando indice [i] em vez de [J]
     ao ler o conteudo de DigestValue.

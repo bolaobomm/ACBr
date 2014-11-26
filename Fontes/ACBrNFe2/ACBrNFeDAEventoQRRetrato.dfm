@@ -1714,7 +1714,7 @@ inherited frmNFeDAEventoQRRetrato: TfrmNFeDAEventoQRRetrato
           23.812500000000000000
           10.583333333333330000
           222.250000000000000000
-          97.895833333333320000)
+          97.895833333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -2329,7 +2329,7 @@ inherited frmNFeDAEventoQRRetrato: TfrmNFeDAEventoQRRetrato
           23.812500000000000000
           10.583333333333330000
           222.250000000000000000
-          97.895833333333320000)
+          97.895833333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -2395,7 +2395,7 @@ inherited frmNFeDAEventoQRRetrato: TfrmNFeDAEventoQRRetrato
           23.812500000000000000
           1608.666666666667000000
           50.270833333333330000
-          97.895833333333320000)
+          97.895833333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -3193,7 +3193,7 @@ inherited frmNFeDAEventoQRRetrato: TfrmNFeDAEventoQRRetrato
         Shape = qrsRectangle
         VertAdjust = 0
       end
-      object QRLabel65: TQRLabel
+      object lblModelo: TQRLabel
         Left = 6
         Top = 2
         Width = 186

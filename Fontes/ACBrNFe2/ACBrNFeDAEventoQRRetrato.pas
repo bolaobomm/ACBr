@@ -115,7 +115,7 @@ type
     qrsLinhaH06: TQRShape;
     qrsLinhaH07: TQRShape;
     QRShape10: TQRShape;
-    QRLabel65: TQRLabel;
+    lblModelo: TQRLabel;
     QRShape2: TQRShape;
     qrb_07_Correcao: TQRChildBand;
     QRShape46: TQRShape;
@@ -284,6 +284,11 @@ begin
    then begin
     PrintBand := True;
 
+    if FNFe.Ide.modelo = 55 then
+      lblModelo.Caption := 'NOTA FISCAL ELETRÔNICA - NF-e'
+    else
+      lblModelo.Caption := 'NOTA FISCAL AO CONSUMIDOR ELETRÔNICA - NFC-e';
+
     qrlModelo.Caption  := IntToStr(FNFe.ide.modelo);
     qrlSerie.Caption   := IntToStr(FNFe.ide.serie);
     qrlNumNFe.Caption  := FormatFloat( '000,000,000', FNFe.Ide.nNF );
@@ -407,8 +412,11 @@ begin
    teCancelamento: begin
            lblTitulo_06.Caption := 'DESCRIÇÃO';
            qrmCondicoes.Lines.Clear;
-           qrmCondicoes.Lines.Add('Protocolo da NFe Cancelada: ' + FEventoNFe.InfEvento.detEvento.nProt);
-           qrmCondicoes.Lines.Add('Motivo do Cancelamento    : ' + FEventoNFe.InfEvento.detEvento.xJust);
+           if FNFe.Ide.modelo = 55 then
+             qrmCondicoes.Lines.Add('Protocolo da NF-e Cancelada: ' + FEventoNFe.InfEvento.detEvento.nProt)
+           else
+             qrmCondicoes.Lines.Add('Protocolo da NFCe Cancelada: ' + FEventoNFe.InfEvento.detEvento.nProt);
+           qrmCondicoes.Lines.Add('Motivo do Cancelamento     : ' + FEventoNFe.InfEvento.detEvento.xJust);
           end;
    teEPECNFe: begin
            lblTitulo_06.Caption := 'DESCRIÇÃO';
