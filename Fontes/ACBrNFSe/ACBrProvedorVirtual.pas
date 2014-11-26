@@ -146,7 +146,7 @@ begin
  	 ConfigURL.ProConsultaSitLoteRPS := '';
  	 ConfigURL.ProConsultaNFSe       := '';
  	 ConfigURL.ProCancelaNFSe        := 'http://financas2.barradogarcas.mt.gov.br:8080/SCEM/servlet/anfse_barradogarcas?wsdl';
-   ConfigURL.ProGerarNFSe          := 'http://financas2.barradogarcas.mt.gov.br:8080/SCEM/servlet/agerarnfse_barradogarcas?wsdl';
+   ConfigURL.ProGerarNFSe          := 'http://financas2.barradogarcas.mt.gov.br:8080/SCEM/servlet/agerarnfse_barradogarcas'; //?wsdl';
  	 ConfigURL.ProRecepcaoSincrono   := '';
 
   	Result := ConfigURL;
@@ -278,18 +278,19 @@ function TProvedorVirtual.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
 begin
  DadosMsg := SeparaDados( DadosMsg, 'GerarNfseEnvio' );
  result := '<?xml version="1.0" encoding="utf-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
+           '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                              'xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" ' +
+                              'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                              'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<SOAP-ENV:Body>' +
              '<gerarnfse_barradogarcas.Execute>' +
               '<Entrada xmlns="http://www.abrasf.org.br/nfse.xsd">' +
                 DadosMsg +
 //                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</Entrada>' +
              '</gerarnfse_barradogarcas.Execute>' +
-            '</S:Body>' +
-           '</S:Envelope>';
+            '</SOAP-ENV:Body>' +
+           '</SOAP-ENV:Envelope>';
 end;
 
 function TProvedorVirtual.GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg,
@@ -322,8 +323,8 @@ begin
    acConsLote:    Result := RetornoWS;
    acConsNFSeRps: Result := RetornoWS;
    acConsNFSe:    Result := RetornoWS;
-   acCancelar:    Result := SeparaDados( RetornoWS, 'nfse_barradogarcas.CANCELARNFSEResponse' );
-   acGerar:       Result := SeparaDados( RetornoWS, 'Saida' );
+   acCancelar:    Result := RetornoWS; // SeparaDados( RetornoWS, 'nfse_barradogarcas.CANCELARNFSEResponse' );
+   acGerar:       Result := RetornoWS; // SeparaDados( RetornoWS, 'Saida' );
    acRecSincrono: Result := RetornoWS;
  end;
 end;

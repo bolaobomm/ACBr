@@ -170,6 +170,23 @@ begin
             ConfigURL.ProConsultaNFSe       := 'https://nfse.pjf.mg.gov.br/bhiss-ws/nfse';
             ConfigURL.ProCancelaNFSe        := 'https://nfse.pjf.mg.gov.br/bhiss-ws/nfse';
            end;
+  4314902: begin // Porto Alegre/RS
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'https://nfse-hom.procempa.com.br/bhiss-ws/nfse';
+            ConfigURL.HomConsultaLoteRPS    := 'https://nfse-hom.procempa.com.br/bhiss-ws/nfse';
+            ConfigURL.HomConsultaNFSeRPS    := 'https://nfse-hom.procempa.com.br/bhiss-ws/nfse';
+            ConfigURL.HomConsultaSitLoteRPS := 'https://nfse-hom.procempa.com.br/bhiss-ws/nfse';
+            ConfigURL.HomConsultaNFSe       := 'https://nfse-hom.procempa.com.br/bhiss-ws/nfse';
+            ConfigURL.HomCancelaNFSe        := 'https://nfse-hom.procempa.com.br/bhiss-ws/nfse';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'https://nfe.portoalegre.rs.gov.br/bhiss-ws/nfse';
+            ConfigURL.ProConsultaLoteRPS    := 'https://nfe.portoalegre.rs.gov.br/bhiss-ws/nfse';
+            ConfigURL.ProConsultaNFSeRPS    := 'https://nfe.portoalegre.rs.gov.br/bhiss-ws/nfse';
+            ConfigURL.ProConsultaSitLoteRPS := 'https://nfe.portoalegre.rs.gov.br/bhiss-ws/nfse';
+            ConfigURL.ProConsultaNFSe       := 'https://nfe.portoalegre.rs.gov.br/bhiss-ws/nfse';
+            ConfigURL.ProCancelaNFSe        := 'https://nfe.portoalegre.rs.gov.br/bhiss-ws/nfse';
+           end;
  end;
 
  Result := ConfigURL;

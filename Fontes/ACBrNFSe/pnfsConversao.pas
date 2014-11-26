@@ -828,7 +828,8 @@ begin
 //         : Provedor := 'Betim';
 
   3106200, // Belo Horizonte/MG
-  3136702  // Juiz de Fora/MG
+  3136702, // Juiz de Fora/MG
+  4314902  // Porto Alegre/RS
          : Provedor := 'BHISS';
 
   5102637, // Campo Novo do Parecis/MT
