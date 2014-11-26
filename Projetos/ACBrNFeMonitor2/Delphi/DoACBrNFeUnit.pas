@@ -188,6 +188,7 @@ begin
 
         else if Cmd.Metodo = 'cancelarnfe' then
          begin
+           ACBrNFe1.NotasFiscais.Clear;
            if not ValidarChave('NFe'+Cmd.Params(0)) then
               raise Exception.Create('Chave '+Cmd.Params(0)+' inválida.')
            else
@@ -196,74 +197,48 @@ begin
            if not ACBrNFe1.WebServices.Consulta.Executar then
               raise Exception.Create(ACBrNFe1.WebServices.Consulta.Msg);
 
-           if rgTipoCancelamento.ItemIndex = 0 then
+           ACBrNFe1.EventoNFe.Evento.Clear;
+           with ACBrNFe1.EventoNFe.Evento.Add do
             begin
-              ACBrNFe1.EventoNFe.Evento.Clear;
-              with ACBrNFe1.EventoNFe.Evento.Add do
+              infEvento.CNPJ   := Cmd.Params(2);
+              if Trim(infEvento.CNPJ) = '' then
+                 infEvento.CNPJ   := copy(DFeUtil.LimpaNumero(ACBrNFe1.WebServices.Consulta.NFeChave),7,14)
+              else
                begin
-                 infEvento.CNPJ   := Cmd.Params(2);
-                 if Trim(infEvento.CNPJ) = '' then
-                    infEvento.CNPJ   := copy(DFeUtil.LimpaNumero(ACBrNFe1.WebServices.Consulta.NFeChave),7,14)
-                 else
-                  begin
-                    if not ValidarCNPJ(Cmd.Params(2)) then
-                      raise Exception.Create('CNPJ '+Cmd.Params(2)+' inválido.')
-                  end;
-
-                 infEvento.cOrgao := StrToIntDef(copy(DFeUtil.LimpaNumero(ACBrNFe1.WebServices.Consulta.NFeChave),1,2),0);
-                 infEvento.dhEvento := now;
-                 infEvento.tpEvento := teCancelamento;
-                 infEvento.chNFe := ACBrNFe1.WebServices.Consulta.NFeChave;
-                 infEvento.detEvento.nProt := ACBrNFe1.WebServices.Consulta.Protocolo;
-                 infEvento.detEvento.xJust := Cmd.Params(1);
+                 if not ValidarCNPJ(Cmd.Params(2)) then
+                   raise Exception.Create('CNPJ '+Cmd.Params(2)+' inválido.')
                end;
-              try
-                 ACBrNFe1.EnviarEventoNFe(StrToIntDef(Cmd.Params(3),1));
 
-                 Cmd.Resposta := ACBrNFe1.WebServices.EnvEvento.EventoRetorno.xMotivo+sLineBreak+
-                                 '[CANCELAMENTO]'+sLineBreak+
-                                 'Versao='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.verAplic+sLineBreak+
-                                 'TpAmb='+TpAmbToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.TpAmb)+sLineBreak+
-                                 'VerAplic='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.VerAplic+sLineBreak+
-                                 'CStat='+IntToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat)+sLineBreak+
-                                 'XMotivo='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.XMotivo+sLineBreak+
-                                 'CUF='+IntToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cOrgao)+sLineBreak+
-                                 'ChNFe='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.chNFe+sLineBreak+
-                                 'DhRecbto='+DateTimeToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento)+sLineBreak+
-                                 'NProt='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt+sLineBreak+
-                                 'tpEvento='+TpEventoToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.tpEvento)+sLineBreak+
-                                 'xEvento='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.xEvento+sLineBreak+
-                                 'nSeqEvento='+IntToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nSeqEvento)+sLineBreak+
-                                 'CNPJDest='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.CNPJDest+sLineBreak+
-                                 'emailDest='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.emailDest+sLineBreak+
-                                 'XML='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.XML+sLineBreak;
-              except
-                 raise Exception.Create(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.xMotivo);
-              end;
-            end
-        {   else
-            begin
-              ACBrNFe1.WebServices.Cancelamento.NFeChave      := ACBrNFe1.WebServices.Consulta.NFeChave;
-              ACBrNFe1.WebServices.Cancelamento.Protocolo     := ACBrNFe1.WebServices.Consulta.Protocolo;
-              ACBrNFe1.WebServices.Cancelamento.Justificativa := Cmd.Params(1);
-              try
-                 ACBrNFe1.WebServices.Cancelamento.Executar;
+              infEvento.cOrgao := StrToIntDef(copy(DFeUtil.LimpaNumero(ACBrNFe1.WebServices.Consulta.NFeChave),1,2),0);
+              infEvento.dhEvento := now;
+              infEvento.tpEvento := teCancelamento;
+              infEvento.chNFe := ACBrNFe1.WebServices.Consulta.NFeChave;
+              infEvento.detEvento.nProt := ACBrNFe1.WebServices.Consulta.Protocolo;
+              infEvento.detEvento.xJust := Cmd.Params(1);
+            end;
+           try
+              ACBrNFe1.EnviarEventoNFe(StrToIntDef(Cmd.Params(3),1));
 
-                 Cmd.Resposta := ACBrNFe1.WebServices.Cancelamento.Msg+sLineBreak+
-                                 '[CANCELAMENTO]'+sLineBreak+
-                                 'Versao='+ACBrNFe1.WebServices.Cancelamento.verAplic+sLineBreak+
-                                 'TpAmb='+TpAmbToStr(ACBrNFe1.WebServices.Cancelamento.TpAmb)+sLineBreak+
-                                 'VerAplic='+ACBrNFe1.WebServices.Cancelamento.VerAplic+sLineBreak+
-                                 'CStat='+IntToStr(ACBrNFe1.WebServices.Cancelamento.CStat)+sLineBreak+
-                                 'XMotivo='+ACBrNFe1.WebServices.Cancelamento.XMotivo+sLineBreak+
-                                 'CUF='+IntToStr(ACBrNFe1.WebServices.Cancelamento.CUF)+sLineBreak+
-                                 'ChNFe='+ACBrNFe1.WebServices.Cancelamento.NFeChave+sLineBreak+
-                                 'DhRecbto='+DateTimeToStr(ACBrNFe1.WebServices.Cancelamento.DhRecbto)+sLineBreak+
-                                 'NProt='+ACBrNFe1.WebServices.Cancelamento.Protocolo+sLineBreak;
-              except
-                 raise Exception.Create(ACBrNFe1.WebServices.Cancelamento.Msg);
-              end;
-            end; }
+              Cmd.Resposta := ACBrNFe1.WebServices.EnvEvento.EventoRetorno.xMotivo+sLineBreak+
+                              '[CANCELAMENTO]'+sLineBreak+
+                              'Versao='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.verAplic+sLineBreak+
+                              'TpAmb='+TpAmbToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.TpAmb)+sLineBreak+
+                              'VerAplic='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.VerAplic+sLineBreak+
+                              'CStat='+IntToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat)+sLineBreak+
+                              'XMotivo='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.XMotivo+sLineBreak+
+                              'CUF='+IntToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cOrgao)+sLineBreak+
+                              'ChNFe='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.chNFe+sLineBreak+
+                              'DhRecbto='+DateTimeToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento)+sLineBreak+
+                              'NProt='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt+sLineBreak+
+                              'tpEvento='+TpEventoToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.tpEvento)+sLineBreak+
+                              'xEvento='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.xEvento+sLineBreak+
+                              'nSeqEvento='+IntToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nSeqEvento)+sLineBreak+
+                              'CNPJDest='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.CNPJDest+sLineBreak+
+                              'emailDest='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.emailDest+sLineBreak+
+                              'XML='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.XML+sLineBreak;
+           except
+              raise Exception.Create(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.xMotivo);
+           end;
          end
         else if Cmd.Metodo = 'imprimirdanfe' then
          begin

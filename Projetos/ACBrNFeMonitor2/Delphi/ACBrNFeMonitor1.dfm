@@ -4133,7 +4133,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
       Top = 1
       Width = 569
       Height = 261
-      ActivePage = Diretorios
+      ActivePage = WebService
       Align = alClient
       Style = tsFlatButtons
       TabOrder = 0
@@ -4883,18 +4883,6 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 TabOrder = 1
                 OnKeyPress = edtNumCopiaKeyPress
               end
-            end
-            object rgTipoCancelamento: TRadioGroup
-              Left = 300
-              Top = 161
-              Width = 250
-              Height = 38
-              Caption = 'Tipo de Cancelamento'
-              Columns = 2
-              Items.Strings = (
-                'Por Evento'
-                'Anterior')
-              TabOrder = 4
             end
           end
           object tsWSNFCe: TTabSheet

@@ -274,7 +274,6 @@ type
     edtTentativas: TEdit;
     edtIntervalo: TEdit;
     edtAguardar: TEdit;
-    rgTipoCancelamento: TRadioGroup;
     TabSheet1: TTabSheet;
     rgModeloDANFeNFCE: TRadioGroup;
     ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
@@ -854,8 +853,6 @@ begin
      ACBrMDFe1.Configuracoes.WebServices.UF         := cbUF.Text;
      ACBrMDFe1.Configuracoes.WebServices.Ambiente   := StrToTpAmb(Ok,IntToStr(rgTipoAmb.ItemIndex+1));
 
-     rgTipoCancelamento.ItemIndex := Ini.ReadInteger( 'WebService','TipoCancelamento',0) ;
-
      edtIdToken.Text := Ini.ReadString( 'NFCe', 'IdToken', '') ;     
      edtToken.Text := Ini.ReadString( 'NFCe', 'Token', '') ;
 
@@ -1114,7 +1111,6 @@ begin
      Ini.WriteString( 'WebService','Aguardar'   ,edtAguardar.Text) ;
      Ini.WriteString( 'WebService','Tentativas' ,edtTentativas.Text) ;
      Ini.WriteString( 'WebService','Intervalo'  ,edtIntervalo.Text) ;
-     Ini.WriteInteger('WebService','TipoCancelamento',rgTipoCancelamento.ItemIndex) ;
 
      Ini.WriteString( 'Proxy','Host'   ,edtProxyHost.Text) ;
      Ini.WriteString( 'Proxy','Porta'  ,edtProxyPorta.Text) ;
@@ -1743,31 +1739,22 @@ begin
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
     idLote := '1';
-    if rgTipoCancelamento.ItemIndex = 0 then
-       if not(InputQuery('WebServices Eventos: Cancelamento', 'Identificador de controle do Lote de envio do Evento', idLote)) then
-          exit;
+    if not(InputQuery('WebServices Eventos: Cancelamento', 'Identificador de controle do Lote de envio do Evento', idLote)) then
+       exit;
 
     if not(InputQuery('WebServices Cancelamento', 'Justificativa', vAux)) then
        exit;
 
-     if rgTipoCancelamento.ItemIndex = 0 then
+     ACBrNFe1.EventoNFe.Evento.Clear;
+     ACBrNFe1.EventoNFe.idLote := StrToInt(idLote) ;
+     with ACBrNFe1.EventoNFe.Evento.Add do
       begin
-        ACBrNFe1.EventoNFe.Evento.Clear;
-        ACBrNFe1.EventoNFe.idLote := StrToInt(idLote) ;
-        with ACBrNFe1.EventoNFe.Evento.Add do
-         begin
-           infEvento.dhEvento := now;
-           infEvento.tpEvento := teCancelamento;
-           infEvento.detEvento.xJust := vAux;
-        end;
-        ACBrNFe1.EnviarEventoNFe(StrToInt(idLote));
-        ExibeResp(ACBrNFe1.WebServices.EnvEvento.RetWS);
-      end
-     else
-      begin
-        ACBrNFe1.Cancelamento(vAux);
-        ExibeResp(ACBrNFe1.WebServices.EnvEvento.RetWS);
-      end;
+        infEvento.dhEvento := now;
+        infEvento.tpEvento := teCancelamento;
+        infEvento.detEvento.xJust := vAux;
+     end;
+     ACBrNFe1.EnviarEventoNFe(StrToInt(idLote));
+     ExibeResp(ACBrNFe1.WebServices.EnvEvento.RetWS);
   end;
 end;
 
