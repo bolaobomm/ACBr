@@ -102,6 +102,7 @@ type
      class function TamanhoMenor(const AValue: String; const ATamanho: Integer): Boolean;
      class function FormatarCPF(AValue : String ): String;
      class function FormatarCNPJ(AValue : String ): String;
+     class function FormatarIE(AIE, AUF: String): String;
      class function FormatarCEP(AValue : String ): String;
      class function FormatarFone(AValue : String ): String;
      class function FormatarNumeroDocumentoFiscal(AValue : String ): String;
@@ -269,6 +270,73 @@ begin
        end;
     end;
   end;
+end;
+
+class function DFeUtil.FormatarIE(AIE, AUF: String): String;
+Var
+  Mascara : String ;
+  C : Char ;
+  I, J, LenDoc, LenMas : Integer;
+Begin
+  Result := AIE ;
+  if UpperCase( Trim(AIE) ) = 'ISENTO' then
+     exit ;
+
+  AUF := UpperCase( AUF ) ;
+
+  LenDoc  := Length( AIE ) ;
+  Mascara := StringOfChar('*', LenDoc) ;
+
+  IF AUF = 'AC' Then Mascara := '**.***.***/***-**';
+  IF AUF = 'AL' Then Mascara := '*********';
+  IF AUF = 'AP' Then Mascara := '*********';
+  IF AUF = 'AM' Then Mascara := '**.***.***-*';
+  IF AUF = 'BA' Then Mascara := '*******-**';
+  IF AUF = 'CE' Then Mascara := '********-*';
+  IF AUF = 'DF' Then Mascara := '***********-**';
+  IF AUF = 'ES' Then Mascara := '*********';
+  IF AUF = 'GO' Then Mascara := '**.***.***-*';
+  IF AUF = 'MA' Then Mascara := '*********';
+  IF AUF = 'MT' Then Mascara := '**********-*';
+  IF AUF = 'MS' Then Mascara := '**.***.***-*';
+  IF AUF = 'MG' Then Mascara := '***.***.***/****';
+  IF AUF = 'PA' Then Mascara := '**-******-*';
+  IF AUF = 'PB' Then Mascara := '********-*';
+  IF AUF = 'PR' Then Mascara := '***.*****-**';
+  IF AUF = 'PE' Then Mascara := IfThen((LenDoc>9),'**.*.***.*******-*','*******-**');
+  IF AUF = 'PI' Then Mascara := '*********';
+  IF AUF = 'RJ' Then Mascara := '**.***.**-*';
+  IF AUF = 'RN' Then Mascara := IfThen((LenDoc>9),'**.*.***.***-*','**.***.***-*');
+  IF AUF = 'RS' Then Mascara := '***/*******';
+  IF AUF = 'RO' Then Mascara := IfThen((LenDoc>13),'*************-*','***.*****-*');
+  IF AUF = 'RR' Then Mascara := '********-*';
+  IF AUF = 'SC' Then Mascara := '***.***.***';
+  IF AUF = 'SP' Then Mascara := ifthen((LenDoc>1) and (AIE[1]='P'),'*-********.*/***', '***.***.***.***');
+  IF AUF = 'SE' Then Mascara := '**.***.***-*';
+  IF AUF = 'TO' Then Mascara := IfThen((LenDoc=11),'**.**.******-*','**.***.***-*');
+
+  Result := '';
+  LenMas := Length( Mascara ) ;
+  J := LenMas ;
+
+  For I := LenMas downto 1 do
+  begin
+     C := Mascara[I] ;
+
+     if C = '*' then
+     begin
+        if J <= ( LenMas - LenDoc ) then
+           C := '0'
+        else
+           C := AIE[( J - ( LenMas - LenDoc ) )] ;
+
+        Dec( J ) ;
+     end;
+
+     Result := C + Result;
+  End;
+
+  Result := Trim( Result );
 end;
 
 class function DFeUtil.FormatarNumeroDocumentoFiscal(AValue: String): String;

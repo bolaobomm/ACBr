@@ -47,6 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+[*] -- ACBrNFeDANFeESCPOS -- por: Regys Silveira
+       - Identação da unit para o padrão correto.
+       - Acertos gerais no layout e textos para adequação a documentação de impressão do DANFC-e
+       - adicionada opção para impressão de via consumidor ou estabelecimento
+       - opção de impressão resumida ou não revisada
+       - adicionada opção para imprimir completo em 2 linhas ou somente 1 linha
+       - adicionada opção para impressão ou não de desconto/acrescimo por linha
+       - Acerto para que o ; nas observações quebre a linha corretamente
+       - impressão de relatórios normais (texto livre)
+       - impressão de eventos
+
 26/11/2014
 [*] Utilizacao da propriedade ImprimirTotalLiquido nos DANFEs (Quick Report).
     Por: fpasqueto
