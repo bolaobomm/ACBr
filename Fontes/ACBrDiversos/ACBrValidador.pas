@@ -1293,10 +1293,10 @@ begin
   DigOriginal  := fsDocto[Length(fsDocto)];
   DigCalculado := CalcularDV(Codigo);
 
+  fsDigitoCalculado := DigCalculado;
   if DigOriginal <> DigCalculado then
   begin
    fsMsgErro := 'Código GTIN inválido.' ;
-   fsDigitoCalculado := DigCalculado;
 
    if fsExibeDigitoCorreto then
      fsMsgErro := fsMsgErro + ' Dígito calculado: ' + fsDigitoCalculado ;
