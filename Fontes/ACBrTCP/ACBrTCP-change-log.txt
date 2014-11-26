@@ -37,8 +37,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-13/11/2014 
-	ACBrDownload -- por : Juliomar
+26/11/2014
+-- ACBrConsultaCPF --  (por: Gelson Borsoi)
+[*] Correções para suportar o novo mecanismo de Captcha.
+http://www.projetoacbr.com.br/forum/index.php?/topic/11761-consulta-de-cpf-receita-fazenda/?p=119135
+
+13/11/2014
+-- ACBrDownload -- por : Juliomar
 [-] Possível correção aplicada em função de relatos de erros!
 	http://www.projetoacbr.com.br/forum/index.php?/topic/18339-erro-acbrdownload/
 	http://www.projetoacbr.com.br/forum/index.php?/topic/6228-acbrdownload/
