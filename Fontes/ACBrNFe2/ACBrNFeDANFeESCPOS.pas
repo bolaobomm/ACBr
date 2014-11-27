@@ -111,8 +111,8 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure ImprimirDANFE(NFE: TNFe = nil; const ViaConsumidor: Boolean = True); overload;
-    procedure ImprimirDANFEResumido(NFE: TNFe = nil; const ViaConsumidor: Boolean = True); overload;
+    procedure ImprimirDANFE(NFE: TNFe = nil); override;
+    procedure ImprimirDANFEResumido(NFE: TNFe = nil); override;
     procedure ImprimirEVENTO(NFE: TNFe = nil); override;
 
     procedure ImprimirRelatorio(const ATexto: TStrings; const AVias: Integer = 1;
@@ -651,12 +651,12 @@ begin
   ImprimePorta(FBuffer.Text);
 end;
 
-procedure TACBrNFeDANFeESCPOS.ImprimirDANFE(NFE: TNFe; const ViaConsumidor: Boolean);
+procedure TACBrNFeDANFeESCPOS.ImprimirDANFE(NFE: TNFe);
 begin
   MontarEnviarDANFE(NFE, False, ViaConsumidor);
 end;
 
-procedure TACBrNFeDANFeESCPOS.ImprimirDANFEResumido(NFE: TNFe; const ViaConsumidor: Boolean);
+procedure TACBrNFeDANFeESCPOS.ImprimirDANFEResumido(NFE: TNFe);
 begin
   MontarEnviarDANFE(NFE, True, ViaConsumidor);
 end;
