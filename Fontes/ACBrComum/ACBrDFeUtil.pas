@@ -138,7 +138,7 @@ type
 implementation
 
 uses
- IniFiles, Variants, DateUtils, ACBrUtil, ACBrConsts;
+ IniFiles, Variants, DateUtils, ACBrUtil, ACBrConsts, strutils;
 
 class function DFeUtil.EstaVazio(const AValue: String): Boolean;
 begin
