@@ -77,7 +77,7 @@ const
      "OnGetChavePrivada" }
 
 type
-  TACBrEADDgst = (dgstMD2, dgstMD4, dgstMD5, dgstRMD160, dgstSHA, dgstSHA1, dgstSHA256) ;
+  TACBrEADDgst = (dgstMD2, dgstMD4, dgstMD5, dgstRMD160, dgstSHA, dgstSHA1, dgstSHA256, dgstSHA512) ;
   TACBrEADDgstOutput = (outHexa, outBase64) ;
 
   TACBrEADCalc = procedure(Arquivo: String) of object ;
@@ -839,6 +839,7 @@ begin
     dgstSHA    : NameDgst := 'sha';
     dgstSHA1   : NameDgst := 'sha1';
     dgstSHA256 : NameDgst := 'sha256';
+    dgstSHA512 : NameDgst := 'sha512';
  end ;
 
   if Assinar then
