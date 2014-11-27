@@ -402,6 +402,24 @@ object dmACBrNFeFR: TdmACBrNFeFR
     object cdsDadosProdutosVUnTrib: TFloatField
       FieldName = 'ValorUnitario'
     end
+    object cdsDadosProdutosvBcST: TFloatField
+      FieldName = 'vBcST'
+    end
+    object cdsDadosProdutosvICMSST: TFloatField
+      FieldName = 'vICMSST'
+    end
+    object cdsDadosProdutosnLote: TStringField
+      FieldName = 'nLote'
+    end
+    object cdsDadosProdutosqLote: TFloatField
+      FieldName = 'qLote'
+    end
+    object cdsDadosProdutosdFab: TDateField
+      FieldName = 'dFab'
+    end
+    object cdsDadosProdutosdVal: TDateField
+      FieldName = 'dVal'
+    end
   end
   object cdsParametros: TClientDataSet
     Aggregates = <>
@@ -921,7 +939,13 @@ object dmACBrNFeFR: TdmACBrNFeFR
       'vBcISSQN=vBcISSQN'
       'Unidade=Unidade'
       'Quantidade=Quantidade'
-      'ValorUnitario=ValorUnitario')
+      'ValorUnitario=ValorUnitario'
+      'vBcST=vBcST'
+      'vICMSST=vICMSST'
+      'nLote=nLote'
+      'qLote=qLote'
+      'dFab=dFab'
+      'dVal=dVal')
     OpenDataSource = False
     DataSet = cdsDadosProdutos
     BCDToCurrency = False

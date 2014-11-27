@@ -302,6 +302,12 @@ type
     cdsDadosProdutosUTrib2: TStringField;
     cdsDadosProdutosQTrib2: TFloatField;
     cdsDadosProdutosVUnTrib2: TFloatField;
+    cdsDadosProdutosvBcST: TFloatField;
+    cdsDadosProdutosvICMSST: TFloatField;
+    cdsDadosProdutosnLote: TStringField;
+    cdsDadosProdutosqLote: TFloatField;
+    cdsDadosProdutosdFab: TDateField;
+    cdsDadosProdutosdVal: TDateField;
     constructor Create(AOwner: TComponent); override;
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
   private
@@ -747,6 +753,8 @@ begin
                     FieldByName('VBC').AsFloat := vBC;
                     FieldByName('PICMS').AsFloat := pICMS;
                     FieldByName('VICMS').AsFloat := vICMS;
+                    FieldByName('VBCST').AsFloat := vBcST;
+                    FieldByName('VICMSST').AsFloat := vICMSST;
                   end
                 else if CST = cst20 then
                   begin
@@ -795,6 +803,8 @@ begin
                     FieldByName('VBC').AsFloat := vBC;
                     FieldByName('PICMS').AsFloat := pICMS;
                     FieldByName('VICMS').AsFloat := vICMS;
+                    FieldByName('VBCST').AsFloat := vBcST;
+                    FieldByName('VICMSST').AsFloat := vICMSST;
                   end
                 else if (CST = cst90) then
                   begin

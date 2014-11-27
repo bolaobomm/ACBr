@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+[*] Adição no DataModule para FastReport campos usados para medicamentos que devem ser impressos no danfe
+	http://www.projetoacbr.com.br/forum/index.php?/topic/18720-declarar-vbcst-vst-e-xlote-no-report-designer/#entry118653
+	por: Juliomar Marchetti
+
 [*] -- ACBrNFeDANFeESCPOS -- por: Regys Silveira
        - Identação da unit para o padrão correto.
        - Acertos gerais no layout e textos para adequação a documentação de impressão do DANFC-e
