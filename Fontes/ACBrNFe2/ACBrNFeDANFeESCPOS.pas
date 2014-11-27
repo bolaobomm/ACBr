@@ -88,19 +88,19 @@ type
 
     procedure InicializarComandos;
     procedure ImprimePorta(AString: AnsiString);
-    procedure MontarEnviarDANFE(NFE: TNFe; const AResumido: Boolean; const AViaConsumidor: Boolean);
+    procedure MontarEnviarDANFE(NFE: TNFe; const AResumido: Boolean);
 
     function GetLinhaSimples: String;
   protected
     FpNFe: TNFe;
     FpEvento: TEventoNFe;
     procedure GerarCabecalho;
-    procedure GerarItens(const AResumido: Boolean);
+    procedure GerarItens;
     procedure GerarTotais(Resumido: Boolean = False);
     procedure GerarPagamentos(Resumido: Boolean = False);
     procedure GerarTotTrib;
     procedure GerarObsCliente;
-    procedure GerarObsFisco(const AViaConsumidor: Boolean);
+    procedure GerarObsFisco;
     procedure GerarDadosConsumidor;
     procedure GerarRodape(CortaPapel: Boolean = True; Cancelamento: Boolean = False);
     procedure GerarDadosEvento;
@@ -322,14 +322,14 @@ begin
   FBuffer.Add(ParseTextESCPOS('Não permite aproveitamento de crédito de ICMS') + cCmdImpFimNegrito);
 end;
 
-procedure TACBrNFeDANFeESCPOS.GerarItens(const AResumido: Boolean);
+procedure TACBrNFeDANFeESCPOS.GerarItens;
 var
   i : integer;
   nTamDescricao: Integer;
   StrDescricao: String;
   VlrLiquido: Double;
 begin
-  if not AResumido then
+  if ImprimeItens then
   begin
     FBuffer.Add(GetLinhaSimples);
     FBuffer.Add(cCmdFonteNormal + ParseTextESCPOS('#|COD|DESCRIÇÃO|QTD|UN|VL UN R$|VL TOTAL R$'));
@@ -475,7 +475,7 @@ begin
   end;
 end;
 
-procedure TACBrNFeDANFeESCPOS.GerarObsFisco(const AViaConsumidor: Boolean);
+procedure TACBrNFeDANFeESCPOS.GerarObsFisco;
 begin
   // se homologação imprimir o texto de homologação
   if FpNFe.ide.tpAmb = taHomologacao then
@@ -501,7 +501,7 @@ begin
   ));
 
   // via consumidor ou estabelecimento
-  FBuffer.Add(cCmdFonteNormal + cCmdAlinhadoCentro + IfThen(AViaConsumidor, 'Via Consumidor', 'Via Estabelecimento'));
+  FBuffer.Add(cCmdFonteNormal + cCmdAlinhadoCentro + IfThen(ViaConsumidor, 'Via Consumidor', 'Via Estabelecimento'));
 
   // chave de acesso
   FBuffer.Add(cCmdAlinhadoCentro + cCmdFontePequena + ParseTextESCPOS('Consulte pela Chave de Acesso em:'));
@@ -626,7 +626,7 @@ begin
 end;
 
 procedure TACBrNFeDANFeESCPOS.MontarEnviarDANFE(NFE: TNFe;
-  const AResumido: Boolean; const AViaConsumidor: Boolean);
+  const AResumido: Boolean);
 begin
   if NFE = nil then
   begin
@@ -639,12 +639,12 @@ begin
     FpNFe := NFE;
 
   GerarCabecalho;
-  GerarItens(AResumido);
+  GerarItens;
   GerarTotais(AResumido);
   GerarPagamentos(AResumido);
   GerarTotTrib;
   GerarObsCliente;
-  GerarObsFisco(AViaConsumidor);
+  GerarObsFisco;
   GerarDadosConsumidor;
   GerarRodape;
 
@@ -653,12 +653,20 @@ end;
 
 procedure TACBrNFeDANFeESCPOS.ImprimirDANFE(NFE: TNFe);
 begin
-  MontarEnviarDANFE(NFE, False, ViaConsumidor);
+  MontarEnviarDANFE(NFE, False);
 end;
 
 procedure TACBrNFeDANFeESCPOS.ImprimirDANFEResumido(NFE: TNFe);
+var
+  OldImprimeItens: Boolean;
 begin
-  MontarEnviarDANFE(NFE, True, ViaConsumidor);
+  OldImprimeItens := ImprimeItens;
+  try
+    ImprimeItens := False;
+    MontarEnviarDANFE(NFE, True);
+  finally
+    ImprimeItens := OldImprimeItens;
+  end;
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarDadosEvento;
