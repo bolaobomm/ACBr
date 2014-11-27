@@ -671,7 +671,7 @@ begin
        if (Self.Items[i].NFe.Ide.idDest <> doInterna) then  //B11-10
           Erros := Erros + '707-NFC-e para operação interestadual ou com o exterior'+sLineBreak;
 
-       if (not (Self.Items[i].NFe.Ide.tpImp in[tiNFCe, tiMsgEletronica])) then  //B21-10
+       if (not (Self.Items[i].NFe.Ide.tpImp in[tiNFCe, tiNFCeA4, tiMsgEletronica])) then  //B21-10
           Erros := Erros + '709-Rejeição: NFC-e com formato de DANFE inválido'+sLineBreak;
 
        if (Self.Items[i].NFe.Ide.tpEmis = teOffLine) and
