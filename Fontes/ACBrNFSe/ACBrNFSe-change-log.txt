@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/11/2014
+[*] Alterado a montagem da mensagem de Consulta a NFS-e no que diz respeito ao
+    grupo <Tomador>.
+    Por: Italo Jurisato Junior
 [*] A cidade Assis Chateaubriand passa a usar o provedor Pronim em vez de GovBr.
     Por: eazschomack
 

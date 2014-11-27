@@ -462,6 +462,21 @@ begin
  if (CNPJTomador <> '') or (IMTomador <> '')
   then begin
     DadosMsg := DadosMsg + '<Tomador>' +
+                            '<' + Prefixo4 + 'CpfCnpj>' +
+                             DFeUtil.SeSenao(Length(OnlyNumber(CnpjTomador)) <= 11,
+                             '<' + Prefixo4 + 'Cpf>' +
+                               CnpjTomador +
+                             '</' + Prefixo4 + 'Cpf>',
+                             '<' + Prefixo4 + 'Cnpj>' +
+                               CnpjTomador +
+                             '</' + Prefixo4 + 'Cnpj>') +
+                            '</' + Prefixo4 + 'CpfCnpj>' +
+                            '<' + Prefixo4 + 'InscricaoMunicipal>' +
+                             IMTomador +
+                            '</' + Prefixo4 + 'InscricaoMunicipal>' +
+                           '</Tomador>'
+(*
+    DadosMsg := DadosMsg + '<Tomador>' +
                             DFeUtil.SeSenao((VersaoXML = '2') or
                                             (AProvedor in [proThema]),
 
@@ -483,6 +498,7 @@ begin
                              IMTomador +
                             '</' + Prefixo4 + 'InscricaoMunicipal>' +
                            '</Tomador>'
+*)
   end;
 
  if (NomeInter <> '') and (CNPJInter <> '')
