@@ -780,6 +780,7 @@ object Form1: TForm1
         'sha'
         'sha1'
         'sha256'
+        'sha512'
       )
       Style = csDropDownList
       TabOrder = 3

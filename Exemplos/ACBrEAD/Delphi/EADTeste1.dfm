@@ -791,7 +791,8 @@ object Form1: TForm1
         'rmd160'
         'sha'
         'sha1'
-        'sha256')
+        'sha256'
+        'sha512')
     end
     object cbxOut: TComboBox
       Left = 168
