@@ -47,7 +47,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
-
+27/11/2014
+[-] : Corrigido a unit do CT-e para não usar mais a propriedade que tratava a forma de cancelar
+	Por:  Juliomar Marchetti
+	
 25/11/2014
 [-] : Correção de erros de compilação 
 	Por : Juliomar Marchetti
