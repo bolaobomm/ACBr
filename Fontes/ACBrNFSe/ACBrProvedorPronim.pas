@@ -264,6 +264,23 @@ begin
              ConfigURL.ProConsultaNFSe       := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWS/Services.svc';
              ConfigURL.ProCancelaNFSe        := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWS/Services.svc';
            end;
+  4102000: begin // Assis Chateaubriand/PR
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'http://177.38.165.34:8184/nfsewsteste/Services.svc';
+            ConfigURL.HomConsultaLoteRPS    := 'http://177.38.165.34:8184/nfsewsteste/Services.svc';
+            ConfigURL.HomConsultaNFSeRPS    := 'http://177.38.165.34:8184/nfsewsteste/Services.svc';
+            ConfigURL.HomConsultaSitLoteRPS := 'http://177.38.165.34:8184/nfsewsteste/Services.svc';
+            ConfigURL.HomConsultaNFSe       := 'http://177.38.165.34:8184/nfsewsteste/Services.svc';
+            ConfigURL.HomCancelaNFSe        := 'http://177.38.165.34:8184/nfsewsteste/Services.svc';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://177.38.165.34:8184/nfsews/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://177.38.165.34:8184/nfsews/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://177.38.165.34:8184/nfsews/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://177.38.165.34:8184/nfsews/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://177.38.165.34:8184/nfsews/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://177.38.165.34:8184/nfsews/Services.svc';
+           end;
   4118501: begin // Pato Branco/PR
              ConfigURL.HomNomeCidade         := '';
              ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';

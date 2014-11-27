@@ -317,7 +317,7 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://cetil.apucarana.pr.gov.br/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://cetil.apucarana.pr.gov.br/NFSEWS/Services.svc';
            end;
-
+           (*
   4102000: begin // Assis Chateaubriand/PR
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://201.89.84.202:8184/nfsewsteste/Services.svc';
@@ -335,7 +335,7 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://201.89.84.202:8184/nfsews/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://201.89.84.202:8184/nfsews/Services.svc';
            end;
-           (*
+
   4205902: begin // Gaspar/SC
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';

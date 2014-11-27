@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/11/2014
+[*] A cidade Assis Chateaubriand passa a usar o provedor Pronim em vez de GovBr.
+    Por: eazschomack
+
 24/11/2014
 [+] Incluido a cidade Porto Alegre/RS ao provedor BHISS.
     Por: Italo Jurisato Junior

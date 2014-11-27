@@ -1010,7 +1010,7 @@ begin
   3541505, // Presidente Venceslau/SP
 //  4204004, // Catanduvas/SC
   4101408, // Apucarana/PR
-  4102000, // Assis Chateaubriand/PR
+//  4102000, // Assis Chateaubriand/PR
 //  4205902, // Gaspar/SC
 //  4309407, // Guapore/RS
 //  4310207, // Ijui/RS
@@ -1035,6 +1035,7 @@ begin
   3505609, // Barrinha/SP
   3511102, // Catanduva/SP
   3530300, // Mirassol/SP
+  4102000, // Assis Chateaubriand/PR
   4118501, // Pato Branco/PR
   4201307, // Araquari/SC
   4204004, // Catanduvas/SC
