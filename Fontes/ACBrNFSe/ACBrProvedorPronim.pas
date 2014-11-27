@@ -298,6 +298,23 @@ begin
              ConfigURL.ProConsultaNFSe       := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
              ConfigURL.ProCancelaNFSe        := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
            end;
+  4122404: begin // Rolandia/PR
+             ConfigURL.HomNomeCidade         := '';
+             ConfigURL.HomRecepcaoLoteRPS    := '';
+             ConfigURL.HomConsultaLoteRPS    := '';
+             ConfigURL.HomConsultaNFSeRPS    := '';
+             ConfigURL.HomConsultaSitLoteRPS := '';
+             ConfigURL.HomConsultaNFSe       := '';
+             ConfigURL.HomCancelaNFSe        := '';
+
+             ConfigURL.ProNomeCidade         := '';
+             ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.rolandia.pr.gov.br/NFSEws/Services.svc';
+             ConfigURL.ProConsultaLoteRPS    := 'http://nfse.rolandia.pr.gov.br/NFSEws/Services.svc';
+             ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.rolandia.pr.gov.br/NFSEws/Services.svc';
+             ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.rolandia.pr.gov.br/NFSEws/Services.svc';
+             ConfigURL.ProConsultaNFSe       := 'http://nfse.rolandia.pr.gov.br/NFSEws/Services.svc';
+             ConfigURL.ProCancelaNFSe        := 'http://nfse.rolandia.pr.gov.br/NFSEws/Services.svc';
+           end;
   4201307: begin // Araquari/SC
              ConfigURL.HomNomeCidade         := '';
              ConfigURL.HomRecepcaoLoteRPS    := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';

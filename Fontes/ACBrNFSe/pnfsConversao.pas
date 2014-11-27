@@ -1037,6 +1037,7 @@ begin
   3530300, // Mirassol/SP
   4102000, // Assis Chateaubriand/PR
   4118501, // Pato Branco/PR
+  4122404, // Rolandia/PR
   4201307, // Araquari/SC
   4204004, // Catanduvas/SC
   4205902, // Gaspar/SC
