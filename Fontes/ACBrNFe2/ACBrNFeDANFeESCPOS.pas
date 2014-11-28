@@ -455,7 +455,7 @@ begin
     cCmdAlinhadoCentro   := ESC + 'j'#1;
     cCmdAlinhadoDireita  := ESC + 'j'#2;
     cCmdCortaPapel       := ESC + 'm';
-    cCmdImprimeLogo      := SYN + #8 + SYN + #9;
+    cCmdImprimeLogo      := SYN + BS + SYN + TAB;
     cCmdCodeBarEAN8      := ESC + 'b2';
     cCmdCodeBarEAN13     := ESC + 'b1';
     cCmdCodeBarSTD25     := ESC + 'b3';
