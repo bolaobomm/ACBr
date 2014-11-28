@@ -191,10 +191,10 @@ begin
     ConfigurarComponente;
     ACBrNFeDANFeESCPOS.Device.Ativar;
     try
-      if chkDanfeResumido.Checked then
-        ACBrNFeDANFeESCPOS.ImprimirDANFEResumido(nil, chkViaConsumidor.Checked)
-      else
-        ACBrNFeDANFeESCPOS.ImprimirDANFE(nil, chkViaConsumidor.Checked);
+      ACBrNFe.DANFE.ViaConsumidor := chkViaConsumidor.Checked;
+      ACBrNFe.DANFE.ImprimeItens  := not chkDanfeResumido.Checked;
+
+      ACBrNFe.NotasFiscais[0].Imprimir;
     finally
       ACBrNFeDANFeESCPOS.Device.Desativar;
     end;
