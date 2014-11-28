@@ -54,10 +54,8 @@ uses
   Classes, Forms,
   {$IFDEF FPC}
     LResources, Controls, Graphics, Dialogs,
-  {$ELSE}
-    StrUtils,
   {$ENDIF}
-  SysUtils;
+  StrUtils, SysUtils;
 
 type
   EACBrDFeException = class(Exception);

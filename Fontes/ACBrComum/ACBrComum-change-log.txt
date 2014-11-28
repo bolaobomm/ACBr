@@ -38,7 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-
+Data: 27/11/2014
+[-] Corrigido problema na unit DFeUtil onde estava errado o Define impossibilitando
+	compilar no lazarus
+	Por: Juliomar
+	
 Data: 21/11/2014
 -- ACBrEAD --        (por: DSA)
 [+] Adicionada Propriedade "BufferSize: Integer" default 32768
