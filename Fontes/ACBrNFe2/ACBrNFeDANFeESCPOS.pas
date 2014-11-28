@@ -541,7 +541,7 @@ begin
   FBuffer.clear;
   FBuffer.Add(cCmdImpZera + cCmdEspacoLinha + cCmdPagCod + cCmdFonteNormal + cCmdAlinhadoCentro + cCmdImprimeLogo);
 
-  FBuffer.Add(cCmdImpNegrito + FpNFe.Emit.xNome + cCmdImpFimNegrito);
+  FBuffer.Add(cCmdAlinhadoCentro + cCmdImpNegrito + FpNFe.Emit.xNome + cCmdImpFimNegrito);
   FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(QuebraLinhas(
     Trim(FpNFe.Emit.EnderEmit.xLgr) + ', ' +
     Trim(FpNFe.Emit.EnderEmit.nro) + '  ' +
@@ -605,9 +605,9 @@ begin
         FLinhaCmd := IntToStrZero(FpNFe.Det.Items[i].Prod.nItem,3) + ' '+
                      Trim(FpNFe.Det.Items[i].Prod.cProd) + ' ' +
                      '[DesProd] ' +
-                     DFeUtil.FormatFloat(FpNFe.Det.Items[i].Prod.qCom,'0.0000') + ' ' +
+                     DFeUtil.FormatFloat(FpNFe.Det.Items[i].Prod.QCom,DFeUtil.SeSenao(CasasDecimais._Mask_qCom='',NotaUtil.PreparaCasasDecimais(CasasDecimais._qCom),CasasDecimais._Mask_qCom)) + ' ' +
                      Trim(FpNFe.Det.Items[i].Prod.uCom) + ' X ' +
-                     DFeUtil.FormatFloat(FpNFe.Det.Items[i].Prod.vUnCom,'0.000') + ' ' +
+                     DFeUtil.FormatFloat(FpNFe.Det.Items[i].Prod.VUnCom,DFeUtil.SeSenao(CasasDecimais._Mask_vUnCom='',NotaUtil.PreparaCasasDecimais(CasasDecimais._vUnCom),CasasDecimais._Mask_vUnCom)) + ' ' +
                      FormatFloat('#,###,##0.00', FpNFe.Det.Items[i].Prod.vProd);
 
         nTamDescricao := nLargPapel - Length(FLinhaCmd) + 9;
@@ -628,9 +628,9 @@ begin
         FBuffer.Add(cCmdAlinhadoEsquerda + cCmdFontePequena + FLinhaCmd);
 
         FLinhaCmd :=
-          padL(DFeUtil.FormatFloat(FpNFe.Det.Items[i].Prod.qCom, '0.0000'), 15) + ' ' +
+          padL(DFeUtil.FormatFloat(FpNFe.Det.Items[i].Prod.QCom,DFeUtil.SeSenao(CasasDecimais._Mask_qCom='',NotaUtil.PreparaCasasDecimais(CasasDecimais._qCom),CasasDecimais._Mask_qCom)), 15) + ' ' +
           padL(Trim(FpNFe.Det.Items[i].Prod.uCom), 6) + ' X ' +
-          padL(DFeUtil.FormatFloat(FpNFe.Det.Items[i].Prod.vUnCom, '0.000'), 13) + '|' +
+          padL(DFeUtil.FormatFloat(FpNFe.Det.Items[i].Prod.VUnCom,DFeUtil.SeSenao(CasasDecimais._Mask_vUnCom='',NotaUtil.PreparaCasasDecimais(CasasDecimais._vUnCom),CasasDecimais._Mask_vUnCom)), 13) + '|' +
           DFeUtil.FormatFloat(FpNFe.Det.Items[i].Prod.vProd, '0.00');
         FLinhaCmd := padS(FLinhaCmd, nLargPapel, '|');
         FBuffer.Add(cCmdAlinhadoEsquerda + cCmdFontePequena + FLinhaCmd);
@@ -883,6 +883,11 @@ begin
   FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(Trim(FpNFe.procNFe.nProt) + ' ' + DFeUtil.SeSenao(FpNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FpNFe.procNFe.dhRecbto), '')) + cCmdFonteNormal);
   FBuffer.Add(GetLinhaSimples);
 
+  // sistema
+  FBuffer.Add(cCmdFontePequena + cCmdAlinhadoCentro + Sistema);
+  FBuffer.Add(cCmdFontePequena + cCmdAlinhadoCentro + Site);
+
+  // pular linhas e cortar o papel
   PulaLinhas;
   if CortaPapel then
     FBuffer.Add(cCmdCortaPapel);

@@ -289,7 +289,7 @@ object frmPrincipal: TfrmPrincipal
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
-    CasasDecimais._qCom = 2
+    CasasDecimais._qCom = 0
     CasasDecimais._vUnCom = 2
     ExibirResumoCanhoto = False
     FormularioContinuo = False
@@ -301,8 +301,13 @@ object frmPrincipal: TfrmPrincipal
     ImprimeItens = True
     ViaConsumidor = True
     Device.Baud = 115200
+    ConfigBarras.MostrarCodigo = True
+    ConfigBarras.LarguraLinha = 2
+    ConfigBarras.Altura = 40
     MarcaImpressora = iDaruma
     LinhasEntreCupons = 5
+    ImprimeEmUmaLinha = False
+    ImprimeDescAcrescItem = False
     Left = 235
     Top = 405
   end
