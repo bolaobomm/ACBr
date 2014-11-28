@@ -85,7 +85,7 @@ implementation
 
 constructor TProvedorVirtual.Create;
 begin
- {----}
+  {----}
 end;
 
 function TProvedorVirtual.GetConfigCidade(ACodCidade, AAmbiente: Integer): TConfigCidade;
@@ -107,59 +107,59 @@ end;
 
 function TProvedorVirtual.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
- ConfigSchema: TConfigSchema;
+  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho       := '2.00';
- ConfigSchema.VersaoDados           := '2.00';
- ConfigSchema.VersaoXML             := '2';
- ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
- ConfigSchema.Cabecalho             := 'nfse.xsd';
- ConfigSchema.ServicoEnviar         := 'nfse.xsd';
- ConfigSchema.ServicoConSit         := 'nfse.xsd';
- ConfigSchema.ServicoConLot         := 'nfse.xsd';
- ConfigSchema.ServicoConRps         := 'nfse.xsd';
- ConfigSchema.ServicoConNfse        := 'nfse.xsd';
- ConfigSchema.ServicoCancelar       := 'nfse.xsd';
- ConfigSchema.ServicoGerar          := 'nfse.xsd';
- ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
- ConfigSchema.DefTipos              := '';
+  ConfigSchema.VersaoCabecalho       := '2.00';
+  ConfigSchema.VersaoDados           := '2.00';
+  ConfigSchema.VersaoXML             := '2';
+  ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
+  ConfigSchema.Cabecalho             := 'nfse.xsd';
+  ConfigSchema.ServicoEnviar         := 'nfse.xsd';
+  ConfigSchema.ServicoConSit         := 'nfse.xsd';
+  ConfigSchema.ServicoConLot         := 'nfse.xsd';
+  ConfigSchema.ServicoConRps         := 'nfse.xsd';
+  ConfigSchema.ServicoConNfse        := 'nfse.xsd';
+  ConfigSchema.ServicoCancelar       := 'nfse.xsd';
+  ConfigSchema.ServicoGerar          := 'nfse.xsd';
+  ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
+  ConfigSchema.DefTipos              := '';
 
- Result := ConfigSchema;
+  Result := ConfigSchema;
 end;
 
 function TProvedorVirtual.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
  	ConfigURL: TConfigURL;
 begin
- 	 ConfigURL.HomRecepcaoLoteRPS    := '';
- 	 ConfigURL.HomConsultaLoteRPS    := '';
- 	 ConfigURL.HomConsultaNFSeRPS    := '';
- 	 ConfigURL.HomConsultaSitLoteRPS := '';
-   ConfigURL.HomConsultaNFSe       := '';
-   ConfigURL.HomCancelaNFSe        := 'http://virtualserver.dyndns-free.com:8080/SCEMX32JavaEnvironment/servlet/anfse_barradogarcas?wsdl';
- 	 ConfigURL.HomGerarNFSe          := 'http://virtualserver.dyndns-free.com:8080/SCEMX32JavaEnvironment/servlet/agerarnfse_barradogarcas?wsdl';
- 	 ConfigURL.HomRecepcaoSincrono   := '';
+  ConfigURL.HomRecepcaoLoteRPS    := '';
+  ConfigURL.HomConsultaLoteRPS    := '';
+  ConfigURL.HomConsultaNFSeRPS    := '';
+  ConfigURL.HomConsultaSitLoteRPS := '';
+  ConfigURL.HomConsultaNFSe       := '';
+  ConfigURL.HomCancelaNFSe        := 'http://virtualserver.dyndns-free.com:8080/SCEMX32JavaEnvironment/servlet/anfse_barradogarcas?wsdl';
+  ConfigURL.HomGerarNFSe          := 'http://virtualserver.dyndns-free.com:8080/SCEMX32JavaEnvironment/servlet/agerarnfse_barradogarcas?wsdl';
+  ConfigURL.HomRecepcaoSincrono   := '';
 
- 	 ConfigURL.ProRecepcaoLoteRPS    := '';
- 	 ConfigURL.ProConsultaLoteRPS    := '';
- 	 ConfigURL.ProConsultaNFSeRPS    := '';
- 	 ConfigURL.ProConsultaSitLoteRPS := '';
- 	 ConfigURL.ProConsultaNFSe       := '';
- 	 ConfigURL.ProCancelaNFSe        := 'http://financas2.barradogarcas.mt.gov.br:8080/SCEM/servlet/anfse_barradogarcas?wsdl';
-   ConfigURL.ProGerarNFSe          := 'http://financas2.barradogarcas.mt.gov.br:8080/SCEM/servlet/agerarnfse_barradogarcas'; //?wsdl';
- 	 ConfigURL.ProRecepcaoSincrono   := '';
+  ConfigURL.ProRecepcaoLoteRPS    := '';
+  ConfigURL.ProConsultaLoteRPS    := '';
+  ConfigURL.ProConsultaNFSeRPS    := '';
+  ConfigURL.ProConsultaSitLoteRPS := '';
+  ConfigURL.ProConsultaNFSe       := '';
+  ConfigURL.ProCancelaNFSe        := 'http://financas2.barradogarcas.mt.gov.br:8080/SCEM/servlet/acancelarnfse_barradogarcas'; // ?wsdl';
+  ConfigURL.ProGerarNFSe          := 'http://financas2.barradogarcas.mt.gov.br:8080/SCEM/servlet/agerarnfse_barradogarcas'; //?wsdl';
+  ConfigURL.ProRecepcaoSincrono   := '';
 
-  	Result := ConfigURL;
+ 	Result := ConfigURL;
 end;
 
 function TProvedorVirtual.GetURI(URI: String): String;
 begin
- Result := URI;
+  Result := URI;
 end;
 
 function TProvedorVirtual.GetAssinarXML(Acao: TnfseAcao): Boolean;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := False;
    acConsSit:     Result := False;
    acConsLote:    Result := False;
@@ -169,18 +169,18 @@ begin
    acGerar:       Result := False;
    acRecSincrono: Result := False;
    else           Result := False;
- end;
+  end;
 end;
 
 function TProvedorVirtual.GetValidarLote: Boolean;
 begin
- Result := True;
+  Result := True;
 end;
 
 function TProvedorVirtual.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
@@ -192,25 +192,25 @@ begin
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
    acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + NameSpaceDad;
- end;
+  end;
 end;
 
 function TProvedorVirtual.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
   NameSpaceCab: String; ACodCidade: Integer): AnsiString;
 begin
- Result := '<' + Prefixo2 + 'cabecalho versao="'  + VersaoLayOut + '"' + NameSpaceCab +
-            '<versaoDados>' + VersaoDados + '</versaoDados>'+
-           '</' + Prefixo2 + 'cabecalho>';
+  Result := '<' + Prefixo2 + 'cabecalho versao="'  + VersaoLayOut + '"' + NameSpaceCab +
+             '<versaoDados>' + VersaoDados + '</versaoDados>'+
+            '</' + Prefixo2 + 'cabecalho>';
 end;
 
 function TProvedorVirtual.Gera_DadosSenha(CNPJ, Senha: String): AnsiString;
 begin
- Result := '';
+  Result := '';
 end;
 
 function TProvedorVirtual.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
@@ -220,104 +220,102 @@ begin
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
    acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
- end;
+  end;
 end;
 
 function TProvedorVirtual.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '';
+  result := '';
 end;
 
 function TProvedorVirtual.GeraEnvelopeConsultarSituacaoLoteRPS(
   URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '';
+  result := '';
 end;
 
 function TProvedorVirtual.GeraEnvelopeConsultarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '';
+  result := '';
 end;
 
 function TProvedorVirtual.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '';
+  result := '';
 end;
 
 function TProvedorVirtual.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '';
+  result := '';
 end;
 
 function TProvedorVirtual.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="utf-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-//             '<CancelarNfse.Execute xmlns="Abrasf2">' +
-             '<nfse_barradogarcas.CANCELARNFSE>' +
-//              '<Entrada>' +
-              '<Cancelarnfseenvio>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-//              '</Entrada>' +
-              '</Cancelarnfseenvio>' +
-             '</nfse_barradogarcas.CANCELARNFSE>' +
-            '</S:Body>' +
-           '</S:Envelope>';
+  DadosMsg := SeparaDados( DadosMsg, 'CancelarNfseEnvio' );
+  result := '<?xml version="1.0" encoding="utf-8"?>' +
+            '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                               'xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" ' +
+                               'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                               'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+             '<SOAP-ENV:Body>' +
+              '<cancelarnfse_barradogarcas.Execute>' +
+               '<Entrada>' +
+                 DadosMsg +
+//                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+               '</Entrada>' +
+              '</cancelarnfse_barradogarcas.Execute>' +
+             '</SOAP-ENV:Body>' +
+            '</SOAP-ENV:Envelope>';
 end;
 
 function TProvedorVirtual.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- DadosMsg := SeparaDados( DadosMsg, 'GerarNfseEnvio' );
- result := '<?xml version="1.0" encoding="utf-8"?>' +
-           '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                              'xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" ' +
-                              'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                              'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<SOAP-ENV:Body>' +
-             '<gerarnfse_barradogarcas.Execute>' +
-              '<Entrada xmlns="http://www.abrasf.org.br/nfse.xsd">' +
-                DadosMsg +
-//                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</Entrada>' +
-             '</gerarnfse_barradogarcas.Execute>' +
-            '</SOAP-ENV:Body>' +
-           '</SOAP-ENV:Envelope>';
+  DadosMsg := SeparaDados( DadosMsg, 'GerarNfseEnvio' );
+  result := '<?xml version="1.0" encoding="utf-8"?>' +
+            '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                               'xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" ' +
+                               'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                               'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+             '<SOAP-ENV:Body>' +
+              '<gerarnfse_barradogarcas.Execute>' +
+               '<Entrada xmlns="http://www.abrasf.org.br/nfse.xsd">' +
+                 DadosMsg +
+//                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+               '</Entrada>' +
+              '</gerarnfse_barradogarcas.Execute>' +
+             '</SOAP-ENV:Body>' +
+            '</SOAP-ENV:Envelope>';
 end;
 
 function TProvedorVirtual.GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '';
+  result := '';
 end;
 
 function TProvedorVirtual.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '';
    acConsSit:     Result := '';
    acConsLote:    Result := '';
    acConsNFSeRps: Result := '';
    acConsNFSe:    Result := '';
-   acCancelar:    Result := 'NFSE_BarradoGarcasaction/ANFSE_BARRADOGARCAS.CANCELARNFSE';
+   acCancelar:    Result := 'http://www.abrasf.org.br/nfse.xsdaction/ACANCELARNFSE_BARRADOGARCAS.Execute';
    acGerar:       Result := 'http://www.abrasf.org.br/nfse.xsdaction/AGERARNFSE_BARRADOGARCAS.Execute';
    acRecSincrono: Result := '';
- end;
+  end;
 end;
 
 function TProvedorVirtual.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
-var
- RetWS: AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := RetornoWS;
    acConsSit:     Result := RetornoWS;
    acConsLote:    Result := RetornoWS;
@@ -326,23 +324,23 @@ begin
    acCancelar:    Result := RetornoWS; // SeparaDados( RetornoWS, 'nfse_barradogarcas.CANCELARNFSEResponse' );
    acGerar:       Result := RetornoWS; // SeparaDados( RetornoWS, 'Saida' );
    acRecSincrono: Result := RetornoWS;
- end;
+  end;
 end;
 
 function TProvedorVirtual.GeraRetornoNFSe(Prefixo: String;
   RetNFSe: AnsiString; NomeCidade: String): AnsiString;
 begin
- Result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<CompNfse xmlns="http://www.abrasf.org.br/nfse.xsd">' +
-            RetNFSe +
-           '</CompNfse>';
+  Result := '<?xml version="1.0" encoding="UTF-8"?>' +
+            '<CompNfse xmlns="http://www.abrasf.org.br/nfse.xsd">' +
+             RetNFSe +
+            '</CompNfse>';
 end;
 
 function TProvedorVirtual.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
 begin
   // Não implementada
- Result := ''; 
+  Result := ''; 
 end;
 
 end.
