@@ -111,7 +111,7 @@ const
     '<code93>', '</code93>', '<code128>', '</code128>',
     '<upca>', '</upca>', '<codabar>', '</codabar>',
     '<msi>', '</msi>',
-    '<ad>','</ad>','<ae>','</ae>','<ce>','</ce>' );
+    '<ad>','</ad>','<ce>','</ce>','<ae>','</ae>' );
 
   TAGS_FORMATACAO: set of byte = [2..11] ;
   TAGS_BLOCO: set of byte = [12..39] ;
