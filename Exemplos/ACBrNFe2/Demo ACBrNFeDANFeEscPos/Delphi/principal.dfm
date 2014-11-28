@@ -2,7 +2,7 @@ object frmPrincipal: TfrmPrincipal
   Left = 0
   Top = 0
   Caption = 'Demo Impress'#227'o DANFCe'
-  ClientHeight = 575
+  ClientHeight = 571
   ClientWidth = 527
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -168,6 +168,7 @@ object frmPrincipal: TfrmPrincipal
       '</linha_simples>'
       ''
       '<CE>*** TAGS DE FORMATA'#199#195'O ***</CE>'
+      '<ae>Alinhado esquerda</Ae>'
       '<ce>NO CENTRO</CE>'
       '<AD>A Direira</ad>'
       '</linha_simples>'

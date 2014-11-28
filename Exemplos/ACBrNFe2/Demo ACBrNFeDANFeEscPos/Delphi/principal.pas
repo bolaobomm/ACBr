@@ -5,9 +5,10 @@ interface
 uses
   IniFiles, TypInfo, pcnConversao,
 
+  ACBrNFe, ACBrNFeDANFEClass, ACBrNFeDANFeESCPOS,
+
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ACBrNFeDANFEClass, ACBrNFeDANFeESCPOS, ACBrNFe, Spin,
-  Buttons;
+  Dialogs, StdCtrls, Spin, Buttons;
 
 type
   TfrmPrincipal = class(TForm)

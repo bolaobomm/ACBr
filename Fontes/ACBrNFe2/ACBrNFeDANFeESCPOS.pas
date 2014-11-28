@@ -42,6 +42,9 @@
 |*   Acertos gerais e adaptação do layout a norma técnica
 |*   adição de método para impressão de relatórios
 |*   adição de impressão de eventos
+|* 28/11/2014: Régys Silveira
+|*   Implementação da possibilidade de utilizar tags nos relatorios (segue o
+|*   padrão do acbrecf)
 ******************************************************************************}
 
 {$I ACBr.inc}
@@ -66,6 +69,8 @@ type
     FImprimeEmUmaLinha: Boolean;
     FLinhaCmd: AnsiString;
     FBuffer: TStringList;
+    FImprimeDescAcrescItem: Boolean;
+    FIgnorarTagsFormatacao: Boolean;
 
     cCmdImpZera: String;
     cCmdEspacoLinha: String;
@@ -76,6 +81,12 @@ type
     cCmdImpFimExpandido: String;
     cCmdFonteNormal: String;
     cCmdFontePequena: String;
+    cCmdImpSublinhado: String;
+    cCmdImpFimSublinhado: String;
+    cCmdImpItalico: String;
+    cCmdImpFimItalico: String;
+    cCmdImpCondensado: String;
+    cCmdImpFimCondensado: String;
     cCmdAlinhadoEsquerda: String;
     cCmdAlinhadoCentro: String;
     cCmdAlinhadoDireita: String;
@@ -83,14 +94,16 @@ type
     cCmdImprimeLogo: String;
 
     nLargPapel: Integer;
-    FImprimeDescAcrescItem: Boolean;
-    FIgnorarTagsFormatacao: Boolean;
 
     procedure InicializarComandos;
     procedure ImprimePorta(AString: AnsiString);
     procedure MontarEnviarDANFE(NFE: TNFe; const AResumido: Boolean);
 
+    function Int2TB(AInteger: Integer): AnsiString;
     function GetLinhaSimples: String;
+    function GetLinhaDupla: String;
+    function DecodificarTagsFormatacao(AString: AnsiString): AnsiString;
+    function TraduzirTag(const ATag: AnsiString): AnsiString;
   protected
     FpNFe: TNFe;
     FpEvento: TEventoNFe;
@@ -139,13 +152,169 @@ begin
   RegisterComponents('ACBr', [TACBrNFeDANFeESCPOS]);
 end;
 
-function Int2TB(AInteger: Integer): AnsiString;
+{ TACBrNFeDANFeESCPOS }
+
+function TACBrNFeDANFeESCPOS.Int2TB(AInteger: Integer): AnsiString;
 var
   AHexStr: String;
 begin
   AHexStr := IntToHex(AInteger, 4);
   Result  := AnsiChar(chr(StrToInt('$' + copy(AHexStr, 3, 2)))) + AnsiChar(chr(StrToInt('$' + copy(AHexStr, 1, 2))));
   AHexStr := Result;
+end;
+
+function TACBrNFeDANFeESCPOS.TraduzirTag(const ATag: AnsiString): AnsiString;
+var
+  I: Integer;
+  LowerTag: AnsiString;
+begin
+  {*****************************************************************************
+  tags permitidas pelo acbr, nem todas foram implementadas ainda.
+  </linha_simples>,              0
+  </linha_dupla>,                1
+  <e>, </e>,                     2,3
+  <n>, </n>,                     4,5
+  <s>, </s>,                     6,7
+  <c>, </c>,                     8,9
+  <i>, </i>,                     10,11
+  <ean8>, </ean8>,               12,13
+  <ean13>, </ean13>,             14,15
+  <std>, </std>,                 16,17
+  <inter>, </inter>,             18,19
+  <code11>, </code11>,           20,21
+  <code39>, </code39>,           22,23
+  <code93>, </code93>,           24,25
+  <code128>, </code128>,         26,27
+  <upca>, </upca>,               28,29
+  <codabar>, </codabar>,         30,31
+  <msi>, </msi>,                 32,33
+  <ad>,</ad>,                    34,35
+  <ce>,</ce>,                    36,37
+  <ae>,</ae> );                  38,39
+  *****************************************************************************}
+
+  Result := '';
+  if ATag = '' then
+    exit;
+
+  LowerTag := LowerCase(ATag);
+  case AnsiIndexText(LowerTag, ARRAY_TAGS) of
+    -1: Result := LowerTag;
+     0: Result := GetLinhaSimples;
+     1: Result := GetLinhaDupla;
+     2: Result := cCmdImpExpandido;
+     3: Result := cCmdImpFimExpandido;
+     4: Result := cCmdImpNegrito;
+     5: Result := cCmdImpFimNegrito;
+     6: Result := cCmdImpSublinhado;
+     7: Result := cCmdImpFimSublinhado;
+     8: Result := cCmdImpCondensado;
+     9: Result := cCmdImpFimCondensado;
+    10: Result := cCmdImpItalico;
+    11: Result := cCmdImpFimItalico;
+     {
+    12: Result := ConfigurarBarras(cEAN8);
+    13: Result := cBarraFim;
+    14: Result := ConfigurarBarras(cEAN13);
+    15: Result := cBarraFim;
+    16: Result := ConfigurarBarras(cSTD25);
+    17: Result := cBarraFim;
+    18: Result := ConfigurarBarras(cINTER25);
+    19: Result := cBarraFim;
+    20: Result := ConfigurarBarras(cCODE11);
+    21: Result := cBarraFim;
+    22: Result := ConfigurarBarras(cCODE39);
+    23: Result := cBarraFim;
+    24: Result := ConfigurarBarras(cCODE93);
+    25: Result := cBarraFim;
+    26: Result := ConfigurarBarras(cCODE128);
+    27: Result := cBarraFim;
+    28: Result := ConfigurarBarras(cUPCA);
+    29: Result := cBarraFim;
+    30: Result := ConfigurarBarras(cCODABAR);
+    31: Result := cBarraFim;
+    32: Result := ConfigurarBarras(cMSI);
+    33: Result := cBarraFim;
+     }
+    34: Result := cCmdAlinhadoDireita;
+    35: Result := cCmdAlinhadoEsquerda;
+    36: Result := cCmdAlinhadoCentro;
+    37: Result := cCmdAlinhadoEsquerda;
+    38: Result := cCmdAlinhadoEsquerda;
+    39: Result := cCmdAlinhadoEsquerda;
+  else
+    Result := '' ;
+  end;
+end;
+
+function TACBrNFeDANFeESCPOS.DecodificarTagsFormatacao(AString: AnsiString): AnsiString;
+
+  Procedure AchaTag(const AString: AnsiString; const PosIni: Integer; var ATag: AnsiString; var PosTag: Integer);
+  var
+    PosTagAux, FimTag, LenTag: Integer;
+  begin
+    ATag := '';
+    PosTag := PosEx('<', AString, PosIni);
+    if PosTag > 0 then
+    begin
+      // Verificando se Tag é inválida
+      PosTagAux := PosEx('<', Result, PosTag + 1);
+      FimTag := PosEx('>', Result, PosTag + 1);
+
+      // Tag não fechada ?
+      if FimTag = 0 then
+      begin
+        PosTag := 0;
+        exit;
+      end;
+
+      while (PosTagAux > 0) and (PosTagAux < FimTag) do
+      // Achou duas aberturas Ex: <<e>
+      begin
+        PosTag := PosTagAux;
+        PosTagAux := PosEx('<', Result, PosTag + 1);
+      end;
+
+      LenTag := FimTag - PosTag + 1;
+      ATag := copy(AString, PosTag, LenTag);
+    end;
+  end;
+
+Var
+  Tag1, Tag2, Cmd, LowerTag: AnsiString;
+  PosTag1, IndTag1, LenTag1, PosTag2, FimTag: Integer;
+begin
+  Result := AString;
+
+  Tag1 := '';
+  PosTag1 := 0;
+  AchaTag(Result, 1, Tag1, PosTag1);
+
+  while Tag1 <> '' do
+  begin
+    LenTag1  := Length(Tag1);
+    LowerTag := LowerCase(Tag1);
+    IndTag1  := AnsiIndexText(LowerTag, ARRAY_TAGS);
+    Tag2     := '';
+    PosTag2  := 0;
+
+    if IgnorarTagsFormatacao and (IndTag1 in TAGS_FORMATACAO) then
+      Cmd := ''
+    else
+      Cmd := TraduzirTag(Tag1);
+
+    FimTag := PosTag1 + LenTag1 - 1;
+
+    if Cmd <> Tag1 then
+    begin
+      Result := StuffString(Result, PosTag1, LenTag1, Cmd);
+      FimTag := FimTag + (Length(Cmd) - LenTag1);
+    end;
+
+    Tag1    := '';
+    PosTag1 := 0;
+    AchaTag(Result, FimTag + 1, Tag1, PosTag1);
+  end;
 end;
 
 function TACBrNFeDANFeESCPOS.ParseTextESCPOS(Text: AnsiString): AnsiString;
@@ -156,9 +325,6 @@ begin
   else
     Result := Text;
 end;
-
-
-{ TACBrNFeDANFeESCPOS }
 
 constructor TACBrNFeDANFeESCPOS.Create(AOwner: TComponent);
 begin
@@ -205,6 +371,12 @@ begin
     cCmdImpFimExpandido  := #27#87#0;
     cCmdFonteNormal      := #18;
     cCmdFontePequena     := #15;
+    cCmdImpSublinhado    := '';
+    cCmdImpFimSublinhado := '';
+    cCmdImpItalico       := '';
+    cCmdImpFimItalico    := '';
+    cCmdImpCondensado    := '';
+    cCmdImpFimCondensado := '';
     cCmdAlinhadoEsquerda := #27 + 'a0';
     cCmdAlinhadoCentro   := #27 + 'a1';
     cCmdAlinhadoDireita  := #27 + 'a2'; // Verificar comando BEMA/POS
@@ -214,15 +386,21 @@ begin
   end
   else if MarcaImpressora = iDaruma then
   begin
-    cCmdImpZera          := #27 + '@';
-    cCmdEspacoLinha      := #27 + '2';
+    cCmdImpZera          := #27'@';
+    cCmdEspacoLinha      := #27'2';
     cCmdPagCod           := ''; // pelo aplicativo da Daruma (Tool) selecione ISO 8859-1 (TODO: tentar implementar essa mudança via código)
     cCmdImpNegrito       := #27#69;
     cCmdImpFimNegrito    := #27#70;
-    cCmdImpExpandido     := #27 + 'W' + #1;
-    cCmdImpFimExpandido  := #27 + 'W' + #0;
+    cCmdImpExpandido     := #27'W'#1;
+    cCmdImpFimExpandido  := #27'W'#0;
     cCmdFonteNormal      := #20;
     cCmdFontePequena     := #15;
+    cCmdImpSublinhado    := #27'-'#1;
+    cCmdImpFimSublinhado := #27'-'#0;
+    cCmdImpItalico       := #27'4'#1;
+    cCmdImpFimItalico    := #27'4'#0;
+    cCmdImpCondensado    := #27#15#1;
+    cCmdImpFimCondensado := #27#15#0;
     cCmdAlinhadoEsquerda := #27#106#0;
     cCmdAlinhadoCentro   := #27#106#1;
     cCmdAlinhadoDireita  := #27#106#2;
@@ -241,6 +419,12 @@ begin
     cCmdImpFimExpandido  := #29 + '!' + #0;
     cCmdFonteNormal      := #27 + 'M0';
     cCmdFontePequena     := #27 + 'M1';
+    cCmdImpSublinhado    := '';
+    cCmdImpFimSublinhado := '';
+    cCmdImpItalico       := '';
+    cCmdImpFimItalico    := '';
+    cCmdImpCondensado    := '';
+    cCmdImpFimCondensado := '';
     cCmdAlinhadoEsquerda := #27 + 'a0';
     cCmdAlinhadoCentro   := #27 + 'a1';
     cCmdAlinhadoDireita  := #27 + 'a2';
@@ -253,6 +437,11 @@ end;
 function TACBrNFeDANFeESCPOS.GetLinhaSimples: String;
 begin
   Result := cCmdAlinhadoEsquerda + cCmdFontePequena + LinhaSimples(nLargPapel);
+end;
+
+function TACBrNFeDANFeESCPOS.GetLinhaDupla: String;
+begin
+  Result := cCmdAlinhadoEsquerda + cCmdFontePequena + LinhaDupla(nLargPapel);
 end;
 
 procedure TACBrNFeDANFeESCPOS.PulaLinhas(NumLinhas: Integer);
@@ -794,7 +983,7 @@ begin
   FBuffer.Add(cCmdAlinhadoEsquerda);
   for I := 0 to AVias - 1 do
   begin
-    FBuffer.Add(ParseTextESCPOS(ATexto.Text));
+    FBuffer.Add(ParseTextESCPOS(DecodificarTagsFormatacao(ATexto.Text)));
     PulaLinhas(LinhasEntreCupons);
   end;
 
