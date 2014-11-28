@@ -513,17 +513,6 @@ TACBrECFDadosRZ = class
     property TotalTroco: Double read fsTotalTroco write fsTotalTroco;
   end;
 
-TACBrECFConfigBarras = class(TPersistent)
-  private
-    FMostrarCodigo: Boolean;
-    FAltura: Integer;
-    FLarguraLinha: Integer;
-  published
-    property MostrarCodigo: Boolean read FMostrarCodigo write FMostrarCodigo;
-    property LarguraLinha: Integer read FLarguraLinha write FLarguraLinha;
-    property Altura: Integer read FAltura write FAltura;
-end;
-
 { Evento para o usuário exibir os erros encontrados pela classe TACBrECFClass.
   Se o evento OnMsgErro NAO for programado a Classe TACBrECFClass exibirá as
   Msg de erro através de Exceçoes. Se o evento OnMsgErro for programado a Classe

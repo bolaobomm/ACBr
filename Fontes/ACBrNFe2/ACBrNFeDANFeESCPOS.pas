@@ -93,7 +93,21 @@ type
     cCmdCortaPapel: String;
     cCmdImprimeLogo: String;
 
+    cCmdCodeBarEAN8: String;
+    cCmdCodeBarEAN13: String;
+    cCmdCodeBarSTD25: String;
+    cCmdCodeBarINTER25: String;
+    cCmdCodeBarCODE11: String;
+    cCmdCodeBarCODE39: String;
+    cCmdCodeBarCODE93: String;
+    cCmdCodeBarCODE128: String;
+    cCmdCodeBarUPCA: String;
+    cCmdCodeBarCODABAR: String;
+    cCmdCodeBarMSI: String;
+    cCmdCodeBarFim: String;
+
     nLargPapel: Integer;
+    FConfigBarras: TACBrECFConfigBarras;
 
     procedure InicializarComandos;
     procedure ImprimePorta(AString: AnsiString);
@@ -133,6 +147,7 @@ type
     procedure CortarPapel;
   published
     property Device: TACBrDevice read FDevice;
+    property ConfigBarras: TACBrECFConfigBarras read FConfigBarras write FConfigBarras;
     property MarcaImpressora: TACBrNFeMarcaImpressora read FMarcaImpressora write FMarcaImpressora default iEpson;
     property LinhasEntreCupons: Integer read FLinhasEntreCupons write FLinhasEntreCupons default 21;
     property ImprimeEmUmaLinha: Boolean read FImprimeEmUmaLinha write FImprimeEmUmaLinha default True;
@@ -167,6 +182,20 @@ function TACBrNFeDANFeESCPOS.TraduzirTag(const ATag: AnsiString): AnsiString;
 var
   I: Integer;
   LowerTag: AnsiString;
+
+  function ConfigurarBarras(const ACodigo: AnsiString): AnsiString;
+  var
+    Largura: AnsiString;
+    Altura: AnsiString;
+    Mostrar: AnsiString;
+  begin
+    Largura := IntToStrZero( max( min( ConfigBarras.LarguraLinha, 5), 2) , 1);
+    Altura  := IntToStrZero( max( min( ConfigBarras.Altura, 200), 50), 2);
+    Mostrar := IfThen(ConfigBarras.MostrarCodigo, '01', '00');
+
+    Result := ACodigo + Largura + Altura + Mostrar;
+  end;
+
 begin
   {*****************************************************************************
   tags permitidas pelo acbr, nem todas foram implementadas ainda.
@@ -214,30 +243,28 @@ begin
      9: Result := cCmdImpFimCondensado;
     10: Result := cCmdImpItalico;
     11: Result := cCmdImpFimItalico;
-     {
-    12: Result := ConfigurarBarras(cEAN8);
-    13: Result := cBarraFim;
-    14: Result := ConfigurarBarras(cEAN13);
-    15: Result := cBarraFim;
-    16: Result := ConfigurarBarras(cSTD25);
-    17: Result := cBarraFim;
-    18: Result := ConfigurarBarras(cINTER25);
-    19: Result := cBarraFim;
-    20: Result := ConfigurarBarras(cCODE11);
-    21: Result := cBarraFim;
-    22: Result := ConfigurarBarras(cCODE39);
-    23: Result := cBarraFim;
-    24: Result := ConfigurarBarras(cCODE93);
-    25: Result := cBarraFim;
-    26: Result := ConfigurarBarras(cCODE128);
-    27: Result := cBarraFim;
-    28: Result := ConfigurarBarras(cUPCA);
-    29: Result := cBarraFim;
-    30: Result := ConfigurarBarras(cCODABAR);
-    31: Result := cBarraFim;
-    32: Result := ConfigurarBarras(cMSI);
-    33: Result := cBarraFim;
-     }
+    12: Result := ConfigurarBarras(cCmdCodeBarEAN8);
+    13: Result := cCmdCodeBarFim;
+    14: Result := ConfigurarBarras(cCmdCodeBarEAN13);
+    15: Result := cCmdCodeBarFim;
+    16: Result := ConfigurarBarras(cCmdCodeBarSTD25);
+    17: Result := cCmdCodeBarFim;
+    18: Result := ConfigurarBarras(cCmdCodeBarINTER25);
+    19: Result := cCmdCodeBarFim;
+    20: Result := ConfigurarBarras(cCmdCodeBarCODE11);
+    21: Result := cCmdCodeBarFim;
+    22: Result := ConfigurarBarras(cCmdCodeBarCODE39);
+    23: Result := cCmdCodeBarFim;
+    24: Result := ConfigurarBarras(cCmdCodeBarCODE93);
+    25: Result := cCmdCodeBarFim;
+    26: Result := ConfigurarBarras(cCmdCodeBarCODE128);
+    27: Result := cCmdCodeBarFim;
+    28: Result := ConfigurarBarras(cCmdCodeBarUPCA);
+    29: Result := cCmdCodeBarFim;
+    30: Result := ConfigurarBarras(cCmdCodeBarCODABAR);
+    31: Result := cCmdCodeBarFim;
+    32: Result := ConfigurarBarras(cCmdCodeBarMSI);
+    33: Result := cCmdCodeBarFim;
     34: Result := cCmdAlinhadoDireita;
     35: Result := cCmdAlinhadoEsquerda;
     36: Result := cCmdAlinhadoCentro;
@@ -245,9 +272,10 @@ begin
     38: Result := cCmdAlinhadoEsquerda;
     39: Result := cCmdAlinhadoEsquerda;
     40: Result := cCmdFonteNormal;
-    41: Result := '';
+    41: Result := ''; // não precisa voltar, porque é a fonte padrão
     42: Result := cCmdFontePequena;
-    43: Result := cCmdFonteNormal;
+    43: Result := cCmdFonteNormal; // voltar para a fonte padrão
+    44: Result := cCmdImprimeLogo;
   else
     Result := '' ;
   end;
@@ -292,7 +320,7 @@ Var
 begin
   Result := AString;
 
-  Tag1 := '';
+  Tag1    := '';
   PosTag1 := 0;
   AchaTag(Result, 1, Tag1, PosTag1);
 
@@ -339,6 +367,9 @@ begin
   // Instanciando SubComponente TACBrDevice
   FDevice := TACBrDevice.Create(self);
 
+  // instanciando subclasse de configuração de barras
+  FConfigBarras := TACBrECFConfigBarras.Create;
+
   // O dono é o proprio componente
   FDevice.Name := 'ACBrDevice';
 
@@ -360,6 +391,7 @@ destructor TACBrNFeDANFeESCPOS.Destroy;
 begin
   FBuffer.Free;
   FreeAndNil(FDevice);
+  FreeAndNil(FConfigBarras);
 
   inherited Destroy;
 end;
@@ -368,74 +400,110 @@ procedure TACBrNFeDANFeESCPOS.InicializarComandos;
 begin
   if MarcaImpressora = iBematech then
   begin
-    cCmdImpZera          := #27 + '@' + #29#249#32#48;  // #27+'@' Inicializa impressora, demais selecionam ESC/Bema temporariamente
-    cCmdEspacoLinha      := #27 + '3' + #14;  // Verificar comando BEMA/POS
-    cCmdPagCod           := #27 + 't' + #8; // codepage UTF-8
-    cCmdImpNegrito       := #27#78#3;
-    cCmdImpFimNegrito    := #27#78#2;
-    cCmdImpExpandido     := #27#87#1;
-    cCmdImpFimExpandido  := #27#87#0;
-    cCmdFonteNormal      := #18;
-    cCmdFontePequena     := #15;
-    cCmdImpSublinhado    := '';
-    cCmdImpFimSublinhado := '';
-    cCmdImpItalico       := '';
-    cCmdImpFimItalico    := '';
-    cCmdImpCondensado    := '';
-    cCmdImpFimCondensado := '';
-    cCmdAlinhadoEsquerda := #27 + 'a0';
-    cCmdAlinhadoCentro   := #27 + 'a1';
-    cCmdAlinhadoDireita  := #27 + 'a2'; // Verificar comando BEMA/POS
-    cCmdCortaPapel       := #27 + 'w' + #29#249#31#49; // #27+'w' corta papel, demais voltam a configuração da impressora
+    cCmdImpZera          := ESC + '@'#29#249#32#48;  // ESC + +'@' Inicializa impressora, demais selecionam ESC/Bema temporariamente
+    cCmdEspacoLinha      := ESC + '3'#14;  // Verificar comando BEMA/POS
+    cCmdPagCod           := ESC + 't'#8; // codepage UTF-8
+    cCmdImpNegrito       := ESC + 'E'; //;ESC + 'N' + #3;
+    cCmdImpFimNegrito    := ESC + 'F'; //;ESC + 'N' + #2;
+    cCmdImpExpandido     := ESC + 'W'#1;
+    cCmdImpFimExpandido  := ESC + 'W'#0;
+    cCmdFonteNormal      := DC2;
+    cCmdFontePequena     := SI;
+    cCmdImpSublinhado    := ESC + '-'#1;
+    cCmdImpFimSublinhado := ESC + '-'#0;
+    cCmdImpItalico       := ESC + '4';
+    cCmdImpFimItalico    := ESC + '5';
+    cCmdImpCondensado    := ESC + SI;
+    cCmdImpFimCondensado := ESC + 'H';
+    cCmdAlinhadoEsquerda := ESC + 'a0';
+    cCmdAlinhadoCentro   := ESC + 'a1';
+    cCmdAlinhadoDireita  := ESC + 'a2'; // Verificar comando BEMA/POS
+    cCmdCortaPapel       := ESC + 'w'#29#249#31#49; // ESC + +'w' corta papel, demais voltam a configuração da impressora
     cCmdImprimeLogo      := '';
+    cCmdCodeBarEAN8      := '';
+    cCmdCodeBarEAN13     := '';
+    cCmdCodeBarSTD25     := '';
+    cCmdCodeBarINTER25   := '';
+    cCmdCodeBarCODE11    := '';
+    cCmdCodeBarCODE39    := '';
+    cCmdCodeBarCODE93    := '';
+    cCmdCodeBarCODE128   := '';
+    cCmdCodeBarUPCA      := '';
+    cCmdCodeBarCODABAR   := '';
+    cCmdCodeBarMSI       := '';
+    cCmdCodeBarFim       := NUL;
     nLargPapel           := 64;
   end
   else if MarcaImpressora = iDaruma then
   begin
-    cCmdImpZera          := #27'@';
-    cCmdEspacoLinha      := #27'2';
+    cCmdImpZera          := ESC + '@';
+    cCmdEspacoLinha      := ESC + '2';
     cCmdPagCod           := ''; // pelo aplicativo da Daruma (Tool) selecione ISO 8859-1 (TODO: tentar implementar essa mudança via código)
-    cCmdImpNegrito       := #27#69;
-    cCmdImpFimNegrito    := #27#70;
-    cCmdImpExpandido     := #27'W'#1;
-    cCmdImpFimExpandido  := #27'W'#0;
-    cCmdFonteNormal      := #20;
-    cCmdFontePequena     := #15;
-    cCmdImpSublinhado    := #27'-'#1;
-    cCmdImpFimSublinhado := #27'-'#0;
-    cCmdImpItalico       := #27'4'#1;
-    cCmdImpFimItalico    := #27'4'#0;
-    cCmdImpCondensado    := #27#15#1;
-    cCmdImpFimCondensado := #27#15#0;
-    cCmdAlinhadoEsquerda := #27#106#0;
-    cCmdAlinhadoCentro   := #27#106#1;
-    cCmdAlinhadoDireita  := #27#106#2;
-    cCmdCortaPapel       := #27#109;
-    cCmdImprimeLogo      := '';
+    cCmdImpNegrito       := ESC + 'E';
+    cCmdImpFimNegrito    := ESC + 'F';
+    cCmdImpExpandido     := ESC + 'W'#1;
+    cCmdImpFimExpandido  := ESC + 'W'#0;
+    cCmdFonteNormal      := DC4;
+    cCmdFontePequena     := SI;
+    cCmdImpSublinhado    := ESC + '-'#1;
+    cCmdImpFimSublinhado := ESC + '-'#0;
+    cCmdImpItalico       := ESC + '4'#1;
+    cCmdImpFimItalico    := ESC + '4'#0;
+    cCmdImpCondensado    := ESC + SI + #1;
+    cCmdImpFimCondensado := ESC + SI + #0;
+    cCmdAlinhadoEsquerda := ESC + 'j'#0;
+    cCmdAlinhadoCentro   := ESC + 'j'#1;
+    cCmdAlinhadoDireita  := ESC + 'j'#2;
+    cCmdCortaPapel       := ESC + 'm';
+    cCmdImprimeLogo      := SYN + #8 + SYN + #9;
+    cCmdCodeBarEAN8      := ESC + 'b2';
+    cCmdCodeBarEAN13     := ESC + 'b1';
+    cCmdCodeBarSTD25     := ESC + 'b3';
+    cCmdCodeBarINTER25   := ESC + 'b4';
+    cCmdCodeBarCODE11    := ESC + 'b11';
+    cCmdCodeBarCODE39    := ESC + 'b6';
+    cCmdCodeBarCODE93    := ESC + 'b7';
+    cCmdCodeBarCODE128   := ESC + 'b5';
+    cCmdCodeBarUPCA      := ESC + 'b8';
+    cCmdCodeBarCODABAR   := ESC + 'b9';
+    cCmdCodeBarMSI       := ESC + 'b10';
+    cCmdCodeBarFim       := NUL;
     nLargPapel           := 57;
   end
   else
   begin
-    cCmdImpZera          := #27 + '@';
-    cCmdEspacoLinha      := #27 + '3' + #14;
-    cCmdPagCod           := #27 + 't' + #39;
-    cCmdImpNegrito       := #27 + 'E1';
-    cCmdImpFimNegrito    := #27 + 'E2';
-    cCmdImpExpandido     := #29 + '!' + #16;
-    cCmdImpFimExpandido  := #29 + '!' + #0;
-    cCmdFonteNormal      := #27 + 'M0';
-    cCmdFontePequena     := #27 + 'M1';
-    cCmdImpSublinhado    := '';
-    cCmdImpFimSublinhado := '';
-    cCmdImpItalico       := '';
-    cCmdImpFimItalico    := '';
-    cCmdImpCondensado    := '';
-    cCmdImpFimCondensado := '';
-    cCmdAlinhadoEsquerda := #27 + 'a0';
-    cCmdAlinhadoCentro   := #27 + 'a1';
-    cCmdAlinhadoDireita  := #27 + 'a2';
-    cCmdCortaPapel       := #29 + 'V1';
-    cCmdImprimeLogo      := #29 + '(L'#6#0 + '0E  ' + #1#1;
+    cCmdImpZera          := ESC + '@';
+    cCmdEspacoLinha      := ESC + '3'#14;
+    cCmdPagCod           := ESC + 't'#39;
+    cCmdImpNegrito       := ESC + 'E1';
+    cCmdImpFimNegrito    := ESC + 'E2';
+    cCmdImpExpandido     := GS + '!'#16;
+    cCmdImpFimExpandido  := GS + '!'#0;
+    cCmdFonteNormal      := ESC + 'M0';
+    cCmdFontePequena     := ESC + 'M1';
+    cCmdImpSublinhado    := ESC + '-'#1;
+    cCmdImpFimSublinhado := ESC + '-'#0;
+    cCmdImpItalico       := ESC + '4'#1;
+    cCmdImpFimItalico    := ESC + '4'#0;
+    cCmdImpCondensado    := ESC + SI + #1;
+    cCmdImpFimCondensado := ESC + SI + #0;
+    cCmdAlinhadoEsquerda := ESC + 'a0';
+    cCmdAlinhadoCentro   := ESC + 'a1';
+    cCmdAlinhadoDireita  := ESC + 'a2';
+    cCmdCortaPapel       := #29'V1';
+    cCmdImprimeLogo      := #29'(L'#6#0'0E  '#1#1;
+    cCmdCodeBarEAN8      := '';
+    cCmdCodeBarEAN13     := '';
+    cCmdCodeBarSTD25     := '';
+    cCmdCodeBarINTER25   := '';
+    cCmdCodeBarCODE11    := '';
+    cCmdCodeBarCODE39    := '';
+    cCmdCodeBarCODE93    := '';
+    cCmdCodeBarCODE128   := '';
+    cCmdCodeBarUPCA      := '';
+    cCmdCodeBarCODABAR   := '';
+    cCmdCodeBarMSI       := '';
+    cCmdCodeBarFim       := NUL;
     nLargPapel           := 64;
   end;
 end;

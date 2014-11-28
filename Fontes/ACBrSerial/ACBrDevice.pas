@@ -145,6 +145,17 @@ TACBrDeviceHookLeString = procedure(const NumBytes, ATimeOut: Integer; var Retor
 { ACBrDevice é um componente apenas para usarmos o recurso de AutoExpand do
   ObjectInspector para SubComponentes, poderia ser uma Classe }
 
+TACBrECFConfigBarras = class(TPersistent)
+  private
+    FMostrarCodigo: Boolean;
+    FAltura: Integer;
+    FLarguraLinha: Integer;
+  published
+    property MostrarCodigo: Boolean read FMostrarCodigo write FMostrarCodigo;
+    property LarguraLinha: Integer read FLarguraLinha write FLarguraLinha;
+    property Altura: Integer read FAltura write FAltura;
+end;
+
 { TACBrDevice }
 
 TACBrDevice = class( TComponent )

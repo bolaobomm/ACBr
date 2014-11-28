@@ -48,10 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/11/2014
-[*] Adicionada a implementação das tags de formatação no ACBrNFeDANFeESCPOS
-    ele vai utilizar as mesmas tags que são utilizadas hoje no ACBrECF
-    o exemplo de utilização já possui botão e texto para teste
-    por: regys silveira
+[*] - Adicionada a implementação das tags de formatação no ACBrNFeDANFeESCPOS
+      ele vai utilizar as mesmas tags que são utilizadas hoje no ACBrECF
+      o exemplo de utilização já possui botão e texto para teste
+    - Adiconados comandos de impressão de codigos de barra e logomarca na Daruma
+      por: regys silveira
 
 27/11/2014
 [*] Adição no DataModule para FastReport campos usados para medicamentos que devem ser impressos no danfe
