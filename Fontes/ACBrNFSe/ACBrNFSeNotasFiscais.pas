@@ -591,7 +591,9 @@ begin
        FConfiguracoes.Geral.Save(NotaUtil.PathWithDelim(CaminhoArquivo) + Self.Items[i].NFSe.InfID.ID+'-Rps2.xml', LocNFSeW.Gerador.ArquivoFormatoXML);
      end;
 
-    if self.Configuracoes.Certificados.AssinaRPS and AssinaRPS
+//    if self.Configuracoes.Certificados.AssinaRPS and AssinaRPS
+    // Alterado por Italo em 28/11/2014
+    if self.Configuracoes.Certificados.AssinaRPS or AssinaRPS
      then begin
       {$IFDEF ACBrNFSeOpenSSL}
         if not(NotaUtil.Assinar(LocNFSeW.Gerador.ArquivoFormatoXML,

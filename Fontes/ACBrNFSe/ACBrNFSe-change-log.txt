@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/11/2014
+[*] Alterado a condição de assinar o não RPS caso seja usado o metodo Gerar em
+    vez de Enviar.
+    Por: Italo Jurisato Junior
+
 27/11/2014
 [*] Ajustes no provedor Virtual.
     Por: Italo Jurisato Junior
