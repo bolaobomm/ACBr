@@ -191,6 +191,8 @@ begin
   <ad>,</ad>,                    34,35
   <ce>,</ce>,                    36,37
   <ae>,</ae> );                  38,39
+  <fn>,</fn>                     40,41
+  <fp>,</fp>                     42,43
   *****************************************************************************}
 
   Result := '';
@@ -242,6 +244,10 @@ begin
     37: Result := cCmdAlinhadoEsquerda;
     38: Result := cCmdAlinhadoEsquerda;
     39: Result := cCmdAlinhadoEsquerda;
+    40: Result := cCmdFonteNormal;
+    41: Result := '';
+    42: Result := cCmdFontePequena;
+    43: Result := cCmdFonteNormal;
   else
     Result := '' ;
   end;

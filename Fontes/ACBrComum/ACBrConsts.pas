@@ -103,7 +103,7 @@ const
 
   cTimeout = 3 ;  { Tempo PADRAO para msg de falha de comunicacao }
 
-  ARRAY_TAGS: array[0..39] of String = ( '</linha_simples>', '</linha_dupla>',
+  ARRAY_TAGS: array[0..43] of String = ( '</linha_simples>', '</linha_dupla>',
     '<e>', '</e>', '<n>', '</n>', '<s>', '</s>', '<c>', '</c>', '<i>', '</i>',
     '<ean8>', '</ean8>', '<ean13>', '</ean13>',
     '<std>', '</std>', '<inter>', '</inter>',
@@ -111,7 +111,7 @@ const
     '<code93>', '</code93>', '<code128>', '</code128>',
     '<upca>', '</upca>', '<codabar>', '</codabar>',
     '<msi>', '</msi>',
-    '<ad>','</ad>','<ce>','</ce>','<ae>','</ae>' );
+    '<ad>','</ad>','<ce>','</ce>','<ae>','</ae>','<fn>', '</fn>', '<fp>', '</fp>' );
 
   TAGS_FORMATACAO: set of byte = [2..11] ;
   TAGS_BLOCO: set of byte = [12..39] ;
