@@ -185,15 +185,18 @@ var
 
   function ConfigurarBarras(const ACodigo: AnsiString): AnsiString;
   var
-    Largura: AnsiString;
-    Altura: AnsiString;
+    Largura: Integer;
+    Altura: Integer;
     Mostrar: AnsiString;
   begin
-    Largura := IntToStrZero( max( min( ConfigBarras.LarguraLinha, 5), 2) , 1);
-    Altura  := IntToStrZero( max( min( ConfigBarras.Altura, 200), 50), 2);
-    Mostrar := IfThen(ConfigBarras.MostrarCodigo, '01', '00');
+    if Trim(ACodigo) <> '' then
+    begin
+      Largura := StrToInt('$'+ IntToHex( max( min( ConfigBarras.LarguraLinha, 5), 2), 2));
+      Altura  := StrToInt('$'+ IntToHex( max( min( ConfigBarras.Altura, 200), 50), 2));
+      Mostrar := IfThen(ConfigBarras.MostrarCodigo, '1', '0');
 
-    Result := ACodigo + Largura + Altura + Mostrar;
+      Result := ACodigo + chr(Largura) + chr(Altura) + Mostrar;
+    end;
   end;
 
 begin
@@ -456,17 +459,17 @@ begin
     cCmdAlinhadoDireita  := ESC + 'j'#2;
     cCmdCortaPapel       := ESC + 'm';
     cCmdImprimeLogo      := SYN + BS + SYN + TAB;
-    cCmdCodeBarEAN8      := ESC + 'b2';
-    cCmdCodeBarEAN13     := ESC + 'b1';
-    cCmdCodeBarSTD25     := ESC + 'b3';
-    cCmdCodeBarINTER25   := ESC + 'b4';
-    cCmdCodeBarCODE11    := ESC + 'b11';
-    cCmdCodeBarCODE39    := ESC + 'b6';
-    cCmdCodeBarCODE93    := ESC + 'b7';
-    cCmdCodeBarCODE128   := ESC + 'b5';
-    cCmdCodeBarUPCA      := ESC + 'b8';
-    cCmdCodeBarCODABAR   := ESC + 'b9';
-    cCmdCodeBarMSI       := ESC + 'b10';
+    cCmdCodeBarEAN8      := ESC + 'b' + chr($02);
+    cCmdCodeBarEAN13     := ESC + 'b' + chr($01);
+    cCmdCodeBarSTD25     := ESC + 'b' + chr($03);
+    cCmdCodeBarINTER25   := ESC + 'b' + chr($04);
+    cCmdCodeBarCODE11    := ESC + 'b' + chr($11);
+    cCmdCodeBarCODE39    := ESC + 'b' + chr($06);
+    cCmdCodeBarCODE93    := ESC + 'b' + chr($07);
+    cCmdCodeBarCODE128   := ESC + 'b' + chr($05);
+    cCmdCodeBarUPCA      := ESC + 'b' + chr($08);
+    cCmdCodeBarCODABAR   := ESC + 'b' + chr($09);
+    cCmdCodeBarMSI       := ESC + 'b' + chr($10);
     cCmdCodeBarFim       := NUL;
     nLargPapel           := 57;
   end

@@ -303,7 +303,7 @@ object frmPrincipal: TfrmPrincipal
     Device.Baud = 115200
     ConfigBarras.MostrarCodigo = True
     ConfigBarras.LarguraLinha = 2
-    ConfigBarras.Altura = 40
+    ConfigBarras.Altura = 100
     MarcaImpressora = iDaruma
     LinhasEntreCupons = 5
     ImprimeEmUmaLinha = False
