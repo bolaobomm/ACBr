@@ -320,6 +320,9 @@ TACBrECFFiscNET = class( TACBrECFClass )
        Finalidade: TACBrECFFinalizaArqMFD = finMFD;
        TipoContador: TACBrECFTipoContador = tpcCOO  ) ; override ;
 
+    Procedure ArquivoMF_DLL(NomeArquivo: AnsiString); override ;
+    Procedure ArquivoMFD_DLL(NomeArquivo: AnsiString); override ;
+
     Procedure ImprimeCheque(Banco : String; Valor : Double ; Favorecido,
        Cidade : String; Data : TDateTime ;Observacao : String = '') ; override ;
     Procedure CancelaImpressaoCheque ; override ;
@@ -2953,6 +2956,18 @@ begin
   end;
 end;
 
+procedure TACBrECFFiscNET.ArquivoMF_DLL(NomeArquivo: AnsiString);
+begin
+  // TODO:
+  inherited ArquivoMF_DLL(NomeArquivo);
+end;
+
+procedure TACBrECFFiscNET.ArquivoMFD_DLL(NomeArquivo: AnsiString);
+begin
+  // TODO:
+  inherited ArquivoMFD_DLL(NomeArquivo);
+end;
+
 function TACBrECFFiscNET.GetDadosUltimaReducaoZ: AnsiString;
 var
    RetCmd, S, SS : AnsiString ;
@@ -2973,12 +2988,12 @@ begin
 
   with TACBrECF(fpOwner) do
   begin
-    ECFCRZ := StrToIntDef( NumCRZ, 0);
-    ECFCRO := StrToIntDef( NumCRO, 0);
-    DHUltZ := DataHoraUltimaReducaoZ;
+    try ECFCRZ := StrToIntDef( NumCRZ, 0); except ECFCRZ := -1; end;
+    try ECFCRO := StrToIntDef( NumCRO, 0); except ECFCRO := -1; end;
+    try DHUltZ := DataHoraUltimaReducaoZ;  except DHUltZ :=  0; end;
   end;
 
-  ECFVBruta := LeMoeda( 'VendaBrutaReducao['+IntToStr(ECFCRZ) + ']' ) ;
+   try ECFVBruta := LeMoeda( 'VendaBrutaReducao['+IntToStr(ECFCRZ) + ']' ) ; except ECFVBruta := -1 end;
 
   FiscNETComando.NomeComando := 'LeTexto' ;
   FiscNETComando.AddParamString( 'NomeTexto', 'DadosUltimaReducaoZ' );
@@ -3017,9 +3032,9 @@ begin
     CRZ             := ECFCRZ;
     ValorVendaBruta := ECFVBruta;
 
-    ValorGrandeTotal := RoundTo( StrToFloatDef( copy( RetCmd, 3, 18 ), 0 ) / 100, -2 ) ;
-    CancelamentoICMS := RoundTo( StrToFloatDef( copy( RetCmd, 21, 14 ), 0 ) / 100, -2 )  ;
-    DescontoICMS := RoundTo( StrToFloatDef( copy( RetCmd, 35, 14 ), 0 ) / 100, -2 ) ;
+    ValorGrandeTotal := RoundTo( StrToFloatDef( copy( RetCmd,  3, 18 ), -1 ) / 100, -2 ) ;
+    CancelamentoICMS := RoundTo( StrToFloatDef( copy( RetCmd, 21, 14 ), -1 ) / 100, -2 )  ;
+    DescontoICMS     := RoundTo( StrToFloatDef( copy( RetCmd, 35, 14 ), -1 ) / 100, -2 ) ;
 
     // Dados das Aliquotas //
     S := copy( RetCmd, 113, 224 ) ;  // 16 * 14
@@ -3032,9 +3047,9 @@ begin
       AdicionaAliquota( AliqZ );
     end ;
 
-    SubstituicaoTributariaICMS := RoundTo( StrToFloatDef( copy( RetCmd, 337, 14 ), 0 ) / 100, -2 ) ;
-    IsentoICMS                 := RoundTo( StrToFloatDef( copy( RetCmd, 351, 14 ), 0 ) / 100, -2 ) ;
-    NaoTributadoICMS           := RoundTo( StrToFloatDef( copy( RetCmd, 365, 14 ), 0 ) / 100, -2 ) ;
+    SubstituicaoTributariaICMS := RoundTo( StrToFloatDef( copy( RetCmd, 337, 14 ), -1 ) / 100, -2 ) ;
+    IsentoICMS                 := RoundTo( StrToFloatDef( copy( RetCmd, 351, 14 ), -1 ) / 100, -2 ) ;
+    NaoTributadoICMS           := RoundTo( StrToFloatDef( copy( RetCmd, 365, 14 ), -1 ) / 100, -2 ) ;
 
     { TOTALIZADORES NÃO FISCAIS }
     S  := Copy(RetCmd,407,126);   // 9 * 14
@@ -3058,7 +3073,7 @@ begin
                                                copy( RetCmd, 585, 2 ) + DateSeparator +
                                                copy( RetCmd, 587, 2 ), 0, 'dd/mm/yy' );
     if Length(RetCmd) > 589 then
-       AcrescimoICMS := RoundTo( StrToFloatDef( copy( RetCmd, 589, 14 ), 0 ) / 100, -2 ) ;
+       AcrescimoICMS := RoundTo( StrToFloatDef( copy( RetCmd, 589, 14 ), -1 ) / 100, -2 ) ;
 
     // TODO: 14 ACRFIN Acréscimo Financeiro                         603  616
 
