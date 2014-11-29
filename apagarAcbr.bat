@@ -1,10 +1,3 @@
 cd\
-del ACBr*.bpl /s
-del ACBr*.dcp /s
-del ACBr*.dcu /s
-del PCN*.bpl  /s
-del PCN*.dcp  /s
-del PCN*.dcu  /s
-del SYNA*.bpl /s
-del SYNA*.dcp /s
-del SYNA*.dcu /s
+del ACBr*.bpl  ACBr*.dcp  ACBr*.dcu  PCN*.bpl PCN*.dcp PCN*.dcu SYNA*.bpl  SYNA*.dcp SYNA*.dcu /s
+pause
