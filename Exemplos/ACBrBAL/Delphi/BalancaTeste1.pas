@@ -1,4 +1,4 @@
-{$I ACBr.inc}
+{$I ..\..\Fontes\ACBrComum\ACBr.inc}
 
 unit BalancaTeste1;
 
@@ -11,17 +11,12 @@ uses
 type
   TForm1 = class(TForm)
     ACBrBAL1: TACBrBAL;
-    btnConectar: TButton;
-    btnDesconectar: TButton;
-    btnLerPeso: TButton;
     sttPeso: TStaticText;
     sttResposta: TStaticText;
     Label2: TLabel;
     Label3: TLabel;
-    btnSair: TButton;
     edtTimeOut: TEdit;
     Label9: TLabel;
-    chbMonitorar: TCheckBox;
     Label10: TLabel;
     Memo1: TMemo;
     Panel1: TPanel;
@@ -39,6 +34,13 @@ type
     cmbParity: TComboBox;
     Label11: TLabel;
     cmbStopBits: TComboBox;
+    Panel2: TPanel;
+    btnConectar: TButton;
+    btnDesconectar: TButton;
+    btnLerPeso: TButton;
+    chbMonitorar: TCheckBox;
+    btnLimpar: TButton;
+    btnSair: TButton;
     procedure btnConectarClick(Sender: TObject);
     procedure btnLerPesoClick(Sender: TObject);
     procedure btnSairClick(Sender: TObject);
@@ -47,9 +49,14 @@ type
     procedure edtTimeOutKeyPress(Sender: TObject; var Key: Char);
     procedure chbMonitorarClick(Sender: TObject);
     procedure ACBrBAL1LePeso(Peso: Double; Resposta: String);
+    procedure btnLimparClick(Sender: TObject);
   private
     { Private declarations }
+
+    FRespostaList: TStringList;
+
     Function Converte( cmd : String) : String;
+
   public
     { Public declarations }
   end;
@@ -131,7 +138,15 @@ end;
 
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  ACBrBAL1.Desativar ;
+  ACBrBAL1.Desativar;
+
+  // Salvar
+  if Assigned(FRespostaList) then
+  begin
+    FRespostaList.SaveToFile(ChangeFileExt(ParamStr(0), '.log'));
+    FRespostaList.Free;
+  end;
+
 end;
 
 procedure TForm1.edtTimeOutKeyPress(Sender: TObject; var Key: Char);
@@ -148,8 +163,18 @@ end;
 procedure TForm1.ACBrBAL1LePeso(Peso: Double; Resposta: String);
 var valid : integer;
 begin
-   sttPeso.Caption     := formatFloat('##0.000', Peso );
+  // Objeto para armazenar as leituras
+  if (not Assigned(FRespostaList)) then
+    FRespostaList := TStringList.Create;
+
+  if FRespostaList.Count > 0 then
+    FRespostaList.Add(StringOfChar('-', 80));
+
+   sttPeso.Caption     := formatFloat('######0.000', Peso );
    sttResposta.Caption := Converte( Resposta ) ;
+
+   // Acrescentar resposta
+   FRespostaList.Add(sttResposta.Caption);
 
    if Peso > 0 then
       Memo1.Lines.Text := 'Leitura OK !'
@@ -165,6 +190,12 @@ begin
        -10 : Memo1.Lines.Text := 'Sobrepeso !' ;
       end;
     end ;
+end;
+
+procedure TForm1.btnLimparClick(Sender: TObject);
+begin
+  sttPeso.Caption := '';
+  sttResposta.Caption := '';
 end;
 
 end.

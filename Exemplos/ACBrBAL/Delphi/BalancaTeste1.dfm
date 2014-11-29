@@ -1,9 +1,9 @@
 object Form1: TForm1
-  Left = 444
-  Top = 211
+  Left = 248
+  Top = 141
+  Width = 813
+  Height = 379
   Caption = 'Form1'
-  ClientHeight = 337
-  ClientWidth = 448
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,121 +16,72 @@ object Form1: TForm1
   PixelsPerInch = 96
   TextHeight = 16
   object Label2: TLabel
-    Left = 208
-    Top = 135
+    Left = 200
+    Top = 49
     Width = 100
     Height = 16
     Caption = 'Ultima Resposta'
   end
   object Label3: TLabel
-    Left = 208
-    Top = 90
+    Left = 200
+    Top = 4
     Width = 105
     Height = 16
     Caption = 'Ultimo Peso Lido:'
   end
   object Label9: TLabel
-    Left = 208
-    Top = 280
+    Left = 601
+    Top = 4
     Width = 51
     Height = 16
     Caption = 'TimeOut'
   end
   object Label10: TLabel
-    Left = 208
-    Top = 188
+    Left = 200
+    Top = 270
     Width = 68
     Height = 16
     Caption = 'Mensagem'
   end
-  object btnConectar: TButton
-    Left = 203
-    Top = 16
-    Width = 105
-    Height = 25
-    Caption = 'Ativar'
-    TabOrder = 0
-    OnClick = btnConectarClick
-  end
-  object btnDesconectar: TButton
-    Left = 331
-    Top = 16
-    Width = 105
-    Height = 25
-    Caption = 'Desativar'
-    Enabled = False
-    TabOrder = 1
-    OnClick = btnDesconectarClick
-  end
-  object btnLerPeso: TButton
-    Left = 256
-    Top = 56
-    Width = 129
-    Height = 25
-    Caption = 'Ler Peso'
-    Enabled = False
-    TabOrder = 2
-    OnClick = btnLerPesoClick
-  end
   object sttPeso: TStaticText
-    Left = 208
-    Top = 106
-    Width = 233
+    Left = 200
+    Top = 20
+    Width = 393
     Height = 24
     AutoSize = False
     BevelKind = bkTile
-    Caption = 'sttPeso'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -16
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 6
+    TabOrder = 1
   end
   object sttResposta: TStaticText
-    Left = 208
-    Top = 152
-    Width = 233
-    Height = 36
+    Left = 200
+    Top = 66
+    Width = 462
+    Height = 199
     AutoSize = False
     BevelKind = bkTile
-    Caption = 'sttResposta'
-    TabOrder = 7
-  end
-  object btnSair: TButton
-    Left = 368
-    Top = 304
-    Width = 75
-    Height = 25
-    Caption = 'Sair'
-    TabOrder = 5
-    OnClick = btnSairClick
+    TabOrder = 2
   end
   object edtTimeOut: TEdit
-    Left = 208
-    Top = 302
-    Width = 73
+    Left = 601
+    Top = 20
+    Width = 61
     Height = 24
-    TabOrder = 4
-    Text = '2000'
+    TabOrder = 0
+    Text = '5000'
     OnKeyPress = edtTimeOutKeyPress
   end
-  object chbMonitorar: TCheckBox
-    Left = 208
-    Top = 259
-    Width = 233
-    Height = 17
-    Caption = 'Monitorar a Balan'#231'a'
-    TabOrder = 3
-    OnClick = chbMonitorarClick
-  end
   object Memo1: TMemo
-    Left = 208
-    Top = 208
-    Width = 233
+    Left = 200
+    Top = 288
+    Width = 461
     Height = 42
-    TabOrder = 8
+    TabOrder = 3
   end
   object Panel1: TPanel
     Left = 8
@@ -138,7 +89,7 @@ object Form1: TForm1
     Width = 177
     Height = 321
     BevelOuter = bvLowered
-    TabOrder = 9
+    TabOrder = 4
     object Label1: TLabel
       Left = 16
       Top = 6
@@ -204,7 +155,10 @@ object Form1: TForm1
         'Urano'
         'LucasTec'
         'Magna'
-		'Magellan')
+        'Digitron'
+        'Magellan'
+        'UranoPOP'
+        'Lider')
     end
     object cmbPortaSerial: TComboBox
       Left = 16
@@ -314,10 +268,77 @@ object Form1: TForm1
         '')
     end
   end
+  object Panel2: TPanel
+    Left = 674
+    Top = 0
+    Width = 131
+    Height = 345
+    Align = alRight
+    BevelInner = bvRaised
+    BevelOuter = bvLowered
+    TabOrder = 5
+    object btnConectar: TButton
+      Left = 16
+      Top = 8
+      Width = 105
+      Height = 25
+      Caption = 'Ativar'
+      TabOrder = 0
+      OnClick = btnConectarClick
+    end
+    object btnDesconectar: TButton
+      Left = 16
+      Top = 45
+      Width = 105
+      Height = 25
+      Caption = 'Desativar'
+      Enabled = False
+      TabOrder = 1
+      OnClick = btnDesconectarClick
+    end
+    object btnLerPeso: TButton
+      Left = 16
+      Top = 80
+      Width = 105
+      Height = 25
+      Caption = 'Ler Peso'
+      Enabled = False
+      TabOrder = 2
+      OnClick = btnLerPesoClick
+    end
+    object chbMonitorar: TCheckBox
+      Left = 17
+      Top = 115
+      Width = 103
+      Height = 42
+      Caption = 'Monitorar Balan'#231'a'
+      TabOrder = 3
+      WordWrap = True
+      OnClick = chbMonitorarClick
+    end
+    object btnLimpar: TButton
+      Left = 16
+      Top = 208
+      Width = 105
+      Height = 25
+      Caption = 'Limpar'
+      TabOrder = 4
+      OnClick = btnLimparClick
+    end
+    object btnSair: TButton
+      Left = 16
+      Top = 243
+      Width = 105
+      Height = 25
+      Caption = 'Sair'
+      TabOrder = 5
+      OnClick = btnSairClick
+    end
+  end
   object ACBrBAL1: TACBrBAL
     Porta = 'COM1'
     OnLePeso = ACBrBAL1LePeso
-    Left = 408
-    Top = 56
+    Left = 696
+    Top = 160
   end
 end
