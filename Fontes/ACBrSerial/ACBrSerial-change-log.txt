@@ -98,6 +98,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 29/11/2014
+-- ACBrBal --  (por: Regys Silveira)
+[+] Adicionada balança Lider.
+    Contribuição: Laércio Amici
+
+Data: 29/11/2014
 -- ACBrECFFiscNet --  (por: DSA)
 [-] Ajuste em DadosUltimaReducaoZ para que não seja interrompida por exceção,
     caso ECF ainda não contenha uma Redução Z na memória
