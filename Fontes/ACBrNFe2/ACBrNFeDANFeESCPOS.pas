@@ -118,6 +118,7 @@ type
     function GetLinhaDupla: String;
     function DecodificarTagsFormatacao(AString: AnsiString): AnsiString;
     function TraduzirTag(const ATag: AnsiString): AnsiString;
+    function ConfigurarBarrasDaruma(const ACodigo: AnsiString): AnsiString;
   protected
     FpNFe: TNFe;
     FpEvento: TEventoNFe;
@@ -178,27 +179,26 @@ begin
   AHexStr := Result;
 end;
 
+function TACBrNFeDANFeESCPOS.ConfigurarBarrasDaruma(const ACodigo: AnsiString): AnsiString;
+var
+  Largura: Integer;
+  Altura: Integer;
+  Mostrar: AnsiString;
+begin
+  if Trim(ACodigo) <> '' then
+  begin
+    Largura := StrToInt('$'+ IntToHex( max( min( ConfigBarras.LarguraLinha, 5), 2), 2));
+    Altura  := StrToInt('$'+ IntToHex( max( min( ConfigBarras.Altura, 200), 50), 2));
+    Mostrar := IfThen(ConfigBarras.MostrarCodigo, '1', '0');
+
+    Result := ACodigo + chr(Largura) + chr(Altura) + Mostrar;
+  end;
+end;
+
 function TACBrNFeDANFeESCPOS.TraduzirTag(const ATag: AnsiString): AnsiString;
 var
   I: Integer;
   LowerTag: AnsiString;
-
-  function ConfigurarBarras(const ACodigo: AnsiString): AnsiString;
-  var
-    Largura: Integer;
-    Altura: Integer;
-    Mostrar: AnsiString;
-  begin
-    if Trim(ACodigo) <> '' then
-    begin
-      Largura := StrToInt('$'+ IntToHex( max( min( ConfigBarras.LarguraLinha, 5), 2), 2));
-      Altura  := StrToInt('$'+ IntToHex( max( min( ConfigBarras.Altura, 200), 50), 2));
-      Mostrar := IfThen(ConfigBarras.MostrarCodigo, '1', '0');
-
-      Result := ACodigo + chr(Largura) + chr(Altura) + Mostrar;
-    end;
-  end;
-
 begin
   {*****************************************************************************
   tags permitidas pelo acbr, nem todas foram implementadas ainda.
@@ -246,27 +246,27 @@ begin
      9: Result := cCmdImpFimCondensado;
     10: Result := cCmdImpItalico;
     11: Result := cCmdImpFimItalico;
-    12: Result := ConfigurarBarras(cCmdCodeBarEAN8);
+    12: Result := cCmdCodeBarEAN8;
     13: Result := cCmdCodeBarFim;
-    14: Result := ConfigurarBarras(cCmdCodeBarEAN13);
+    14: Result := cCmdCodeBarEAN13;
     15: Result := cCmdCodeBarFim;
-    16: Result := ConfigurarBarras(cCmdCodeBarSTD25);
+    16: Result := cCmdCodeBarSTD25;
     17: Result := cCmdCodeBarFim;
-    18: Result := ConfigurarBarras(cCmdCodeBarINTER25);
+    18: Result := cCmdCodeBarINTER25;
     19: Result := cCmdCodeBarFim;
-    20: Result := ConfigurarBarras(cCmdCodeBarCODE11);
+    20: Result := cCmdCodeBarCODE11;
     21: Result := cCmdCodeBarFim;
-    22: Result := ConfigurarBarras(cCmdCodeBarCODE39);
+    22: Result := cCmdCodeBarCODE39;
     23: Result := cCmdCodeBarFim;
-    24: Result := ConfigurarBarras(cCmdCodeBarCODE93);
+    24: Result := cCmdCodeBarCODE93;
     25: Result := cCmdCodeBarFim;
-    26: Result := ConfigurarBarras(cCmdCodeBarCODE128);
+    26: Result := cCmdCodeBarCODE128;
     27: Result := cCmdCodeBarFim;
-    28: Result := ConfigurarBarras(cCmdCodeBarUPCA);
+    28: Result := cCmdCodeBarUPCA;
     29: Result := cCmdCodeBarFim;
-    30: Result := ConfigurarBarras(cCmdCodeBarCODABAR);
+    30: Result := cCmdCodeBarCODABAR;
     31: Result := cCmdCodeBarFim;
-    32: Result := ConfigurarBarras(cCmdCodeBarMSI);
+    32: Result := cCmdCodeBarMSI;
     33: Result := cCmdCodeBarFim;
     34: Result := cCmdAlinhadoDireita;
     35: Result := cCmdAlinhadoEsquerda;
@@ -459,17 +459,17 @@ begin
     cCmdAlinhadoDireita  := ESC + 'j'#2;
     cCmdCortaPapel       := ESC + 'm';
     cCmdImprimeLogo      := SYN + BS + SYN + TAB;
-    cCmdCodeBarEAN8      := ESC + 'b' + chr($02);
-    cCmdCodeBarEAN13     := ESC + 'b' + chr($01);
-    cCmdCodeBarSTD25     := ESC + 'b' + chr($03);
-    cCmdCodeBarINTER25   := ESC + 'b' + chr($04);
-    cCmdCodeBarCODE11    := ESC + 'b' + chr($11);
-    cCmdCodeBarCODE39    := ESC + 'b' + chr($06);
-    cCmdCodeBarCODE93    := ESC + 'b' + chr($07);
-    cCmdCodeBarCODE128   := ESC + 'b' + chr($05);
-    cCmdCodeBarUPCA      := ESC + 'b' + chr($08);
-    cCmdCodeBarCODABAR   := ESC + 'b' + chr($09);
-    cCmdCodeBarMSI       := ESC + 'b' + chr($10);
+    cCmdCodeBarEAN8      := ConfigurarBarrasDaruma( ESC + 'b' + chr($02) );
+    cCmdCodeBarEAN13     := ConfigurarBarrasDaruma( ESC + 'b' + chr($01) );
+    cCmdCodeBarSTD25     := ConfigurarBarrasDaruma( ESC + 'b' + chr($03) );
+    cCmdCodeBarINTER25   := ConfigurarBarrasDaruma( ESC + 'b' + chr($04) );
+    cCmdCodeBarCODE11    := ConfigurarBarrasDaruma( ESC + 'b' + chr($11) );
+    cCmdCodeBarCODE39    := ConfigurarBarrasDaruma( ESC + 'b' + chr($06) );
+    cCmdCodeBarCODE93    := ConfigurarBarrasDaruma( ESC + 'b' + chr($07) );
+    cCmdCodeBarCODE128   := ConfigurarBarrasDaruma( ESC + 'b' + chr($05) );
+    cCmdCodeBarUPCA      := ConfigurarBarrasDaruma( ESC + 'b' + chr($08) );
+    cCmdCodeBarCODABAR   := ConfigurarBarrasDaruma( ESC + 'b' + chr($09) );
+    cCmdCodeBarMSI       := ConfigurarBarrasDaruma( ESC + 'b' + chr($10) );
     cCmdCodeBarFim       := NUL;
     nLargPapel           := 57;
   end
