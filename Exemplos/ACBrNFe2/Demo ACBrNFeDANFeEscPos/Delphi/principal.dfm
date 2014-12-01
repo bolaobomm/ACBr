@@ -289,7 +289,7 @@ object frmPrincipal: TfrmPrincipal
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
-    CasasDecimais._qCom = 0
+    CasasDecimais._qCom = 3
     CasasDecimais._vUnCom = 2
     ExibirResumoCanhoto = False
     FormularioContinuo = False

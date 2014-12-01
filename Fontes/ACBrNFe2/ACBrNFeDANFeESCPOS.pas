@@ -590,10 +590,10 @@ end;
 
 procedure TACBrNFeDANFeESCPOS.GerarItens;
 var
-  i : integer;
+  i: Integer;
   nTamDescricao: Integer;
-  StrDescricao: String;
-  VlrLiquido: Double;
+  fQuant, VlrLiquido: Double;
+  sItem, sCodigo, sDescricao, sQuantidade, sUnidade, sVlrUnitario, sVlrProduto: AnsiString;
 begin
   if ImprimeItens then
   begin
@@ -601,40 +601,58 @@ begin
     FBuffer.Add(cCmdFonteNormal + ParseTextESCPOS('#|COD|DESCRIÇÃO|QTD|UN|VL UN R$|VL TOTAL R$'));
     FBuffer.Add(GetLinhaSimples);
 
-    for i:=0 to FpNFe.Det.Count - 1 do
+    for i := 0 to FpNFe.Det.Count - 1 do
     begin
+      sItem        := IntToStrZero(FpNFe.Det.Items[i].Prod.nItem, 3);
+      sCodigo      := Trim(FpNFe.Det.Items[i].Prod.cProd);
+      sDescricao   := Trim(FpNFe.Det.Items[i].Prod.xProd);
+      sUnidade     := Trim(FpNFe.Det.Items[i].Prod.uCom);
+      sVlrProduto  := FormatFloat('#,###,##0.00', FpNFe.Det.Items[i].Prod.vProd);
+
+      // formatar conforme configurado
+      sVlrUnitario := DFeUtil.FormatFloat(FpNFe.Det.Items[i].Prod.VUnCom,
+        DFeUtil.SeSenao(CasasDecimais._Mask_vUnCom = '',
+                        NotaUtil.PreparaCasasDecimais(CasasDecimais._vUnCom),
+                        CasasDecimais._Mask_vUnCom)
+        );
+
+      // formatar conforme configurado somente quando houver decimais
+      // caso contrário mostrar somente o número inteiro
+      fQuant := FpNFe.Det.Items[i].Prod.QCom;
+      if Frac(fQuant) > 0 then
+      begin
+        sQuantidade  := DFeUtil.FormatFloat(fQuant,
+          DFeUtil.SeSenao(CasasDecimais._Mask_qCom = '',
+                          NotaUtil.PreparaCasasDecimais(CasasDecimais._qCom),
+                          CasasDecimais._Mask_qCom)
+          );
+      end
+      else
+      begin
+        sQuantidade := FloatToStr(fQuant);
+      end;
+
       if ImprimeEmUmaLinha then
       begin
-        FLinhaCmd := IntToStrZero(FpNFe.Det.Items[i].Prod.nItem,3) + ' '+
-                     Trim(FpNFe.Det.Items[i].Prod.cProd) + ' ' +
-                     '[DesProd] ' +
-                     DFeUtil.FormatFloat(FpNFe.Det.Items[i].Prod.QCom,DFeUtil.SeSenao(CasasDecimais._Mask_qCom='',NotaUtil.PreparaCasasDecimais(CasasDecimais._qCom),CasasDecimais._Mask_qCom)) + ' ' +
-                     Trim(FpNFe.Det.Items[i].Prod.uCom) + ' X ' +
-                     DFeUtil.FormatFloat(FpNFe.Det.Items[i].Prod.VUnCom,DFeUtil.SeSenao(CasasDecimais._Mask_vUnCom='',NotaUtil.PreparaCasasDecimais(CasasDecimais._vUnCom),CasasDecimais._Mask_vUnCom)) + ' ' +
-                     FormatFloat('#,###,##0.00', FpNFe.Det.Items[i].Prod.vProd);
+        FLinhaCmd := sItem + ' ' + sCodigo + ' ' + '[DesProd] ' + sQuantidade + ' ' +
+          sUnidade + ' X ' + sVlrUnitario + ' ' + sVlrProduto;
 
+        // acerta tamanho da descrição
         nTamDescricao := nLargPapel - Length(FLinhaCmd) + 9;
-        StrDescricao := Copy(FpNFe.Det.Items[i].Prod.xProd, 1, nTamDescricao);
-        while Length(strDescricao) < nTamDescricao  do
-          StrDescricao := StrDescricao + ' ';
+        sDescricao := padL(Copy(sDescricao, 1, nTamDescricao), nTamDescricao);
 
-        FLinhaCmd := StringReplace(FLinhaCmd, '[DesProd]', StrDescricao, [rfReplaceAll]);
+        FLinhaCmd := StringReplace(FLinhaCmd, '[DesProd]', sDescricao, [rfReplaceAll]);
         FLinhaCmd := ParseTextESCPOS(FLinhaCmd);
         FBuffer.Add(cCmdAlinhadoEsquerda + cCmdFontePequena + FLinhaCmd);
       end
       else
       begin
-        FLinhaCmd :=
-          IntToStrZero(FpNFe.Det.Items[i].Prod.nItem, 3) + ' ' +
-          padL(Trim(FpNFe.Det.Items[i].Prod.cProd), 8) + ' ' +
-          padL(Trim(FpNFe.Det.Items[i].Prod.xProd), nLargPapel - 13);
+        FLinhaCmd := sItem + ' ' + sCodigo + ' ' + sDescricao;
         FBuffer.Add(cCmdAlinhadoEsquerda + cCmdFontePequena + FLinhaCmd);
 
         FLinhaCmd :=
-          padL(DFeUtil.FormatFloat(FpNFe.Det.Items[i].Prod.QCom,DFeUtil.SeSenao(CasasDecimais._Mask_qCom='',NotaUtil.PreparaCasasDecimais(CasasDecimais._qCom),CasasDecimais._Mask_qCom)), 15) + ' ' +
-          padL(Trim(FpNFe.Det.Items[i].Prod.uCom), 6) + ' X ' +
-          padL(DFeUtil.FormatFloat(FpNFe.Det.Items[i].Prod.VUnCom,DFeUtil.SeSenao(CasasDecimais._Mask_vUnCom='',NotaUtil.PreparaCasasDecimais(CasasDecimais._vUnCom),CasasDecimais._Mask_vUnCom)), 13) + '|' +
-          DFeUtil.FormatFloat(FpNFe.Det.Items[i].Prod.vProd, '0.00');
+          padL(sQuantidade, 15) + ' ' + padL(sUnidade, 6) + ' X ' +
+          padL(sVlrUnitario, 13) + '|' + sVlrProduto;
         FLinhaCmd := padS(FLinhaCmd, nLargPapel, '|');
         FBuffer.Add(cCmdAlinhadoEsquerda + cCmdFontePequena + FLinhaCmd);
       end;
