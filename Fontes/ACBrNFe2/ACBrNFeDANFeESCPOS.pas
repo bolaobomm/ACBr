@@ -119,6 +119,7 @@ type
     function DecodificarTagsFormatacao(AString: AnsiString): AnsiString;
     function TraduzirTag(const ATag: AnsiString): AnsiString;
     function ConfigurarBarrasDaruma(const ACodigo: AnsiString): AnsiString;
+    function ConfigurarBarrasBematech(const ACodigo: AnsiString): AnsiString;
   protected
     FpNFe: TNFe;
     FpEvento: TEventoNFe;
@@ -193,6 +194,22 @@ begin
 
     Result := ACodigo + chr(Largura) + chr(Altura) + Mostrar;
   end;
+end;
+
+function TACBrNFeDANFeESCPOS.ConfigurarBarrasBematech(const ACodigo: AnsiString): AnsiString;
+var
+  L, A : Integer ;
+begin
+  with ConfigBarras do
+  begin
+    L := IfThen( LarguraLinha = 0, 3, max(min(LarguraLinha,4),2) );
+    A := IfThen( Altura = 0, 162, max(min(Altura,255),1) );
+  end ;
+
+  Result := GS + 'w' + chr( L ) + // Largura
+            GS + 'h' + chr( A ) + // Altura
+            GS + 'H' + ifthen( ConfigBarras.MostrarCodigo, #1, #0 ) +
+            ACodigo;
 end;
 
 function TACBrNFeDANFeESCPOS.TraduzirTag(const ATag: AnsiString): AnsiString;
@@ -305,8 +322,8 @@ function TACBrNFeDANFeESCPOS.DecodificarTagsFormatacao(AString: AnsiString): Ans
         exit;
       end;
 
-      while (PosTagAux > 0) and (PosTagAux < FimTag) do
       // Achou duas aberturas Ex: <<e>
+      while (PosTagAux > 0) and (PosTagAux < FimTag) do
       begin
         PosTag := PosTagAux;
         PosTagAux := PosEx('<', Result, PosTag + 1);
@@ -406,8 +423,8 @@ begin
     cCmdImpZera          := ESC + '@'#29#249#32#48;  // ESC + +'@' Inicializa impressora, demais selecionam ESC/Bema temporariamente
     cCmdEspacoLinha      := ESC + '3'#14;  // Verificar comando BEMA/POS
     cCmdPagCod           := ESC + 't'#8; // codepage UTF-8
-    cCmdImpNegrito       := ESC + 'E'; //;ESC + 'N' + #3;
-    cCmdImpFimNegrito    := ESC + 'F'; //;ESC + 'N' + #2;
+    cCmdImpNegrito       := ESC + 'E';
+    cCmdImpFimNegrito    := ESC + 'F';
     cCmdImpExpandido     := ESC + 'W'#1;
     cCmdImpFimExpandido  := ESC + 'W'#0;
     cCmdFonteNormal      := DC2;
@@ -423,17 +440,17 @@ begin
     cCmdAlinhadoDireita  := ESC + 'a2'; // Verificar comando BEMA/POS
     cCmdCortaPapel       := ESC + 'w'#29#249#31#49; // ESC + +'w' corta papel, demais voltam a configuração da impressora
     cCmdImprimeLogo      := '';
-    cCmdCodeBarEAN8      := '';
-    cCmdCodeBarEAN13     := '';
+    cCmdCodeBarEAN8      := ConfigurarBarrasBematech( GS + 'k' + ETX );
+    cCmdCodeBarEAN13     := ConfigurarBarrasBematech( GS + 'k' + STX );
     cCmdCodeBarSTD25     := '';
-    cCmdCodeBarINTER25   := '';
+    cCmdCodeBarINTER25   := ConfigurarBarrasBematech( GS + 'k' + ENQ );
     cCmdCodeBarCODE11    := '';
-    cCmdCodeBarCODE39    := '';
+    cCmdCodeBarCODE39    := ConfigurarBarrasBematech( GS + 'k' + EOT );
     cCmdCodeBarCODE93    := '';
     cCmdCodeBarCODE128   := '';
-    cCmdCodeBarUPCA      := '';
-    cCmdCodeBarCODABAR   := '';
-    cCmdCodeBarMSI       := '';
+    cCmdCodeBarUPCA      := ConfigurarBarrasBematech( GS + 'k' + NUL );
+    cCmdCodeBarCODABAR   := ConfigurarBarrasBematech( GS + 'k' + ACK );
+    cCmdCodeBarMSI       := ConfigurarBarrasBematech( GS + 'k' + SYN );
     cCmdCodeBarFim       := NUL;
     nLargPapel           := 64;
   end
