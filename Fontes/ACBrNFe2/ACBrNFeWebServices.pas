@@ -3854,12 +3854,14 @@ begin
   FEnviar.FLote     := ALote;
   FEnviar.FSincrono := ASincrono;
 
-  Enviar.Executar;
+  if not Enviar.Executar then
+    Enviar.GerarException(Enviar.Msg);
 
   if not ASincrono then
   begin
     FRetorno.Recibo := FEnviar.Recibo;
-    FRetorno.Executar;
+    if not FRetorno.Executar then
+      FRetorno.GerarException(FRetorno.Msg);
   end;
 
   Result := True;
@@ -3886,7 +3888,8 @@ begin
   FInutilizacao.NumeroFinal   := NumeroFinal;
   FInutilizacao.Justificativa := AJustificativa;
 
-  FInutilizacao.Executar;
+  if not(FInutilizacao.Executar) then
+     FInutilizacao.GerarException(FInutilizacao.Msg);
 end;
 
 end.
