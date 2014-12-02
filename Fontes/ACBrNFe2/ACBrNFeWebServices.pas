@@ -1810,17 +1810,29 @@ begin
             end;
           end;
 
-          if FConfiguracoes.Arquivos.Salvar then
-          begin
-            if FConfiguracoes.Arquivos.EmissaoPathNFe then
-              Data := FNotasFiscais.Items[J].NFe.Ide.dEmi
-            else
-              Data := Now;
+//          if FConfiguracoes.Arquivos.Salvar then
+//          begin
+//            if FConfiguracoes.Arquivos.EmissaoPathNFe then
+//              Data := FNotasFiscais.Items[J].NFe.Ide.dEmi
+//            else
+//              Data := Now;
 
-            FNotasFiscais.Items[J].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(Data,
-               FNotasFiscais.Items[J].NFe.Emit.CNPJCPF)) +
-               OnlyNumber(FNotasFiscais.Items[J].NFe.InfNFe.Id) + '-nfe.xml')
-          end;
+//            FNotasFiscais.Items[J].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(Data,
+//               FNotasFiscais.Items[J].NFe.Emit.CNPJCPF)) +
+//               OnlyNumber(FNotasFiscais.Items[J].NFe.InfNFe.Id) + '-nfe.xml')
+//          end;
+        end;
+
+        if FConfiguracoes.Arquivos.Salvar then
+        begin
+          if FConfiguracoes.Arquivos.EmissaoPathNFe then
+            Data := FNotasFiscais.Items[J].NFe.Ide.dEmi
+          else
+            Data := Now;
+
+          FNotasFiscais.Items[J].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(Data,
+             FNotasFiscais.Items[J].NFe.Emit.CNPJCPF)) +
+             OnlyNumber(FNotasFiscais.Items[J].NFe.InfNFe.Id) + '-nfe.xml')
         end;
 
         break;
@@ -2342,7 +2354,7 @@ begin
           TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.xMotivo  := NFeRetorno.xMotivo;
 
           if FileExists(NomeArquivo + '-nfe.xml') or
-              DFeUtil.NaoEstaVazio(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NomeArq) then
+             DFeUtil.NaoEstaVazio(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NomeArq) then
           begin
             AProcNFe := TProcNFe.Create;
             try
@@ -2543,7 +2555,8 @@ var
 begin
   inherited SalvarEnvio;
 
-  if FConfiguracoes.Arquivos.Salvar then
+//  if FConfiguracoes.Arquivos.Salvar then
+  if FConfiguracoes.Geral.Salvar then
   begin
     aPath := GerarPathPorCNPJ;
     FConfiguracoes.Geral.Save(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
@@ -2557,7 +2570,8 @@ var
 begin
   inherited SalvarResposta;
 
-  if FConfiguracoes.Arquivos.Salvar then
+//  if FConfiguracoes.Arquivos.Salvar then
+  if FConfiguracoes.Geral.Salvar then
   begin
     aPath := GerarPathPorCNPJ;
     FConfiguracoes.Geral.Save(GerarPrefixoArquivo + '-' + ArqResp + '.xml',

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/12/2014
+[*] - Alterado de posição a rotina que salva o XML da NF-e caso a propriedade
+      Configuracoes.Arquivos.Salvar seja True.
+      por: Italo Jurisato Junior
+
 01/12/2014
 [*] - acerto para formatar as decimais da quantidade somente quando for quantidade 
       com decimais como no ECF.
