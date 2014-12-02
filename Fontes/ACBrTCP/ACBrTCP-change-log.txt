@@ -37,6 +37,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/12/2014
+-- ACBrIBPTax --
+[-] Alterado ACBrIBPTax.pas para a nova versão de tabelas 14.2.b
+
 26/11/2014
 -- ACBrConsultaCPF --  (por: Gelson Borsoi)
 [*] Correções para suportar o novo mecanismo de Captcha.

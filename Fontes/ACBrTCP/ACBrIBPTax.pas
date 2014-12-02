@@ -232,7 +232,7 @@ begin
     for I := 1 to Arquivo.Count - 1 do
     begin
       QuebrarLinha(Arquivo.Strings[I], Item);
-      if Item.Count = 12 then
+      if Item.Count = 13 then
       begin
         try
           // codigo;ex;tabela;descricao;aliqNac;aliqImp;0.0.2
@@ -257,7 +257,7 @@ begin
       end
       else
       begin
-        EventoErroImportacao(Arquivo.Strings[I], Format('Registro inválido, quantidade de colunas "%d" excede o esperado "7"!', [Item.Count]));
+        EventoErroImportacao(Arquivo.Strings[I], Format('Registro inválido, quantidade de colunas "%d" excede o esperado!', [Item.Count]));
       end;
     end;
   finally
