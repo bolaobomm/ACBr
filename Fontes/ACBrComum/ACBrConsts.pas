@@ -82,11 +82,12 @@ const
   SOH = #01 ;
   STX = #02 ;
   ETX = #03 ;
+  EOT = #04 ;
   ENQ = #05 ;
   ACK = #06 ;
   BELL= #07 ;
-  TAB = #09 ;
   BS  = #08 ;
+  TAB = #09 ;
   LF  = #10 ;
   FF  = #12 ;
   CR  = #13 ;
