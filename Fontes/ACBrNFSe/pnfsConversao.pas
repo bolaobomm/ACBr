@@ -847,10 +847,11 @@ begin
          : Provedor := 'Coplan';
 
   4300406, // Alegrete/RS
-  4304705 // Carazinho/RS
+  4304705  // Carazinho/RS
          : Provedor := 'DBSeller';
 
-  4308508  // Frederico Westphalen/RS
+  4308508, // Frederico Westphalen/RS
+  4310009  // Ibiruba/RS
          : Provedor := 'Digifred';
 
   3203205  // Linhares/ES

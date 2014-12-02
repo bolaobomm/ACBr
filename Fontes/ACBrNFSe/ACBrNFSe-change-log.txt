@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/12/2014
+[+] Incluido a cidade Iburubá/RS provedor Digifred.
+    Por: Italo Jurisato Junior
+
 28/11/2014
 [*] Alterado a condição de assinar o não RPS caso seja usado o metodo Gerar em
     vez de Enviar.
