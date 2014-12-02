@@ -59,7 +59,7 @@ uses
   pcnNFe, pcnEnvEventoNFe, pcnConversao, pcnAuxiliar;
 
 type
-  TACBrNFeMarcaImpressora = (iEpson, iBematech, iDaruma);
+  TACBrNFeMarcaImpressora = (iEpson, iBematech, iDaruma, iDiebold);
 
   TACBrNFeDANFeESCPOS = class(TACBrNFeDANFEClass)
   private
@@ -106,7 +106,7 @@ type
     cCmdCodeBarMSI: String;
     cCmdCodeBarFim: String;
 
-    nLargPapel: Integer;
+    nColunasPapel: Integer;
     FConfigBarras: TACBrECFConfigBarras;
 
     procedure InicializarComandos;
@@ -214,7 +214,6 @@ end;
 
 function TACBrNFeDANFeESCPOS.TraduzirTag(const ATag: AnsiString): AnsiString;
 var
-  I: Integer;
   LowerTag: AnsiString;
 begin
   {*****************************************************************************
@@ -336,7 +335,7 @@ function TACBrNFeDANFeESCPOS.DecodificarTagsFormatacao(AString: AnsiString): Ans
 
 Var
   Tag1, Tag2, Cmd, LowerTag: AnsiString;
-  PosTag1, IndTag1, LenTag1, PosTag2, FimTag: Integer;
+  PosTag1, IndTag1, LenTag1, FimTag: Integer;
 begin
   Result := AString;
 
@@ -350,7 +349,6 @@ begin
     LowerTag := LowerCase(Tag1);
     IndTag1  := AnsiIndexText(LowerTag, ARRAY_TAGS);
     Tag2     := '';
-    PosTag2  := 0;
 
     if IgnorarTagsFormatacao and (IndTag1 in TAGS_FORMATACAO) then
       Cmd := ''
@@ -452,7 +450,7 @@ begin
     cCmdCodeBarCODABAR   := ConfigurarBarrasBematech( GS + 'k' + ACK );
     cCmdCodeBarMSI       := ConfigurarBarrasBematech( GS + 'k' + SYN );
     cCmdCodeBarFim       := NUL;
-    nLargPapel           := 64;
+    nColunasPapel        := 64;
   end
   else if MarcaImpressora = iDaruma then
   begin
@@ -488,8 +486,25 @@ begin
     cCmdCodeBarCODABAR   := ConfigurarBarrasDaruma( ESC + 'b' + chr($09) );
     cCmdCodeBarMSI       := ConfigurarBarrasDaruma( ESC + 'b' + chr($10) );
     cCmdCodeBarFim       := NUL;
-    nLargPapel           := 57;
+    nColunasPapel        := 57;
   end
+  else if MarcaImpressora = iDiebold then
+   begin
+     cCmdImpZera     := #27+'@';
+     cCmdEspacoLinha := #27+'3'+#14;
+     cCmdPagCod      := #27+'t'+#2;
+     cCmdImpNegrito  := #27+'E';
+     cCmdImpFimNegrito := #27+'F';
+     cCmdImpExpandido  := #27 +'A';
+     cCmdImpFimExpandido := #27+'B';
+     cCmdFonteNormal   := #20;
+     cCmdFontePequena  := #15;
+     cCmdAlinhadoEsquerda := #27#106#0;
+     cCmdAlinhadoCentro   := #27#106#1;
+     cCmdAlinhadoDireita  := #27#106#2;
+     cCmdCortaPapel       := #27#109;
+     cCmdImprimeLogo      := '';
+   end
   else
   begin
     cCmdImpZera          := ESC + '@';
@@ -524,18 +539,18 @@ begin
     cCmdCodeBarCODABAR   := '';
     cCmdCodeBarMSI       := '';
     cCmdCodeBarFim       := NUL;
-    nLargPapel           := 64;
+    nColunasPapel        := 64;
   end;
 end;
 
 function TACBrNFeDANFeESCPOS.GetLinhaSimples: String;
 begin
-  Result := cCmdAlinhadoEsquerda + cCmdFontePequena + LinhaSimples(nLargPapel);
+  Result := cCmdAlinhadoEsquerda + cCmdFontePequena + LinhaSimples(nColunasPapel);
 end;
 
 function TACBrNFeDANFeESCPOS.GetLinhaDupla: String;
 begin
-  Result := cCmdAlinhadoEsquerda + cCmdFontePequena + LinhaDupla(nLargPapel);
+  Result := cCmdAlinhadoEsquerda + cCmdFontePequena + LinhaDupla(nColunasPapel);
 end;
 
 procedure TACBrNFeDANFeESCPOS.PulaLinhas(NumLinhas: Integer);
@@ -570,13 +585,13 @@ begin
     Trim(FpNFe.Emit.EnderEmit.xMun) + '/' + Trim(FpNFe.Emit.EnderEmit.UF) + '  ' +
     'Cep: ' + DFeUtil.FormatarCEP(IntToStr(FpNFe.Emit.EnderEmit.CEP)) + '  ' +
     'Tel: ' + DFeUtil.FormatarFone(FpNFe.Emit.EnderEmit.fone)
-    , nLargPapel)
+    , nColunasPapel)
   ));
 
   FLinhaCmd := 'CNPJ: ' + DFeUtil.FormatarCNPJ(FpNFe.Emit.CNPJCPF);
   if Trim(FpNFe.Emit.IE) <> '' then
   begin
-    FLinhaCMd := padL(FLinhaCmd, Trunc(nLargPapel / 2)) +
+    FLinhaCMd := padL(FLinhaCmd, Trunc(nColunasPapel / 2)) +
     'IE: ' + DFeUtil.FormatarIE(FpNFe.Emit.IE, FpNFe.Emit.EnderEmit.UF);
   end;
 
@@ -655,7 +670,7 @@ begin
           sUnidade + ' X ' + sVlrUnitario + ' ' + sVlrProduto;
 
         // acerta tamanho da descrição
-        nTamDescricao := nLargPapel - Length(FLinhaCmd) + 9;
+        nTamDescricao := nColunasPapel - Length(FLinhaCmd) + 9;
         sDescricao := padL(Copy(sDescricao, 1, nTamDescricao), nTamDescricao);
 
         FLinhaCmd := StringReplace(FLinhaCmd, '[DesProd]', sDescricao, [rfReplaceAll]);
@@ -670,7 +685,7 @@ begin
         FLinhaCmd :=
           padL(sQuantidade, 15) + ' ' + padL(sUnidade, 6) + ' X ' +
           padL(sVlrUnitario, 13) + '|' + sVlrProduto;
-        FLinhaCmd := padS(FLinhaCmd, nLargPapel, '|');
+        FLinhaCmd := padS(FLinhaCmd, nColunasPapel, '|');
         FBuffer.Add(cCmdAlinhadoEsquerda + cCmdFontePequena + FLinhaCmd);
       end;
 
@@ -685,7 +700,7 @@ begin
           FLinhaCmd := cCmdAlinhadoEsquerda + cCmdFontePequena +
             ParseTextESCPOS(padS(
               'desconto ' + padR(DFeUtil.FormatFloat(FpNFe.Det.Items[i].Prod.vDesc, '-0.00'), 15, ' ')
-              + '|' + DFeUtil.FormatFloat(VlrLiquido, '0.00'), nLargPapel, '|')
+              + '|' + DFeUtil.FormatFloat(VlrLiquido, '0.00'), nColunasPapel, '|')
             );
           FBuffer.Add(cCmdAlinhadoEsquerda + cCmdFontePequena + FLinhaCmd);
         end;
@@ -699,7 +714,7 @@ begin
           FLinhaCmd := cCmdAlinhadoEsquerda + cCmdFontePequena +
             ParseTextESCPOS(padS(
               'acréscimo ' + padR(DFeUtil.FormatFloat(FpNFe.Det.Items[i].Prod.vOutro, '+0.00'), 15, ' ')
-              + '|' + DFeUtil.FormatFloat(VlrLiquido, '0.00'), nLargPapel, '|')
+              + '|' + DFeUtil.FormatFloat(VlrLiquido, '0.00'), nColunasPapel, '|')
             );
           FBuffer.Add(cCmdAlinhadoEsquerda + cCmdFontePequena + FLinhaCmd);
         end;
@@ -711,21 +726,21 @@ end;
 procedure TACBrNFeDANFeESCPOS.GerarTotais(Resumido: Boolean);
 begin
   FBuffer.Add(GetLinhaSimples);
-  FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS('QTD. TOTAL DE ITENS|' + IntToStrZero(FpNFe.Det.Count, 3), nLargPapel, '|')));
+  FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS('QTD. TOTAL DE ITENS|' + IntToStrZero(FpNFe.Det.Count, 3), nColunasPapel, '|')));
 
   if not Resumido then
   begin
     if (FpNFe.Total.ICMSTot.vDesc > 0) or (FpNFe.Total.ICMSTot.vOutro > 0) then
-      FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS('Subtotal|' + FormatFloat('#,###,##0.00', FpNFe.Total.ICMSTot.vProd), nLargPapel, '|')));
+      FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS('Subtotal|' + FormatFloat('#,###,##0.00', FpNFe.Total.ICMSTot.vProd), nColunasPapel, '|')));
 
     if FpNFe.Total.ICMSTot.vDesc > 0 then
-      FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS('Descontos|' + FormatFloat('-#,###,##0.00', FpNFe.Total.ICMSTot.vDesc), nLargPapel, '|')));
+      FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS('Descontos|' + FormatFloat('-#,###,##0.00', FpNFe.Total.ICMSTot.vDesc), nColunasPapel, '|')));
 
     if FpNFe.Total.ICMSTot.vOutro > 0 then
-      FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS(('Acréscimos|') + FormatFloat('+#,###,##0.00', FpNFe.Total.ICMSTot.vOutro), nLargPapel, '|')));
+      FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS(('Acréscimos|') + FormatFloat('+#,###,##0.00', FpNFe.Total.ICMSTot.vOutro), nColunasPapel, '|')));
   end;
 
-  FLinhaCmd := cCmdAlinhadoEsquerda + cCmdImpExpandido + ParseTextESCPOS(padS('VALOR TOTAL R$|' + FormatFloat('#,###,##0.00', FpNFe.Total.ICMSTot.vNF), nLargPapel div 2, '|')) + cCmdImpFimExpandido;
+  FLinhaCmd := cCmdAlinhadoEsquerda + cCmdImpExpandido + ParseTextESCPOS(padS('VALOR TOTAL R$|' + FormatFloat('#,###,##0.00', FpNFe.Total.ICMSTot.vNF), nColunasPapel div 2, '|')) + cCmdImpFimExpandido;
 
   FBuffer.Add(FLinhaCmd);
 end;
@@ -736,17 +751,17 @@ var
   Total, Troco: Real;
 begin
   Total := 0;
-  FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS('FORMA DE PAGAMENTO ' + '|' + ' Valor Pago', nLargPapel, '|')));
+  FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS('FORMA DE PAGAMENTO ' + '|' + ' Valor Pago', nColunasPapel, '|')));
 
   for i := 0 to FpNFe.pag.Count - 1 do
   begin
-    FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS(FormaPagamentoToDescricao(FpNFe.pag.Items[i].tPag) + '|' + FormatFloat('#,###,##0.00', FpNFe.pag.Items[i].vPag), nLargPapel, '|')));
+    FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS(FormaPagamentoToDescricao(FpNFe.pag.Items[i].tPag) + '|' + FormatFloat('#,###,##0.00', FpNFe.pag.Items[i].vPag), nColunasPapel, '|')));
     Total := Total + FpNFe.pag.Items[i].vPag;
   end;
 
   Troco := Total - FpNFe.Total.ICMSTot.vNF;
   if Troco > 0 then
-    FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS('Troco R$|' + FormatFloat('#,###,##0.00', Troco), nLargPapel, '|')));
+    FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS('Troco R$|' + FormatFloat('#,###,##0.00', Troco), nColunasPapel, '|')));
 
   FBuffer.Add(GetLinhaSimples);
 end;
@@ -756,7 +771,7 @@ begin
   if FpNFe.Total.ICMSTot.vTotTrib > 0 then
   begin
     FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS('Informação dos Tributos Totais Incidentes|' +
-      FormatFloat('#,###,##0.00', FpNFe.Total.ICMSTot.vTotTrib), nLargPapel, '|'))
+      FormatFloat('#,###,##0.00', FpNFe.Total.ICMSTot.vTotTrib), nColunasPapel, '|'))
     );
     FBuffer.Add(cCmdFontePequena + ParseTextESCPOS('(Lei Federal 12.741/2012)'));
     FBuffer.Add(GetLinhaSimples);
