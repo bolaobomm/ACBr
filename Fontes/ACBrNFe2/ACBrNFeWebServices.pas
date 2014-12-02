@@ -1552,10 +1552,10 @@ begin
     begin
       for I := 0 to TACBrNFe( FACBrNFe ).NotasFiscais.Count-1 do
       begin
-//        if pos(chNFe, TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].NFe.infNFe.Id) > 0  then
         if OnlyNumber(chNFe) = OnlyNumber(TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].NFe.infNFe.Id) then
         begin
-          if (TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].NFe.signature.DigestValue <> FNFeRetornoSincrono.protNFe.digVal) and
+          if (TACBrNFe( FACBrNFe ).Configuracoes.Geral.ValidarDigest ) and
+             (TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].NFe.signature.DigestValue <> FNFeRetornoSincrono.protNFe.digVal) and
              (FNFeRetornoSincrono.protNFe.digVal <> '') then
            begin
              raise EACBrNFeException.Create('DigestValue do documento '+
@@ -1758,7 +1758,8 @@ begin
 //      if pos(AInfProt.Items[I].chNFe, FNotasFiscais.Items[J].NFe.InfNFe.Id) > 0 then
       if OnlyNumber(AInfProt.Items[I].chNFe) = OnlyNumber(FNotasFiscais.Items[J].NFe.InfNFe.Id) then
       begin
-        if (FNotasFiscais.Items[J].NFe.signature.DigestValue <> AInfProt.Items[I].digVal) and
+        if (TACBrNFe( FACBrNFe ).Configuracoes.Geral.ValidarDigest ) and
+           (FNotasFiscais.Items[J].NFe.signature.DigestValue <> AInfProt.Items[I].digVal) and
            (AInfProt.Items[I].digVal <> '') then
          begin
            raise EACBrNFeException.Create('DigestValue do documento '+
@@ -2322,7 +2323,8 @@ begin
         TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].Confirmada := (NFeRetorno.cStat in [100, 150]);
         if Atualiza then
         begin
-          if (TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.signature.DigestValue <> NFeRetorno.protNFe.digVal) and
+          if (TACBrNFe( FACBrNFe ).Configuracoes.Geral.ValidarDigest ) and
+             (TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.signature.DigestValue <> NFeRetorno.protNFe.digVal) and
              (NFeRetorno.protNFe.digVal <> '') then
            begin
              raise EACBrNFeException.Create('DigestValue do documento '+

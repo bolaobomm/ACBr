@@ -148,6 +148,7 @@ type
     FModeloDFCodigo: Integer;  //Verificar
     FIdToken : String;
     FToken : String;
+    FValidarDigest : Boolean;
 
     procedure SetFormaEmissao(AValue: TpcnTipoEmissao);
     function GetPathSalvar: String;
@@ -176,6 +177,7 @@ type
     property ModeloDFCodigo: Integer read FModeloDFCodigo;
     property IdToken: String read FIdToken write FIdToken;
     property Token: String read FToken write FToken;
+    property ValidarDigest: Boolean read FValidarDigest write FValidarDigest default True;
   end;
 
   TArquivosConf = class(TComponent)
