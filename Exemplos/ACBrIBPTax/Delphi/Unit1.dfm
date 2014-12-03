@@ -325,6 +325,13 @@ object Form1: TForm1
       Height = 13
       Caption = 'Chave: '
     end
+    object lblFonte: TLabel
+      Left = 674
+      Top = 110
+      Width = 32
+      Height = 13
+      Caption = 'Fonte:'
+    end
     object edArquivo: TEdit
       Left = 12
       Top = 83

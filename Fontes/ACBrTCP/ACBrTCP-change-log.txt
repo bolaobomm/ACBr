@@ -37,6 +37,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/12/2014
+-- ACBrIBPTax --
+[-] Acertos na validação da primeira linha do arquivo, onde ficam as informações gerais
+
 02/12/2014
 -- ACBrIBPTax --
 [-] Alterado ACBrIBPTax.pas para a nova versão de tabelas 14.2.b

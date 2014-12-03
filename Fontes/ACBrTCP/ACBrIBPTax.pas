@@ -103,6 +103,7 @@ type
     FVigenciaFim: TDateTime;
     FVigenciaInicio: TDateTime;
     FOnErroImportacao: TACBrIBPTaxErroImportacao;
+    FFonte: string;
     procedure ExportarCSV(const AArquivo: String);
     procedure ExportarDSV(const AArquivo: String);
     procedure ExportarHTML(const AArquivo: String);
@@ -128,6 +129,7 @@ type
     property Itens: TACBrIBPTaxRegistros read FItens;
   published
     property OnErroImportacao: TACBrIBPTaxErroImportacao read FOnErroImportacao write FOnErroImportacao;
+    property Fonte: string read FFonte write FFonte;
     property VersaoArquivo: String read FVersaoArquivo;
     property ChaveArquivo: String read FChaveArquivo;
     property VigenciaInicio: TDateTime read FVigenciaInicio;
@@ -190,6 +192,7 @@ begin
 
   FItens := TACBrIBPTaxRegistros.Create( True );
   FArquivo := TStringList.Create;
+  FFonte := '';
   FURLDownload := '';
   FVersaoArquivo := '';
   FVigenciaInicio := 0;
@@ -208,31 +211,38 @@ function TACBrIBPTax.PopularItens: Integer;
 var
   Item: TStringList;
   I: Integer;
+const
+  COUNT_COLUN = 13;
 begin
   if Arquivo.Count <= 0 then
     raise EACBrIBPTax.Create('Arquivo de itens não foi baixado!');
 
   FVersaoArquivo := '';
-  Itens.Clear;
+  FFonte := '';
+  FChaveArquivo := '';
+  FVigenciaFim := 0;
+  FVigenciaInicio := 0;
 
+  Itens.Clear;
   Item := TStringList.Create;
   try
     // primeira linha contem os cabecalhos de campo e versão do arquivo
     // segunda linha possui os dados do primeiro item e outros dados
     QuebrarLinha(Arquivo.Strings[1], Item);
-    if Item.Count = 12 then
+    if Item.Count = COUNT_COLUN then
     begin
       FVigenciaInicio := StrToDateDef(Item.Strings[8], 0.0);
       FVigenciaFim    := StrToDateDef(Item.Strings[9], 0.0);
       FChaveArquivo   := Item.Strings[10];
       FVersaoArquivo  := Item.Strings[11];
+      FFonte          := Item.Strings[12];
     end;
 
     // proximas linhas contem os registros
     for I := 1 to Arquivo.Count - 1 do
     begin
       QuebrarLinha(Arquivo.Strings[I], Item);
-      if Item.Count = 13 then
+      if Item.Count = COUNT_COLUN then
       begin
         try
           // codigo;ex;tabela;descricao;aliqNac;aliqImp;0.0.2
@@ -257,7 +267,10 @@ begin
       end
       else
       begin
-        EventoErroImportacao(Arquivo.Strings[I], Format('Registro inválido, quantidade de colunas "%d" excede o esperado!', [Item.Count]));
+        EventoErroImportacao(
+          Arquivo.Strings[I],
+          Format('Linha %d: Registro inválido, quantidade de colunas "%d" diferente do esperado "%d"!', [I, Item.Count, COUNT_COLUN])
+        );
       end;
     end;
   finally
