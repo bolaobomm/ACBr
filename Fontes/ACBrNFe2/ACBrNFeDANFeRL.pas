@@ -120,8 +120,6 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     function BuscaDireita(Busca, Text: String): Integer;
-    function FormatarCEP(AValue: String): String;
-    function FormatarFone(AValue: String): String;
     procedure InsereLinhas(sTexto: String; iLimCaracteres: Integer; rMemo: TRLMemo);
 
   private
@@ -556,38 +554,6 @@ begin
          end;
       end;
   Result := retorno;
-end;
-
-{Função original de ACBrNFeUtil modificada para exibir em outro formato}
-function TfrlDANFeRL.FormatarCEP(AValue: String): String;
-var i, iZeros: Integer;
-sCep: String;
-begin
-  if Length(AValue) <= 8 then
-    begin
-      iZeros := 8 - Length(AValue);
-      sCep := AValue;
-      For i := 1 to iZeros do
-        begin
-          sCep := '0' + sCep;
-        end;
-      Result := copy(sCep,1,5) + '-' + copy(sCep,6,3);
-    end
-  else
-    Result := copy(AValue,1,5) + '-' + copy(AValue,6,3);
-end;
-
-{Função original de ACBrNFeUtil modificada para exibir em outro formato}
-function TfrlDANFeRL.FormatarFone(AValue: String): String;
-begin
-  Result := AValue;
-  if DFeUtil.NaoEstaVazio(AValue) then
-  begin
-    if Length(DFeUtil.LimpaNumero(AValue)) > 10 then AValue := copy(DFeUtil.LimpaNumero(AValue),2,10); //Casos em que o DDD vem com ZERO antes somando 3 digitos
-
-    AValue := DFeUtil.Poem_Zeros(DFeUtil.LimpaNumero(AValue), 10);
-    Result := '('+copy(AValue,1,2) + ') ' + copy(AValue,3,4) + '-' + copy(AValue,7,4);
-  end;
 end;
 
 procedure TfrlDANFeRL.InsereLinhas(sTexto: String; iLimCaracteres: Integer;

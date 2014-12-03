@@ -1142,7 +1142,7 @@ begin
       rllRecebemosDe.Caption := Format (FRecebemoDe, [ XNome ]);
       rllInscricaoEstadual.Caption := IE;
       rllInscrEstSubst.caption := IEST;
-      rllCNPJ.Caption := DFeUtil.FormatarCNPJ(CNPJCPF );
+      rllCNPJ.Caption := DFeUtil.FormatarCNPJCPF(CNPJCPF );
       rlmEmitente.Lines.Text   := XNome;
       with EnderEmit do
         begin
@@ -1154,17 +1154,17 @@ begin
             rlmEndereco.Lines.add (XLgr + IfThen (Nro = '0', '', ', ' + Nro) +
                                                               ' - ' + XBairro);
 
-          rlmEndereco.Lines.add ('CEP: ' + FormatarCEP(IntToStr(CEP)) +
+          rlmEndereco.Lines.add ('CEP: ' + DFeUtil.FormatarCEP(IntToStr(CEP)) +
                                                     ' - ' + XMun + ' - ' + UF);
 
         if FFax <> '' then
           begin
-            rllFone.Caption := 'TEL: ' + FormatarFone(Fone) +
-                                      ' - FAX: ' + FormatarFone(FFax);
+            rllFone.Caption := 'TEL: ' + DFeUtil.FormatarFone(Fone) +
+                                      ' - FAX: ' + DFeUtil.FormatarFone(FFax);
           end
         else
           begin
-            rllFone.Caption := 'TEL: ' + FormatarFone(Fone);
+            rllFone.Caption := 'TEL: ' + DFeUtil.FormatarFone(Fone);
           end;
       end;
     end;
@@ -1196,13 +1196,7 @@ begin
   // destinatario
   with FNFe.Dest do
     begin
-      if Length(CNPJCPF) = 14 then
-        rllDestCNPJ.Caption := DFeUtil.FormatarCNPJ(CNPJCPF)
-      else
-        if Length(CNPJCPF) = 11 then
-          rllDestCNPJ.Caption := DFeUtil.FormatarCPF(CNPJCPF)
-        else
-          rllDestCNPJ.Caption := CNPJCPF;
+      rllDestCNPJ.Caption := DFeUtil.FormatarCNPJCPF(CNPJCPF);
 
       rllDestIE.Caption   := IE;
       rllDestNome.Caption := XNome;
@@ -1216,8 +1210,8 @@ begin
           rllDestBairro.Caption := XBairro;
           rllDestCidade.Caption := XMun;
           rllDestUF.Caption := UF;
-          rllDestCEP.Caption := FormatarCEP(IntToStr(CEP));
-          rllDestFONE.Caption := FormatarFone(Fone);
+          rllDestCEP.Caption := DFeUtil.FormatarCEP(IntToStr(CEP));
+          rllDestFONE.Caption := DFeUtil.FormatarFone(Fone);
         end;
     end;
 end;
@@ -1230,10 +1224,7 @@ begin
     begin
       with FNFe.Entrega do
         begin
-          if Trim (CNPJCPF) <>  '' then
-            sCNPJ := DFeUtil.FormatarCNPJ(CNPJCPF)
-          else
-            sCNPJ := DFeUtil.FormatarCPF(CNPJCPF);
+          sCNPJ := DFeUtil.FormatarCNPJCPF(CNPJCPF);
 
           if xCpl > '' then
             sEndereco := XLgr + IfThen (Nro = '0', '', ', ' + Nro) + ' - ' + xCpl
@@ -1254,10 +1245,7 @@ begin
     begin
       with FNFe.Retirada do
         begin
-          if Trim (CNPJCPF) <>  '' then
-            sCNPJ := DFeUtil.FormatarCNPJ(CNPJCPF)
-          else
-            sCNPJ := DFeUtil.FormatarCPF(CNPJCPF);
+          sCNPJ := DFeUtil.FormatarCNPJCPF(CNPJCPF);
 
           if xCpl > '' then
             sEndereco := XLgr + IfThen (Nro = '0', '', ', ' + Nro) + ' - ' + xCpl
@@ -1352,12 +1340,7 @@ begin
       with Transporta do
         begin
           if Trim (CNPJCPF) <> '' then
-            begin
-              if length(Trim (CNPJCPF)) <= 11 then
-                rllTransCNPJ.Caption := DFeUtil.FormatarCPF(CNPJCPF)
-              else
-                rllTransCNPJ.Caption := DFeUtil.FormatarCNPJ(CNPJCPF);
-            end
+            rllTransCNPJ.Caption := DFeUtil.FormatarCNPJCPF(CNPJCPF)
           else
             rllTransCNPJ.Caption := '';
 

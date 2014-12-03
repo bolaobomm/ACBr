@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/12/2014
+[*] - Refatoração de código para remover funções duplicadas e aplicar padrões
+	por : Juliomar Marchetti
+	
 02/12/2014
 [*] - Alterado de posição a rotina que salva o XML da NF-e caso a propriedade
       Configuracoes.Arquivos.Salvar seja True.

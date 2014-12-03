@@ -210,7 +210,7 @@ begin
                               IfThen(XBairro = '', '', ', ' + XBairro) +
                               ', ' + XMun + '/ ' + UF);
        end;
-      rlmEmitente.Lines.Add('CNPJ: ' + DFeUtil.FormatarCNPJ(CNPJCPF) +
+      rlmEmitente.Lines.Add('CNPJ: ' + DFeUtil.FormatarCNPJCPF(CNPJCPF) +
                             ' IE: '+ IE);
      end;
    end;
