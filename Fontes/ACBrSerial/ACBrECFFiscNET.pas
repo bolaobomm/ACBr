@@ -2970,8 +2970,8 @@ end;
 
 function TACBrECFFiscNET.GetDadosUltimaReducaoZ: AnsiString;
 var
-   RetCmd, S, SS : AnsiString ;
-   I, J, ECFCRZ, ECFCRO : Integer;
+   RetCmd, S, SS , total : AnsiString ;
+   I, J, ECFCRZ, ECFCRO,initotal : Integer;
    ECFVBruta : Double ;
    AliqZ: TACBrECFAliquota;
    CNFZ: TACBrECFComprovanteNaoFiscal;
@@ -2993,89 +2993,150 @@ begin
     try DHUltZ := DataHoraUltimaReducaoZ;  except DHUltZ :=  0; end;
   end;
 
-   try ECFVBruta := LeMoeda( 'VendaBrutaReducao['+IntToStr(ECFCRZ) + ']' ) ; except ECFVBruta := -1 end;
+  try ECFVBruta := LeMoeda( 'VendaBrutaReducao['+IntToStr(ECFCRZ) + ']' ) ; except ECFVBruta := -1 end;
 
   FiscNETComando.NomeComando := 'LeTexto' ;
   FiscNETComando.AddParamString( 'NomeTexto', 'DadosUltimaReducaoZ' );
   EnviaComando ;
   RetCmd := FiscNETResposta.Params.Values['ValorTexto'] ;
 
-  { Tamanho de Retorno 616 dígitos BCD (308 bytes),
-    com a seguinte estrutura.                                Ini  Fim
-    2 Constante 00.                                            1    2
-   18 GTDA GT no momento da última redução.                    3   20
-   14 CANCEL Cancelamentos                                    21   34
-   14 DESCON Descontos                                        35   48
-   64 TR Tributos                                             49  112
-  266 TP Totalizadores Parciais Tributados                   113  378
-   14 SANGRIA Sangria                                        379  392
-   14 SUPRIMENTOS Suprimentos                                393  406
-  126 NSI Totalizadores não Sujeitos ao ICMS                 407  532
-   36 CNSI Contadores dos TP’s não Sujeitos ao ICMS          533  568
-    6 COO Contador de Ordem de Operação                      569  574
-    6 CNS Contador de Operações não Sujeitas ao ICMS         575  580
-    2 AL Número de Alíquotas Cadastradas                     581  582
-    6 DATA_PC Data do Movimento                              583  588
-   14 ACRESC Acréscimo                                       589  602
-   14 ACRFIN Acréscimo Financeiro                            603  616
-
-  RRGGGGGGGGGGGGGGGGGGCCCCCCCCCCCCCCDDDDDDDDDDDDDDT001T002T003T004T005T006T007T008T009T010T011T012T013T014T015T016TPT00000000001TPT00000000002TPT00000000003TPT00000000004TPT00000000005TPT00000000006TPT00000000007TPT00000000008TPT00000000009TPT00000000010TPT00000000011TPT00000000012TPT00000000013TPT00000000014TPT00000000015TPT00000000016IIIIIIIIIIIIIINNNNNNNNNNNNNNFFFFFFFFFFFFFFAAAAAAAAAAAAAAUUUUUUUUUUUUUUTNS00000000001TNS00000000002TNS00000000003TNS00000000004TNS00000000005TNS00000000006TNS00000000007TNS00000000008TNS00000000009CN01CN02CN03CN04CN05CN06CN07CN08CN09COOCOOCNSCNSALDTMOVTAAAAAAAAAAAAAAFFFFFFFFFFFFFF
-  0000000000000014231000000000000000000000000000001800021605001200050025000250180013001600170002110200100006000100000000000001000000000000020000000000000300000000000004010000000000050100000000000601000000000007010000000000080100000000000901000000000010010000000000110200000000001202000000000013020000000000140200000000001502000000000016020000000001001400000000010114000000000408640000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000162000019161708070000000000011100000000000000
-  ....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8....+....9....+....0....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8....+....9....+....0....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8....+....9....+....0....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8....+....9....+....0....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8....+....9....+....0....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8....+....9....+....0....+....1....+.
-  }
-
-  { Alimenta a class com os dados atuais do ECF }
   with fpDadosReducaoZClass do
   begin
-    DataHoraEmissao := DHUltZ;
-    CRO             := ECFCRO;
-    CRZ             := ECFCRZ;
-    ValorVendaBruta := ECFVBruta;
+     DataHoraEmissao := DHUltZ;
+     CRO             := ECFCRO;
+     CRZ             := ECFCRZ;
+     ValorVendaBruta := ECFVBruta;
 
-    ValorGrandeTotal := RoundTo( StrToFloatDef( copy( RetCmd,  3, 18 ), -1 ) / 100, -2 ) ;
-    CancelamentoICMS := RoundTo( StrToFloatDef( copy( RetCmd, 21, 14 ), -1 ) / 100, -2 )  ;
-    DescontoICMS     := RoundTo( StrToFloatDef( copy( RetCmd, 35, 14 ), -1 ) / 100, -2 ) ;
-
-    // Dados das Aliquotas //
-    S := copy( RetCmd, 113, 224 ) ;  // 16 * 14
-    For I := 0 to fpAliquotas.Count-1 do
+    //////////////////////////////////////////////////////////////////////////////
+    ///              FORMATO DE STRING COM 468 CARACTERES                      ///
+    ///                RETORNADO PELA DATAREGIS 3202DT                         ///
+    //////////////////////////////////////////////////////////////////////////////
+    if length(trim(RetCmd)) = 468 then
     begin
-      J := StrToIntDef( Trim(fpAliquotas[I].Indice), I );
-      AliqZ := TACBrECFAliquota.Create ;
-      AliqZ.Assign( fpAliquotas[I] );
-      AliqZ.Total := RoundTo( StrToFloatDef( copy(S,(J*14)+1,14),0) / 100, -2);
-      AdicionaAliquota( AliqZ );
-    end ;
+      {
+      string fixa "00"                                         1    2
+      GT da última Redução                                     3   20
+      Cancelamentos                                           21   34
+      Descontos                                               35   48
+      string fixa "00000000000000"                            49   62
+      Acrescimos                                              63   76
+      Venda Bruta                                             77   90
+      Aliquotas                                               91  154
+      Totalizador das Aliquotas                              155  378
+      String fixa "TTTTTTTTTTTTTTTT"                         379  394
+      Substituição tributária                                395  408
+      Isento                                                 409  422
+      Não Incidência                                         423  436
+      COO                                                    451  456
+      Contador Geral de operação não fiscal                  457  462
+      Data de Movimento                                      463  468
 
-    SubstituicaoTributariaICMS := RoundTo( StrToFloatDef( copy( RetCmd, 337, 14 ), -1 ) / 100, -2 ) ;
-    IsentoICMS                 := RoundTo( StrToFloatDef( copy( RetCmd, 351, 14 ), -1 ) / 100, -2 ) ;
-    NaoTributadoICMS           := RoundTo( StrToFloatDef( copy( RetCmd, 365, 14 ), -1 ) / 100, -2 ) ;
+000000000000586130780000000000085500000000000071000000000000000000000000001900000000001670070012001800250010001300000000000000000000000000000000000000000000000000000038000000000001360000000000008000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000TTTTTTTTTTTTTTTT00000000000338000000000001130000000000003900000000002351015000001135011214
+000000000000586136220000000000023300000000000005000000000000000000000000000900000000000544070012001800250010001300000000000000000000000000000000000000000000000000000024000000000000360000000000005000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000TTTTTTTTTTTTTTTT00000000000030000000000001400000000000002600000000000462015025001140021214
+}
+      try COO                       := strtoint (copy( RetCmd, 451, 6 ));                                                       except  COO                       := -1; end;
+      try DataHoraEmissao           := strtodate(copy( RetCmd, 463, 2 )+'/'+copy( RetCmd, 465, 2 )+'/'+copy( RetCmd, 467, 2 )); except  DataHoraEmissao           :=  0; end;
+      try DataDoMovimento           := strtodate(copy( RetCmd, 463, 2 )+'/'+copy( RetCmd, 465, 2 )+'/'+copy( RetCmd, 467, 2 )); except  DataDoMovimento           :=  0; end;
+      try ValorGrandeTotal          := RoundTo( StrToFloatDef( copy( RetCmd,   3, 18 ), -1 ) / 100, -2 ) ;                      except  ValorGrandeTotal          := -1; end;
+      try AcrescimoICMS             := RoundTo( StrToFloatDef( copy( RetCmd,  63, 14 ), -1 ) / 100, -2 ) ;                      except  AcrescimoICMS             := -1; end;
+      try ValorVendaBruta           := RoundTo( StrToFloatDef( copy( RetCmd,  77, 14 ), -1 ) / 100, -2 ) ;                      except  ValorVendaBruta           := -1; end;
+      try CancelamentoICMS          := RoundTo( StrToFloatDef( copy( RetCmd,  21, 14 ), -1 ) / 100, -2 ) ;                      except  CancelamentoICMS          := -1; end;
+      try DescontoICMS              := RoundTo( StrToFloatDef( copy( RetCmd,  35, 14 ), -1 ) / 100, -2 ) ;                      except  DescontoICMS              := -1; end;
+      try SubstituicaoTributariaICMS:= RoundTo( StrToFloatDef( copy( RetCmd, 395, 14 ), -1 ) / 100, -2 ) ;                      except  SubstituicaoTributariaICMS:= -1; end;
+      try IsentoICMS                := RoundTo( StrToFloatDef( copy( RetCmd, 409, 14 ), -1 ) / 100, -2 ) ;                      except  IsentoICMS                := -1; end;
+      try NaoTributadoICMS          := RoundTo( StrToFloatDef( copy( RetCmd, 423, 14 ), -1 ) / 100, -2 ) ;                      except  NaoTributadoICMS          := -1; end;
 
-    { TOTALIZADORES NÃO FISCAIS }
-    S  := Copy(RetCmd,407,126);   // 9 * 14
-    SS := Copy(RetCmd,533,36);    // 9 * 4
-    for I := 0 to fpComprovantesNaoFiscais.Count - 1 do
+      fpDadosReducaoZClass.VendaLiquida  := fpDadosReducaoZClass.ValorVendaBruta - fpDadosReducaoZClass.DescontoICMS - fpDadosReducaoZClass.CancelamentoICMS;
+      fpDadosReducaoZClass.TotalISSQN    := 0;
+
+      S := copy( RetCmd, 91, 64 ) ;  // 4 * 16  aliquotas
+      initotal := 155;
+      For I := 0 to fpAliquotas.Count-1 do
+      begin
+        J           := StrToIntDef( Trim(fpAliquotas[I].Indice), I );
+        AliqZ       := TACBrECFAliquota.Create ;
+        AliqZ.Assign( fpAliquotas[I] );
+        total       := copy(RetCmd,initotal,14);
+        AliqZ.Total := RoundTo( StrToFloatDef( total,0) / 100, -2);
+        AdicionaAliquota( AliqZ );
+        initotal := initotal + 14;
+      end ;   
+    end
+    else
     begin
-      CNFZ := TACBrECFComprovanteNaoFiscal.Create ;
-      CNFZ.Assign( fpComprovantesNaoFiscais[I] );
-      CNFZ.Total    := RoundTo(StrToFloatDef( copy(S,(I*14)+1,14),0) / 100, -2 ) ;
-      CNFZ.Contador := StrToIntDef( copy(SS,(I*4)+1,4), 0);
+      //////////////////////////////////////////////////////////////////////////////
+      ///               FORMATO DE STRING COM 616 CARACTERES                     ///
+      //////////////////////////////////////////////////////////////////////////////
+       { Tamanho de Retorno 616 dígitos BCD (308 bytes),
+        com a seguinte estrutura.                                Ini  Fim
+        2 Constante 00.                                            1    2
+       18 GTDA GT no momento da última redução.                    3   20
+       14 CANCEL Cancelamentos                                    21   34
+       14 DESCON Descontos                                        35   48
+       64 TR Tributos                                             49  112
+      266 TP Totalizadores Parciais Tributados                   113  378
+       14 SANGRIA Sangria                                        379  392
+       14 SUPRIMENTOS Suprimentos                                393  406
+      126 NSI Totalizadores não Sujeitos ao ICMS                 407  532
+       36 CNSI Contadores dos TP’s não Sujeitos ao ICMS          533  568
+        6 COO Contador de Ordem de Operação                      569  574
+        6 CNS Contador de Operações não Sujeitas ao ICMS         575  580
+        2 AL Número de Alíquotas Cadastradas                     581  582
+        6 DATA_PC Data do Movimento                              583  588
+       14 ACRESC Acréscimo                                       589  602
+       14 ACRFIN Acréscimo Financeiro                            603  616
 
-      TotalizadoresNaoFiscais.Add( CNFZ ) ;
-    end;
+      RRGGGGGGGGGGGGGGGGGGCCCCCCCCCCCCCCDDDDDDDDDDDDDDT001T002T003T004T005T006T007T008T009T010T011T012T013T014T015T016TPT00000000001TPT00000000002TPT00000000003TPT00000000004TPT00000000005TPT00000000006TPT00000000007TPT00000000008TPT00000000009TPT00000000010TPT00000000011TPT00000000012TPT00000000013TPT00000000014TPT00000000015TPT00000000016IIIIIIIIIIIIIINNNNNNNNNNNNNNFFFFFFFFFFFFFFAAAAAAAAAAAAAAUUUUUUUUUUUUUUTNS00000000001TNS00000000002TNS00000000003TNS00000000004TNS00000000005TNS00000000006TNS00000000007TNS00000000008TNS00000000009CN01CN02CN03CN04CN05CN06CN07CN08CN09COOCOOCNSCNSALDTMOVTAAAAAAAAAAAAAAFFFFFFFFFFFFFF
+      0000000000000014231000000000000000000000000000001800021605001200050025000250180013001600170002110200100006000100000000000001000000000000020000000000000300000000000004010000000000050100000000000601000000000007010000000000080100000000000901000000000010010000000000110200000000001202000000000013020000000000140200000000001502000000000016020000000001001400000000010114000000000408640000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000162000019161708070000000000011100000000000000
+      ....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8....+....9....+....0....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8....+....9....+....0....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8....+....9....+....0....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8....+....9....+....0....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8....+....9....+....0....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8....+....9....+....0....+....1....+.
+      |                 |             |             |                                                               |                                                                                                                                                                                                                                                                         |
+      }
 
-    if Length(RetCmd) > 569 then
-      COO := StrToIntDef( copy( RetCmd, 569, 6 ), 0) ;
-    // TODO: CNS Contador de Operações não Sujeitas ao ICMS         575  580
+      ValorGrandeTotal := RoundTo( StrToFloatDef( copy( RetCmd,  3, 18 ), -1 ) / 100, -2 ) ;
+      CancelamentoICMS := RoundTo( StrToFloatDef( copy( RetCmd, 21, 14 ), -1 ) / 100, -2 )  ;
+      DescontoICMS     := RoundTo( StrToFloatDef( copy( RetCmd, 35, 14 ), -1 ) / 100, -2 ) ;
 
-    if Length(RetCmd) > 587 then
-       DataDoMovimento := StringToDateTimeDef( copy( RetCmd, 583, 2 ) + DateSeparator +
-                                               copy( RetCmd, 585, 2 ) + DateSeparator +
-                                               copy( RetCmd, 587, 2 ), 0, 'dd/mm/yy' );
-    if Length(RetCmd) > 589 then
-       AcrescimoICMS := RoundTo( StrToFloatDef( copy( RetCmd, 589, 14 ), -1 ) / 100, -2 ) ;
+      // Dados das Aliquotas //
+      S := copy( RetCmd, 113, 224 ) ;  // 16 * 14
+      For I := 0 to fpAliquotas.Count-1 do
+      begin
+        J := StrToIntDef( Trim(fpAliquotas[I].Indice), I );
+        AliqZ := TACBrECFAliquota.Create ;
+        AliqZ.Assign( fpAliquotas[I] );
+        AliqZ.Total := RoundTo( StrToFloatDef( copy(S,(J*14)+1,14),0) / 100, -2);
+        AdicionaAliquota( AliqZ );
+      end ;
 
-    // TODO: 14 ACRFIN Acréscimo Financeiro                         603  616
+      SubstituicaoTributariaICMS := RoundTo( StrToFloatDef( copy( RetCmd, 337, 14 ), -1 ) / 100, -2 ) ;
+      IsentoICMS                 := RoundTo( StrToFloatDef( copy( RetCmd, 351, 14 ), -1 ) / 100, -2 ) ;
+      NaoTributadoICMS           := RoundTo( StrToFloatDef( copy( RetCmd, 365, 14 ), -1 ) / 100, -2 ) ;
+
+      { TOTALIZADORES NÃO FISCAIS }
+      S  := Copy(RetCmd,407,126);   // 9 * 14
+      SS := Copy(RetCmd,533,36);    // 9 * 4
+      for I := 0 to fpComprovantesNaoFiscais.Count - 1 do
+      begin
+        CNFZ := TACBrECFComprovanteNaoFiscal.Create ;
+        CNFZ.Assign( fpComprovantesNaoFiscais[I] );
+        CNFZ.Total    := RoundTo(StrToFloatDef( copy(S,(I*14)+1,14),0) / 100, -2 ) ;
+        CNFZ.Contador := StrToIntDef( copy(SS,(I*4)+1,4), 0);
+
+        TotalizadoresNaoFiscais.Add( CNFZ ) ;
+      end;
+
+      if Length(RetCmd) > 569 then
+        COO := StrToIntDef( copy( RetCmd, 569, 6 ), 0) ;
+      // TODO: CNS Contador de Operações não Sujeitas ao ICMS         575  580
+
+      if Length(RetCmd) > 587 then
+         DataDoMovimento := StringToDateTimeDef( copy( RetCmd, 583, 2 ) + DateSeparator +
+                                                 copy( RetCmd, 585, 2 ) + DateSeparator +
+                                                 copy( RetCmd, 587, 2 ), 0, 'dd/mm/yy' );
+      if Length(RetCmd) > 589 then
+         AcrescimoICMS := RoundTo( StrToFloatDef( copy( RetCmd, 589, 14 ), -1 ) / 100, -2 ) ;
+
+      // TODO: 14 ACRFIN Acréscimo Financeiro                         603  616
+    end;   
 
     CalculaValoresVirtuais;
     Result := MontaDadosReducaoZ;

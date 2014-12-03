@@ -97,6 +97,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 03/12/2014
+-- ACBrECFFiscNet --
+[*] Ajustes para ECFs que retornam o DadosUltimaReducaoZ fora do padrão
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=18502
+    (por: Simone D. Russo)
+
 Data: 29/11/2014
 -- ACBrBal --  (por: Regys Silveira)
 [+] Adicionada balança Lider.
