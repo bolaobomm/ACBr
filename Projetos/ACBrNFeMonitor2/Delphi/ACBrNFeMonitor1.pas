@@ -35,7 +35,7 @@ unit ACBrNFeMonitor1;
 
 interface
 
-uses IniFiles, CmdUnitNFe, FileCtrl, Printers,
+uses IniFiles, CmdUnitNFe, FileCtrl, Printers, TypInfo,
   IdBaseComponent, IdComponent, IdTCPServer,
   ShellAPI,                                { Unit para criar icone no Systray }
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
@@ -293,6 +293,17 @@ type
     rgLocalCanhoto: TRadioGroup;
     rgModoImpressaoEvento: TRadioGroup;
     cbxSepararporModelo: TCheckBox;
+    gbDANFeESCPOS: TGroupBox;
+    Label51: TLabel;
+    cbMarcaImpressoraESCPOS: TComboBox;
+    cbPortaESCPOS: TComboBox;
+    Label52: TLabel;
+    cbVelocidadeESCPOS: TComboBox;
+    Label53: TLabel;
+    sedLinhasEntreCupom: TSpinEdit;
+    Label54: TLabel;
+    cbxImprimirItem1LinhaESCPOS: TCheckBox;
+    cbxImprimirDescAcresItemESCPOS: TCheckBox;
     procedure DoACBrTimer(Sender: TObject);
     procedure edOnlyNumbers(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
@@ -935,9 +946,15 @@ begin
      else
         ACBrNFe1.DANFE := ACBrNFeDANFERaveCB1;
 
-     ACBrNFe1.DANFE.LocalImpCanhoto := rgLocalCanhoto.ItemIndex;
-     rgModeloDANFeNFCE.ItemIndex   := Ini.ReadInteger('NFCe','Modelo'   ,0) ;
+     ACBrNFe1.DANFE.LocalImpCanhoto    := rgLocalCanhoto.ItemIndex;
+     rgModeloDANFeNFCE.ItemIndex       := Ini.ReadInteger('NFCe','Modelo'   ,0) ;
      rgModoImpressaoEvento.ItemIndex   := Ini.ReadInteger('NFCe','ModoImpressaoEvento'   ,0) ;
+     cbMarcaImpressoraESCPOS.ItemIndex := Ini.ReadInteger('NFCe', 'MarcaImpressora', 0);
+     cbPortaESCPOS.ItemIndex           := cbPortaESCPOS.Items.IndexOf(Ini.ReadString('NFCe', 'Porta', 'COM1'));
+     cbVelocidadeESCPOS.ItemIndex      := cbVelocidadeESCPOS.Items.IndexOf(Ini.ReadString('NFCe', 'Velocidade', '9600'));
+     sedLinhasEntreCupom.Value         := Ini.ReadInteger('NFCe', 'LinhasEntreCupom', 7);
+     cbxImprimirItem1LinhaESCPOS.Checked    := Ini.ReadBool('NFCe', 'ImprimirItem1Linha', True);
+     cbxImprimirDescAcresItemESCPOS.Checked := Ini.ReadBool('NFCe', 'ImprimirDescAcresItem', True);
 
      ConfiguraDANFe;
 
@@ -1163,6 +1180,13 @@ begin
 
      Ini.WriteInteger('NFCe','Modelo'              ,rgModeloDANFeNFCE.ItemIndex) ;
      Ini.WriteInteger('NFCe','ModoImpressaoEvento' ,rgModoImpressaoEvento.ItemIndex) ;
+     Ini.WriteInteger('NFCe','ModoImpressaoEvento'   ,rgModoImpressaoEvento.ItemIndex) ;
+     Ini.WriteInteger('NFCe', 'MarcaImpressora', cbMarcaImpressoraESCPOS.ItemIndex);
+     Ini.WriteString('NFCe', 'Porta', cbPortaESCPOS.Text);
+     Ini.WriteString('NFCe', 'Velocidade', cbVelocidadeESCPOS.Text);
+     Ini.WriteInteger('NFCe', 'LinhasEntreCupom', sedLinhasEntreCupom.Value);
+     Ini.WriteBool('NFCe', 'ImprimirItem1Linha', cbxImprimirItem1LinhaESCPOS.Checked);
+     Ini.WriteBool('NFCe', 'ImprimirDescAcresItem', cbxImprimirDescAcresItemESCPOS.Checked);
 
      Ini.WriteBool(   'Arquivos','Salvar'     ,cbxSalvarArqs.Checked);
      Ini.WriteBool(   'Arquivos','PastaMensal',cbxPastaMensal.Checked);
@@ -1426,6 +1450,8 @@ begin
 end;
 
 procedure TfrmAcbrNfeMonitor.FormCreate(Sender: TObject);
+var
+  MarcaImpressora: TACBrNFeMarcaImpressora;
 begin
   mResp.Clear ;
   mCmd.Clear ;
@@ -1439,6 +1465,13 @@ begin
    end
   else
      ACBrGIF1.Visible := False;
+
+  cbMarcaImpressoraESCPOS.Items.Clear ;
+  For MarcaImpressora := Low(TACBrNFeMarcaImpressora) to High(TACBrNFeMarcaImpressora) do
+    cbMarcaImpressoraESCPOS.Items.Add(GetEnumName(TypeInfo(TACBrNFeMarcaImpressora), Integer(MarcaImpressora)));
+
+  cbPortaESCPOS.Items.Clear;
+  ACBrNFeDANFeESCPOS1.Device.AcharPortasSeriais(cbPortaESCPOS.Items);
 
   Cmd       := TACBrNFeCTeCmd.Create ;
   CmdXML    := TACBrCmd.Create;
@@ -1894,11 +1927,12 @@ begin
   begin
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+    ConfiguraDANFe;
     ACBrNFe1.NotasFiscais.ImprimirPDF;
     ArqPDF := ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID ;
 
-    ArqPDF := StringReplace(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]);
-    ArqPDF :=PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ ArqPDF+'.pdf';
+    ArqPDF := OnlyNumber(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID);
+    ArqPDF :=PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ ArqPDF+'-nfe.pdf';
 
     if not(InputQuery('Enviar Email', 'Email de Destino', vPara)) then
        exit;
@@ -2220,10 +2254,21 @@ begin
         ACBrNFeDANFERave1.TamanhoFonte_RazaoSocial := StrToIntDef(edtFonteRazao.Text, 12);
         ACBrNFeDANFERave1.RavFile := PathWithDelim(ExtractFilePath(Application.ExeName))+'Report\DANFE_Rave513.rav'; //NotaFiscalEletronica
       end
-     else
+     else if ACBrNFe1.DANFE = ACBrNFeDANFERaveCB1 then
       begin
         ACBrNFeDANFERaveCB1.EspessuraBorda := StrToIntDef(edtEspBorda.Text, 1);
         ACBrNFeDANFERaveCB1.Fonte  := DFeUtil.SeSenao(rgTipoFonte.ItemIndex=0,ftTimes,ftCourier);
+      end
+     else if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
+      begin
+        ACBrNFeDANFeESCPOS1.MarcaImpressora       := TACBrNFeMarcaImpressora(cbMarcaImpressoraESCPOS.ItemIndex);
+        ACBrNFeDANFeESCPOS1.Device.Porta          := cbPortaESCPOS.Text;
+        ACBrNFeDANFeESCPOS1.Device.Baud           := StrToInt(cbVelocidadeESCPOS.Text);
+        ACBrNFeDANFeESCPOS1.ImprimeEmUmaLinha     := cbxImprimirItem1LinhaESCPOS.Checked;
+        ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemESCPOS.Checked;
+
+        if not ACBrNFeDANFeESCPOS1.Device.Ativo then
+           ACBrNFeDANFeESCPOS1.Device.Ativar;
       end;
    end;
 end;

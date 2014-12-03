@@ -267,7 +267,7 @@ begin
 
            try
               ACBrMDFe1.Manifestos.ImprimirPDF;
-              ArqPDF := OnlyNumber(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID)+'.pdf';
+              ArqPDF := OnlyNumber(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID)+'-mdfe.pdf';
               Cmd.Resposta := 'Arquivo criado em: '+ PathWithDelim(ACBrMDFe1.DAMDFe.PathPDF) +
                               ArqPDF;
            except
@@ -664,7 +664,7 @@ begin
                  ArqPDF := ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID;
 
                  ArqPDF := OnlyNumber(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID);
-                 ArqPDF := PathWithDelim(ACBrMDFe1.DAMDFe.PathPDF)+ArqPDF+'.pdf';
+                 ArqPDF := PathWithDelim(ACBrMDFe1.DAMDFe.PathPDF)+ArqPDF+'-mdfe.pdf';
               except
                  raise Exception.Create('Erro ao criar o arquivo PDF');
               end;

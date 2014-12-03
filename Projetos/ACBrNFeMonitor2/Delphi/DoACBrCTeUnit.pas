@@ -281,7 +281,7 @@ begin
 		        ACBrCTe1.DACTe.CTeCancelada := True;
 				
               ACBrCTe1.Conhecimentos.ImprimirPDF;
-              ArqPDF := OnlyNumber(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.ID)+'.pdf';
+              ArqPDF := OnlyNumber(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.ID)+'-cte.pdf';
               Cmd.Resposta := 'Arquivo criado em: '+ PathWithDelim(ACBrCTe1.DACTe.PathPDF) +
                               ArqPDF;
 							  
@@ -371,10 +371,8 @@ begin
               ACBrCTe1.ImprimirEventoPDF;
 //              ArqPDF := StringReplace(ACBrCTe1.EventoCTe.Evento[0].InfEvento.id,'ID', '', [rfIgnoreCase]);
 
-              ArqPDF := Copy(ACBrCTe1.EventoCTe.Evento[0].InfEvento.id, 09, 44) +
-                        Copy(ACBrCTe1.EventoCTe.Evento[0].InfEvento.id, 03, 06) +
-                        Copy(ACBrCTe1.EventoCTe.Evento[0].InfEvento.id, 53, 02);
-              ArqPDF := PathWithDelim(ACBrCTe1.DACTe.PathPDF)+ArqPDF+'evento.pdf';
+              ArqPDF := OnlyNumber(ACBrCTe1.EventoCTe.Evento[0].InfEvento.Id);
+              ArqPDF := PathWithDelim(ACBrCTe1.DACTe.PathPDF)+ArqPDF+'-procEventoCTe.pdf';
               Cmd.Resposta := 'Arquivo criado em: ' + ArqPDF;
            except
               raise Exception.Create('Erro ao criar o arquivo PDF');
@@ -863,7 +861,7 @@ begin
                  ArqPDF := ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.ID;
 
                  ArqPDF := OnlyNumber(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.ID);
-                 ArqPDF := PathWithDelim(ACBrCTe1.DACTe.PathPDF)+ArqPDF+'.pdf';
+                 ArqPDF := PathWithDelim(ACBrCTe1.DACTe.PathPDF)+ArqPDF+'-cte.pdf';
               except
                  raise Exception.Create('Erro ao criar o arquivo PDF');
               end;
@@ -926,11 +924,8 @@ begin
               try
                  ACBrCTe1.ImprimirEventoPDF;
 
-//                 ArqPDF := StringReplace(ACBrCTe1.EventoCTe.Evento[0].InfEvento.id,'ID', '', [rfIgnoreCase]);
-                 ArqPDF := Copy(ACBrCTe1.EventoCTe.Evento[0].InfEvento.id, 09, 44) +
-                           Copy(ACBrCTe1.EventoCTe.Evento[0].InfEvento.id, 03, 06) +
-                           Copy(ACBrCTe1.EventoCTe.Evento[0].InfEvento.id, 53, 02);
-                 ArqPDF := PathWithDelim(ACBrCTe1.DACTe.PathPDF)+ArqPDF+'evento.pdf';
+                 ArqPDF := OnlyNumber(ACBrCTe1.EventoCTe.Evento[0].InfEvento.Id);
+                 ArqPDF := PathWithDelim(ACBrCTe1.DACTe.PathPDF)+ArqPDF+'-procEventoCTe.pdf';
               except
                  raise Exception.Create('Erro ao criar o arquivo PDF');
               end;

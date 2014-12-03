@@ -56,7 +56,7 @@ implementation
 Uses IniFiles, StrUtils, DateUtils,
   Windows, Forms, XMLIntf, XMLDoc,
   ACBrUtil, ACBrNFeMonitor1 , ACBrNFeWebServices, ACBrNFe,
-  ACBrNFeConfiguracoes,
+  ACBrNFeConfiguracoes, ACBrNFeDANFEClass,
   pcnNFe, pcnConversao,
   pcnRetConsReciNFe, pcnConsStatServ, pcnRetConsStatServ,
   pcnCancNFe, pcnRetCancNFe,
@@ -71,7 +71,7 @@ Procedure DoACBrNFe( Cmd : TACBrNFeCTeCmd ) ;
 var
   I,J : Integer;
   ArqNFe, ArqPDF, ArqEvento, Chave : String;
-  Salva, EnviadoDPEC, OK, OldMostrarPreview : Boolean;
+  Salva, EnviadoDPEC, OK, OldMostrarPreview, MudouDANFe : Boolean;
   SL     : TStringList;
   ChavesNFe: Tstrings;
   Alertas : AnsiString;
@@ -86,7 +86,8 @@ var
 
   NFeRTXT   : TNFeRTXT;
   VersaoDF  : TpcnVersaoDF;
-  ModeloDF  : TpcnModeloDF;  
+  ModeloDF  : TpcnModeloDF;
+  OldDANFe  : TACBrNFeDANFEClass;
 begin
  with frmAcbrNfeMonitor do
   begin
@@ -94,10 +95,8 @@ begin
      try
         if Cmd.Metodo = 'statusservico' then
          begin
-           if ACBrNFe1.WebServices.StatusServico.Executar then
-            begin
-
-              Cmd.Resposta := ACBrNFe1.WebServices.StatusServico.Msg+
+           ACBrNFe1.WebServices.StatusServico.Executar;
+           Cmd.Resposta := ACBrNFe1.WebServices.StatusServico.Msg+
                               '[STATUS]'+sLineBreak+
                               'Versao='+ACBrNFe1.WebServices.StatusServico.verAplic+sLineBreak+
                               'TpAmb='+TpAmbToStr(ACBrNFe1.WebServices.StatusServico.TpAmb)+sLineBreak+
@@ -109,7 +108,6 @@ begin
                               'TMed='+IntToStr(ACBrNFe1.WebServices.StatusServico.TMed)+sLineBreak+
                               'DhRetorno='+DateTimeToStr(ACBrNFe1.WebServices.StatusServico.DhRetorno)+sLineBreak+
                               'XObs='+ACBrNFe1.WebServices.StatusServico.XObs+sLineBreak;
-            end;
          end
 
         else if Cmd.Metodo = 'validarnfe' then
@@ -148,9 +146,9 @@ begin
 
         else if Cmd.Metodo = 'consultarnfe' then
          begin
+           ACBrNFe1.NotasFiscais.Clear;
            if FileExists(Cmd.Params(0)) or FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(0)) then
             begin
-              ACBrNFe1.NotasFiscais.Clear;
               if FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(0)) then
                  ACBrNFe1.NotasFiscais.LoadFromFile(PathWithDelim(ACBrNFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(0))
               else
@@ -182,7 +180,10 @@ begin
                               'DigVal='+ACBrNFe1.WebServices.Consulta.protNFe.digVal+sLineBreak;
 
            except
-              raise Exception.Create(ACBrNFe1.WebServices.Consulta.Msg);
+               on E: Exception do
+                begin
+                  raise Exception.Create(ACBrNFe1.WebServices.Consulta.Msg+sLineBreak+E.Message);
+                end;
            end;
          end
 
@@ -237,7 +238,10 @@ begin
                               'emailDest='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.emailDest+sLineBreak+
                               'XML='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.XML+sLineBreak;
            except
-              raise Exception.Create(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.xMotivo);
+             on E: Exception do
+              begin
+                raise Exception.Create(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.xMotivo+sLineBreak+E.Message);
+              end;
            end;
          end
         else if Cmd.Metodo = 'imprimirdanfe' then
@@ -313,6 +317,14 @@ begin
               raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
 
            ConfiguraDANFe;
+           MudouDANFe := False;
+
+           if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
+            begin
+              MudouDANFe := True;
+              OldDANFe := ACBrNFe1.DANFE;
+              ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1;
+            end;
 
            if DFeUtil.NaoEstaVazio(Cmd.Params(1)) then
               ACBrNFe1.DANFE.ProtocoloNFe := Cmd.Params(1);
@@ -328,6 +340,11 @@ begin
            try
               ACBrNFe1.NotasFiscais.ImprimirPDF;
               ArqPDF := OnlyNumber(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID)+'-nfe.pdf';
+              if MudouDANFe then
+               begin
+                 MudouDANFe := False;
+                 ACBrNFe1.DANFE := OldDANFe;
+               end;
               Cmd.Resposta := 'Arquivo criado em: '+ PathWithDelim(ACBrNFe1.DANFE.PathPDF) +
                               ArqPDF ;
            except
@@ -564,6 +581,7 @@ begin
            ACBrNFe1.WebServices.Recibo.Recibo := Cmd.Params(0);
            if not(ACBrNFe1.WebServices.Recibo.Executar) then
              raise Exception.Create(ACBrNFe1.WebServices.Recibo.xMotivo);
+
 
            Cmd.Resposta :=  Cmd.Resposta+
                             ACBrNFe1.WebServices.Recibo.Msg+sLineBreak+
@@ -1007,7 +1025,10 @@ begin
                    end;
                end;
            except
-              raise Exception.Create(AcbrNFe1.WebServices.ConsNFeDest.Msg);
+             on E: Exception do
+              begin
+                raise Exception.Create(AcbrNFe1.WebServices.ConsNFeDest.Msg+sLineBreak+E.Message);
+              end;
            end;
          end
 
@@ -1075,7 +1096,10 @@ begin
                 SL.Free;
               end;
            except
-              raise Exception.Create(ACBrNFe1.WebServices.DownloadNFe.Msg);
+             on E: Exception do
+              begin
+                raise Exception.Create(ACBrNFe1.WebServices.DownloadNFe.Msg+sLineBreak+E.Message);
+              end;
            end;
          end
 
@@ -1098,14 +1122,30 @@ begin
            else
               raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
 
+           ConfiguraDANFe;
+           MudouDANFe := False;
+
+           if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
+            begin
+              MudouDANFe := True;
+              OldDANFe := ACBrNFe1.DANFE;
+              ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1;
+            end;
+
            if (Cmd.Params(2) = '1') then
             begin
               try
                  ACBrNFe1.NotasFiscais.ImprimirPDF;
-                 ArqPDF := ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID ;
+                 if MudouDANFe then
+                  begin
+                    MudouDANFe := False;
+                    ACBrNFe1.DANFE := OldDANFe;
+                  end;
 
                  ArqPDF := OnlyNumber(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID);
                  ArqPDF := PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ArqPDF+'-nfe.pdf';
+
+                 
               except
                  raise Exception.Create('Erro ao criar o arquivo PDF');
               end;
@@ -1162,6 +1202,8 @@ begin
               if DFeUtil.NaoEstaVazio(Cmd.Params(2)) then
                  raise Exception.Create('Arquivo '+Cmd.Params(2)+' não encontrado.');
             end;
+
+           ConfiguraDANFe; 
 
            if (Cmd.Params(3) = '1') then
             begin
@@ -1551,10 +1593,21 @@ begin
           begin
             sSecao := 'NFRef'+IntToStrZero(I,3) ;
             sFim   := INIRec.ReadString(  sSecao,'Tipo'  ,'FIM');
+            sTipo := UpperCase(INIRec.ReadString(  sSecao,'Tipo'  ,'NFe')); //NFe2 NF NFe NFP CTe ECF)            
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
+             begin
+               if INIRec.ReadString(sSecao,'refNFe','') <> '' then
+                  sTipo := 'NFE'
+               else if INIRec.ReadString(  sSecao,'refCTe'  ,'') <> '' then
+                  sTipo := 'CTE'
+               else if INIRec.ReadString(  sSecao,'nECF'  ,'') <> '' then
+                  sTipo :=  'ECF'
+               else if INIRec.ReadString(  sSecao,'IE'    ,'') <> '' then
+                  sTipo := 'NFP'
+               else if INIRec.ReadString(  sSecao,'CNPJ'  ,'') <> '' then
+                  sTipo := 'NF';
                break ;
-
-            sTipo := UpperCase(INIRec.ReadString(  sSecao,'Tipo'  ,'NFe')); //NFe2 NF NFe NFP CTe ECF)
+             end;
 
             with Ide.NFref.Add do
              begin
@@ -1571,21 +1624,21 @@ begin
                 end
                else if sTipo = 'NFP' then
                 begin
-                  RefNFP.cUF    := INIRec.ReadInteger( sSecao,'cUF'   ,0);  //NFe2
-                  RefNFP.AAMM   := INIRec.ReadString(  sSecao,'AAMM'  ,''); //NFe2
-                  RefNFP.CNPJCPF:= INIRec.ReadString(  sSecao,'CNPJ'  ,''); //NFe2
-                  RefNFP.IE     := INIRec.ReadString(  sSecao,'IE'    ,''); //NFe2
-                  RefNFP.Modelo := INIRec.ReadString(  sSecao,'Modelo',INIRec.ReadString(  sSecao,'mod','')); //NFe2
-                  RefNFP.serie  := INIRec.ReadInteger( sSecao,'Serie' ,0);  //NFe2
-                  RefNFP.nNF    := INIRec.ReadInteger( sSecao,'nNF'   ,0);  //NFe2
+                  RefNFP.cUF    := INIRec.ReadInteger( sSecao,'cUF'   ,0);
+                  RefNFP.AAMM   := INIRec.ReadString(  sSecao,'AAMM'  ,'');
+                  RefNFP.CNPJCPF:= INIRec.ReadString(  sSecao,'CNPJ'  ,INIRec.ReadString(sSecao,'CPF',INIRec.ReadString(sSecao,'CNPJCPF','')));
+                  RefNFP.IE     := INIRec.ReadString(  sSecao,'IE'    ,'');
+                  RefNFP.Modelo := INIRec.ReadString(  sSecao,'Modelo',INIRec.ReadString(  sSecao,'mod',''));
+                  RefNFP.serie  := INIRec.ReadInteger( sSecao,'Serie' ,0);
+                  RefNFP.nNF    := INIRec.ReadInteger( sSecao,'nNF'   ,0);
                 end
                else if sTipo = 'CTE' then
-                  refCTe         := INIRec.ReadString(  sSecao,'refCTe'  ,'') //NFe2
+                  refCTe         := INIRec.ReadString(  sSecao,'refCTe'  ,'')
                else if sTipo = 'ECF' then
                 begin
-                  RefECF.modelo := StrToECFModRef(ok,INIRec.ReadString(  sSecao,'ModECF'  ,INIRec.ReadString(  sSecao,'mod'  ,''))) ; //NFe2
-                  RefECF.nECF   := INIRec.ReadString(  sSecao,'nECF'  ,''); //NFe2
-                  RefECF.nCOO   := INIRec.ReadString(  sSecao,'nCOO'  ,''); //NFe2
+                  RefECF.modelo := StrToECFModRef(ok,INIRec.ReadString(  sSecao,'ModECF'  ,INIRec.ReadString(  sSecao,'mod'  ,''))) ;
+                  RefECF.nECF   := INIRec.ReadString(  sSecao,'nECF'  ,'');
+                  RefECF.nCOO   := INIRec.ReadString(  sSecao,'nCOO'  ,'');
                 end;
              end;
             Inc(I);

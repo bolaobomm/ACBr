@@ -4133,7 +4133,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
       Top = 1
       Width = 569
       Height = 261
-      ActivePage = WebService
+      ActivePage = DANFE
       Align = alClient
       Style = tsFlatButtons
       TabOrder = 0
@@ -5062,7 +5062,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Top = 0
           Width = 561
           Height = 230
-          ActivePage = tsDanfe
+          ActivePage = TabSheet1
           Align = alClient
           Style = tsFlatButtons
           TabOrder = 0
@@ -5485,6 +5485,101 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 'A4'
                 'Bobina')
               TabOrder = 1
+            end
+            object gbDANFeESCPOS: TGroupBox
+              Left = 201
+              Top = -2
+              Width = 337
+              Height = 106
+              Caption = 'Configura'#231#245'es ESCPOS'
+              TabOrder = 2
+              object Label51: TLabel
+                Left = 12
+                Top = 20
+                Width = 84
+                Height = 13
+                Caption = 'Marca Impressora'
+              end
+              object Label52: TLabel
+                Left = 140
+                Top = 20
+                Width = 25
+                Height = 13
+                Caption = 'Porta'
+              end
+              object Label53: TLabel
+                Left = 240
+                Top = 20
+                Width = 81
+                Height = 13
+                Caption = 'Velocidade Porta'
+              end
+              object Label54: TLabel
+                Left = 12
+                Top = 60
+                Width = 96
+                Height = 13
+                Caption = 'Linhas entre cupons'
+              end
+              object cbMarcaImpressoraESCPOS: TComboBox
+                Left = 12
+                Top = 36
+                Width = 120
+                Height = 21
+                Style = csDropDownList
+                ItemHeight = 13
+                TabOrder = 0
+              end
+              object cbPortaESCPOS: TComboBox
+                Left = 140
+                Top = 36
+                Width = 90
+                Height = 21
+                Style = csDropDownList
+                ItemHeight = 13
+                TabOrder = 1
+              end
+              object cbVelocidadeESCPOS: TComboBox
+                Left = 240
+                Top = 36
+                Width = 90
+                Height = 21
+                Style = csDropDownList
+                ItemHeight = 13
+                TabOrder = 2
+                Items.Strings = (
+                  '9600'
+                  '19200'
+                  '38400'
+                  '57600'
+                  '115200')
+              end
+              object sedLinhasEntreCupom: TSpinEdit
+                Left = 12
+                Top = 76
+                Width = 98
+                Height = 22
+                MaxValue = 50
+                MinValue = 1
+                TabOrder = 3
+                Value = 1
+              end
+              object cbxImprimirItem1LinhaESCPOS: TCheckBox
+                Left = 130
+                Top = 63
+                Width = 186
+                Height = 17
+                Caption = 'Imprimir itens somente em 1 linha'
+                TabOrder = 4
+              end
+              object cbxImprimirDescAcresItemESCPOS: TCheckBox
+                Left = 130
+                Top = 81
+                Width = 199
+                Height = 17
+                Caption = 'Imprime desconto/acr'#233'scimo por item'
+                TabOrder = 5
+              end
             end
           end
         end
@@ -6679,6 +6774,11 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     LocalImpCanhoto = 0
     ImprimeItens = True
     ViaConsumidor = True
+    ConfigBarras.MostrarCodigo = False
+    ConfigBarras.LarguraLinha = 0
+    ConfigBarras.Altura = 0
+    ImprimeEmUmaLinha = False
+    ImprimeDescAcrescItem = False
     Left = 201
     Top = 60
   end
