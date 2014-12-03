@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 03/12/2014
+[+] Adição da geração dos registros C800, C850..
+	http://www.projetoacbr.com.br/forum/index.php?/topic/18991-registros-cfe-modelo-59-sat/
+  
 Data 06/10/2014
 [*] Correções de alterações do registro C175 ACBrSpedPisCofins
 http://www.projetoacbr.com.br/forum/index.php?/topic/15798-registro-c175/

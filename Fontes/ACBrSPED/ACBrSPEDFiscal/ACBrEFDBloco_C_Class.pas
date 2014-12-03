@@ -2982,7 +2982,7 @@ begin
           Add( LFill('C800') +
                LFill( COD_MOD,2 ) +
                LFill( strCOD_SIT  ) +
-               LFill( NUM_CFE,9 ) +
+               LFill( NUM_CFE,6 ) +
                LFill( DT_DOC ) +
                LFill( VL_CFE,0,2 ) +
                LFill( VL_PIS,0,2 ) +
