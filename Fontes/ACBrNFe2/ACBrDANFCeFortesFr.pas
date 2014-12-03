@@ -746,7 +746,7 @@ begin
           RLFiltro.ShowProgress := ACBrNFeDANFCeFortes.MostrarStatus;
           //RLFiltro.FileName := NomeArquivo ;
           RLFiltro.FileName := ACBrNFeDANFCeFortes.PathPDF +
-                               Copy(ACBrNFeDANFCeFortes.FpNFe.infNFe.ID, 4, 44) + '.pdf';
+                               OnlyNumber(ACBrNFeDANFCeFortes.FpNFe.infNFe.ID) + '-nfe.pdf';
           {$IFDEF FPC}
             RLFiltro.Pages := RLLayout.Pages ;
             RLFiltro.FirstPage := 1;
