@@ -408,7 +408,9 @@ function funChecaCNPJ(const CNPJ: String): Boolean;
 //wCGCDigt: Integer;
 //strCNPJ: String;
 begin
-  Result := ACBrValidador.ACBrValidadorValidarCNPJ(CNPJ) = '';
+  Result := True;
+  if Length(CNPJ) > 0 then
+    Result := ACBrValidador.ACBrValidadorValidarCNPJ(CNPJ) = '';
 
 //   Result := funChecaIE(CNPJ, 'CNPJ');
 (*
@@ -472,7 +474,9 @@ function funChecaCPF(const CPF: String): Boolean;
 //wCPFDigt: Integer;
 //strCPF: String;
 begin
-  Result := ACBrValidador.ACBrValidadorValidarCPF(CPF) = '';
+  Result := True;
+  if Length(CPF) > 0 then
+    Result := ACBrValidador.ACBrValidadorValidarCPF(CPF) = '';
 
 //   Result := funChecaIE(CPF, 'CPF');
 (*
