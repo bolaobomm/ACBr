@@ -131,22 +131,24 @@ function TProvedorVirtual.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
  	ConfigURL: TConfigURL;
 begin
+ 	ConfigURL.HomNomeCidade         := '';
   ConfigURL.HomRecepcaoLoteRPS    := '';
   ConfigURL.HomConsultaLoteRPS    := '';
   ConfigURL.HomConsultaNFSeRPS    := '';
   ConfigURL.HomConsultaSitLoteRPS := '';
   ConfigURL.HomConsultaNFSe       := '';
-  ConfigURL.HomCancelaNFSe        := 'http://virtualserver.dyndns-free.com:8080/SCEMX32JavaEnvironment/servlet/anfse_barradogarcas?wsdl';
-  ConfigURL.HomGerarNFSe          := 'http://virtualserver.dyndns-free.com:8080/SCEMX32JavaEnvironment/servlet/agerarnfse_barradogarcas?wsdl';
+  ConfigURL.HomCancelaNFSe        := 'https://servidor.virtualtechnologia.com.br:8080/SCEMBGJavaEnvironment/servlet/acancelarnfse_barradogarcas'; //?wsdl';
+  ConfigURL.HomGerarNFSe          := 'https://servidor.virtualtechnologia.com.br:8080/SCEMBGJavaEnvironment/servlet/agerarnfse_barradogarcas'; //?wsdl';
   ConfigURL.HomRecepcaoSincrono   := '';
 
+ 	ConfigURL.ProNomeCidade         := '';
   ConfigURL.ProRecepcaoLoteRPS    := '';
   ConfigURL.ProConsultaLoteRPS    := '';
   ConfigURL.ProConsultaNFSeRPS    := '';
   ConfigURL.ProConsultaSitLoteRPS := '';
   ConfigURL.ProConsultaNFSe       := '';
-  ConfigURL.ProCancelaNFSe        := 'http://financas2.barradogarcas.mt.gov.br:8080/SCEM/servlet/acancelarnfse_barradogarcas'; // ?wsdl';
-  ConfigURL.ProGerarNFSe          := 'http://financas2.barradogarcas.mt.gov.br:8080/SCEM/servlet/agerarnfse_barradogarcas'; //?wsdl';
+  ConfigURL.ProCancelaNFSe        := 'https://financas2.barradogarcas.mt.gov.br:8080/SCEM/servlet/acancelarnfse_barradogarcas'; // ?wsdl';
+  ConfigURL.ProGerarNFSe          := 'https://financas2.barradogarcas.mt.gov.br:8080/SCEM/servlet/agerarnfse_barradogarcas'; //?wsdl';
   ConfigURL.ProRecepcaoSincrono   := '';
 
  	Result := ConfigURL;
