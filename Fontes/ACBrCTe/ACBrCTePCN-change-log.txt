@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/12/2014
+[-] Correções na Unit pcteCTeR: grupo de informações de documentos, estava lendo
+    informações sobre a unidade de carga em duplicidade.
+    por: Leandro Hermes
+
 11/11/2014
 [-] Correções para o modal ferroviário, os grupos: ferroEnv e detVag não 
     estavam sendo fechados corretamente.

@@ -679,25 +679,27 @@ begin
           inc(i02);
         end;
 
-        i02 := 0;
-        while Leitor.rExtrai(4, 'infUnidCarga', '', i02 + 1) <> '' do
+        if i02 = 0 then
         begin
-          CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga.Add;
-          CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
-          CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
-          CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
-
-          i03 := 0;
-          while Leitor.rExtrai(5, 'lacUnidCarga', '', i03 + 1) <> '' do
+          while Leitor.rExtrai(4, 'infUnidCarga', '', i02 + 1) <> '' do
           begin
-            CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].lacUnidCarga.Add;
-            CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].lacUnidCarga[i03].nLacre := Leitor.rCampo(tcStr, 'nLacre');
-            inc(i03);
+            CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga.Add;
+            CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
+            CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
+            CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
+
+            i03 := 0;
+            while Leitor.rExtrai(5, 'lacUnidCarga', '', i03 + 1) <> '' do
+            begin
+              CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].lacUnidCarga.Add;
+              CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].lacUnidCarga[i03].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+              inc(i03);
+            end;
+
+            inc(i02);
           end;
-
-          inc(i02);
         end;
-
+        
         inc(i01);
       end;
 
@@ -747,23 +749,25 @@ begin
           inc(i02);
         end;
 
-        i02 := 0;
-        while Leitor.rExtrai(4, 'infUnidCarga', '', i02 + 1) <> '' do
+        if i02 = 0 then
         begin
-          CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga.Add;
-          CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
-          CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
-          CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
-
-          i03 := 0;
-          while Leitor.rExtrai(5, 'lacUnidCarga', '', i03 + 1) <> '' do
+          while Leitor.rExtrai(4, 'infUnidCarga', '', i02 + 1) <> '' do
           begin
-            CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].lacUnidCarga.Add;
-            CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].lacUnidCarga[i03].nLacre := Leitor.rCampo(tcStr, 'nLacre');
-            inc(i03);
-          end;
+            CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga.Add;
+            CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
+            CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
+            CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
 
-          inc(i02);
+            i03 := 0;
+            while Leitor.rExtrai(5, 'lacUnidCarga', '', i03 + 1) <> '' do
+            begin
+              CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].lacUnidCarga.Add;
+              CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].lacUnidCarga[i03].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+              inc(i03);
+            end;
+
+            inc(i02);
+          end;
         end;
 
         inc(i01);
@@ -818,23 +822,25 @@ begin
           inc(i02);
         end;
 
-        i02 := 0;
-        while Leitor.rExtrai(4, 'infUnidCarga', '', i02 + 1) <> '' do
+        if i02 = 0 then
         begin
-          CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga.Add;
-          CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
-          CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
-          CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
-
-          i03 := 0;
-          while Leitor.rExtrai(5, 'lacUnidCarga', '', i03 + 1) <> '' do
+          while Leitor.rExtrai(4, 'infUnidCarga', '', i02 + 1) <> '' do
           begin
-            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].lacUnidCarga.Add;
-            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].lacUnidCarga[i03].nLacre := Leitor.rCampo(tcStr, 'nLacre');
-            inc(i03);
-          end;
+            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga.Add;
+            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
+            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
+            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
 
-          inc(i02);
+            i03 := 0;
+            while Leitor.rExtrai(5, 'lacUnidCarga', '', i03 + 1) <> '' do
+            begin
+              CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].lacUnidCarga.Add;
+              CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].lacUnidCarga[i03].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+              inc(i03);
+            end;
+
+            inc(i02);
+          end;
         end;
 
         inc(i01);
