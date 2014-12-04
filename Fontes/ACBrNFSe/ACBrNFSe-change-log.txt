@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/12/2014
+[*] Nova URL de produção de Pontal (provedor Fiorilli).
+    Por: Carlos César C. Silva
 [*] Para os provedores Lexsom e Publica o identificador estava sendo alterado para
     id antes de ocorrer a assinatura.
     Por: Italo Jurisato Junior
