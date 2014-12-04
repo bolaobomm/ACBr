@@ -171,7 +171,7 @@ begin
     acConsLote:    Result := False;
     acConsNFSeRps: Result := False;
     acConsNFSe:    Result := False;
-    acCancelar:    Result := False;
+    acCancelar:    Result := True;
     else           Result := False;
   end;
 end;

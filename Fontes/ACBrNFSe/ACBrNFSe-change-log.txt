@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/12/2014
+[*] Alterado a propriedade que informa que o pedido de cancelamento deve ser
+    assinado (provedor Lexsom).
+    Por: Italo Jurisato Junior
 [*] Incluido na function AssinarXML a alteração de Id para id após a assinatura
     para os provedores cujo identificador é id em vez de Id.
     Por: Italo Jurisato Junior
