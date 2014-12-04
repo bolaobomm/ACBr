@@ -1216,6 +1216,15 @@ begin
 
   AXMLAssinado := XmlAss;
 
+  //Não é possível assinar por delphi quando o id é minúsculo... mas se manter o id maiúsculo
+  //não será validado o schema... uma função mais legível como stringreplace faz a assinatura sumir.
+  if Aprovedor in [proPublica, proLexsom, proSalvador] then
+  begin
+    I := pos('Id=', AXMLAssinado);
+    if i>0 then
+      AXMLAssinado[I] := 'i';
+  end;
+
   Result := True;
 end;
 {$ELSE}
@@ -1348,6 +1357,15 @@ begin
       then AXMLAssinado := StuffString(AXMLAssinado,1,length(xmlHeaderDepois),xmlHeaderAntes);
     end
     else AXMLAssinado := xmlHeaderAntes + AXMLAssinado;
+  end;
+
+  //Não é possível assinar por delphi quando o id é minúsculo... mas se manter o id maiúsculo
+  //não será validado o schema... uma função mais legível como stringreplace faz a assinatura sumir.
+  if Aprovedor in [proPublica, proLexsom, proSalvador] then
+  begin
+    I := pos('Id=', AXMLAssinado);
+    if i>0 then
+      AXMLAssinado[I] := 'i';
   end;
 
  dsigKey   := nil;

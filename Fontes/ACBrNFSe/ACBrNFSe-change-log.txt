@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/12/2014
+[*] Incluido na function AssinarXML a alteração de Id para id após a assinatura
+    para os provedores cujo identificador é id em vez de Id.
+    Por: Italo Jurisato Junior
 [*] Nova URL de produção de Pontal (provedor Fiorilli).
     Por: Carlos César C. Silva
 [*] Para os provedores Lexsom e Publica o identificador estava sendo alterado para
