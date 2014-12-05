@@ -36,7 +36,7 @@ unit ACBrNFeMonitor1;
 interface
 
 uses IniFiles, CmdUnitNFe, FileCtrl, Printers, TypInfo,
-  IdBaseComponent, IdComponent, IdTCPServer,
+  IdBaseComponent, blcksock,
   ShellAPI,                                { Unit para criar icone no Systray }
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ComCtrls, ExtCtrls, Buttons, Spin, Menus, ImgList,
@@ -44,7 +44,7 @@ uses IniFiles, CmdUnitNFe, FileCtrl, Printers, TypInfo,
   SHDocVw, ACBrNFeUtil, ACBrDFeUtil, ACBrNFeDANFERaveCB, ACBrGIF,
   ACBrCTeDACTEClass, ACBrCTeDACTeQRClass, ACBrCTe, ACBrMDFeDAMDFeClass,
   ACBrMDFeDAMDFEQRClass, ACBrDANFCeFortesFr,  ACBrMDFe, ACBrNFeDANFeESCPOS,
-  ACBrMDFeDAMDFeRLClass;
+  ACBrMDFeDAMDFeRLClass, ACBrBase, ACBrSocket;
 
 const
    BufferMemoResposta = 10000 ;              { Maximo de Linhas no MemoResposta }
@@ -71,7 +71,6 @@ type
     N1: TMenuItem;
     EncerrarMonitor1: TMenuItem;
     Timer1: TTimer;
-    TCPServer: TIdTCPServer;
     pConfig: TPanel;
     PageControl1: TPageControl;
     Monitor: TTabSheet;
@@ -304,6 +303,8 @@ type
     Label54: TLabel;
     cbxImprimirItem1LinhaESCPOS: TCheckBox;
     cbxImprimirDescAcresItemESCPOS: TCheckBox;
+    TcpServer: TACBrTCPServer;
+    cbxSalvarNFesAutorizadas: TCheckBox;
     procedure DoACBrTimer(Sender: TObject);
     procedure edOnlyNumbers(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
@@ -318,9 +319,6 @@ type
     procedure rbTCPClick(Sender: TObject);
     procedure cbSenhaClick(Sender: TObject);
     procedure cbLogClick(Sender: TObject);
-    procedure TCPServerConnect(AThread: TIdPeerThread);
-    procedure TCPServerDisconnect(AThread: TIdPeerThread);
-    procedure TCPServerExecute(AThread: TIdPeerThread);
     procedure sbArquivoCertClick(Sender: TObject);
     procedure sbLogoMarcaClick(Sender: TObject);
     procedure PathClick(Sender: TObject);
@@ -366,6 +364,12 @@ type
     procedure btnCancNFMDFeClick(Sender: TObject);
     procedure btnValidarXMLMDFeClick(Sender: TObject);
     procedure btnImprimirMDFeClick(Sender: TObject);
+    procedure TcpServerConecta(const TCPBlockSocket: TTCPBlockSocket;
+      var Enviar: String);
+    procedure TcpServerDesConecta(const TCPBlockSocket: TTCPBlockSocket;
+      Erro: Integer; ErroDesc: String);
+    procedure TcpServerRecebeDados(const TCPBlockSocket: TTCPBlockSocket;
+      const Recebido: String; var Enviar: String);
   private
     { Private declarations }
     ACBrNFeMonitorINI : string;
@@ -392,7 +396,7 @@ type
   public
     { Public declarations }
     nid: TNotifyIconData;
-    Conexao : TIdPeerThread ;
+    Conexao : TTCPBlockSocket;
 
     procedure Processar ;
     procedure LerIni ;
@@ -557,10 +561,11 @@ begin
   end ;
 
   try
-     btConfig.Enabled  := true ;
+     btConfig.Enabled := true ;
      Timer1.Interval  := sedIntervalo.Value ;
      Timer1.Enabled   := rbTXT.Checked ;
-     TcpServer.Active := rbTCP.Checked ;
+     TcpServer.Terminador := '#13,#10,#46,#13,#10';
+     TcpServer.Ativo  := rbTCP.Checked ;
 
      mResp.Lines.Add('ACBrNFeMonitor2 Ver.'+Versao+ {$IFDEF ACBrNFeOpenSSL}' - OpenSSL'{$ELSE}' - CAPICOM'{$ENDIF});
      mResp.Lines.Add('Aguardando comandos');
@@ -572,16 +577,16 @@ begin
   try
      if rbTCP.Checked then
       begin
-        if TcpServer.Active then
+        if TcpServer.Ativo then
         begin
            try
-              Txt := 'Endereço: '+TcpServer.LocalName ;
+              Txt := 'Endereço: '+TcpServer.TCPBlockSocket.LocalName ;
               For A := 0 to IdStack.GStack.LocalAddresses.Count-1 do
                  Txt := Txt + '   ' + IdStack.GStack.LocalAddresses[A] ;
            except
            end ;
            mResp.Lines.Add(Txt) ;
-           mResp.Lines.Add( 'Porta: ['+IntToStr(TcpServer.DefaultPort)+']') ;
+           mResp.Lines.Add( 'Porta: ['+ TcpServer.Port +']') ;
         end ;
       end
      else
@@ -757,7 +762,7 @@ begin
      rbTXT.Checked        := Ini.ReadBool('ACBrNFeMonitor','Modo_TXT',false);
      cbMonitorarPasta.Checked := Ini.ReadBool('ACBrNFeMonitor','MonitorarPasta',false);
      MonitorarPasta       := cbMonitorarPasta.Checked;
-     edPortaTCP.Text      := IntToStr(Ini.ReadInteger('ACBrNFeMonitor','TCP_Porta',3434));
+     edPortaTCP.Text      := IntToStr(Ini.ReadInteger('ACBrNFeMonitor','TCP_Porta',3436));
      sedConexoesTCP.Value := Ini.ReadInteger('ACBrNFeMonitor','Conexoes_Simultaneas',1);
      edEntTXT.Text        := Ini.ReadString('ACBrNFeMonitor','TXT_Entrada','ENT.TXT');
      edSaiTXT.Text        := Ini.ReadString('ACBrNFeMonitor','TXT_Saida','SAI.TXT');
@@ -781,12 +786,12 @@ begin
      ArqLogTXT := AcertaPath( edLogArq.Text ) ;
      ArqLogCompTXT := AcertaPath( edLogComp.Text ) ;     
 
-     TcpServer.DefaultPort    := StrToIntDef( edPortaTCP.Text, 3436 ) ;
-     TcpServer.MaxConnections := sedConexoesTCP.Value ;
+     TcpServer.Port    := edPortaTCP.Text ;
+{     TcpServer.MaxConnections := sedConexoesTCP.Value ;
      TcpServer.MaxConnectionReply.Text.Add( 'Pedido de conexão negado.') ;
      TcpServer.MaxConnectionReply.Text.Add(
         'Número máximo de conexões ('+sedConexoesTCP.Text+') já atingido' ) ;
-
+ }
      rgFormaEmissao.ItemIndex := Ini.ReadInteger( 'Geral','FormaEmissao',0) ;
      ckSalvar.Checked    := Ini.ReadBool(   'Geral','Salvar'      ,True) ;
      edtPathLogs.Text    := Ini.ReadString( 'Geral','PathSalvar'  ,     PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs') ;
@@ -1017,8 +1022,9 @@ begin
      cbxAdicionaLiteral.Checked := Ini.ReadBool(   'Arquivos','AddLiteral' ,false);
      cbxEmissaoPathNFe.Checked  := Ini.ReadBool(   'Arquivos','EmissaoPathNFe',false);
      cbxSalvaCCeCancelamentoPathEvento.Checked  := Ini.ReadBool(   'Arquivos','SalvarCCeCanPathEvento',false);
-     cbxSepararPorCNPJ.Checked  := Ini.ReadBool(   'Arquivos','SepararPorCNPJ',false);
+     cbxSepararPorCNPJ.Checked    := Ini.ReadBool(   'Arquivos','SepararPorCNPJ',false);
      cbxSepararporModelo.Checked  := Ini.ReadBool(   'Arquivos','SepararPorModelo',false);
+     cbxSalvarNFesAutorizadas.Checked  := Ini.ReadBool(   'Arquivos','SalvarApenasNFesAutorizadas',false);
      edtPathNFe.Text            := Ini.ReadString( 'Arquivos','PathNFe'    ,'') ;
      edtPathCan.Text            := Ini.ReadString( 'Arquivos','PathCan'    ,'') ;
      edtPathInu.Text            := Ini.ReadString( 'Arquivos','PathInu'    ,'') ;
@@ -1033,6 +1039,7 @@ begin
      ACBrNFe1.Configuracoes.Arquivos.SalvarCCeCanEvento := cbxSalvaCCeCancelamentoPathEvento.Checked;
      ACBrNFe1.Configuracoes.Arquivos.SepararPorCNPJ   := cbxSepararPorCNPJ.Checked;
      ACBrNFe1.Configuracoes.Arquivos.SepararPorModelo := cbxSepararporModelo.Checked;
+     ACBrNFe1.Configuracoes.Arquivos.SalvarApenasNFeAutorizadas := cbxSalvarNFesAutorizadas.Checked;
      ACBrNFe1.Configuracoes.Arquivos.PathNFe  := edtPathNFe.Text;
      ACBrNFe1.Configuracoes.Arquivos.PathCan  := edtPathCan.Text;
      ACBrNFe1.Configuracoes.Arquivos.PathInu  := edtPathInu.Text;
@@ -1195,6 +1202,7 @@ begin
      Ini.WriteBool(   'Arquivos','SalvarCCeCanPathEvento',cbxSalvaCCeCancelamentoPathEvento.Checked);
      Ini.WriteBool(   'Arquivos','SepararPorCNPJ',cbxSepararPorCNPJ.Checked);
      Ini.WriteBool(   'Arquivos','SepararPorModelo',cbxSepararporModelo.Checked);
+     Ini.WriteBool(   'Arquivos','SalvarApenasNFesAutorizadas',cbxSalvarNFesAutorizadas.Checked);
      Ini.WriteString( 'Arquivos','PathNFe'    ,edtPathNFe.Text) ;
      Ini.WriteString( 'Arquivos','PathCan'    ,edtPathCan.Text) ;
      Ini.WriteString( 'Arquivos','PathInu'    ,edtPathInu.Text) ;
@@ -1220,10 +1228,11 @@ begin
   begin
      if Assigned( Conexao ) then
      begin
-        if Assigned( Conexao.Connection ) then
+        if Assigned( Conexao ) then
         begin
-           Conexao.Connection.WriteLn(Resposta) ;
-           Conexao.Connection.Write(#3) ;
+          Resposta := StringReplace(Resposta, chr(3), '', [rfReplaceAll]);
+          Conexao.SendString(Resposta);
+          Conexao.SendByte(3);
         end;
      end ;
   end ;
@@ -1549,8 +1558,8 @@ procedure TfrmAcbrNfeMonitor.FormClose(Sender: TObject;
 begin
   Timer1.Enabled := False ;
 
-  TCPServer.OnDisconnect := nil ;
-  TCPServer.Active       := False ;    { Desliga TCP }
+  TCPServer.OnDesConecta := nil ;
+  TCPServer.Desativar;    { Desliga TCP }
 end;
 
 procedure TfrmAcbrNfeMonitor.FormCloseQuery(Sender: TObject;
@@ -1632,40 +1641,6 @@ begin
 
   if cbLog.Checked and (edLogArq.Text = '') then
      edLogArq.Text := 'LOG.TXT' ;
-end;
-
-procedure TfrmAcbrNfeMonitor.TCPServerConnect(AThread: TIdPeerThread);
-begin
-  sleep(100);
-  Conexao := AThread;
-  mCmd.Lines.Clear ;
-  Resposta('','ACBrNFeMonitor2 Ver. '+ Versao + {$IFDEF ACBrNFeOpenSSL}' - OpenSSL'{$ELSE}' - CAPICOM'{$ENDIF} +sLineBreak +
-              'Conectado em: '+FormatDateTime('dd/mm/yy hh:nn:ss', now )+sLineBreak+
-              'Máquina: '+AThread.Connection.Socket.Binding.PeerIP+sLineBreak+
-              'Esperando por comandos.');
-end;
-
-procedure TfrmAcbrNfeMonitor.TCPServerDisconnect(AThread: TIdPeerThread);
-begin
-  mResp.Lines.Add('ALERTA: Fim da Conexão com: '+
-                   AThread.Connection.Socket.Binding.PeerIP+
-                  ' em: '+FormatDateTime('dd/mm/yy hh:nn:ss', now ) )
-end;
-
-procedure TfrmAcbrNfeMonitor.TCPServerExecute(AThread: TIdPeerThread);
-Var
-  SL : TStringList;
-begin
-  { Le o que foi enviado atravez da conexao TCP }
-  SL := TStringList.Create ;
-  try
-     AThread.Connection.Capture( SL );
-     NewLines:= SL.Text;
-     Conexao := AThread ;
-     AThread.Synchronize( Processar );
-  finally
-     SL.Free ;
-  end ;
 end;
 
 procedure TfrmAcbrNfeMonitor.sbArquivoCertClick(Sender: TObject);
@@ -2013,6 +1988,7 @@ begin
      cbxSalvaCCeCancelamentoPathEvento.Enabled  := True;
      cbxSepararPorCNPJ.Enabled  := True;
      cbxSepararporModelo.Enabled := True;
+     cbxSalvarNFesAutorizadas.Enabled := True;
      edtPathNFe.Enabled   := True;
      edtPathCan.Enabled   := True;
      edtPathInu.Enabled   := True;
@@ -2033,7 +2009,8 @@ begin
      cbxEmissaoPathNFe.Enabled  := False;
      cbxSalvaCCeCancelamentoPathEvento.Enabled  := False;
      cbxSepararPorCNPJ.Enabled  := False;
-     cbxSepararporModelo.Enabled := False;      
+     cbxSepararporModelo.Enabled := False;
+     cbxSalvarNFesAutorizadas.Enabled := False;      
      edtPathNFe.Enabled   := False;
      edtPathCan.Enabled   := False;
      edtPathInu.Enabled   := False;
@@ -2377,6 +2354,46 @@ begin
     ACBrMDFe1.Enviar(StrToInt(vAux));
     ExibeResp(ACBrMDFe1.WebServices.Retorno.RetWS);
   end;
+end;
+
+procedure TfrmAcbrNfeMonitor.TcpServerConecta(
+  const TCPBlockSocket: TTCPBlockSocket; var Enviar: String);
+begin
+  sleep(100);
+  Conexao := TCPBlockSocket;
+  mCmd.Lines.Clear ;
+  Resposta('','ACBrNFeMonitor2 Ver. '+ Versao + {$IFDEF ACBrNFeOpenSSL}' - OpenSSL'{$ELSE}' - CAPICOM'{$ENDIF} +sLineBreak +
+              'Conectado em: '+FormatDateTime('dd/mm/yy hh:nn:ss', now )+sLineBreak+
+              'Máquina: '+Conexao.GetRemoteSinIP+sLineBreak+
+              'Esperando por comandos.');
+end;
+
+procedure TfrmAcbrNfeMonitor.TcpServerDesConecta(
+  const TCPBlockSocket: TTCPBlockSocket; Erro: Integer; ErroDesc: String);
+begin
+  Conexao := TCPBlockSocket;
+  mResp.Lines.Add('ALERTA: Fim da Conexão com: '+
+                   Conexao.GetRemoteSinIP+
+                  ' em: '+FormatDateTime('dd/mm/yy hh:nn:ss', now ) )
+
+end;
+
+procedure TfrmAcbrNfeMonitor.TcpServerRecebeDados(
+  const TCPBlockSocket: TTCPBlockSocket; const Recebido: String;
+  var Enviar: String);
+Var
+  SL : TStringList;
+begin
+  Conexao := TCPBlockSocket;
+  { Le o que foi enviado atravez da conexao TCP }
+  SL := TStringList.Create ;
+  try
+     SL.Text := Recebido;
+     NewLines:= SL.Text;
+     Processar ;
+  finally
+     SL.Free ;
+  end ;
 end;
 
 end.

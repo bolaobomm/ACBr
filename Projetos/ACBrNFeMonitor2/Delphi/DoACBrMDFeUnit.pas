@@ -843,8 +843,7 @@ begin
            mCmd.Lines.Clear;
 
            if Assigned( Conexao ) then
-              if Assigned( Conexao.Connection ) then
-                 Conexao.Connection.Disconnect;
+             Conexao.CloseSocket;
          end
 
 

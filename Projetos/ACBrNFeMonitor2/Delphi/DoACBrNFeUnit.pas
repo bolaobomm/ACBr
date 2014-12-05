@@ -35,7 +35,7 @@ unit DoACBrNFeUnit ;
 
 interface
 
-Uses Classes, TypInfo, SysUtils, CmdUnitNFe, Types,
+Uses Classes, TypInfo, SysUtils, CmdUnitNFe, Types, StdCtrls,
      smtpsend, ssl_openssl, mimemess, mimepart,
      ACBrNFeUtil, ACBrDFeUtil, RpDevice,
      IdMessage, IdSMTP, IdBaseComponent, IdComponent,
@@ -63,7 +63,7 @@ Uses IniFiles, StrUtils, DateUtils,
   pcnConsSitNFe, pcnRetConsSitNFe,
   pcnInutNFe, pcnRetInutNFe,
   pcnRetEnvNFe, pcnConsReciNFe, pcnAuxiliar,
-  pcnNFeRTXT, ACBrNFeNotasFiscais, pcnRetConsCad, StdCtrls, pcnProcNFe,
+  pcnNFeRTXT, ACBrNFeNotasFiscais, pcnRetConsCad, pcnProcNFe,
   pcnRetCCeNFe, pcnNFeR, pcnEventoNFe, pcnRetConsNFeDest,
   pcnRetDownloadNFe, pcnRetEnvEventoNFe, pcnEnvEventoNFe, pcteCTe;
 
@@ -77,7 +77,8 @@ var
   Alertas : AnsiString;
   wDiretorioAtual : String;
 
-  Memo   : TStringList ;
+  Lines   : TStringList ;
+  MemoTXT : TMemo;
   Files  : String ;
   dtFim  : TDateTime ;
 
@@ -1341,13 +1342,13 @@ begin
 
         else if Cmd.Metodo = 'savetofile' then
          begin
-           Memo := TStringList.Create ;
+           Lines := TStringList.Create ;
            try
-              Memo.Clear ;
-              Memo.Text := ConvertStrRecived( cmd.Params(1) );
-              Memo.SaveToFile( Cmd.Params(0) );
+              Lines.Clear ;
+              Lines.Text := ConvertStrRecived( cmd.Params(1) );
+              Lines.SaveToFile( Cmd.Params(0) );
            finally
-              Memo.Free ;
+              Lines.Free ;
            end ;
          end
 
@@ -1359,14 +1360,14 @@ begin
            begin
               if FileExists( Files ) then
               begin
-                 Memo  := TStringList.Create ;
+                 Lines  := TStringList.Create ;
                  try
-                    Memo.Clear ;
-                    Memo.LoadFromFile( Files ) ;
-                    Cmd.Resposta := Memo.Text ;
+                    Lines.Clear ;
+                    Lines.LoadFromFile( Files ) ;
+                    Cmd.Resposta := Lines.Text ;
                     Break ;
                  finally
-                    Memo.Free ;
+                    Lines.Free ;
                  end ;
               end ;
 
@@ -1434,6 +1435,28 @@ begin
         else if Cmd.Metodo = 'getpathevento' then
            Cmd.Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathEvento( TpcnTpEvento(StrToInt(Cmd.Params(0))) )
 
+        else if Cmd.Metodo = 'imprimirrelatorio' then
+         begin
+           ConfiguraDANFe;
+
+           if rgModeloDANFeNFCE.ItemIndex <> 1  then
+               raise Exception.Create('Comando disponível apenas para o DANFe modelo DANFe ESCPOS');
+
+
+
+           MemoTXT := TMemo.Create(frmAcbrNfeMonitor) ;
+           try
+              MemoTXT.Clear ;
+              MemoTXT.Text := ConvertStrRecived( cmd.Params(1) );
+              if not ACBrNFeDANFeESCPOS1.Device.Ativo then
+                 ACBrNFeDANFeESCPOS1.Device.Ativar;
+              ACBrNFeDANFeESCPOS1.ImprimirRelatorio(MemoTXT.Lines);
+           finally
+              MemoTXT.Free ;
+           end ;
+
+         end
+
         else if Cmd.Metodo = 'restaurar' then
            Restaurar1Click( frmAcbrNfeMonitor )
 
@@ -1455,8 +1478,7 @@ begin
            mCmd.Lines.Clear;
 
            if Assigned( Conexao ) then
-              if Assigned( Conexao.Connection ) then
-                 Conexao.Connection.Disconnect ;
+             Conexao.CloseSocket ;
          end
 
 

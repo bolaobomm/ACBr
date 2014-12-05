@@ -4133,7 +4133,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
       Top = 1
       Width = 569
       Height = 261
-      ActivePage = DANFE
+      ActivePage = Diretorios
       Align = alClient
       Style = tsFlatButtons
       TabOrder = 0
@@ -5893,6 +5893,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Caption = 'Separar Arqs pelo Modelo(NFe/NFCe)'
           TabOrder = 3
         end
+        object cbxSalvarNFesAutorizadas: TCheckBox
+          Left = 288
+          Top = 54
+          Width = 265
+          Height = 17
+          Caption = 'Salvar apenas NFes autorizadas na pasta da NFe'
+          TabOrder = 14
+        end
       end
       object Testes: TTabSheet
         Caption = 'Testes'
@@ -6182,23 +6190,6 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
   object Timer1: TTimer
     OnTimer = DoACBrTimer
     Left = 9
-    Top = 25
-  end
-  object TCPServer: TIdTCPServer
-    Bindings = <>
-    CommandHandlers = <>
-    DefaultPort = 0
-    Greeting.NumericCode = 0
-    MaxConnectionReply.NumericCode = 0
-    OnConnect = TCPServerConnect
-    OnExecute = TCPServerExecute
-    OnDisconnect = TCPServerDisconnect
-    ReplyExceptionCode = 0
-    ReplyTexts = <>
-    ReplyUnknownCommand.NumericCode = 0
-    ReuseSocket = rsFalse
-    TerminateWaitTime = 25000
-    Left = 41
     Top = 25
   end
   object ACBrNFe1: TACBrNFe
@@ -6830,5 +6821,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     MDFeEncerrado = False
     Left = 250
     Top = 149
+  end
+  object TcpServer: TACBrTCPServer
+    IP = '0.0.0.0'
+    Port = '0'
+    OnConecta = TcpServerConecta
+    OnDesConecta = TcpServerDesConecta
+    OnRecebeDados = TcpServerRecebeDados
+    Left = 41
+    Top = 25
   end
 end
