@@ -71,6 +71,7 @@ type
     FBuffer: TStringList;
     FImprimeDescAcrescItem: Boolean;
     FIgnorarTagsFormatacao: Boolean;
+    FLinhasBuffer : Integer;
 
     cCmdImpZera: String;
     cCmdEspacoLinha: String;
@@ -120,6 +121,8 @@ type
     function TraduzirTag(const ATag: AnsiString): AnsiString;
     function ConfigurarBarrasDaruma(const ACodigo: AnsiString): AnsiString;
     function ConfigurarBarrasBematech(const ACodigo: AnsiString): AnsiString;
+
+    procedure DoLinesChange(Sender: TObject); 
   protected
     FpNFe: TNFe;
     FpEvento: TEventoNFe;
@@ -155,6 +158,7 @@ type
     property ImprimeEmUmaLinha: Boolean read FImprimeEmUmaLinha write FImprimeEmUmaLinha default True;
     property ImprimeDescAcrescItem: Boolean read FImprimeDescAcrescItem write FImprimeDescAcrescItem default True;
     property IgnorarTagsFormatacao: Boolean read FIgnorarTagsFormatacao write FIgnorarTagsFormatacao default False;
+    property LinhasBuffer: Integer read FLinhasBuffer write FLinhasBuffer default 0;
   end;
 
 procedure Register;
@@ -401,6 +405,7 @@ begin
   FDevice.Porta := 'COM1';
 
   FBuffer            := TStringList.Create;
+  FBuffer.OnChange   := DoLinesChange;
   FMarcaImpressora   := iEpson;
   FLinhasEntreCupons := 21;
 end;
@@ -1130,7 +1135,21 @@ begin
   ImprimePorta(cCmdImpZera + cCmdEspacoLinha + cCmdPagCod + cCmdFonteNormal + cCmdCortaPapel);
 end;
 
+procedure TACBrNFeDANFeESCPOS.DoLinesChange(Sender: TObject);
+begin
+
+  if (FLinhasBuffer > 0) and
+     (FBuffer.Count > FLinhasBuffer) then
+   begin
+     ImprimePorta(FBuffer.Text);
+     FBuffer.Clear;
+   end;
+
+end;
+
+
 {$IFDEF FPC}
+
 initialization
 {$I ACBrNFeDANFeESCPOS.lrs}
 {$ENDIF}
