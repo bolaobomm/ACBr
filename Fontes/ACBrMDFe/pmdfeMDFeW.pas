@@ -136,7 +136,7 @@ end;
 
 function TMDFeW.ObterNomeArquivo: String;
 begin
-  Result := SomenteNumeros(MDFe.infMDFe.ID) + '-mdfe.xml';
+  Result := SomenteNumeros(MDFe.infMDFe.Id) + '-mdfe.xml';
 end;
 
 function TMDFeW.GerarXml: boolean;
@@ -151,10 +151,13 @@ begin
     MDFe.ide.nMDF, StrToInt(TpEmisToStr(MDFe.ide.tpEmis)), MDFe.ide.dhEmi, MDFe.emit.CNPJ) then
     Gerador.wAlerta('#001', 'infMDFe', DSC_CHAVE, ERR_MSG_GERAR_CHAVE);
 
-  chave           := StringReplace(chave,'NFe','MDFe',[rfReplaceAll]);
-  MDFe.infMDFe.ID := chave;
-  MDFe.ide.cDV    := RetornarDigito(MDFe.infMDFe.ID);
-  MDFe.Ide.cMDF   := RetornarCodigoNumerico(MDFe.infMDFe.ID, 2);
+  chave := StringReplace(chave,'NFe','MDFe',[rfReplaceAll]);
+
+  if trim(MDFe.infMDFe.Id) = '' then
+    MDFe.infMDFe.Id := chave;
+
+  MDFe.ide.cDV  := RetornarDigito(MDFe.infMDFe.Id);
+  MDFe.Ide.cMDF := RetornarCodigoNumerico(MDFe.infMDFe.Id, 2);
 
   // Carrega Layout que sera utilizado para gera o txt
   Gerador.LayoutArquivoTXT.Clear;
