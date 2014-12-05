@@ -189,6 +189,7 @@ type
     FSalvarEvento : Boolean;
     FSepararCNPJ : Boolean;
     FSepararModelo : Boolean;
+    FSalvarApenasNFeAutorizadas : Boolean;
     FPathNFe  : String;
     FPathCan  : String;
     FPathInu  : String;
@@ -212,7 +213,8 @@ type
     property EmissaoPathNFe: Boolean read FEmissaoPathNFe write FEmissaoPathNFe default False;
     property SalvarCCeCanEvento: Boolean read FSalvarEvento write FSalvarEvento default False;
     property SepararPorCNPJ: Boolean read FSepararCNPJ write FSepararCNPJ default False ;
-    property SepararPorModelo: Boolean read FSepararModelo write FSepararModelo default False ;    
+    property SepararPorModelo: Boolean read FSepararModelo write FSepararModelo default False ;
+    property SalvarApenasNFeAutorizadas: Boolean read FSalvarApenasNFeAutorizadas write FSalvarApenasNFeAutorizadas default False ;
     property PathNFe : String read FPathNFe  write FPathNFe;
     property PathCan : String read FPathCan  write FPathCan;
     property PathInu : String read FPathInu  write FPathInu;

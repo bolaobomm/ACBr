@@ -1544,7 +1544,7 @@ begin
 
     // Verificar se a NF-e foi autorizada com sucesso
     Result := (FNFeRetornoSincrono.cStat = 104) and
-              (FNFeRetornoSincrono.protNFe.cStat = 100);
+              (FNFeRetornoSincrono.protNFe.cStat in [100, 150]);
 
     NomeArquivo := PathWithDelim(FConfiguracoes.Geral.PathSalvar) + chNFe;
 
@@ -1613,10 +1613,20 @@ begin
             else
               Data := Now;
 
-            TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].SaveToFile(PathWithDelim(
-              FConfiguracoes.Arquivos.GetPathNFe( Data,
-                TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].NFe.Emit.CNPJCPF)) +
-                OnlyNumber(TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].NFe.InfNFe.Id) + '-nfe.xml');
+            if FConfiguracoes.Arquivos.SalvarApenasNFeAutorizadas then
+             begin
+                if TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].NFe.procNFe.cStat in [100, 150] then
+                   TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].SaveToFile(PathWithDelim(
+                       FConfiguracoes.Arquivos.GetPathNFe( Data,
+                       TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].NFe.Emit.CNPJCPF)) +
+                       OnlyNumber(TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].NFe.InfNFe.Id) + '-nfe.xml');
+             end
+            else
+              TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].SaveToFile(PathWithDelim(
+                  FConfiguracoes.Arquivos.GetPathNFe( Data,
+                  TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].NFe.Emit.CNPJCPF)) +
+                  OnlyNumber(TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].NFe.InfNFe.Id) + '-nfe.xml');
+
           end;
 
           Break;
@@ -1830,9 +1840,18 @@ begin
           else
             Data := Now;
 
-          FNotasFiscais.Items[J].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(Data,
-             FNotasFiscais.Items[J].NFe.Emit.CNPJCPF)) +
-             OnlyNumber(FNotasFiscais.Items[J].NFe.InfNFe.Id) + '-nfe.xml')
+            if FConfiguracoes.Arquivos.SalvarApenasNFeAutorizadas then
+             begin
+                if FNotasFiscais.Items[J].NFe.procNFe.cStat in [100, 150] then
+                 FNotasFiscais.Items[J].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(Data,
+                     FNotasFiscais.Items[J].NFe.Emit.CNPJCPF)) +
+                     OnlyNumber(FNotasFiscais.Items[J].NFe.InfNFe.Id) + '-nfe.xml');
+
+             end
+            else
+              FNotasFiscais.Items[J].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(Data,
+                  FNotasFiscais.Items[J].NFe.Emit.CNPJCPF)) +
+                  OnlyNumber(FNotasFiscais.Items[J].NFe.InfNFe.Id) + '-nfe.xml');
         end;
 
         break;
@@ -2390,10 +2409,20 @@ begin
             else
               Data := Now;
 
-            TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].SaveToFile(
-              PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(Data,
-                                                               TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Emit.CNPJCPF)) +
-              OnlyNumber(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.InfNFe.Id) + '-nfe.xml')
+            if FConfiguracoes.Arquivos.SalvarApenasNFeAutorizadas then
+             begin
+                if TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.cStat in [100, 150] then
+                  TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].SaveToFile(
+                      PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(Data,
+                      TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Emit.CNPJCPF)) +
+                      OnlyNumber(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.InfNFe.Id) + '-nfe.xml')
+
+             end
+            else
+               TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].SaveToFile(
+                   PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(Data,
+                   TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Emit.CNPJCPF)) +
+                   OnlyNumber(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.InfNFe.Id) + '-nfe.xml')
           end;
         end;
 
