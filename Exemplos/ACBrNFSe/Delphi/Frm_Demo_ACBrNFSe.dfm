@@ -1,7 +1,7 @@
 object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
   Left = 199
   Top = 124
-  Width = 879
+  Width = 870
   Height = 568
   Caption = 'Demo ACBrNFSe'
   Color = clBtnFace
@@ -377,10 +377,12 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Itatinga/3523503/SP'
               'Itu/3523909/SP'
               'Ituporanga/4208500/SC'
+              'Ivoti/4310801/RS'
               'Jaguariuna/3524709/SP'
               'Jau/3525300/SP'
               'Joacaba/4209003/SC'
               'Joao Pessoa/2507507/PB'
+              'Juina/5105150/MT'
               'Juiz de Fora/3136702/MG'
               'Jundiai/3525904/SP'
               'Lages/4209300/SC'
@@ -398,6 +400,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Montes Claros/3143302/MG'
               'Muriae/3143906/MG'
               'Natal/2408102/RN'
+              'Nova Mutum/5106224/MT'
               'Novo Hamburgo/4313409/RS'
               'Niteroi/3303302/RJ'
               'Olimpia/3533908/SP'
@@ -1058,15 +1061,15 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
   object Panel2: TPanel
     Left = 297
     Top = 0
-    Width = 574
+    Width = 565
     Height = 534
     Align = alClient
     TabOrder = 1
     object Panel3: TPanel
       Left = 1
       Top = 1
-      Width = 572
-      Height = 168
+      Width = 563
+      Height = 208
       Align = alTop
       TabOrder = 0
       object btnImprimir: TButton
@@ -1187,9 +1190,9 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         OnClick = btnGerarEnviarSincronoClick
       end
       object Button1: TButton
-        Left = 192
-        Top = 135
-        Width = 361
+        Left = 8
+        Top = 175
+        Width = 545
         Height = 25
         Caption = 'Verifica se uma cidade '#233' atendida pelo componente ou n'#227'o'
         Font.Charset = DEFAULT_CHARSET
@@ -1201,12 +1204,21 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         TabOrder = 13
         OnClick = Button1Click
       end
+      object btnSubsNFSe: TButton
+        Left = 192
+        Top = 136
+        Width = 177
+        Height = 25
+        Caption = 'Substituir NFSe'
+        TabOrder = 14
+        OnClick = btnSubsNFSeClick
+      end
     end
     object PageControl2: TPageControl
       Left = 1
-      Top = 169
-      Width = 572
-      Height = 364
+      Top = 209
+      Width = 563
+      Height = 324
       ActivePage = TabSheet8
       Align = alClient
       TabOrder = 1
@@ -1245,8 +1257,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         object memoLog: TMemo
           Left = 0
           Top = 0
-          Width = 564
-          Height = 336
+          Width = 555
+          Height = 296
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1258,8 +1270,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         object trvwNFSe: TTreeView
           Left = 0
           Top = 0
-          Width = 564
-          Height = 336
+          Width = 555
+          Height = 296
           Align = alClient
           Indent = 19
           TabOrder = 0

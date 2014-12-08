@@ -142,6 +142,7 @@ type
     btnGerarEnviarSincrono: TButton;
     Button1: TButton;
     ckSalvarSoap: TCheckBox;
+    btnSubsNFSe: TButton;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -171,6 +172,7 @@ type
     procedure btnGerarLoteRPSClick(Sender: TObject);
     procedure btnGerarEnviarSincronoClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure btnSubsNFSeClick(Sender: TObject);
     {
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
@@ -707,7 +709,7 @@ end;
 
 procedure TfrmDemo_ACBrNFSe.btnCancNFSeClick(Sender: TObject);
 var
- Codigo, Motivo : String; 
+ Codigo, Motivo : String;
 begin
 
  OpenDialog1.Title := 'Selecione a NFSe';
@@ -727,7 +729,7 @@ begin
 
    if not(InputQuery('Cancelar NFSe', 'Código de Cancelamento', Codigo))
     then exit;
-	
+
    //Provedor Equiplano é obrigatório o motivo de cancelamento
    //if not(InputQuery('Cancelar NFSe', 'Motivo de Cancelamento', Motivo))
    // then exit;
@@ -1107,6 +1109,34 @@ begin
  provedor := CodCidadeToProvedor(StrToIntDef(vAux, 0));
 
  ShowMessage('Provedor: ' + provedor);
+end;
+
+procedure TfrmDemo_ACBrNFSe.btnSubsNFSeClick(Sender: TObject);
+var
+ Codigo, vAux, sNumNFSe: String;
+begin
+  if not(InputQuery('Substituir NFS-e', 'Numero do novo RPS', vAux))
+   then exit;
+  ACBrNFSe1.NotasFiscais.Clear;
+  AlimentaComponente(vAux);
+
+  // Codigo de Cancelamento
+  // 1 - Erro de emissão
+  // 2 - Serviço não concluido
+  // 3 - RPS Cancelado na Emissão
+
+  if not(InputQuery('Substituir NFSe', 'Código de Cancelamento', Codigo))
+   then exit;
+
+  if not(InputQuery('Substituir NFS-e', 'Numero da NFS-e', sNumNFSe))
+   then exit;
+
+  ACBrNFSe1.SubstituirNFSe(Codigo, sNumNFSe);
+
+  MemoDados.Lines.Add('Retorno da Substituição:');
+  MemoDados.Lines.Add('Cód. Cancelamento: ' + ACBrNFSe1.WebServices.SubNfse.CodigoCancelamento);
+  LoadXML(MemoResp, WBResposta);
+  PageControl2.ActivePageIndex := 1;
 end;
 
 end.
