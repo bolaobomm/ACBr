@@ -71,6 +71,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -116,48 +117,54 @@ end;
 
 function TProvedorfintelISS.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
- ConfigSchema: TConfigSchema;
+  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho := '2.00';
- ConfigSchema.VersaoDados     := '2.00';
- ConfigSchema.VersaoXML       := '2';
- ConfigSchema.NameSpaceXML    := 'http://iss.pontagrossa.pr.gov.br/Arquivos/';
- ConfigSchema.Cabecalho       := 'nfse.xsd';
- ConfigSchema.ServicoEnviar   := 'nfse.xsd';
- ConfigSchema.ServicoConSit   := 'nfse.xsd';
- ConfigSchema.ServicoConLot   := 'nfse.xsd';
- ConfigSchema.ServicoConRps   := 'nfse.xsd';
- ConfigSchema.ServicoConNfse  := 'nfse.xsd';
- ConfigSchema.ServicoCancelar := 'nfse.xsd';
- ConfigSchema.ServicoGerar    := 'nfse.xsd';
- ConfigSchema.DefTipos        := '';
+  ConfigSchema.VersaoCabecalho       := '2.00';
+  ConfigSchema.VersaoDados           := '2.00';
+  ConfigSchema.VersaoXML             := '2';
+  ConfigSchema.NameSpaceXML          := 'http://iss.pontagrossa.pr.gov.br/Arquivos/';
+  ConfigSchema.Cabecalho             := 'nfse.xsd';
+  ConfigSchema.ServicoEnviar         := 'nfse.xsd';
+  ConfigSchema.ServicoConSit         := 'nfse.xsd';
+  ConfigSchema.ServicoConLot         := 'nfse.xsd';
+  ConfigSchema.ServicoConRps         := 'nfse.xsd';
+  ConfigSchema.ServicoConNfse        := 'nfse.xsd';
+  ConfigSchema.ServicoCancelar       := 'nfse.xsd';
+  ConfigSchema.ServicoGerar          := 'nfse.xsd';
+  ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
+  ConfigSchema.ServicoSubstituir     := 'nfse.xsd';
+  ConfigSchema.DefTipos              := '';
 
- Result := ConfigSchema;
+  Result := ConfigSchema;
 end;
 
 function TProvedorfintelISS.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
- ConfigURL: TConfigURL;
+  ConfigURL: TConfigURL;
 begin
- ConfigURL.HomNomeCidade         := 'pontagrossa.pr';
- ConfigURL.HomRecepcaoLoteRPS    := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
- ConfigURL.HomConsultaLoteRPS    := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
- ConfigURL.HomConsultaNFSeRPS    := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
- ConfigURL.HomConsultaSitLoteRPS := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
- ConfigURL.HomConsultaNFSe       := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
- ConfigURL.HomCancelaNFSe        := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
- ConfigURL.HomGerarNFSe          := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
+  ConfigURL.HomNomeCidade         := 'pontagrossa.pr';
+  ConfigURL.HomRecepcaoLoteRPS    := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
+  ConfigURL.HomConsultaLoteRPS    := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
+  ConfigURL.HomConsultaNFSeRPS    := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
+  ConfigURL.HomConsultaSitLoteRPS := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
+  ConfigURL.HomConsultaNFSe       := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
+  ConfigURL.HomCancelaNFSe        := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
+  ConfigURL.HomGerarNFSe          := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
+  ConfigURL.HomRecepcaoSincrono   := '';
+  ConfigURL.HomSubstituiNFSe      := '';
 
- ConfigURL.ProNomeCidade         := 'pontagrossa.pr';
- ConfigURL.ProRecepcaoLoteRPS    := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
- ConfigURL.ProConsultaLoteRPS    := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
- ConfigURL.ProConsultaNFSeRPS    := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
- ConfigURL.ProConsultaSitLoteRPS := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
- ConfigURL.ProConsultaNFSe       := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
- ConfigURL.ProCancelaNFSe        := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
- ConfigURL.ProGerarNFSe          := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
+  ConfigURL.ProNomeCidade         := 'pontagrossa.pr';
+  ConfigURL.ProRecepcaoLoteRPS    := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
+  ConfigURL.ProConsultaLoteRPS    := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
+  ConfigURL.ProConsultaNFSeRPS    := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
+  ConfigURL.ProConsultaSitLoteRPS := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
+  ConfigURL.ProConsultaNFSe       := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
+  ConfigURL.ProCancelaNFSe        := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
+  ConfigURL.ProGerarNFSe          := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
+  ConfigURL.ProRecepcaoSincrono   := '';
+  ConfigURL.ProSubstituiNFSe      := '';
 
- Result := ConfigURL;
+  Result := ConfigURL;
 end;
 
 function TProvedorfintelISS.GetURI(URI: String): String;
@@ -187,7 +194,7 @@ end;
 function TProvedorfintelISS.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
@@ -198,7 +205,13 @@ begin
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
- end;
+   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + NameSpaceDad;
+   acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio' + NameSpaceDad +
+                             '<' + Prefixo3 + 'SubstituicaoNfse>' +
+                              '<' + Prefixo3 + 'Pedido>' +
+                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+  end;
 end;
 
 function TProvedorfintelISS.Gera_CabMsg(Prefixo2, VersaoLayOut,
@@ -216,7 +229,7 @@ end;
 
 function TProvedorfintelISS.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
@@ -225,7 +238,10 @@ begin
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
- end;
+   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
+   acSubstituir:  Result := '</' + Prefixo3 + 'SubstituicaoNfse>' +
+                            '</' + Prefixo3 + 'SubstituirNfseEnvio>';
+  end;
 end;
 
 function TProvedorfintelISS.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
@@ -364,7 +380,13 @@ end;
 function TProvedorfintelISS.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+  Result := '';
+end;
+
+function TProvedorfintelISS.GeraEnvelopeSubstituirNFSe(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
 end;
 
 function TProvedorfintelISS.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;

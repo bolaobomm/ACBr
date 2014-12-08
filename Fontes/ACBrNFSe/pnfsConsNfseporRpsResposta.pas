@@ -721,10 +721,10 @@ end;
 function TretNfseRps.LerXml_provedorIssDsf: boolean;  //falta homologar
 var
   ok: boolean;
-  i, Item, posI, count: Integer;
+  i, Item{, posI, count}: Integer;
   sOperacao, sTributacao, VersaoXML: String;
-  strAux, strItem: AnsiString;
-  leitorAux, leitorItem:TLeitor;
+//  strAux, strItem: AnsiString;
+//  leitorAux, leitorItem:TLeitor;
 begin
   result := true;
 

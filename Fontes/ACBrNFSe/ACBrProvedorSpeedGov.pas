@@ -71,6 +71,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -113,24 +114,25 @@ end;
 
 function TProvedorSpeedGov.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
- ConfigSchema: TConfigSchema;
+  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho       := '1';
- ConfigSchema.VersaoDados           := '1';
- ConfigSchema.VersaoXML             := '1';
- ConfigSchema.NameSpaceXML          := 'http://ws.speedgov.com.br/';
- ConfigSchema.Cabecalho             := 'cabecalho_v1.xsd';
- ConfigSchema.ServicoEnviar         := 'enviar_lote_rps_envio_v1.xsd';
- ConfigSchema.ServicoConSit         := 'consultar_situacao_lote_rps_envio_v1.xsd';
- ConfigSchema.ServicoConLot         := 'consultar_lote_rps_envio_v1.xsd';
- ConfigSchema.ServicoConRps         := 'consultar_nfse_rps_envio_v1.xsd';
- ConfigSchema.ServicoConNfse        := 'consultar_nfse_envio_v1.xsd';
- ConfigSchema.ServicoCancelar       := 'cancelar_nfse_envio_v1.xsd';
- ConfigSchema.ServicoGerar          := '';
- ConfigSchema.ServicoEnviarSincrono := '';
- ConfigSchema.DefTipos              := 'tipos_v1.xsd';
+  ConfigSchema.VersaoCabecalho       := '1';
+  ConfigSchema.VersaoDados           := '1';
+  ConfigSchema.VersaoXML             := '1';
+  ConfigSchema.NameSpaceXML          := 'http://ws.speedgov.com.br/';
+  ConfigSchema.Cabecalho             := 'cabecalho_v1.xsd';
+  ConfigSchema.ServicoEnviar         := 'enviar_lote_rps_envio_v1.xsd';
+  ConfigSchema.ServicoConSit         := 'consultar_situacao_lote_rps_envio_v1.xsd';
+  ConfigSchema.ServicoConLot         := 'consultar_lote_rps_envio_v1.xsd';
+  ConfigSchema.ServicoConRps         := 'consultar_nfse_rps_envio_v1.xsd';
+  ConfigSchema.ServicoConNfse        := 'consultar_nfse_envio_v1.xsd';
+  ConfigSchema.ServicoCancelar       := 'cancelar_nfse_envio_v1.xsd';
+  ConfigSchema.ServicoGerar          := '';
+  ConfigSchema.ServicoEnviarSincrono := '';
+  ConfigSchema.ServicoSubstituir     := '';
+  ConfigSchema.DefTipos              := 'tipos_v1.xsd';
 
- Result := ConfigSchema;
+  Result := ConfigSchema;
 end;
 
 function TProvedorSpeedGov.GetConfigURL(ACodCidade: Integer): TConfigURL;
@@ -157,6 +159,7 @@ begin
  ConfigURL.HomCancelaNFSe        := 'http://speedgov.com.br/wsmod/Nfes';
  ConfigURL.HomGerarNFSe          := 'http://speedgov.com.br/wsmod/Nfes';
  ConfigURL.HomRecepcaoSincrono   := 'http://speedgov.com.br/wsmod/Nfes';
+  ConfigURL.HomSubstituiNFSe      := '';
 
  ConfigURL.ProRecepcaoLoteRPS    := 'http://www.speedgov.com.br/ws' + ConfigURL.ProNomeCidade + '/Nfes';
  ConfigURL.ProConsultaLoteRPS    := 'http://www.speedgov.com.br/ws' + ConfigURL.ProNomeCidade + '/Nfes';
@@ -166,7 +169,8 @@ begin
  ConfigURL.ProCancelaNFSe        := 'http://www.speedgov.com.br/ws' + ConfigURL.ProNomeCidade + '/Nfes';
  ConfigURL.ProGerarNFSe          := 'http://www.speedgov.com.br/ws' + ConfigURL.ProNomeCidade + '/Nfes';
  ConfigURL.ProRecepcaoSincrono   := 'http://www.speedgov.com.br/ws' + ConfigURL.ProNomeCidade + '/Nfes';
-
+  ConfigURL.ProSubstituiNFSe      := '';
+  
  Result := ConfigURL;
 end;
 
@@ -197,23 +201,24 @@ end;
 
 function TProvedorSpeedGov.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
-var
- xmlns: String;
 begin
- xmlns := NameSpaceDad;
-
- case Acao of
-   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + xmlns;
-   acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + xmlns;
-   acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + xmlns;
-   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + xmlns;
-   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseServicoPrestadoEnvio' + xmlns;
-   acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + xmlns +
+  case Acao of
+   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
+   acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
+   acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
+   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + NameSpaceDad;
+   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseServicoPrestadoEnvio' + NameSpaceDad;
+   acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + NameSpaceDad +
                              '<' + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento>';
-   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + xmlns;
-   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + xmlns;
- end;
+   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
+   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + NameSpaceDad;
+   acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio' + NameSpaceDad +
+                             '<' + Prefixo3 + 'SubstituicaoNfse>' +
+                              '<' + Prefixo3 + 'Pedido>' +
+                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+  end;
 end;
 
 function TProvedorSpeedGov.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
@@ -236,7 +241,7 @@ end;
 
 function TProvedorSpeedGov.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
@@ -246,7 +251,9 @@ begin
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
    acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
- end;
+   acSubstituir:  Result := '</' + Prefixo3 + 'SubstituicaoNfse>' +
+                            '</' + Prefixo3 + 'SubstituirNfseEnvio>';
+  end;
 end;
 
 function TProvedorSpeedGov.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
@@ -402,13 +409,19 @@ end;
 function TProvedorSpeedGov.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '';
+  result := '';
 end;
 
 function TProvedorSpeedGov.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '';
+  result := '';
+end;
+
+function TProvedorSpeedGov.GeraEnvelopeSubstituirNFSe(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
 end;
 
 function TProvedorSpeedGov.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;

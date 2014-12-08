@@ -71,6 +71,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -113,77 +114,86 @@ end;
 
 function TProvedorISSNet.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
- ConfigSchema: TConfigSchema;
+  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho := '1.00';
- ConfigSchema.VersaoDados     := '1.00';
- ConfigSchema.VersaoXML       := '1';
- ConfigSchema.NameSpaceXML    := 'http://www.issnetonline.com.br/webserviceabrasf/vsd/';
- ConfigSchema.Cabecalho       := '';
- ConfigSchema.ServicoEnviar   := 'servico_enviar_lote_rps_envio.xsd';
- ConfigSchema.ServicoConSit   := 'servico_consultar_situacao_lote_rps_envio.xsd';
- ConfigSchema.ServicoConLot   := 'servico_consultar_lote_rps_envio.xsd';
- ConfigSchema.ServicoConRps   := 'servico_consultar_nfse_rps_envio.xsd';
- ConfigSchema.ServicoConNfse  := 'servico_consultar_nfse_envio.xsd';
- ConfigSchema.ServicoCancelar := 'servico_cancelar_nfse_envio.xsd';
- ConfigSchema.DefTipos        := 'tipos_complexos.xsd';
+  ConfigSchema.VersaoCabecalho       := '1.00';
+  ConfigSchema.VersaoDados           := '1.00';
+  ConfigSchema.VersaoXML             := '1';
+  ConfigSchema.NameSpaceXML          := 'http://www.issnetonline.com.br/webserviceabrasf/vsd/';
+  ConfigSchema.Cabecalho             := '';
+  ConfigSchema.ServicoEnviar         := 'servico_enviar_lote_rps_envio.xsd';
+  ConfigSchema.ServicoConSit         := 'servico_consultar_situacao_lote_rps_envio.xsd';
+  ConfigSchema.ServicoConLot         := 'servico_consultar_lote_rps_envio.xsd';
+  ConfigSchema.ServicoConRps         := 'servico_consultar_nfse_rps_envio.xsd';
+  ConfigSchema.ServicoConNfse        := 'servico_consultar_nfse_envio.xsd';
+  ConfigSchema.ServicoCancelar       := 'servico_cancelar_nfse_envio.xsd';
+  ConfigSchema.ServicoGerar          := '';
+  ConfigSchema.ServicoEnviarSincrono := '';
+  ConfigSchema.ServicoSubstituir     := '';
+  ConfigSchema.DefTipos              := 'tipos_complexos.xsd';
 
- Result := ConfigSchema;
+  Result := ConfigSchema;
 end;
 
 function TProvedorISSNet.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
- ConfigURL: TConfigURL;
+  ConfigURL: TConfigURL;
 begin
- ConfigURL.HomNomeCidade := 'homologacao';
+  ConfigURL.HomNomeCidade := 'homologacao';
 
- case ACodCidade of
-      999: ConfigURL.ProNomeCidade := 'homologacao';
-  1702109: ConfigURL.ProNomeCidade := 'araguaina';          // Araguaína/TO
-  3139607: ConfigURL.ProNomeCidade := 'mantena';            // Mantena/MG
-  3169307: ConfigURL.ProNomeCidade := 'trescoracoes';       // Três Corações/MG
-  3502101: ConfigURL.ProNomeCidade := 'andradina';          // Andradina/SP
-  3502507: ConfigURL.ProNomeCidade := 'aparecida';          // Aparecida/SP
-  3522307: ConfigURL.ProNomeCidade := 'itapetininga';       // Itapetininga/SP
-  3524402: ConfigURL.ProNomeCidade := 'jacarei';            // Jacareí/SP
-  3524709: ConfigURL.ProNomeCidade := 'jaguariuna';         // Jaguariúna/SP
-  3527207: ConfigURL.ProNomeCidade := 'lorena';             // Lorena/SP
-  3530607: ConfigURL.ProNomeCidade := 'mogidascruzes';      // Mogi das Cruzes/SP
-  3541000: ConfigURL.ProNomeCidade := 'praiagrande';        // Praia Grande/SP
-  3551009: ConfigURL.ProNomeCidade := 'saovicente';         // São Vicente/SP
-  3551504: ConfigURL.ProNomeCidade := 'serrana';            // Serrana/SP
-  4104808: ConfigURL.ProNomeCidade := 'cascavel';           // Cascavel/PR
-//  4219507: ConfigURL.ProNomeCidade := 'xanxere';            // Xanxerê/SC passou para o provedor Betha
-  4313409: ConfigURL.ProNomeCidade := 'novohamburgo';       // Novo Hamburgo/RS
-  4316907: ConfigURL.ProNomeCidade := 'santamaria';         // Santa Maria/RS
-  5002209: ConfigURL.ProNomeCidade := 'bonito';             // Bonito/MS
-  5003702: ConfigURL.ProNomeCidade := 'dourados';           // Dourados/MS
-  5100250: ConfigURL.ProNomeCidade := 'altafloresta';       // Alta Floresta/MT
-  5103403: ConfigURL.ProNomeCidade := 'cuiaba';             // Cuiaba/MT
-  5105101: ConfigURL.ProNomeCidade := 'juara';              // Juara/MT
-  5105903: ConfigURL.ProNomeCidade := 'nobres';             // Nobres/MT
-  5106232: ConfigURL.ProNomeCidade := 'novaolimpia';        // Nova Olimpia/MT
-  5107925: ConfigURL.ProNomeCidade := 'sorriso';            // Sorriso/MT
-  5108402: ConfigURL.ProNomeCidade := 'varzeagrande';       // Varzea Grande/MT
-  5201108: ConfigURL.ProNomeCidade := 'anapolis';           // Anapolis/GO
-  5201405: ConfigURL.ProNomeCidade := 'aparecidadegoiania'; // Aparecida de Goiania/GO
- end;
+  case ACodCidade of
+       999: ConfigURL.ProNomeCidade := 'homologacao';
+   1702109: ConfigURL.ProNomeCidade := 'araguaina';          // Araguaína/TO
+   3139607: ConfigURL.ProNomeCidade := 'mantena';            // Mantena/MG
+   3169307: ConfigURL.ProNomeCidade := 'trescoracoes';       // Três Corações/MG
+   3502101: ConfigURL.ProNomeCidade := 'andradina';          // Andradina/SP
+   3502507: ConfigURL.ProNomeCidade := 'aparecida';          // Aparecida/SP
+   3522307: ConfigURL.ProNomeCidade := 'itapetininga';       // Itapetininga/SP
+   3524402: ConfigURL.ProNomeCidade := 'jacarei';            // Jacareí/SP
+   3524709: ConfigURL.ProNomeCidade := 'jaguariuna';         // Jaguariúna/SP
+   3527207: ConfigURL.ProNomeCidade := 'lorena';             // Lorena/SP
+   3530607: ConfigURL.ProNomeCidade := 'mogidascruzes';      // Mogi das Cruzes/SP
+   3541000: ConfigURL.ProNomeCidade := 'praiagrande';        // Praia Grande/SP
+   3551009: ConfigURL.ProNomeCidade := 'saovicente';         // São Vicente/SP
+   3551504: ConfigURL.ProNomeCidade := 'serrana';            // Serrana/SP
+   4104808: ConfigURL.ProNomeCidade := 'cascavel';           // Cascavel/PR
+//   4219507: ConfigURL.ProNomeCidade := 'xanxere';            // Xanxerê/SC passou para o provedor Betha
+   4313409: ConfigURL.ProNomeCidade := 'novohamburgo';       // Novo Hamburgo/RS
+   4316907: ConfigURL.ProNomeCidade := 'santamaria';         // Santa Maria/RS
+   5002209: ConfigURL.ProNomeCidade := 'bonito';             // Bonito/MS
+   5003702: ConfigURL.ProNomeCidade := 'dourados';           // Dourados/MS
+   5100250: ConfigURL.ProNomeCidade := 'altafloresta';       // Alta Floresta/MT
+   5103403: ConfigURL.ProNomeCidade := 'cuiaba';             // Cuiaba/MT
+   5105101: ConfigURL.ProNomeCidade := 'juara';              // Juara/MT
+   5105903: ConfigURL.ProNomeCidade := 'nobres';             // Nobres/MT
+   5106232: ConfigURL.ProNomeCidade := 'novaolimpia';        // Nova Olimpia/MT
+   5107925: ConfigURL.ProNomeCidade := 'sorriso';            // Sorriso/MT
+   5108402: ConfigURL.ProNomeCidade := 'varzeagrande';       // Varzea Grande/MT
+   5201108: ConfigURL.ProNomeCidade := 'anapolis';           // Anapolis/GO
+   5201405: ConfigURL.ProNomeCidade := 'aparecidadegoiania'; // Aparecida de Goiania/GO
+  end;
 
- ConfigURL.HomRecepcaoLoteRPS    := 'http://www.issnetonline.com.br/webserviceabrasf/homologacao/servicos.asmx';
- ConfigURL.HomConsultaLoteRPS    := 'http://www.issnetonline.com.br/webserviceabrasf/homologacao/servicos.asmx';
- ConfigURL.HomConsultaNFSeRPS    := 'http://www.issnetonline.com.br/webserviceabrasf/homologacao/servicos.asmx';
- ConfigURL.HomConsultaSitLoteRPS := 'http://www.issnetonline.com.br/webserviceabrasf/homologacao/servicos.asmx';
- ConfigURL.HomConsultaNFSe       := 'http://www.issnetonline.com.br/webserviceabrasf/homologacao/servicos.asmx';
- ConfigURL.HomCancelaNFSe        := 'http://www.issnetonline.com.br/webserviceabrasf/homologacao/servicos.asmx';
+  ConfigURL.HomRecepcaoLoteRPS    := 'http://www.issnetonline.com.br/webserviceabrasf/homologacao/servicos.asmx';
+  ConfigURL.HomConsultaLoteRPS    := 'http://www.issnetonline.com.br/webserviceabrasf/homologacao/servicos.asmx';
+  ConfigURL.HomConsultaNFSeRPS    := 'http://www.issnetonline.com.br/webserviceabrasf/homologacao/servicos.asmx';
+  ConfigURL.HomConsultaSitLoteRPS := 'http://www.issnetonline.com.br/webserviceabrasf/homologacao/servicos.asmx';
+  ConfigURL.HomConsultaNFSe       := 'http://www.issnetonline.com.br/webserviceabrasf/homologacao/servicos.asmx';
+  ConfigURL.HomCancelaNFSe        := 'http://www.issnetonline.com.br/webserviceabrasf/homologacao/servicos.asmx';
+  ConfigURL.HomGerarNFSe          := '';
+  ConfigURL.HomRecepcaoSincrono   := '';
+  ConfigURL.HomSubstituiNFSe      := '';
 
- ConfigURL.ProRecepcaoLoteRPS    := 'http://www.issnetonline.com.br/webserviceabrasf/' + ConfigURL.ProNomeCidade + '/servicos.asmx';
- ConfigURL.ProConsultaLoteRPS    := 'http://www.issnetonline.com.br/webserviceabrasf/' + ConfigURL.ProNomeCidade + '/servicos.asmx';
- ConfigURL.ProConsultaNFSeRPS    := 'http://www.issnetonline.com.br/webserviceabrasf/' + ConfigURL.ProNomeCidade + '/servicos.asmx';
- ConfigURL.ProConsultaSitLoteRPS := 'http://www.issnetonline.com.br/webserviceabrasf/' + ConfigURL.ProNomeCidade + '/servicos.asmx';
- ConfigURL.ProConsultaNFSe       := 'http://www.issnetonline.com.br/webserviceabrasf/' + ConfigURL.ProNomeCidade + '/servicos.asmx';
- ConfigURL.ProCancelaNFSe        := 'http://www.issnetonline.com.br/webserviceabrasf/' + ConfigURL.ProNomeCidade + '/servicos.asmx';
+  ConfigURL.ProRecepcaoLoteRPS    := 'http://www.issnetonline.com.br/webserviceabrasf/' + ConfigURL.ProNomeCidade + '/servicos.asmx';
+  ConfigURL.ProConsultaLoteRPS    := 'http://www.issnetonline.com.br/webserviceabrasf/' + ConfigURL.ProNomeCidade + '/servicos.asmx';
+  ConfigURL.ProConsultaNFSeRPS    := 'http://www.issnetonline.com.br/webserviceabrasf/' + ConfigURL.ProNomeCidade + '/servicos.asmx';
+  ConfigURL.ProConsultaSitLoteRPS := 'http://www.issnetonline.com.br/webserviceabrasf/' + ConfigURL.ProNomeCidade + '/servicos.asmx';
+  ConfigURL.ProConsultaNFSe       := 'http://www.issnetonline.com.br/webserviceabrasf/' + ConfigURL.ProNomeCidade + '/servicos.asmx';
+  ConfigURL.ProCancelaNFSe        := 'http://www.issnetonline.com.br/webserviceabrasf/' + ConfigURL.ProNomeCidade + '/servicos.asmx';
+  ConfigURL.ProGerarNFSe          := '';
+  ConfigURL.ProRecepcaoSincrono   := '';
+  ConfigURL.ProSubstituiNFSe      := '';
 
- Result := ConfigURL;
+  Result := ConfigURL;
 end;
 
 function TProvedorISSNet.GetURI(URI: String): String;
@@ -213,7 +223,7 @@ end;
 function TProvedorISSNet.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
@@ -231,8 +241,14 @@ begin
 //                             '<' + Prefixo3 + 'Pedido>' +
 //                              '<' + Prefixo4 + 'InfPedidoCancelamento' +
 //                                 DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
-   acGerar:       Result := '';
- end;
+   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
+   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + NameSpaceDad;
+   acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio' + NameSpaceDad +
+                             '<' + Prefixo3 + 'SubstituicaoNfse>' +
+                              '<' + Prefixo3 + 'Pedido>' +
+                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+  end;
 end;
 
 function TProvedorISSNet.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
@@ -250,7 +266,7 @@ end;
 
 function TProvedorISSNet.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
@@ -259,8 +275,11 @@ begin
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</p1:CancelarNfseEnvio>';
 //                            '</' + Prefixo3 + 'CancelarNfseEnvio>';
-   acGerar:       Result := '';
- end;
+   acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
+   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
+   acSubstituir:  Result := '</' + Prefixo3 + 'SubstituicaoNfse>' +
+                            '</' + Prefixo3 + 'SubstituirNfseEnvio>';
+  end;
 end;
 
 function TProvedorISSNet.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
@@ -380,13 +399,19 @@ end;
 function TProvedorISSNet.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+  Result := '';
 end;
 
 function TProvedorISSNet.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+  Result := '';
+end;
+
+function TProvedorISSNet.GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
 end;
 
 function TProvedorISSNet.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;

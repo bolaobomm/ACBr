@@ -706,6 +706,9 @@ var
  CM: String;
  Ok: Boolean;
 begin
+
+ Result := False;
+
  if (Leitor.rExtrai(1, 'OrgaoGerador') <> '')
   then begin
    CM:= Leitor.rCampo(tcStr, 'CodigoMunicipio');
@@ -1364,11 +1367,12 @@ begin
 end;
 
 function TNFSeR.LerNFSe_IssDSF: Boolean;
-var ok  : Boolean;
-    Item, posI, count: integer;
-    sOperacao, sTributacao: string;
-    strItem: ansiString;
-    leitorItem : TLeitor;
+var
+  ok: Boolean;
+  Item{, posI, count}: integer;
+  sOperacao, sTributacao: string;
+//    strItem: ansiString;
+//    leitorItem : TLeitor;
 begin
  Leitor.Grupo := Leitor.Arquivo;
  //provedorIssDSF
@@ -1649,6 +1653,8 @@ begin
 //  proSystemPro: Result := LerNFSe_ProvedorSysPro;
 
   proEquiplano: Result := LerNFSe_Equiplano;
+
+  else Result := False;
  end;
 
  if Leitor.rExtrai(1, 'NfseCancelamento') <> ''
@@ -1684,7 +1690,7 @@ function TNFSeR.LerNFSe_ProvedorSysPro: Boolean;
 var
   Item, I: integer;
  	ok  : Boolean;
-  dt, d, m , a : string;
+//  dt, d, m , a : string;
 begin
   result:=True;
 

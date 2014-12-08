@@ -71,6 +71,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -113,24 +114,25 @@ end;
 
 function TProvedorFiorilli.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
- ConfigSchema: TConfigSchema;
+  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho       := '2.01';
- ConfigSchema.VersaoDados           := '2.01';
- ConfigSchema.VersaoXML             := '2';
- ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
- ConfigSchema.Cabecalho             := 'nfse.xsd';
- ConfigSchema.ServicoEnviar         := 'nfse.xsd';
- ConfigSchema.ServicoConSit         := 'nfse.xsd';
- ConfigSchema.ServicoConLot         := 'nfse.xsd';
- ConfigSchema.ServicoConRps         := 'nfse.xsd';
- ConfigSchema.ServicoConNfse        := 'nfse.xsd';
- ConfigSchema.ServicoCancelar       := 'nfse.xsd';
- ConfigSchema.ServicoGerar          := 'nfse.xsd';
- ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
- ConfigSchema.DefTipos              := '';
+  ConfigSchema.VersaoCabecalho       := '2.01';
+  ConfigSchema.VersaoDados           := '2.01';
+  ConfigSchema.VersaoXML             := '2';
+  ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
+  ConfigSchema.Cabecalho             := 'nfse.xsd';
+  ConfigSchema.ServicoEnviar         := 'nfse.xsd';
+  ConfigSchema.ServicoConSit         := 'nfse.xsd';
+  ConfigSchema.ServicoConLot         := 'nfse.xsd';
+  ConfigSchema.ServicoConRps         := 'nfse.xsd';
+  ConfigSchema.ServicoConNfse        := 'nfse.xsd';
+  ConfigSchema.ServicoCancelar       := 'nfse.xsd';
+  ConfigSchema.ServicoGerar          := 'nfse.xsd';
+  ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
+  ConfigSchema.ServicoSubstituir     := 'nfse.xsd';
+  ConfigSchema.DefTipos              := '';
 
- Result := ConfigSchema;
+  Result := ConfigSchema;
 end;
 
 function TProvedorFiorilli.GetConfigURL(ACodCidade: Integer): TConfigURL;
@@ -185,27 +187,29 @@ begin
 //    cURL_Producao := 'http://179.252.22.226:3394/IssWeb-ejb/IssWebWS/IssWebWS';
  end;
 
- ConfigURL.HomNomeCidade         := '';
- ConfigURL.HomRecepcaoLoteRPS    := cURL_Homologacao;
- ConfigURL.HomConsultaLoteRPS    := cURL_Homologacao;
- ConfigURL.HomConsultaNFSeRPS    := cURL_Homologacao;
- ConfigURL.HomConsultaSitLoteRPS := cURL_Homologacao;
- ConfigURL.HomConsultaNFSe       := cURL_Homologacao;
- ConfigURL.HomCancelaNFSe        := cURL_Homologacao;
- ConfigURL.HomGerarNFSe          := cURL_Homologacao;
- ConfigURL.HomRecepcaoSincrono   := cURL_Homologacao;
+  ConfigURL.HomNomeCidade         := '';
+  ConfigURL.HomRecepcaoLoteRPS    := cURL_Homologacao;
+  ConfigURL.HomConsultaLoteRPS    := cURL_Homologacao;
+  ConfigURL.HomConsultaNFSeRPS    := cURL_Homologacao;
+  ConfigURL.HomConsultaSitLoteRPS := cURL_Homologacao;
+  ConfigURL.HomConsultaNFSe       := cURL_Homologacao;
+  ConfigURL.HomCancelaNFSe        := cURL_Homologacao;
+  ConfigURL.HomGerarNFSe          := cURL_Homologacao;
+  ConfigURL.HomRecepcaoSincrono   := cURL_Homologacao;
+  ConfigURL.HomSubstituiNFSe      := '';
 
- ConfigURL.ProNomeCidade         := '';
- ConfigURL.ProRecepcaoLoteRPS    := cURL_Producao;
- ConfigURL.ProConsultaLoteRPS    := cURL_Producao;
- ConfigURL.ProConsultaNFSeRPS    := cURL_Producao;
- ConfigURL.ProConsultaSitLoteRPS := cURL_Producao;
- ConfigURL.ProConsultaNFSe       := cURL_Producao;
- ConfigURL.ProCancelaNFSe        := cURL_Producao;
- ConfigURL.ProGerarNFSe          := cURL_Producao;
- ConfigURL.ProRecepcaoSincrono   := cURL_Producao;
+  ConfigURL.ProNomeCidade         := '';
+  ConfigURL.ProRecepcaoLoteRPS    := cURL_Producao;
+  ConfigURL.ProConsultaLoteRPS    := cURL_Producao;
+  ConfigURL.ProConsultaNFSeRPS    := cURL_Producao;
+  ConfigURL.ProConsultaSitLoteRPS := cURL_Producao;
+  ConfigURL.ProConsultaNFSe       := cURL_Producao;
+  ConfigURL.ProCancelaNFSe        := cURL_Producao;
+  ConfigURL.ProGerarNFSe          := cURL_Producao;
+  ConfigURL.ProRecepcaoSincrono   := cURL_Producao;
+  ConfigURL.ProSubstituiNFSe      := '';
 
- Result := ConfigURL;
+  Result := ConfigURL;
 end;
 
 function TProvedorFiorilli.GetURI(URI: String): String;
@@ -236,7 +240,7 @@ end;
 function TProvedorFiorilli.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
@@ -248,7 +252,12 @@ begin
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
    acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + NameSpaceDad;
- end;
+   acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio' + NameSpaceDad +
+                             '<' + Prefixo3 + 'SubstituicaoNfse>' +
+                              '<' + Prefixo3 + 'Pedido>' +
+                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+  end;
 end;
 
 function TProvedorFiorilli.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
@@ -267,7 +276,7 @@ end;
 
 function TProvedorFiorilli.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
@@ -277,7 +286,9 @@ begin
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
    acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
- end;
+   acSubstituir:  Result := '</' + Prefixo3 + 'SubstituicaoNfse>' +
+                            '</' + Prefixo3 + 'SubstituirNfseEnvio>';
+  end;
 end;
 
 function TProvedorFiorilli.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
@@ -414,6 +425,12 @@ begin
                 '</ws:recepcionarLoteRpsSincrono>' +
               '</soapenv:Body>' +
            '</soapenv:Envelope>';
+end;
+
+function TProvedorFiorilli.GeraEnvelopeSubstituirNFSe(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
 end;
 
 function TProvedorFiorilli.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;

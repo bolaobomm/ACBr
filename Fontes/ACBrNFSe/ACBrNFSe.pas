@@ -138,6 +138,7 @@ type
     function GerarLote(ALote: String): Boolean; overload;
     function EnviarSincrono(ALote: Integer; Imprimir: Boolean = True): Boolean; overload;
     function EnviarSincrono(ALote: String; Imprimir: Boolean = True): Boolean; overload;
+    function SubstituirNFSe(ACodigoCancelamento, ANumeroNFSe: String): Boolean;
 
     property WebServices: TWebServices   read FWebServices  write FWebServices;
     property NotasFiscais: TNotasFiscais read FNotasFiscais write FNotasFiscais;
@@ -755,6 +756,20 @@ begin
       NomeArq
     );
   end;
+end;
+
+function TACBrNFSe.SubstituirNFSe(ACodigoCancelamento, ANumeroNFSe: String): Boolean;
+begin
+  if Self.NotasFiscais.Count = 0 then
+   begin
+      if Assigned(Self.OnGerarLog) then
+         Self.OnGerarLog('ERRO: Nenhum RPS adicionado!');
+      raise Exception.Create('ERRO: Nenhum RPS adicionado!');
+   end;
+
+ NotasFiscais.Assinar(True); 
+
+ Result := WebServices.SubstitiNFSe(ACodigoCancelamento, ANumeroNFSe);
 end;
 
 end.

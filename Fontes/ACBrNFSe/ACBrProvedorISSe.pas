@@ -71,6 +71,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -113,57 +114,59 @@ end;
 
 function TProvedorISSe.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
- ConfigSchema: TConfigSchema;
+  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho       := '2.01';
- ConfigSchema.VersaoDados           := '2.01';
- ConfigSchema.VersaoXML             := '2';
- ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
- ConfigSchema.Cabecalho             := 'nfse.xsd';
- ConfigSchema.ServicoEnviar         := 'nfse.xsd';
- ConfigSchema.ServicoConSit         := 'nfse.xsd';
- ConfigSchema.ServicoConLot         := 'nfse.xsd';
- ConfigSchema.ServicoConRps         := 'nfse.xsd';
- ConfigSchema.ServicoConNfse        := 'nfse.xsd';
- ConfigSchema.ServicoCancelar       := 'nfse.xsd';
- ConfigSchema.ServicoGerar          := 'nfse.xsd';
- ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
- ConfigSchema.DefTipos              := '';
+  ConfigSchema.VersaoCabecalho       := '2.01';
+  ConfigSchema.VersaoDados           := '2.01';
+  ConfigSchema.VersaoXML             := '2';
+  ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
+  ConfigSchema.Cabecalho             := 'nfse.xsd';
+  ConfigSchema.ServicoEnviar         := 'nfse.xsd';
+  ConfigSchema.ServicoConSit         := 'nfse.xsd';
+  ConfigSchema.ServicoConLot         := 'nfse.xsd';
+  ConfigSchema.ServicoConRps         := 'nfse.xsd';
+  ConfigSchema.ServicoConNfse        := 'nfse.xsd';
+  ConfigSchema.ServicoCancelar       := 'nfse.xsd';
+  ConfigSchema.ServicoGerar          := 'nfse.xsd';
+  ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
+  ConfigSchema.ServicoSubstituir     := 'nfse.xsd';
+  ConfigSchema.DefTipos              := '';
 
- Result := ConfigSchema;
+  Result := ConfigSchema;
 end;
 
 function TProvedorISSe.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
- ConfigURL: TConfigURL;
+  ConfigURL: TConfigURL;
 begin
- case ACodCidade of
-  4115200: begin
-            ConfigURL.HomNomeCidade         := 'teste.maringa.pr';
+  case ACodCidade of
+   4115200: begin
+              ConfigURL.HomNomeCidade := 'teste.maringa.pr';
+              ConfigURL.ProNomeCidade := '.maringa.pr';
+            end;
+  end;
 
-            ConfigURL.ProNomeCidade         := '.maringa.pr';
-           end;
- end;
+  ConfigURL.HomRecepcaoLoteRPS    := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+  ConfigURL.HomConsultaLoteRPS    := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+  ConfigURL.HomConsultaNFSeRPS    := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+  ConfigURL.HomConsultaSitLoteRPS := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+  ConfigURL.HomConsultaNFSe       := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+  ConfigURL.HomCancelaNFSe        := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+  ConfigURL.HomGerarNFSe          := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+  ConfigURL.HomRecepcaoSincrono   := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+  ConfigURL.HomSubstituiNFSe      := '';
 
- ConfigURL.HomRecepcaoLoteRPS    := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
- ConfigURL.HomConsultaLoteRPS    := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
- ConfigURL.HomConsultaNFSeRPS    := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
- ConfigURL.HomConsultaSitLoteRPS := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
- ConfigURL.HomConsultaNFSe       := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
- ConfigURL.HomCancelaNFSe        := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
- ConfigURL.HomGerarNFSe          := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
- ConfigURL.HomRecepcaoSincrono   := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+  ConfigURL.ProRecepcaoLoteRPS    := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+  ConfigURL.ProConsultaLoteRPS    := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+  ConfigURL.ProConsultaNFSeRPS    := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+  ConfigURL.ProConsultaSitLoteRPS := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+  ConfigURL.ProConsultaNFSe       := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+  ConfigURL.ProCancelaNFSe        := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+  ConfigURL.ProGerarNFSe          := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+  ConfigURL.ProRecepcaoSincrono   := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+  ConfigURL.ProSubstituiNFSe      := '';
 
- ConfigURL.ProRecepcaoLoteRPS    := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
- ConfigURL.ProConsultaLoteRPS    := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
- ConfigURL.ProConsultaNFSeRPS    := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
- ConfigURL.ProConsultaSitLoteRPS := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
- ConfigURL.ProConsultaNFSe       := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
- ConfigURL.ProCancelaNFSe        := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
- ConfigURL.ProGerarNFSe          := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
- ConfigURL.ProRecepcaoSincrono   := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
-
- Result := ConfigURL;
+  Result := ConfigURL;
 end;
 
 function TProvedorISSe.GetURI(URI: String): String;
@@ -194,14 +197,14 @@ end;
 function TProvedorISSe.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 var
- xmlns: String;
+  xmlns: String;
 begin
- xmlns := ' xmlns:ds="http://www.w3.org/2000/09/xmldsig#"' +
-          ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-          ' xsi:schemaLocation="http://www.abrasf.org.br/nfse.xsd nfse_v2.01.xsd"' +
-          NameSpaceDad;
+  xmlns := ' xmlns:ds="http://www.w3.org/2000/09/xmldsig#"' +
+           ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+           ' xsi:schemaLocation="http://www.abrasf.org.br/nfse.xsd nfse_v2.01.xsd"' +
+           NameSpaceDad;
 
- case Acao of
+  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + xmlns;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + xmlns;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + xmlns;
@@ -213,7 +216,12 @@ begin
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + xmlns;
    acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + xmlns;
- end;
+   acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio' + xmlns +
+                             '<' + Prefixo3 + 'SubstituicaoNfse>' +
+                              '<' + Prefixo3 + 'Pedido>' +
+                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+  end;
 end;
 
 function TProvedorISSe.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
@@ -234,7 +242,7 @@ end;
 
 function TProvedorISSe.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
@@ -244,7 +252,9 @@ begin
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
    acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
- end;
+   acSubstituir:  Result := '</' + Prefixo3 + 'SubstituicaoNfse>' +
+                            '</' + Prefixo3 + 'SubstituirNfseEnvio>';
+  end;
 end;
 
 function TProvedorISSe.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
@@ -364,6 +374,12 @@ begin
              '</EnviarLoteRpsSincrono>' +
             '</S:Body>' +
            '</S:Envelope>';
+end;
+
+function TProvedorISSe.GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
 end;
 
 function TProvedorISSe.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;

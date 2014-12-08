@@ -41,13 +41,19 @@ uses
   Classes{, pcnConversao};
 
 type
-  TStatusACBrNFSe = ( stNFSeIdle, stNFSeRecepcao, stNFSeConsulta, stNFSeCancelamento, stNFSeEmail, stNFSeAguardaProcesso);
-  TLayOut = (LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps, LayNfseConsultaSitLoteRps,
-             LayNfseConsultaNfse, LayNfseCancelaNfse, LayNfseGerar, LayNfseRecepcaoLoteSincrono);
+  TStatusACBrNFSe = (stNFSeIdle, stNFSeRecepcao, stNFSeConsulta,
+                     stNFSeCancelamento, stNFSeEmail, stNFSeAguardaProcesso,
+                     stNFSeSubstituicao);
 
-  TnfseTagAssinatura = ( taSempre, taNunca, taSomenteSeAssinada, taSomenteParaNaoAssinada );
-  TnfsePadraoLayout = ( plABRASF );
+  TLayOut = (LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
+             LayNfseConsultaSitLoteRps, LayNfseConsultaNfse, LayNfseCancelaNfse,
+             LayNfseGerar, LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse);
+
+  TnfseTagAssinatura = (taSempre, taNunca, taSomenteSeAssinada,
+                        taSomenteParaNaoAssinada);
+
   TnfseStatusRPS = ( srNormal, srCancelado );
+
   TnfseStatusNFSe = ( snNormal, snCancelado );
 
   TnfseNaturezaOperacao = ( noTributacaoNoMunicipio, noTributacaoForaMunicipio, noIsencao, noImune,
@@ -89,7 +95,8 @@ type
                     proEgoverneISS, proSisPMJP, proSystemPro, proSalvador,
                     proDBSeller, proLexsom, proABRASFv1, proABRASFv2 );
 
-  TnfseAcao = ( acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe, acCancelar, acGerar, acRecSincrono, acConsSecRps );
+  TnfseAcao = (acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe,
+               acCancelar, acGerar, acRecSincrono, acConsSecRps, acSubstituir);
 
   TnfseSituacaoTributaria = ( stRetencao, stNormal, stSubstituicao );
 
@@ -100,9 +107,6 @@ function StrToEnumerado(var ok: boolean; const s: string; const AString: array o
   const AEnumerados: array of variant): variant;
 function EnumeradoToStr(const t: variant; const AString:
   array of string; const AEnumerados: array of variant): variant;
-
-function PadraoLayoutToStr(const t: TnfsePadraoLayout):string;
-function StrToPadraoLayout(var ok: boolean; const s: string):TnfsePadraoLayout;
 
 function StatusRPSToStr(const t: TnfseStatusRPS):string;
 function StrToStatusRPS(var ok: boolean; const s: string):TnfseStatusRPS;
@@ -182,22 +186,6 @@ begin
   for i := Low(AEnumerados) to High(AEnumerados) do
     if t = AEnumerados[i] then
       result := AString[i];
-end;
-
-// Padrao Layout ***************************************************************
-
-function PadraoLayoutToStr(const t: TnfsePadraoLayout):string;
-begin
-  result := EnumeradoToStr(t,
-                           ['1'],
-                           [plABRASF]);
-end;
-
-function StrToPadraoLayout(var ok: boolean; const s: string):TnfsePadraoLayout;
-begin
-  result := StrToEnumerado(ok, s,
-                           ['1'],
-                           [plABRASF]);
 end;
 
 // Status RPS ******************************************************************
@@ -1041,7 +1029,7 @@ begin
   4122404, // Rolandia/PR
   4201307, // Araquari/SC
   4204004, // Catanduvas/SC
-  4205902, // Gaspar/SC
+//  4205902, // Gaspar/SC
   4210506, // Maravilha/SC
   4216602, // São José/SC
   4308102, // Feliz/RS
@@ -1254,6 +1242,7 @@ begin
   4322806  // Veranopolis/RS
          : Provedor := 'Tecnos';
 
+  4205902, // Gaspar/SC
   4303103, // Cachoeirinha/RS
   4307708, // Esteio/RS
   4311403, // Lajeado/RS

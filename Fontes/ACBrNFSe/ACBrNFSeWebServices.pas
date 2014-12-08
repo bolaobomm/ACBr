@@ -55,7 +55,7 @@ uses
     pnfsEnvLoteRpsResposta, pnfsConsSitLoteRpsResposta,
     pnfsConsLoteRpsResposta, pnfsConsNfseporRpsResposta,
     pnfsConsNfseResposta, pnfsCancNfseResposta,
-    pnfsGerarNfseResposta,
+    pnfsGerarNfseResposta, pnfsSubsNfseResposta,
     ACBrNFSeNotasFiscais, ACBrNFSeConfiguracoes,
     ACBrProvedorGinfesV3, ACBrProvedorPublica, ACBrProvedorRJ,
     ACBrProvedorTiplan, ACBrProvedorISSNet, ACBrProvedorWebISS,
@@ -91,6 +91,7 @@ type
     procedure DoNFSeLinkNFSe;
     procedure DoNFSeGerarLote;
     procedure DoNFSeEnviarSincrono;
+    procedure DoNFSeSubstituirNFSe;
 
     {$IFDEF ACBrNFSeOpenSSL}
       procedure ConfiguraHTTP( HTTP : THTTPSend; Action : AnsiString);
@@ -134,8 +135,9 @@ type
     FServicoConNfse: String;
     FServicoCancelar: String;
     FServicoGerar: String;
-    FServicoConsSeqRPS:string;
+    FServicoConsSeqRPS:String;
     FServicoEnviarSincrono: String;
+    FServicoSubstituir: String;
     FDefTipos: String;
 
     FNomeCidade: String;
@@ -146,10 +148,11 @@ type
     FConsultaNFSe: String;
     FCancelaNFSe: String;
     FGerarNFSe: String;
-    FConsSeqRPS: string;
+    FConsSeqRPS: String;
     FLinkNFSe: String;
     FGerarLoteRps: String;
     FRecepcaoSincrono: String;
+    FSubstituiNFSe: String;
 
     procedure LoadMsgEntrada;
     procedure LoadURL;
@@ -187,6 +190,7 @@ type
     property ServicoCancelar: String read FServicoCancelar;
     property ServicoGerar: String read FServicoGerar;
     property ServicoEnviarSincrono: String read FServicoEnviarSincrono;
+    property ServicoSubstituir: String read FServicoSubstituir;
     property DefTipos: String read FDefTipos;
 
     property NomeCidade: String read FNomeCidade;
@@ -200,6 +204,7 @@ type
     property LinkNFSe: String read FLinkNFSe;
     property GerarLoteRps: String read FGerarLoteRps;
     property RecepcaoSincrono: String read FRecepcaoSincrono;
+    property SubstituiNFSe: String read FSubstituiNFSe;
   end;
 
   TNFSeEnviarLoteRPS = Class(TWebServicesBase)
@@ -224,7 +229,7 @@ type
     FCnpj: String;
     FInscricaoMunicipal: String;
     FProtocolo: String;
-    FNumeroLote: string;
+    FNumeroLote: String;
     FSituacao: String;
     FSenha: String;
     FFraseSecreta: String;
@@ -247,15 +252,15 @@ type
   TNFSeConsultarLoteRPS = Class(TWebServicesBase)
   private
     FProtocolo: String;
-    FNumeroLote: string;
+    FNumeroLote: String;
     FNFSeRetorno: TRetLote;
     FNotasFiscais : TNotasFiscais;
-    FCNPJ: string;
-    FIM: string;
-    FSenha: string;
-    FFraseSecreta: string;
+    FCNPJ: String;
+    FIM: String;
+    FSenha: String;
+    FFraseSecreta: String;
     FArquivoRetorno: WideString;
-    FRazaoSocial: string;
+    FRazaoSocial: String;
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
@@ -265,13 +270,13 @@ type
     property NumeroLote: String read FNumeroLote write FNumeroLote;
     property NFSeRetorno: TRetLote read FNFSeRetorno write FNFSeRetorno;
     property NotasFiscais : TNotasFiscais read FNotasFiscais;
-    property CNPJ: string read FCNPJ write FCNPJ;
-    property IM: string read FIM write FIM;
-    property Senha: string read FSenha write FSenha;
-    property FraseSecreta: string read FFraseSecreta write FFraseSecreta;
+    property CNPJ: String read FCNPJ write FCNPJ;
+    property IM: String read FIM write FIM;
+    property Senha: String read FSenha write FSenha;
+    property FraseSecreta: String read FFraseSecreta write FFraseSecreta;
     property ArquivoRetorno: WideString read FArquivoRetorno write FArquivoRetorno;
     //usado pelo provedor Tecnos
-    property RazaoSocial: string read FRazaoSocial write FRazaoSocial;
+    property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
   end;
 
   TNFSeConsultarNfseRPS = Class(TWebServicesBase)
@@ -281,11 +286,11 @@ type
     FTipo: String;
     FCnpj: String;
     FInscricaoMunicipal: String;
-    FSenha: string;
-    FFraseSecreta: string;
+    FSenha: String;
+    FFraseSecreta: String;
     FNFSeRetorno: TRetNfseRps;
     FNotasFiscais : TNotasFiscais;
-    FRazaoSocial: string;
+    FRazaoSocial: String;
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
@@ -295,10 +300,10 @@ type
     property Tipo: String read FTipo write FTipo;
     property Cnpj: String read FCnpj write FCnpj;
     property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
-    property Senha: string read FSenha write FSenha;
-    property FraseSecreta: string read FFraseSecreta write FFraseSecreta;
+    property Senha: String read FSenha write FSenha;
+    property FraseSecreta: String read FFraseSecreta write FFraseSecreta;
     property NFSeRetorno: TRetNfseRps read FNFSeRetorno write FNFSeRetorno;
-    property RazaoSocial: string read FRazaoSocial write FRazaoSocial;
+    property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
   end;
 
   TNFSeConsultarNfse = Class(TWebServicesBase)
@@ -311,8 +316,8 @@ type
     FNFSeRetorno: TRetNfse;
     FNotasFiscais : TNotasFiscais;
     FPagina: Integer;
-    FSenha: string;
-    FFraseSecreta: string;
+    FSenha: String;
+    FFraseSecreta: String;
     FCNPJTomador: String;
     FIMTomador: String;
     FNomeInter: String;
@@ -331,8 +336,8 @@ type
     property NumeroNFSe: String         read FNumeroNFSe         write FNumeroNFSe;
     property NFSeRetorno: TRetNfse      read FNFSeRetorno        write FNFSeRetorno;
     property Pagina: Integer            read FPagina             write FPagina;
-    property Senha: string              read FSenha              write FSenha;
-    property FraseSecreta: string       read FFraseSecreta       write FFraseSecreta;
+    property Senha: String              read FSenha              write FSenha;
+    property FraseSecreta: String       read FFraseSecreta       write FFraseSecreta;
     property CNPJTomador: String        read FCNPJTomador        write FCNPJTomador;
     property IMTomador: String          read FIMTomador          write FIMTomador;
     property NomeInter: String          read FNomeInter          write FNomeInter;
@@ -369,10 +374,10 @@ type
     FDataHora: TDateTime;
     FNFSeRetorno: TretCancNFSe;
     FNotasFiscais : TNotasFiscais;
-    FCNPJ: string;
-    FIM: string;
-    FNumeroNFSe: string;
-    FCodigoMunicipio: string;
+    FCNPJ: String;
+    FIM: String;
+    FNumeroNFSe: String;
+    FCodigoMunicipio: String;
     FArquivoRetorno: WideString;
   public
     function Executar: Boolean; override;
@@ -382,10 +387,10 @@ type
     property MotivoCancelamento: String read FMotivoCancelamento write FMotivoCancelamento;
     property DataHora: TDateTime read FDataHora write FDataHora;
     property NFSeRetorno: TretCancNFSe read FNFSeRetorno write FNFSeRetorno;
-    property NumeroNFSe: string read FNumeroNFSe write FNumeroNFSe;
-    property CNPJ: string read FCNPJ write FCNPJ;
-    property IM: string read FIM write FIM;
-    property CodigoMunicipio: string read FCodigoMunicipio write FCodigoMunicipio;
+    property NumeroNFSe: String read FNumeroNFSe write FNumeroNFSe;
+    property CNPJ: String read FCNPJ write FCNPJ;
+    property IM: String read FIM write FIM;
+    property CodigoMunicipio: String read FCodigoMunicipio write FCodigoMunicipio;
     property ArquivoRetorno: WideString read FArquivoRetorno write FArquivoRetorno;
   end;
 
@@ -427,13 +432,54 @@ type
     property Situacao: String read FSituacao;
   end;
 
+  TNFSeSubstituirNFSe = Class(TWebServicesBase)
+  private
+    FNotasFiscais : TNotasFiscais;
+
+    FCodigoCancelamento: String;
+    FMotivoCancelamento: String;
+    FDataHora: TDateTime;
+    FNumeroNFSe: String;
+    FCNPJ: String;
+    FIM: String;
+    FCodigoMunicipio: String;
+
+    FNumeroRps: Integer;
+    FProtocolo: String;
+    FDataRecebimento: TDateTime;
+    FSituacao: String;
+
+    FNFSeRetorno : TretSubsNfse;
+    FArquivoRetorno: WideString;
+  public
+    function Executar: Boolean; override;
+    constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
+    destructor Destroy; override;
+
+    property CodigoCancelamento: String read FCodigoCancelamento write FCodigoCancelamento;
+    property MotivoCancelamento: String read FMotivoCancelamento write FMotivoCancelamento;
+    property DataHora: TDateTime        read FDataHora           write FDataHora;
+    property NumeroNFSe: String         read FNumeroNFSe         write FNumeroNFSe;
+    property CNPJ: String               read FCNPJ               write FCNPJ;
+    property IM: String                 read FIM                 write FIM;
+    property CodigoMunicipio: String    read FCodigoMunicipio    write FCodigoMunicipio;
+
+    property NumeroRps: integer         read FNumeroRps;
+    property Protocolo: String          read FProtocolo;
+    property DataRecebimento: TDateTime read FDataRecebimento;
+    property Situacao: String           read FSituacao;
+
+    property NFSeRetorno: TretSubsNfse  read FNFSeRetorno    write FNFSeRetorno;
+    property ArquivoRetorno: WideString read FArquivoRetorno write FArquivoRetorno;
+  end;
+
   TNFSeLinkNFSe = Class(TWebServicesBase)
   private
     FNotasFiscais : TNotasFiscais;
     FNumeroNFSe: integer;
     FCodVerif: String;
     FLink: String;
-    FIM: string;
+    FIM: String;
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
@@ -441,7 +487,7 @@ type
     property NumeroNFSe: integer read FNumeroNFSe;
     property CodVerif: String read FCodVerif;
     property Link: String read FLink;
-    property IM: string read FIM;
+    property IM: String read FIM;
   end;
 
   TNFSeGerarLoteRPS = Class(TWebServicesBase)
@@ -468,6 +514,7 @@ type
     FLinkNfse: TNFSeLinkNfse;
     FGerarLoteRPS: TNFSeGerarLoteRPS;
     FEnviarSincrono: TNFSeEnviarSincrono;
+    FSubNfse: TNFSeSubstituirNfse;
   public
     constructor Create(AFNotaFiscalEletronica: TComponent); reintroduce;
     destructor Destroy; override;
@@ -478,22 +525,22 @@ type
     function ConsultaLoteRps(AProtocolo: String;
                              const CarregaProps: boolean = true): Boolean; overload;
     function ConsultaLoteRps(AProtocolo,
-                             ACNPJ, AInscricaoMunicipal: string;
-                             const ASenha: string = '';
-                             const AFraseSecreta: string = '';
-                             const ARazaoSocial: string = ''): Boolean; overload;
+                             ACNPJ, AInscricaoMunicipal: String;
+                             const ASenha: String = '';
+                             const AFraseSecreta: String = '';
+                             const ARazaoSocial: String = ''): Boolean; overload;
     function ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACnpj, AInscricaoMunicipal: String;
-                                const ASenha: string = '';
-                                const AFraseSecreta: string = '';
-                                const ARazaoSocial: string = ''): Boolean;
+                                const ASenha: String = '';
+                                const AFraseSecreta: String = '';
+                                const ARazaoSocial: String = ''): Boolean;
     function ConsultaNFSe(ACnpj,
                           AInscricaoMunicipal: String;
                           ADataInicial,
                           ADataFinal: TDateTime;
-                          NumeroNFSe: string = '';
+                          NumeroNFSe: String = '';
                           APagina: Integer = 1;
-                          const ASenha: string = '';
-                          const AFraseSecreta: string = '';
+                          const ASenha: String = '';
+                          const AFraseSecreta: String = '';
                           ACNPJTomador: String = '';
                           AIMTomador: String = '';
                           ANomeInter: String = '';
@@ -504,13 +551,14 @@ type
     function CancelaNFSe(ACodigoCancelamento: String;
                          const CarregaProps: boolean = true): Boolean; overload;
     function CancelaNFSe(ACodigoCancelamento, ANumeroNFSe, ACNPJ, AInscricaoMunicipal,
-                         ACodigoMunicipio: string): Boolean; overload;
+                         ACodigoMunicipio: String): Boolean; overload;
     function Gera(ARps:Integer): Boolean;
     function LinkNFSeGerada(ANumeroNFSe: Integer; ACodVerificacao, AInscricaoM: String): String;
     function GeraLote(ALote:Integer): Boolean; overload;
     function GeraLote(ALote:String): Boolean; overload;
     function EnviaSincrono(ALote:Integer): Boolean; overload;
     function EnviaSincrono(ALote:String): Boolean; overload;
+    function SubstitiNFSe(ACodigoCancelamento, ANumeroNFSe: String): Boolean; 
   published
     property ACBrNFSe: TComponent read FACBrNFSe write FACBrNFSe;
     property Enviar: TNFSeEnviarLoteRPS read FEnviar write FEnviar;
@@ -524,6 +572,7 @@ type
     property LinkNfse: TNFSeLinkNfse read FLinkNfse write FLinkNfse;
     property GerarLoteRPS: TNFSeGerarLoteRPS read FGerarLoteRPS write FGerarLoteRPS;
     property EnviarSincrono: TNFSeEnviarSincrono read FEnviarSincrono write FEnviarSincrono;
+    property SubNfse: TNFSeSubstituirNfse read FSubNfse write FSubNfse;
   end;
 
 implementation
@@ -591,7 +640,7 @@ end;
 procedure TWebServicesBase.OnBeforePost(const HTTPReqResp: THTTPReqResp;
   Data: Pointer);
 
-function GetLastErrorText: string;
+function GetLastErrorText: String;
 var
  aMsg: String;
 begin
@@ -608,7 +657,7 @@ var
  Cert         : ICertificate2;
  CertContext  : ICertContext;
  PCertContext : Pointer;
- ContentHeader: string;
+ ContentHeader: String;
 begin
  if DFeUtil.EstaVazio( FConfiguracoes.Certificados.NumeroSerie )
   then Exit;
@@ -781,6 +830,8 @@ begin
   then DoNFSeGerarLote
   else if self is TNFSeEnviarSincrono
   then DoNFSeEnviarSincrono
+  else if self is TNFSeSubstituirNfse
+  then DoNFSeSubstituirNfse
 end;
 
 procedure TWebServicesBase.LoadURL;
@@ -797,6 +848,7 @@ begin
    FGerarNFSe          := FConfiguracoes.WebServices.ProGerarNFSe;
    FConsSeqRPS         := FConfiguracoes.WebServices.ProConsultaSeqRPS; // Alterado por Ailton Branco 16/072014
    FRecepcaoSincrono   := FConfiguracoes.WebServices.ProRecepcaoSincrono;
+   FSubstituiNFSe      := FConfiguracoes.WebServices.ProSubstituiNFSe;
   end
   else begin
    FNomeCidade         := FConfiguracoes.WebServices.HomNomeCidade;
@@ -809,6 +861,7 @@ begin
    FGerarNFSe          := FConfiguracoes.WebServices.HomGerarNFSe;
    FConsSeqRPS         := FConfiguracoes.WebServices.HomConsultaSeqRPS; // Alterado por Ailton Branco 16/072014
    FRecepcaoSincrono   := FConfiguracoes.WebServices.HomRecepcaoSincrono;
+   FSubstituiNFSe      := FConfiguracoes.WebServices.HomSubstituiNFSe;
   end;
 
  if self is TNFSeEnviarLoteRps
@@ -828,7 +881,9 @@ begin
   else if self is TNFSeEnviarSincrono
   then FURL := FRecepcaoSincrono
   else if self is TNFSeConsultarSequencialRPS
-  then FURL := FConsSeqRPS;
+  then FURL := FConsSeqRPS
+  else if self is TNFSeSubstituirNfse
+  then FURL := FSubstituiNFSe;
 end;
 
 procedure TWebServicesBase.DoNFSeEnviarLoteRPS;
@@ -849,7 +904,7 @@ begin
  if FCabecalho <> ''
   then begin
    if Prefixo2 <> ''
-    then FNameSpaceCab := ' xmlns:' + stringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
+    then FNameSpaceCab := ' xmlns:' + StringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
     else FNameSpaceCab := ' xmlns="' + FHTTP_AG + Separador + FCabecalho +'">';
   end
   else FNameSpaceCab := '>';
@@ -857,25 +912,25 @@ begin
  if FServicoEnviar <> ''
   then begin
    if (FProvedor = proIssDSF) then
-     FNameSpaceDad :=  'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '"'
+     FNameSpaceDad :=  'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '"'
                     + ' xmlns:tipos="http://localhost:8080/WsNFe2/tp"'
                     + ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'
                     + ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqEnvioLoteRPS.xsd"'
 					
    else if (FProvedor = proEquiplano)
-    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="http://www.equiplano.com.br/esnfs" ' +
+    then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="http://www.equiplano.com.br/esnfs" ' +
                           'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                           'xsi:schemaLocation="http://www.equiplano.com.br/enfs esRecepcionarLoteRpsEnvio_v01.xsd"'
     else begin
      if (RightStr(FHTTP_AG, 1) = '/')
       then begin
        if Prefixo3 <> ''
-        then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoEnviar + '"'
+        then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoEnviar + '"'
         else FNameSpaceDad := 'xmlns="' + FHTTP_AG + Separador + FServicoEnviar + '"';
       end
       else begin
        if Prefixo3 <> ''
-        then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
+        then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
         else FNameSpaceDad := 'xmlns="' + FHTTP_AG + '"';
       end;
     end;
@@ -893,7 +948,7 @@ begin
      if FProvedor = proIssDsf then
        FNameSpaceDad := FNameSpaceDad + '>'
      else
-       FNameSpaceDad := FNameSpaceDad + ' xmlns:' + stringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
+       FNameSpaceDad := FNameSpaceDad + ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
     end
    else 
 	 FNameSpaceDad := FNameSpaceDad + ' xmlns="' + FHTTP_AG + Separador + FDefTipos + '">';
@@ -1091,7 +1146,7 @@ begin
  if FCabecalho <> ''
   then begin
    if Prefixo2 <> ''
-    then FNameSpaceCab := ' xmlns:' + stringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
+    then FNameSpaceCab := ' xmlns:' + StringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
     else FNameSpaceCab := ' xmlns="' + FHTTP_AG + Separador + FCabecalho +'">';
   end
   else FNameSpaceCab := '>';
@@ -1099,19 +1154,19 @@ begin
  if FServicoConSit <> ''
   then begin
    if (FProvedor = proEquiplano)
-    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="http://www.equiplano.com.br/esnfs" ' +
+    then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="http://www.equiplano.com.br/esnfs" ' +
                           'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                           'xsi:schemaLocation="http://www.equiplano.com.br/enfs esConsultarSituacaoLoteRpsEnvio_v01.xsd"'
    else begin
      if RightStr(FHTTP_AG, 1) = '/'
       then begin
        if Prefixo3 <> ''
-        then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoConSit + '"'
+        then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoConSit + '"'
         else FNameSpaceDad := 'xmlns="' + FHTTP_AG + Separador + FServicoConSit + '"';
       end
       else begin
        if Prefixo3 <> ''
-        then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
+        then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
         else FNameSpaceDad := 'xmlns="' + FHTTP_AG + '"';
       end;
    end;
@@ -1125,7 +1180,7 @@ begin
   then begin
    if Prefixo4 <> ''
     then FNameSpaceDad := FNameSpaceDad +
-                        ' xmlns:' + stringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
+                        ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
     else FNameSpaceDad := FNameSpaceDad +
                         ' xmlns="' + FHTTP_AG + Separador + FDefTipos + '">';
   end;
@@ -1215,7 +1270,7 @@ begin
  if FCabecalho <> ''
   then begin
    if Prefixo2 <> ''
-    then FNameSpaceCab := ' xmlns:' + stringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
+    then FNameSpaceCab := ' xmlns:' + StringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
     else FNameSpaceCab := ' xmlns="' + FHTTP_AG + Separador + FCabecalho +'">';
   end
   else FNameSpaceCab := '>';
@@ -1223,24 +1278,24 @@ begin
  if FServicoConLot <> ''
   then begin
    if (FProvedor = proIssDSF)
-    then FNameSpaceDad :=  'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '"'
+    then FNameSpaceDad :=  'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '"'
                     + ' xmlns:tipos="http://localhost:8080/WsNFe2/tp"'
                     + ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'
                     + ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote  http://localhost:8080/WsNFe2/xsd/ReqConsultaLote.xsd"'
     else if (FProvedor = proEquiplano)
-     then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="http://www.equiplano.com.br/esnfs" ' +
+     then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="http://www.equiplano.com.br/esnfs" ' +
                            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                            'xsi:schemaLocation="http://www.equiplano.com.br/enfs esConsultarLoteRpsEnvio_v01.xsd"'
    else begin
      if RightStr(FHTTP_AG, 1) = '/'
       then begin
        if Prefixo3 <> ''
-        then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoConLot + '"'
+        then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoConLot + '"'
         else FNameSpaceDad := 'xmlns="' + FHTTP_AG + Separador + FServicoConLot + '"';
       end
       else begin
        if Prefixo3 <> ''
-        then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
+        then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
         else FNameSpaceDad := 'xmlns="' + FHTTP_AG + '"';
       end;
     end;
@@ -1254,7 +1309,7 @@ begin
   then begin
    if Prefixo4 <> ''
     then FNameSpaceDad := FNameSpaceDad +
-                        ' xmlns:' + stringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
+                        ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
     else FNameSpaceDad := FNameSpaceDad +
                         ' xmlns="' + FHTTP_AG + Separador + FDefTipos + '">';
   end;
@@ -1367,7 +1422,7 @@ begin
  if FCabecalho <> ''
   then begin
    if Prefixo2 <> ''
-    then FNameSpaceCab := ' xmlns:' + stringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
+    then FNameSpaceCab := ' xmlns:' + StringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
     else FNameSpaceCab := ' xmlns="' + FHTTP_AG + Separador + FCabecalho +'">';
   end
   else FNameSpaceCab := '>';
@@ -1375,23 +1430,23 @@ begin
  if FServicoConRps <> ''
   then begin
    if (FProvedor = proIssDSF)
-    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' +
+    then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' +
                           'xmlns:tipos="http://localhost:8080/WsNFe2/tp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                           'xsi:schemaLocation="' + FURLNS1 + ' http://localhost:8080/WsNFe2/xsd/' + FServicoConRps + '"'
    else if (FProvedor = proEquiplano)
-    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="http://www.equiplano.com.br/esnfs" ' +
+    then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="http://www.equiplano.com.br/esnfs" ' +
                           'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                           'xsi:schemaLocation="http://www.equiplano.com.br/enfs esConsultarNfsePorRpsEnvio_v01.xsd"'
    else begin
      if RightStr(FHTTP_AG, 1) = '/'
       then begin
        if Prefixo3 <> ''
-        then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoConRps + '"'
+        then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoConRps + '"'
         else FNameSpaceDad := 'xmlns="' + FHTTP_AG + Separador + FServicoConRps + '"';
       end
       else begin
        if Prefixo3 <> ''
-        then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
+        then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
         else FNameSpaceDad := 'xmlns="' + FHTTP_AG + '"';
       end;
     end;
@@ -1405,7 +1460,7 @@ begin
   then begin
    if Prefixo4 <> ''
     then FNameSpaceDad := FNameSpaceDad +
-                        ' xmlns:' + stringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
+                        ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
     else FNameSpaceDad := FNameSpaceDad +
                         ' xmlns="' + FHTTP_AG + Separador + FDefTipos + '">';
   end;
@@ -1558,7 +1613,7 @@ begin
  if FCabecalho <> ''
   then begin
    if Prefixo2 <> ''
-    then FNameSpaceCab := ' xmlns:' + stringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
+    then FNameSpaceCab := ' xmlns:' + StringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
     else FNameSpaceCab := ' xmlns="' + FHTTP_AG + Separador + FCabecalho +'">';
   end
   else FNameSpaceCab := '>';
@@ -1566,19 +1621,19 @@ begin
  if FServicoConNfse <> ''
   then begin
    if (FProvedor = proIssDSF)
-    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' {+
+    then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' {+
                           'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="' + FURLNS1 + ' ' +
                           FHTTP_AG + FServicoConNfse + '"'}
     else begin
      if RightStr(FHTTP_AG, 1) = '/'
       then begin
        if Prefixo3 <> ''
-        then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoConNfse + '"'
+        then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoConNfse + '"'
         else FNameSpaceDad := 'xmlns="' + FHTTP_AG + Separador + FServicoConNfse + '"';
       end
       else begin
        if Prefixo3 <> ''
-        then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
+        then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
         else FNameSpaceDad := 'xmlns="' + FHTTP_AG + '"';
       end;
     end;
@@ -1592,7 +1647,7 @@ begin
   then begin
    if Prefixo4 <> ''
     then FNameSpaceDad := FNameSpaceDad +
-                        ' xmlns:' + stringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
+                        ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
     else FNameSpaceDad := FNameSpaceDad +
                         ' xmlns="' + FHTTP_AG + Separador + FDefTipos + '">';
   end;
@@ -1713,12 +1768,12 @@ begin
 
  if FCabecalho <> '' then begin
    if Prefixo2 <> ''
-    then FNameSpaceCab := ' xmlns:' + stringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
+    then FNameSpaceCab := ' xmlns:' + StringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
     else FNameSpaceCab := ' xmlns="' + FHTTP_AG + Separador + FCabecalho +'">';
   end else FNameSpaceCab := '>';
 
  if FServicoConNfse <> '' then
-    FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' {+
+    FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' {+
                      'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="' + FURLNS1 +
                      ' ' + FHTTP_AG + FServicoCancelar + '"'}
  else FNameSpaceDad := '';
@@ -1730,7 +1785,7 @@ begin
   then begin
    if Prefixo4 <> ''
     then FNameSpaceDad := FNameSpaceDad +
-                        ' xmlns:' + stringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
+                        ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
     else FNameSpaceDad := FNameSpaceDad +
                         ' xmlns="' + FHTTP_AG + Separador + FDefTipos + '">';
   end;
@@ -1794,7 +1849,7 @@ begin
  if FCabecalho <> ''
   then begin
    if Prefixo2 <> ''
-    then FNameSpaceCab := ' xmlns:' + stringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
+    then FNameSpaceCab := ' xmlns:' + StringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
     else FNameSpaceCab := ' xmlns="' + FHTTP_AG + Separador + FCabecalho +'">';
   end
   else FNameSpaceCab := '>';
@@ -1802,25 +1857,25 @@ begin
  if FServicoCancelar <> ''
   then begin
    if (FProvedor = proIssDSF)
-    then FNameSpaceDad :=  'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '"'
+    then FNameSpaceDad :=  'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '"'
                     + ' xmlns:tipos="http://localhost:8080/WsNFe2/tp"'
                     + ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'
                     + ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote  http://localhost:8080/WsNFe2/xsd/ReqCancelamentoNFSe.xsd"'
 
    else if (FProvedor = proEquiplano)
-    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="http://www.equiplano.com.br/esnfs" ' +
+    then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="http://www.equiplano.com.br/esnfs" ' +
                           'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                           'xsi:schemaLocation="http://www.equiplano.com.br/enfs esCancelarNfseEnvio_v01.xsd"'
    else begin
      if RightStr(FHTTP_AG, 1) = '/'
       then begin
        if Prefixo3 <> ''
-        then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoCancelar + '"'
+        then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoCancelar + '"'
         else FNameSpaceDad := 'xmlns="' + FHTTP_AG + Separador + FServicoCancelar + '"';
       end
       else begin
        if Prefixo3 <> ''
-        then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
+        then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
         else FNameSpaceDad := 'xmlns="' + FHTTP_AG + '"';
       end;
     end;
@@ -1841,7 +1896,7 @@ begin
        FDefTipos     := 'tipos_v02.xsd';
       end;
      FNameSpaceDad := FNameSpaceDad +
-                        ' xmlns:' + stringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">';
+                        ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">';
     end
     else FNameSpaceDad := FNameSpaceDad +
                         ' xmlns="' + FHTTP_AG + Separador + FDefTipos + '">';
@@ -1950,7 +2005,7 @@ begin
                                                                 TNFSeCancelarNfse(Self).FIM,
                                                                 TNFSeCancelarNfse(Self).FNumeroNFSe,
                                                                 TNFSeCancelarNfse(Self).FMotivoCancelamento,
-                                                                '', ''); 
+                                                                '', '');
     else FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSe(Prefixo4,
                                                        NameSpaceDad,
                                                        TNFSeCancelarNfse(Self).FNumeroNFSe,
@@ -2038,7 +2093,7 @@ begin
  if FCabecalho <> ''
   then begin
    if Prefixo2 <> ''
-    then FNameSpaceCab := ' xmlns:' + stringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
+    then FNameSpaceCab := ' xmlns:' + StringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
     else FNameSpaceCab := ' xmlns="' + FHTTP_AG + Separador + FCabecalho +'">';
   end
   else FNameSpaceCab := '>';
@@ -2048,12 +2103,12 @@ begin
    if RightStr(FHTTP_AG, 1) = '/'
     then begin
      if Prefixo3 <> ''
-      then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoGerar + '"'
+      then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoGerar + '"'
       else FNameSpaceDad := 'xmlns="' + FHTTP_AG + Separador + FServicoGerar + '"';
     end
     else begin
      if Prefixo3 <> ''
-      then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
+      then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
       else FNameSpaceDad := 'xmlns="' + FHTTP_AG + '"';
     end;
   end
@@ -2066,7 +2121,7 @@ begin
   then begin
    if Prefixo4 <> ''
     then FNameSpaceDad := FNameSpaceDad +
-                        ' xmlns:' + stringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
+                        ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
     else FNameSpaceDad := FNameSpaceDad + ' xmlns="' + FHTTP_AG + Separador + FDefTipos + '">';
   end;
 
@@ -2247,7 +2302,7 @@ begin
  if FCabecalho <> ''
   then begin
    if Prefixo2 <> ''
-    then FNameSpaceCab := ' xmlns:' + stringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
+    then FNameSpaceCab := ' xmlns:' + StringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
     else FNameSpaceCab := ' xmlns="' + FHTTP_AG + Separador + FCabecalho +'">';
   end
   else FNameSpaceCab := '>';
@@ -2255,19 +2310,19 @@ begin
  if FServicoEnviar <> ''
   then begin
    if (FProvedor = proIssDSF)
-    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' {+
+    then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' {+
                           'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="' + FURLNS1 + ' ' +
                           FHTTP_AG + FServicoEnviar + '"'}
     else begin
       if (RightStr(FHTTP_AG, 1) = '/')
       then begin
        if Prefixo3 <> ''
-        then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoEnviar + '"'
+        then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoEnviar + '"'
         else FNameSpaceDad := 'xmlns="' + FHTTP_AG + Separador + FServicoEnviar + '"';
       end
       else begin
        if Prefixo3 <> ''
-        then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
+        then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
         else FNameSpaceDad := 'xmlns="' + FHTTP_AG + '"';
       end;
     end;
@@ -2281,7 +2336,7 @@ begin
   then begin
    if Prefixo4 <> ''
     then FNameSpaceDad := FNameSpaceDad +
-                        ' xmlns:' + stringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
+                        ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
     else FNameSpaceDad := FNameSpaceDad + ' xmlns="' + FHTTP_AG + Separador + FDefTipos + '">';
   end;
 
@@ -2476,7 +2531,7 @@ begin
  if FCabecalho <> ''
   then begin
    if Prefixo2 <> ''
-    then FNameSpaceCab := ' xmlns:' + stringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
+    then FNameSpaceCab := ' xmlns:' + StringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
     else FNameSpaceCab := ' xmlns="' + FHTTP_AG + Separador + FCabecalho +'">';
   end
   else FNameSpaceCab := '>';
@@ -2486,12 +2541,12 @@ begin
    if (RightStr(FHTTP_AG, 1) = '/')
     then begin
      if Prefixo3 <> ''
-      then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoEnviarSincrono + '"'
+      then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoEnviarSincrono + '"'
       else FNameSpaceDad := 'xmlns="' + FHTTP_AG + Separador + FServicoEnviarSincrono + '"';
     end
     else begin
      if Prefixo3 <> ''
-      then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
+      then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
       else FNameSpaceDad := 'xmlns="' + FHTTP_AG + '"';
     end;
   end
@@ -2504,7 +2559,7 @@ begin
   then begin
    if Prefixo4 <> ''
     then FNameSpaceDad := FNameSpaceDad +
-                        ' xmlns:' + stringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
+                        ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
     else FNameSpaceDad := FNameSpaceDad + ' xmlns="' + FHTTP_AG + Separador + FDefTipos + '">';
   end;
 
@@ -2656,6 +2711,380 @@ begin
   else raise Exception.Create('A funcionalidade [Enviar Sincrono] não foi disponibilizada pelo provedor: ' + FxProvedor);
 end;
 
+
+
+
+
+
+
+
+
+
+
+procedure TWebServicesBase.DoNFSeSubstituirNFSe;
+var
+ i         : Integer;
+ vNotas    : WideString;
+ URISig, URIRef, Separador : String;
+ Gerador: TGerador;
+begin
+ vNotas := '';
+
+ if RightStr(FHTTP_AG, 1) = '/'
+  then Separador := ''
+  else Separador := '/';
+
+ if FCabecalho <> ''
+  then begin
+   if Prefixo2 <> ''
+    then FNameSpaceCab := ' xmlns:' + StringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
+    else FNameSpaceCab := ' xmlns="' + FHTTP_AG + Separador + FCabecalho +'">';
+  end
+  else FNameSpaceCab := '>';
+
+ if FServicoSubstituir <> ''
+  then begin
+   (*
+   if (FProvedor = proIssDSF)
+    then FNameSpaceDad :=  'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '"'
+                    + ' xmlns:tipos="http://localhost:8080/WsNFe2/tp"'
+                    + ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'
+                    + ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote  http://localhost:8080/WsNFe2/xsd/ReqCancelamentoNFSe.xsd"'
+
+   else if (FProvedor = proEquiplano)
+    then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="http://www.equiplano.com.br/esnfs" ' +
+                          'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                          'xsi:schemaLocation="http://www.equiplano.com.br/enfs esCancelarNfseEnvio_v01.xsd"'
+
+   else begin
+   *)
+     if RightStr(FHTTP_AG, 1) = '/'
+      then begin
+       if Prefixo3 <> ''
+        then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoSubstituir + '"'
+        else FNameSpaceDad := 'xmlns="' + FHTTP_AG + Separador + FServicoSubstituir + '"';
+      end
+      else begin
+       if Prefixo3 <> ''
+        then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
+        else FNameSpaceDad := 'xmlns="' + FHTTP_AG + '"';
+      end;
+//    end;
+  end
+  else FNameSpaceDad := '';
+
+ if (FDefTipos = '') and (FNameSpaceDad <> '')
+  then FNameSpaceDad := FNameSpaceDad + '>';
+
+ if FDefTipos <> ''
+  then begin
+   if Prefixo4 <> ''
+    then begin
+     if (FProvedor = proGINFES)
+      then begin
+       FVersaoLayOut := '2';
+       FVersaoDados  := '2';
+       FDefTipos     := 'tipos_v02.xsd';
+      end;
+     FNameSpaceDad := FNameSpaceDad +
+                        ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">';
+    end
+    else FNameSpaceDad := FNameSpaceDad +
+                        ' xmlns="' + FHTTP_AG + Separador + FDefTipos + '">';
+  end;
+
+ if FNameSpaceDad = ''
+  then FNameSpaceDad := '>'
+  else FNameSpaceDad := ' ' + FNameSpaceDad;
+
+ if FConfiguracoes.Certificados.AssinaRPS
+  then begin
+   for i := 0 to TNFSeSubstituirNFSe(Self).FNotasFiscais.Count-1 do
+    begin
+     case FProvedor of
+      profintelISS,
+      proSaatri,
+      proSisPMJP,
+      proISSDigital,
+      proISSe,
+      proSystemPro,
+      pro4R,
+      proFiorilli,
+      proProdata,
+      proVitoria,
+      proPVH,
+      proAgili,
+      proCoplan,
+      proVirtual,
+      proFreire,
+      proLink3,
+      proGovDigital,
+      proGoiania: vNotas := vNotas +
+                              '<' + Prefixo4 + 'Rps>' +
+                               '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
+                                 RetornarConteudoEntre(TNFSeSubstituirNFSe(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
+                                   '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
+                               '</Signature>'+
+                              '</' + Prefixo4 + 'Rps>';
+
+      proTecnos: vNotas := vNotas +
+                              '<' + Prefixo4 + 'Rps>' +
+                               '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico' +
+                                 RetornarConteudoEntre(TNFSeSubstituirNFSe(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
+                                   '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico', '</' + Prefixo4 + 'tcDeclaracaoPrestacaoServico>') +
+                                   '</' + Prefixo4 + 'tcDeclaracaoPrestacaoServico>' +
+                              '</' + Prefixo4 + 'Rps>';
+
+      proDigifred: vNotas := vNotas +
+                              '<' + Prefixo4 + 'Rps ' +
+                                 RetornarConteudoEntre(TNFSeSubstituirNFSe(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
+                                   '<' + Prefixo4 + 'Rps', '</Signature>') +
+                               '</Signature>'+
+                              '</' + Prefixo4 + 'Rps>';
+
+      else vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
+                               '<' + Prefixo4 + 'InfRps' +
+                                 RetornarConteudoEntre(TNFSeSubstituirNFSe(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
+                                   '<' + Prefixo4 + 'InfRps', '</Rps>') +
+                              '</' + Prefixo4 + 'Rps>';
+     end;
+    end;
+  end
+  else begin
+   for i := 0 to TNFSeSubstituirNFSe(Self).FNotasFiscais.Count-1 do
+    begin
+     case FProvedor of
+      profintelISS,
+      proSaatri,
+      proSisPMJP,
+      proGoiania,
+      proISSDigital,
+      proISSe,
+      proSystemPro,
+      pro4R,
+      proFiorilli,
+      proProdata,
+      proVitoria,
+      proPVH,
+      proAgili,
+      proCoplan,
+      proVirtual,
+      proFreire,
+      proLink3,
+      proActcon,
+      proGovDigital: vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
+                               '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
+                                 RetornarConteudoEntre(TNFSeSubstituirNFSe(Self).FNotasFiscais.Items[I].XML_Rps,
+                                   '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</' + Prefixo4 + 'InfDeclaracaoPrestacaoServico>') +
+                               '</' + Prefixo4 + 'InfDeclaracaoPrestacaoServico>'+
+                              '</' + Prefixo4 + 'Rps>';
+
+      proTecnos: vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
+                               '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico' +
+                                 RetornarConteudoEntre(TNFSeSubstituirNFSe(Self).FNotasFiscais.Items[I].XML_Rps,
+                                   '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico', '</tcDeclaracaoPrestacaoServico>') +
+                               '</tcDeclaracaoPrestacaoServico>'+
+                              '</' + Prefixo4 + 'Rps>';
+
+      else vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
+                               '<' + Prefixo4 + 'InfRps' +
+                                 RetornarConteudoEntre(TNFSeSubstituirNFSe(Self).FNotasFiscais.Items[I].XML_Rps,
+                                   '<' + Prefixo4 + 'InfRps', '</Rps>') +
+                              '</' + Prefixo4 + 'Rps>';
+     end;
+    end;
+  end;
+
+ if (TNFSeSubstituirNfse(Self).FNumeroNFSe = '') then
+   TNFSeSubstituirNfse(Self).FNumeroNFSe := TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.Numero;
+
+ if (TNFSeSubstituirNfse(Self).FCNPJ = '') then
+ begin
+   if (FProvedor = proDigifred) or (FProvedor = pro4R) then
+    TNFSeSubstituirNfse(Self).FCNPJ := SomenteNumeros(TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj)
+   else
+    TNFSeSubstituirNfse(Self).FCNPJ := SomenteNumeros(TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj);
+ end;
+
+ if (TNFSeSubstituirNfse(Self).FIM = '') then
+ begin
+  if (FProvedor = proDigifred) or (FProvedor = pro4R) then
+    TNFSeSubstituirNfse(Self).FIM := TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal
+  else
+    TNFSeSubstituirNfse(Self).FIM := TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
+ end;
+
+ if (TNFSeSubstituirNfse(Self).MotivoCancelamento = '') then
+   TNFSeSubstituirNfse(Self).MotivoCancelamento:= TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.MotivoCancelamento;
+
+ if (TNFSeSubstituirNfse(Self).FCodigoMunicipio = '') then
+ begin
+  if (FProvedor = proISSNet) and (FConfiguracoes.WebServices.AmbienteCodigo = 2) then
+   TNFSeSubstituirNfse(Self).FCodigoMunicipio := '999'
+  else
+   TNFSeSubstituirNfse(Self).FCodigoMunicipio := TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio;
+ end;
+
+ FDadosSenha := FProvedorClass.Gera_DadosSenha(FConfiguracoes.WebServices.UserWeb,
+                                               FConfiguracoes.WebServices.SenhaWeb);
+
+ FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab, FConfiguracoes.WebServices.CodigoMunicipio);
+
+ case FProvedor of
+  // Alterado por Augusto Fontana - 28/04/2014
+  proEquiplano, proPublica: URISig:= '';
+  proDigifred:  URISig := 'CANC' + TNFSeSubstituirNfse(Self).FNumeroNFSe;
+  proSaatri: URISig := 'Cancelamento_' + TNFSeSubstituirNfse(Self).FCnpj;
+  proIssIntel,
+  proISSNet: begin
+              URISig := '';
+              URIRef := 'http://www.w3.org/TR/2000/REC-xhtml1-20000126/';
+             end;
+  proTecnos: URISig := '2' + TNFSeSubstituirNfse(Self).FCnpj + IntToStrZero(StrToInt(TNFSeSubstituirNfse(Self).FNumeroNFSe), 16);
+ else        URISig := 'pedidoCancelamento_' + TNFSeSubstituirNfse(Self).FCnpj +
+                    TNFSeSubstituirNfse(Self).FIM + TNFSeSubstituirNfse(Self).FNumeroNFSe;
+ end;
+
+ if FProvedor <> proISSNet
+  then begin
+   URISig := FProvedorClass.GetURI(URISig);
+   URIRef := URISig;
+  end;
+
+ FTagI := FProvedorClass.Gera_TagI(acSubstituir, Prefixo3, Prefixo4, NameSpaceDad, FConfiguracoes.WebServices.Identificador, URISig);
+
+ FTagF := FProvedorClass.Gera_TagF(acSubstituir, Prefixo3);
+
+ if (FProvedor = proIssDSF ) then
+ begin
+   Gerador := TGerador.Create;
+   Gerador.ArquivoFormatoXML := '';
+
+   for i := 0 to TNFSeSubstituirNfse(Self).FNotasFiscais.Count-1 do
+   begin
+     with TNFSeSubstituirNfse(Self).FNotasFiscais.Items[I] do
+     begin
+       Gerador.wGrupoNFSe('Nota Id="nota:' + NFSe.Numero + '"');
+       Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, TNFSeSubstituirNfse(Self).FIM, '');
+       Gerador.wCampoNFSe(tcStr, '#1', 'NumeroNota', 01, 12, 1, SomenteNumeros(NFSe.Numero), '');
+       Gerador.wCampoNFSe(tcStr, '', 'CodigoVerificacao', 01, 255,  1, NFSe.CodigoVerificacao, '');
+       Gerador.wCampoNFSe(tcStr, '', 'MotivoCancelamento', 01, 80, 1, NFSe.MotivoCancelamento, '');
+       Gerador.wGrupoNFSe('/Nota');
+     end;
+   end;
+
+   vNotas := Gerador.ArquivoFormatoXML;
+
+   Gerador.Free;
+ end;
+
+ if FProvedorClass.GetAssinarXML(acSubstituir)
+  then begin
+   case FProvedor of
+    proIssDSF: FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeDSF(Prefixo3, Prefixo4,
+                                                          NameSpaceDad, VersaoXML,
+                                                          TNFSeSubstituirNfse(Self).FCnpj,
+                                                          LowerCase(booltostr(TNFSeSubstituirNfse(Self).FNotasFiscais.Transacao, True)),
+                                                          CodCidadeToCodSiafi(strtoint64(TNFSeSubstituirNfse(Self).FCodigoMunicipio)),
+                                                          TNFSeSubstituirNfse(Self).FNotasFiscais.NumeroLote,
+                                                          vNotas,
+                                                          '', '');
+    proEquiplano: FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeEquiplano(StrToInt(TNFSeSubstituirNfse(Self).FCodigoMunicipio),
+                                                                SomenteNumeros(TNFSeSubstituirNfse(Self).FCnpj),
+                                                                TNFSeSubstituirNfse(Self).FIM,
+                                                                TNFSeSubstituirNfse(Self).FNumeroNFSe,
+                                                                TNFSeSubstituirNfse(Self).FMotivoCancelamento,
+                                                                '', '');
+    else FDadosMsg := TNFSeG.Gera_DadosMsgSubstituirNFSe(Prefixo3, Prefixo4,
+                                                         FConfiguracoes.WebServices.Identificador, NameSpaceDad,
+                                                         TNFSeSubstituirNfse(Self).FNumeroNFSe,
+                                                         TNFSeSubstituirNfse(Self).FCnpj,
+                                                         TNFSeSubstituirNfse(Self).FIM,
+                                                         TNFSeSubstituirNfse(Self).FCodigoMunicipio,
+                                                         TNFSeSubstituirNfse(Self).FCodigoCancelamento,
+                                                         TNFSeSubstituirNfse(Self).FMotivoCancelamento,
+                                                         VersaoDados, FVersaoXML,
+                                                         IntToStr(TNFSeSubstituirNfse(Self).NumeroRps),
+                                                         IntToStr(TNFSeSubstituirNfse(Self).FNotasFiscais.Count),
+                                                         vNotas,
+                                                         '', '',
+                                                         FProvedor);
+   end;
+   if FDadosMsg <> ''
+    then begin
+    {$IFDEF ACBrNFSeOpenSSL}
+     URIRef := '';
+     if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
+                     FConfiguracoes.Certificados.Certificado,
+                     FConfiguracoes.Certificados.Senha,
+                     FvAssinada, FMsg, FProvedor))
+      then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
+      else FDadosMsg := FvAssinada;
+    {$ELSE}
+     if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
+                     FConfiguracoes.Certificados.GetCertificado, FvAssinada, FMsg, FProvedor))
+      then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
+      else FDadosMsg := FvAssinada;
+    {$ENDIF}
+    end;
+  end
+  else begin
+   case FProvedor of
+    proIssDSF: FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeDSF(Prefixo3, Prefixo4,
+                                                          NameSpaceDad, VersaoXML,
+                                                          TNFSeSubstituirNfse(Self).FCnpj,
+                                                          LowerCase(booltostr(TNFSeSubstituirNfse(Self).FNotasFiscais.Transacao, True)),
+                                                          CodCidadeToCodSiafi(strtoint64(TNFSeSubstituirNfse(Self).FCodigoMunicipio)),
+                                                          TNFSeSubstituirNfse(Self).FNotasFiscais.NumeroLote,
+                                                          vNotas,
+                                                          FTagI, FTagF);
+    proEquiplano: FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeEquiplano(StrToInt(TNFSeSubstituirNfse(Self).FCodigoMunicipio),
+                                                                SomenteNumeros(TNFSeSubstituirNfse(Self).FCnpj),
+                                                                TNFSeSubstituirNfse(Self).FIM,
+                                                                TNFSeSubstituirNfse(Self).FNumeroNFSe,
+                                                                TNFSeSubstituirNfse(Self).FMotivoCancelamento,
+                                                                FTagI, FTagF);
+    proFreire: FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeFreire(Prefixo4,
+                                                             NameSpaceDad,
+                                                             TNFSeSubstituirNfse(Self).FNumeroNFSe,
+                                                             TNFSeSubstituirNfse(Self).FCnpj,
+                                                             TNFSeSubstituirNfse(Self).FIM,
+                                                             TNFSeSubstituirNfse(Self).FCodigoMunicipio,
+                                                             TNFSeSubstituirNfse(Self).FCodigoCancelamento,
+                                                             TNFSeSubstituirNfse(Self).FMotivoCancelamento,
+                                                             FTagI, FTagF);
+    else FDadosMsg := TNFSeG.Gera_DadosMsgSubstituirNFSe(Prefixo3, Prefixo4,
+                                                         FConfiguracoes.WebServices.Identificador, NameSpaceDad,
+                                                         TNFSeSubstituirNfse(Self).FNumeroNFSe,
+                                                         TNFSeSubstituirNfse(Self).FCnpj,
+                                                         TNFSeSubstituirNfse(Self).FIM,
+                                                         TNFSeSubstituirNfse(Self).FCodigoMunicipio,
+                                                         TNFSeSubstituirNfse(Self).FCodigoCancelamento,
+                                                         TNFSeSubstituirNfse(Self).FMotivoCancelamento,
+                                                         VersaoDados, FVersaoXML,
+                                                         IntToStr(TNFSeSubstituirNfse(Self).NumeroRps),
+                                                         IntToStr(TNFSeSubstituirNfse(Self).FNotasFiscais.Count),
+                                                         vNotas,
+                                                         FTagI, FTagF,
+                                                         FProvedor);
+   end;
+  end;
+
+  if DadosMsg = '' then
+   raise Exception.Create('A funcionalidade [Substituir NFSe] não foi disponibilizada pelo provedor: ' + FxProvedor);
+end;
+
+
+
+
+
+
+
+
+
+
+
+
 { TWebServices }
 
 constructor TWebServices.Create(AFNotaFiscalEletronica: TComponent);
@@ -2674,6 +3103,7 @@ begin
  FGerarLoteRPS   := TNFSeGerarLoteRPS.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
  FEnviarSincrono := TNFSeEnviarSincrono.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
  FConsSeqRPS     := TNFSeConsultarSequencialRPS.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
+ FSubNfse        := TNFSeSubstituirNfse.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
 end;
 
 destructor TWebServices.Destroy;
@@ -2700,6 +3130,8 @@ begin
      FEnviarSincrono.Free;
   if Assigned(FConsSeqRPS) then //Leandro
      FConsSeqRPS.Free;
+  if Assigned(FSubNfse) then //Leandro
+     FSubNfse.Free;
 // FEnviar.Free;
 // FConsSitLote.Free;
 // FConsLote.Free;
@@ -2866,7 +3298,7 @@ begin
 end;
 
 function TWebServices.ConsultaLoteRps(AProtocolo, ACNPJ,
-  AInscricaoMunicipal: string; const ASenha, AFraseSecreta, ARazaoSocial: String): Boolean;
+  AInscricaoMunicipal: String; const ASenha, AFraseSecreta, ARazaoSocial: String): Boolean;
 begin
  Self.ConsLote.CNPJ         := ACNPJ;
  Self.ConsLote.IM           := AInscricaoMunicipal;
@@ -2881,9 +3313,9 @@ function TWebServices.ConsultaNFSe(ACnpj,
                                    AInscricaoMunicipal: String;
                                    ADataInicial,
                                    ADataFinal: TDateTime;
-                                   NumeroNFSe: string = '';
+                                   NumeroNFSe: String = '';
                                    APagina: Integer = 1;
-                                   const ASenha : string = '';
+                                   const ASenha : String = '';
                                    const AFraseSecreta: String = '';
                                    ACNPJTomador: String = '';
                                    AIMTomador: String = '';
@@ -3021,7 +3453,7 @@ begin
 end;
 
 function TWebServices.CancelaNFSe(ACodigoCancelamento, ANumeroNFSe, ACNPJ,
-  AInscricaoMunicipal, ACodigoMunicipio: string): Boolean;
+  AInscricaoMunicipal, ACodigoMunicipio: String): Boolean;
 begin
   Self.CancNfse.NumeroNFSe      := ANumeroNFSe;
   Self.CancNfse.CNPJ            := ACNPJ;
@@ -3104,6 +3536,29 @@ begin
    if Self.EnviarSincrono.Msg <> ''
     then raise Exception.Create(Self.EnviarSincrono.Msg)
     else raise Exception.Create('Erro Desconhecido ao Enviar o Lote modo Sincrono!')
+  end;
+end;
+
+function TWebServices.SubstitiNFSe(ACodigoCancelamento, ANumeroNFSe: String): Boolean;
+begin
+ Self.SubNfse.FCodigoCancelamento := ACodigoCancelamento;
+ Self.SubNfse.FMotivoCancelamento := '';
+
+ Self.SubNfse.FNumeroNFSe      := ANumeroNFSe;
+ Self.SubNfse.FCnpj            := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.Cnpj;
+ Self.SubNfse.FIM              := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
+ Self.SubNfse.FCodigoMunicipio := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Servico.CodigoMunicipio;
+ Self.SubNfse.FNumeroRps       := StrToInt(TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero);
+
+ Result := Self.SubNfse.Executar;
+
+ if not (Result)
+  then begin
+   if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
+    then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.SubNfse.Msg);
+   if Self.SubNfse.Msg <> ''
+    then raise Exception.Create(Self.SubNfse.Msg)
+    else raise Exception.Create('Erro Desconhecido ao Substituir a NFS-e!')
   end;
 end;
 
@@ -4480,7 +4935,7 @@ begin
     for i:=0 to NFSeRetorno.InfCanc.MsgRetorno.Count - 1 do
      begin
       FMsg := FMsg + NFSeRetorno.infCanc.MsgRetorno.Items[i].Mensagem + IfThen(FMsg = '', '', ' / ');
-      
+
       aMsg := aMsg + 'Código Erro : ' + NFSeRetorno.InfCanc.MsgRetorno.Items[i].Codigo + LineBreak +
                      'Mensagem... : ' + NFSeRetorno.infCanc.MsgRetorno.Items[i].Mensagem + LineBreak+
                      'Correção... : ' + NFSeRetorno.InfCanc.MsgRetorno.Items[i].Correcao + LineBreak+
@@ -5225,6 +5680,158 @@ begin
    then TACBrNFSe( FACBrNFSe ).OnGerarLog(aMsg);
 
   Result := (FMsg = '');
+
+ finally
+  {$IFDEF ACBrNFSeOpenSSL}
+    HTTP.Free;
+  {$ELSE}
+    ReqResp.Free;
+  {$ENDIF}
+  Acao.Free;
+  Stream.Free;
+
+  DFeUtil.ConfAmbiente;
+  TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeIdle );
+ end;
+end;
+
+{ TNFSeSubstituirNFSe }
+
+constructor TNFSeSubstituirNFSe.Create(AOwner: TComponent;
+  ANotasFiscais: TNotasFiscais);
+begin
+ inherited Create(AOwner);
+  FNotasFiscais := ANotasFiscais;
+end;
+
+destructor TNFSeSubstituirNFSe.Destroy;
+begin
+ if Assigned(NFSeRetorno)
+  then NFSeRetorno.Free;
+  inherited;
+end;
+
+function TNFSeSubstituirNFSe.Executar: Boolean;
+var
+ aMsg        : String;
+ Texto       : String;
+ Acao        : TStringList;
+ Stream      : TMemoryStream;
+ StrStream   : TStringStream;
+ i           : Integer;
+
+ {$IFDEF ACBrNFSeOpenSSL}
+   HTTP    : THTTPSend;
+ {$ELSE}
+   ReqResp : THTTPReqResp;
+ {$ENDIF}
+begin
+ inherited Executar;
+
+ if Assigned(NFSeRetorno)
+  then NFSeRetorno.Free;
+
+ Texto := TiraAcentos(FProvedorClass.GeraEnvelopeSubstituirNFSe(URLNS1, FCabMSg, FDadosMsg, FDadosSenha));
+
+ Acao      := TStringList.Create;
+ Stream    := TMemoryStream.Create;
+ Acao.Text := Texto;
+
+ TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeSubstituicao );
+
+ if FConfiguracoes.WebServices.Salvar
+   then FConfiguracoes.Geral.Save(TNFSeSubstituirNFse(Self).FNotasFiscais.Items[0].NFSe.Numero + '-ped-sub-soap.xml', Texto, FConfiguracoes.Arquivos.GetPathCan );
+
+ if FConfiguracoes.Geral.Salvar
+   then FConfiguracoes.Geral.Save(TNFSeSubstituirNFse(Self).FNotasFiscais.Items[0].NFSe.Numero + '-ped-sub.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathCan );
+
+ {$IFDEF ACBrNFSeOpenSSL}
+   Acao.SaveToStream(Stream);
+   HTTP := THTTPSend.Create;
+ {$ELSE}
+   ReqResp := THTTPReqResp.Create(nil);
+   ConfiguraReqResp( ReqResp );
+
+  // Veriricar qual é a URL do provedor RJ para a realização da Substituição
+  if FProvedor = proRJ
+   then ReqResp.URL := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx?op=CancelarNfse'
+   else ReqResp.URL := FURL;
+
+   ReqResp.UseUTF8InHeader := True;
+
+   ReqResp.SoapAction := FProvedorClass.GetSoapAction(acSubstituir, FNomeCidade);
+ {$ENDIF}
+
+ try
+  {$IFDEF ACBrNFSeOpenSSL}
+    HTTP.Document.LoadFromStream(Stream);
+    ConfiguraHTTP(HTTP, 'SOAPAction: "'+ FProvedorClass.GetSoapAction(acSubstituir, FNomeCidade) +'"');
+    HTTP.HTTPMethod('POST', FURL);
+
+    StrStream := TStringStream.Create('');
+    StrStream.CopyFrom(HTTP.Document, 0);
+
+    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+    FRetWS     := FProvedorClass.GetRetornoWS(acSubstituir, FRetornoWS);
+
+    StrStream.Free;
+  {$ELSE}
+    ReqResp.Execute(Acao.Text, Stream);
+    StrStream := TStringStream.Create('');
+    StrStream.CopyFrom(Stream, 0);
+
+    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+    FRetWS     := FProvedorClass.GetRetornoWS(acSubstituir, FRetornoWS);
+
+    StrStream.Free;
+  {$ENDIF}
+
+  if FConfiguracoes.WebServices.Salvar
+   then FConfiguracoes.Geral.Save(TNFSeSubstituirNFse(Self).FNotasFiscais.Items[0].NFSe.Numero + '-sub-soap.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathCan);
+
+  if FConfiguracoes.Geral.Salvar
+   then FConfiguracoes.Geral.Save(TNFSeSubstituirNFse(Self).FNotasFiscais.Items[0].NFSe.Numero + '-sub.xml', FRetWS, FConfiguracoes.Arquivos.GetPathCan);
+
+  self.ArquivoRetorno := FRetWS;
+
+  NFSeRetorno := TretSubsNfse.Create;
+
+  NFSeRetorno.Leitor.Arquivo := FRetWS;
+  if FProvedor = proEquiplano then
+    NFSeRetorno.LerXML_provedorEquiplano
+  else
+  if FProvedor = proIssDSF then
+    NFSeRetorno.LerXml_provedorIssDsf
+  else
+    NFSeRetorno.LerXml;
+
+  TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeIdle );
+
+  // Lista de Mensagem de Retorno
+  FMsg := '';
+  if NFSeRetorno.MsgRetorno.Count>0
+   then begin
+    aMsg:='';
+    for i:=0 to NFSeRetorno.MsgRetorno.Count - 1 do
+     begin
+      FMsg := FMsg + NFSeRetorno.MsgRetorno.Items[i].Mensagem + IfThen(FMsg = '', '', ' / ');
+
+      aMsg := aMsg + 'Código Erro : ' + NFSeRetorno.MsgRetorno.Items[i].Codigo + LineBreak +
+                     'Mensagem... : ' + NFSeRetorno.MsgRetorno.Items[i].Mensagem + LineBreak+
+                     'Correção... : ' + NFSeRetorno.MsgRetorno.Items[i].Correcao + LineBreak+
+                     'Provedor... : ' + FxProvedor + LineBreak;
+     end;
+   end{
+   else aMsg := 'Numero da NFSe : ' + NFSeRetorno.Pedido.IdentificacaoNfse.Numero + LineBreak +
+                'Data Hora..... : ' + DFeUtil.SeSenao(FDataHora = 0, '', DateTimeToStr(FDataHora)) + LineBreak};
+
+  if FConfiguracoes.WebServices.Visualizar
+   then ShowMessage(aMsg);
+
+  if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
+   then TACBrNFSe( FACBrNFSe ).OnGerarLog(aMsg);
+
+  Result := (FMsg='');
 
  finally
   {$IFDEF ACBrNFSeOpenSSL}

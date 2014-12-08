@@ -71,6 +71,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -110,48 +111,54 @@ end;
 
 function TProvedorRJ.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
- ConfigSchema: TConfigSchema;
+  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho := '1.00';
- ConfigSchema.VersaoDados     := '1.00';
- ConfigSchema.VersaoXML       := '1';
- ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/ABRASF/arquivos/';
- ConfigSchema.Cabecalho       := 'nfse.xsd';
- ConfigSchema.ServicoEnviar   := 'nfse.xsd';
- ConfigSchema.ServicoConSit   := 'nfse.xsd';
- ConfigSchema.ServicoConLot   := 'nfse.xsd';
- ConfigSchema.ServicoConRps   := 'nfse.xsd';
- ConfigSchema.ServicoConNfse  := 'nfse.xsd';
- ConfigSchema.ServicoCancelar := 'nfse.xsd';
- ConfigSchema.ServicoGerar    := 'nfse.xsd';
- ConfigSchema.DefTipos        := '';
+  ConfigSchema.VersaoCabecalho       := '1.00';
+  ConfigSchema.VersaoDados           := '1.00';
+  ConfigSchema.VersaoXML             := '1';
+  ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/ABRASF/arquivos/';
+  ConfigSchema.Cabecalho             := 'nfse.xsd';
+  ConfigSchema.ServicoEnviar         := 'nfse.xsd';
+  ConfigSchema.ServicoConSit         := 'nfse.xsd';
+  ConfigSchema.ServicoConLot         := 'nfse.xsd';
+  ConfigSchema.ServicoConRps         := 'nfse.xsd';
+  ConfigSchema.ServicoConNfse        := 'nfse.xsd';
+  ConfigSchema.ServicoCancelar       := 'nfse.xsd';
+  ConfigSchema.ServicoGerar          := 'nfse.xsd';
+  ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
+  ConfigSchema.ServicoSubstituir     := 'nfse.xsd';
+  ConfigSchema.DefTipos              := '';
 
- Result := ConfigSchema;
+  Result := ConfigSchema;
 end;
 
 function TProvedorRJ.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
- ConfigURL: TConfigURL;
+  ConfigURL: TConfigURL;
 begin
- ConfigURL.HomNomeCidade         := '';
- ConfigURL.HomRecepcaoLoteRPS    := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
- ConfigURL.HomConsultaLoteRPS    := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
- ConfigURL.HomConsultaNFSeRPS    := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
- ConfigURL.HomConsultaSitLoteRPS := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
- ConfigURL.HomConsultaNFSe       := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
- ConfigURL.HomCancelaNFSe        := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
- ConfigURL.HomGerarNFSe          := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
+  ConfigURL.HomNomeCidade         := '';
+  ConfigURL.HomRecepcaoLoteRPS    := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
+  ConfigURL.HomConsultaLoteRPS    := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
+  ConfigURL.HomConsultaNFSeRPS    := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
+  ConfigURL.HomConsultaSitLoteRPS := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
+  ConfigURL.HomConsultaNFSe       := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
+  ConfigURL.HomCancelaNFSe        := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
+  ConfigURL.HomGerarNFSe          := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
+  ConfigURL.HomRecepcaoSincrono   := '';
+  ConfigURL.HomSubstituiNFSe      := '';
 
- ConfigURL.ProNomeCidade         := '';
- ConfigURL.ProRecepcaoLoteRPS    := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
- ConfigURL.ProConsultaLoteRPS    := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
- ConfigURL.ProConsultaNFSeRPS    := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
- ConfigURL.ProConsultaSitLoteRPS := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
- ConfigURL.ProConsultaNFSe       := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
- ConfigURL.ProCancelaNFSe        := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
- ConfigURL.ProGerarNFSe          := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
+  ConfigURL.ProNomeCidade         := '';
+  ConfigURL.ProRecepcaoLoteRPS    := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
+  ConfigURL.ProConsultaLoteRPS    := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
+  ConfigURL.ProConsultaNFSeRPS    := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
+  ConfigURL.ProConsultaSitLoteRPS := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
+  ConfigURL.ProConsultaNFSe       := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
+  ConfigURL.ProCancelaNFSe        := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
+  ConfigURL.ProGerarNFSe          := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
+  ConfigURL.ProRecepcaoSincrono   := '';
+  ConfigURL.ProSubstituiNFSe      := '';
 
- Result := ConfigURL;
+  Result := ConfigURL;
 end;
 
 function TProvedorRJ.GetURI(URI: String): String;
@@ -181,7 +188,7 @@ end;
 function TProvedorRJ.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
@@ -192,7 +199,13 @@ begin
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
- end;
+   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + NameSpaceDad;
+   acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio' + NameSpaceDad +
+                             '<' + Prefixo3 + 'SubstituicaoNfse>' +
+                              '<' + Prefixo3 + 'Pedido>' +
+                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+  end;
 end;
 
 function TProvedorRJ.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
@@ -210,7 +223,7 @@ end;
 
 function TProvedorRJ.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
@@ -219,7 +232,10 @@ begin
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
- end;
+   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
+   acSubstituir:  Result := '</' + Prefixo3 + 'SubstituicaoNfse>' +
+                            '</' + Prefixo3 + 'SubstituirNfseEnvio>';
+  end;
 end;
 
 function TProvedorRJ.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
@@ -347,6 +363,12 @@ begin
  Result := '';
 end;
 
+function TProvedorRJ.GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
+end;
+
 function TProvedorRJ.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
  case Acao of
@@ -385,7 +407,7 @@ end;
 function TProvedorRJ.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
 begin
- Result := '';
+  Result := '';
 end;
 
 end.

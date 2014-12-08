@@ -70,10 +70,11 @@ type
    function GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarNFSeporRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
-   function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
-   function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -116,24 +117,25 @@ end;
 
 function TProvedorSystemPro.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
- ConfigSchema: TConfigSchema;
+  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho       := '2.01';
- ConfigSchema.VersaoDados           := '2.01';
- ConfigSchema.VersaoXML             := '2';
- ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
- ConfigSchema.Cabecalho             := 'nfse.xsd';
- ConfigSchema.ServicoEnviar         := 'nfse.xsd';
- ConfigSchema.ServicoConSit         := 'nfse.xsd';
- ConfigSchema.ServicoConLot         := 'nfse.xsd';
- ConfigSchema.ServicoConRps         := 'nfse.xsd';
- ConfigSchema.ServicoConNfse        := 'nfse.xsd';
- ConfigSchema.ServicoCancelar       := 'nfse.xsd';
- ConfigSchema.ServicoGerar          := 'nfse.xsd';
- ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
- ConfigSchema.DefTipos              := '';
+  ConfigSchema.VersaoCabecalho       := '2.01';
+  ConfigSchema.VersaoDados           := '2.01';
+  ConfigSchema.VersaoXML             := '2';
+  ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
+  ConfigSchema.Cabecalho             := 'nfse.xsd';
+  ConfigSchema.ServicoEnviar         := 'nfse.xsd';
+  ConfigSchema.ServicoConSit         := 'nfse.xsd';
+  ConfigSchema.ServicoConLot         := 'nfse.xsd';
+  ConfigSchema.ServicoConRps         := 'nfse.xsd';
+  ConfigSchema.ServicoConNfse        := 'nfse.xsd';
+  ConfigSchema.ServicoCancelar       := 'nfse.xsd';
+  ConfigSchema.ServicoGerar          := 'nfse.xsd';
+  ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
+  ConfigSchema.ServicoSubstituir     := 'nfse.xsd';
+  ConfigSchema.DefTipos              := '';
 
- Result := ConfigSchema;
+  Result := ConfigSchema;
 end;
 
 function TProvedorSystemPro.GetConfigURL(ACodCidade: Integer): TConfigURL;
@@ -162,6 +164,7 @@ begin
  ConfigURL.HomCancelaNFSe        := fHttp+ConfigURL.HomNomeCidade;
  ConfigURL.HomGerarNFSe          := fHttp+ConfigURL.HomNomeCidade;
  ConfigURL.HomRecepcaoSincrono   := '';
+  ConfigURL.HomSubstituiNFSe      := '';
 
  ConfigURL.ProRecepcaoLoteRPS    := '';
  ConfigURL.ProConsultaLoteRPS    := '';
@@ -171,6 +174,7 @@ begin
  ConfigURL.ProCancelaNFSe        := fHttp+ConfigURL.ProNomeCidade;
  ConfigURL.ProGerarNFSe          := fHttp+ConfigURL.ProNomeCidade;
  ConfigURL.ProRecepcaoSincrono   := '';
+  ConfigURL.ProSubstituiNFSe      := '';
 
  Result := ConfigURL;
 end;
@@ -217,11 +221,11 @@ end;
 function TProvedorSystemPro.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 var
- xmlns: String;
+  xmlns: String;
 begin
- xmlns := ' xmlns="http://www.abrasf.org.br/nfse.xsd">';
-                    
- case Acao of
+  xmlns := ' xmlns="http://www.abrasf.org.br/nfse.xsd">';
+
+  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + xmlns;
    acConsSit:     Result := '<' + Prefixo3 + '' + xmlns;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + xmlns;
@@ -233,7 +237,12 @@ begin
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + xmlns;
    acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + xmlns;
- end;
+   acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio' + xmlns +
+                             '<' + Prefixo3 + 'SubstituicaoNfse>' +
+                              '<' + Prefixo3 + 'Pedido>' +
+                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+  end;
  
 end;
 
@@ -254,7 +263,7 @@ end;
 
 function TProvedorSystemPro.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
@@ -264,7 +273,9 @@ begin
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
    acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
- end;
+   acSubstituir:  Result := '</' + Prefixo3 + 'SubstituicaoNfse>' +
+                            '</' + Prefixo3 + 'SubstituirNfseEnvio>';
+  end;
 end;
 
 function TProvedorSystemPro.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
@@ -293,36 +304,6 @@ function TProvedorSystemPro.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
 begin
   result := '';
   raise Exception.Create( 'Opção não implementada para este provedor (GeraEnvelopeConsultarNFSeporRPS).' );
-end;
-
-function TProvedorSystemPro.GeraEnvelopeRecepcionarSincrono(URLNS: String;
-  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
-  result := '';
-  raise Exception.Create( 'Opção não implementada para este provedor (GeraEnvelopeRecepcionarSincrono).' );
-end;
-
-function TProvedorSystemPro.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
-  DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
-  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                        'xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">' +
-             '<SOAP-ENV:Header/>' +
-             '<S:Body>' +
-              '<ns2:GerarNfse xmlns:ns2="http://NFSe.wsservices.systempro.com.br/">' +
-               '<nfseCabecMsg><![CDATA[<?xml version=''1.0'' encoding=''UTF-8''?>' +
-                '<cabecalho xmlns="http://www.abrasf.org.br/nfse.xsd" versao="0.01">' +
-                '<versaoDados>2.01</versaoDados>' +
-                '</cabecalho>]]>' +
-               '</nfseCabecMsg>' +
-               '<nfseDadosMsg>' +
-                '<![CDATA[' + DadosMsg + ']]>' +
-               '</nfseDadosMsg>' +
-              '</ns2:GerarNfse>' +
-             '</S:Body>' +
-            '</S:Envelope>';
-
 end;
 
 function TProvedorSystemPro.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
@@ -367,6 +348,42 @@ begin
            +'</ns2:CancelarNfse>'
            +'</S:Body>'
            +'</S:Envelope>';
+end;
+
+function TProvedorSystemPro.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  result := '<?xml version="1.0" encoding="UTF-8"?>' +
+            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                        'xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">' +
+             '<SOAP-ENV:Header/>' +
+             '<S:Body>' +
+              '<ns2:GerarNfse xmlns:ns2="http://NFSe.wsservices.systempro.com.br/">' +
+               '<nfseCabecMsg><![CDATA[<?xml version=''1.0'' encoding=''UTF-8''?>' +
+                '<cabecalho xmlns="http://www.abrasf.org.br/nfse.xsd" versao="0.01">' +
+                '<versaoDados>2.01</versaoDados>' +
+                '</cabecalho>]]>' +
+               '</nfseCabecMsg>' +
+               '<nfseDadosMsg>' +
+                '<![CDATA[' + DadosMsg + ']]>' +
+               '</nfseDadosMsg>' +
+              '</ns2:GerarNfse>' +
+             '</S:Body>' +
+            '</S:Envelope>';
+
+end;
+
+function TProvedorSystemPro.GeraEnvelopeRecepcionarSincrono(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  result := '';
+  raise Exception.Create( 'Opção não implementada para este provedor (GeraEnvelopeRecepcionarSincrono).' );
+end;
+
+function TProvedorSystemPro.GeraEnvelopeSubstituirNFSe(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
 end;
 
 function TProvedorSystemPro.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;

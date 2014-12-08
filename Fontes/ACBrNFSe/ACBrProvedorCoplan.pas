@@ -71,6 +71,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -113,63 +114,67 @@ end;
 
 function TProvedorCoplan.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
- ConfigSchema: TConfigSchema;
+  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho := '2.01';
- ConfigSchema.VersaoDados     := '2.01';
- ConfigSchema.VersaoXML       := '2';
- ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/';
- ConfigSchema.Cabecalho       := 'nfse.xsd';
- ConfigSchema.ServicoEnviar   := 'nfse.xsd';
- ConfigSchema.ServicoConSit   := 'nfse.xsd';
- ConfigSchema.ServicoConLot   := 'nfse.xsd';
- ConfigSchema.ServicoConRps   := 'nfse.xsd';
- ConfigSchema.ServicoConNfse  := 'nfse.xsd';
- ConfigSchema.ServicoCancelar := 'nfse.xsd';
- ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
- ConfigSchema.DefTipos        := '';
+  ConfigSchema.VersaoCabecalho       := '2.01';
+  ConfigSchema.VersaoDados           := '2.01';
+  ConfigSchema.VersaoXML             := '2';
+  ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
+  ConfigSchema.Cabecalho             := 'nfse.xsd';
+  ConfigSchema.ServicoEnviar         := 'nfse.xsd';
+  ConfigSchema.ServicoConSit         := 'nfse.xsd';
+  ConfigSchema.ServicoConLot         := 'nfse.xsd';
+  ConfigSchema.ServicoConRps         := 'nfse.xsd';
+  ConfigSchema.ServicoConNfse        := 'nfse.xsd';
+  ConfigSchema.ServicoCancelar       := 'nfse.xsd';
+  ConfigSchema.ServicoGerar          := 'nfse.xsd';
+  ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
+  ConfigSchema.ServicoSubstituir     := 'nfse.xsd';
+  ConfigSchema.DefTipos              := '';
 
- Result := ConfigSchema;
+  Result := ConfigSchema;
 end;
 
 function TProvedorCoplan.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
- ConfigURL: TConfigURL;
+  ConfigURL: TConfigURL;
 begin
- case ACodCidade of
-  5102637: ConfigURL.ProNomeCidade := 'camponovodoparecis'; // Campo Novo do Parecis/MT
-  5102678: ConfigURL.ProNomeCidade := 'campoverde';      // Campo Verde/MT
-  5103205: ConfigURL.ProNomeCidade := 'colider';         // Colider/MT
-  5104104: ConfigURL.ProNomeCidade := 'guarantadonorte'; // Guarantã Do Norte/MT
-  5104542: ConfigURL.ProNomeCidade := 'itanhanga';       // Itanhanga/MT
-  5105606: ConfigURL.ProNomeCidade := 'matupa';          // Matupá/MT
-  5105903: ConfigURL.ProNomeCidade := 'nobres';          // Nobres/MT
-  5106208: ConfigURL.ProNomeCidade := 'novabrasilandia'; // Nova Brasilandia/MT
-  5106224: ConfigURL.ProNomeCidade := 'novamutum';       // Nova Mutum/MT
-  5106307: ConfigURL.ProNomeCidade := 'paranatinga';     // Paranatinga/MT
-  5106455: ConfigURL.ProNomeCidade := 'planaltodaserra'; // Planalto da Serra/MT
-  5108006: ConfigURL.ProNomeCidade := 'tapurah';         // Tapurah/MT
- end;
+  case ACodCidade of
+   5102637: ConfigURL.ProNomeCidade := 'camponovodoparecis'; // Campo Novo do Parecis/MT
+   5102678: ConfigURL.ProNomeCidade := 'campoverde';      // Campo Verde/MT
+   5103205: ConfigURL.ProNomeCidade := 'colider';         // Colider/MT
+   5104104: ConfigURL.ProNomeCidade := 'guarantadonorte'; // Guarantã Do Norte/MT
+   5104542: ConfigURL.ProNomeCidade := 'itanhanga';       // Itanhanga/MT
+   5105606: ConfigURL.ProNomeCidade := 'matupa';          // Matupá/MT
+   5105903: ConfigURL.ProNomeCidade := 'nobres';          // Nobres/MT
+   5106208: ConfigURL.ProNomeCidade := 'novabrasilandia'; // Nova Brasilandia/MT
+   5106224: ConfigURL.ProNomeCidade := 'novamutum';       // Nova Mutum/MT
+   5106307: ConfigURL.ProNomeCidade := 'paranatinga';     // Paranatinga/MT
+   5106455: ConfigURL.ProNomeCidade := 'planaltodaserra'; // Planalto da Serra/MT
+   5108006: ConfigURL.ProNomeCidade := 'tapurah';         // Tapurah/MT
+  end;
 
- ConfigURL.HomRecepcaoLoteRPS    := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
- ConfigURL.HomConsultaLoteRPS    := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
- ConfigURL.HomConsultaNFSeRPS    := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
- ConfigURL.HomConsultaSitLoteRPS := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
- ConfigURL.HomConsultaNFSe       := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
- ConfigURL.HomCancelaNFSe        := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
- ConfigURL.HomGerarNFSe          := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
- ConfigURL.HomRecepcaoSincrono   := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
+  ConfigURL.HomRecepcaoLoteRPS    := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
+  ConfigURL.HomConsultaLoteRPS    := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
+  ConfigURL.HomConsultaNFSeRPS    := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
+  ConfigURL.HomConsultaSitLoteRPS := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
+  ConfigURL.HomConsultaNFSe       := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
+  ConfigURL.HomCancelaNFSe        := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
+  ConfigURL.HomGerarNFSe          := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
+  ConfigURL.HomRecepcaoSincrono   := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
+  ConfigURL.HomSubstituiNFSe      := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
 
- ConfigURL.ProRecepcaoLoteRPS    := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
- ConfigURL.ProConsultaLoteRPS    := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
- ConfigURL.ProConsultaNFSeRPS    := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
- ConfigURL.ProConsultaSitLoteRPS := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
- ConfigURL.ProConsultaNFSe       := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
- ConfigURL.ProCancelaNFSe        := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
- ConfigURL.ProGerarNFSe          := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
- ConfigURL.ProRecepcaoSincrono   := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
+  ConfigURL.ProRecepcaoLoteRPS    := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
+  ConfigURL.ProConsultaLoteRPS    := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
+  ConfigURL.ProConsultaNFSeRPS    := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
+  ConfigURL.ProConsultaSitLoteRPS := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
+  ConfigURL.ProConsultaNFSe       := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
+  ConfigURL.ProCancelaNFSe        := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
+  ConfigURL.ProGerarNFSe          := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
+  ConfigURL.ProRecepcaoSincrono   := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
+  ConfigURL.ProSubstituiNFSe      := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
 
- Result := ConfigURL;
+  Result := ConfigURL;
 end;
 
 function TProvedorCoplan.GetURI(URI: String): String;
@@ -188,7 +193,7 @@ begin
    acCancelar:    Result := False;
    acGerar:       Result := False;
    acRecSincrono: Result := False;
-   else           Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -200,12 +205,12 @@ end;
 function TProvedorCoplan.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 var
- xmlns: String;
+  xmlns: String;
 begin
- xmlns := ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-          ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"';
+  xmlns := ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+           ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"';
 
- case Acao of
+  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + {xmlns + } NameSpaceDad;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + xmlns + NameSpaceDad;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + xmlns + NameSpaceDad;
@@ -217,7 +222,12 @@ begin
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + xmlns + NameSpaceDad;
    acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + NameSpaceDad;
- end;
+   acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio' + xmlns + NameSpaceDad +
+                             '<' + Prefixo3 + 'SubstituicaoNfse>' +
+                              '<' + Prefixo3 + 'Pedido>' +
+                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+  end;
 end;
 
 function TProvedorCoplan.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
@@ -239,7 +249,7 @@ end;
 
 function TProvedorCoplan.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
@@ -249,7 +259,9 @@ begin
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
    acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
- end;
+   acSubstituir:  Result := '</' + Prefixo3 + 'SubstituicaoNfse>' +
+                            '</' + Prefixo3 + 'SubstituirNfseEnvio>';
+  end;
 end;
 
 function TProvedorCoplan.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
@@ -413,6 +425,28 @@ begin
            '</S:Envelope>';
 end;
 
+function TProvedorCoplan.GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
+                      ' xmlns:nfse="http://nfse.abrasf.org.br">' +
+            '<S:Header>' +
+              DadosSenha +
+            '</S:Header>' +
+            '<S:Body>' +
+             '<nfse:SubstituirNfseRequest>' +
+              '<nfseCabecMsg>' +
+               '<![CDATA[' + CabMsg + ']]>' +
+              '</nfseCabecMsg>' +
+              '<nfseDadosMsg>' +
+               '<![CDATA[' + DadosMsg + ']]>' +
+              '</nfseDadosMsg>' +
+             '</nfse:SubstituirNfseRequest>' +
+            '</S:Body>' +
+           '</S:Envelope>';
+end;
+
 function TProvedorCoplan.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
  case Acao of
@@ -424,6 +458,7 @@ begin
    acCancelar:    Result := 'http://nfse.abrasf.org.br/Infse/CancelarNfse';
    acGerar:       Result := 'http://nfse.abrasf.org.br/Infse/GerarNfse';
    acRecSincrono: Result := 'http://nfse.abrasf.org.br/Infse/RecepcionarLoteRpsSincrono';
+   acSubstituir:  Result := 'http://nfse.abrasf.org.br/Infse/SubstituirNfse';
  end;
 end;
 
@@ -438,6 +473,7 @@ begin
    acCancelar:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acGerar:       Result := SeparaDados( RetornoWS, 'outputXML' );
    acRecSincrono: Result := SeparaDados( RetornoWS, 'outputXML' );
+   acSubstituir:  Result := SeparaDados( RetornoWS, 'outputXML' );
  end;
 end;
 

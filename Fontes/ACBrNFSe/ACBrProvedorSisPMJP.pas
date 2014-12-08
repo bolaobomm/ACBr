@@ -71,6 +71,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -113,24 +114,25 @@ end;
 
 function TProvedorSisPMJP.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
- ConfigSchema: TConfigSchema;
+  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho       := '2.02';
- ConfigSchema.VersaoDados           := '2.02';
- ConfigSchema.VersaoXML             := '2';
- ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
- ConfigSchema.Cabecalho             := 'nfse.xsd';
- ConfigSchema.ServicoEnviar         := 'nfse.xsd';
- ConfigSchema.ServicoConSit         := 'nfse.xsd';
- ConfigSchema.ServicoConLot         := 'nfse.xsd';
- ConfigSchema.ServicoConRps         := 'nfse.xsd';
- ConfigSchema.ServicoConNfse        := 'nfse.xsd';
- ConfigSchema.ServicoCancelar       := 'nfse.xsd';
- ConfigSchema.ServicoGerar          := 'nfse.xsd';
- ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
- ConfigSchema.DefTipos              := '';
+  ConfigSchema.VersaoCabecalho       := '2.02';
+  ConfigSchema.VersaoDados           := '2.02';
+  ConfigSchema.VersaoXML             := '2';
+  ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
+  ConfigSchema.Cabecalho             := 'nfse.xsd';
+  ConfigSchema.ServicoEnviar         := 'nfse.xsd';
+  ConfigSchema.ServicoConSit         := 'nfse.xsd';
+  ConfigSchema.ServicoConLot         := 'nfse.xsd';
+  ConfigSchema.ServicoConRps         := 'nfse.xsd';
+  ConfigSchema.ServicoConNfse        := 'nfse.xsd';
+  ConfigSchema.ServicoCancelar       := 'nfse.xsd';
+  ConfigSchema.ServicoGerar          := 'nfse.xsd';
+  ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
+  ConfigSchema.ServicoSubstituir     := 'nfse.xsd';
+  ConfigSchema.DefTipos              := '';
 
- Result := ConfigSchema;
+  Result := ConfigSchema;
 end;
 
 function TProvedorSisPMJP.GetConfigURL(ACodCidade: Integer): TConfigURL;
@@ -146,6 +148,7 @@ begin
  ConfigURL.HomCancelaNFSe        := 'https://nfsehomolog.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
  ConfigURL.HomGerarNFSe          := 'https://nfsehomolog.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
  ConfigURL.HomRecepcaoSincrono   := 'https://nfsehomolog.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
+  ConfigURL.HomSubstituiNFSe      := '';
 
  ConfigURL.ProNomeCidade         := 'joaopessoa';
  ConfigURL.ProRecepcaoLoteRPS    := 'https://sispmjp.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
@@ -156,6 +159,7 @@ begin
  ConfigURL.ProCancelaNFSe        := 'https://sispmjp.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
  ConfigURL.ProGerarNFSe          := 'https://sispmjp.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
  ConfigURL.ProRecepcaoSincrono   := 'https://sispmjp.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
+  ConfigURL.ProSubstituiNFSe      := '';
 
  Result := ConfigURL;
 end;
@@ -188,7 +192,7 @@ end;
 function TProvedorSisPMJP.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 var
- xmlns: String;
+  xmlns: String;
 begin
 (*
  xmlns := ' xmlns:ds="http://www.w3.org/2000/09/xmldsig#"' +
@@ -196,9 +200,9 @@ begin
           ' xsi:schemaLocation="http://www.abrasf.org.br/nfse.xsd nfse_v2.01.xsd"' +
           NameSpaceDad;
 *)
- xmlns := NameSpaceDad;
+  xmlns := NameSpaceDad;
 
- case Acao of
+  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + xmlns;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + xmlns;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + xmlns;
@@ -210,7 +214,12 @@ begin
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + xmlns;
    acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + xmlns;
- end;
+   acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio' + xmlns +
+                             '<' + Prefixo3 + 'SubstituicaoNfse>' +
+                              '<' + Prefixo3 + 'Pedido>' +
+                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+  end;
 end;
 
 function TProvedorSisPMJP.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
@@ -232,7 +241,7 @@ end;
 
 function TProvedorSisPMJP.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
@@ -242,7 +251,9 @@ begin
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
    acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
- end;
+   acSubstituir:  Result := '</' + Prefixo3 + 'SubstituicaoNfse>' +
+                            '</' + Prefixo3 + 'SubstituirNfseEnvio>';
+  end;
 end;
 
 function TProvedorSisPMJP.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
@@ -543,6 +554,12 @@ begin
             '</S:Body>' +
            '</S:Envelope>';
 }
+end;
+
+function TProvedorSisPMJP.GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
 end;
 
 function TProvedorSisPMJP.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;

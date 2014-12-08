@@ -71,6 +71,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -113,22 +114,25 @@ end;
 
 function TProvedorSimplISS.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
- ConfigSchema: TConfigSchema;
+  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho := '1.00';
- ConfigSchema.VersaoDados     := '1.00';
- ConfigSchema.VersaoXML       := '1';
- ConfigSchema.NameSpaceXML    := 'http://www.sistema.com.br/Nfse/arquivos/';
- ConfigSchema.Cabecalho       := 'nfse_3.xsd';
- ConfigSchema.ServicoEnviar   := 'nfse_3.xsd';
- ConfigSchema.ServicoConSit   := 'nfse_3.xsd';
- ConfigSchema.ServicoConLot   := 'nfse_3.xsd';
- ConfigSchema.ServicoConRps   := 'nfse_3.xsd';
- ConfigSchema.ServicoConNfse  := 'nfse_3.xsd';
- ConfigSchema.ServicoCancelar := 'nfse_3.xsd';
- ConfigSchema.DefTipos        := '';
+  ConfigSchema.VersaoCabecalho       := '1.00';
+  ConfigSchema.VersaoDados           := '1.00';
+  ConfigSchema.VersaoXML             := '1';
+  ConfigSchema.NameSpaceXML          := 'http://www.sistema.com.br/Nfse/arquivos/';
+  ConfigSchema.Cabecalho             := 'nfse_3.xsd';
+  ConfigSchema.ServicoEnviar         := 'nfse_3.xsd';
+  ConfigSchema.ServicoConSit         := 'nfse_3.xsd';
+  ConfigSchema.ServicoConLot         := 'nfse_3.xsd';
+  ConfigSchema.ServicoConRps         := 'nfse_3.xsd';
+  ConfigSchema.ServicoConNfse        := 'nfse_3.xsd';
+  ConfigSchema.ServicoCancelar       := 'nfse_3.xsd';
+  ConfigSchema.ServicoGerar          := 'nfse_3.xsd';
+  ConfigSchema.ServicoEnviarSincrono := 'nfse_3.xsd';
+  ConfigSchema.ServicoSubstituir     := 'nfse_3.xsd';
+  ConfigSchema.DefTipos              := '';
 
- Result := ConfigSchema;
+  Result := ConfigSchema;
 end;
 
 function TProvedorSimplISS.GetConfigURL(ACodCidade: Integer): TConfigURL;
@@ -144,6 +148,9 @@ begin
    ConfigURL.HomConsultaSitLoteRPS := 'http://200.144.16.82:8080/ws_homologacao/nfseservice.svc';
    ConfigURL.HomConsultaNFSe       := 'http://200.144.16.82:8080/ws_homologacao/nfseservice.svc';
    ConfigURL.HomCancelaNFSe        := 'http://200.144.16.82:8080/ws_homologacao/nfseservice.svc';
+   ConfigURL.HomGerarNFSe          := '';
+   ConfigURL.HomRecepcaoSincrono   := '';
+   ConfigURL.HomSubstituiNFSe      := '';
   end
   else begin
    ConfigURL.HomNomeCidade         := '';
@@ -153,6 +160,9 @@ begin
    ConfigURL.HomConsultaSitLoteRPS := 'http://187.45.245.217/ws_nfse/nfseservice.svc';
    ConfigURL.HomConsultaNFSe       := 'http://187.45.245.217/ws_nfse/nfseservice.svc';
    ConfigURL.HomCancelaNFSe        := 'http://187.45.245.217/ws_nfse/nfseservice.svc';
+   ConfigURL.HomGerarNFSe          := '';
+   ConfigURL.HomRecepcaoSincrono   := '';
+   ConfigURL.HomSubstituiNFSe      := '';
   end;
 
  case ACodCidade of
@@ -164,6 +174,9 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProConsultaNFSe       := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProCancelaNFSe        := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+            ConfigURL.ProGerarNFSe          := '';
+            ConfigURL.ProRecepcaoSincrono   := '';
+            ConfigURL.ProSubstituiNFSe      := '';
            end;
   3105103: begin
             ConfigURL.ProNomeCidade := 'bambui';
@@ -173,6 +186,9 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProConsultaNFSe       := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProCancelaNFSe        := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+            ConfigURL.ProGerarNFSe          := '';
+            ConfigURL.ProRecepcaoSincrono   := '';
+            ConfigURL.ProSubstituiNFSe      := '';
            end;
   3137205: begin
             ConfigURL.ProNomeCidade := 'lagoa_prata';
@@ -182,6 +198,9 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProConsultaNFSe       := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProCancelaNFSe        := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+            ConfigURL.ProGerarNFSe          := '';
+            ConfigURL.ProRecepcaoSincrono   := '';
+            ConfigURL.ProSubstituiNFSe      := '';
            end;
   3148103: begin // Patrocinio/MG
             ConfigURL.ProNomeCidade := 'patrocinio';
@@ -191,6 +210,9 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProConsultaNFSe       := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProCancelaNFSe        := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+            ConfigURL.ProGerarNFSe          := '';
+            ConfigURL.ProRecepcaoSincrono   := '';
+            ConfigURL.ProSubstituiNFSe      := '';
            end;
   3503307: begin // Araras/SP
             ConfigURL.ProNomeCidade := 'araras';
@@ -200,6 +222,9 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://200.144.16.82:8080/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProConsultaNFSe       := 'http://200.144.16.82:8080/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProCancelaNFSe        := 'http://200.144.16.82:8080/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+            ConfigURL.ProGerarNFSe          := '';
+            ConfigURL.ProRecepcaoSincrono   := '';
+            ConfigURL.ProSubstituiNFSe      := '';
            end;
   3511508: begin // Cerquilho/SP
             ConfigURL.ProNomeCidade := 'cerquilho';
@@ -209,6 +234,9 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProConsultaNFSe       := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProCancelaNFSe        := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+            ConfigURL.ProGerarNFSe          := '';
+            ConfigURL.ProRecepcaoSincrono   := '';
+            ConfigURL.ProSubstituiNFSe      := '';
            end;
   3520608: begin // Indiana/SP
             ConfigURL.ProNomeCidade := 'indiana';
@@ -218,6 +246,9 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProConsultaNFSe       := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProCancelaNFSe        := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+            ConfigURL.ProGerarNFSe          := '';
+            ConfigURL.ProRecepcaoSincrono   := '';
+            ConfigURL.ProSubstituiNFSe      := '';
            end;
   3524808: begin // Jales/SP
             ConfigURL.ProNomeCidade := 'jales';
@@ -227,6 +258,9 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProConsultaNFSe       := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProCancelaNFSe        := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+            ConfigURL.ProGerarNFSe          := '';
+            ConfigURL.ProRecepcaoSincrono   := '';
+            ConfigURL.ProSubstituiNFSe      := '';
            end;
   3534609: begin // Osvaldo Cruz/SP
             ConfigURL.ProNomeCidade := 'nfse_osvaldo_cruz';
@@ -236,6 +270,9 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProConsultaNFSe       := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProCancelaNFSe        := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+            ConfigURL.ProGerarNFSe          := '';
+            ConfigURL.ProRecepcaoSincrono   := '';
+            ConfigURL.ProSubstituiNFSe      := '';
            end;
   3538709: begin // Piracicaba/SP
             ConfigURL.ProNomeCidade := 'piracicaba';
@@ -245,6 +282,9 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://www.sistemas.piracicaba.sp.gov.br/semfi/simpliss/ws_nfse/nfseservice.svc';
             ConfigURL.ProConsultaNFSe       := 'http://www.sistemas.piracicaba.sp.gov.br/semfi/simpliss/ws_nfse/nfseservice.svc';
             ConfigURL.ProCancelaNFSe        := 'http://www.sistemas.piracicaba.sp.gov.br/semfi/simpliss/ws_nfse/nfseservice.svc';
+            ConfigURL.ProGerarNFSe          := '';
+            ConfigURL.ProRecepcaoSincrono   := '';
+            ConfigURL.ProSubstituiNFSe      := '';
            end;
   3541406: begin // Presidente Prudente/SP
             ConfigURL.ProNomeCidade := 'presidente_prudente';
@@ -254,6 +294,9 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://187.45.245.217/ws_nfse_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProConsultaNFSe       := 'http://187.45.245.217/ws_nfse_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProCancelaNFSe        := 'http://187.45.245.217/ws_nfse_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+            ConfigURL.ProGerarNFSe          := '';
+            ConfigURL.ProRecepcaoSincrono   := '';
+            ConfigURL.ProSubstituiNFSe      := '';
            end;
   3549102: begin
             ConfigURL.ProNomeCidade := 'sao_joao_boa_vista';
@@ -263,6 +306,9 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://187.45.245.217/ws_nfse_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProConsultaNFSe       := 'http://187.45.245.217/ws_nfse_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProCancelaNFSe        := 'http://187.45.245.217/ws_nfse_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+            ConfigURL.ProGerarNFSe          := '';
+            ConfigURL.ProRecepcaoSincrono   := '';
+            ConfigURL.ProSubstituiNFSe      := '';
            end;
   3549706: begin
             ConfigURL.ProNomeCidade := 'sao_jose_rio_pardo';
@@ -272,6 +318,9 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProConsultaNFSe       := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProCancelaNFSe        := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+            ConfigURL.ProGerarNFSe          := '';
+            ConfigURL.ProRecepcaoSincrono   := '';
+            ConfigURL.ProSubstituiNFSe      := '';
            end;
   3556404: begin
             ConfigURL.ProNomeCidade := 'vargem_grande_sul';
@@ -281,6 +330,9 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://187.45.245.217/ws_nfse_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProConsultaNFSe       := 'http://187.45.245.217/ws_nfse_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProCancelaNFSe        := 'http://187.45.245.217/ws_nfse_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+            ConfigURL.ProGerarNFSe          := '';
+            ConfigURL.ProRecepcaoSincrono   := '';
+            ConfigURL.ProSubstituiNFSe      := '';
            end;
   4202008: begin
             ConfigURL.ProNomeCidade := 'balneario_camboriu';
@@ -290,10 +342,13 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProConsultaNFSe       := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProCancelaNFSe        := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+            ConfigURL.ProGerarNFSe          := '';
+            ConfigURL.ProRecepcaoSincrono   := '';
+            ConfigURL.ProSubstituiNFSe      := '';
            end;
  end;
 
- Result := ConfigURL;
+  Result := ConfigURL;
 end;
 
 function TProvedorSimplISS.GetURI(URI: String): String;
@@ -324,7 +379,7 @@ end;
 function TProvedorSimplISS.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
@@ -334,8 +389,14 @@ begin
                              '<' + Prefixo3 + 'Pedido ' + NameSpaceDad +
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
-   acGerar:       Result := '';
- end;
+   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio>';
+   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
+   acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio>' +
+                             '<' + Prefixo3 + 'SubstituicaoNfse>' +
+                              '<' + Prefixo3 + 'Pedido>' +
+                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+  end;
 end;
 
 function TProvedorSimplISS.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
@@ -358,7 +419,7 @@ end;
 
 function TProvedorSimplISS.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
@@ -366,8 +427,11 @@ begin
    acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseEnvio>';
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
-   acGerar:       Result := '';
- end;
+   acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
+   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
+   acSubstituir:  Result := '</' + Prefixo3 + 'SubstituicaoNfse>' +
+                            '</' + Prefixo3 + 'SubstituirNfseEnvio>';
+  end;
 end;
 
 function TProvedorSimplISS.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
@@ -481,13 +545,19 @@ end;
 function TProvedorSimplISS.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+  Result := '';
 end;
 
 function TProvedorSimplISS.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+  Result := '';
+end;
+
+function TProvedorSimplISS.GeraEnvelopeSubstituirNFSe(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
 end;
 
 function TProvedorSimplISS.GetSoapAction(Acao: TnfseAcao;

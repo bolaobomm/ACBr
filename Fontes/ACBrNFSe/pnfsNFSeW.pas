@@ -519,7 +519,7 @@ begin
 
   if not (FProvedor in [pro4R, profinteliSS, proFiorilli, proGoiania, proISSDigital,
                         proISSe, proSystemPro, proProdata, proVitoria, proPVH, proSaatri, proCoplan, proFreire,
-                        proLink3, proMitra, proGovDigital, proVirtual, proSisPMJP])
+                        proLink3, proMitra, proGovDigital, proVirtual, proSisPMJP, proDigifred])
    then Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo', 01, 15, 0, NFSe.Servico.Valores.BaseCalculo, '');
 
   if FProvedor in [proActcon] then

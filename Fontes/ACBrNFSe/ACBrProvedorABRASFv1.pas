@@ -71,6 +71,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -110,18 +111,21 @@ function TProvedorABRASFv1.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
   ConfigSchema: TConfigSchema;
 begin
-  ConfigSchema.VersaoCabecalho := '1.00';
-  ConfigSchema.VersaoDados     := '1.00';
-  ConfigSchema.VersaoXML       := '1';
-  ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/ABRASF/arquivos/';
-  ConfigSchema.Cabecalho       := 'nfse.xsd';
-  ConfigSchema.ServicoEnviar   := 'nfse.xsd';
-  ConfigSchema.ServicoConSit   := 'nfse.xsd';
-  ConfigSchema.ServicoConLot   := 'nfse.xsd';
-  ConfigSchema.ServicoConRps   := 'nfse.xsd';
-  ConfigSchema.ServicoConNfse  := 'nfse.xsd';
-  ConfigSchema.ServicoCancelar := 'nfse.xsd';
-  ConfigSchema.DefTipos        := '';
+  ConfigSchema.VersaoCabecalho       := '1.00';
+  ConfigSchema.VersaoDados           := '1.00';
+  ConfigSchema.VersaoXML             := '1';
+  ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/ABRASF/arquivos/';
+  ConfigSchema.Cabecalho             := 'nfse.xsd';
+  ConfigSchema.ServicoEnviar         := 'nfse.xsd';
+  ConfigSchema.ServicoConSit         := 'nfse.xsd';
+  ConfigSchema.ServicoConLot         := 'nfse.xsd';
+  ConfigSchema.ServicoConRps         := 'nfse.xsd';
+  ConfigSchema.ServicoConNfse        := 'nfse.xsd';
+  ConfigSchema.ServicoCancelar       := 'nfse.xsd';
+  ConfigSchema.ServicoGerar          := 'nfse.xsd';
+  ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
+  ConfigSchema.ServicoSubstituir     := 'nfse.xsd';
+  ConfigSchema.DefTipos              := '';
 
   Result := ConfigSchema;
 end;
@@ -229,6 +233,12 @@ begin
 end;
 
 function TProvedorABRASFv1.GeraEnvelopeRecepcionarSincrono(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
+end;
+
+function TProvedorABRASFv1.GeraEnvelopeSubstituirNFSe(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
   Result := '';

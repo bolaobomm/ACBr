@@ -71,6 +71,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -104,52 +105,59 @@ begin
   ConfigCidade.AssinaRPS  := False;
   ConfigCidade.AssinaLote := False;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorEgoverneISS.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
- ConfigSchema: TConfigSchema;
+  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho := '';
- ConfigSchema.VersaoDados     := '';
- ConfigSchema.VersaoXML       := '1';
- ConfigSchema.NameSpaceXML    := '';
- ConfigSchema.Cabecalho       := '';
- ConfigSchema.ServicoEnviar   := '';
- ConfigSchema.ServicoConSit   := '';
- ConfigSchema.ServicoConLot   := '';
- ConfigSchema.ServicoConRps   := '';
- ConfigSchema.ServicoConNfse  := '';
- ConfigSchema.ServicoCancelar := '';
- ConfigSchema.DefTipos        := '';
+  ConfigSchema.VersaoCabecalho       := '';
+  ConfigSchema.VersaoDados           := '';
+  ConfigSchema.VersaoXML             := '1';
+  ConfigSchema.NameSpaceXML          := '';
+  ConfigSchema.Cabecalho             := '';
+  ConfigSchema.ServicoEnviar         := '';
+  ConfigSchema.ServicoConSit         := '';
+  ConfigSchema.ServicoConLot         := '';
+  ConfigSchema.ServicoConRps         := '';
+  ConfigSchema.ServicoConNfse        := '';
+  ConfigSchema.ServicoCancelar       := '';
+  ConfigSchema.ServicoGerar          := '';
+  ConfigSchema.ServicoEnviarSincrono := '';
+  ConfigSchema.ServicoSubstituir     := '';
+  ConfigSchema.DefTipos              := '';
 
- Result := ConfigSchema;
+  Result := ConfigSchema;
 end;
 
 function TProvedorEgoverneISS.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
- ConfigURL: TConfigURL;
+  ConfigURL: TConfigURL;
 begin
- ConfigURL.HomNomeCidade         := '';
- ConfigURL.HomRecepcaoLoteRPS    := '';
- ConfigURL.HomConsultaLoteRPS    := '';
- ConfigURL.HomConsultaNFSeRPS    := '';
- ConfigURL.HomConsultaSitLoteRPS := '';
- ConfigURL.HomConsultaNFSe       := '';
- ConfigURL.HomCancelaNFSe        := 'https://www.nfeosasco.com.br/EissnfeWebServices/NotaFiscalEletronica.svc';
- ConfigURL.HomGerarNFSe          := 'https://www.nfeosasco.com.br/EissnfeWebServices/NotaFiscalEletronica.svc';
+  ConfigURL.HomNomeCidade         := '';
+  ConfigURL.HomRecepcaoLoteRPS    := '';
+  ConfigURL.HomConsultaLoteRPS    := '';
+  ConfigURL.HomConsultaNFSeRPS    := '';
+  ConfigURL.HomConsultaSitLoteRPS := '';
+  ConfigURL.HomConsultaNFSe       := '';
+  ConfigURL.HomCancelaNFSe        := 'https://www.nfeosasco.com.br/EissnfeWebServices/NotaFiscalEletronica.svc';
+  ConfigURL.HomGerarNFSe          := 'https://www.nfeosasco.com.br/EissnfeWebServices/NotaFiscalEletronica.svc';
+  ConfigURL.HomRecepcaoSincrono   := '';
+  ConfigURL.HomSubstituiNFSe      := '';
 
- ConfigURL.ProNomeCidade         := '';
- ConfigURL.ProRecepcaoLoteRPS    := '';
- ConfigURL.ProConsultaLoteRPS    := '';
- ConfigURL.ProConsultaNFSeRPS    := '';
- ConfigURL.ProConsultaSitLoteRPS := '';
- ConfigURL.ProConsultaNFSe       := '';
- ConfigURL.ProCancelaNFSe        := 'https://www.nfeosasco.com.br/EissnfeWebServices/NotaFiscalEletronica.svc';
- ConfigURL.ProGerarNFSe          := 'https://www.nfeosasco.com.br/EissnfeWebServices/NotaFiscalEletronica.svc';
+  ConfigURL.ProNomeCidade         := '';
+  ConfigURL.ProRecepcaoLoteRPS    := '';
+  ConfigURL.ProConsultaLoteRPS    := '';
+  ConfigURL.ProConsultaNFSeRPS    := '';
+  ConfigURL.ProConsultaSitLoteRPS := '';
+  ConfigURL.ProConsultaNFSe       := '';
+  ConfigURL.ProCancelaNFSe        := 'https://www.nfeosasco.com.br/EissnfeWebServices/NotaFiscalEletronica.svc';
+  ConfigURL.ProGerarNFSe          := 'https://www.nfeosasco.com.br/EissnfeWebServices/NotaFiscalEletronica.svc';
+  ConfigURL.ProRecepcaoSincrono   := '';
+  ConfigURL.ProSubstituiNFSe      := '';
 
- Result := ConfigURL;
+  Result := ConfigURL;
 end;
 
 function TProvedorEgoverneISS.GetURI(URI: String): String;
@@ -285,7 +293,13 @@ end;
 function TProvedorEgoverneISS.GeraEnvelopeRecepcionarSincrono(
   URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+  Result := '';
+end;
+
+function TProvedorEgoverneISS.GeraEnvelopeSubstituirNFSe(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
 end;
 
 function TProvedorEgoverneISS.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;

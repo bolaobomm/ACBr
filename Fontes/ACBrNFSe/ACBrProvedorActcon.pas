@@ -71,6 +71,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -129,58 +130,63 @@ begin
    3127701: NomeCidade := 'valadares'
   end;
 
-  ConfigSchema.VersaoCabecalho := '1.00';
-  ConfigSchema.VersaoDados     := '2.00';
-  ConfigSchema.VersaoXML       := '2';
-
-  ConfigSchema.NameSpaceXML    := 'http://nfe' + NomeCidade + '.portalfacil.com.br/' + DescAmbiente+ '/schema/';
-
-  ConfigSchema.Cabecalho       := 'nfse_v201.xsd';
-  ConfigSchema.ServicoEnviar   := 'nfse_v201.xsd';
-  ConfigSchema.ServicoConSit   := 'nfse_v201.xsd';
-  ConfigSchema.ServicoConLot   := 'nfse_v201.xsd';
-  ConfigSchema.ServicoConRps   := 'nfse_v201.xsd';
-  ConfigSchema.ServicoConNfse  := 'nfse_v201.xsd';
-  ConfigSchema.ServicoCancelar := 'nfse_v201.xsd';
-  ConfigSchema.ServicoGerar    := '';
-  ConfigSchema.DefTipos        := '';
-  ConfigSchema.ServicoEnviarSincrono:='nfse_v201.xsd';
+  ConfigSchema.VersaoCabecalho       := '1.00';
+  ConfigSchema.VersaoDados           := '2.00';
+  ConfigSchema.VersaoXML             := '2';
+  ConfigSchema.NameSpaceXML          := 'http://nfe' + NomeCidade +
+                                        '.portalfacil.com.br/' + DescAmbiente +
+                                        '/schema/';
+  ConfigSchema.Cabecalho             := 'nfse_v201.xsd';
+  ConfigSchema.ServicoEnviar         := 'nfse_v201.xsd';
+  ConfigSchema.ServicoConSit         := 'nfse_v201.xsd';
+  ConfigSchema.ServicoConLot         := 'nfse_v201.xsd';
+  ConfigSchema.ServicoConRps         := 'nfse_v201.xsd';
+  ConfigSchema.ServicoConNfse        := 'nfse_v201.xsd';
+  ConfigSchema.ServicoCancelar       := 'nfse_v201.xsd';
+  ConfigSchema.ServicoGerar          := 'nfse_v201.xsd';
+  ConfigSchema.ServicoEnviarSincrono := 'nfse_v201.xsd';
+  ConfigSchema.ServicoSubstituir     := 'nfse_v201.xsd';
+  ConfigSchema.DefTipos              := '';
 
   Result := ConfigSchema;
 end;
 
 function TProvedorActcon.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
- ConfigURL: TConfigURL;
+  ConfigURL: TConfigURL;
 begin
- case ACodCidade of
-  3127701: begin
-             ConfigURL.HomNomeCidade := 'valadares';
-             ConfigURL.ProNomeCidade := 'valadares';
-           end;
-  3131307: begin // Ipatinga
-             ConfigURL.HomNomeCidade := 'ipatinga';
-             ConfigURL.ProNomeCidade := 'ipatinga';
-           end;
- end;
+  case ACodCidade of
+   3127701: begin
+              ConfigURL.HomNomeCidade := 'valadares';
+              ConfigURL.ProNomeCidade := 'valadares';
+            end;
+   3131307: begin // Ipatinga
+              ConfigURL.HomNomeCidade := 'ipatinga';
+              ConfigURL.ProNomeCidade := 'ipatinga';
+            end;
+  end;
 
- ConfigURL.HomRecepcaoLoteRPS    := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
- ConfigURL.HomConsultaLoteRPS    := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
- ConfigURL.HomConsultaNFSeRPS    := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
- ConfigURL.HomConsultaSitLoteRPS := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
- ConfigURL.HomConsultaNFSe       := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
- ConfigURL.HomCancelaNFSe        := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
- ConfigURL.HomRecepcaoSincrono   := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
+  ConfigURL.HomRecepcaoLoteRPS    := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
+  ConfigURL.HomConsultaLoteRPS    := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
+  ConfigURL.HomConsultaNFSeRPS    := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
+  ConfigURL.HomConsultaSitLoteRPS := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
+  ConfigURL.HomConsultaNFSe       := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
+  ConfigURL.HomCancelaNFSe        := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
+  ConfigURL.HomGerarNFSe          := '';
+  ConfigURL.HomRecepcaoSincrono   := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
+  ConfigURL.HomSubstituiNFSe      := '';
 
- ConfigURL.ProRecepcaoLoteRPS    := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
- ConfigURL.ProConsultaLoteRPS    := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
- ConfigURL.ProConsultaNFSeRPS    := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
- ConfigURL.ProConsultaSitLoteRPS := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/s/webservice/servicos';
- ConfigURL.ProConsultaNFSe       := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
- ConfigURL.ProCancelaNFSe        := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
- ConfigURL.ProRecepcaoSincrono   := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
+  ConfigURL.ProRecepcaoLoteRPS    := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
+  ConfigURL.ProConsultaLoteRPS    := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
+  ConfigURL.ProConsultaNFSeRPS    := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
+  ConfigURL.ProConsultaSitLoteRPS := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
+  ConfigURL.ProConsultaNFSe       := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
+  ConfigURL.ProCancelaNFSe        := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
+  ConfigURL.ProGerarNFSe          := '';
+  ConfigURL.ProRecepcaoSincrono   := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
+  ConfigURL.ProSubstituiNFSe      := '';
 
- Result := ConfigURL;
+  Result := ConfigURL;
 end;
 
 function TProvedorActcon.GetURI(URI: String): String;
@@ -211,7 +217,7 @@ end;
 function TProvedorActcon.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
@@ -223,7 +229,12 @@ begin
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
    acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
- end;
+   acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio' + NameSpaceDad +
+                             '<' + Prefixo3 + 'SubstituicaoNfse>' +
+                              '<' + Prefixo3 + 'Pedido>' +
+                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+  end;
 end;
 
 function TProvedorActcon.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
@@ -241,7 +252,7 @@ end;
 
 function TProvedorActcon.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
@@ -251,7 +262,9 @@ begin
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
    acRecSincrono: result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
- end;
+   acSubstituir:  Result := '</' + Prefixo3 + 'SubstituicaoNfse>' +
+                            '</' + Prefixo3 + 'SubstituirNfseEnvio>';
+  end;
 end;
 
 function TProvedorActcon.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
@@ -429,6 +442,12 @@ begin
             '</S:Body>' +
            '</S:Envelope>';
 
+end;
+
+function TProvedorActcon.GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
 end;
 
 function TProvedorActcon.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;

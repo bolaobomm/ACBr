@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/12/2014
+[+] Incluido a Funcionalidade Substituicao de NFS-e.
+    Não esta 100% requer testes.
+    Por: Italo Jurisato Junior
+
 04/12/2014
 [*] Alterado a propriedade que informa que o pedido de cancelamento deve ser
     assinado (provedor Lexsom).

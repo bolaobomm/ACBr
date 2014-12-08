@@ -71,6 +71,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -113,11 +114,11 @@ end;
 
 function TProvedorRecife.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
- ConfigSchema: TConfigSchema;
+  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho := '1.00';
- ConfigSchema.VersaoDados     := '1.00';
- ConfigSchema.VersaoXML       := '1';
+  ConfigSchema.VersaoCabecalho := '1.00';
+  ConfigSchema.VersaoDados     := '1.00';
+  ConfigSchema.VersaoXML       := '1';
  (*
  ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/ABRASF/arquivos/';
  ConfigSchema.Cabecalho       := 'nfse.xsd';
@@ -128,43 +129,49 @@ begin
  ConfigSchema.ServicoConNfse  := 'nfse.xsd';
  ConfigSchema.ServicoCancelar := 'nfse.xsd';
  *)
- ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd';
- ConfigSchema.Cabecalho       := 'tipos_nfse_v01.xsd';
- ConfigSchema.ServicoEnviar   := 'tipos_nfse_v01.xsd';
- ConfigSchema.ServicoConSit   := 'tipos_nfse_v01.xsd';
- ConfigSchema.ServicoConLot   := 'tipos_nfse_v01.xsd';
- ConfigSchema.ServicoConRps   := 'tipos_nfse_v01.xsd';
- ConfigSchema.ServicoConNfse  := 'tipos_nfse_v01.xsd';
- ConfigSchema.ServicoCancelar := 'tipos_nfse_v01.xsd';
- ConfigSchema.DefTipos        := '';
- ConfigSchema.ServicoGerar    := 'http://nfse.recife.pe.gov.br/WSNacional/XSD/1/nfse_recife_v01.xsd';
+  ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd';
+  ConfigSchema.Cabecalho             := 'tipos_nfse_v01.xsd';
+  ConfigSchema.ServicoEnviar         := 'tipos_nfse_v01.xsd';
+  ConfigSchema.ServicoConSit         := 'tipos_nfse_v01.xsd';
+  ConfigSchema.ServicoConLot         := 'tipos_nfse_v01.xsd';
+  ConfigSchema.ServicoConRps         := 'tipos_nfse_v01.xsd';
+  ConfigSchema.ServicoConNfse        := 'tipos_nfse_v01.xsd';
+  ConfigSchema.ServicoCancelar       := 'tipos_nfse_v01.xsd';
+  ConfigSchema.ServicoGerar          := 'http://nfse.recife.pe.gov.br/WSNacional/XSD/1/nfse_recife_v01.xsd';
+  ConfigSchema.ServicoEnviarSincrono := 'tipos_nfse_v01.xsd';
+  ConfigSchema.ServicoSubstituir     := 'tipos_nfse_v01.xsd';
+  ConfigSchema.DefTipos              := '';
 
- Result := ConfigSchema;
+  Result := ConfigSchema;
 end;
 
 function TProvedorRecife.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
- ConfigURL: TConfigURL;
+  ConfigURL: TConfigURL;
 begin
- ConfigURL.HomNomeCidade         := '';
- ConfigURL.HomRecepcaoLoteRPS    := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx?op=RecepcionarLoteRps';
- ConfigURL.HomConsultaLoteRPS    := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
- ConfigURL.HomConsultaNFSeRPS    := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
- ConfigURL.HomConsultaSitLoteRPS := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
- ConfigURL.HomConsultaNFSe       := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
- ConfigURL.HomCancelaNFSe        := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
- ConfigURL.HomGerarNFSe          := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
+  ConfigURL.HomNomeCidade         := '';
+  ConfigURL.HomRecepcaoLoteRPS    := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx?op=RecepcionarLoteRps';
+  ConfigURL.HomConsultaLoteRPS    := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
+  ConfigURL.HomConsultaNFSeRPS    := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
+  ConfigURL.HomConsultaSitLoteRPS := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
+  ConfigURL.HomConsultaNFSe       := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
+  ConfigURL.HomCancelaNFSe        := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
+  ConfigURL.HomGerarNFSe          := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
+  ConfigURL.HomRecepcaoSincrono   := '';
+  ConfigURL.HomSubstituiNFSe      := '';
 
- ConfigURL.ProNomeCidade         := '';
- ConfigURL.ProRecepcaoLoteRPS    := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx?op=RecepcionarLoteRps';
- ConfigURL.ProConsultaLoteRPS    := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
- ConfigURL.ProConsultaNFSeRPS    := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
- ConfigURL.ProConsultaSitLoteRPS := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
- ConfigURL.ProConsultaNFSe       := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
- ConfigURL.ProCancelaNFSe        := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
- ConfigURL.ProGerarNFSe          := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
+  ConfigURL.ProNomeCidade         := '';
+  ConfigURL.ProRecepcaoLoteRPS    := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx?op=RecepcionarLoteRps';
+  ConfigURL.ProConsultaLoteRPS    := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
+  ConfigURL.ProConsultaNFSeRPS    := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
+  ConfigURL.ProConsultaSitLoteRPS := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
+  ConfigURL.ProConsultaNFSe       := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
+  ConfigURL.ProCancelaNFSe        := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
+  ConfigURL.ProGerarNFSe          := 'https://nfse.recife.pe.gov.br/wsnacional/nfse_v01.asmx';
+  ConfigURL.ProRecepcaoSincrono   := '';
+  ConfigURL.ProSubstituiNFSe      := '';
 
- Result := ConfigURL;
+  Result := ConfigURL;
 end;
 
 function TProvedorRecife.GetURI(URI: String): String;
@@ -194,7 +201,7 @@ end;
 function TProvedorRecife.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
@@ -205,7 +212,13 @@ begin
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
    acGerar:       Result := '<GerarNfseEnvio xmlns="http://nfse.recife.pe.gov.br/WSNacional/XSD/1/nfse_recife_v01.xsd">';
- end;
+   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + NameSpaceDad;
+   acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio' + NameSpaceDad +
+                             '<' + Prefixo3 + 'SubstituicaoNfse>' +
+                              '<' + Prefixo3 + 'Pedido>' +
+                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+  end;
 end;
 
 function TProvedorRecife.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
@@ -223,7 +236,7 @@ end;
 
 function TProvedorRecife.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
@@ -232,7 +245,10 @@ begin
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</GerarNfseEnvio>';
- end;
+   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
+   acSubstituir:  Result := '</' + Prefixo3 + 'SubstituicaoNfse>' +
+                            '</' + Prefixo3 + 'SubstituirNfseEnvio>';
+  end;
 end;
 
 function TProvedorRecife.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
@@ -337,13 +353,6 @@ begin
            '</soap:Envelope>';
 end;
 
-function TProvedorRecife.GeraEnvelopeRecepcionarSincrono(URLNS: String;
-  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- Result := '';
- raise Exception.Create( 'Opção não implementada para este provedor.' );
-end;
-
 function TProvedorRecife.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
@@ -361,6 +370,18 @@ begin
            '</soap:Envelope>';
 end;
 
+function TProvedorRecife.GeraEnvelopeRecepcionarSincrono(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
+end;
+
+function TProvedorRecife.GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
+end;
+
 function TProvedorRecife.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
  case Acao of
@@ -375,8 +396,6 @@ begin
 end;
 
 function TProvedorRecife.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
-var
- RetWS: AnsiString;
 begin
  Result := SeparaDados(RetornoWS, 'outputXML');
 end;

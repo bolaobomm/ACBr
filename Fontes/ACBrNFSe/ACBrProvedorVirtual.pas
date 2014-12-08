@@ -71,6 +71,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -122,6 +123,7 @@ begin
   ConfigSchema.ServicoCancelar       := 'nfse.xsd';
   ConfigSchema.ServicoGerar          := 'nfse.xsd';
   ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
+  ConfigSchema.ServicoSubstituir     := 'nfse.xsd';
   ConfigSchema.DefTipos              := '';
 
   Result := ConfigSchema;
@@ -140,6 +142,7 @@ begin
   ConfigURL.HomCancelaNFSe        := 'https://servidor.virtualtechnologia.com.br:8080/SCEMBGJavaEnvironment/servlet/acancelarnfse_barradogarcas'; //?wsdl';
   ConfigURL.HomGerarNFSe          := 'https://servidor.virtualtechnologia.com.br:8080/SCEMBGJavaEnvironment/servlet/agerarnfse_barradogarcas'; //?wsdl';
   ConfigURL.HomRecepcaoSincrono   := '';
+  ConfigURL.HomSubstituiNFSe      := '';
 
  	ConfigURL.ProNomeCidade         := '';
   ConfigURL.ProRecepcaoLoteRPS    := '';
@@ -150,6 +153,7 @@ begin
   ConfigURL.ProCancelaNFSe        := 'https://financas2.barradogarcas.mt.gov.br:8080/SCEM/servlet/acancelarnfse_barradogarcas'; // ?wsdl';
   ConfigURL.ProGerarNFSe          := 'https://financas2.barradogarcas.mt.gov.br:8080/SCEM/servlet/agerarnfse_barradogarcas'; //?wsdl';
   ConfigURL.ProRecepcaoSincrono   := '';
+  ConfigURL.ProSubstituiNFSe      := '';
 
  	Result := ConfigURL;
 end;
@@ -194,6 +198,11 @@ begin
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
    acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + NameSpaceDad;
+   acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio' + NameSpaceDad +
+                             '<' + Prefixo3 + 'SubstituicaoNfse>' +
+                              '<' + Prefixo3 + 'Pedido>' +
+                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
   end;
 end;
 
@@ -222,6 +231,8 @@ begin
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
    acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
+   acSubstituir:  Result := '</' + Prefixo3 + 'SubstituicaoNfse>' +
+                            '</' + Prefixo3 + 'SubstituirNfseEnvio>';
   end;
 end;
 
@@ -298,7 +309,13 @@ end;
 function TProvedorVirtual.GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
-  result := '';
+  Result := '';
+end;
+
+function TProvedorVirtual.GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
 end;
 
 function TProvedorVirtual.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;

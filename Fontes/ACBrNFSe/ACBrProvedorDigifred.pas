@@ -71,6 +71,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -115,18 +116,21 @@ function TProvedorDigifred.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
   ConfigSchema: TConfigSchema;
 begin
-  ConfigSchema.VersaoCabecalho := '2.00';
-  ConfigSchema.VersaoDados     := '2.00';
-  ConfigSchema.VersaoXML       := '2';
-  ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/';
-  ConfigSchema.Cabecalho       := 'nfse.xsd';
-  ConfigSchema.ServicoEnviar   := 'nfse.xsd';
-  ConfigSchema.ServicoConSit   := 'nfse.xsd';
-  ConfigSchema.ServicoConLot   := 'nfse.xsd';
-  ConfigSchema.ServicoConRps   := 'nfse.xsd';
-  ConfigSchema.ServicoConNfse  := 'nfse.xsd';
-  ConfigSchema.ServicoCancelar := 'nfse.xsd';
-  ConfigSchema.DefTipos        := '';
+  ConfigSchema.VersaoCabecalho       := '2.00';
+  ConfigSchema.VersaoDados           := '2.00';
+  ConfigSchema.VersaoXML             := '2';
+  ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
+  ConfigSchema.Cabecalho             := 'nfse.xsd';
+  ConfigSchema.ServicoEnviar         := 'nfse.xsd';
+  ConfigSchema.ServicoConSit         := 'nfse.xsd';
+  ConfigSchema.ServicoConLot         := 'nfse.xsd';
+  ConfigSchema.ServicoConRps         := 'nfse.xsd';
+  ConfigSchema.ServicoConNfse        := 'nfse.xsd';
+  ConfigSchema.ServicoCancelar       := 'nfse.xsd';
+  ConfigSchema.ServicoGerar          := 'nfse.xsd';
+  ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
+  ConfigSchema.ServicoSubstituir     := 'nfse.xsd';
+  ConfigSchema.DefTipos              := '';
 
   Result := ConfigSchema;
 end;
@@ -154,6 +158,8 @@ begin
   ConfigURL.HomConsultaNFSe       := 'https://sim.digifred.net.br/'+ ConfigURL.HomNomeCidade + '_homolog/nfse/ws/principal';
   ConfigURL.HomCancelaNFSe        := 'https://sim.digifred.net.br/'+ ConfigURL.HomNomeCidade + '_homolog/nfse/ws/principal';
   ConfigURL.HomGerarNFSe          := 'https://sim.digifred.net.br/'+ ConfigURL.HomNomeCidade + '_homolog/nfse/ws/principal';
+  ConfigURL.HomRecepcaoSincrono   := '';
+  ConfigURL.HomSubstituiNFSe      := '';
 
   ConfigURL.ProRecepcaoLoteRPS    := 'https://sim.digifred.net.br/'+ ConfigURL.ProNomeCidade + '/nfse/ws/principal';
   ConfigURL.ProConsultaLoteRPS    := 'https://sim.digifred.net.br/'+ ConfigURL.ProNomeCidade + '/nfse/ws/principal';
@@ -162,6 +168,8 @@ begin
   ConfigURL.ProConsultaNFSe       := 'https://sim.digifred.net.br/'+ ConfigURL.ProNomeCidade + '/nfse/ws/principal';
   ConfigURL.ProCancelaNFSe        := 'https://sim.digifred.net.br/'+ ConfigURL.ProNomeCidade + '/nfse/ws/principal';
   ConfigURL.ProGerarNFSe          := 'https://sim.digifred.net.br/'+ ConfigURL.ProNomeCidade + '/nfse/ws/principal';
+  ConfigURL.ProRecepcaoSincrono   := '';
+  ConfigURL.ProSubstituiNFSe      := '';
 
   Result := ConfigURL;
 end;
@@ -194,16 +202,22 @@ function TProvedorDigifred.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
   case Acao of
-    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
-    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
-    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
-    acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + NameSpaceDad;
-    acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseEnvio' + NameSpaceDad;
-    acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + NameSpaceDad +
+   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
+   acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
+   acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
+   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + NameSpaceDad;
+   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseEnvio' + NameSpaceDad;
+   acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + NameSpaceDad +
+                             '<' + Prefixo3 + 'Pedido>' +
+                              '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                 DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
+   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + NameSpaceDad;
+   acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio' + NameSpaceDad +
+                             '<' + Prefixo3 + 'SubstituicaoNfse>' +
                               '<' + Prefixo3 + 'Pedido>' +
                                '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                   DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
-    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
   end;
 end;
 
@@ -223,14 +237,17 @@ end;
 function TProvedorDigifred.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
   case Acao of
-    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
-    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
-    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
-    acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfseRpsEnvio>';
-    acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseEnvio>';
-    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
-                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
-    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
+   acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
+   acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
+   acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
+   acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfseRpsEnvio>';
+   acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseEnvio>';
+   acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
+                            '</' + Prefixo3 + 'CancelarNfseEnvio>';
+   acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
+   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
+   acSubstituir:  Result := '</' + Prefixo3 + 'SubstituicaoNfse>' +
+                            '</' + Prefixo3 + 'SubstituirNfseEnvio>';
   end;
 end;
 
@@ -379,6 +396,12 @@ begin
 end;
 
 function TProvedorDigifred.GeraEnvelopeRecepcionarSincrono(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
+end;
+
+function TProvedorDigifred.GeraEnvelopeSubstituirNFSe(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
   Result := '';

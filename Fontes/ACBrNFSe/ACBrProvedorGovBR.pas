@@ -71,6 +71,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -113,23 +114,25 @@ end;
 
 function TProvedorGovBR.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
- ConfigSchema: TConfigSchema;
+  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho := '1.00';
- ConfigSchema.VersaoDados     := '1.00';
- ConfigSchema.VersaoXML       := '1';
+  ConfigSchema.VersaoCabecalho       := '1.00';
+  ConfigSchema.VersaoDados           := '1.00';
+  ConfigSchema.VersaoXML             := '1';
+  ConfigSchema.NameSpaceXML          := 'http://tempuri.org/';
+  ConfigSchema.Cabecalho             := '';
+  ConfigSchema.ServicoEnviar         := 'servico_enviar_lote_rps_envio.xsd';
+  ConfigSchema.ServicoConSit         := 'servico_consultar_situacao_lote_rps_envio.xsd';
+  ConfigSchema.ServicoConLot         := 'servico_consultar_lote_rps_envio.xsd';
+  ConfigSchema.ServicoConRps         := 'servico_consultar_nfse_rps_envio';
+  ConfigSchema.ServicoConNfse        := 'servico_consultar_nfse_envio';
+  ConfigSchema.ServicoCancelar       := 'servico_cancelar_nfse_envio';
+  ConfigSchema.ServicoGerar          := '';
+  ConfigSchema.ServicoEnviarSincrono := '';
+  ConfigSchema.ServicoSubstituir     := '';
+  ConfigSchema.DefTipos              := 'tipos_complexos.xsd'; // Alterado por Italo em 05/02/2014
 
- ConfigSchema.NameSpaceXML    := 'http://tempuri.org/';
- ConfigSchema.Cabecalho       := '';
- ConfigSchema.ServicoEnviar   := 'servico_enviar_lote_rps_envio.xsd';
- ConfigSchema.ServicoConSit   := 'servico_consultar_situacao_lote_rps_envio.xsd';
- ConfigSchema.ServicoConLot   := 'servico_consultar_lote_rps_envio.xsd';
- ConfigSchema.ServicoConRps   := 'servico_consultar_nfse_rps_envio';
- ConfigSchema.ServicoConNfse  := 'servico_consultar_nfse_envio';
- ConfigSchema.ServicoCancelar := 'servico_cancelar_nfse_envio';
- ConfigSchema.DefTipos        := 'tipos_complexos.xsd'; // Alterado por Italo em 05/02/2014
-
- Result := ConfigSchema;
+  Result := ConfigSchema;
 end;
 
 function TProvedorGovBR.GetConfigURL(ACodCidade: Integer): TConfigURL;
@@ -155,7 +158,7 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://nfse.contagem.mg.gov.br/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://nfse.contagem.mg.gov.br/NFSEWS/Services.svc';
            end;
-           
+
   3143302: begin // Montes Claros/MG
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfeteste.montesclaros.mg.gov.br:8081/nfsewsteste/Services.svc';
@@ -182,6 +185,9 @@ begin
             ConfigURL.HomConsultaSitLoteRPS := 'http://nfseteste.guarapari.es.gov.br/NFSEWSTESTE/Services.svc';
             ConfigURL.HomConsultaNFSe       := 'http://nfseteste.guarapari.es.gov.br/NFSEWSTESTE/Services.svc';
             ConfigURL.HomCancelaNFSe        := 'http://nfseteste.guarapari.es.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomGerarNFSe          := '';
+            ConfigURL.HomRecepcaoSincrono   := '';
+            ConfigURL.HomSubstituiNFSe      := '';
 
             ConfigURL.ProNomeCidade         := '';
             ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.guarapari.es.gov.br/NFSEws/Services.svc';
@@ -190,6 +196,9 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.guarapari.es.gov.br/NFSEws/Services.svc';
             ConfigURL.ProConsultaNFSe       := 'http://nfse.guarapari.es.gov.br/NFSEws/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://nfse.guarapari.es.gov.br/NFSEws/Services.svc';
+            ConfigURL.ProGerarNFSe          := '';
+            ConfigURL.ProRecepcaoSincrono   := '';
+            ConfigURL.ProSubstituiNFSe      := '';
            end;
            (*
   3304706: begin // Santo Antonio de Padua/RJ
@@ -290,6 +299,9 @@ begin
             ConfigURL.HomConsultaSitLoteRPS := 'http://mail.presidentevenceslau.sp.gov.br/NFSEWSTESTE/Services.svc';
             ConfigURL.HomConsultaNFSe       := 'http://mail.presidentevenceslau.sp.gov.br/NFSEWSTESTE/Services.svc';
             ConfigURL.HomCancelaNFSe        := 'http://mail.presidentevenceslau.sp.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomGerarNFSe          := '';
+            ConfigURL.HomRecepcaoSincrono   := '';
+            ConfigURL.HomSubstituiNFSe      := '';
 
             ConfigURL.ProNomeCidade         := '';
             ConfigURL.ProRecepcaoLoteRPS    := 'http://mail.presidentevenceslau.sp.gov.br/NFSEWS/Services.svc';
@@ -298,6 +310,9 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://mail.presidentevenceslau.sp.gov.br/NFSEWS/Services.svc';
             ConfigURL.ProConsultaNFSe       := 'http://mail.presidentevenceslau.sp.gov.br/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://mail.presidentevenceslau.sp.gov.br/NFSEWS/Services.svc';
+            ConfigURL.ProGerarNFSe          := '';
+            ConfigURL.ProRecepcaoSincrono   := '';
+            ConfigURL.ProSubstituiNFSe      := '';
            end;
 
   4101408: begin // Apucarana/PR
@@ -308,6 +323,9 @@ begin
             ConfigURL.HomConsultaSitLoteRPS := '';
             ConfigURL.HomConsultaNFSe       := '';
             ConfigURL.HomCancelaNFSe        := '';
+            ConfigURL.HomGerarNFSe          := '';
+            ConfigURL.HomRecepcaoSincrono   := '';
+            ConfigURL.HomSubstituiNFSe      := '';
 
             ConfigURL.ProNomeCidade         := '';
             ConfigURL.ProRecepcaoLoteRPS    := 'http://cetil.apucarana.pr.gov.br/NFSEWS/Services.svc';
@@ -316,6 +334,9 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://cetil.apucarana.pr.gov.br/NFSEWS/Services.svc';
             ConfigURL.ProConsultaNFSe       := 'http://cetil.apucarana.pr.gov.br/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://cetil.apucarana.pr.gov.br/NFSEWS/Services.svc';
+            ConfigURL.ProGerarNFSe          := '';
+            ConfigURL.ProRecepcaoSincrono   := '';
+            ConfigURL.ProSubstituiNFSe      := '';
            end;
            (*
   4102000: begin // Assis Chateaubriand/PR
@@ -380,6 +401,9 @@ begin
             ConfigURL.HomConsultaSitLoteRPS := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
             ConfigURL.HomConsultaNFSe       := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
             ConfigURL.HomCancelaNFSe        := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomGerarNFSe          := '';
+            ConfigURL.HomRecepcaoSincrono   := '';
+            ConfigURL.HomSubstituiNFSe      := '';
 
             ConfigURL.ProNomeCidade         := '';
             ConfigURL.ProRecepcaoLoteRPS    := 'http://177.20.255.244/NFSEWS/Services.svc';
@@ -388,6 +412,9 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://177.20.255.244/NFSEWS/Services.svc';
             ConfigURL.ProConsultaNFSe       := 'http://177.20.255.244/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://177.20.255.244/NFSEWS/Services.svc';
+            ConfigURL.ProGerarNFSe          := '';
+            ConfigURL.ProRecepcaoSincrono   := '';
+            ConfigURL.ProSubstituiNFSe      := '';
            end;
            (*
   4204004: begin // Catanduvas / SC
@@ -451,6 +478,9 @@ begin
             ConfigURL.HomConsultaSitLoteRPS := 'http://nfseteste.pmtcoroas.com.br/nfsewsteste/Services.svc';
             ConfigURL.HomConsultaNFSe       := 'http://nfseteste.pmtcoroas.com.br/nfsewsteste/Services.svc';
             ConfigURL.HomCancelaNFSe        := 'http://nfseteste.pmtcoroas.com.br/nfsewsteste/Services.svc';
+            ConfigURL.HomGerarNFSe          := '';
+            ConfigURL.HomRecepcaoSincrono   := '';
+            ConfigURL.HomSubstituiNFSe      := '';
 
             ConfigURL.ProNomeCidade         := '';
             ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.pmtcoroas.com.br/nfsews/Services.svc';
@@ -459,6 +489,9 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.pmtcoroas.com.br/nfsews/Services.svc';
             ConfigURL.ProConsultaNFSe       := 'http://nfse.pmtcoroas.com.br/nfsews/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://nfse.pmtcoroas.com.br/nfsews/Services.svc';
+            ConfigURL.ProGerarNFSe          := '';
+            ConfigURL.ProRecepcaoSincrono   := '';
+            ConfigURL.ProSubstituiNFSe      := '';
            end;
            (*
   4322400: begin // Uruguaiana/RS
@@ -512,19 +545,24 @@ end;
 function TProvedorGovBR.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
    acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + NameSpaceDad;
-//   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfsePorRpsEnvio' + NameSpaceDad;
    acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseEnvio' + NameSpaceDad;
    acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + NameSpaceDad +
                              '<' + Prefixo3 + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
-   acGerar:       Result := '';
- end;
+   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
+   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + NameSpaceDad;
+   acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio' + NameSpaceDad +
+                             '<' + Prefixo3 + 'SubstituicaoNfse>' +
+                              '<' + Prefixo3 + 'Pedido>' +
+                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+  end;
 end;
 
 function TProvedorGovBR.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
@@ -547,12 +585,14 @@ begin
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
    acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfseRpsEnvio>';
-//   acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfsePorRpsEnvio>';
    acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseEnvio>';
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
-   acGerar:       Result := '';
- end;
+   acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
+   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
+   acSubstituir:  Result := '</' + Prefixo3 + 'SubstituicaoNfse>' +
+                            '</' + Prefixo3 + 'SubstituirNfseEnvio>';
+  end;
 end;
 
 function TProvedorGovBR.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
@@ -689,13 +729,19 @@ end;
 function TProvedorGovBR.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+  Result := '';
 end;
 
 function TProvedorGovBR.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+  Result := '';
+end;
+
+function TProvedorGovBR.GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
 end;
 
 function TProvedorGovBR.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;

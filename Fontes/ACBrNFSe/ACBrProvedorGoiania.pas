@@ -71,6 +71,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -112,23 +113,25 @@ end;
 
 function TProvedorGoiania.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
- ConfigSchema: TConfigSchema;
+  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho := '2.01';
- ConfigSchema.VersaoDados     := '2.01';
- ConfigSchema.VersaoXML       := '2';
- ConfigSchema.NameSpaceXML    := 'http://nfse.goiania.go.gov.br/xsd/';
- ConfigSchema.Cabecalho       := 'nfse_gyn_v02.xsd';
- ConfigSchema.ServicoEnviar   := 'nfse_gyn_v02.xsd';
- ConfigSchema.ServicoConSit   := 'nfse_gyn_v02.xsd';
- ConfigSchema.ServicoConLot   := 'nfse_gyn_v02.xsd';
- ConfigSchema.ServicoConRps   := 'nfse_gyn_v02.xsd';
- ConfigSchema.ServicoConNfse  := 'nfse_gyn_v02.xsd';
- ConfigSchema.ServicoCancelar := 'nfse_gyn_v02.xsd';
-// ConfigSchema.ServicoGerar    := 'nfse_gyn_v02.xsd';
- ConfigSchema.DefTipos        := '';
+  ConfigSchema.VersaoCabecalho       := '2.01';
+  ConfigSchema.VersaoDados           := '2.01';
+  ConfigSchema.VersaoXML             := '2';
+  ConfigSchema.NameSpaceXML          := 'http://nfse.goiania.go.gov.br/xsd/';
+  ConfigSchema.Cabecalho             := 'nfse_gyn_v02.xsd';
+  ConfigSchema.ServicoEnviar         := 'nfse_gyn_v02.xsd';
+  ConfigSchema.ServicoConSit         := 'nfse_gyn_v02.xsd';
+  ConfigSchema.ServicoConLot         := 'nfse_gyn_v02.xsd';
+  ConfigSchema.ServicoConRps         := 'nfse_gyn_v02.xsd';
+  ConfigSchema.ServicoConNfse        := 'nfse_gyn_v02.xsd';
+  ConfigSchema.ServicoCancelar       := 'nfse_gyn_v02.xsd';
+  ConfigSchema.ServicoGerar          := 'nfse_gyn_v02.xsd';
+  ConfigSchema.ServicoEnviarSincrono := 'nfse_gyn_v02.xsd';
+  ConfigSchema.ServicoSubstituir     := 'nfse_gyn_v02.xsd';
+  ConfigSchema.DefTipos              := '';
 
- Result := ConfigSchema;
+  Result := ConfigSchema;
 end;
 
 function TProvedorGoiania.GetConfigURL(ACodCidade: Integer): TConfigURL;
@@ -143,6 +146,8 @@ begin
  	ConfigURL.HomConsultaNFSe       := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
  	ConfigURL.HomCancelaNFSe        := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
  	ConfigURL.HomGerarNFSe          := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
+  ConfigURL.HomRecepcaoSincrono   := '';
+  ConfigURL.HomSubstituiNFSe      := '';
 
  	ConfigURL.ProNomeCidade         := 'goiania';
  	ConfigURL.ProRecepcaoLoteRPS    := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
@@ -152,7 +157,9 @@ begin
  	ConfigURL.ProConsultaNFSe       := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
  	ConfigURL.ProCancelaNFSe        := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
   ConfigURL.ProGerarNFSe          := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
-
+  ConfigURL.ProRecepcaoSincrono   := '';
+  ConfigURL.ProSubstituiNFSe      := '';
+  
  	Result := ConfigURL;
 end;
 
@@ -183,15 +190,14 @@ end;
 function TProvedorGoiania.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 var
- xmlns: String;
+  xmlns: String;
 begin
- xmlns := ' xmlns="http://nfse.goiania.go.gov.br/xsd/nfse_gyn_v02.xsd"';
+  xmlns := ' xmlns="http://nfse.goiania.go.gov.br/xsd/nfse_gyn_v02.xsd"';
 
- case Acao of
+  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
-//   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + NameSpaceDad;
    acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRps' + NameSpaceDad;
    acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseEnvio' + NameSpaceDad;
    acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + NameSpaceDad +
@@ -199,7 +205,13 @@ begin
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + xmlns + NameSpaceDad;
- end;
+   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + NameSpaceDad;
+   acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio' + NameSpaceDad +
+                             '<' + Prefixo3 + 'SubstituicaoNfse>' +
+                              '<' + Prefixo3 + 'Pedido>' +
+                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+  end;
 end;
 
 function TProvedorGoiania.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
@@ -217,17 +229,19 @@ end;
 
 function TProvedorGoiania.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
-//   acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfseRpsEnvio>';
    acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfseRps>';
    acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseEnvio>';
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
- end;
+   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
+   acSubstituir:  Result := '</' + Prefixo3 + 'SubstituicaoNfse>' +
+                            '</' + Prefixo3 + 'SubstituirNfseEnvio>';
+  end;
 end;
 
 function TProvedorGoiania.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
@@ -299,7 +313,13 @@ end;
 function TProvedorGoiania.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+  Result := '';
+end;
+
+function TProvedorGoiania.GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
 end;
 
 function TProvedorGoiania.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;

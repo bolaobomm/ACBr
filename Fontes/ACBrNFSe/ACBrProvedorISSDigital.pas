@@ -71,6 +71,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -113,65 +114,71 @@ end;
 
 function TProvedorISSDigital.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
- ConfigSchema: TConfigSchema;
+  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho := '2.01';
- ConfigSchema.VersaoDados     := '2.01';
- ConfigSchema.VersaoXML       := '2';
- ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/';
- ConfigSchema.Cabecalho       := 'nfse.xsd';
- ConfigSchema.ServicoEnviar   := 'nfse.xsd';
- ConfigSchema.ServicoConSit   := 'nfse.xsd';
- ConfigSchema.ServicoConLot   := 'nfse.xsd';
- ConfigSchema.ServicoConRps   := 'nfse.xsd';
- ConfigSchema.ServicoConNfse  := 'nfse.xsd';
- ConfigSchema.ServicoCancelar := 'nfse.xsd';
- ConfigSchema.ServicoGerar    := 'nfse.xsd';
- ConfigSchema.DefTipos        := '';
+  ConfigSchema.VersaoCabecalho       := '2.01';
+  ConfigSchema.VersaoDados           := '2.01';
+  ConfigSchema.VersaoXML             := '2';
+  ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
+  ConfigSchema.Cabecalho             := 'nfse.xsd';
+  ConfigSchema.ServicoEnviar         := 'nfse.xsd';
+  ConfigSchema.ServicoConSit         := 'nfse.xsd';
+  ConfigSchema.ServicoConLot         := 'nfse.xsd';
+  ConfigSchema.ServicoConRps         := 'nfse.xsd';
+  ConfigSchema.ServicoConNfse        := 'nfse.xsd';
+  ConfigSchema.ServicoCancelar       := 'nfse.xsd';
+  ConfigSchema.ServicoGerar          := 'nfse.xsd';
+  ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
+  ConfigSchema.ServicoSubstituir     := 'nfse.xsd';
+  ConfigSchema.DefTipos              := '';
 
- Result := ConfigSchema;
+  Result := ConfigSchema;
 end;
 
 function TProvedorISSDigital.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
- ConfigURL: TConfigURL;
- URL: String;
+  ConfigURL: TConfigURL;
+  URL: String;
 begin
- case ACodCidade of
-  3144805: begin
-            URL := 'http://issonline.pnl.mg.gov.br/nfe/snissdigitalsvc';
-            ConfigURL.HomNomeCidade := ''; // 'novalima';
-            ConfigURL.ProNomeCidade := ''; // 'novalima';
-           end;
-  3157807: begin
-            URL := 'http://209.126.222.200/nfe/snissdigitalsvc';
-            ConfigURL.HomNomeCidade := '_santaluzia';
-            ConfigURL.ProNomeCidade := '_santaluzia';
-           end;
-  3300704: begin
-            URL := 'http://186.232.160.26/nfe/snissdigitalsvc';
-            ConfigURL.HomNomeCidade := ''; // 'cabo frio/rj';
-            ConfigURL.ProNomeCidade := ''; // 'cabo frio/rj';
-           end;
- end;
+  case ACodCidade of
+   3144805: begin
+              URL := 'http://issonline.pnl.mg.gov.br/nfe/snissdigitalsvc';
+              ConfigURL.HomNomeCidade := ''; // 'novalima';
+              ConfigURL.ProNomeCidade := ''; // 'novalima';
+            end;
+   3157807: begin
+              URL := 'http://209.126.222.200/nfe/snissdigitalsvc';
+              ConfigURL.HomNomeCidade := '_santaluzia';
+              ConfigURL.ProNomeCidade := '_santaluzia';
+            end;
+   3300704: begin
+              URL := 'http://186.232.160.26/nfe/snissdigitalsvc';
+              ConfigURL.HomNomeCidade := ''; // 'cabo frio/rj';
+              ConfigURL.ProNomeCidade := ''; // 'cabo frio/rj';
+            end;
+  end;
 
- ConfigURL.HomRecepcaoLoteRPS    := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.HomConsultaLoteRPS    := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.HomConsultaNFSeRPS    := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.HomConsultaSitLoteRPS := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.HomConsultaNFSe       := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.HomCancelaNFSe        := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.HomGerarNFSe          := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+  ConfigURL.HomRecepcaoLoteRPS    := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+  ConfigURL.HomConsultaLoteRPS    := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+  ConfigURL.HomConsultaNFSeRPS    := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+  ConfigURL.HomConsultaSitLoteRPS := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+  ConfigURL.HomConsultaNFSe       := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+  ConfigURL.HomCancelaNFSe        := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+  ConfigURL.HomGerarNFSe          := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+  ConfigURL.HomRecepcaoSincrono   := '';
+  ConfigURL.HomSubstituiNFSe      := '';
 
- ConfigURL.ProRecepcaoLoteRPS    := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.ProConsultaLoteRPS    := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.ProConsultaNFSeRPS    := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.ProConsultaSitLoteRPS := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.ProConsultaNFSe       := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.ProCancelaNFSe        := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.ProGerarNFSe          := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+  ConfigURL.ProRecepcaoLoteRPS    := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+  ConfigURL.ProConsultaLoteRPS    := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+  ConfigURL.ProConsultaNFSeRPS    := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+  ConfigURL.ProConsultaSitLoteRPS := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+  ConfigURL.ProConsultaNFSe       := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+  ConfigURL.ProCancelaNFSe        := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+  ConfigURL.ProGerarNFSe          := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+  ConfigURL.ProRecepcaoSincrono   := '';
+  ConfigURL.ProSubstituiNFSe      := '';
 
- Result := ConfigURL;
+  Result := ConfigURL;
 end;
 
 function TProvedorISSDigital.GetURI(URI: String): String;
@@ -200,28 +207,30 @@ end;
 
 function TProvedorISSDigital.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
-var
- xmlns: String;
 begin
- xmlns := NameSpaceDad;
-
- case Acao of
-   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + xmlns;
-   acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + xmlns;
-   acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + xmlns;
-   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + xmlns;
-   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseServicoPrestadoEnvio' + xmlns;
+  case Acao of
+   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
+   acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
+   acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
+   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + NameSpaceDad;
+   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseServicoPrestadoEnvio' + NameSpaceDad;
    {
-   acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + xmlns +
+   acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + NameSpaceDad +
                              '<' + Prefixo3 + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
    }
-   acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + xmlns +
+   acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + NameSpaceDad +
                              '<' + Prefixo3 + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento';
-   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + xmlns;
- end;
+   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
+   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + NameSpaceDad;
+   acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio' + NameSpaceDad +
+                             '<' + Prefixo3 + 'SubstituicaoNfse>' +
+                              '<' + Prefixo3 + 'Pedido>' +
+                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+  end;
 end;
 
 function TProvedorISSDigital.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
@@ -242,7 +251,7 @@ end;
 
 function TProvedorISSDigital.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
@@ -251,7 +260,10 @@ begin
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
- end;
+   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
+   acSubstituir:  Result := '</' + Prefixo3 + 'SubstituicaoNfse>' +
+                            '</' + Prefixo3 + 'SubstituirNfseEnvio>';
+  end;
 end;
 
 function TProvedorISSDigital.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
@@ -484,7 +496,13 @@ end;
 function TProvedorISSDigital.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+  Result := '';
+end;
+
+function TProvedorISSDigital.GeraEnvelopeSubstituirNFSe(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
 end;
 
 function TProvedorISSDigital.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;

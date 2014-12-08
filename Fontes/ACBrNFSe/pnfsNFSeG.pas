@@ -90,6 +90,14 @@ type
                                         NumeroLote, CNPJ, IM, QtdeNotas: String;
                                         Notas, TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
 
+     class function Gera_DadosMsgSubstituirNFSe(Prefixo3, Prefixo4, Identificador,
+                                   NameSpaceDad, NumeroNFSe, CNPJ, IM,
+                                   CodMunicipio, CodCancelamento,
+                                   MotivoCancelamento, VersaoDados, VersaoXML,
+                                   NumeroLote, QtdeNotas: String;
+                                   Notas, TagI, TagF: AnsiString;
+                                   AProvedor: TnfseProvedor = proNenhum): AnsiString;
+
      //-------------------------------------------------------------------------
      // As classes abaixo são exclusivas para o provedor DSF
      //-------------------------------------------------------------------------
@@ -725,7 +733,7 @@ begin
                                    VersaoDados, VersaoXML, NumeroLote, CNPJ, IM,
                                    QtdeNotas, Notas, TagI, TagF, AProvedor);
 
- if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, 
+ if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco,
                   proBetha, proBetim, proBHISS, proDBSeller, proDigifred,
                   proEquiplano, profintelISS, proFISSLex, proGinfes, proGoiania,
                   proGovBR, proGovDigital, proIssCuritiba, proISSDigital,
@@ -734,6 +742,27 @@ begin
                   proSimplISS, proThema, proTiplan, proWebISS, proProdata,
                   proAgili, proSpeedGov, proPronim, proVirtual,
                   proSalvador] then Result := '';
+end;
+
+class function TNFSeG.Gera_DadosMsgSubstituirNFSe(Prefixo3, Prefixo4, Identificador,
+                                   NameSpaceDad, NumeroNFSe, CNPJ, IM,
+                                   CodMunicipio, CodCancelamento,
+                                   MotivoCancelamento, VersaoDados,
+                                   VersaoXML, NumeroLote, QtdeNotas: String;
+                                   Notas, TagI, TagF: AnsiString;
+                                   AProvedor: TnfseProvedor = proNenhum): AnsiString;
+var
+ DadosMsg: AnsiString;
+begin
+ DadosMsg := Gera_DadosMsgCancelarNFSe(Prefixo4, NameSpaceDad, NumeroNFSe, CNPJ,
+                                     IM, CodMunicipio, CodCancelamento, '', '',
+                                     AProvedor, MotivoCancelamento);
+ DadosMsg := DadosMsg + '</' + Prefixo3 + 'Pedido>';
+ DadosMsg := DadosMsg + Notas;
+ 
+ Result := TagI + DadosMsg + TagF;
+
+ if AProvedor in [proNenhum] then Result := '';
 end;
 
 //-------------------------------------------------------------------------

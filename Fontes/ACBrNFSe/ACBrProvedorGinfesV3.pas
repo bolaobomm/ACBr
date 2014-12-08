@@ -71,6 +71,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -124,27 +125,30 @@ end;
 
 function TProvedorGinfesV3.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
- ConfigSchema: TConfigSchema;
+  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho := '3';
- ConfigSchema.VersaoDados     := '3';
- ConfigSchema.VersaoXML       := '1';
- ConfigSchema.NameSpaceXML    := 'http://www.ginfes.com.br/';
- ConfigSchema.Cabecalho       := 'cabecalho_v03.xsd';
- ConfigSchema.ServicoEnviar   := 'servico_enviar_lote_rps_envio_v03.xsd';
- ConfigSchema.ServicoConSit   := 'servico_consultar_situacao_lote_rps_envio_v03.xsd';
- ConfigSchema.ServicoConLot   := 'servico_consultar_lote_rps_envio_v03.xsd';
- ConfigSchema.ServicoConRps   := 'servico_consultar_nfse_rps_envio_v03.xsd';
- ConfigSchema.ServicoConNfse  := 'servico_consultar_nfse_envio_v03.xsd';
+  ConfigSchema.VersaoCabecalho := '3';
+  ConfigSchema.VersaoDados     := '3';
+  ConfigSchema.VersaoXML       := '1';
+  ConfigSchema.NameSpaceXML    := 'http://www.ginfes.com.br/';
+  ConfigSchema.Cabecalho       := 'cabecalho_v03.xsd';
+  ConfigSchema.ServicoEnviar   := 'servico_enviar_lote_rps_envio_v03.xsd';
+  ConfigSchema.ServicoConSit   := 'servico_consultar_situacao_lote_rps_envio_v03.xsd';
+  ConfigSchema.ServicoConLot   := 'servico_consultar_lote_rps_envio_v03.xsd';
+  ConfigSchema.ServicoConRps   := 'servico_consultar_nfse_rps_envio_v03.xsd';
+  ConfigSchema.ServicoConNfse  := 'servico_consultar_nfse_envio_v03.xsd';
 
- case ACodCidade of
-  3300456: ConfigSchema.ServicoCancelar := 'servico_cancelar_nfse_envio_v03.xsd' // Schema usado por Belford Roxo/RJ
-  else ConfigSchema.ServicoCancelar := 'servico_cancelar_nfse_envio_v02.xsd';
- end;
+  case ACodCidade of
+   3300456: ConfigSchema.ServicoCancelar := 'servico_cancelar_nfse_envio_v03.xsd' // Schema usado por Belford Roxo/RJ
+   else ConfigSchema.ServicoCancelar := 'servico_cancelar_nfse_envio_v02.xsd';
+  end;
 
- ConfigSchema.DefTipos        := 'tipos_v03.xsd';
+  ConfigSchema.ServicoGerar          := '';
+  ConfigSchema.ServicoEnviarSincrono := '';
+  ConfigSchema.ServicoSubstituir     := '';
+  ConfigSchema.DefTipos              := 'tipos_v03.xsd';
 
- Result := ConfigSchema;
+  Result := ConfigSchema;
 end;
 
 function TProvedorGinfesV3.GetConfigURL(ACodCidade: Integer): TConfigURL;
@@ -160,6 +164,9 @@ begin
    ConfigURL.HomConsultaSitLoteRPS := 'http://isshomo.sefin.fortaleza.ce.gov.br:80/grpfor-iss/ServiceGinfesImplService';
    ConfigURL.HomConsultaNFSe       := 'http://isshomo.sefin.fortaleza.ce.gov.br:80/grpfor-iss/ServiceGinfesImplService';
    ConfigURL.HomCancelaNFSe        := 'http://isshomo.sefin.fortaleza.ce.gov.br:80/grpfor-iss/ServiceGinfesImplService';
+   ConfigURL.HomGerarNFSe          := '';
+   ConfigURL.HomRecepcaoSincrono   := '';
+   ConfigURL.HomSubstituiNFSe      := '';
 
    ConfigURL.ProNomeCidade         := '';
    ConfigURL.ProRecepcaoLoteRPS    := 'https://iss.fortaleza.ce.gov.br/grpfor-iss/ServiceGinfesImplService';
@@ -168,6 +175,9 @@ begin
    ConfigURL.ProConsultaSitLoteRPS := 'https://iss.fortaleza.ce.gov.br/grpfor-iss/ServiceGinfesImplService';
    ConfigURL.ProConsultaNFSe       := 'https://iss.fortaleza.ce.gov.br/grpfor-iss/ServiceGinfesImplService';
    ConfigURL.ProCancelaNFSe        := 'https://iss.fortaleza.ce.gov.br/grpfor-iss/ServiceGinfesImplService';
+   ConfigURL.ProGerarNFSe          := '';
+   ConfigURL.ProRecepcaoSincrono   := '';
+   ConfigURL.ProSubstituiNFSe      := '';
    (*
    ConfigURL.HomNomeCidade         := '';
    ConfigURL.HomRecepcaoLoteRPS    := 'https://homologacao.issfortaleza.com.br/ServiceGinfesImpl';
@@ -194,6 +204,9 @@ begin
    ConfigURL.HomConsultaSitLoteRPS := 'https://homologacao.ginfes.com.br/ServiceGinfesImpl';
    ConfigURL.HomConsultaNFSe       := 'https://homologacao.ginfes.com.br/ServiceGinfesImpl';
    ConfigURL.HomCancelaNFSe        := 'https://homologacao.ginfes.com.br/ServiceGinfesImpl';
+   ConfigURL.HomGerarNFSe          := '';
+   ConfigURL.HomRecepcaoSincrono   := '';
+   ConfigURL.HomSubstituiNFSe      := '';
 
    ConfigURL.ProNomeCidade         := '';
    ConfigURL.ProRecepcaoLoteRPS    := 'https://producao.ginfes.com.br/ServiceGinfesImpl';
@@ -202,6 +215,9 @@ begin
    ConfigURL.ProConsultaSitLoteRPS := 'https://producao.ginfes.com.br/ServiceGinfesImpl';
    ConfigURL.ProConsultaNFSe       := 'https://producao.ginfes.com.br/ServiceGinfesImpl';
    ConfigURL.ProCancelaNFSe        := 'https://producao.ginfes.com.br/ServiceGinfesImpl';
+   ConfigURL.ProGerarNFSe          := '';
+   ConfigURL.ProRecepcaoSincrono   := '';
+   ConfigURL.ProSubstituiNFSe      := '';
   end;
 
  Result := ConfigURL;
@@ -235,7 +251,7 @@ end;
 function TProvedorGinfesV3.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
@@ -244,8 +260,14 @@ begin
    acCancelar:    Result := '<CancelarNfseEnvio' +
                                ' xmlns="http://www.ginfes.com.br/servico_cancelar_nfse_envio"' +
                                ' xmlns:' + stringReplace(Prefixo4, ':', '', []) + '="http://www.ginfes.com.br/tipos">';
-   acGerar:       Result := '';
- end;
+   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
+   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + NameSpaceDad;
+   acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio' + NameSpaceDad +
+                             '<' + Prefixo3 + 'SubstituicaoNfse>' +
+                              '<' + Prefixo3 + 'Pedido>' +
+                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+  end;
 end;
 
 function TProvedorGinfesV3.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
@@ -263,15 +285,18 @@ end;
 
 function TProvedorGinfesV3.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
    acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfseRpsEnvio>';
    acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseEnvio>';
    acCancelar:    Result := '</CancelarNfseEnvio>';
-   acGerar:       Result := '';
- end;
+   acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
+   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
+   acSubstituir:  Result := '</' + Prefixo3 + 'SubstituicaoNfse>' +
+                            '</' + Prefixo3 + 'SubstituirNfseEnvio>';
+  end;
 end;
 
 function TProvedorGinfesV3.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
@@ -457,13 +482,19 @@ end;
 function TProvedorGinfesV3.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+  Result := '';
 end;
 
 function TProvedorGinfesV3.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+  Result := '';
+end;
+
+function TProvedorGinfesV3.GeraEnvelopeSubstituirNFSe(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
 end;
 
 function TProvedorGinfesV3.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;

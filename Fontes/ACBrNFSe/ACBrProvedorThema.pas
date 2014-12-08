@@ -74,6 +74,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -119,22 +120,25 @@ end;
 
 function TProvedorThema.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
- ConfigSchema: TConfigSchema;
+  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho := '1.00';
- ConfigSchema.VersaoDados     := '1.00';
- ConfigSchema.VersaoXML       := '1';
- ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/ABRASF/arquivos/';
- ConfigSchema.Cabecalho       := 'nfse.xsd';
- ConfigSchema.ServicoEnviar   := 'nfse.xsd';
- ConfigSchema.ServicoConSit   := 'nfse.xsd';
- ConfigSchema.ServicoConLot   := 'nfse.xsd';
- ConfigSchema.ServicoConRps   := 'nfse.xsd';
- ConfigSchema.ServicoConNfse  := 'nfse.xsd';
- ConfigSchema.ServicoCancelar := 'nfse.xsd';
- ConfigSchema.DefTipos        := '';
+  ConfigSchema.VersaoCabecalho       := '1.00';
+  ConfigSchema.VersaoDados           := '1.00';
+  ConfigSchema.VersaoXML             := '1';
+  ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/ABRASF/arquivos/';
+  ConfigSchema.Cabecalho             := 'nfse.xsd';
+  ConfigSchema.ServicoEnviar         := 'nfse.xsd';
+  ConfigSchema.ServicoConSit         := 'nfse.xsd';
+  ConfigSchema.ServicoConLot         := 'nfse.xsd';
+  ConfigSchema.ServicoConRps         := 'nfse.xsd';
+  ConfigSchema.ServicoConNfse        := 'nfse.xsd';
+  ConfigSchema.ServicoCancelar       := 'nfse.xsd';
+  ConfigSchema.ServicoGerar          := 'nfse.xsd';
+  ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
+  ConfigSchema.ServicoSubstituir     := 'nfse.xsd';
+  ConfigSchema.DefTipos              := '';
 
- Result := ConfigSchema;
+  Result := ConfigSchema;
 end;
 
 function TProvedorThema.GetConfigURL(ACodCidade: Integer): TConfigURL;
@@ -146,6 +150,10 @@ begin
  sHTTPPro := 'https://';
 
  case ACodCidade of
+  4205902: begin // Gaspar/SC
+            ConfigURL.HomNomeCidade := 'nfsehml.gaspar.sc.gov.br';
+            ConfigURL.ProNomeCidade := 'nfse.gaspar.sc.gov.br/nfse';
+           end;
   4303103: begin // Cachoeirinha/RS
             ConfigURL.HomNomeCidade := 'nfsehomologacao.cachoeirinha.rs.gov.br/nfse';
             ConfigURL.ProNomeCidade := 'nfse.cachoeirinha.rs.gov.br/nfse';
@@ -205,6 +213,9 @@ begin
  ConfigURL.HomConsultaSitLoteRPS := sHTTPHom + ConfigURL.HomNomeCidade + '/services/NFSEconsulta';
  ConfigURL.HomConsultaNFSe       := sHTTPHom + ConfigURL.HomNomeCidade + '/services/NFSEconsulta';
  ConfigURL.HomCancelaNFSe        := sHTTPHom + ConfigURL.HomNomeCidade + '/services/NFSEcancelamento';
+ ConfigURL.HomGerarNFSe          := '';
+ ConfigURL.HomRecepcaoSincrono   := '';
+ ConfigURL.HomSubstituiNFSe      := '';
 
  ConfigURL.ProRecepcaoLoteRPS    := sHTTPPro + ConfigURL.ProNomeCidade + '/services/NFSEremessa';
  ConfigURL.ProConsultaLoteRPS    := sHTTPPro + ConfigURL.ProNomeCidade + '/services/NFSEconsulta';
@@ -212,6 +223,9 @@ begin
  ConfigURL.ProConsultaSitLoteRPS := sHTTPPro + ConfigURL.ProNomeCidade + '/services/NFSEconsulta';
  ConfigURL.ProConsultaNFSe       := sHTTPPro + ConfigURL.ProNomeCidade + '/services/NFSEconsulta';
  ConfigURL.ProCancelaNFSe        := sHTTPPro + ConfigURL.ProNomeCidade + '/services/NFSEcancelamento';
+ ConfigURL.ProGerarNFSe          := '';
+ ConfigURL.ProRecepcaoSincrono   := '';
+ ConfigURL.ProSubstituiNFSe      := '';
 
  Result := ConfigURL;
 end;
@@ -231,7 +245,8 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := True;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -243,7 +258,7 @@ end;
 function TProvedorThema.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
@@ -252,8 +267,14 @@ begin
    acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + NameSpaceDad +
                              '<' + Prefixo3 + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento Id' + '="' + URI + '">';
-   acGerar:       Result := '';
- end;
+   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
+   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + NameSpaceDad;
+   acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio' + NameSpaceDad +
+                             '<' + Prefixo3 + 'SubstituicaoNfse>' +
+                              '<' + Prefixo3 + 'Pedido>' +
+                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+  end;
 end;
 
 function TProvedorThema.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
@@ -271,7 +292,7 @@ end;
 
 function TProvedorThema.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
@@ -279,8 +300,11 @@ begin
    acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseEnvio>';
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
-   acGerar:       Result := '';
- end;
+   acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
+   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
+   acSubstituir:  Result := '</' + Prefixo3 + 'SubstituicaoNfse>' +
+                            '</' + Prefixo3 + 'SubstituirNfseEnvio>';
+  end;
 end;
 
 function TProvedorThema.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
@@ -422,13 +446,19 @@ end;
 function TProvedorThema.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+  Result := '';
 end;
 
 function TProvedorThema.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+  Result := '';
+end;
+
+function TProvedorThema.GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+  Result := '';
 end;
 
 function TProvedorThema.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
@@ -441,31 +471,23 @@ begin
    acConsNFSe:    Result := 'urn:consultarNfse';
    acCancelar:    Result := 'urn:cancelarNfse';
    acGerar:       Result := '';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
 function TProvedorThema.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
 begin
  case Acao of
-   acRecepcionar: begin
-                   Result := SeparaDados( RetornoWS, 'ns:return' );
-                  end;
-   acConsSit:     begin
-                   Result := SeparaDados( RetornoWS, 'ns:return' );
-                  end;
-   acConsLote:    begin
-                   Result := SeparaDados( RetornoWS, 'ns:return' );
-                  end;
-   acConsNFSeRps: begin
-                   Result := SeparaDados( RetornoWS, 'ns:return' );
-                  end;
-   acConsNFSe:    begin
-                   Result := SeparaDados( RetornoWS, 'ns:return' );
-                  end;
-   acCancelar:    begin
-                   Result := SeparaDados( RetornoWS, 'ns:return' );
-                  end;
-   acGerar:       Result := '';
+   acRecepcionar: Result := SeparaDados( RetornoWS, 'ns:return' );
+   acConsSit:     Result := SeparaDados( RetornoWS, 'ns:return' );
+   acConsLote:    Result := SeparaDados( RetornoWS, 'ns:return' );
+   acConsNFSeRps: Result := SeparaDados( RetornoWS, 'ns:return' );
+   acConsNFSe:    Result := SeparaDados( RetornoWS, 'ns:return' );
+   acCancelar:    Result := SeparaDados( RetornoWS, 'ns:return' );
+   acGerar:       Result := RetornoWS;
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 
@@ -481,7 +503,7 @@ end;
 function TProvedorThema.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
 begin
- Result := '';
+  Result := '';
 end;
 
 end.

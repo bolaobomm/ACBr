@@ -71,6 +71,7 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -110,24 +111,25 @@ end;
 
 function TProvedorVitoria.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
- ConfigSchema: TConfigSchema;
+  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho       := '2.01';
- ConfigSchema.VersaoDados           := '2.01';
- ConfigSchema.VersaoXML             := '2';
- ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
- ConfigSchema.Cabecalho             := 'nfse.xsd';
- ConfigSchema.ServicoEnviar         := 'nfse.xsd';
- ConfigSchema.ServicoConSit         := 'nfse.xsd';
- ConfigSchema.ServicoConLot         := 'nfse.xsd';
- ConfigSchema.ServicoConRps         := 'nfse.xsd';
- ConfigSchema.ServicoConNfse        := 'nfse.xsd';
- ConfigSchema.ServicoCancelar       := 'nfse.xsd';
- ConfigSchema.ServicoGerar          := 'nfse.xsd';
- ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
- ConfigSchema.DefTipos              := '';
+  ConfigSchema.VersaoCabecalho       := '2.01';
+  ConfigSchema.VersaoDados           := '2.01';
+  ConfigSchema.VersaoXML             := '2';
+  ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
+  ConfigSchema.Cabecalho             := 'nfse.xsd';
+  ConfigSchema.ServicoEnviar         := 'nfse.xsd';
+  ConfigSchema.ServicoConSit         := 'nfse.xsd';
+  ConfigSchema.ServicoConLot         := 'nfse.xsd';
+  ConfigSchema.ServicoConRps         := 'nfse.xsd';
+  ConfigSchema.ServicoConNfse        := 'nfse.xsd';
+  ConfigSchema.ServicoCancelar       := 'nfse.xsd';
+  ConfigSchema.ServicoGerar          := 'nfse.xsd';
+  ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
+  ConfigSchema.ServicoSubstituir     := 'nfse.xsd';
+  ConfigSchema.DefTipos              := '';
 
- Result := ConfigSchema;
+  Result := ConfigSchema;
 end;
 
 function TProvedorVitoria.GetConfigURL(ACodCidade: Integer): TConfigURL;
@@ -145,6 +147,7 @@ begin
              ConfigURL.HomCancelaNFSe        := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
              ConfigURL.HomGerarNFSe          := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
              ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
+             ConfigURL.HomSubstituiNFSe      := '';
 
              ConfigURL.ProNomeCidade         := 'https://issonline.vilavelha.es.gov.br/SistemaISS/WebService';
              ConfigURL.ProRecepcaoLoteRPS    := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
@@ -155,6 +158,7 @@ begin
              ConfigURL.ProCancelaNFSe        := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
              ConfigURL.ProGerarNFSe          := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
              ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
+             ConfigURL.ProSubstituiNFSe      := '';
            end;
   3205309: begin // Vitória/ES
              ConfigURL.HomNomeCidade         := 'https://wsnfsehomologa.vitoria.es.gov.br';
@@ -166,6 +170,7 @@ begin
              ConfigURL.HomCancelaNFSe        := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
              ConfigURL.HomGerarNFSe          := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
              ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
+             ConfigURL.HomSubstituiNFSe      := '';
 
              ConfigURL.ProNomeCidade         := 'https://wsnfse.vitoria.es.gov.br';
              ConfigURL.ProRecepcaoLoteRPS    := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
@@ -176,8 +181,10 @@ begin
              ConfigURL.ProCancelaNFSe        := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
              ConfigURL.ProGerarNFSe          := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
              ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
+             ConfigURL.ProSubstituiNFSe      := '';
            end;
  end;
+
  Result := ConfigURL;
 end;
 
@@ -203,13 +210,13 @@ end;
 
 function TProvedorVitoria.GetValidarLote: Boolean;
 begin
- Result := True;
+  Result := True;
 end;
 
 function TProvedorVitoria.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
@@ -221,15 +228,20 @@ begin
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
    acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + NameSpaceDad;
- end;
+   acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio' + NameSpaceDad +
+                             '<' + Prefixo3 + 'SubstituicaoNfse>' +
+                              '<' + Prefixo3 + 'Pedido>' +
+                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+  end;
 end;
 
 function TProvedorVitoria.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
   NameSpaceCab: String; ACodCidade: Integer): AnsiString;
 begin
- Result := '<' + Prefixo2 + 'cabecalho versao="'  + VersaoLayOut + '"' + NameSpaceCab +
-            '<versaoDados>' + VersaoDados + '</versaoDados>'+
-           '</' + Prefixo2 + 'cabecalho>';
+  Result := '<' + Prefixo2 + 'cabecalho versao="'  + VersaoLayOut + '"' + NameSpaceCab +
+             '<versaoDados>' + VersaoDados + '</versaoDados>'+
+            '</' + Prefixo2 + 'cabecalho>';
 end;
 
 function TProvedorVitoria.Gera_DadosSenha(CNPJ, Senha: String): AnsiString;
@@ -239,7 +251,7 @@ end;
 
 function TProvedorVitoria.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
- case Acao of
+  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
@@ -249,7 +261,9 @@ begin
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
    acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
- end;
+   acSubstituir:  Result := '</' + Prefixo3 + 'SubstituicaoNfse>' +
+                            '</' + Prefixo3 + 'SubstituirNfseEnvio>';
+  end;
 end;
 
 function TProvedorVitoria.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
@@ -366,6 +380,12 @@ begin
              '</RecepcionarLoteRpsSincrono>' +
             '</s:Body>' +
            '</s:Envelope>';
+end;
+
+function TProvedorVitoria.GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ Result := '';
 end;
 
 function TProvedorVitoria.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;

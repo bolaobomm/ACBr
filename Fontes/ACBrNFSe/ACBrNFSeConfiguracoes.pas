@@ -75,6 +75,7 @@ type
     ServicoCancelar: String;
     ServicoGerar: String;
     ServicoEnviarSincrono: String;
+    ServicoSubstituir: String;
     DefTipos: String;
   end;
 
@@ -89,6 +90,8 @@ type
     HomCancelaNFSe: String;
     HomGerarNFSe: String;
     HomRecepcaoSincrono: String;
+    HomSubstituiNFSe: String;
+
     ProNomeCidade:String;
     ProRecepcaoLoteRPS: String;
     ProConsultaLoteRPS: String;
@@ -99,6 +102,7 @@ type
     ProCancelaNFSe: String;
     ProGerarNFSe: String;
     ProRecepcaoSincrono: String;
+    ProSubstituiNFSe: String;
   end;
 
  TCertificadosConf = class(TComponent)
@@ -183,6 +187,7 @@ type
     FServicoCancelar: String;
     FServicoGerar: String;
     FServicoEnviarSincrono: String;
+    FServicoSubstituir: String;
     FDefTipos: String;
 
     // URLs
@@ -196,6 +201,8 @@ type
     FHomCancelaNFSe: String;
     FHomGerarNFSe: String;
     FHomRecepcaoSincrono: String;
+    FHomSubstituiNFSe: String;
+
     FProNomeCidade:String;
     FProRecepcaoLoteRPS: String;
     FProConsultaLoteRPS: String;
@@ -206,6 +213,8 @@ type
     FProCancelaNFSe: String;
     FProGerarNFSe: String;
     FProRecepcaoSincrono: String;
+    FProSubstituiNFSe: String;
+
     FConsultaLoteAposEnvio: Boolean;
 
     procedure SetAmbiente(AValue: TpcnTipoAmbiente);
@@ -257,6 +266,7 @@ type
     property ServicoCancelar: String read FServicoCancelar;
     property ServicoGerar: String read FServicoGerar;
     property ServicoEnviarSincrono: String read FServicoEnviarSincrono;
+    property ServicoSubstituir: String read FServicoSubstituir;
     property DefTipos: String read FDefTipos;
 
     // URLs
@@ -270,6 +280,8 @@ type
     property HomCancelaNFSe: String read FHomCancelaNFSe;
     property HomGerarNFSe: String read FHomGerarNFSe;
     property HomRecepcaoSincrono: String read FHomRecepcaoSincrono;
+    property HomSubstituiNFSe: String read FHomSubstituiNFSe;
+
     property ProNomeCidade: String read FProNomeCidade;
     property ProRecepcaoLoteRPS: String read FProRecepcaoLoteRPS;
     property ProConsultaLoteRPS: String read FProConsultaLoteRPS;
@@ -280,6 +292,7 @@ type
     property ProCancelaNFSe: String read FProCancelaNFSe;
     property ProGerarNFSe: String read FProGerarNFSe;
     property ProRecepcaoSincrono: String read FProRecepcaoSincrono;
+    property ProSubstituiNFSe: String read FProSubstituiNFSe;
   end;
 
  TGeralConf = class(TComponent)
@@ -369,32 +382,7 @@ type
    function Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados, NameSpaceCab: String; ACodCidade: Integer): AnsiString; Virtual; Abstract;
    function Gera_DadosSenha(CNPJ, Senha: String): AnsiString; Virtual; Abstract;
    function Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString; Virtual; Abstract;
-   (*
-   function Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4, Identificador,
-                                    NameSpaceDad, VersaoDados, VersaoXML,
-                                    NumeroLote, CNPJ, IM, QtdeNotas: String;
-                                    Notas, TagI, TagF: AnsiString): AnsiString; Virtual; Abstract;
-   function Gera_DadosMsgConsSitLote(Prefixo3, Prefixo4, NameSpaceDad,
-                                     VersaoXML, Protocolo, CNPJ, IM: String;
-                                     TagI, TagF: AnsiString): AnsiString; Virtual; Abstract;
-   function Gera_DadosMsgConsLote(Prefixo3, Prefixo4, NameSpaceDad,
-                                  VersaoXML, Protocolo, CNPJ, IM: String;
-                                  TagI, TagF: AnsiString): AnsiString; Virtual; Abstract;
-   function Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
-                                     NumeroRps, SerieRps, TipoRps, CNPJ, IM: String;
-                                     TagI, TagF: AnsiString): AnsiString; Virtual; Abstract;
-   function Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
-                                  CNPJ, IM: String;
-                                  DataInicial, DataFinal: TDateTime;
-                                  TagI, TagF: AnsiString; NumeroNFSe: string = ''): AnsiString; Virtual; Abstract;
-   function Gera_DadosMsgCancelarNFSe(Prefixo4, NameSpaceDad, NumeroNFSe, CNPJ, IM,
-                                      CodMunicipio, CodCancelamento: String;
-                                      TagI, TagF: AnsiString): AnsiString; Virtual; Abstract;
-   function Gera_DadosMsgGerarNFSe(Prefixo3, Prefixo4, Identificador,
-                                   NameSpaceDad, VersaoDados, VersaoXML,
-                                   NumeroLote, CNPJ, IM, QtdeNotas: String;
-                                   Notas, TagI, TagF: AnsiString): AnsiString; Virtual; Abstract;
-   *)
+
    function GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; Virtual; Abstract;
    function GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; Virtual; Abstract;
    function GeraEnvelopeConsultarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; Virtual; Abstract;
@@ -403,6 +391,8 @@ type
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; Virtual; Abstract;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; Virtual; Abstract;
    function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; Virtual; Abstract;
+   function GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; Virtual; Abstract;
+
    function GeraEnvelopeConsultarSequencialRps(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; Virtual; Abstract;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; Virtual; Abstract;
@@ -896,6 +886,7 @@ begin
  FServicoCancelar       := ConfigSchema.ServicoCancelar;
  FServicoGerar          := ConfigSchema.ServicoGerar;
  FServicoEnviarSincrono := ConfigSchema.ServicoEnviarSincrono;
+ FServicoSubstituir     := ConfigSchema.ServicoSubstituir;
  FDefTipos              := ConfigSchema.DefTipos;
 
  ConfigURL := FProvedorClass.GetConfigURL(FCodigoMunicipio);
@@ -910,6 +901,7 @@ begin
  FHomCancelaNFSe        := ConfigURL.HomCancelaNFSe;
  FHomGerarNFSe          := ConfigURL.HomGerarNFSe;
  FHomRecepcaoSincrono   := ConfigURL.HomRecepcaoSincrono;
+ FHomSubstituiNFSe      := ConfigURL.HomSubstituiNFSe;
 
  FProNomeCidade         := ConfigURL.ProNomeCidade;
  FProRecepcaoLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
@@ -921,6 +913,7 @@ begin
  FProCancelaNFSe        := ConfigURL.ProCancelaNFSe;
  FProGerarNFSe          := ConfigURL.ProGerarNFSe;
  FProRecepcaoSincrono   := ConfigURL.ProRecepcaoSincrono;
+ FProSubstituiNFSe      := ConfigURL.ProSubstituiNFSe;
 end;
 
 procedure TWebServicesConf.SetIntervaloTentativas(const Value: Cardinal);
