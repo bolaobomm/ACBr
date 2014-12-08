@@ -219,6 +219,63 @@ begin
               raise Exception.Create(ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.xMotivo);
            end;
          end
+        else if Cmd.Metodo = 'encerrarmdfe' then
+         begin
+
+           if not ValidarChave('MDFe'+Cmd.Params(0)) then
+              raise Exception.Create('Chave '+Cmd.Params(0)+' inválida.')
+           else
+              ACBrMDFe1.WebServices.Consulta.MDFeChave := Cmd.Params(0);
+
+           if not ACBrMDFe1.WebServices.Consulta.Executar then
+              raise Exception.Create(ACBrMDFe1.WebServices.Consulta.Msg);
+
+           ACBrMDFe1.EventoMDFe.Evento.Clear;
+           with ACBrMDFe1.EventoMDFe.Evento.Add do
+           begin
+             infEvento.CNPJ := Cmd.Params(3);
+             if Trim(infEvento.CNPJ) = '' then
+                infEvento.CNPJ := copy(DFeUtil.LimpaNumero(ACBrMDFe1.WebServices.Consulta.MDFeChave),7,14)
+             else
+             begin
+                if not ValidarCNPJ(Cmd.Params(3)) then
+                  raise Exception.Create('CNPJ '+Cmd.Params(3)+' inválido.')
+             end;
+
+             infEvento.cOrgao   := StrToIntDef(copy(DFeUtil.LimpaNumero(ACBrMDFe1.WebServices.Consulta.MDFeChave),1,2),0);
+             infEvento.dhEvento := now;
+             infEvento.tpEvento := teEncerramento;
+             infEvento.chMDFe   := ACBrMDFe1.WebServices.Consulta.MDFeChave;
+
+             infEvento.detEvento.nProt := ACBrMDFe1.WebServices.Consulta.Protocolo;
+             infEvento.detEvento.dtEnc := DFeUtil.StringToDate(Cmd.Params(1));
+             infEvento.detEvento.cUF   := StrToIntDef(copy(Cmd.Params(2), 1, 2), 1);
+             infEvento.detEvento.cMun  := StrToIntDef(Cmd.Params(2), 1);
+           end;
+           try
+              ACBrMDFe1.EnviarEventoMDFe(StrToIntDef(Cmd.Params(4),1));
+
+              Cmd.Resposta := ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.xMotivo+sLineBreak+
+                              '[ENCERRAMENTO]'+sLineBreak+
+                              'Versao='+ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.verAplic+sLineBreak+
+                              'TpAmb='+TpAmbToStr(ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.TpAmb)+sLineBreak+
+                              'VerAplic='+ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.VerAplic+sLineBreak+
+                              'CStat='+IntToStr(ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat)+sLineBreak+
+                              'XMotivo='+ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.XMotivo+sLineBreak+
+                              'CUF='+IntToStr(ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cOrgao)+sLineBreak+
+                              'ChMDFe='+ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.chMDFe+sLineBreak+
+                              'DhRecbto='+DateTimeToStr(ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento)+sLineBreak+
+                              'NProt='+ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt+sLineBreak+
+                              'tpEvento='+TpEventoToStr(ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.tpEvento)+sLineBreak+
+                              'xEvento='+ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.xEvento+sLineBreak+
+                              'nSeqEvento='+IntToStr(ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nSeqEvento)+sLineBreak+
+                              'CNPJDest='+ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.CNPJDest+sLineBreak+
+                              'emailDest='+ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.emailDest+sLineBreak+
+                              'XML='+ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.XML+sLineBreak;
+           except
+              raise Exception.Create(ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.xMotivo);
+           end;
+         end
         else if Cmd.Metodo = 'imprimirdamdfe' then
          begin
            if ACBrMDFe1.DAMDFe.MostrarPreview then

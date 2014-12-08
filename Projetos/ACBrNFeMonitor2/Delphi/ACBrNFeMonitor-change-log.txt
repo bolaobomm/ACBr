@@ -47,6 +47,17 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+08/12/2014
+[+] : Implementado o comando: 
+      MDFe.EncerrarMDFe(<chave>, <data>, <codmunic>, <CNPJ>, <numLote>)
+      <chave> = chave do MDF-e a ser encerrado (obrigatório);
+      <data>  = data de encerramento (obrigatório);
+      <codmunic> = código IBGE do municipio onde ocorreu o encerramento (obrigatório);
+      <CNPJ> = CNPJ do Emitente do MDF-e (opcional), se não informado será extraido da chave;
+      <numLote> = numero do lote de envio (opcional), se não informado será considerado "1".
+      Por: Italo Jurisato Junior
+	
 27/11/2014
 [-] : Corrigido a unit do CT-e para não usar mais a propriedade que tratava a forma de cancelar
 	Por:  Juliomar Marchetti
