@@ -2584,8 +2584,7 @@ var
 begin
   inherited SalvarEnvio;
 
-//  if FConfiguracoes.Arquivos.Salvar then
-  if FConfiguracoes.Geral.Salvar then
+  if FConfiguracoes.Arquivos.Salvar then
   begin
     aPath := GerarPathPorCNPJ;
     FConfiguracoes.Geral.Save(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
@@ -2599,8 +2598,7 @@ var
 begin
   inherited SalvarResposta;
 
-//  if FConfiguracoes.Arquivos.Salvar then
-  if FConfiguracoes.Geral.Salvar then
+  if FConfiguracoes.Arquivos.Salvar then
   begin
     aPath := GerarPathPorCNPJ;
     FConfiguracoes.Geral.Save(GerarPrefixoArquivo + '-' + ArqResp + '.xml',
