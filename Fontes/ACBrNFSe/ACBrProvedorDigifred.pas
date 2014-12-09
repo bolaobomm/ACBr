@@ -152,24 +152,24 @@ begin
   end;
 
   ConfigURL.HomRecepcaoLoteRPS    := 'https://sim.digifred.net.br/'+ ConfigURL.HomNomeCidade + '_homolog/nfse/ws/principal';
-  ConfigURL.HomConsultaLoteRPS    := 'https://sim.digifred.net.br/'+ ConfigURL.HomNomeCidade + '_homolog/nfse/ws/principal';
-  ConfigURL.HomConsultaNFSeRPS    := 'https://sim.digifred.net.br/'+ ConfigURL.HomNomeCidade + '_homolog/nfse/ws/principal';
-  ConfigURL.HomConsultaSitLoteRPS := 'https://sim.digifred.net.br/'+ ConfigURL.HomNomeCidade + '_homolog/nfse/ws/principal';
-  ConfigURL.HomConsultaNFSe       := 'https://sim.digifred.net.br/'+ ConfigURL.HomNomeCidade + '_homolog/nfse/ws/principal';
-  ConfigURL.HomCancelaNFSe        := 'https://sim.digifred.net.br/'+ ConfigURL.HomNomeCidade + '_homolog/nfse/ws/principal';
-  ConfigURL.HomGerarNFSe          := 'https://sim.digifred.net.br/'+ ConfigURL.HomNomeCidade + '_homolog/nfse/ws/principal';
-  ConfigURL.HomRecepcaoSincrono   := '';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
   ConfigURL.ProRecepcaoLoteRPS    := 'https://sim.digifred.net.br/'+ ConfigURL.ProNomeCidade + '/nfse/ws/principal';
-  ConfigURL.ProConsultaLoteRPS    := 'https://sim.digifred.net.br/'+ ConfigURL.ProNomeCidade + '/nfse/ws/principal';
-  ConfigURL.ProConsultaNFSeRPS    := 'https://sim.digifred.net.br/'+ ConfigURL.ProNomeCidade + '/nfse/ws/principal';
-  ConfigURL.ProConsultaSitLoteRPS := 'https://sim.digifred.net.br/'+ ConfigURL.ProNomeCidade + '/nfse/ws/principal';
-  ConfigURL.ProConsultaNFSe       := 'https://sim.digifred.net.br/'+ ConfigURL.ProNomeCidade + '/nfse/ws/principal';
-  ConfigURL.ProCancelaNFSe        := 'https://sim.digifred.net.br/'+ ConfigURL.ProNomeCidade + '/nfse/ws/principal';
-  ConfigURL.ProGerarNFSe          := 'https://sim.digifred.net.br/'+ ConfigURL.ProNomeCidade + '/nfse/ws/principal';
-  ConfigURL.ProRecepcaoSincrono   := '';
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;
@@ -188,8 +188,9 @@ begin
     acConsNFSeRps: Result := False;
     acConsNFSe:    Result := False;
     acCancelar:    Result := True;
-    acGerar:       Result := True;
-    else           Result := False;
+    acGerar:       Result := False;
+    acRecSincrono: Result := False;
+    acSubstituir:  Result := False;
   end;
 end;
 
@@ -417,6 +418,8 @@ begin
     acConsNFSe:    Result := 'http://nfse.abrasf.org.br/ConsultarNfseServicoPrestado';
     acCancelar:    Result := 'http://nfse.abrasf.org.br/CancelarNfse';
     acGerar:       Result := 'http://nfse.abrasf.org.br/GerarNfse';
+    acRecSincrono: Result := '';
+    acSubstituir:  Result := '';
   end;
 end;
 
@@ -430,6 +433,8 @@ begin
     acConsNFSe:    Result := SeparaDados( RetornoWS, 'outputXML' );
     acCancelar:    Result := SeparaDados( RetornoWS, 'outputXML' );
     acGerar:       Result := SeparaDados( RetornoWS, 'outputXML' );
+    acRecSincrono: Result := RetornoWS;
+    acSubstituir:  Result := RetornoWS;
   end;
 end;
 

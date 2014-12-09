@@ -179,20 +179,6 @@ begin
  Result := ConfigURL;
 end;
 
-function TProvedorSystemPro.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
-begin
- case Acao of
-   acRecepcionar: Result := '';
-   acConsSit:     Result := '';
-   acConsLote:    Result := '';
-   acConsNFSeRps: Result := '';
-   acConsNFSe:    Result := fHttp+NomeCidade+'/#ConsultarNfseFaixa';
-   acCancelar:    Result := fHttp+NomeCidade+'/#CancelarNfse';
-   acGerar:       Result := fHttp+NomeCidade+'/#GerarNfse';
-   acRecSincrono: Result := '';
- end;
-end;
-
 function TProvedorSystemPro.GetURI(URI: String): String;
 begin
  Result := URI;
@@ -209,7 +195,7 @@ begin
    acCancelar:    Result := True;
    acGerar:       Result := False;
    acRecSincrono: Result := False;
-   else           Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -386,6 +372,21 @@ begin
   Result := '';
 end;
 
+function TProvedorSystemPro.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
+begin
+ case Acao of
+   acRecepcionar: Result := '';
+   acConsSit:     Result := '';
+   acConsLote:    Result := '';
+   acConsNFSeRps: Result := '';
+   acConsNFSe:    Result := fHttp+NomeCidade+'/#ConsultarNfseFaixa';
+   acCancelar:    Result := fHttp+NomeCidade+'/#CancelarNfse';
+   acGerar:       Result := fHttp+NomeCidade+'/#GerarNfse';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
+ end;
+end;
+
 function TProvedorSystemPro.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
 begin
  case Acao of
@@ -397,6 +398,7 @@ begin
    acCancelar:    Result := SeparaDados( RetornoWS, 'return' );
    acGerar:       Result := SeparaDados( RetornoWS, 'return' );
    acRecSincrono: Result := SeparaDados( RetornoWS, 'return' );
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

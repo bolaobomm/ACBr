@@ -141,25 +141,25 @@ var
 begin
   ConfigURL.HomNomeCidade         := 'homologacao';
   ConfigURL.HomRecepcaoLoteRPS    := 'https://wsnfsev1homologacao.natal.rn.gov.br:8443/axis2/services/NfseWSServiceV1/';
-  ConfigURL.HomConsultaLoteRPS    := 'https://wsnfsev1homologacao.natal.rn.gov.br:8443/axis2/services/NfseWSServiceV1/';
-  ConfigURL.HomConsultaNFSeRPS    := 'https://wsnfsev1homologacao.natal.rn.gov.br:8443/axis2/services/NfseWSServiceV1/';
-  ConfigURL.HomConsultaSitLoteRPS := 'https://wsnfsev1homologacao.natal.rn.gov.br:8443/axis2/services/NfseWSServiceV1/';
-  ConfigURL.HomConsultaNFSe       := 'https://wsnfsev1homologacao.natal.rn.gov.br:8443/axis2/services/NfseWSServiceV1/';
-  ConfigURL.HomCancelaNFSe        := 'https://wsnfsev1homologacao.natal.rn.gov.br:8443/axis2/services/NfseWSServiceV1/';
-  ConfigURL.HomGerarNFSe          := '';
-  ConfigURL.HomRecepcaoSincrono   := '';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
   ConfigURL.ProNomeCidade         := '';
   ConfigURL.ProRecepcaoLoteRPS    := 'https://wsnfsev1.natal.rn.gov.br:8444/axis2/services/NfseWSServiceV1/';
-  ConfigURL.ProConsultaLoteRPS    := 'https://wsnfsev1.natal.rn.gov.br:8444/axis2/services/NfseWSServiceV1/';
-  ConfigURL.ProConsultaNFSeRPS    := 'https://wsnfsev1.natal.rn.gov.br:8444/axis2/services/NfseWSServiceV1/';
-  ConfigURL.ProConsultaSitLoteRPS := 'https://wsnfsev1.natal.rn.gov.br:8444/axis2/services/NfseWSServiceV1/';
-  ConfigURL.ProConsultaNFSe       := 'https://wsnfsev1.natal.rn.gov.br:8444/axis2/services/NfseWSServiceV1/';
-  ConfigURL.ProCancelaNFSe        := 'https://wsnfsev1.natal.rn.gov.br:8444/axis2/services/NfseWSServiceV1/';
-  ConfigURL.ProGerarNFSe          := '';
-  ConfigURL.ProRecepcaoSincrono   := '';
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;
@@ -179,7 +179,8 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := True;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -431,6 +432,8 @@ begin
    acConsNFSe:    Result := 'https://wsnfsev1' + NomeCidade + '.natal.rn.gov.br:' + Porta +'/axis2/services/ConsultarNfse';
    acCancelar:    Result := 'https://wsnfsev1' + NomeCidade + '.natal.rn.gov.br:' + Porta +'/axis2/services/CancelarNfse';
    acGerar:       Result := 'https://wsnfsev1' + NomeCidade + '.natal.rn.gov.br:' + Porta +'/axis2/services/GerarNfse';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -445,7 +448,9 @@ begin
    acConsNFSeRps: Result := SeparaDados( RetornoWS, 'outputXML' );
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'outputXML' );
-   acGerar:       Result := '';
+   acGerar:       Result := RetornoWS;
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

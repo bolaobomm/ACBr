@@ -159,24 +159,24 @@ begin
   end;
 
   ConfigURL.HomRecepcaoLoteRPS    := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
-  ConfigURL.HomConsultaLoteRPS    := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
-  ConfigURL.HomConsultaNFSeRPS    := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
-  ConfigURL.HomConsultaSitLoteRPS := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
-  ConfigURL.HomConsultaNFSe       := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
-  ConfigURL.HomCancelaNFSe        := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
-  ConfigURL.HomGerarNFSe          := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
-  ConfigURL.HomRecepcaoSincrono   := '';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
   ConfigURL.ProRecepcaoLoteRPS    := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
-  ConfigURL.ProConsultaLoteRPS    := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
-  ConfigURL.ProConsultaNFSeRPS    := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
-  ConfigURL.ProConsultaSitLoteRPS := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
-  ConfigURL.ProConsultaNFSe       := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
-  ConfigURL.ProCancelaNFSe        := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
-  ConfigURL.ProGerarNFSe          := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
-  ConfigURL.ProRecepcaoSincrono   := '';
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;
@@ -196,7 +196,8 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := False;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -515,6 +516,8 @@ begin
    acConsNFSe:    Result := 'urn:uWebServiceIssDigitalIntf-IuWebServiceIssDigital#ConsultarNfseServicoPrestado';
    acCancelar:    Result := 'urn:uWebServiceIssDigitalIntf-IuWebServiceIssDigital#CancelarNfse';
    acGerar:       Result := 'urn:uWebServiceIssDigitalIntf-IuWebServiceIssDigital#GerarNfse';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -528,6 +531,8 @@ begin
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'return' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'return' );
    acGerar:       Result := SeparaDados( RetornoWS, 'return' );
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

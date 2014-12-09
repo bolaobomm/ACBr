@@ -146,24 +146,24 @@ begin
   end;
 
   ConfigURL.HomRecepcaoLoteRPS    := 'http://homologa.nfse.'+ ConfigURL.HomNomeCidade +'.gov.br/nfsews/nfse.asmx';
-  ConfigURL.HomConsultaLoteRPS    := 'http://homologa.nfse.'+ ConfigURL.HomNomeCidade +'.gov.br/nfsews/nfse.asmx';
-  ConfigURL.HomConsultaNFSeRPS    := 'http://homologa.nfse.'+ ConfigURL.HomNomeCidade +'.gov.br/nfsews/nfse.asmx';
-  ConfigURL.HomConsultaSitLoteRPS := 'http://homologa.nfse.'+ ConfigURL.HomNomeCidade +'.gov.br/nfsews/nfse.asmx';
-  ConfigURL.HomConsultaNFSe       := 'http://homologa.nfse.'+ ConfigURL.HomNomeCidade +'.gov.br/nfsews/nfse.asmx';
-  ConfigURL.HomCancelaNFSe        := 'http://homologa.nfse.'+ ConfigURL.HomNomeCidade +'.gov.br/nfsews/nfse.asmx';
-  ConfigURL.HomGerarNFSe          := '';
-  ConfigURL.HomRecepcaoSincrono   := '';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
   ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.'+ ConfigURL.ProNomeCidade +'.gov.br/nfsews/nfse.asmx';
-  ConfigURL.ProConsultaLoteRPS    := 'http://nfse.'+ ConfigURL.ProNomeCidade +'.gov.br/nfsews/nfse.asmx';
-  ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.'+ ConfigURL.ProNomeCidade +'.gov.br/nfsews/nfse.asmx';
-  ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.'+ ConfigURL.ProNomeCidade +'.gov.br/nfsews/nfse.asmx';
-  ConfigURL.ProConsultaNFSe       := 'http://nfse.'+ ConfigURL.ProNomeCidade +'.gov.br/nfsews/nfse.asmx';
-  ConfigURL.ProCancelaNFSe        := 'http://nfse.'+ ConfigURL.ProNomeCidade +'.gov.br/nfsews/nfse.asmx';
-  ConfigURL.ProGerarNFSe          := '';
-  ConfigURL.ProRecepcaoSincrono   := '';
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;
@@ -176,13 +176,15 @@ end;
 function TProvedorLexsom.GetAssinarXML(Acao: TnfseAcao): Boolean;
 begin
   case Acao of
-    acRecepcionar: Result := False;
-    acConsSit:     Result := False;
-    acConsLote:    Result := False;
-    acConsNFSeRps: Result := False;
-    acConsNFSe:    Result := False;
-    acCancelar:    Result := True;
-    else           Result := False;
+   acRecepcionar: Result := False;
+   acConsSit:     Result := False;
+   acConsLote:    Result := False;
+   acConsNFSeRps: Result := False;
+   acConsNFSe:    Result := False;
+   acCancelar:    Result := True;
+   acGerar:       Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
   end;
 end;
 
@@ -373,6 +375,9 @@ begin
    acConsNFSeRps: Result := 'http://tempuri.org/ConsultarNFSEPorRPS';
    acConsNFSe:    Result := 'http://tempuri.org/ConsultaNFSE';
    acCancelar:    Result := 'http://tempuri.org/CancelamentoNFSE';
+   acGerar:       Result := '';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -409,6 +414,9 @@ begin
                      if Result = '' then
                        Result := SeparaDados( RetornoWS, 'soap12:Body' );
                    end;
+   acGerar:       Result := RetornoWS;
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
   end;
 end;
 

@@ -157,24 +157,24 @@ begin
   end;
 
   ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br:82/webservice/index/homologacao';
-  ConfigURL.HomConsultaLoteRPS    := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br:82/webservice/index/homologacao';
-  ConfigURL.HomConsultaNFSeRPS    := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br:82/webservice/index/homologacao';
-  ConfigURL.HomConsultaSitLoteRPS := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br:82/webservice/index/homologacao';
-  ConfigURL.HomConsultaNFSe       := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br:82/webservice/index/homologacao';
-  ConfigURL.HomCancelaNFSe        := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br:82/webservice/index/homologacao';
-  ConfigURL.HomGerarNFSe          := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br:82/webservice/index/homologacao';
-  ConfigURL.HomRecepcaoSincrono   := '';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
   ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.' + ConfigURL.ProNomeCidade + '.gov.br/webservice/index/producao';
-  ConfigURL.ProConsultaLoteRPS    := 'http://nfse.' + ConfigURL.ProNomeCidade + '.gov.br/webservice/index/producao';
-  ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.' + ConfigURL.ProNomeCidade + '.gov.br/webservice/index/producao';
-  ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.' + ConfigURL.ProNomeCidade + '.gov.br/webservice/index/producao';
-  ConfigURL.ProConsultaNFSe       := 'http://nfse.' + ConfigURL.ProNomeCidade + '.gov.br/webservice/index/producao';
-  ConfigURL.ProCancelaNFSe        := 'http://nfse.' + ConfigURL.ProNomeCidade + '.gov.br/webservice/index/producao';
-  ConfigURL.ProGerarNFSe          := 'http://nfse.' + ConfigURL.ProNomeCidade + '.gov.br/webservice/index/producao';
-  ConfigURL.ProRecepcaoSincrono   := '';
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;
@@ -194,7 +194,8 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := False;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -412,6 +413,8 @@ begin
    acConsNFSe:    Result := '';
    acCancelar:    Result := '';
    acGerar:       Result := '';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -428,7 +431,9 @@ begin
                  if Result = '' then
                    Result := SeparaDados( RetornoWS, 'SOAP-ENV:Body' );
                end;
-   acGerar:    Result := '';
+   acGerar:       Result := RetornoWS;
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

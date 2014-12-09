@@ -492,24 +492,24 @@ begin
  end;
 
   ConfigURL.HomRecepcaoLoteRPS    := 'https://' + ConfigURL.HomNomeCidade + '.treino-issintel.com.br' + Porta + '/webservices/abrasf/api';
-  ConfigURL.HomConsultaLoteRPS    := 'https://' + ConfigURL.HomNomeCidade + '.treino-issintel.com.br' + Porta + '/webservices/abrasf/api';
-  ConfigURL.HomConsultaNFSeRPS    := 'https://' + ConfigURL.HomNomeCidade + '.treino-issintel.com.br' + Porta + '/webservices/abrasf/api';
-  ConfigURL.HomConsultaSitLoteRPS := 'https://' + ConfigURL.HomNomeCidade + '.treino-issintel.com.br' + Porta + '/webservices/abrasf/api';
-  ConfigURL.HomConsultaNFSe       := 'https://' + ConfigURL.HomNomeCidade + '.treino-issintel.com.br' + Porta + '/webservices/abrasf/api';
-  ConfigURL.HomCancelaNFSe        := 'https://' + ConfigURL.HomNomeCidade + '.treino-issintel.com.br' + Porta + '/webservices/abrasf/api';
-  ConfigURL.HomGerarNFSe          := '';
-  ConfigURL.HomRecepcaoSincrono   := '';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
   ConfigURL.ProRecepcaoLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.issintel.com.br' + Porta + '/webservices/abrasf/api';
-  ConfigURL.ProConsultaLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.issintel.com.br' + Porta + '/webservices/abrasf/api';
-  ConfigURL.ProConsultaNFSeRPS    := 'https://' + ConfigURL.ProNomeCidade + '.issintel.com.br' + Porta + '/webservices/abrasf/api';
-  ConfigURL.ProConsultaSitLoteRPS := 'https://' + ConfigURL.ProNomeCidade + '.issintel.com.br' + Porta + '/webservices/abrasf/api';
-  ConfigURL.ProConsultaNFSe       := 'https://' + ConfigURL.ProNomeCidade + '.issintel.com.br' + Porta + '/webservices/abrasf/api';
-  ConfigURL.ProCancelaNFSe        := 'https://' + ConfigURL.ProNomeCidade + '.issintel.com.br' + Porta + '/webservices/abrasf/api';
-  ConfigURL.ProGerarNFSe          := '';
-  ConfigURL.ProRecepcaoSincrono   := '';
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;
@@ -529,7 +529,9 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := True;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
+   acConsSecRps:  Result := False;
  end;
 end;
 
@@ -709,6 +711,8 @@ begin
    acConsNFSe:    Result := 'https://' + NomeCidade + '.issintel.com.br' + Porta + '/webservices/abrasf/api/ConsultarNfse';
    acCancelar:    Result := 'https://' + NomeCidade + '.issintel.com.br' + Porta + '/webservices/abrasf/api/CancelarNfse';
    acGerar:       Result := '';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -732,7 +736,9 @@ begin
    acConsNFSeRps: Result := SeparaDados( RetornoWS, 'env:Body' );
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'env:Body' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'env:Body' );
-   acGerar:       Result := '';
+   acGerar:       Result := RetornoWS;
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

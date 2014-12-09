@@ -203,6 +203,7 @@ begin
    acGerar:       Result := False;
    acRecSincrono: Result := False;
    acSubstituir:  Result := False;
+   acConsSecRps:  Result := False;
  end;
 end;
 

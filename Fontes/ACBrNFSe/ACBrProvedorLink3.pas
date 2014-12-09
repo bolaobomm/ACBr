@@ -156,7 +156,7 @@ begin
   ConfigURL.HomCancelaNFSe        := URL;
   ConfigURL.HomGerarNFSe          := URL;
   ConfigURL.HomRecepcaoSincrono   := URL;
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomSubstituiNFSe      := URL;
 
   ConfigURL.ProRecepcaoLoteRPS    := URL;
   ConfigURL.ProConsultaLoteRPS    := URL;
@@ -166,7 +166,7 @@ begin
   ConfigURL.ProCancelaNFSe        := URL;
   ConfigURL.ProGerarNFSe          := URL;
   ConfigURL.ProRecepcaoSincrono   := URL;
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProSubstituiNFSe      := URL;
 
   Result := ConfigURL;
 end;
@@ -188,6 +188,7 @@ begin
    acCancelar:    Result := True;
    acGerar:       Result := False;
    acRecSincrono: Result := True;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -430,6 +431,7 @@ begin
    acCancelar:    Result := 'cancelarNfse';
    acGerar:       Result := 'gerarNfse';
    acRecSincrono: Result := 'recepcionarLoteRpsSincrono';
+   acSubstituir:  Result := '';
  end;;
 end;
 
@@ -444,6 +446,7 @@ begin
    acCancelar:    Result := SeparaDados( RetornoWS, 'tns:cancelarNfseResponse' );
    acGerar:       Result := SeparaDados( RetornoWS, 'tns:gerarNfseResponse' );
    acRecSincrono: Result := SeparaDados( RetornoWS, 'tns:recepcionarLoteRpsSincronoResponse' );
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

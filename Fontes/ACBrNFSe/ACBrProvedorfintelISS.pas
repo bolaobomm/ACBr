@@ -144,25 +144,25 @@ var
 begin
   ConfigURL.HomNomeCidade         := 'pontagrossa.pr';
   ConfigURL.HomRecepcaoLoteRPS    := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
-  ConfigURL.HomConsultaLoteRPS    := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
-  ConfigURL.HomConsultaNFSeRPS    := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
-  ConfigURL.HomConsultaSitLoteRPS := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
-  ConfigURL.HomConsultaNFSe       := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
-  ConfigURL.HomCancelaNFSe        := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
-  ConfigURL.HomGerarNFSe          := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
-  ConfigURL.HomRecepcaoSincrono   := '';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
   ConfigURL.ProNomeCidade         := 'pontagrossa.pr';
   ConfigURL.ProRecepcaoLoteRPS    := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
-  ConfigURL.ProConsultaLoteRPS    := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
-  ConfigURL.ProConsultaNFSeRPS    := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
-  ConfigURL.ProConsultaSitLoteRPS := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
-  ConfigURL.ProConsultaNFSe       := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
-  ConfigURL.ProCancelaNFSe        := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
-  ConfigURL.ProGerarNFSe          := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
-  ConfigURL.ProRecepcaoSincrono   := '';
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;
@@ -182,7 +182,8 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := True;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -399,6 +400,8 @@ begin
    acConsNFSe:    Result := 'https://iss.pontagrossa.pr.gov.br/ConsultarNfseServicoPrestado';
    acCancelar:    Result := 'https://iss.pontagrossa.pr.gov.br/CancelarNfse';
    acGerar:       Result := 'https://iss.pontagrossa.pr.gov.br/GerarNfse';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -413,6 +416,8 @@ begin
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'ConsultarNfseServicoPrestadoResult' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'CancelarNfseResult' );
    acGerar:       Result := SeparaDados( RetornoWS, 'GerarNfseResult' );
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

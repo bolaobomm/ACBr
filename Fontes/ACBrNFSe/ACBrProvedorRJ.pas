@@ -138,25 +138,25 @@ var
 begin
   ConfigURL.HomNomeCidade         := '';
   ConfigURL.HomRecepcaoLoteRPS    := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
-  ConfigURL.HomConsultaLoteRPS    := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
-  ConfigURL.HomConsultaNFSeRPS    := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
-  ConfigURL.HomConsultaSitLoteRPS := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
-  ConfigURL.HomConsultaNFSe       := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
-  ConfigURL.HomCancelaNFSe        := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
-  ConfigURL.HomGerarNFSe          := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
-  ConfigURL.HomRecepcaoSincrono   := '';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
   ConfigURL.ProNomeCidade         := '';
   ConfigURL.ProRecepcaoLoteRPS    := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
-  ConfigURL.ProConsultaLoteRPS    := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
-  ConfigURL.ProConsultaNFSeRPS    := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
-  ConfigURL.ProConsultaSitLoteRPS := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
-  ConfigURL.ProConsultaNFSe       := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
-  ConfigURL.ProCancelaNFSe        := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
-  ConfigURL.ProGerarNFSe          := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
-  ConfigURL.ProRecepcaoSincrono   := '';
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;
@@ -176,7 +176,9 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := True;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
+   acConsSecRps:  Result := False;
  end;
 end;
 
@@ -379,6 +381,8 @@ begin
    acConsNFSe:    Result := 'http://notacarioca.rio.gov.br/ConsultarNfse';
    acCancelar:    Result := 'http://notacarioca.rio.gov.br/CancelarNfse';
    acGerar:       Result := 'http://notacarioca.rio.gov.br/GerarNfse';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -392,6 +396,8 @@ begin
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acGerar:       Result := SeparaDados( RetornoWS, 'outputXML' );
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

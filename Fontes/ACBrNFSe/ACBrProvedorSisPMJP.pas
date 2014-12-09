@@ -137,31 +137,31 @@ end;
 
 function TProvedorSisPMJP.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
- ConfigURL: TConfigURL;
+  ConfigURL: TConfigURL;
 begin
- ConfigURL.HomNomeCidade         := 'joaopessoa';
- ConfigURL.HomRecepcaoLoteRPS    := 'https://nfsehomolog.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
- ConfigURL.HomConsultaLoteRPS    := 'https://nfsehomolog.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
- ConfigURL.HomConsultaNFSeRPS    := 'https://nfsehomolog.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
- ConfigURL.HomConsultaSitLoteRPS := 'https://nfsehomolog.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
- ConfigURL.HomConsultaNFSe       := 'https://nfsehomolog.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
- ConfigURL.HomCancelaNFSe        := 'https://nfsehomolog.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
- ConfigURL.HomGerarNFSe          := 'https://nfsehomolog.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
- ConfigURL.HomRecepcaoSincrono   := 'https://nfsehomolog.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomNomeCidade         := 'joaopessoa';
+  ConfigURL.HomRecepcaoLoteRPS    := 'https://nfsehomolog.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
- ConfigURL.ProNomeCidade         := 'joaopessoa';
- ConfigURL.ProRecepcaoLoteRPS    := 'https://sispmjp.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
- ConfigURL.ProConsultaLoteRPS    := 'https://sispmjp.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
- ConfigURL.ProConsultaNFSeRPS    := 'https://sispmjp.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
- ConfigURL.ProConsultaSitLoteRPS := 'https://sispmjp.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
- ConfigURL.ProConsultaNFSe       := 'https://sispmjp.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
- ConfigURL.ProCancelaNFSe        := 'https://sispmjp.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
- ConfigURL.ProGerarNFSe          := 'https://sispmjp.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
- ConfigURL.ProRecepcaoSincrono   := 'https://sispmjp.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProNomeCidade         := 'joaopessoa';
+  ConfigURL.ProRecepcaoLoteRPS    := 'https://sispmjp.joaopessoa.pb.gov.br:8443/sispmjp/NfseWSService';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
- Result := ConfigURL;
+  Result := ConfigURL;
 end;
 
 function TProvedorSisPMJP.GetURI(URI: String): String;
@@ -180,7 +180,7 @@ begin
    acCancelar:    Result := False;
    acGerar:       Result := False;
    acRecSincrono: Result := False;
-   else           Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -573,6 +573,7 @@ begin
    acCancelar:    Result := 'http://nfse.abrasf.org.br/CancelarNfse';
    acGerar:       Result := 'http://nfse.abrasf.org.br/GerarNfse';
    acRecSincrono: Result := 'http://nfse.abrasf.org.br/RecepcionarLoteRpsSincrono';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -587,6 +588,7 @@ begin
    acCancelar:    Result := SeparaDados( RetornoWS, 'ws:CancelarNfseResponse' );
    acGerar:       Result := SeparaDados( RetornoWS, 'ws:GerarNfseResponse' );
    acRecSincrono: Result := SeparaDados( RetornoWS, 'ws:RecepcionarLoteRpsSincronoResponse' );
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

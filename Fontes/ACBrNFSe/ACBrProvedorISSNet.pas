@@ -174,24 +174,24 @@ begin
   end;
 
   ConfigURL.HomRecepcaoLoteRPS    := 'http://www.issnetonline.com.br/webserviceabrasf/homologacao/servicos.asmx';
-  ConfigURL.HomConsultaLoteRPS    := 'http://www.issnetonline.com.br/webserviceabrasf/homologacao/servicos.asmx';
-  ConfigURL.HomConsultaNFSeRPS    := 'http://www.issnetonline.com.br/webserviceabrasf/homologacao/servicos.asmx';
-  ConfigURL.HomConsultaSitLoteRPS := 'http://www.issnetonline.com.br/webserviceabrasf/homologacao/servicos.asmx';
-  ConfigURL.HomConsultaNFSe       := 'http://www.issnetonline.com.br/webserviceabrasf/homologacao/servicos.asmx';
-  ConfigURL.HomCancelaNFSe        := 'http://www.issnetonline.com.br/webserviceabrasf/homologacao/servicos.asmx';
-  ConfigURL.HomGerarNFSe          := '';
-  ConfigURL.HomRecepcaoSincrono   := '';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
   ConfigURL.ProRecepcaoLoteRPS    := 'http://www.issnetonline.com.br/webserviceabrasf/' + ConfigURL.ProNomeCidade + '/servicos.asmx';
-  ConfigURL.ProConsultaLoteRPS    := 'http://www.issnetonline.com.br/webserviceabrasf/' + ConfigURL.ProNomeCidade + '/servicos.asmx';
-  ConfigURL.ProConsultaNFSeRPS    := 'http://www.issnetonline.com.br/webserviceabrasf/' + ConfigURL.ProNomeCidade + '/servicos.asmx';
-  ConfigURL.ProConsultaSitLoteRPS := 'http://www.issnetonline.com.br/webserviceabrasf/' + ConfigURL.ProNomeCidade + '/servicos.asmx';
-  ConfigURL.ProConsultaNFSe       := 'http://www.issnetonline.com.br/webserviceabrasf/' + ConfigURL.ProNomeCidade + '/servicos.asmx';
-  ConfigURL.ProCancelaNFSe        := 'http://www.issnetonline.com.br/webserviceabrasf/' + ConfigURL.ProNomeCidade + '/servicos.asmx';
-  ConfigURL.ProGerarNFSe          := '';
-  ConfigURL.ProRecepcaoSincrono   := '';
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;
@@ -211,7 +211,9 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := True;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
+   acConsSecRps:  Result := False;
  end;
 end;
 
@@ -424,6 +426,8 @@ begin
    acConsNFSe:    Result := 'http://www.issnetonline.com.br/webservice/nfd/ConsultarNfse';
    acCancelar:    Result := 'http://www.issnetonline.com.br/webservice/nfd/CancelarNfse';
    acGerar:       Result := '';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -468,7 +472,9 @@ begin
                    RetWS  := StringReplace( RetWS, ' xmlns="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd"', '', [rfReplaceAll] );
                    Result :=RetWS;
                   end;
-   acGerar:       Result := '';
+   acGerar:       Result := RetornoWS;
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

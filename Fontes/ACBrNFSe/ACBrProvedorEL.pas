@@ -146,24 +146,24 @@ begin
   end;
 
   ConfigURL.HomRecepcaoLoteRPS    := 'https://' + ConfigURL.HomNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-  ConfigURL.HomConsultaLoteRPS    := 'https://' + ConfigURL.HomNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-  ConfigURL.HomConsultaNFSeRPS    := 'https://' + ConfigURL.HomNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-  ConfigURL.HomConsultaSitLoteRPS := 'https://' + ConfigURL.HomNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-  ConfigURL.HomConsultaNFSe       := 'https://' + ConfigURL.HomNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-  ConfigURL.HomCancelaNFSe        := 'https://' + ConfigURL.HomNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-  ConfigURL.HomGerarNFSe          := '';
-  ConfigURL.HomRecepcaoSincrono   := '';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
   ConfigURL.ProRecepcaoLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-  ConfigURL.ProConsultaLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-  ConfigURL.ProConsultaNFSeRPS    := 'https://' + ConfigURL.ProNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-  ConfigURL.ProConsultaSitLoteRPS := 'https://' + ConfigURL.ProNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-  ConfigURL.ProConsultaNFSe       := 'https://' + ConfigURL.ProNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-  ConfigURL.ProCancelaNFSe        := 'https://' + ConfigURL.ProNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-  ConfigURL.ProGerarNFSe          := '';
-  ConfigURL.ProRecepcaoSincrono   := '';
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;
@@ -175,16 +175,17 @@ end;
 
 function TProvedorEL.GetAssinarXML(Acao: TnfseAcao): Boolean;
 begin
-     case Acao of
-          acRecepcionar: Result := False;
-          acConsSit    : Result := False;
-          acConsLote   : Result := False;
-          acConsNFSeRps: Result := False;
-          acConsNFSe   : Result := False;
-          acCancelar   : Result := False;
-          acGerar      : Result := False;
-          else           Result := False;
-     end;
+  case Acao of
+   acRecepcionar: Result := False;
+   acConsSit    : Result := False;
+   acConsLote   : Result := False;
+   acConsNFSeRps: Result := False;
+   acConsNFSe   : Result := False;
+   acCancelar   : Result := False;
+   acGerar:       Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
+  end;
 end;
 
 function TProvedorEL.GetValidarLote: Boolean;
@@ -367,28 +368,32 @@ end;
 
 function TProvedorEL.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
-     case Acao of
-          acRecepcionar: Result := 'http://www.nfe.com.br/RecepcionarLoteRps';
-          acConsSit    : Result := 'http://www.nfe.com.br/ConsultarSituacaoLoteRps';
-          acConsLote   : Result := 'http://www.nfe.com.br/ConsultarLoteRps';
-          acConsNFSeRps: Result := 'http://www.nfe.com.br/ConsultarNfsePorRps';
-          acConsNFSe   : Result := 'http://www.nfe.com.br/ConsultarNfse';
-          acCancelar   : Result := 'http://www.nfe.com.br/CancelarNfse';
-          acGerar      : Result := '';
-     end;
+  case Acao of
+   acRecepcionar: Result := 'http://www.nfe.com.br/RecepcionarLoteRps';
+   acConsSit    : Result := 'http://www.nfe.com.br/ConsultarSituacaoLoteRps';
+   acConsLote   : Result := 'http://www.nfe.com.br/ConsultarLoteRps';
+   acConsNFSeRps: Result := 'http://www.nfe.com.br/ConsultarNfsePorRps';
+   acConsNFSe   : Result := 'http://www.nfe.com.br/ConsultarNfse';
+   acCancelar   : Result := 'http://www.nfe.com.br/CancelarNfse';
+   acGerar:       Result := '';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
+  end;
 end;
 
 function TProvedorEL.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
 begin
-     case Acao of
-          acRecepcionar: Result := SeparaDados( RetornoWS, 'outputXML' );
-          acConsSit    : Result := SeparaDados( RetornoWS, 'outputXML' );
-          acConsLote   : Result := SeparaDados( RetornoWS, 'outputXML' );
-          acConsNFSeRps: Result := SeparaDados( RetornoWS, 'outputXML' );
-          acConsNFSe   : Result := SeparaDados( RetornoWS, 'outputXML' );
-          acCancelar   : Result := SeparaDados( RetornoWS, 'outputXML' );
-          acGerar      : Result := '';
-     end;
+  case Acao of
+   acRecepcionar: Result := SeparaDados( RetornoWS, 'outputXML' );
+   acConsSit    : Result := SeparaDados( RetornoWS, 'outputXML' );
+   acConsLote   : Result := SeparaDados( RetornoWS, 'outputXML' );
+   acConsNFSeRps: Result := SeparaDados( RetornoWS, 'outputXML' );
+   acConsNFSe   : Result := SeparaDados( RetornoWS, 'outputXML' );
+   acCancelar   : Result := SeparaDados( RetornoWS, 'outputXML' );
+   acGerar:       Result := RetornoWS;
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
+  end;
 end;
 
 function TProvedorEL.GeraRetornoNFSe(Prefixo: String;

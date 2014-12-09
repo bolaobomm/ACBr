@@ -140,52 +140,38 @@ begin
   3205200: begin // Vila Velha/ES
              ConfigURL.HomNomeCidade         := 'https://issonline.vilavelha.es.gov.br/SistemaISS/WebServiceHomologa';
              ConfigURL.HomRecepcaoLoteRPS    := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.HomConsultaNFSe       := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.HomCancelaNFSe        := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.HomGerarNFSe          := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.HomSubstituiNFSe      := '';
 
              ConfigURL.ProNomeCidade         := 'https://issonline.vilavelha.es.gov.br/SistemaISS/WebService';
              ConfigURL.ProRecepcaoLoteRPS    := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.ProConsultaNFSe       := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.ProCancelaNFSe        := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.ProGerarNFSe          := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.ProSubstituiNFSe      := '';
            end;
   3205309: begin // Vitória/ES
              ConfigURL.HomNomeCidade         := 'https://wsnfsehomologa.vitoria.es.gov.br';
              ConfigURL.HomRecepcaoLoteRPS    := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.HomConsultaNFSe       := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.HomCancelaNFSe        := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.HomGerarNFSe          := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.HomSubstituiNFSe      := '';
 
              ConfigURL.ProNomeCidade         := 'https://wsnfse.vitoria.es.gov.br';
              ConfigURL.ProRecepcaoLoteRPS    := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.ProConsultaNFSe       := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.ProCancelaNFSe        := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.ProGerarNFSe          := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProNomeCidade + '/NotaFiscalService.asmx';
-             ConfigURL.ProSubstituiNFSe      := '';
            end;
  end;
 
- Result := ConfigURL;
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
+
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
+
+  Result := ConfigURL;
 end;
 
 function TProvedorVitoria.GetURI(URI: String): String;
@@ -205,6 +191,7 @@ begin
    acCancelar:    Result := True;
    acGerar:       Result := True;
    acRecSincrono: Result := True;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -399,6 +386,7 @@ begin
    acCancelar:    Result := 'http://www.abrasf.org.br/nfse.xsd/CancelarNfse';
    acGerar:       Result := 'http://www.abrasf.org.br/nfse.xsd/GerarNfse';
    acRecSincrono: Result := 'http://www.abrasf.org.br/nfse.xsd/RecepcionarLoteRpsSincrono';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -413,6 +401,7 @@ begin
    acCancelar:    Result := SeparaDados( RetornoWS, 'CancelarNfseResult' );
    acGerar:       Result := SeparaDados( RetornoWS, 'GerarNfseResult' );
    acRecSincrono: Result := SeparaDados( RetornoWS, 'RecepcionarLoteRpsSincronoResult' );
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

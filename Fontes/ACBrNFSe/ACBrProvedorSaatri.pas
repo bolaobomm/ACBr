@@ -266,27 +266,27 @@ begin
            end;
  end;
 
- ConfigURL.HomRecepcaoLoteRPS    := 'https://homologa-' + ConfigURL.HomNomeCidade + '.saatri.com.br/servicos/nfse.svc';
- ConfigURL.HomConsultaLoteRPS    := 'https://homologa-' + ConfigURL.HomNomeCidade + '.saatri.com.br/servicos/nfse.svc';
- ConfigURL.HomConsultaNFSeRPS    := 'https://homologa-' + ConfigURL.HomNomeCidade + '.saatri.com.br/servicos/nfse.svc';
- ConfigURL.HomConsultaSitLoteRPS := 'https://homologa-' + ConfigURL.HomNomeCidade + '.saatri.com.br/servicos/nfse.svc';
- ConfigURL.HomConsultaNFSe       := 'https://homologa-' + ConfigURL.HomNomeCidade + '.saatri.com.br/servicos/nfse.svc';
- ConfigURL.HomCancelaNFSe        := 'https://homologa-' + ConfigURL.HomNomeCidade + '.saatri.com.br/servicos/nfse.svc';
- ConfigURL.HomGerarNFSe          := 'https://homologa-' + ConfigURL.HomNomeCidade + '.saatri.com.br/servicos/nfse.svc';
-  ConfigURL.HomRecepcaoSincrono   := '';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomRecepcaoLoteRPS    := 'https://homologa-' + ConfigURL.HomNomeCidade + '.saatri.com.br/servicos/nfse.svc';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
- ConfigURL.ProRecepcaoLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.saatri.com.br/servicos/nfse.svc';
- ConfigURL.ProConsultaLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.saatri.com.br/servicos/nfse.svc';
- ConfigURL.ProConsultaNFSeRPS    := 'https://' + ConfigURL.ProNomeCidade + '.saatri.com.br/servicos/nfse.svc';
- ConfigURL.ProConsultaSitLoteRPS := 'https://' + ConfigURL.ProNomeCidade + '.saatri.com.br/servicos/nfse.svc';
- ConfigURL.ProConsultaNFSe       := 'https://' + ConfigURL.ProNomeCidade + '.saatri.com.br/servicos/nfse.svc';
- ConfigURL.ProCancelaNFSe        := 'https://' + ConfigURL.ProNomeCidade + '.saatri.com.br/servicos/nfse.svc';
- ConfigURL.ProGerarNFSe          := 'https://' + ConfigURL.ProNomeCidade + '.saatri.com.br/servicos/nfse.svc';
-  ConfigURL.ProRecepcaoSincrono   := '';
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProRecepcaoLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.saatri.com.br/servicos/nfse.svc';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
- Result := ConfigURL;
+  Result := ConfigURL;
 end;
 
 function TProvedorSaatri.GetURI(URI: String): String;
@@ -304,7 +304,8 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := False;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -547,6 +548,8 @@ begin
    acConsNFSe:    Result := 'http://nfse.abrasf.org.br/Infse/ConsultarNfseServicoPrestado';
    acCancelar:    Result := 'http://nfse.abrasf.org.br/Infse/CancelarNfse';
    acGerar:       Result := 'http://nfse.abrasf.org.br/Infse/GerarNfse';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -560,6 +563,8 @@ begin
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acGerar:       Result := StringReplace( RetornoWS, ' xml:lang="pt-BR"','', [rfReplaceAll] );
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

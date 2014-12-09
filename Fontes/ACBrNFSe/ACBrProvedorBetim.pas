@@ -145,25 +145,25 @@ var
 begin
   ConfigURL.HomNomeCidade         := '';
   ConfigURL.HomRecepcaoLoteRPS    := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';  // /wsdl
-  ConfigURL.HomConsultaLoteRPS    := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';
-  ConfigURL.HomConsultaNFSeRPS    := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';
-  ConfigURL.HomConsultaSitLoteRPS := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';
-  ConfigURL.HomConsultaNFSe       := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';
-  ConfigURL.HomCancelaNFSe        := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';
-  ConfigURL.HomGerarNFSe          := '';
-  ConfigURL.HomRecepcaoSincrono   := '';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
   ConfigURL.ProNomeCidade         := '';
   ConfigURL.ProRecepcaoLoteRPS    := 'https://betim.rps.com.br/sgm/zend/nfs/nfs'; // /wsdl
-  ConfigURL.ProConsultaLoteRPS    := 'https://betim.rps.com.br/sgm/zend/nfs/nfs';
-  ConfigURL.ProConsultaNFSeRPS    := 'https://betim.rps.com.br/sgm/zend/nfs/nfs';
-  ConfigURL.ProConsultaSitLoteRPS := 'https://betim.rps.com.br/sgm/zend/nfs/nfs';
-  ConfigURL.ProConsultaNFSe       := 'https://betim.rps.com.br/sgm/zend/nfs/nfs';
-  ConfigURL.ProCancelaNFSe        := 'https://betim.rps.com.br/sgm/zend/nfs/nfs';
-  ConfigURL.ProGerarNFSe          := '';
-  ConfigURL.ProRecepcaoSincrono   := '';
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;
@@ -183,7 +183,8 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := False;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -480,6 +481,8 @@ begin
    acConsNFSe:    Result := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste#ConsultarNfse';
    acCancelar:    Result := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste#CancelarNfse';
    acGerar:       Result := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste#GerarNfse';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -493,6 +496,8 @@ begin
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'return' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'return' );
    acGerar:       Result := SeparaDados( RetornoWS, 'return' );
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
  end;
 (*
  case Acao of

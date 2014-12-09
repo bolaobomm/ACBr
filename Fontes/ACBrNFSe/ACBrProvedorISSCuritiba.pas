@@ -151,25 +151,25 @@ begin
  *)
   ConfigURL.HomNomeCidade         := '';
   ConfigURL.HomRecepcaoLoteRPS    := 'https://pilotoisscuritiba.curitiba.pr.gov.br/nfse_ws/NfseWs.asmx';
-  ConfigURL.HomConsultaLoteRPS    := 'https://pilotoisscuritiba.curitiba.pr.gov.br/nfse_ws/NfseWs.asmx';
-  ConfigURL.HomConsultaNFSeRPS    := 'https://pilotoisscuritiba.curitiba.pr.gov.br/nfse_ws/NfseWs.asmx';
-  ConfigURL.HomConsultaSitLoteRPS := 'https://pilotoisscuritiba.curitiba.pr.gov.br/nfse_ws/NfseWs.asmx';
-  ConfigURL.HomConsultaNFSe       := 'https://pilotoisscuritiba.curitiba.pr.gov.br/nfse_ws/NfseWs.asmx';
-  ConfigURL.HomCancelaNFSe        := 'https://pilotoisscuritiba.curitiba.pr.gov.br/nfse_ws/NfseWs.asmx';
-  ConfigURL.HomGerarNFSe          := '';
-  ConfigURL.HomRecepcaoSincrono   := '';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
   ConfigURL.ProNomeCidade         := '';
   ConfigURL.ProRecepcaoLoteRPS    := 'https://isscuritiba.curitiba.pr.gov.br/Iss.NfseWebService/Nfsews.asmx';
-  ConfigURL.ProConsultaLoteRPS    := 'https://isscuritiba.curitiba.pr.gov.br/Iss.NfseWebService/Nfsews.asmx';
-  ConfigURL.ProConsultaNFSeRPS    := 'https://isscuritiba.curitiba.pr.gov.br/Iss.NfseWebService/Nfsews.asmx';
-  ConfigURL.ProConsultaSitLoteRPS := 'https://isscuritiba.curitiba.pr.gov.br/Iss.NfseWebService/Nfsews.asmx';
-  ConfigURL.ProConsultaNFSe       := 'https://isscuritiba.curitiba.pr.gov.br/Iss.NfseWebService/Nfsews.asmx';
-  ConfigURL.ProCancelaNFSe        := 'https://isscuritiba.curitiba.pr.gov.br/Iss.NfseWebService/Nfsews.asmx';
-  ConfigURL.ProGerarNFSe          := '';
-  ConfigURL.ProRecepcaoSincrono   := '';
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;
@@ -189,7 +189,8 @@ begin
    acConsNFSe:    Result := True;
    acCancelar:    Result := True;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -367,6 +368,7 @@ begin
    acCancelar:    Result := 'http://www.e-governeapps2.com.br/CancelarNfse';
    acGerar:       Result := '';
    acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -381,8 +383,9 @@ begin
    acConsNFSeRps: Result := SeparaDados( RetornoWS, 'ConsultarNfsePorRpsResult', True );
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'ConsultarNfseResult', True );
    acCancelar:    Result := SeparaDados( RetornoWS, 'CancelarNfseResult', True );
-   acGerar:       Result := '';
-   acRecSincrono: Result := '';
+   acGerar:       Result := RetornoWS;
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

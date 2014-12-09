@@ -146,24 +146,24 @@ begin
 // end;
 
   ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws?wsdl';
-  ConfigURL.HomConsultaLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws?wsdl';
-  ConfigURL.HomConsultaNFSeRPS    := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws?wsdl';
-  ConfigURL.HomConsultaSitLoteRPS := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws?wsdl';
-  ConfigURL.HomConsultaNFSe       := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws?wsdl';
-  ConfigURL.HomCancelaNFSe        := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws?wsdl';
-  ConfigURL.HomGerarNFSe          := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws?wsdl';
-  ConfigURL.HomRecepcaoSincrono   := '';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
   ConfigURL.ProRecepcaoLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:6554/webrun/webservices/NFEServices.jws?wsdl';
-  ConfigURL.ProConsultaLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:6554/webrun/webservices/NFEServices.jws?wsdl';
-  ConfigURL.ProConsultaNFSeRPS    := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:6554/webrun/webservices/NFEServices.jws?wsdl';
-  ConfigURL.ProConsultaSitLoteRPS := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:6554/webrun/webservices/NFEServices.jws?wsdl';
-  ConfigURL.ProConsultaNFSe       := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:6554/webrun/webservices/NFEServices.jws?wsdl';
-  ConfigURL.ProCancelaNFSe        := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:6554/webrun/webservices/NFEServices.jws?wsdl';
-  ConfigURL.ProGerarNFSe          := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:6554/webrun/webservices/NFEServices.jws?wsdl';
-  ConfigURL.ProRecepcaoSincrono   := '';
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;
@@ -183,7 +183,8 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := False;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -425,6 +426,7 @@ begin
    acCancelar:    Result := 'http://nfse.abrasf.org.br/Infse/CancelarNfse';
    acGerar:       Result := 'http://nfse.abrasf.org.br/Infse/GerarNfse';
    acRecSincrono: Result := 'http://nfse.abrasf.org.br/Infse/RecepcionarLoteRpsSincrono';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -439,6 +441,7 @@ begin
    acCancelar:    Result := RetornoWS; //SeparaDados( RetornoWS, 'outputXML' );
    acGerar:       Result := RetornoWS;
    acRecSincrono: Result := SeparaDados( RetornoWS, 'outputXML' );
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

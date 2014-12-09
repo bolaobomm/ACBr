@@ -199,7 +199,9 @@ begin
    acConsNFSeRps: Result := False;
    acConsNFSe:    Result := False;
    acCancelar:    Result := False;
-   else           Result := False;
+   acGerar:       Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 

@@ -159,24 +159,24 @@ begin
   end;
 
   ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '/prodataws/services/NfseWSService?wsdl/';
-  ConfigURL.HomConsultaLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '/prodataws/services/NfseWSService?wsdl/';
-  ConfigURL.HomConsultaNFSeRPS    := 'http://' + ConfigURL.HomNomeCidade + '/prodataws/services/NfseWSService?wsdl/';
-  ConfigURL.HomConsultaSitLoteRPS := 'http://' + ConfigURL.HomNomeCidade + '/prodataws/services/NfseWSService?wsdl/';
-  ConfigURL.HomConsultaNFSe       := 'http://' + ConfigURL.HomNomeCidade + '/prodataws/services/NfseWSService?wsdl/';
-  ConfigURL.HomCancelaNFSe        := 'http://' + ConfigURL.HomNomeCidade + '/prodataws/services/NfseWSService?wsdl/';
-  ConfigURL.HomGerarNFSe          := 'http://' + ConfigURL.HomNomeCidade + '/prodataws/services/NfseWSService?wsdl/';
-  ConfigURL.HomRecepcaoSincrono   := 'http://' + ConfigURL.HomNomeCidade + '/prodataws/services/NfseWSService?wsdl/';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
   ConfigURL.ProRecepcaoLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + '/prodataws/services/NfseWSService?wsdl/';
-  ConfigURL.ProConsultaLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + '/prodataws/services/NfseWSService?wsdl/';
-  ConfigURL.ProConsultaNFSeRPS    := 'http://' + ConfigURL.ProNomeCidade + '/prodataws/services/NfseWSService?wsdl/';
-  ConfigURL.ProConsultaSitLoteRPS := 'http://' + ConfigURL.ProNomeCidade + '/prodataws/services/NfseWSService?wsdl/';
-  ConfigURL.ProConsultaNFSe       := 'http://' + ConfigURL.ProNomeCidade + '/prodataws/services/NfseWSService?wsdl/';
-  ConfigURL.ProCancelaNFSe        := 'http://' + ConfigURL.ProNomeCidade + '/prodataws/services/NfseWSService?wsdl/';
-  ConfigURL.ProGerarNFSe          := 'http://' + ConfigURL.ProNomeCidade + '/prodataws/services/NfseWSService?wsdl/';
-  ConfigURL.ProRecepcaoSincrono   := 'http://' + ConfigURL.ProNomeCidade + '/prodataws/services/NfseWSService?wsdl/';
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;
@@ -198,6 +198,7 @@ begin
    acCancelar:    Result := True;
    acGerar:       Result := True;
    acRecSincrono: Result := True;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -438,6 +439,7 @@ begin
    acCancelar:    Result := 'http://services.nfse/CancelarNfse';
    acGerar:       Result := 'http://services.nfse/GerarNfse';
    acRecSincrono: Result := 'http://services.nfse/RecepcionarLoteRpsSincrono';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -452,6 +454,7 @@ begin
    acCancelar:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acGerar:       Result := SeparaDados( RetornoWS, 'outputXML' );
    acRecSincrono: Result := SeparaDados( RetornoWS, 'outputXML' );
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

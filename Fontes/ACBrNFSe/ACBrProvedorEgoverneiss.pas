@@ -175,7 +175,8 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := False;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -199,6 +200,8 @@ begin
    acConsNFSe:    Result := '';
    acCancelar:    Result := '<' + Prefixo3 + 'request' + xmlns;
    acGerar:       Result := '<' + Prefixo3 + 'request' + xmlns;
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -223,6 +226,8 @@ begin
    acConsNFSe:    Result := '';
    acCancelar:    Result := '</' + Prefixo3 + 'request>';
    acGerar:       Result := '</' + Prefixo3 + 'request>';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -313,6 +318,7 @@ begin
    acCancelar:    Result := 'http://tempuri.org/INotaFiscalEletronicaServico/Cancelar';
    acGerar:       Result := 'http://tempuri.org/INotaFiscalEletronicaServico/Emitir';
    acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -329,7 +335,8 @@ begin
 
 //   acCancelar:    Result := SeparaDados( RetornoWS, 'http://tempuri.org/INotaFiscalEletronicaServico/CancelarResponse', True );
 //   acGerar:       Result := SeparaDados( RetornoWS, 'http://tempuri.org/INotaFiscalEletronicaServico/EmitirResponse', True );
-   acRecSincrono: Result := '';
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

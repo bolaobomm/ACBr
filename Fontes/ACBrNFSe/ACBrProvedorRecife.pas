@@ -189,7 +189,9 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := False;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
+   acConsSecRps:  Result := False;
  end;
 end;
 
@@ -392,6 +394,8 @@ begin
    acConsNFSe:    Result := 'http://nfse.recife.pe.gov.br/ConsultarNfse';
    acCancelar:    Result := 'http://nfse.recife.pe.gov.br/CancelarNfse';
    acGerar:       Result := 'http://nfse.recife.pe.gov.br/GerarNfse';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 

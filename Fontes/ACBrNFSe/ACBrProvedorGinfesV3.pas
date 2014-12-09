@@ -159,68 +159,37 @@ begin
   then begin
    ConfigURL.HomNomeCidade         := '';
    ConfigURL.HomRecepcaoLoteRPS    := 'http://isshomo.sefin.fortaleza.ce.gov.br:80/grpfor-iss/ServiceGinfesImplService';
-   ConfigURL.HomConsultaLoteRPS    := 'http://isshomo.sefin.fortaleza.ce.gov.br:80/grpfor-iss/ServiceGinfesImplService';
-   ConfigURL.HomConsultaNFSeRPS    := 'http://isshomo.sefin.fortaleza.ce.gov.br:80/grpfor-iss/ServiceGinfesImplService';
-   ConfigURL.HomConsultaSitLoteRPS := 'http://isshomo.sefin.fortaleza.ce.gov.br:80/grpfor-iss/ServiceGinfesImplService';
-   ConfigURL.HomConsultaNFSe       := 'http://isshomo.sefin.fortaleza.ce.gov.br:80/grpfor-iss/ServiceGinfesImplService';
-   ConfigURL.HomCancelaNFSe        := 'http://isshomo.sefin.fortaleza.ce.gov.br:80/grpfor-iss/ServiceGinfesImplService';
-   ConfigURL.HomGerarNFSe          := '';
-   ConfigURL.HomRecepcaoSincrono   := '';
-   ConfigURL.HomSubstituiNFSe      := '';
 
    ConfigURL.ProNomeCidade         := '';
    ConfigURL.ProRecepcaoLoteRPS    := 'https://iss.fortaleza.ce.gov.br/grpfor-iss/ServiceGinfesImplService';
-   ConfigURL.ProConsultaLoteRPS    := 'https://iss.fortaleza.ce.gov.br/grpfor-iss/ServiceGinfesImplService';
-   ConfigURL.ProConsultaNFSeRPS    := 'https://iss.fortaleza.ce.gov.br/grpfor-iss/ServiceGinfesImplService';
-   ConfigURL.ProConsultaSitLoteRPS := 'https://iss.fortaleza.ce.gov.br/grpfor-iss/ServiceGinfesImplService';
-   ConfigURL.ProConsultaNFSe       := 'https://iss.fortaleza.ce.gov.br/grpfor-iss/ServiceGinfesImplService';
-   ConfigURL.ProCancelaNFSe        := 'https://iss.fortaleza.ce.gov.br/grpfor-iss/ServiceGinfesImplService';
-   ConfigURL.ProGerarNFSe          := '';
-   ConfigURL.ProRecepcaoSincrono   := '';
-   ConfigURL.ProSubstituiNFSe      := '';
-   (*
-   ConfigURL.HomNomeCidade         := '';
-   ConfigURL.HomRecepcaoLoteRPS    := 'https://homologacao.issfortaleza.com.br/ServiceGinfesImpl';
-   ConfigURL.HomConsultaLoteRPS    := 'https://homologacao.issfortaleza.com.br/ServiceGinfesImpl';
-   ConfigURL.HomConsultaNFSeRPS    := 'https://homologacao.issfortaleza.com.br/ServiceGinfesImpl';
-   ConfigURL.HomConsultaSitLoteRPS := 'https://homologacao.issfortaleza.com.br/ServiceGinfesImpl';
-   ConfigURL.HomConsultaNFSe       := 'https://homologacao.issfortaleza.com.br/ServiceGinfesImpl';
-   ConfigURL.HomCancelaNFSe        := 'https://homologacao.issfortaleza.com.br/ServiceGinfesImpl';
-
-   ConfigURL.ProNomeCidade         := '';
-   ConfigURL.ProRecepcaoLoteRPS    := 'https://producao.issfortaleza.com.br/ServiceGinfesImpl';
-   ConfigURL.ProConsultaLoteRPS    := 'https://producao.issfortaleza.com.br/ServiceGinfesImpl';
-   ConfigURL.ProConsultaNFSeRPS    := 'https://producao.issfortaleza.com.br/ServiceGinfesImpl';
-   ConfigURL.ProConsultaSitLoteRPS := 'https://producao.issfortaleza.com.br/ServiceGinfesImpl';
-   ConfigURL.ProConsultaNFSe       := 'https://producao.issfortaleza.com.br/ServiceGinfesImpl';
-   ConfigURL.ProCancelaNFSe        := 'https://producao.issfortaleza.com.br/ServiceGinfesImpl';
-   *)
   end
   else begin  // Demais Cidades
    ConfigURL.HomNomeCidade         := '';
    ConfigURL.HomRecepcaoLoteRPS    := 'https://homologacao.ginfes.com.br/ServiceGinfesImpl';
-   ConfigURL.HomConsultaLoteRPS    := 'https://homologacao.ginfes.com.br/ServiceGinfesImpl';
-   ConfigURL.HomConsultaNFSeRPS    := 'https://homologacao.ginfes.com.br/ServiceGinfesImpl';
-   ConfigURL.HomConsultaSitLoteRPS := 'https://homologacao.ginfes.com.br/ServiceGinfesImpl';
-   ConfigURL.HomConsultaNFSe       := 'https://homologacao.ginfes.com.br/ServiceGinfesImpl';
-   ConfigURL.HomCancelaNFSe        := 'https://homologacao.ginfes.com.br/ServiceGinfesImpl';
-   ConfigURL.HomGerarNFSe          := '';
-   ConfigURL.HomRecepcaoSincrono   := '';
-   ConfigURL.HomSubstituiNFSe      := '';
 
    ConfigURL.ProNomeCidade         := '';
    ConfigURL.ProRecepcaoLoteRPS    := 'https://producao.ginfes.com.br/ServiceGinfesImpl';
-   ConfigURL.ProConsultaLoteRPS    := 'https://producao.ginfes.com.br/ServiceGinfesImpl';
-   ConfigURL.ProConsultaNFSeRPS    := 'https://producao.ginfes.com.br/ServiceGinfesImpl';
-   ConfigURL.ProConsultaSitLoteRPS := 'https://producao.ginfes.com.br/ServiceGinfesImpl';
-   ConfigURL.ProConsultaNFSe       := 'https://producao.ginfes.com.br/ServiceGinfesImpl';
-   ConfigURL.ProCancelaNFSe        := 'https://producao.ginfes.com.br/ServiceGinfesImpl';
-   ConfigURL.ProGerarNFSe          := '';
-   ConfigURL.ProRecepcaoSincrono   := '';
-   ConfigURL.ProSubstituiNFSe      := '';
   end;
 
- Result := ConfigURL;
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
+
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
+
+  Result := ConfigURL;
 end;
 
 function TProvedorGinfesV3.GetURI(URI: String): String;
@@ -239,7 +208,9 @@ begin
    acConsNFSe:    Result := True;
    acCancelar:    Result := True;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
+   acConsSecRps:  Result := False;
  end;
 end;
 
@@ -507,6 +478,8 @@ begin
    acConsNFSe:    Result := '';
    acCancelar:    Result := '';
    acGerar:       Result := '';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -561,9 +534,9 @@ begin
                     then Result := SeparaDados( RetornoWS, 'soap:Body' )
                     else Result := Result + '</CancelarNfseResposta>';
                   end;
-   acGerar:       begin
-                   Result := '';
-                  end;
+   acGerar:       Result := RetornoWS;
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

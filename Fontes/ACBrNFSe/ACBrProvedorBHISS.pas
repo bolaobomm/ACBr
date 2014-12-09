@@ -143,73 +143,43 @@ begin
   3106200: begin  // Belo Horizonte/MG
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'https://bhisshomologa.pbh.gov.br/bhiss-ws/nfse';
-            ConfigURL.HomConsultaLoteRPS    := 'https://bhisshomologa.pbh.gov.br/bhiss-ws/nfse';
-            ConfigURL.HomConsultaNFSeRPS    := 'https://bhisshomologa.pbh.gov.br/bhiss-ws/nfse';
-            ConfigURL.HomConsultaSitLoteRPS := 'https://bhisshomologa.pbh.gov.br/bhiss-ws/nfse';
-            ConfigURL.HomConsultaNFSe       := 'https://bhisshomologa.pbh.gov.br/bhiss-ws/nfse';
-            ConfigURL.HomCancelaNFSe        := 'https://bhisshomologa.pbh.gov.br/bhiss-ws/nfse';
-            ConfigURL.HomGerarNFSe          := '';
-            ConfigURL.HomRecepcaoSincrono   := '';
-            ConfigURL.HomSubstituiNFSe      := '';
 
             ConfigURL.ProNomeCidade         := '';
             ConfigURL.ProRecepcaoLoteRPS    := 'https://bhissdigital.pbh.gov.br/bhiss-ws/nfse';
-            ConfigURL.ProConsultaLoteRPS    := 'https://bhissdigital.pbh.gov.br/bhiss-ws/nfse';
-            ConfigURL.ProConsultaNFSeRPS    := 'https://bhissdigital.pbh.gov.br/bhiss-ws/nfse';
-            ConfigURL.ProConsultaSitLoteRPS := 'https://bhissdigital.pbh.gov.br/bhiss-ws/nfse';
-            ConfigURL.ProConsultaNFSe       := 'https://bhissdigital.pbh.gov.br/bhiss-ws/nfse';
-            ConfigURL.ProCancelaNFSe        := 'https://bhissdigital.pbh.gov.br/bhiss-ws/nfse';
-            ConfigURL.ProGerarNFSe          := '';
-            ConfigURL.ProRecepcaoSincrono   := '';
-            ConfigURL.ProSubstituiNFSe      := '';
            end;
   3136702: begin // Juiz de Fora/MG
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'https://nfsejuizdefora-teste.pbh.gov.br/bhiss-ws/nfse';
-            ConfigURL.HomConsultaLoteRPS    := 'https://nfsejuizdefora-teste.pbh.gov.br/bhiss-ws/nfse';
-            ConfigURL.HomConsultaNFSeRPS    := 'https://nfsejuizdefora-teste.pbh.gov.br/bhiss-ws/nfse';
-            ConfigURL.HomConsultaSitLoteRPS := 'https://nfsejuizdefora-teste.pbh.gov.br/bhiss-ws/nfse';
-            ConfigURL.HomConsultaNFSe       := 'https://nfsejuizdefora-teste.pbh.gov.br/bhiss-ws/nfse';
-            ConfigURL.HomCancelaNFSe        := 'https://nfsejuizdefora-teste.pbh.gov.br/bhiss-ws/nfse';
-            ConfigURL.HomGerarNFSe          := '';
-            ConfigURL.HomRecepcaoSincrono   := '';
-            ConfigURL.HomSubstituiNFSe      := '';
 
             ConfigURL.ProNomeCidade         := '';
             ConfigURL.ProRecepcaoLoteRPS    := 'https://nfse.pjf.mg.gov.br/bhiss-ws/nfse';
-            ConfigURL.ProConsultaLoteRPS    := 'https://nfse.pjf.mg.gov.br/bhiss-ws/nfse';
-            ConfigURL.ProConsultaNFSeRPS    := 'https://nfse.pjf.mg.gov.br/bhiss-ws/nfse';
-            ConfigURL.ProConsultaSitLoteRPS := 'https://nfse.pjf.mg.gov.br/bhiss-ws/nfse';
-            ConfigURL.ProConsultaNFSe       := 'https://nfse.pjf.mg.gov.br/bhiss-ws/nfse';
-            ConfigURL.ProCancelaNFSe        := 'https://nfse.pjf.mg.gov.br/bhiss-ws/nfse';
-            ConfigURL.ProGerarNFSe          := '';
-            ConfigURL.ProRecepcaoSincrono   := '';
-            ConfigURL.ProSubstituiNFSe      := '';
            end;
   4314902: begin // Porto Alegre/RS
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'https://nfse-hom.procempa.com.br/bhiss-ws/nfse';
-            ConfigURL.HomConsultaLoteRPS    := 'https://nfse-hom.procempa.com.br/bhiss-ws/nfse';
-            ConfigURL.HomConsultaNFSeRPS    := 'https://nfse-hom.procempa.com.br/bhiss-ws/nfse';
-            ConfigURL.HomConsultaSitLoteRPS := 'https://nfse-hom.procempa.com.br/bhiss-ws/nfse';
-            ConfigURL.HomConsultaNFSe       := 'https://nfse-hom.procempa.com.br/bhiss-ws/nfse';
-            ConfigURL.HomCancelaNFSe        := 'https://nfse-hom.procempa.com.br/bhiss-ws/nfse';
-            ConfigURL.HomGerarNFSe          := '';
-            ConfigURL.HomRecepcaoSincrono   := '';
-            ConfigURL.HomSubstituiNFSe      := '';
 
             ConfigURL.ProNomeCidade         := '';
             ConfigURL.ProRecepcaoLoteRPS    := 'https://nfe.portoalegre.rs.gov.br/bhiss-ws/nfse';
-            ConfigURL.ProConsultaLoteRPS    := 'https://nfe.portoalegre.rs.gov.br/bhiss-ws/nfse';
-            ConfigURL.ProConsultaNFSeRPS    := 'https://nfe.portoalegre.rs.gov.br/bhiss-ws/nfse';
-            ConfigURL.ProConsultaSitLoteRPS := 'https://nfe.portoalegre.rs.gov.br/bhiss-ws/nfse';
-            ConfigURL.ProConsultaNFSe       := 'https://nfe.portoalegre.rs.gov.br/bhiss-ws/nfse';
-            ConfigURL.ProCancelaNFSe        := 'https://nfe.portoalegre.rs.gov.br/bhiss-ws/nfse';
-            ConfigURL.ProGerarNFSe          := '';
-            ConfigURL.ProRecepcaoSincrono   := '';
-            ConfigURL.ProSubstituiNFSe      := '';
            end;
  end;
+
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
+
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;
@@ -229,7 +199,8 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := True;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -441,6 +412,8 @@ begin
    acConsNFSe:    Result := 'http://ws.bhiss.pbh.gov.br/ConsultarNfse';
    acCancelar:    Result := 'http://ws.bhiss.pbh.gov.br/CancelarNfse';
    acGerar:       Result := '';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -453,7 +426,9 @@ begin
    acConsNFSeRps: Result := SeparaDados( RetornoWS, 'outputXML' );
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'outputXML' );
-   acGerar:       Result := '';
+   acGerar:       Result := RetornoWS;
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

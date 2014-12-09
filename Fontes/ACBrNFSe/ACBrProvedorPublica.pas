@@ -144,60 +144,40 @@ begin
   then begin
    ConfigURL.HomNomeCidade         := '';
    ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse-teste.publica.inf.br/itajai_nfse_integracao/Services';
-   ConfigURL.HomConsultaLoteRPS    := 'http://nfse-teste.publica.inf.br/itajai_nfse_integracao/Services';
-   ConfigURL.HomConsultaNFSeRPS    := 'http://nfse-teste.publica.inf.br/itajai_nfse_integracao/Services';
-   ConfigURL.HomConsultaSitLoteRPS := 'http://nfse-teste.publica.inf.br/itajai_nfse_integracao/Services';
-   ConfigURL.HomConsultaNFSe       := 'http://nfse-teste.publica.inf.br/itajai_nfse_integracao/Services';
-   ConfigURL.HomCancelaNFSe        := 'http://nfse-teste.publica.inf.br/itajai_nfse_integracao/Services';
-   ConfigURL.HomGerarNFSe          := 'http://nfse-teste.publica.inf.br/itajai_nfse_integracao/Services';
-   ConfigURL.HomRecepcaoSincrono   := '';
-   ConfigURL.HomSubstituiNFSe      := '';
    (*
    ConfigURL.HomRecepcaoLoteRPS    := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
-   ConfigURL.HomConsultaLoteRPS    := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
-   ConfigURL.HomConsultaNFSeRPS    := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
-   ConfigURL.HomConsultaSitLoteRPS := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
-   ConfigURL.HomConsultaNFSe       := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
-   ConfigURL.HomCancelaNFSe        := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
-   ConfigURL.HomGerarNFSe          := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
    *)
    ConfigURL.ProNomeCidade         := '';
    ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
-   ConfigURL.ProConsultaLoteRPS    := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
-   ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
-   ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
-   ConfigURL.ProConsultaNFSe       := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
-   ConfigURL.ProCancelaNFSe        := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
-   ConfigURL.ProGerarNFSe          := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
-   ConfigURL.ProRecepcaoSincrono   := '';
-   ConfigURL.ProSubstituiNFSe      := '';
   end
   else
   begin // Não sei como é o das outras cidades, e se tem outras cidades...
    ConfigURL.HomNomeCidade         := '';
    ConfigURL.HomRecepcaoLoteRPS    := '';
-   ConfigURL.HomConsultaLoteRPS    := '';
-   ConfigURL.HomConsultaNFSeRPS    := '';
-   ConfigURL.HomConsultaSitLoteRPS := '';
-   ConfigURL.HomConsultaNFSe       := '';
-   ConfigURL.HomCancelaNFSe        := '';
-   ConfigURL.HomGerarNFSe          := '';
-   ConfigURL.HomRecepcaoSincrono   := '';
-   ConfigURL.HomSubstituiNFSe      := '';
 
    ConfigURL.ProNomeCidade         := '';
    ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
-   ConfigURL.ProConsultaLoteRPS    := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
-   ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
-   ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
-   ConfigURL.ProConsultaNFSe       := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
-   ConfigURL.ProCancelaNFSe        := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
-   ConfigURL.ProGerarNFSe          := '';
-   ConfigURL.ProRecepcaoSincrono   := '';
-   ConfigURL.ProSubstituiNFSe      := '';
   end;
 
- Result := ConfigURL;
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
+
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
+
+  Result := ConfigURL;
 end;
 
 function TProvedorPublica.GetURI(URI: String): String;
@@ -215,7 +195,9 @@ begin
    acConsNFSe:    Result := True;
    acCancelar:    Result := True;
    acGerar:       Result := True;
-   else           Result := True;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
+   acConsSecRps:  Result := False;
  end;
 end;
 
@@ -408,6 +390,8 @@ begin
    acConsNFSe:    Result := '';
    acCancelar:    Result := '';
    acGerar:       Result := '';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -421,6 +405,8 @@ begin
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'ConsultarNfseFaixaResponse' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'CancelarNfseResponse' );
    acGerar:       Result := SeparaDados( RetornoWS, 'GerarNfseResponse' );
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

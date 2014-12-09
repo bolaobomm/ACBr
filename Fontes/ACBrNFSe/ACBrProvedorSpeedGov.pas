@@ -151,27 +151,27 @@ begin
            end;
  end;
 
- ConfigURL.HomRecepcaoLoteRPS    := 'http://speedgov.com.br/wsmod/Nfes';
- ConfigURL.HomConsultaLoteRPS    := 'http://speedgov.com.br/wsmod/Nfes';
- ConfigURL.HomConsultaNFSeRPS    := 'http://speedgov.com.br/wsmod/Nfes';
- ConfigURL.HomConsultaSitLoteRPS := 'http://speedgov.com.br/wsmod/Nfes';
- ConfigURL.HomConsultaNFSe       := 'http://speedgov.com.br/wsmod/Nfes';
- ConfigURL.HomCancelaNFSe        := 'http://speedgov.com.br/wsmod/Nfes';
- ConfigURL.HomGerarNFSe          := 'http://speedgov.com.br/wsmod/Nfes';
- ConfigURL.HomRecepcaoSincrono   := 'http://speedgov.com.br/wsmod/Nfes';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomRecepcaoLoteRPS    := 'http://speedgov.com.br/wsmod/Nfes';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
- ConfigURL.ProRecepcaoLoteRPS    := 'http://www.speedgov.com.br/ws' + ConfigURL.ProNomeCidade + '/Nfes';
- ConfigURL.ProConsultaLoteRPS    := 'http://www.speedgov.com.br/ws' + ConfigURL.ProNomeCidade + '/Nfes';
- ConfigURL.ProConsultaNFSeRPS    := 'http://www.speedgov.com.br/ws' + ConfigURL.ProNomeCidade + '/Nfes';
- ConfigURL.ProConsultaSitLoteRPS := 'http://www.speedgov.com.br/ws' + ConfigURL.ProNomeCidade + '/Nfes';
- ConfigURL.ProConsultaNFSe       := 'http://www.speedgov.com.br/ws' + ConfigURL.ProNomeCidade + '/Nfes';
- ConfigURL.ProCancelaNFSe        := 'http://www.speedgov.com.br/ws' + ConfigURL.ProNomeCidade + '/Nfes';
- ConfigURL.ProGerarNFSe          := 'http://www.speedgov.com.br/ws' + ConfigURL.ProNomeCidade + '/Nfes';
- ConfigURL.ProRecepcaoSincrono   := 'http://www.speedgov.com.br/ws' + ConfigURL.ProNomeCidade + '/Nfes';
-  ConfigURL.ProSubstituiNFSe      := '';
-  
- Result := ConfigURL;
+  ConfigURL.ProRecepcaoLoteRPS    := 'http://www.speedgov.com.br/ws' + ConfigURL.ProNomeCidade + '/Nfes';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
+
+  Result := ConfigURL;
 end;
 
 function TProvedorSpeedGov.GetURI(URI: String): String;
@@ -191,6 +191,7 @@ begin
    acCancelar:    Result := False;
    acGerar:       Result := False;
    acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -435,6 +436,7 @@ begin
    acCancelar:    Result := '';
    acGerar:       Result := '';
    acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;;
 end;
 
@@ -449,6 +451,7 @@ begin
    acCancelar:    Result := SeparaDados( RetornoWS, 'return' );
    acGerar:       Result := SeparaDados( RetornoWS, 'return' );
    acRecSincrono: Result := SeparaDados( RetornoWS, 'return' );
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

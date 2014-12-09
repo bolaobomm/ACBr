@@ -167,24 +167,24 @@ begin
   end;
 
   ConfigURL.HomRecepcaoLoteRPS    := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
-  ConfigURL.HomConsultaLoteRPS    := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
-  ConfigURL.HomConsultaNFSeRPS    := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
-  ConfigURL.HomConsultaSitLoteRPS := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
-  ConfigURL.HomConsultaNFSe       := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
-  ConfigURL.HomCancelaNFSe        := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
-  ConfigURL.HomGerarNFSe          := '';
-  ConfigURL.HomRecepcaoSincrono   := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
   ConfigURL.ProRecepcaoLoteRPS    := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
-  ConfigURL.ProConsultaLoteRPS    := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
-  ConfigURL.ProConsultaNFSeRPS    := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
-  ConfigURL.ProConsultaSitLoteRPS := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
-  ConfigURL.ProConsultaNFSe       := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
-  ConfigURL.ProCancelaNFSe        := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
-  ConfigURL.ProGerarNFSe          := '';
-  ConfigURL.ProRecepcaoSincrono   := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;
@@ -204,8 +204,8 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := False;
    acGerar:       Result := False;
-   acRecSincrono: result := false;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -461,6 +461,7 @@ case Acao of
    acCancelar:    Result := 'CancelarNfseRequest';
    acGerar:       Result := 'http://nfse.abrasf.org.br/Infse/GerarNfse';
    acRecSincrono: Result := 'RecepcionarLoteRpsRequest';
+   acSubstituir:  Result := '';
  end;
 end;
 

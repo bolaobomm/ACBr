@@ -191,24 +191,24 @@ begin
   end;
 
  	ConfigURL.HomRecepcaoLoteRPS    := 'https://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
- 	ConfigURL.HomConsultaLoteRPS    := 'https://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
- 	ConfigURL.HomConsultaNFSeRPS    := 'https://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
- 	ConfigURL.HomConsultaSitLoteRPS := 'https://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
- 	ConfigURL.HomConsultaNFSe       := 'https://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
- 	ConfigURL.HomCancelaNFSe        := 'https://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
- 	ConfigURL.HomGerarNFSe          := 'https://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
-  ConfigURL.HomRecepcaoSincrono   := '';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
  	ConfigURL.ProRecepcaoLoteRPS    := 'https://ws.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
- 	ConfigURL.ProConsultaLoteRPS    := 'https://ws.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
- 	ConfigURL.ProConsultaNFSeRPS    := 'https://ws.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
- 	ConfigURL.ProConsultaSitLoteRPS := 'https://ws.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
- 	ConfigURL.ProConsultaNFSe       := 'https://ws.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
- 	ConfigURL.ProCancelaNFSe        := 'https://ws.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
-  ConfigURL.ProGerarNFSe          := 'https://ws.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
-  ConfigURL.ProRecepcaoSincrono   := '';
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
  	Result := ConfigURL;
 end;
@@ -228,7 +228,8 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := False;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -407,6 +408,8 @@ begin
    acConsNFSe:    Result := 'http://nfse.abrasf.org.br/ConsultarNfsePorFaixa';
    acCancelar:    Result := 'http://nfse.abrasf.org.br/CancelarNfse';
    acGerar:       Result := 'http://nfse.abrasf.org.br/GerarNfse';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -442,6 +445,8 @@ begin
                    RetWS := RetWS + '</GerarNfseResponse>';
                    Result := RetWS;
                   end;
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

@@ -143,28 +143,29 @@ begin
    1100205: begin // Porto Velho/RO
               ConfigURL.HomNomeCidade         := '';
               ConfigURL.HomRecepcaoLoteRPS    := 'http://www.semfazonline.com:7070/nfse/NfseWSService?wsdl';
-              ConfigURL.HomConsultaLoteRPS    := 'http://www.semfazonline.com:7070/nfse/NfseWSService?wsdl';
-              ConfigURL.HomConsultaNFSeRPS    := 'http://www.semfazonline.com:7070/nfse/NfseWSService?wsdl';
-              ConfigURL.HomConsultaSitLoteRPS := 'http://www.semfazonline.com:7070/nfse/NfseWSService?wsdl';
-              ConfigURL.HomConsultaNFSe       := 'http://www.semfazonline.com:7070/nfse/NfseWSService?wsdl';
-              ConfigURL.HomCancelaNFSe        := 'http://www.semfazonline.com:7070/nfse/NfseWSService?wsdl';
-              ConfigURL.HomGerarNFSe          := 'http://www.semfazonline.com:7070/nfse/NfseWSService?wsdl';
-              ConfigURL.HomRecepcaoSincrono   := 'http://www.semfazonline.com:7070/nfse/NfseWSService?wsdl';
-              ConfigURL.HomSubstituiNFSe      := '';
 
               ConfigURL.ProNomeCidade         := '';
               ConfigURL.ProRecepcaoLoteRPS    := 'http://www.semfazonline.com/nfse/NfseWSService?wsdl';
-              ConfigURL.ProConsultaLoteRPS    := 'http://www.semfazonline.com/nfse/NfseWSService?wsdl';
-              ConfigURL.ProConsultaNFSeRPS    := 'http://www.semfazonline.com/nfse/NfseWSService?wsdl';
-              ConfigURL.ProConsultaSitLoteRPS := 'http://www.semfazonline.com/nfse/NfseWSService?wsdl';
-              ConfigURL.ProConsultaNFSe       := 'http://www.semfazonline.com/nfse/NfseWSService?wsdl';
-              ConfigURL.ProCancelaNFSe        := 'http://www.semfazonline.com/nfse/NfseWSService?wsdl';
-              ConfigURL.ProGerarNFSe          := 'http://www.semfazonline.com/nfse/NfseWSService?wsdl';
-              ConfigURL.ProRecepcaoSincrono   := 'http://www.semfazonline.com/nfse/NfseWSService?wsdl';
-              ConfigURL.ProSubstituiNFSe      := '';
            end;
-
   end;
+
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
+
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;
@@ -186,7 +187,7 @@ begin
    acCancelar:    Result := True;
    acGerar:       Result := True;
    acRecSincrono: Result := True;
-   else           Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -600,7 +601,7 @@ begin
    acCancelar:    Result := 'http://nfse.abrasf.org.br/CancelarNfse';
    acGerar:       Result := 'http://nfse.abrasf.org.br/GerarNfse';
    acRecSincrono: Result := 'http://nfse.abrasf.org.br/RecepcionarLoteRpsSincrono';
-   else           Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -615,7 +616,7 @@ begin
    acCancelar:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acGerar:       Result := SeparaDados( RetornoWS, 'outputXML' );
    acRecSincrono: Result := SeparaDados( RetornoWS, 'outputXML' );
-   else           Result := '';
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

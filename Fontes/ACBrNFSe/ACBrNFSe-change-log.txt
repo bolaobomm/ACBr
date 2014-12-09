@@ -48,13 +48,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/12/2014
+[*] Padronização das Units dos provedores para atender a funcionalidade de
+    Substituição de NFS-e.
+    Por: Italo Jurisato Junior
 [+] Incluido a Unit: pnfsSubsNfseResposta.pas para processar a resposta de uma
     solicitação de Substituição de NFS-e.
     Não esta 100% requer testes.
     Por: Italo Jurisato Junior
 
 08/12/2014
-[+] Incluido a Funcionalidade Substituicao de NFS-e.
+[+] Incluido a Funcionalidade Substituição de NFS-e.
     Não esta 100% requer testes.
     Por: Italo Jurisato Junior
 

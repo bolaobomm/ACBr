@@ -147,24 +147,24 @@ begin
   end;
 
   ConfigURL.HomRecepcaoLoteRPS    := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
-  ConfigURL.HomConsultaLoteRPS    := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
-  ConfigURL.HomConsultaNFSeRPS    := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
-  ConfigURL.HomConsultaSitLoteRPS := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
-  ConfigURL.HomConsultaNFSe       := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
-  ConfigURL.HomCancelaNFSe        := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
-  ConfigURL.HomGerarNFSe          := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
-  ConfigURL.HomRecepcaoSincrono   := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
   ConfigURL.ProRecepcaoLoteRPS    := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
-  ConfigURL.ProConsultaLoteRPS    := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
-  ConfigURL.ProConsultaNFSeRPS    := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
-  ConfigURL.ProConsultaSitLoteRPS := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
-  ConfigURL.ProConsultaNFSe       := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
-  ConfigURL.ProCancelaNFSe        := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
-  ConfigURL.ProGerarNFSe          := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
-  ConfigURL.ProRecepcaoSincrono   := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;
@@ -185,7 +185,7 @@ begin
    acCancelar:    Result := True;
    acGerar:       Result := False;
    acRecSincrono: Result := False;
-   else           Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -393,6 +393,7 @@ begin
    acCancelar:    Result := 'https://isse' + NomeCidade + '.gov.br/ws/#CancelarNfse';
    acGerar:       Result := 'https://isse' + NomeCidade + '.gov.br/ws/#GerarNfse';
    acRecSincrono: Result := 'https://isse' + NomeCidade + '.gov.br/ws/#EnviarLoteRpsSincrono';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -408,6 +409,7 @@ begin
    acGerar:       Result := SeparaDados( RetornoWS, 'return' );
    // Alterado por Joel Takei 13/06/2013
    acRecSincrono: Result := SeparaDados( RetornoWS, 'return' );
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

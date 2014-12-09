@@ -140,26 +140,26 @@ var
 begin
  	ConfigURL.HomNomeCidade         := 'goiania';
  	ConfigURL.HomRecepcaoLoteRPS    := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
- 	ConfigURL.HomConsultaLoteRPS    := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
- 	ConfigURL.HomConsultaNFSeRPS    := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
- 	ConfigURL.HomConsultaSitLoteRPS := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
- 	ConfigURL.HomConsultaNFSe       := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
- 	ConfigURL.HomCancelaNFSe        := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
- 	ConfigURL.HomGerarNFSe          := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
-  ConfigURL.HomRecepcaoSincrono   := '';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
  	ConfigURL.ProNomeCidade         := 'goiania';
  	ConfigURL.ProRecepcaoLoteRPS    := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
- 	ConfigURL.ProConsultaLoteRPS    := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
- 	ConfigURL.ProConsultaNFSeRPS    := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
- 	ConfigURL.ProConsultaSitLoteRPS := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
- 	ConfigURL.ProConsultaNFSe       := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
- 	ConfigURL.ProCancelaNFSe        := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
-  ConfigURL.ProGerarNFSe          := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx';
-  ConfigURL.ProRecepcaoSincrono   := '';
-  ConfigURL.ProSubstituiNFSe      := '';
-  
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
+
  	Result := ConfigURL;
 end;
 
@@ -177,8 +177,9 @@ begin
    acConsNFSeRps: Result := False;
    acConsNFSe:    Result := False;
    acCancelar:    Result := False;
-   acGerar:       Result := True;
-   else           Result := False;
+   acGerar:       Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -332,6 +333,8 @@ begin
    acConsNFSe:    Result := ''; //'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarNfse';
    acCancelar:    Result := ''; //'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/CancelarNfse';
    acGerar:       Result := 'http://nfse.goiania.go.gov.br/ws/GerarNfse';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -367,6 +370,8 @@ begin
 //                   RetWS := RetWS + '</GerarNfseResult>';
                    Result := RetWS;
                   end;
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

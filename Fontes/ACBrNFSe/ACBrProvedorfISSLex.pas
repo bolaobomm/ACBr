@@ -237,7 +237,8 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := False;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -487,6 +488,8 @@ begin
    acConsNFSe:    Result := 'FISS-LEXaction/AWS_CONSULTANFSE.Execute';
    acCancelar:    Result := 'FISS-LEXaction/AWS_CANCELARNFSE.Execute';
    acGerar:       Result := '';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -499,7 +502,9 @@ begin
    acConsNFSeRps: Result := SeparaDados( RetornoWS, 'WS_ConsultaNfsePorRps.ExecuteResponse' );
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'WS_ConsultaNfse.ExecuteResponse' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'WS_CancelarNfse.ExecuteResponse' );
-   acGerar:       Result := '';
+   acGerar:       Result := RetornoWS;
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

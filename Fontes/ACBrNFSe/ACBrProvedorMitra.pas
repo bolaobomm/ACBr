@@ -176,7 +176,8 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := False;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -392,6 +393,8 @@ begin
    acConsNFSe:    Result := '';
    acCancelar:    Result := '';
    acGerar:       Result := '';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -407,6 +410,8 @@ begin
    acConsNFSe:    Result := '';
    acCancelar:    Result := '';
    acGerar:       Result := '';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 

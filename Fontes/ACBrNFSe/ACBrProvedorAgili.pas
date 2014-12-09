@@ -155,24 +155,24 @@ begin
   end;
 
   ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '/ServicoNFSe.asmx';
-  ConfigURL.HomConsultaLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '/ServicoNFSe.asmx';
-  ConfigURL.HomConsultaNFSeRPS    := 'http://' + ConfigURL.HomNomeCidade + '/ServicoNFSe.asmx';
-  ConfigURL.HomConsultaSitLoteRPS := 'http://' + ConfigURL.HomNomeCidade + '/ServicoNFSe.asmx';
-  ConfigURL.HomConsultaNFSe       := 'http://' + ConfigURL.HomNomeCidade + '/ServicoNFSe.asmx';
-  ConfigURL.HomCancelaNFSe        := 'http://' + ConfigURL.HomNomeCidade + '/ServicoNFSe.asmx';
-  ConfigURL.HomGerarNFSe          := 'http://' + ConfigURL.HomNomeCidade + '/ServicoNFSe.asmx';
-  ConfigURL.HomRecepcaoSincrono   := 'http://' + ConfigURL.HomNomeCidade + '/ServicoNFSe.asmx';
-  ConfigURL.HomSubstituiNFSe      := 'http://' + ConfigURL.HomNomeCidade + '/ServicoNFSe.asmx';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
   ConfigURL.ProRecepcaoLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + '/ServicoNFSe.asmx';
-  ConfigURL.ProConsultaLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + '/ServicoNFSe.asmx';
-  ConfigURL.ProConsultaNFSeRPS    := 'http://' + ConfigURL.ProNomeCidade + '/ServicoNFSe.asmx';
-  ConfigURL.ProConsultaSitLoteRPS := 'http://' + ConfigURL.ProNomeCidade + '/ServicoNFSe.asmx';
-  ConfigURL.ProConsultaNFSe       := 'http://' + ConfigURL.ProNomeCidade + '/ServicoNFSe.asmx';
-  ConfigURL.ProCancelaNFSe        := 'http://' + ConfigURL.ProNomeCidade + '/ServicoNFSe.asmx';
-  ConfigURL.ProGerarNFSe          := 'http://' + ConfigURL.ProNomeCidade + '/ServicoNFSe.asmx';
-  ConfigURL.ProRecepcaoSincrono   := 'http://' + ConfigURL.ProNomeCidade + '/ServicoNFSe.asmx';
-  ConfigURL.ProSubstituiNFSe      := 'http://' + ConfigURL.ProNomeCidade + '/ServicoNFSe.asmx';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;
@@ -461,13 +461,13 @@ function TProvedorAgili.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): An
 begin
  case Acao of
    acRecepcionar: Result := SeparaDados( RetornoWS, 'outputXML' );
-   acConsSit:     Result := '';
+   acConsSit:     Result := RetornoWS;
    acConsLote:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acConsNFSeRps: Result := SeparaDados( RetornoWS, 'outputXML' );
-   acConsNFSe:    Result := '';
+   acConsNFSe:    Result := RetornoWS;
    acCancelar:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acGerar:       Result := SeparaDados( RetornoWS, 'outputXML' );
-   acRecSincrono: Result := '';
+   acRecSincrono: Result := RetornoWS;
    acSubstituir:  Result := SeparaDados( RetornoWS, 'outputXML' );
  end;
 end;

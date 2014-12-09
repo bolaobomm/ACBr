@@ -141,25 +141,25 @@ var
 begin
   ConfigURL.HomNomeCidade         := '';
   ConfigURL.HomRecepcaoLoteRPS    := 'https://bhisshomologa.pbh.gov.br/bhiss-ws/nfse';
-  ConfigURL.HomConsultaLoteRPS    := 'https://bhisshomologa.pbh.gov.br/bhiss-ws/nfse';
-  ConfigURL.HomConsultaNFSeRPS    := 'https://bhisshomologa.pbh.gov.br/bhiss-ws/nfse';
-  ConfigURL.HomConsultaSitLoteRPS := 'https://bhisshomologa.pbh.gov.br/bhiss-ws/nfse';
-  ConfigURL.HomConsultaNFSe       := 'https://bhisshomologa.pbh.gov.br/bhiss-ws/nfse';
-  ConfigURL.HomCancelaNFSe        := 'https://bhisshomologa.pbh.gov.br/bhiss-ws/nfse';
-  ConfigURL.HomGerarNFSe          := '';
-  ConfigURL.HomRecepcaoSincrono   := '';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
   ConfigURL.ProNomeCidade         := '';
   ConfigURL.ProRecepcaoLoteRPS    := 'https://bhissdigital.pbh.gov.br/bhiss-ws/nfse';
-  ConfigURL.ProConsultaLoteRPS    := 'https://bhissdigital.pbh.gov.br/bhiss-ws/nfse';
-  ConfigURL.ProConsultaNFSeRPS    := 'https://bhissdigital.pbh.gov.br/bhiss-ws/nfse';
-  ConfigURL.ProConsultaSitLoteRPS := 'https://bhissdigital.pbh.gov.br/bhiss-ws/nfse';
-  ConfigURL.ProConsultaNFSe       := 'https://bhissdigital.pbh.gov.br/bhiss-ws/nfse';
-  ConfigURL.ProCancelaNFSe        := 'https://bhissdigital.pbh.gov.br/bhiss-ws/nfse';
-  ConfigURL.ProGerarNFSe          := '';
-  ConfigURL.ProRecepcaoSincrono   := '';
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;
@@ -179,7 +179,9 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := True;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
+   acConsSecRps:  Result := False;
  end;
 end;
 
@@ -391,6 +393,8 @@ begin
    acConsNFSe:    Result := 'http://ws.bhiss.pbh.gov.br/ConsultarNfse';
    acCancelar:    Result := 'http://ws.bhiss.pbh.gov.br/CancelarNfse';
    acGerar:       Result := '';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -403,7 +407,9 @@ begin
    acConsNFSeRps: Result := SeparaDados( RetornoWS, 'outputXML' );
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'outputXML' );
-   acGerar:       Result := '';
+   acGerar:       Result := RetornoWS;
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

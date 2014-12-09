@@ -238,7 +238,8 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := True;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -436,6 +437,7 @@ begin
    acCancelar:    Result := 'http://tempuri.org/mCancelamentoNFSe';
    acGerar:       Result := '';
    acRecSincrono: Result := 'http://tempuri.org/' + FMetodoRecepcionar;
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -448,8 +450,9 @@ begin
    acConsNFSeRps: Result := SeparaDados( RetornoWS, 'mConsultaNFSePorRPSResult');
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'mConsultaNFSePorFaixaResult');
    acCancelar:    Result := SeparaDados( RetornoWS, 'mCancelamentoNFSeResult');
-   acGerar:       Result := '';
+   acGerar:       Result := RetornoWS;
    acRecSincrono: Result := SeparaDados( RetornoWS, 'mEnvioLoteRPSSincronoResult');
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

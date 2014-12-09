@@ -179,7 +179,8 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := True;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -335,6 +336,8 @@ begin
    acConsNFSe:    Result := 'http://www.betha.com.br/e-nota-contribuinte-ws/consultarNfse';
    acCancelar:    Result := 'http://www.betha.com.br/e-nota-contribuinte-ws/cancelarNfse';
    acGerar:       Result := '';
+   acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -347,7 +350,9 @@ begin
    acConsNFSeRps: Result := SeparaDados( RetornoWS, 'ConsultarNfseRpsResposta', True );
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'ConsultarNfseResposta', True );
    acCancelar:    Result := SeparaDados( RetornoWS, 'CancelarNfseReposta', True );
-   acGerar:       Result := '';
+   acGerar:       Result := RetornoWS;
+   acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
  end;
 end;
 

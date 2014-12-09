@@ -155,24 +155,24 @@ begin
   end;
 
   ConfigURL.HomRecepcaoLoteRPS    := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
-  ConfigURL.HomConsultaLoteRPS    := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
-  ConfigURL.HomConsultaNFSeRPS    := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
-  ConfigURL.HomConsultaSitLoteRPS := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
-  ConfigURL.HomConsultaNFSe       := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
-  ConfigURL.HomCancelaNFSe        := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
-  ConfigURL.HomGerarNFSe          := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
-  ConfigURL.HomRecepcaoSincrono   := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
-  ConfigURL.HomSubstituiNFSe      := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
+  ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomGerarNFSe          := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
+  ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
   ConfigURL.ProRecepcaoLoteRPS    := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
-  ConfigURL.ProConsultaLoteRPS    := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
-  ConfigURL.ProConsultaNFSeRPS    := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
-  ConfigURL.ProConsultaSitLoteRPS := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
-  ConfigURL.ProConsultaNFSe       := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
-  ConfigURL.ProCancelaNFSe        := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
-  ConfigURL.ProGerarNFSe          := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
-  ConfigURL.ProRecepcaoSincrono   := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
-  ConfigURL.ProSubstituiNFSe      := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
+  ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProGerarNFSe          := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProRecepcaoSincrono   := ConfigURL.ProRecepcaoLoteRPS;
+  ConfigURL.ProSubstituiNFSe      := ConfigURL.ProRecepcaoLoteRPS;
 
   Result := ConfigURL;
 end;

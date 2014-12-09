@@ -196,7 +196,7 @@ begin
   ConfigURL.HomCancelaNFSe        := cURL_Homologacao;
   ConfigURL.HomGerarNFSe          := cURL_Homologacao;
   ConfigURL.HomRecepcaoSincrono   := cURL_Homologacao;
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomSubstituiNFSe      := cURL_Homologacao;
 
   ConfigURL.ProNomeCidade         := '';
   ConfigURL.ProRecepcaoLoteRPS    := cURL_Producao;
@@ -207,7 +207,7 @@ begin
   ConfigURL.ProCancelaNFSe        := cURL_Producao;
   ConfigURL.ProGerarNFSe          := cURL_Producao;
   ConfigURL.ProRecepcaoSincrono   := cURL_Producao;
-  ConfigURL.ProSubstituiNFSe      := '';
+  ConfigURL.ProSubstituiNFSe      := cURL_Producao;
 
   Result := ConfigURL;
 end;
@@ -228,7 +228,7 @@ begin
    acCancelar:    Result := True;
    acGerar:       Result := False;
    acRecSincrono: Result := False;
-   else           Result := False;
+   acSubstituir:  Result := False;
  end;
 end;
 
@@ -446,6 +446,7 @@ begin
    acCancelar:    Result := urlsoap + 'cancelarNfse';
    acGerar:       Result := urlsoap + 'gerarNfse';
    acRecSincrono: Result := urlsoap + 'recepcionarLoteRpsSincrono';
+   acSubstituir:  Result := '';
  end;
 end;
 
@@ -461,6 +462,7 @@ begin
    acCancelar:    Result := SeparaDados( RetornoWS, 'ns3:cancelarNfseResponse' );
    acGerar:       Result := SeparaDados( RetornoWS, 'ns3:gerarNfseResponse' );
    acRecSincrono: Result := SeparaDados( RetornoWS, 'ns3:recepcionarLoteRpsSincronoResponse' );
+   acSubstituir:  Result := RetornoWS;
  end;
  (*
  Result := SeparaDados( RetornoWS, 'soap:Body' );

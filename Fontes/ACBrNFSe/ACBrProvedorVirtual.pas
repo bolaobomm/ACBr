@@ -174,7 +174,7 @@ begin
    acCancelar:    Result := False;
    acGerar:       Result := False;
    acRecSincrono: Result := False;
-   else           Result := False;
+   acSubstituir:  Result := False;
   end;
 end;
 
@@ -329,6 +329,7 @@ begin
    acCancelar:    Result := 'http://www.abrasf.org.br/nfse.xsdaction/ACANCELARNFSE_BARRADOGARCAS.Execute';
    acGerar:       Result := 'http://www.abrasf.org.br/nfse.xsdaction/AGERARNFSE_BARRADOGARCAS.Execute';
    acRecSincrono: Result := '';
+   acSubstituir:  Result := '';
   end;
 end;
 
@@ -343,6 +344,7 @@ begin
    acCancelar:    Result := RetornoWS; // SeparaDados( RetornoWS, 'nfse_barradogarcas.CANCELARNFSEResponse' );
    acGerar:       Result := RetornoWS; // SeparaDados( RetornoWS, 'Saida' );
    acRecSincrono: Result := RetornoWS;
+   acSubstituir:  Result := RetornoWS;
   end;
 end;
 
