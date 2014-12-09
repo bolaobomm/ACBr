@@ -83,6 +83,10 @@
 |* 30/04/2013: Juliana Tamizou
 |  - Modificado inclusão do registro 74 para evitar duplicidade de registros
 |    para o mesmo produto.
+|* 09/12/2014: EMBarbosa
+|  - No registro 61, campos "Número inicial de ordem" e "Número final de ordem"
+|     possuem limite de 6 caracteres. Como o componente usa tipos inteiros, fica
+|     difícil para o usuário limitar a esse tamanho por fora do componente.
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -2497,21 +2501,21 @@ for i:=0 to Registros61.Count-1 do
 begin
   with Registros61[i] do
   begin
-    wregistro:='61';
-    wregistro:=wregistro+Space(28);
-    wregistro:=wregistro+FormatDateTime('yyyymmdd',Emissao);
-    wregistro:=wregistro+TBStrZero(Modelo,2);
-    wregistro:=wregistro+Padl(Serie,3);
-    wregistro:=wregistro+Padl(SubSerie,2);
-    wregistro:=wregistro+TBStrZero(IntToStr(NumOrdemInicial),6);
-    wregistro:=wregistro+TBStrZero(IntToStr(NumOrdemFinal),6);
-    wregistro:=wregistro+TBStrZero(TiraPontos(FormatFloat('#,##0.00',Valor)),13);
-    wregistro:=wregistro+TBStrZero(TiraPontos(FormatFloat('#,##0.00',BaseDeCalculo)),13);
-    wregistro:=wregistro+TBStrZero(TiraPontos(FormatFloat('#,##0.00',ValorIcms)),12);
-    wregistro:=wregistro+TBStrZero(TiraPontos(FormatFloat('#,##0.00',Isentas)),13);
-    wregistro:=wregistro+TBStrZero(TiraPontos(FormatFloat('#,##0.00',Outras)),13);
-    wregistro:=wregistro+TBStrZero(TiraPontos(FormatFloat('#,##0.00',Aliquota)),4);
-    wregistro:=wregistro+Space(1);
+    wregistro := '61';
+    wregistro := wregistro + Space(28);
+    wregistro := wregistro + FormatDateTime('yyyymmdd',Emissao);
+    wregistro := wregistro + TBStrZero(Modelo,2);
+    wregistro := wregistro + Padl(Serie,3);
+    wregistro := wregistro + Padl(SubSerie,2);
+    wregistro := wregistro + RightStr(TBStrZero(IntToStr(NumOrdemInicial), 6), 6);
+    wregistro := wregistro + RightStr(TBStrZero(IntToStr(NumOrdemFinal), 6), 6);
+    wregistro := wregistro + TBStrZero(TiraPontos(FormatFloat('#,##0.00',Valor)),13);
+    wregistro := wregistro + TBStrZero(TiraPontos(FormatFloat('#,##0.00',BaseDeCalculo)),13);
+    wregistro := wregistro + TBStrZero(TiraPontos(FormatFloat('#,##0.00',ValorIcms)),12);
+    wregistro := wregistro + TBStrZero(TiraPontos(FormatFloat('#,##0.00',Isentas)),13);
+    wregistro := wregistro + TBStrZero(TiraPontos(FormatFloat('#,##0.00',Outras)),13);
+    wregistro := wregistro + TBStrZero(TiraPontos(FormatFloat('#,##0.00',Aliquota)),4);
+    wregistro := wregistro + Space(1);
     WriteRecord(wregistro);
   end;
 end;
