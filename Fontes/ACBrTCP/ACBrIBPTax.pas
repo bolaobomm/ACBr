@@ -242,34 +242,45 @@ begin
     for I := 1 to Arquivo.Count - 1 do
     begin
       QuebrarLinha(Arquivo.Strings[I], Item);
-      if Item.Count = COUNT_COLUN then
-      begin
-        try
-          // codigo;ex;tabela;descricao;aliqNac;aliqImp;0.0.2
-          with Itens.New do
-          begin
-            NCM           := Item.Strings[0];
-            Excecao       := Item.Strings[1];
-            Tabela        := TACBrIBPTaxTabela(StrToInt(Trim(Item.Strings[2]))) ;
-            Descricao     := Item.Strings[3];
 
-            FederalNacional  := StringToFloatDef(Item.Strings[4], 0.00);
-            FederalImportado := StringToFloatDef(Item.Strings[5], 0.00);
-            Estadual         := StringToFloatDef(Item.Strings[6], 0.00);
-            Municipal        := StringToFloatDef(Item.Strings[7], 0.00);
+      if Trim(Item.Strings[2]) <> '' then
+      begin
+        if Item.Count = COUNT_COLUN then
+        begin
+          try
+            // codigo;ex;tabela;descricao;aliqNac;aliqImp;0.0.2
+            with Itens.New do
+            begin
+              NCM           := Item.Strings[0];
+              Excecao       := Item.Strings[1];
+              Tabela        := TACBrIBPTaxTabela(StrToInt(Trim(Item.Strings[2]))) ;
+              Descricao     := Item.Strings[3];
+
+              FederalNacional  := StringToFloatDef(Item.Strings[4], 0.00);
+              FederalImportado := StringToFloatDef(Item.Strings[5], 0.00);
+              Estadual         := StringToFloatDef(Item.Strings[6], 0.00);
+              Municipal        := StringToFloatDef(Item.Strings[7], 0.00);
+            end;
+          except
+            on E: Exception do
+            begin
+              EventoErroImportacao(Arquivo.Strings[I], Format('Linha %d: ', [I+1]) + E.Message);
+            end;
           end;
-        except
-          on E: Exception do
-          begin
-            EventoErroImportacao(Arquivo.Strings[I], E.Message);
-          end;
+        end
+        else
+        begin
+          EventoErroImportacao(
+            Arquivo.Strings[I],
+            Format('Linha %d: Registro inválido, quantidade de colunas "%d" diferente do esperado "%d"!', [I, Item.Count, COUNT_COLUN])
+          );
         end;
       end
       else
       begin
         EventoErroImportacao(
           Arquivo.Strings[I],
-          Format('Linha %d: Registro inválido, quantidade de colunas "%d" diferente do esperado "%d"!', [I, Item.Count, COUNT_COLUN])
+          Format('Linha %d: Registro inválido, registro em branco!', [I, Item.Count, COUNT_COLUN])
         );
       end;
     end;
