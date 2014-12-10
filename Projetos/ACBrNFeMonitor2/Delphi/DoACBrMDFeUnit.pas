@@ -140,7 +140,9 @@ begin
             end
            else
             begin
-              if not ValidarChave('MDFe'+Cmd.Params(0)) then
+              // Foi necessário colocar o prefixo NFe pois a function
+              // ValidarChave só reconhece os prefixos: NFe e CTe.
+              if not ValidarChave('NFe'+Cmd.Params(0)) then
                  raise Exception.Create('Chave '+Cmd.Params(0)+' inválida.')
               else
                  ACBrMDFe1.WebServices.Consulta.MDFeChave := Cmd.Params(0);
@@ -168,7 +170,9 @@ begin
         else if Cmd.Metodo = 'cancelarmdfe' then
          begin
 
-           if not ValidarChave('MDFe'+Cmd.Params(0)) then
+           // Foi necessário colocar o prefixo NFe pois a function
+           // ValidarChave só reconhece os prefixos: NFe e CTe.
+           if not ValidarChave('NFe'+Cmd.Params(0)) then
               raise Exception.Create('Chave '+Cmd.Params(0)+' inválida.')
            else
               ACBrMDFe1.WebServices.Consulta.MDFeChave := Cmd.Params(0);
@@ -222,7 +226,9 @@ begin
         else if Cmd.Metodo = 'encerrarmdfe' then
          begin
 
-           if not ValidarChave('MDFe'+Cmd.Params(0)) then
+           // Foi necessário colocar o prefixo NFe pois a function
+           // ValidarChave só reconhece os prefixos: NFe e CTe.
+           if not ValidarChave('NFe'+Cmd.Params(0)) then
               raise Exception.Create('Chave '+Cmd.Params(0)+' inválida.')
            else
               ACBrMDFe1.WebServices.Consulta.MDFeChave := Cmd.Params(0);

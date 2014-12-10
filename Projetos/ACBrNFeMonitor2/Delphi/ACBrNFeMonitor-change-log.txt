@@ -48,6 +48,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/12/2014
+[-] : Ao passar a chave para a function ValidarChave esta sendo colocado o prefixo:
+      MDFe, mas a function só reconhece os prefixos NFe e CTe, portanto foi alterado
+      o prefixo para NFe desta o forma a validação vai ocorrer sem nenhum problema.
+      Essa alteração é paleativa até que se faça uma alteração na function.
+      Por: Italo Jurisato Junior
+	
 08/12/2014
 [+] : Implementado o comando: 
       MDFe.EncerrarMDFe(<chave>, <data>, <codmunic>, <CNPJ>, <numLote>)
