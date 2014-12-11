@@ -528,8 +528,30 @@ end;
 function ValidarChave(const chave: string): boolean;
 var
   i: integer;
+  aChave: String;
 begin
   result := false;
+
+  aChave := somenteNumeros(chave);
+
+  if length(aChave) <> 44 then
+    exit;
+
+  try
+    i := 0;
+    if GerarDigito(i, copy(aChave, 1, 43)) then
+      result := i = StrToInt(aChave[length(aChave)]);
+    if result then
+      result := ValidarCodigoUF(StrToInt(copy(aChave, 1, 2)));
+    if result then
+      result := ValidarAAMM(copy(aChave, 3, 4));
+    if result then
+      result := ValidarCNPJ(copy(aChave, 7, 14));
+  except
+    result := false;
+  end;
+
+(*
   if (copy(chave, 1, 3) <> 'NFe') and (copy(chave, 1, 3) <> 'CTe') then
     exit;
   try
@@ -545,6 +567,7 @@ begin
   except
     result := false;
   end;
+*)
 end;
 
 function ValidarAAMM(const AAMM: string): boolean;

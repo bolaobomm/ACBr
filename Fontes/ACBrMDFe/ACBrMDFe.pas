@@ -60,7 +60,10 @@ const
 type
   TACBrMDFeAboutInfo = (ACBrMDFeAbout);
 
-  EACBrMDFeException = class(Exception);
+  EACBrMDFeException = class(Exception)
+  public
+    constructor Create(const Msg: string);
+  end;
 
   { Evento para gerar log das mensagens do Componente }
   TACBrMDFeLog = procedure(const Mensagem: String) of object;
@@ -577,15 +580,27 @@ begin
     try
       if EventoMDFe.Evento.Items[i].InfEvento.nSeqEvento = 0 then
         EventoMDFe.Evento.Items[i].infEvento.nSeqEvento := 1;
-      if trim(EventoMDFe.Evento.Items[i].InfEvento.CNPJ) = '' then
-        EventoMDFe.Evento.Items[i].InfEvento.CNPJ := self.Manifestos.Items[i].MDFe.Emit.CNPJ;
-      if trim(EventoMDFe.Evento.Items[i].InfEvento.chMDFe) = '' then
-        EventoMDFe.Evento.Items[i].InfEvento.chMDFe := copy(self.Manifestos.Items[i].MDFe.infMDFe.ID, (length(self.Manifestos.Items[i].MDFe.infMDFe.ID)-44)+1, 44);
-      if trim(EventoMDFe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
-      begin
-        if EventoMDFe.Evento.Items[i].infEvento.tpEvento = teCancelamento then
-          EventoMDFe.Evento.Items[i].infEvento.detEvento.nProt := self.Manifestos.Items[i].MDFe.procMDFe.nProt;
-      end;
+      if self.Manifestos.Count > 0 then
+       begin
+         if trim(EventoMDFe.Evento.Items[i].InfEvento.CNPJ) = '' then
+           EventoMDFe.Evento.Items[i].InfEvento.CNPJ := self.Manifestos.Items[i].MDFe.Emit.CNPJ;
+         if trim(EventoMDFe.Evento.Items[i].InfEvento.chMDFe) = '' then
+           EventoMDFe.Evento.Items[i].InfEvento.chMDFe := copy(self.Manifestos.Items[i].MDFe.infMDFe.ID, (length(self.Manifestos.Items[i].MDFe.infMDFe.ID)-44)+1, 44);
+         if trim(EventoMDFe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
+         begin
+           if EventoMDFe.Evento.Items[i].infEvento.tpEvento = teCancelamento then
+            begin
+              EventoMDFe.Evento.Items[i].infEvento.detEvento.nProt := self.Manifestos.Items[i].MDFe.procMDFe.nProt;
+              if trim(EventoMDFe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
+               begin
+                  WebServices.Consulta.MDFeChave := EventoMDFe.Evento.Items[i].InfEvento.chMDFe;
+                  if not WebServices.Consulta.Executar then
+                    raise Exception.Create(WebServices.Consulta.Msg);
+                  EventoMDFe.Evento.Items[i].infEvento.detEvento.nProt := WebServices.Consulta.Protocolo;
+               end;
+            end;
+         end;
+       end;
     except
     end;
   end;
@@ -595,7 +610,9 @@ begin
   begin
     if Assigned(Self.OnGerarLog) then
       Self.OnGerarLog(WebServices.EnvEvento.Msg);
-    raise EACBrMDFeException.Create(WebServices.EnvEvento.Msg);
+    if WebServices.EnvEvento.Msg <> ''
+     then raise EACBrMDFeException.Create(WebServices.EnvEvento.Msg)
+     else raise EACBrMDFeException.Create('Erro Desconhecido ao Enviar Evento de MDF-e!')
   end;
 end;
 
@@ -619,7 +636,7 @@ begin
       if DAMDFE <> nil then
       begin
         ImprimirEventoPDF;
-        NomeArq := StringReplace(EventoMDFe.Evento[0].InfEvento.id,'ID', '', [rfIgnoreCase]);
+        NomeArq := OnlyNumber(EventoMDFe.Evento[0].InfEvento.Id);
 //        NomeArq := Copy(EventoMDFe.Evento[0].InfEvento.id, 09, 44) +
 //                   Copy(EventoMDFe.Evento[0].InfEvento.id, 03, 06) +
 //                   Copy(EventoMDFe.Evento[0].InfEvento.id, 53, 02);
@@ -650,6 +667,13 @@ begin
      raise EACBrMDFeException.Create('Componente DAMDFE não associado.')
   else
      DAMDFE.ImprimirEVENTOPDF(nil);
+end;
+
+{ EACBrMDFeException }
+
+constructor EACBrMDFeException.Create(const Msg: string);
+begin
+  inherited Create( ACBrStr(Msg) );
 end;
 
 end.

@@ -50,7 +50,7 @@ unit pcteConsReciCTe;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil;
 
 type
 
@@ -87,7 +87,7 @@ end;
 
 function TConsReciCTe.ObterNomeArquivo: String;
 begin
-  Result := SomenteNumeros(FnRec) + '-ped-rec.xml';
+  Result := OnlyNumber(FnRec) + '-ped-rec.xml';
 end;
 
 function TConsReciCTe.GerarXML: Boolean;

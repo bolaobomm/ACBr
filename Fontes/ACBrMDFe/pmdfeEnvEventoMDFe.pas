@@ -45,7 +45,8 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor, pmdfeEventoMDFe;
+  pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor, pmdfeEventoMDFe,
+  ACBrUtil;
 
 type
   TInfEventoCollection     = class;
@@ -134,7 +135,7 @@ begin
   Gerador.wGrupo('eventoMDFe ' + NAME_SPACE_MDFE + ' versao="' + MDFeEventoMDFe + '"');
 
   Evento.Items[0].InfEvento.Id := 'ID'+ Evento.Items[0].InfEvento.TipoEvento +
-                                        SomenteNumeros(Evento.Items[0].InfEvento.chMDFe) +
+                                        OnlyNumber(Evento.Items[0].InfEvento.chMDFe) +
                                         Format('%.2d', [Evento.Items[0].InfEvento.nSeqEvento]);
 
   Gerador.wGrupo('infEvento Id="' + Evento.Items[0].InfEvento.id + '"');
@@ -144,7 +145,7 @@ begin
   Gerador.wCampo(tcInt, 'EP05', 'cOrgao', 1, 2, 1, Evento.Items[0].InfEvento.cOrgao);
   Gerador.wCampo(tcStr, 'EP06', 'tpAmb ', 1, 1, 1, TpAmbToStr(Evento.Items[0].InfEvento.tpAmb), DSC_TPAMB);
 
-  sDoc := SomenteNumeros(Evento.Items[0].InfEvento.CNPJ);
+  sDoc := OnlyNumber(Evento.Items[0].InfEvento.CNPJ);
 
   case Length(sDoc) of
     14: begin
@@ -159,7 +160,7 @@ begin
 
   Gerador.wCampo(tcStr, 'EP08', 'chMDFe', 44, 44, 1, Evento.Items[0].InfEvento.chMDFe, DSC_CHAVE);
 
-  if not ValidarChave('NFe' + SomenteNumeros(Evento.Items[0].InfEvento.chMDFe))
+  if not ValidarChave('NFe' + OnlyNumber(Evento.Items[0].InfEvento.chMDFe))
    then Gerador.wAlerta('EP08', 'chMDFe', '', 'Chave de MDFe inválida');
 
   // Segundo o manual a data deve conter o UTC mas no schema não contem

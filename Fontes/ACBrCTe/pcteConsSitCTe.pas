@@ -50,7 +50,7 @@ unit pcteConsSitCTe;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil;
 
 type
 
@@ -87,7 +87,7 @@ end;
 
 function TConsSitCTe.ObterNomeArquivo: String;
 begin
-  Result := SomenteNumeros(FchCTe) + '-ped-sit.xml';
+  Result := OnlyNumber(FchCTe) + '-ped-sit.xml';
 end;
 
 function TConsSitCTe.GerarXML: Boolean;
@@ -97,8 +97,8 @@ begin
   Gerador.wGrupo('consSitCTe ' + NAME_SPACE_CTE + ' versao="' + CTeconsSitCTe + '"');
   Gerador.wCampo(tcStr, 'EP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
   Gerador.wCampo(tcStr, 'EP04', 'xServ', 009, 009, 1, 'CONSULTAR', DSC_XSERV);
-  Gerador.wCampo(tcEsp, 'EP05', 'chCTe', 044, 044, 1, SomenteNumeros(FchCTe), DSC_CHCTe);
-  if not ValidarChave('NFe' + SomenteNumeros(FchCTe)) then
+  Gerador.wCampo(tcEsp, 'EP05', 'chCTe', 044, 044, 1, OnlyNumber(FchCTe), DSC_CHCTe);
+  if not ValidarChave('NFe' + OnlyNumber(FchCTe)) then
     Gerador.wAlerta('EP05', 'chCTe', '', 'Chave do CTe inválida');
   Gerador.wGrupo('/consSitCTe');
 

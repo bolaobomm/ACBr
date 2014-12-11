@@ -46,7 +46,7 @@ uses
   Variants,
 {$ENDIF}
   pcnAuxiliar, pcnConversao, pcnLeitor,
-  pmdfeConversao, pmdfeMDFe;
+  pmdfeConversao, pmdfeMDFe, ACBrUtil;
 
 type
 
@@ -103,7 +103,7 @@ begin
   *)
   Leitor.Grupo := Leitor.Arquivo;
 
-  MDFe.infMDFe.ID := SomenteNumeros(Leitor.rAtributo('Id='));
+  MDFe.infMDFe.ID := OnlyNumber(Leitor.rAtributo('Id='));
   if MDFe.infMDFe.ID = '' then
     raise Exception.Create('Não encontrei o atributo: Id');
 

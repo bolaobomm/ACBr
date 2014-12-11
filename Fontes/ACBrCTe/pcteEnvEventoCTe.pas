@@ -54,7 +54,8 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor, pcteEventoCTe;
+  pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor, pcteEventoCTe,
+  ACBrUtil;
 
 type
   TInfEventoCollection     = class;
@@ -144,7 +145,7 @@ begin
   Gerador.wGrupo('eventoCTe ' + NAME_SPACE_CTE + ' versao="' + CTeEventoCTe + '"');
 
   Evento.Items[0].InfEvento.Id := 'ID'+ Evento.Items[0].InfEvento.TipoEvento +
-                                        SomenteNumeros(Evento.Items[0].InfEvento.chCTe) +
+                                        OnlyNumber(Evento.Items[0].InfEvento.chCTe) +
                                         Format('%.2d', [Evento.Items[0].InfEvento.nSeqEvento]);
 
   Gerador.wGrupo('infEvento Id="' + Evento.Items[0].InfEvento.Id + '"');
@@ -154,7 +155,7 @@ begin
   Gerador.wCampo(tcInt, 'EP05', 'cOrgao', 1, 2, 1, Evento.Items[0].InfEvento.cOrgao);
   Gerador.wCampo(tcStr, 'EP06', 'tpAmb ', 1, 1, 1, TpAmbToStr(Evento.Items[0].InfEvento.tpAmb), DSC_TPAMB);
 
-  sDoc := SomenteNumeros( Evento.Items[0].InfEvento.CNPJ );
+  sDoc := OnlyNumber( Evento.Items[0].InfEvento.CNPJ );
 
   case Length( sDoc ) of
     14 : begin
@@ -169,7 +170,7 @@ begin
 
   Gerador.wCampo(tcStr, 'EP08', 'chCTe', 44, 44, 1, Evento.Items[0].InfEvento.chCTe, DSC_CHAVE);
 
-  if not ValidarChave('NFe' + SomenteNumeros(Evento.Items[0].InfEvento.chCTe))
+  if not ValidarChave('NFe' + OnlyNumber(Evento.Items[0].InfEvento.chCTe))
    then Gerador.wAlerta('EP08', 'chCTe', '', 'Chave de CTe inválida');
   {
   Gerador.wCampo(tcStr, 'EP09', 'dhEvento', 01, 27,   1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',Evento.Items[0].InfEvento.dhEvento)
@@ -230,13 +231,13 @@ begin
           if Trim(Evento.Items[0].InfEvento.detEvento.IE) = 'ISENTO' then
             Gerador.wCampo(tcStr, 'EP13', 'IE  ', 00, 14, 0, Evento.Items[0].InfEvento.detEvento.IE, DSC_IE)
           else
-            Gerador.wCampo(tcStr, 'EP13', 'IE  ', 00, 14, 0, SomenteNumeros(Evento.Items[0].InfEvento.detEvento.IE), DSC_IE);
+            Gerador.wCampo(tcStr, 'EP13', 'IE  ', 00, 14, 0, OnlyNumber(Evento.Items[0].InfEvento.detEvento.IE), DSC_IE);
 
           if not ValidarIE(Evento.Items[0].InfEvento.detEvento.IE, Evento.Items[0].InfEvento.detEvento.UF) then
             Gerador.wAlerta('EP13', 'IE', DSC_IE, ERR_MSG_INVALIDO);
          end;
 
-//       Gerador.wCampo(tcStr, 'EP13', 'IE  ', 00, 14, 0, SomenteNumeros(Evento.Items[0].InfEvento.detEvento.IE), DSC_IE);
+//       Gerador.wCampo(tcStr, 'EP13', 'IE  ', 00, 14, 0, OnlyNumber(Evento.Items[0].InfEvento.detEvento.IE), DSC_IE);
        Gerador.wGrupo('/toma04');
 
        Gerador.wCampo(tcStr, 'EP14', 'modal   ', 02, 02, 1, TpModalToStr(Evento.Items[0].InfEvento.detEvento.modal), DSC_MODAL);

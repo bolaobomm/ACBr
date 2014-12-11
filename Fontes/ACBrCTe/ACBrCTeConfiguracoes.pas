@@ -40,6 +40,8 @@
 |*
 |* 16/12/2008: Wemerson Souto
 |*  - Doação do componente para o Projeto ACBr
+|* 26/09/2014: Italo Jurisao Junior
+|*  - Refactoring, revisão e otimização
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -50,7 +52,7 @@ interface
 
 uses
  {$IFNDEF ACBrCTeOpenSSL}
-  ACBrCAPICOM_TLB, JwaWinCrypt, JwaWinType, ACBrMSXML2_TLB,
+  Windows, ACBrCAPICOM_TLB, JwaWinCrypt, JwaWinType, ACBrMSXML2_TLB,
  {$ENDIF}
   Classes, Sysutils, pcnConversao, ActiveX;
 
@@ -63,20 +65,21 @@ type
   TCertificadosConf = class(TComponent)
   private
     FSenhaCert: AnsiString;
+    FCNPJ: String;
     {$IFDEF ACBrCTeOpenSSL}
        FCertificado: AnsiString;
     {$ELSE}
+       PCertCarregado: ICertificate2;
        FNumeroSerie: AnsiString;
        FDataVenc: TDateTime;
        FSubjectName: String;
-       FCNPJ: String;
 
        procedure SetNumeroSerie(const Value: AnsiString);
        function GetNumeroSerie: AnsiString;
        function GetDataVenc: TDateTime;
        function GetSubjectName: String;
-       function GetCNPJ: String;
     {$ENDIF}
+    function GetCNPJ: String;
   public
     {$IFNDEF ACBrCTeOpenSSL}
        function SelecionarCertificado: AnsiString;
@@ -89,8 +92,8 @@ type
        property NumeroSerie: AnsiString read GetNumeroSerie write SetNumeroSerie;
        property DataVenc: TDateTime     read GetDataVenc;
        property SubjectName: String     read GetSubjectName;
-       property CNPJ: String            read GetCNPJ;
     {$ENDIF}
+       property CNPJ: String            read GetCNPJ;
        property Senha: AnsiString       read FSenhaCert     write FSenhaCert;
   end;
 
@@ -148,10 +151,13 @@ type
   {$IFDEF ACBrCTeOpenSSL}
     FIniFinXMLSECAutomatico: Boolean;
   {$ENDIF}
+    FVersaoDF: TpcnVersaoDF;
+    FValidarDigest: Boolean;
 
     procedure SetFormaEmissao(AValue: TpcnTipoEmissao);
     function GetPathSalvar: String;
     function GetFormatoAlerta: String;
+    procedure SetVersaoDF(const Value: TpcnVersaoDF);
   public
     constructor Create(AOwner: TComponent); override;
     function Save(AXMLName: String; AXMLFile: WideString; aPath: String = ''): Boolean;
@@ -168,6 +174,8 @@ type
   {$IFDEF ACBrCTeOpenSSL}
     property IniFinXMLSECAutomatico: Boolean read FIniFinXMLSECAutomatico write FIniFinXMLSECAutomatico;
   {$ENDIF}
+    property VersaoDF: TpcnVersaoDF read FVersaoDF write SetVersaoDF default ve200;
+    property ValidarDigest: Boolean read FValidarDigest write FValidarDigest default True;
   end;
 
   TArquivosConf = class(TComponent)
@@ -177,32 +185,36 @@ type
     FLiteral: Boolean;
     FEmissaoPathCTe: Boolean;
     FSalvarEvento: Boolean;
+    FSepararCNPJ: Boolean;
     FPathCTe: String;
     FPathCan: String;
-    FPathCCe: String;
     FPathInu: String;
+    FPathCCe: String;
     FPathEPEC: String;
     FPathEvento: String;
+    FSalvarApenasCTeProcessados: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
-    function GetPathCan(Data: TDateTime = 0): String;
-    function GetPathCCe(Data: TDateTime = 0): String;
-    function GetPathEPEC(Data: TDateTime = 0): String;
-    function GetPathInu(Data: TDateTime = 0): String;
-    function GetPathCTe(Data: TDateTime = 0): String;
-    function GetPathEvento(tipoEvento: TpcnTpEvento; Data: TDateTime = 0): String;
+    function GetPathCTe(Data: TDateTime = 0; CNPJ : String = ''): String;
+    function GetPathCan(Data: TDateTime = 0; CNPJ : String = ''): String;
+    function GetPathInu(Data: TDateTime = 0; CNPJ : String = ''): String;
+    function GetPathCCe(Data: TDateTime = 0; CNPJ : String = ''): String;
+    function GetPathEPEC(Data: TDateTime = 0; CNPJ : String = ''): String;
+    function GetPathEvento(tipoEvento: TpcnTpEvento; Data: TDateTime = 0; CNPJ : String = ''): String;
   published
     property Salvar: Boolean             read FSalvar         write FSalvar         default False;
     property PastaMensal: Boolean        read FMensal         write FMensal         default False;
     property AdicionarLiteral: Boolean   read FLiteral        write FLiteral        default False;
     property EmissaoPathCTe: Boolean     read FEmissaoPathCte write FEmissaoPathCTe default False;
     property SalvarCCeCanEvento: Boolean read FSalvarEvento   write FSalvarEvento   default False;
+    property SepararPorCNPJ: Boolean     read FSepararCNPJ    write FSepararCNPJ    default False;
     property PathCTe: String             read FPathCTe        write FPathCTe;
     property PathCan: String             read FPathCan        write FPathCan;
-    property PathCCe: String             read FPathCCe        write FPathCCe;
     property PathInu: String             read FPathInu        write FPathInu;
+    property PathCCe: String             read FPathCCe        write FPathCCe;
     property PathEPEC: String            read FPathEPEC       write FPathEPEC;
     property PathEvento: String          read FPathEvento     write FPathEvento;
+    property SalvarApenasCTeProcessados: Boolean read FSalvarApenasCTeProcessados write FSalvarApenasCTeProcessados default False;
   end;
 
   TConfiguracoes = class(TComponent)
@@ -224,7 +236,7 @@ type
 implementation
 
 uses
-  Math, StrUtils, DateUtils, ACBrCteUtil, ACBrUtil, ACBrDFeUtil;
+  Math, StrUtils, DateUtils, ACBrCTe, ACBrCteUtil, ACBrUtil, ACBrDFeUtil;
 
 { TConfiguracoes }
 
@@ -292,6 +304,7 @@ begin
 {$IFDEF ACBrCTeOpenSSL}
   FIniFinXMLSECAutomatico := True;
 {$ENDIF}
+  FVersaoDF           := ve200;
 end;
 
 function TGeralConf.GetFormatoAlerta: String;
@@ -356,6 +369,11 @@ procedure TGeralConf.SetFormaEmissao(AValue: TpcnTipoEmissao);
 begin
   FFormaEmissao       := AValue;
   FFormaEmissaoCodigo := StrToInt(TpEmisToStr(FFormaEmissao));
+end;
+
+procedure TGeralConf.SetVersaoDF(const Value: TpcnVersaoDF);
+begin
+  FVersaoDF := Value;
 end;
 
 { TWebServicesConf }
@@ -434,107 +452,116 @@ var
   XML, Propriedades: String;
   Lista: TStringList;
 begin
-  CoInitialize(nil); // PERMITE O USO DE THREAD
-  try
-    if DFeUtil.EstaVazio(FNumeroSerie) then
-      raise Exception.Create('Número de Série do Certificado Digital não especificado !');
+  if (PCertCarregado <> nil) and (NumCertCarregado = FNumeroSerie) then
+     Result := PCertCarregado
+  else
+   begin
+     CoInitialize(nil); // PERMITE O USO DE THREAD
+     try
+        if DFeUtil.EstaVazio( FNumeroSerie ) then
+          raise EACBrCTeException.Create('Número de Série do Certificado Digital não especificado !');
 
-    Result := nil;
-    Store  := CoStore.Create;
-    Store.Open(CAPICOM_CURRENT_USER_STORE, CAPICOM_STORE_NAME, CAPICOM_STORE_OPEN_READ_ONLY);
+        Result := nil;
+        Store := CoStore.Create;
+        Store.Open(CAPICOM_CURRENT_USER_STORE, CAPICOM_STORE_NAME, CAPICOM_STORE_OPEN_READ_ONLY);
 
-    Certs := Store.Certificates as ICertificates2;
-    for i := 1 to Certs.Count do
-    begin
-      Cert := IInterface(Certs.Item[i]) as ICertificate2;
-      if Cert.SerialNumber = FNumeroSerie then
-      begin
-        if DFeUtil.EstaVazio(NumCertCarregado) then
-           NumCertCarregado := Cert.SerialNumber;
+        Certs := Store.Certificates as ICertificates2;
+        for i:= 1 to Certs.Count do
+        begin
+          Cert := IInterface(Certs.Item[i]) as ICertificate2;
+          if Cert.SerialNumber = FNumeroSerie then
+          begin
+            if DFeUtil.EstaVazio(NumCertCarregado) then
+               NumCertCarregado := Cert.SerialNumber;
 
-        PrivateKey := Cert.PrivateKey;
+            PrivateKey := Cert.PrivateKey;
 
-        if  CertStoreMem = nil then
-         begin
-           CertStoreMem := CoStore.Create;
-           CertStoreMem.Open(CAPICOM_MEMORY_STORE, 'MemoriaACBrCTe', CAPICOM_STORE_OPEN_READ_ONLY);
-           CertStoreMem.Add(Cert);
+            if  CertStoreMem = nil then
+             begin
+               CertStoreMem := CoStore.Create;
+               CertStoreMem.Open(CAPICOM_MEMORY_STORE, 'MemoriaACBr', CAPICOM_STORE_OPEN_READ_ONLY);
+               CertStoreMem.Add(Cert);
 
-           if (FSenhaCert <> '') and PrivateKey.IsHardwareDevice then
-            begin
-              XML := XML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />';
-              XML := XML + '<Reference URI="#">';
-              XML := XML + '<Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />';
-              XML := XML + '<DigestValue></DigestValue></Reference></SignedInfo><SignatureValue></SignatureValue><KeyInfo></KeyInfo></Signature>';
+               if (FSenhaCert <> '') and PrivateKey.IsHardwareDevice then
+                begin
 
-              xmldoc                    := CoDOMDocument50.Create;
-              xmldoc.async              := False;
-              xmldoc.validateOnParse    := False;
-              xmldoc.preserveWhiteSpace := True;
-              xmldoc.loadXML(XML);
-              xmldoc.setProperty('SelectionNamespaces', DSIGNS);
+                  XML := XML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />';
+                  XML := XML + '<Reference URI="#">';
+                  XML := XML + '<Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />';
+                  XML := XML + '<DigestValue></DigestValue></Reference></SignedInfo><SignatureValue></SignatureValue><KeyInfo></KeyInfo></Signature>';
 
-              xmldsig           := CoMXDigitalSignature50.Create;
-              xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature');
-              xmldsig.store     := CertStoreMem;
+                  xmldoc := CoDOMDocument50.Create;
+                  xmldoc.async              := False;
+                  xmldoc.validateOnParse    := False;
+                  xmldoc.preserveWhiteSpace := True;
+                  xmldoc.loadXML(XML);
+                  xmldoc.setProperty('SelectionNamespaces', DSIGNS);
 
-              dsigKey := xmldsig.createKeyFromCSP(PrivateKey.ProviderType, PrivateKey.ProviderName, PrivateKey.ContainerName, 0);
-              if (dsigKey = nil) then
-                 raise Exception.Create('Erro ao criar a chave do CSP.');
+                  xmldsig := CoMXDigitalSignature50.Create;
+                  xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature');
+                  xmldsig.store := CertStoreMem;
 
-              SigKey := dsigKey as IXMLDSigKeyEx;
-              SigKey.getCSPHandle(hCryptProvider);
+                  dsigKey := xmldsig.createKeyFromCSP(PrivateKey.ProviderType, PrivateKey.ProviderName, PrivateKey.ContainerName, 0);
+                  if (dsigKey = nil) then
+                     raise EACBrCTeException.Create('Erro ao criar a chave do CSP.');
 
-              try
-                CryptSetProvParam(hCryptProvider , PP_SIGNATURE_PIN, LPBYTE(FSenhaCert), 0);
-              finally
-                CryptReleaseContext(hCryptProvider, 0);
-              end;
+                  SigKey := dsigKey as IXMLDSigKeyEx;
+                  SigKey.getCSPHandle( hCryptProvider );
 
-              SigKey  := nil;
-              dsigKey := nil;
-              xmldsig := nil;
-              xmldoc  := nil;
-           end;
-         end;
+                  try
+                     CryptSetProvParam( hCryptProvider , PP_SIGNATURE_PIN, windows.PBYTE(FSenhaCert), 0 );
+                  finally
+                    CryptReleaseContext(hCryptProvider, 0);
+                  end;
 
-        Result       := Cert;
-        FDataVenc    := Cert.ValidToDate;
-        FSubjectName := Cert.SubjectName;
+                  SigKey    := nil;
+                  dsigKey   := nil;
+                  xmldsig   := nil;
+                  xmldoc    := nil;
+               end;
+             end;
 
-        for J := 1 to Cert.Extensions.Count do
-         begin
-           Extension    := IInterface(Cert.Extensions.Item[J]) as IExtension;
-           Propriedades := Extension.EncodedData.Format(True);
-           if (Pos('2.16.76.1.3.3', Propriedades) > 0) then
-            begin
-              Lista := TStringList.Create;
-      			  try
-                Lista.Text := Propriedades;
-                for K := 0 to Lista.Count-1 do
-                 begin
-                   if (Pos('2.16.76.1.3.3', Lista.Strings[K]) > 0) then
-                    begin
-                      FCNPJ := StringReplace(Lista.Strings[K], '2.16.76.1.3.3=', '', [rfIgnoreCase]);
-                      FCNPJ := OnlyNumber(HexToAscii(RemoveString(' ', FCNPJ)));
-                      break;
-                    end;
-                 end;
-	      		  finally
-		     	      Lista.Free;
-		       	  end;
-            end;
-           Extension := nil;
-         end;
-        break;
-      end;
-    end;
+            Result := Cert;
+            PCertCarregado := Result;
+            FDataVenc := Cert.ValidToDate;
+            FSubjectName := Cert.SubjectName;
 
-    if not(Assigned(Result)) then
-      raise Exception.Create('Certificado Digital não encontrado!');
-  finally
-    CoUninitialize;
-  end;
+            for J:=1 to Cert.Extensions.Count do
+             begin
+               Extension := IInterface(Cert.Extensions.Item[J]) as IExtension;
+               Propriedades := Extension.EncodedData.Format(True);
+               if (Pos('2.16.76.1.3.3',Propriedades) > 0) then
+                begin
+                  Lista := TStringList.Create;
+      			      try
+                     Lista.Text := Propriedades;
+                     for K:=0 to Lista.Count-1 do
+                      begin
+                        if (Pos('2.16.76.1.3.3',Lista.Strings[K]) > 0) then
+                         begin
+                           FCNPJ := StringReplace(Lista.Strings[K],'2.16.76.1.3.3=','',[rfIgnoreCase]);
+                           FCNPJ := OnlyNumber(HexToAscii(RemoveString(' ',FCNPJ)));
+                           break;
+                         end;
+                      end;
+			            finally
+      			         Lista.free;
+             			end;
+                  break;
+                end;
+               Extension := nil;
+             end;
+
+            break;
+          end;
+        end;
+
+        if not(Assigned(Result)) then
+          raise EACBrCTeException.Create('Certificado Digital não encontrado!');
+     finally
+       CoUninitialize;
+     end;
+   end;
 end;
 
 function TCertificadosConf.GetNumeroSerie: AnsiString;
@@ -598,9 +625,11 @@ begin
  else
     Result := '';
 end;
+{$ENDIF}
 
 function TCertificadosConf.GetCNPJ: String;
 begin
+{$IFNDEF ACBrCTeOpenSSL}
  if DFeUtil.NaoEstaVazio(FNumeroSerie) then
   begin
     if FCNPJ = '' then
@@ -609,8 +638,10 @@ begin
   end
  else
     Result := '';
-end;
+{$ELSE}
+    Result := FCNPJ;
 {$ENDIF}
+end;
 
 { TArquivosConf }
 
@@ -619,131 +650,7 @@ begin
   inherited;
 end;
 
-function TArquivosConf.GetPathCan(Data: TDateTime = 0): String;
-var
-  wDia, wMes, wAno: Word;
-  Dir: String;
-begin
-  if DFeUtil.EstaVazio(FPathCan) then
-     Dir := TConfiguracoes(Self.Owner).Geral.PathSalvar
-  else
-     Dir := FPathCan;
-
-  if FMensal then
-   begin
-     if Data = 0 then
-        Data := Now;
-     DecodeDate(Data, wAno, wMes, wDia);
-     if Pos(IntToStr(wAno) + IntToStrZero(wMes, 2), Dir) <= 0 then
-        Dir := PathWithDelim(Dir) + IntToStr(wAno) + IntToStrZero(wMes, 2);
-   end;
-
-  if FLiteral then
-   begin
-     if copy(Dir, length(Dir)-2, 3) <> 'Can' then
-        Dir := PathWithDelim(Dir) + 'Can';
-   end;
-
-  if not DirectoryExists(Dir) then
-     ForceDirectories(Dir);
-
-  Result := Dir;
-end;
-
-function TArquivosConf.GetPathCCe(Data: TDateTime = 0): String;
-var
-  wDia, wMes, wAno: Word;
-  Dir: String;
-begin
-  if DFeUtil.EstaVazio(FPathCCe) then
-     Dir := TConfiguracoes(Self.Owner).Geral.PathSalvar
-  else
-     Dir := FPathCCe;
-
-  if FMensal then
-   begin
-     if Data = 0 then
-        Data := Now;
-     DecodeDate(Data, wAno, wMes, wDia);
-     if Pos(IntToStr(wAno) + IntToStrZero(wMes, 2), Dir) <= 0 then
-        Dir := PathWithDelim(Dir) + IntToStr(wAno) + IntToStrZero(wMes, 2);
-   end;
-
-  if FLiteral then
-   begin
-     if copy(Dir, length(Dir)-2, 3) <> 'CCe' then
-        Dir := PathWithDelim(Dir) + 'CCe';
-   end;
-
-  if not DirectoryExists(Dir) then
-     ForceDirectories(Dir);
-
-  Result := Dir;
-end;
-
-function TArquivosConf.GetPathEPEC(Data: TDateTime = 0): String;
-var
-  wDia, wMes, wAno: Word;
-  Dir: String;
-begin
-  if DFeUtil.EstaVazio(FPathEPEC) then
-     Dir := TConfiguracoes(Self.Owner).Geral.PathSalvar
-  else
-     Dir := FPathEPEC;
-
-  if FMensal then
-   begin
-     if Data = 0 then
-        Data := Now;
-     DecodeDate(Data, wAno, wMes, wDia);
-     if Pos(IntToStr(wAno) + IntToStrZero(wMes, 2), Dir) <= 0 then
-        Dir := PathWithDelim(Dir) + IntToStr(wAno) + IntToStrZero(wMes, 2);
-   end;
-
-  if FLiteral then
-   begin
-     if copy(Dir, length(Dir)-3, 4) <> 'EPEC' then
-        Dir := PathWithDelim(Dir) + 'EPEC';
-   end;
-
-  if not DirectoryExists(Dir) then
-     ForceDirectories(Dir);
-
-  Result := Dir;
-end;
-
-function TArquivosConf.GetPathInu(Data: TDateTime = 0): String;
-var
-  wDia, wMes, wAno: Word;
-  Dir: String;
-begin
-  if DFeUtil.EstaVazio(FPathInu) then
-     Dir := TConfiguracoes(Self.Owner).Geral.PathSalvar
-  else
-     Dir := FPathInu;
-
-  if FMensal then
-   begin
-     if Data = 0 then
-        Data := Now;
-     DecodeDate(Data, wAno, wMes, wDia);
-     if Pos(IntToStr(wAno) + IntToStrZero(wMes, 2), Dir) <= 0 then
-        Dir := PathWithDelim(Dir) + IntToStr(wAno) + IntToStrZero(wMes, 2);
-   end;
-
-  if FLiteral then
-   begin
-     if copy(Dir, length(Dir)-2, 3) <> 'Inu' then
-        Dir := PathWithDelim(Dir) + 'Inu';
-   end;
-
-  if not DirectoryExists(Dir) then
-     ForceDirectories(Dir);
-
-  Result := Dir;
-end;
-
-function TArquivosConf.GetPathCTe(Data: TDateTime = 0): String;
+function TArquivosConf.GetPathCTe(Data: TDateTime = 0; CNPJ : String = ''): String;
 var
   wDia, wMes, wAno: Word;
   Dir: String;
@@ -752,6 +659,9 @@ begin
      Dir := TConfiguracoes(Self.Owner).Geral.PathSalvar
   else
      Dir := FPathCTe;
+
+  if FSepararCNPJ then
+     Dir := PathWithDelim(Dir) + TConfiguracoes(Self.Owner).Certificados.CNPJ;
 
   if FMensal then
    begin
@@ -774,7 +684,143 @@ begin
   Result := Dir;
 end;
 
-function TArquivosConf.GetPathEvento(tipoEvento: TpcnTpEvento; Data: TDateTime = 0): String;
+function TArquivosConf.GetPathCan(Data: TDateTime = 0; CNPJ : String = ''): String;
+var
+  wDia, wMes, wAno: Word;
+  Dir: String;
+begin
+  if DFeUtil.EstaVazio(FPathCan) then
+     Dir := TConfiguracoes(Self.Owner).Geral.PathSalvar
+  else
+     Dir := FPathCan;
+
+  if FSepararCNPJ then
+     Dir := PathWithDelim(Dir) + TConfiguracoes(Self.Owner).Certificados.CNPJ;
+
+  if FMensal then
+   begin
+     if Data = 0 then
+        Data := Now;
+     DecodeDate(Data, wAno, wMes, wDia);
+     if Pos(IntToStr(wAno) + IntToStrZero(wMes, 2), Dir) <= 0 then
+        Dir := PathWithDelim(Dir) + IntToStr(wAno) + IntToStrZero(wMes, 2);
+   end;
+
+  if FLiteral then
+   begin
+     if copy(Dir, length(Dir)-2, 3) <> 'Can' then
+        Dir := PathWithDelim(Dir) + 'Can';
+   end;
+
+  if not DirectoryExists(Dir) then
+     ForceDirectories(Dir);
+
+  Result := Dir;
+end;
+
+function TArquivosConf.GetPathInu(Data: TDateTime = 0; CNPJ : String = ''): String;
+var
+  wDia, wMes, wAno: Word;
+  Dir: String;
+begin
+  if DFeUtil.EstaVazio(FPathInu) then
+     Dir := TConfiguracoes(Self.Owner).Geral.PathSalvar
+  else
+     Dir := FPathInu;
+
+  if FSepararCNPJ then
+     Dir := PathWithDelim(Dir) + TConfiguracoes(Self.Owner).Certificados.CNPJ;
+
+  if FMensal then
+   begin
+     if Data = 0 then
+        Data := Now;
+     DecodeDate(Data, wAno, wMes, wDia);
+     if Pos(IntToStr(wAno) + IntToStrZero(wMes, 2), Dir) <= 0 then
+        Dir := PathWithDelim(Dir) + IntToStr(wAno) + IntToStrZero(wMes, 2);
+   end;
+
+  if FLiteral then
+   begin
+     if copy(Dir, length(Dir)-2, 3) <> 'Inu' then
+        Dir := PathWithDelim(Dir) + 'Inu';
+   end;
+
+  if not DirectoryExists(Dir) then
+     ForceDirectories(Dir);
+
+  Result := Dir;
+end;
+
+function TArquivosConf.GetPathCCe(Data: TDateTime = 0; CNPJ : String = ''): String;
+var
+  wDia, wMes, wAno: Word;
+  Dir: String;
+begin
+  if DFeUtil.EstaVazio(FPathCCe) then
+     Dir := TConfiguracoes(Self.Owner).Geral.PathSalvar
+  else
+     Dir := FPathCCe;
+
+  if FSepararCNPJ then
+     Dir := PathWithDelim(Dir) + TConfiguracoes(Self.Owner).Certificados.CNPJ;
+
+  if FMensal then
+   begin
+     if Data = 0 then
+        Data := Now;
+     DecodeDate(Data, wAno, wMes, wDia);
+     if Pos(IntToStr(wAno) + IntToStrZero(wMes, 2), Dir) <= 0 then
+        Dir := PathWithDelim(Dir) + IntToStr(wAno) + IntToStrZero(wMes, 2);
+   end;
+
+  if FLiteral then
+   begin
+     if copy(Dir, length(Dir)-2, 3) <> 'CCe' then
+        Dir := PathWithDelim(Dir) + 'CCe';
+   end;
+
+  if not DirectoryExists(Dir) then
+     ForceDirectories(Dir);
+
+  Result := Dir;
+end;
+
+function TArquivosConf.GetPathEPEC(Data: TDateTime = 0; CNPJ : String = ''): String;
+var
+  wDia, wMes, wAno: Word;
+  Dir: String;
+begin
+  if DFeUtil.EstaVazio(FPathEPEC) then
+     Dir := TConfiguracoes(Self.Owner).Geral.PathSalvar
+  else
+     Dir := FPathEPEC;
+
+  if FSepararCNPJ then
+     Dir := PathWithDelim(Dir) + TConfiguracoes(Self.Owner).Certificados.CNPJ;
+
+  if FMensal then
+   begin
+     if Data = 0 then
+        Data := Now;
+     DecodeDate(Data, wAno, wMes, wDia);
+     if Pos(IntToStr(wAno) + IntToStrZero(wMes, 2), Dir) <= 0 then
+        Dir := PathWithDelim(Dir) + IntToStr(wAno) + IntToStrZero(wMes, 2);
+   end;
+
+  if FLiteral then
+   begin
+     if copy(Dir, length(Dir)-3, 4) <> 'EPEC' then
+        Dir := PathWithDelim(Dir) + 'EPEC';
+   end;
+
+  if not DirectoryExists(Dir) then
+     ForceDirectories(Dir);
+
+  Result := Dir;
+end;
+
+function TArquivosConf.GetPathEvento(tipoEvento: TpcnTpEvento; Data: TDateTime = 0; CNPJ : String = ''): String;
 var
   wDia, wMes, wAno: Word;
   Dir: String;
@@ -783,6 +829,9 @@ begin
      Dir := TConfiguracoes(Self.Owner).Geral.PathSalvar
   else
      Dir := FPathEvento;
+
+  if FSepararCNPJ then
+     Dir := PathWithDelim(Dir) + TConfiguracoes(Self.Owner).Certificados.CNPJ;
 
   if FMensal then
    begin

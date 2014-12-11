@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/12/2014
+[*] Refactoring em várias Units.
+    por: Italo Jurisato Junior
+
 04/12/2014
 [-] Correções na Unit pcteCTeR: grupo de informações de documentos, estava lendo
     informações sobre a unidade de carga em duplicidade.

@@ -155,6 +155,7 @@ type
 
     class function UFtoCUF(UF: String): Integer;
     class function IdentificaTipoSchema(Const AXML: AnsiString; var I: Integer): Integer;
+    class function CstatProcessado(AValue: Integer): Boolean;
   end;
 
 implementation
@@ -2060,6 +2061,17 @@ begin
          end;
      end;
    end;
+end;
+
+class function CTeUtil.CstatProcessado(AValue: Integer): Boolean;
+begin
+  case AValue of
+     100: Result := True;
+     110: Result := True;
+     301: Result := True;
+  else
+     Result := False;
+  end;
 end;
 
 end.

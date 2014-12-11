@@ -43,7 +43,7 @@ interface
 uses
   SysUtils, Classes,
   pcnAuxiliar, pcnConversao, pcnGerador,
-  pmdfeConversao, pmdfeMDFe;
+  pmdfeConversao, pmdfeMDFe, ACBrUtil;
 
 type
 
@@ -136,7 +136,7 @@ end;
 
 function TMDFeW.ObterNomeArquivo: String;
 begin
-  Result := SomenteNumeros(MDFe.infMDFe.Id) + '-mdfe.xml';
+  Result := OnlyNumber(MDFe.infMDFe.Id) + '-mdfe.xml';
 end;
 
 function TMDFeW.GerarXml: boolean;
@@ -183,7 +183,7 @@ begin
       Gerar := ((MDFe.signature.DigestValue = '') and (MDFe.signature.SignatureValue = '') and (MDFe.signature.X509Certificate = ''));
     if Gerar then
     begin
-      FMDFe.signature.URI := somenteNumeros(MDFe.infMDFe.ID);
+      FMDFe.signature.URI := OnlyNumber(MDFe.infMDFe.ID);
       FMDFe.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
       FMDFe.signature.GerarXML;
       Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + FMDFe.signature.Gerador.ArquivoFormatoXML;
@@ -293,7 +293,7 @@ procedure TMDFeW.GerarEmit;
 begin
   Gerador.wGrupo('emit', '#025');
   Gerador.wCampoCNPJ('#026', MDFe.Emit.CNPJ, CODIGO_BRASIL, True);
-  Gerador.wCampo(tcStr, '#027', 'IE   ', 02, 14, 1, SomenteNumeros(MDFe.Emit.IE), DSC_IE);
+  Gerador.wCampo(tcStr, '#027', 'IE   ', 02, 14, 1, OnlyNumber(MDFe.Emit.IE), DSC_IE);
   if (FOpcoes.ValidarInscricoes)
    then if not ValidarIE(MDFe.Emit.IE, MDFe.Emit.enderEmit.UF) then
          Gerador.wAlerta('#027', 'IE', DSC_IE, ERR_MSG_INVALIDO);
@@ -327,7 +327,7 @@ begin
   Gerador.wCampo(tcStr, '#038', 'UF     ', 02, 02, 1, xUF, DSC_UF);
   if not ValidarUF(xUF) then
     Gerador.wAlerta('#038', 'UF', DSC_UF, ERR_MSG_INVALIDO);
-  Gerador.wCampo(tcStr, '#039', 'fone   ', 07, 12, 0, somenteNumeros(MDFe.Emit.EnderEmit.fone), DSC_FONE);
+  Gerador.wCampo(tcStr, '#039', 'fone   ', 07, 12, 0, OnlyNumber(MDFe.Emit.EnderEmit.fone), DSC_FONE);
   Gerador.wCampo(tcStr, '#040', 'email  ', 01, 60, 0, MDFe.Emit.EnderEmit.email, DSC_EMAIL);
   Gerador.wGrupo('/enderEmit');
 end;
@@ -366,7 +366,7 @@ var
   i: Integer;
 begin
   Gerador.wGrupo('rodo', '#01');
-  Gerador.wCampo(tcStr, '#02', 'RNTRC', 08, 08, 0, SomenteNumeros(MDFe.Rodo.RNTRC), DSC_RNTRC);
+  Gerador.wCampo(tcStr, '#02', 'RNTRC', 08, 08, 0, OnlyNumber(MDFe.Rodo.RNTRC), DSC_RNTRC);
   Gerador.wCampo(tcStr, '#03', 'CIOT ', 12, 12, 0, MDFe.Rodo.CIOT, DSC_CIOT);
 
   Gerador.wGrupo('veicTracao', '#04');
@@ -387,7 +387,7 @@ begin
 //     then Gerador.wCampo(tcStr, '#35', 'RNTRC ', 08, 08, 1, SomenteNumeros(MDFe.Rodo.veicTracao.Prop.RNTRC), DSC_RNTRC)
 //     else begin
       Gerador.wCampoCNPJCPF('#11', '#12', MDFe.Rodo.veicTracao.Prop.CNPJCPF, CODIGO_BRASIL);
-      Gerador.wCampo(tcStr, '#13', 'RNTRC ', 08, 08, 1, SomenteNumeros(MDFe.Rodo.veicTracao.Prop.RNTRC), DSC_RNTRC);
+      Gerador.wCampo(tcStr, '#13', 'RNTRC ', 08, 08, 1, OnlyNumber(MDFe.Rodo.veicTracao.Prop.RNTRC), DSC_RNTRC);
       Gerador.wCampo(tcStr, '#14', 'xNome ', 02, 60, 1, MDFe.Rodo.veicTracao.Prop.xNome, DSC_XNOME);
 
       if MDFe.Rodo.veicTracao.Prop.IE <> '' then
@@ -395,7 +395,7 @@ begin
         if MDFe.Rodo.veicTracao.Prop.IE = 'ISENTO' then
           Gerador.wCampo(tcStr, '#15', 'IE ', 00, 14, 1, MDFe.Rodo.veicTracao.Prop.IE, DSC_IE)
         else
-          Gerador.wCampo(tcStr, '#15', 'IE ', 02, 14, 1, SomenteNumeros(MDFe.Rodo.veicTracao.Prop.IE), DSC_IE);
+          Gerador.wCampo(tcStr, '#15', 'IE ', 02, 14, 1, OnlyNumber(MDFe.Rodo.veicTracao.Prop.IE), DSC_IE);
         if (FOpcoes.ValidarInscricoes) then
           if not ValidarIE(MDFe.Rodo.veicTracao.Prop.IE, MDFe.Rodo.veicTracao.Prop.UF) then
             Gerador.wAlerta('#15', 'IE', DSC_IE, ERR_MSG_INVALIDO);
@@ -449,14 +449,14 @@ begin
 //       then Gerador.wCampo(tcStr, '#35', 'RNTRC ', 08, 08, 1, SomenteNumeros(MDFe.Rodo.veicReboque[i].Prop.RNTRC), DSC_RNTRC)
 //       else begin
         Gerador.wCampoCNPJCPF('#31', '#32', MDFe.Rodo.veicReboque[i].Prop.CNPJCPF, CODIGO_BRASIL);
-        Gerador.wCampo(tcStr, '#33', 'RNTRC ', 08, 08, 1, SomenteNumeros(MDFe.Rodo.veicReboque[i].Prop.RNTRC), DSC_RNTRC);
+        Gerador.wCampo(tcStr, '#33', 'RNTRC ', 08, 08, 1, OnlyNumber(MDFe.Rodo.veicReboque[i].Prop.RNTRC), DSC_RNTRC);
         Gerador.wCampo(tcStr, '#34', 'xNome ', 02, 60, 1, MDFe.Rodo.veicReboque[i].Prop.xNome, DSC_XNOME);
 
         if MDFe.Rodo.veicReboque[i].Prop.IE <> ''
          then begin
           if MDFe.Rodo.veicReboque[i].Prop.IE = 'ISENTO'
            then Gerador.wCampo(tcStr, '#35', 'IE ', 00, 14, 1, MDFe.Rodo.veicTracao.Prop.IE, DSC_IE)
-           else Gerador.wCampo(tcStr, '#35', 'IE ', 02, 14, 1, SomenteNumeros(MDFe.Rodo.veicReboque[i].Prop.IE), DSC_IE);
+           else Gerador.wCampo(tcStr, '#35', 'IE ', 02, 14, 1, OnlyNumber(MDFe.Rodo.veicReboque[i].Prop.IE), DSC_IE);
           if (FOpcoes.ValidarInscricoes)
            then if not ValidarIE(MDFe.Rodo.veicReboque[i].Prop.IE, MDFe.Rodo.veicReboque[i].Prop.UF) then
             Gerador.wAlerta('#35', 'IE', DSC_IE, ERR_MSG_INVALIDO);
@@ -624,9 +624,9 @@ begin
          for j := 0 to MDFe.infDoc.infMunDescarga[i].infCTe.Count - 1 do
          begin
            Gerador.wGrupo('infCTe', '#048');
-           Gerador.wCampo(tcEsp, '#049', 'chCTe      ', 44, 44, 1, SomenteNumeros(MDFe.infDoc.infMunDescarga[i].infCTe[j].chCTe), DSC_REFNFE);
-           if SomenteNumeros(MDFe.infDoc.infMunDescarga[i].infCTe[j].chCTe) <> '' then
-            if not ValidarChave('NFe' + SomenteNumeros(MDFe.infDoc.infMunDescarga[i].infCTe[j].chCTe)) then
+           Gerador.wCampo(tcEsp, '#049', 'chCTe      ', 44, 44, 1, OnlyNumber(MDFe.infDoc.infMunDescarga[i].infCTe[j].chCTe), DSC_REFNFE);
+           if OnlyNumber(MDFe.infDoc.infMunDescarga[i].infCTe[j].chCTe) <> '' then
+            if not ValidarChave('NFe' + OnlyNumber(MDFe.infDoc.infMunDescarga[i].infCTe[j].chCTe)) then
            Gerador.wAlerta('#049', 'chCTe', DSC_REFNFE, ERR_MSG_INVALIDO);
            Gerador.wCampo(tcStr, '#050', 'SegCodBarra', 44, 44, 0, MDFe.infDoc.infMunDescarga[i].infCTe[j].SegCodBarra, DSC_SEGCODBARRA);
 
@@ -729,9 +729,9 @@ begin
          for j := 0 to MDFe.infDoc.infMunDescarga[i].infNFe.Count - 1 do
          begin
            Gerador.wGrupo('infNFe', '#057');
-           Gerador.wCampo(tcEsp, '#058', 'chNFe      ', 44, 44, 1, SomenteNumeros(MDFe.infDoc.infMunDescarga[i].infNFe[j].chNFe), DSC_REFNFE);
-           if SomenteNumeros(MDFe.infDoc.infMunDescarga[i].infNFe[j].chNFe) <> '' then
-            if not ValidarChave('NFe' + SomenteNumeros(MDFe.infDoc.infMunDescarga[i].infNFe[j].chNFe)) then
+           Gerador.wCampo(tcEsp, '#058', 'chNFe      ', 44, 44, 1, OnlyNumber(MDFe.infDoc.infMunDescarga[i].infNFe[j].chNFe), DSC_REFNFE);
+           if OnlyNumber(MDFe.infDoc.infMunDescarga[i].infNFe[j].chNFe) <> '' then
+            if not ValidarChave('NFe' + OnlyNumber(MDFe.infDoc.infMunDescarga[i].infNFe[j].chNFe)) then
              Gerador.wAlerta('#058', 'chNFe', DSC_REFNFE, ERR_MSG_INVALIDO);
            Gerador.wCampo(tcStr, '#059', 'SegCodBarra', 44, 44, 0, MDFe.infDoc.infMunDescarga[i].infNFe[j].SegCodBarra, DSC_SEGCODBARRA);
 
@@ -833,9 +833,9 @@ begin
        for j := 0 to MDFe.infDoc.infMunDescarga[i].infMDFeTransp.Count - 1 do
        begin
          Gerador.wGrupo('infMDFeTransp', '#057');
-         Gerador.wCampo(tcEsp, '#058', 'chMDFe      ', 44, 44, 1, SomenteNumeros(MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].chMDFe), DSC_REFNFE);
-         if SomenteNumeros(MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].chMDFe) <> '' then
-          if not ValidarChave('NFe' + SomenteNumeros(MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].chMDFe)) then
+         Gerador.wCampo(tcEsp, '#058', 'chMDFe      ', 44, 44, 1, OnlyNumber(MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].chMDFe), DSC_REFNFE);
+         if OnlyNumber(MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].chMDFe) <> '' then
+          if not ValidarChave('NFe' + OnlyNumber(MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].chMDFe)) then
            Gerador.wAlerta('#058', 'chMDFe', DSC_REFNFE, ERR_MSG_INVALIDO);
 
          for k := 0 to MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].infUnidTransp.Count - 1 do

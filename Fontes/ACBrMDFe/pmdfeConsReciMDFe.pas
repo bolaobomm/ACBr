@@ -42,7 +42,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnGerador;
+  pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil;
 
 type
 
@@ -79,7 +79,7 @@ end;
 
 function TConsReciMDFe.ObterNomeArquivo: String;
 begin
-  Result := SomenteNumeros(FnRec) + '-ped-rec.xml';
+  Result := OnlyNumber(FnRec) + '-ped-rec.xml';
 end;
 
 function TConsReciMDFe.GerarXML: Boolean;

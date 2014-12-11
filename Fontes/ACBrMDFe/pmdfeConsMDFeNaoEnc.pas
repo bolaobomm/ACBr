@@ -42,7 +42,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnGerador;
+  pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil;
 
 type
 
@@ -98,7 +98,7 @@ begin
  Gerador.wGrupo('consMDFeNaoEnc ' + NAME_SPACE_MDFE + ' versao="' + MDFeConsNaoEnc + '"');
  Gerador.wCampo(tcStr, 'CP03', 'tpAmb', 01, 01, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
  Gerador.wCampo(tcStr, 'CP04', 'xServ', 24, 24, 1, 'CONSULTAR NAO ENCERRADOS', DSC_XSERV);
- Gerador.wCampo(tcEsp, 'CP05', 'CNPJ ', 14, 14, 1, SomenteNumeros(FCNPJ), DSC_CNPJ);
+ Gerador.wCampo(tcEsp, 'CP05', 'CNPJ ', 14, 14, 1, OnlyNumber(FCNPJ), DSC_CNPJ);
  Gerador.wGrupo('/consMDFeNaoEnc');
 
  Result := (Gerador.ListaDeAlertas.Count = 0);

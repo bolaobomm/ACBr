@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/12/2014
+[*] Refactoring em várias Units.
+    por: Italo Jurisato Junior
+
 18/11/2014
 [*] Ajuste no campo observação para que ocorra quebra de linha ao encontrar ";"
     Alteração realizada no DAMDFE - Fast Report

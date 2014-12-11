@@ -41,6 +41,8 @@
 |*
 |* 16/12/2008: Wemerson Souto
 |*  - Doação do componente para o Projeto ACBr
+|* 26/09/2014: Italo Jurisao Junior
+|*  - Refactoring, revisão e otimização
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -77,8 +79,11 @@ const
 
 type
   TACBrCTeAboutInfo = (ACBrCTeAbout);
-
-  EACBrCTeException = class(Exception);
+  
+  EACBrCTeException = class(Exception)
+  public
+    constructor Create(const Msg: string);
+  end;
 
   { Evento para gerar log das mensagens do Componente }
   TACBrCTeLog = procedure(const Mensagem : String) of object;
@@ -142,7 +147,6 @@ type
     destructor Destroy; override;
     function Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean;  overload;
     function Enviar(ALote: String; Imprimir: Boolean = True): Boolean;  overload;
-    function Cancelamento(AJustificativa:WideString): Boolean;
     function Consultar: Boolean;
     function EnviarEventoCTe(idLote: Integer): Boolean;
 
@@ -304,32 +308,6 @@ begin
     if Assigned(fOnStatusChange) then
       FOnStatusChange(Self);
   end;
-end;
-
-function TACBrCTe.Cancelamento(AJustificativa: WideString): Boolean;
-var
-  i: Integer;
-begin
-  raise Exception.Create('Cancelamento somente por Evento.');
-(*
-  if Self.Conhecimentos.Count = 0 then
-   begin
-      if Assigned(Self.OnGerarLog) then
-         Self.OnGerarLog('ERRO: Nenhum Conhecimento de Transporte Eletrônico Informado!');
-      raise Exception.Create('Nenhum Conhecimento de Transporte Eletrônico Informado!');
-   end;
-
-  for i := 0 to self.Conhecimentos.Count-1 do
-  begin
-    WebServices.Cancelamento.CTeChave := copy(self.Conhecimentos.Items[i].CTe.infCTe.ID,
-     (length(self.Conhecimentos.Items[i].CTe.infCTe.ID)-44)+1, 44);
-    WebServices.Consulta.CTeChave := WebServices.Cancelamento.CTeChave;
-    WebServices.Cancela(AJustificativa);
-  end;
-
-  Result := True;
-*)
-  Result := False;
 end;
 
 function TACBrCTe.Consultar: Boolean;
@@ -617,15 +595,27 @@ begin
     try
       if EventoCTe.Evento.Items[i].InfEvento.nSeqEvento = 0 then
         EventoCTe.Evento.Items[i].infEvento.nSeqEvento := 1;
-      if trim(EventoCTe.Evento.Items[i].InfEvento.CNPJ) = '' then
-        EventoCTe.Evento.Items[i].InfEvento.CNPJ := self.Conhecimentos.Items[i].CTe.Emit.CNPJ;
-      if trim(EventoCTe.Evento.Items[i].InfEvento.chCTe) = '' then
-        EventoCTe.Evento.Items[i].InfEvento.chCTe := copy(self.Conhecimentos.Items[i].CTe.infCTe.ID, (length(self.Conhecimentos.Items[i].CTe.infCTe.ID)-44)+1, 44);
-      if trim(EventoCTe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
-      begin
-        if EventoCTe.Evento.Items[i].infEvento.tpEvento = teCancelamento then
-          EventoCTe.Evento.Items[i].infEvento.detEvento.nProt := self.Conhecimentos.Items[i].CTe.procCTe.nProt;
-      end;
+      if self.Conhecimentos.Count > 0 then
+       begin
+         if trim(EventoCTe.Evento.Items[i].InfEvento.CNPJ) = '' then
+           EventoCTe.Evento.Items[i].InfEvento.CNPJ := self.Conhecimentos.Items[i].CTe.Emit.CNPJ;
+         if trim(EventoCTe.Evento.Items[i].InfEvento.chCTe) = '' then
+           EventoCTe.Evento.Items[i].InfEvento.chCTe := copy(self.Conhecimentos.Items[i].CTe.infCTe.ID, (length(self.Conhecimentos.Items[i].CTe.infCTe.ID)-44)+1, 44);
+         if trim(EventoCTe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
+         begin
+           if EventoCTe.Evento.Items[i].infEvento.tpEvento = teCancelamento then
+            begin
+              EventoCTe.Evento.Items[i].infEvento.detEvento.nProt := self.Conhecimentos.Items[i].CTe.procCTe.nProt;
+              if trim(EventoCTe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
+               begin
+                  WebServices.Consulta.CTeChave := EventoCTe.Evento.Items[i].InfEvento.chCTe;
+                  if not WebServices.Consulta.Executar then
+                    raise Exception.Create(WebServices.Consulta.Msg);
+                  EventoCTe.Evento.Items[i].infEvento.detEvento.nProt := WebServices.Consulta.Protocolo;
+               end;
+            end;
+         end;
+       end;
     except
     end;
   end;
@@ -693,11 +683,11 @@ begin
       if DACTE <> nil then
       begin
         ImprimirEventoPDF;
-        NomeArq := StringReplace(EventoCTe.Evento[0].InfEvento.id,'ID', '', [rfIgnoreCase]);
+        NomeArq := OnlyNumber(EventoCTe.Evento[0].InfEvento.Id);
 //        NomeArq := Copy(EventoCTe.Evento[0].InfEvento.id, 09, 44) +
 //                   Copy(EventoCTe.Evento[0].InfEvento.id, 03, 06) +
 //                   Copy(EventoCTe.Evento[0].InfEvento.id, 53, 02);
-        NomeArq := PathWithDelim(DACTE.PathPDF)+NomeArq+'-procEventoCTe.pdf';
+        NomeArq := PathWithDelim(DACTE.PathPDF) + NomeArq + '-procEventoCTe.pdf';
 
         AnexosEmail.Add(NomeArq);
       end;
@@ -709,6 +699,13 @@ begin
   finally
     AnexosEmail.Free;
   end;
+end;
+
+{ EACBrCTeException }
+
+constructor EACBrCTeException.Create(const Msg: string);
+begin
+  inherited Create( ACBrStr(Msg) );
 end;
 
 end.

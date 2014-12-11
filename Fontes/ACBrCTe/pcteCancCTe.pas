@@ -50,7 +50,7 @@ unit pcteCancCTe;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil;
 
 type
 
@@ -93,7 +93,7 @@ end;
 
 function TcancCTe.ObterNomeArquivo: String;
 begin
-  Result := SomenteNumeros(FchCTe) + '-ped-can.xml';
+  Result := OnlyNumber(FchCTe) + '-ped-can.xml';
 end;
 
 function TcancCTe.GerarXML: Boolean;
@@ -101,13 +101,13 @@ begin
   Gerador.ArquivoFormatoXML := '';
 
   Gerador.wGrupo('cancCTe ' + NAME_SPACE_CTE + ' versao="' + CTecancCTe + '"');
-  Gerador.wGrupo('infCanc Id="ID' + SomenteNumeros(FchCTe) + '"');
+  Gerador.wGrupo('infCanc Id="ID' + OnlyNumber(FchCTe) + '"');
   Gerador.wCampo(tcStr, 'CP05', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
   Gerador.wCampo(tcStr, 'CP06', 'xServ', 008, 008, 1, 'CANCELAR', DSC_XSERV);
-  Gerador.wCampo(tcEsp, 'CP07', 'chCTe', 044, 044, 1, SomenteNumeros(FchCTe), DSC_CHCTe);
-  if not ValidarChave('CTe' + SomenteNumeros(FchCTe)) then
+  Gerador.wCampo(tcEsp, 'CP07', 'chCTe', 044, 044, 1, OnlyNumber(FchCTe), DSC_CHCTe);
+  if not ValidarChave('CTe' + OnlyNumber(FchCTe)) then
       Gerador.wAlerta('CP07', 'chCTe', '', 'Chave do CTe inválida');
-  Gerador.wCampo(tcEsp, 'CP08', 'nProt', 015, 015, 1, SomenteNumeros(FnProt), DSC_NPROT);
+  Gerador.wCampo(tcEsp, 'CP08', 'nProt', 015, 015, 1, OnlyNumber(FnProt), DSC_NPROT);
   Gerador.wCampo(tcStr, 'CP09', 'xJust', 015, 255, 1, FiltrarTextoXML(true, FxJust), DSC_XJUST);
   Gerador.wGrupo('/infCanc');
   Gerador.wGrupo('/cancCTe');

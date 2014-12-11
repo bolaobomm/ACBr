@@ -42,7 +42,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnGerador;
+  pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil;
 
 type
 
@@ -79,7 +79,7 @@ end;
 
 function TConsSitMDFe.ObterNomeArquivo: String;
 begin
-  Result := SomenteNumeros(FchMDFe) + '-ped-sit.xml';
+  Result := OnlyNumber(FchMDFe) + '-ped-sit.xml';
 end;
 
 function TConsSitMDFe.GerarXML: Boolean;
@@ -89,8 +89,8 @@ begin
  Gerador.wGrupo('consSitMDFe ' + NAME_SPACE_MDFE + ' versao="' + MDFeconsSitMDFe + '"');
  Gerador.wCampo(tcStr, 'CP03', 'tpAmb ', 01, 01, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
  Gerador.wCampo(tcStr, 'CP04', 'xServ ', 09, 09, 1, 'CONSULTAR', DSC_XSERV);
- Gerador.wCampo(tcEsp, 'CP05', 'chMDFe', 44, 44, 1, SomenteNumeros(FchMDFe), DSC_CHCTe);
- if not ValidarChave('NFe' + SomenteNumeros(FchMDFe))
+ Gerador.wCampo(tcEsp, 'CP05', 'chMDFe', 44, 44, 1, OnlyNumber(FchMDFe), DSC_CHCTe);
+ if not ValidarChave('NFe' + OnlyNumber(FchMDFe))
   then Gerador.wAlerta('CP05', 'chMDFe', '', 'Chave do MDFe inválida');
  Gerador.wGrupo('/consSitMDFe');
 
