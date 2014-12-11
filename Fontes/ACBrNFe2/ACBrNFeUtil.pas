@@ -156,6 +156,7 @@ type
                                 AdhEmi: TDateTime;
                                 AvNF, AvICMS: Currency;
                                 AdigVal, AidToken, AToken: String) : String;
+    class function CstatProcessado(AValue: Integer): Boolean;                                
   end;
 
 implementation
@@ -2132,6 +2133,19 @@ begin
 
   // Passo 6
   Result := urlUF + '?' + sEntrada + cIdToken+ '&cHashQRCode=' + cHashQRCode;
+end;
+
+class function NotaUtil.CstatProcessado(AValue: Integer): Boolean;
+begin
+  case AValue of
+     100: Result := True;
+     110: Result := True;
+     150: Result := True;
+     301: Result := True;
+     302: Result := True;          
+  else
+     Result := False;
+  end;
 end;
 
 initialization

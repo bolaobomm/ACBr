@@ -835,6 +835,7 @@ end;
 
 function TWebServicesBase.EhAutorizacao: Boolean;
 begin
+  Result := False;
   case FConfiguracoes.Geral.ModeloDF of
    moNFe:  begin
             if (FConfiguracoes.Geral.VersaoDF = ve310) then
@@ -1544,7 +1545,7 @@ begin
 
     // Verificar se a NF-e foi autorizada com sucesso
     Result := (FNFeRetornoSincrono.cStat = 104) and
-              (FNFeRetornoSincrono.protNFe.cStat in [100, 150]);
+              (NotaUtil.CstatProcessado(FNFeRetornoSincrono.protNFe.cStat));
 
     NomeArquivo := PathWithDelim(FConfiguracoes.Geral.PathSalvar) + chNFe;
 
@@ -1613,9 +1614,9 @@ begin
             else
               Data := Now;
 
-            if FConfiguracoes.Arquivos.SalvarApenasNFeAutorizadas then
+            if FConfiguracoes.Arquivos.SalvarApenasNFeProcessadas then
              begin
-                if TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].NFe.procNFe.cStat in [100, 150] then
+                if NotaUtil.CstatProcessado(TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].NFe.procNFe.cStat) then
                    TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].SaveToFile(PathWithDelim(
                        FConfiguracoes.Arquivos.GetPathNFe( Data,
                        TACBrNFe( FACBrNFe ).NotasFiscais.Items[I].NFe.Emit.CNPJCPF)) +
@@ -1840,9 +1841,9 @@ begin
           else
             Data := Now;
 
-            if FConfiguracoes.Arquivos.SalvarApenasNFeAutorizadas then
+            if FConfiguracoes.Arquivos.SalvarApenasNFeProcessadas then
              begin
-                if FNotasFiscais.Items[J].NFe.procNFe.cStat in [100, 150] then
+                if NotaUtil.CstatProcessado(FNotasFiscais.Items[J].NFe.procNFe.cStat) then
                  FNotasFiscais.Items[J].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(Data,
                      FNotasFiscais.Items[J].NFe.Emit.CNPJCPF)) +
                      OnlyNumber(FNotasFiscais.Items[J].NFe.InfNFe.Id) + '-nfe.xml');
@@ -2409,9 +2410,9 @@ begin
             else
               Data := Now;
 
-            if FConfiguracoes.Arquivos.SalvarApenasNFeAutorizadas then
+            if FConfiguracoes.Arquivos.SalvarApenasNFeProcessadas then
              begin
-                if TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.cStat in [100, 150] then
+                if NotaUtil.CstatProcessado(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.cStat) then
                   TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].SaveToFile(
                       PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(Data,
                       TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Emit.CNPJCPF)) +
