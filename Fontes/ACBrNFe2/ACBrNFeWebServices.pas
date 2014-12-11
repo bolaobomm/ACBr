@@ -575,12 +575,15 @@ type
 
     function GerarPathEvento: String;
   protected
+    procedure InicializarServico; override;
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     procedure SalvarEnvio; override;
     function TratarResposta: Boolean; override;
     procedure SalvarResposta; override;
+
+    function Executar: Boolean; override;
 
     function GerarMsgLog: AnsiString; override;
     function GerarPrefixoArquivo: AnsiString; override;
@@ -1146,8 +1149,8 @@ begin
   FEnvelopeSoap := UTF8Encode(FEnvelopeSoap);
   try
     {$IFDEF ACBrNFeOpenSSL}
-     ConfiguraHTTP(HTTP, 'SOAPAction: "' + SoapAction + '"');
      HTTP.Document.WriteBuffer(FEnvelopeSoap[1], Length(FEnvelopeSoap));
+     ConfiguraHTTP(HTTP, 'SOAPAction: "' + SoapAction + '"');     
      OK := HTTP.HTTPMethod('POST', URL);
      OK := OK and (HTTP.ResultCode = 200);
      if not OK then
@@ -3193,9 +3196,15 @@ begin
       end;
     end;
 
-    EventoNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
-                                     FConfiguracoes.Geral.VersaoDF,
-                                     Layout);
+    if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe, teCancelamento]) then
+      EventoNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                       FConfiguracoes.Geral.VersaoDF,
+                                       LayNfeEventoAN)
+    else
+      EventoNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                       FConfiguracoes.Geral.VersaoDF,
+                                       LayNfeEvento);
+
     EventoNFe.GerarXML;
 
     // Separa os grupos <evento> e coloca na variável Eventos
@@ -3220,7 +3229,7 @@ begin
         AssinarXML(Evento,
                    'Falha ao assinar o Envio de Evento ' + LineBreak + FMsg);
 
-        EventosAssinados := EventosAssinados + FDadosMsg;
+        EventosAssinados := EventosAssinados + StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [] );
       end
       else
         Break;
@@ -3387,6 +3396,49 @@ end;
 function TNFeEnvEvento.GerarPrefixoArquivo: AnsiString;
 begin
   Result := IntToStr(FEvento.idLote);
+end;
+
+function TNFeEnvEvento.Executar: Boolean;
+var
+  ErroMsg: String;
+begin
+  { Sobrescrever apenas se realmente necessário }
+
+  InicializarServico;
+  try
+    DefinirDadosMsg;
+    DefinirURL; // Precisa definir a URL depois de carregar o evento
+    DefinirEnvelopeSoap;
+    SalvarEnvio;
+
+    try
+      EnviarDados;
+      Result := TratarResposta;
+      FazerLog( GerarMsgLog, True );
+      SalvarResposta;
+    except
+      on E: Exception do
+      begin
+        Result := False;
+        ErroMsg := GerarMsgErro(E);
+        GerarException( ErroMsg );
+      end;
+    end;
+  finally
+     FinalizarServico;
+  end;
+end;
+
+procedure TNFeEnvEvento.InicializarServico;
+begin
+  DefinirServicoEAction;
+  if Servico = '' then
+    GerarException('Servico não definido para: ' + ClassName);
+
+  if SoapAction = '' then
+    GerarException('SoapAction não definido para: ' + ClassName);
+
+  TACBrNFe( FACBrNFe ).SetStatus( FStatus );
 end;
 
 { TNFeConsNFeDest }
