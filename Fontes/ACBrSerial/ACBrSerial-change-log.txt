@@ -97,6 +97,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 11/12/2014
+-- ACBrECF --  (por: DSA)
+[-] Correção para acentuação no método "GetRodapeImposto", em sistemas com UTF8
+    'Você pagou aproximadamente:....."
+
 Data: 03/12/2014
 -- ACBrECFFiscNet --
 [*] Ajustes para ECFs que retornam o DadosUltimaReducaoZ fora do padrão

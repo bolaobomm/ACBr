@@ -3527,8 +3527,9 @@ begin
         end;
       end;
     end;
-
   end;
+
+  Result := ACBrStr(Result);
 end;
 
 procedure TACBrECF.Sangria(Valor: Double; Obs: AnsiString;
