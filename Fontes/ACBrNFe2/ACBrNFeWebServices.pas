@@ -3398,49 +3398,6 @@ begin
   Result := IntToStr(FEvento.idLote);
 end;
 
-function TNFeEnvEvento.Executar: Boolean;
-var
-  ErroMsg: String;
-begin
-  { Sobrescrever apenas se realmente necessário }
-
-  InicializarServico;
-  try
-    DefinirDadosMsg;
-    DefinirURL; // Precisa definir a URL depois de carregar o evento
-    DefinirEnvelopeSoap;
-    SalvarEnvio;
-
-    try
-      EnviarDados;
-      Result := TratarResposta;
-      FazerLog( GerarMsgLog, True );
-      SalvarResposta;
-    except
-      on E: Exception do
-      begin
-        Result := False;
-        ErroMsg := GerarMsgErro(E);
-        GerarException( ErroMsg );
-      end;
-    end;
-  finally
-     FinalizarServico;
-  end;
-end;
-
-procedure TNFeEnvEvento.InicializarServico;
-begin
-  DefinirServicoEAction;
-  if Servico = '' then
-    GerarException('Servico não definido para: ' + ClassName);
-
-  if SoapAction = '' then
-    GerarException('SoapAction não definido para: ' + ClassName);
-
-  TACBrNFe( FACBrNFe ).SetStatus( FStatus );
-end;
-
 { TNFeConsNFeDest }
 
 constructor TNFeConsNFeDest.Create(AOwner: TComponent);
