@@ -276,7 +276,7 @@ begin
     LoadLayout('<BA10> BA10|cUF¨|AAMM¨|IE¨|Mod¨|serie¨|nNF¨|refCTe¨');
     LoadLayout('<B13>   B13|CNPJ¨');
     LoadLayout('<B14>   B14|CPF¨');
-    LoadLayout('<B20>   B20|mod¨|nECF¨|nCOO¨');
+    LoadLayout('<BA20> BA20|mod¨|nECF¨|nCOO¨');
     LoadLayout('<C01>     C|XNome¨|XFant¨|IE¨|IEST¨|IM¨|CNAE¨|CRT¨'); 
     LoadLayout('<C01>   C02|CNPJ¨');
     LoadLayout('<C01>  C02a|CPF¨');
@@ -360,7 +360,7 @@ begin
     LoadLayout('<W17>   W17|VServ¨|VBC¨|VISS¨|VPIS¨|VCOFINS¨|dCompet¨|vDeducao¨|vOutro¨|vDescIncond¨|vDescCond¨|vISSRet¨|cRegTrib¨');
     LoadLayout('<W23>   W23|VRetPIS¨|VRetCOFINS¨|VRetCSLL¨|VBCIRRF¨|VIRRF¨|VBCRetPrev¨|VRetPrev¨');
     LoadLayout('<X01>     X|ModFrete¨');
-    LoadLayout('<X03>   X03|XNome¨|IE¨|XEnder¨|UF¨|XMun¨');
+    LoadLayout('<X03>   X03|XNome¨|IE¨|XEnder¨|XMun¨|UF¨');
     LoadLayout('<X03>   X04|CNPJ¨');
     LoadLayout('<X03>   X05|CPF¨');
     LoadLayout('<X11>   X11|VServ¨|VBCRet¨|PICMSRet¨|VICMSRet¨|CFOP¨|CMunFG¨');

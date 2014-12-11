@@ -151,35 +151,39 @@ begin
   if copy(ConteudoTag,1,1) = '§' then
     ConteudoTag := '';
 
-  case Tipo of
-    tcStr     : result := ReverterFiltroTextoXML(ConteudoTag);
-    tcDat     : begin
-                  if length(ConteudoTag)>0 then
-                    result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 06, 2)), StrToInt(copy(ConteudoTag, 09, 2)))
-                  else
-                    result:=0;
-                  end;
-    tcDatHor  : begin
+  try
+    case Tipo of
+      tcStr     : result := ReverterFiltroTextoXML(ConteudoTag);
+      tcDat     : begin
                     if length(ConteudoTag)>0 then
-                      result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 06, 2)), StrToInt(copy(ConteudoTag, 09, 2))) +
-                      EncodeTime(StrToInt(copy(ConteudoTag, 12, 2)), StrToInt(copy(ConteudoTag, 15, 2)), StrToInt(copy(ConteudoTag, 18, 2)), 0)
+                      result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 06, 2)), StrToInt(copy(ConteudoTag, 09, 2)))
                     else
                       result:=0;
-                  end;
-    tcHor     : begin
-                    if length(ConteudoTag)>0 then
-                    result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)), StrToInt(copy(ConteudoTag, 4, 2)), StrToInt(copy(ConteudoTag, 7, 2)), 0)
-                    else
-                    result:=0;
-                  end;
-    tcDe2,
-    tcDe3,
-    tcDe4,
-    tcDe10    : result := StrToFloat(StringReplace('0' + ConteudoTag, '.', DecimalSeparator, []));
-    tcEsp     : result := ConteudoTag;
-    tcInt     : result := StrToInt('0' + Trim(SomenteNumeros(ConteudoTag)));
-    else
-      raise Exception.Create('Tag <' + Tag + '> com conteúdo inválido. '+ConteudoTag);
+                    end;
+      tcDatHor  : begin
+                      if length(ConteudoTag)>0 then
+                        result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 06, 2)), StrToInt(copy(ConteudoTag, 09, 2))) +
+                        EncodeTime(StrToInt(copy(ConteudoTag, 12, 2)), StrToInt(copy(ConteudoTag, 15, 2)), StrToInt(copy(ConteudoTag, 18, 2)), 0)
+                      else
+                        result:=0;
+                    end;
+      tcHor     : begin
+                      if length(ConteudoTag)>0 then
+                      result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)), StrToInt(copy(ConteudoTag, 4, 2)), StrToInt(copy(ConteudoTag, 7, 2)), 0)
+                      else
+                      result:=0;
+                    end;
+      tcDe2,
+      tcDe3,
+      tcDe4,
+      tcDe10    : result := StrToFloat(StringReplace('0' + ConteudoTag, '.', DecimalSeparator, []));
+      tcEsp     : result := ConteudoTag;
+      tcInt     : result := StrToInt('0' + Trim(SomenteNumeros(ConteudoTag)));
+      else
+       raise Exception.Create('Tag <' + Tag + '> com conteúdo inválido. '+ConteudoTag);
+    end;
+  except
+    raise Exception.Create('Erro ao ler o campo ' + Tag + '. Conteúdo inválido = ' +ConteudoTag);
   end;
 end;
 
@@ -562,7 +566,7 @@ begin
  end;
 
 
-  if ID = 'J' or ID = 'JA' then (* Grupo da TAG <det><prod><veicProd> **********************)
+  if (ID = 'J') or (ID = 'JA') then (* Grupo da TAG <det><prod><veicProd> **********************)
   begin
     i := NFe.Det.Count - 1;
     (*J02*)NFe.Det[i].Prod.veicProd.tpOP := StrToTpOP(ok, LerCampo(tcStr, 'tpOp'));
@@ -1114,7 +1118,7 @@ begin
 
   if ID = 'ZC04' then
   begin
-    nfe.cana.fordia.Add
+    nfe.cana.fordia.Add;
     i := nfe.cana.fordia.Count - 1;
     NFe.cana.fordia[i].dia  := LerCampo(tcInt, 'dia');
     NFe.cana.fordia[i].qtde := LerCampo(tcDe10, 'qtde');
@@ -1122,7 +1126,7 @@ begin
 
   if ID = 'ZC10' then
   begin
-    nfe.cana.deduc.Add
+    nfe.cana.deduc.Add;
     i := nfe.cana.deduc.Count - 1;
     NFe.cana.deduc[i].xDed := LerCampo(tcStr, 'xDed');
     NFe.cana.deduc[i].vDed := LerCampo(tcDe2, 'vDed');
