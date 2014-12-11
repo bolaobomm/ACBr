@@ -575,15 +575,12 @@ type
 
     function GerarPathEvento: String;
   protected
-    procedure InicializarServico; override;
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     procedure SalvarEnvio; override;
     function TratarResposta: Boolean; override;
     procedure SalvarResposta; override;
-
-    function Executar: Boolean; override;
 
     function GerarMsgLog: AnsiString; override;
     function GerarPrefixoArquivo: AnsiString; override;
@@ -1150,7 +1147,7 @@ begin
   try
     {$IFDEF ACBrNFeOpenSSL}
      HTTP.Document.WriteBuffer(FEnvelopeSoap[1], Length(FEnvelopeSoap));
-     ConfiguraHTTP(HTTP, 'SOAPAction: "' + SoapAction + '"');     
+     ConfiguraHTTP(HTTP, 'SOAPAction: "' + SoapAction + '"');
      OK := HTTP.HTTPMethod('POST', URL);
      OK := OK and (HTTP.ResultCode = 200);
      if not OK then
