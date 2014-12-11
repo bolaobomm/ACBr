@@ -5893,12 +5893,12 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Caption = 'Separar Arqs pelo Modelo(NFe/NFCe)'
           TabOrder = 3
         end
-        object cbxSalvarNFesAutorizadas: TCheckBox
+        object cbxSalvarNFesProcessadas: TCheckBox
           Left = 288
           Top = 54
           Width = 265
           Height = 17
-          Caption = 'Salvar apenas NFes autorizadas na pasta da NFe'
+          Caption = 'Salvar apenas NFes processadas na pasta da NFe'
           TabOrder = 14
         end
       end

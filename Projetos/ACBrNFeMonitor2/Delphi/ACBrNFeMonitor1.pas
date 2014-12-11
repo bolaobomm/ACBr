@@ -304,7 +304,7 @@ type
     cbxImprimirItem1LinhaESCPOS: TCheckBox;
     cbxImprimirDescAcresItemESCPOS: TCheckBox;
     TcpServer: TACBrTCPServer;
-    cbxSalvarNFesAutorizadas: TCheckBox;
+    cbxSalvarNFesProcessadas: TCheckBox;
     procedure DoACBrTimer(Sender: TObject);
     procedure edOnlyNumbers(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
@@ -1024,7 +1024,7 @@ begin
      cbxSalvaCCeCancelamentoPathEvento.Checked  := Ini.ReadBool(   'Arquivos','SalvarCCeCanPathEvento',false);
      cbxSepararPorCNPJ.Checked    := Ini.ReadBool(   'Arquivos','SepararPorCNPJ',false);
      cbxSepararporModelo.Checked  := Ini.ReadBool(   'Arquivos','SepararPorModelo',false);
-     cbxSalvarNFesAutorizadas.Checked  := Ini.ReadBool(   'Arquivos','SalvarApenasNFesAutorizadas',false);
+     cbxSalvarNFesProcessadas.Checked  := Ini.ReadBool(   'Arquivos','SalvarApenasNFesAutorizadas',false);
      edtPathNFe.Text            := Ini.ReadString( 'Arquivos','PathNFe'    ,'') ;
      edtPathCan.Text            := Ini.ReadString( 'Arquivos','PathCan'    ,'') ;
      edtPathInu.Text            := Ini.ReadString( 'Arquivos','PathInu'    ,'') ;
@@ -1039,7 +1039,7 @@ begin
      ACBrNFe1.Configuracoes.Arquivos.SalvarCCeCanEvento := cbxSalvaCCeCancelamentoPathEvento.Checked;
      ACBrNFe1.Configuracoes.Arquivos.SepararPorCNPJ   := cbxSepararPorCNPJ.Checked;
      ACBrNFe1.Configuracoes.Arquivos.SepararPorModelo := cbxSepararporModelo.Checked;
-     ACBrNFe1.Configuracoes.Arquivos.SalvarApenasNFeAutorizadas := cbxSalvarNFesAutorizadas.Checked;
+     ACBrNFe1.Configuracoes.Arquivos.SalvarApenasNFeProcessadas := cbxSalvarNFesProcessadas.Checked;
      ACBrNFe1.Configuracoes.Arquivos.PathNFe  := edtPathNFe.Text;
      ACBrNFe1.Configuracoes.Arquivos.PathCan  := edtPathCan.Text;
      ACBrNFe1.Configuracoes.Arquivos.PathInu  := edtPathInu.Text;
@@ -1202,7 +1202,7 @@ begin
      Ini.WriteBool(   'Arquivos','SalvarCCeCanPathEvento',cbxSalvaCCeCancelamentoPathEvento.Checked);
      Ini.WriteBool(   'Arquivos','SepararPorCNPJ',cbxSepararPorCNPJ.Checked);
      Ini.WriteBool(   'Arquivos','SepararPorModelo',cbxSepararporModelo.Checked);
-     Ini.WriteBool(   'Arquivos','SalvarApenasNFesAutorizadas',cbxSalvarNFesAutorizadas.Checked);
+     Ini.WriteBool(   'Arquivos','SalvarApenasNFesAutorizadas',cbxSalvarNFesProcessadas.Checked);
      Ini.WriteString( 'Arquivos','PathNFe'    ,edtPathNFe.Text) ;
      Ini.WriteString( 'Arquivos','PathCan'    ,edtPathCan.Text) ;
      Ini.WriteString( 'Arquivos','PathInu'    ,edtPathInu.Text) ;
@@ -1988,7 +1988,7 @@ begin
      cbxSalvaCCeCancelamentoPathEvento.Enabled  := True;
      cbxSepararPorCNPJ.Enabled  := True;
      cbxSepararporModelo.Enabled := True;
-     cbxSalvarNFesAutorizadas.Enabled := True;
+     cbxSalvarNFesProcessadas.Enabled := True;
      edtPathNFe.Enabled   := True;
      edtPathCan.Enabled   := True;
      edtPathInu.Enabled   := True;
@@ -2010,7 +2010,7 @@ begin
      cbxSalvaCCeCancelamentoPathEvento.Enabled  := False;
      cbxSepararPorCNPJ.Enabled  := False;
      cbxSepararporModelo.Enabled := False;
-     cbxSalvarNFesAutorizadas.Enabled := False;      
+     cbxSalvarNFesProcessadas.Enabled := False;      
      edtPathNFe.Enabled   := False;
      edtPathCan.Enabled   := False;
      edtPathInu.Enabled   := False;
