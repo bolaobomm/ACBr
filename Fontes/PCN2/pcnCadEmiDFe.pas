@@ -50,7 +50,7 @@ unit pcnCadEmiDFe;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil;
 
 type
 
