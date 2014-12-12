@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/12/2014
+[*] Alterações no provedor Pronim para poder realizar a assinatura.
+    Por: Italo Jurisato Junior
 [*] Alterações realizadas visando gerar o XML do RPS segundo o layout do 
     provedor Virtual.
     Por: Italo Jurisato Junior

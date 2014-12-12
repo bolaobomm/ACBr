@@ -573,7 +573,7 @@ begin
 
   //Não é possível assinar por delphi quando o id é minúsculo... mas se manter o id maiúsculo
   //não será validado o schema... uma função mais legível como stringreplace faz a assinatura sumir.
-  if {(not ALote) and }(Aprovedor in [proPublica, {proDBSeller,}
+  if {(not ALote) and }(Aprovedor in [proPublica, proPronim,
                                       proLexsom, proSalvador])
    then begin
      I := pos('Id=', AXMLAssinado);
@@ -1068,7 +1068,7 @@ begin
 
     //Não é possível assinar por delphi quando o id é minúsculo... mas se manter o id maiúsculo
     //não será validado o schema... uma função mais legível como stringreplace faz a assinatura sumir.
-    if {(not ALote) and }(Aprovedor in [proPublica, {proDBSeller,}
+    if {(not ALote) and }(Aprovedor in [proPublica, proPronim,
                                         proLexsom, proSalvador])
      then begin
        I := pos('Id=', XMLAssinado);
@@ -1219,7 +1219,7 @@ begin
 
   //Não é possível assinar por delphi quando o id é minúsculo... mas se manter o id maiúsculo
   //não será validado o schema... uma função mais legível como stringreplace faz a assinatura sumir.
-  if Aprovedor in [proPublica, proLexsom, proSalvador] then
+  if Aprovedor in [proPronim, proPublica, proLexsom, proSalvador] then
   begin
     I := pos('Id=', AXMLAssinado);
     if i>0 then
@@ -1362,7 +1362,7 @@ begin
 
   //Não é possível assinar por delphi quando o id é minúsculo... mas se manter o id maiúsculo
   //não será validado o schema... uma função mais legível como stringreplace faz a assinatura sumir.
-  if Aprovedor in [proPublica, proLexsom, proSalvador] then
+  if Aprovedor in [proPronim,proPublica, proLexsom, proSalvador] then
   begin
     I := pos('Id=', AXMLAssinado);
     if i>0 then

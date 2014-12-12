@@ -98,7 +98,7 @@ begin
   ConfigCidade.Prefixo2      := '';
   ConfigCidade.Prefixo3      := '';
   ConfigCidade.Prefixo4      := '';
-  ConfigCidade.Identificador := 'id';
+  ConfigCidade.Identificador := 'Id'; // Alterado para poder Assinar no Schema é id
   ConfigCidade.QuebradeLinha := ';';
 
   if AAmbiente = 1 then
@@ -106,7 +106,7 @@ begin
   else
     ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org';
 
-  ConfigCidade.AssinaRPS  := False;
+  ConfigCidade.AssinaRPS := False;
 
   case ACodCidade of
    3118601: ConfigCidade.AssinaLote := True; {Denio Incluido para Contagem}
@@ -114,7 +114,10 @@ begin
    4320800: ConfigCidade.AssinaLote := True; {Dalvan}
    4204004: ConfigCidade.AssinaLote := True; {Dalvan}
    4216602: ConfigCidade.AssinaLote := True;
-  else      ConfigCidade.AssinaLote := False;
+  else      begin
+             ConfigCidade.Identificador := 'id';
+             ConfigCidade.AssinaLote    := False;
+            end;
   end;
 
   Result := ConfigCidade;
