@@ -379,7 +379,7 @@ begin
                 // Alterado por Cleiver em 26/02/2013
                 if (ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico <> '')
                  then begin
-                  Item := StrToInt(SomenteNumeros(ListaNfse.FCompNfse[i].FNfse.Servico.ItemListaServico));
+                  Item := StrToInt(OnlyNumber(ListaNfse.FCompNfse[i].FNfse.Servico.ItemListaServico));
                   if Item<100 then Item:=Item*100+1;
 
                   ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
@@ -388,8 +388,8 @@ begin
                       Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico, 3, 2);
 
                   if TabServicosExt
-                   then ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(SomenteNumeros(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico))
-                   else ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico));
+                   then ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(OnlyNumber(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico))
+                   else ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := CodigoToDesc(OnlyNumber(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico));
                  end;
 
                 if length(ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio)<7
@@ -400,7 +400,7 @@ begin
                 //Alterado por Cleiver em 26/02/2013
                 if (ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico <> '')
                  then ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico :=
-                      CodigoToDesc(SomenteNumeros(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico));
+                      CodigoToDesc(OnlyNumber(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico));
                 *)
                 if Leitor.rExtrai(7, 'Valores') <> ''
                  then begin

@@ -323,6 +323,17 @@ begin
                 ListaNfse.FCompNfse[i].FNFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao')
               else
                 ListaNfse.FCompNfse[i].FNFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
+				
+              // Luiz Baião 2014.12.05 NFSEBrasil   -     <InfNfse Id="049391280001763952720147138">
+              if  Leitor.rAtributo('Id') <> EmptyStr then begin
+                ListaNfse.FCompNfse[i].FNfse.InfID.ID        := Leitor.rAtributo('Id');
+              end;
+
+              // Luiz Baião 2014.12.05 NFSEBrasil   -  <NfseSubstituida>0</NfseSubstituida>
+              if (Leitor.rCampo(tcStr, 'NfseSubstituida') <> '0') then begin
+               ListaNfse.FCompNfse[i].FNFSe.RpsSubstituido.Numero := Leitor.rCampo(tcStr, 'NfseSubstituida');
+              end;
+			  
 
               ListaNfse.FCompNfse[i].FNFSe.NaturezaOperacao         := StrToNaturezaOperacao(ok, Leitor.rCampo(tcStr, 'NaturezaOperacao'));
               ListaNfse.FCompNfse[i].FNFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
@@ -366,7 +377,7 @@ begin
                  then ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio := Leitor.rCampo(tcStr, 'MunicipioPrestacaoServico')
                  else ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
 
-                Item := StrToInt(SomenteNumeros(ListaNfse.FCompNfse[i].FNfse.Servico.ItemListaServico));
+                Item := StrToInt(OnlyNumber(ListaNfse.FCompNfse[i].FNfse.Servico.ItemListaServico));
                 if Item<100 then Item:=Item*100+1;
 
                 ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
@@ -380,8 +391,8 @@ begin
                        FormatFloat('00000', StrToIntDef(Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio, 3, 5), 0));
 
                 if TabServicosExt
-                 then ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(SomenteNumeros(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico))
-                 else ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico));
+                 then ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(OnlyNumber(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico))
+                 else ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := CodigoToDesc(OnlyNumber(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico));
 
                 if (Leitor.rExtrai(iNivel + 6, 'Valores') <> '') or (Leitor.rExtrai(iNivel + 6, 'ValoresNfse') <> '')
                  then begin

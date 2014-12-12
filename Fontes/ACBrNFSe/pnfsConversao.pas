@@ -93,7 +93,7 @@ type
                     proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov,
                     proVitoria, proMitra, ProTecnos, proPronim, proActcon, proEL,
                     proEgoverneISS, proSisPMJP, proSystemPro, proSalvador,
-                    proDBSeller, proLexsom, proABRASFv1, proABRASFv2 );
+                    proDBSeller, proLexsom, proABRASFv1, proABRASFv2, proNFSEBrasil );
 
   TnfseAcao = (acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe,
                acCancelar, acGerar, acRecSincrono, acConsSecRps, acSubstituir);
@@ -387,7 +387,7 @@ begin
                             '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
                             'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon',
                             'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Salvador', 'DBSeller',
-                            'Lexsom', 'ABRASFv1', 'ABRASFv2'],
+                            'Lexsom', 'ABRASFv1', 'ABRASFv2', 'NFSEBrasil'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
@@ -395,7 +395,7 @@ begin
                             proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
                             proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
                             proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP, proSystemPro,
-                            proSalvador, proDBSeller, proLexsom, proABRASFv1, proABRASFv2]);
+                            proSalvador, proDBSeller, proLexsom, proABRASFv1, proABRASFv2,proNFSEBrasil ]);
 end;
 
 function StrToProvedor(var ok: boolean; const s: string):TnfseProvedor;
@@ -408,7 +408,7 @@ begin
                             '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
                             'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon',
                             'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Salvador', 'DBSeller',
-                            'Lexsom', 'ABRASFv1', 'ABRASFv2'],
+                            'Lexsom', 'ABRASFv1', 'ABRASFv2', 'NFSEBrasil'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
@@ -416,7 +416,7 @@ begin
                             proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
                             proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
                             proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP, proSystemPro,
-                            proSalvador, proDBSeller, proLexsom, proABRASFv1, proABRASFv2]);
+                            proSalvador, proDBSeller, proLexsom, proABRASFv1, proABRASFv2, proNFSEBrasil]);
 end;
 
 // Condição de pagamento ******************************************************
@@ -895,7 +895,8 @@ begin
   5104609, // Itiquira/MT
   5107248, // Santa Carmen/MT
   5107800, // Santo Antônio do Leverger/MT
-  5107875  // Sapezal/MT
+  5107875, // Sapezal/MT
+  5107909  // Sinop/MT
 //  5107958  // Tangara da Serra/MT
          : Provedor := 'FISSLEX';
 
@@ -1346,12 +1347,17 @@ begin
   5101308, // Arenapolis/MT
   5101704, // Barra do Bugres/MT
   5105259, // Lucas do Rio Verde/MT
-  5107909, // Sinop/MT
+//  5107909, // Sinop/MT
   5107305, // Sao Jose do Rio Claro/MT
   5107958, // Tangara da Serra/MT
   5204508  // Caldas Novas/GO
          : Provedor := 'WebISS';
 
+  3118304, // Conselheiro Lafaiete,
+  3120904, // Curvelo
+  3169356, // Três Marias
+  3171204  // Vespasiano
+         : Provedor := 'NFSEBrasil';
  end;
  Result := Provedor;
 end;

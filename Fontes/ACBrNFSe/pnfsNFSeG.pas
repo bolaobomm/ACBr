@@ -34,7 +34,7 @@ unit pnfsNFSeG;
 interface
 
 uses
-  SysUtils, Classes, Forms,
+  SysUtils, Classes, Forms, pcnAuxiliar,
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
@@ -162,10 +162,12 @@ class function TNFSeG.Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4,
   IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
 var
  DadosMsg: AnsiString;
- IdLote: String;
+ IdLote,tagCabecalhoCodigoMunicipio: String;
 begin
  if AProvedor = proBetha then Prefixo3 := '';
  if AProvedor in [proGovBR, proPronim, proISSDigital] then Identificador := '';
+
+
 
  case AProvedor of
   proTecnos : IdLote := '1' + IntToStrZero(YearOf(Date), 4) +
@@ -234,6 +236,48 @@ begin
              '</' + Prefixo3 + 'LoteRps>';
 
  Result := TagI + DadosMsg + TagF;
+ 
+
+ tagCabecalhoCodigoMunicipio := RetornarConteudoEntre(Notas,'<CodigoMunicipio>','</CodigoMunicipio>');
+ tagCabecalhoCodigoMunicipio := ' codMunicipio="'+tagCabecalhoCodigoMunicipio+'"';
+
+  // Luiz Baião 2014.11.24 -
+ if  AProvedor = proNFSEBrasil then begin
+                   DadosMsg := '<' + Prefixo3 + 'LoteRps'+ tagCabecalhoCodigoMunicipio +
+//                       DFeUtil.SeSenao(codMunicipio <> '', ' codMunicipio="' + codMunicipio + '"','') +
+                       DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"','') +
+                       DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') +
+
+                        '>' +
+                      '<' + Prefixo4 + 'NumeroLote>' +
+                        NumeroLote +
+                      '</' + Prefixo4 + 'NumeroLote>' +
+
+                      DFeUtil.SeSenao(VersaoXML = '1',
+
+                        '<' + Prefixo4 + 'CpfCnpj>' +
+                        '<' + Prefixo4 + 'Cnpj>' +
+                          Cnpj +
+                        '</' + Prefixo4 + 'Cnpj>' +
+                        '</' + Prefixo4 + 'CpfCnpj>',
+
+                        '<' + Prefixo4 + 'Cnpj>' +
+                          Cnpj +
+                        '</' + Prefixo4 + 'Cnpj>') +
+
+                      '<' + Prefixo4 + 'InscricaoMunicipal>' +
+                        IM +
+                      '</' + Prefixo4 + 'InscricaoMunicipal>' +
+                      '<' + Prefixo4 + 'QuantidadeRps>' +
+                        QtdeNotas +
+                      '</' + Prefixo4 + 'QuantidadeRps>' +
+                      '<' + Prefixo4 + 'ListaRps>' +
+                       Notas +
+                      '</' + Prefixo4 + 'ListaRps>' +
+                     '</' + Prefixo3 + 'LoteRps>';
+
+         Result := TagI + DadosMsg + TagF;
+ end;		 
 
  if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proVirtual] then Result := '';
 end;
@@ -675,6 +719,7 @@ begin
   proFiorilli,
   proPublica,
   proSystemPro,
+  proNFSEBrasil,
   proEGoverneISS: Result := TagI + Notas + TagF;
 
   else begin // proWebISS
@@ -722,7 +767,7 @@ begin
                   proIssIntel, proIssNet, proLexsom, proNatal, proProdemge,
                   proRJ, proSimplIss, proThema, proTiplan, proIssDSF, proAgili,
                   proSpeedGov, proPronim, proActcon,
-                  proSalvador] then Result := '';
+                  proSalvador, proNFSEBrasil] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
@@ -741,7 +786,7 @@ begin
                   proPublica, proRecife, proRJ, proSaatri, proFreire,
                   proSimplISS, proThema, proTiplan, proWebISS, proProdata,
                   proAgili, proSpeedGov, proPronim, proVirtual,
-                  proSalvador] then Result := '';
+                  proSalvador,proNFSEBrasil] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgSubstituirNFSe(Prefixo3, Prefixo4, Identificador,

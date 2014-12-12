@@ -106,8 +106,23 @@ begin
   else
     ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org';
 
-  ConfigCidade.AssinaRPS  := False;
-  ConfigCidade.AssinaLote := False;
+//  ConfigCidade.AssinaRPS  := False;
+//  ConfigCidade.AssinaLote := False;
+
+// Alterado por Luiz Baião em 10/12/2014
+// Segundo: http://www.contagem.mg.gov.br/arquivos/downloads/modelo_integracao_nfs-e.pdf
+// Página: 12 - Item: 2.2.5 Uso de Assinatura com Certificado Digital
+// Abaixo segue as informações que deverão ser assinadas e quem deverá fazê-lo em cada momento:
+// - O RPS, pelo contribuinte, antes do envio do mesmo através do Lote de RPS;
+// - O Lote de RPS, pelo contribuinte, antes do envio do mesmo;
+// - A NFS-e:
+// 	  * Pela prefeitura e pelo contribuinte, quando gerada pela Aplicação On Line;
+//	  * Pela prefeitura nos demais casos;
+// - O Pedido de cancelamento da NFS-e, pelo contribuinte;
+// - A Confirmação de cancelamento da NFS-e, pela prefeitura;
+
+  ConfigCidade.AssinaRPS  := True;
+  ConfigCidade.AssinaLote := True;
 
   Result := ConfigCidade;
 end;

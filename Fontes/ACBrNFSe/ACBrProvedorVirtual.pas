@@ -180,7 +180,7 @@ end;
 
 function TProvedorVirtual.GetValidarLote: Boolean;
 begin
-  Result := True;
+  Result := False;
 end;
 
 function TProvedorVirtual.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,

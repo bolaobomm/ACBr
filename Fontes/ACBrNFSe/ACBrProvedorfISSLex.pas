@@ -115,6 +115,7 @@ begin
      5107248: ConfigCidade.NameSpaceEnvelope := 'https://santacarmen.fisslex.com.br';
      5107800: ConfigCidade.NameSpaceEnvelope := 'https://leverger.fisslex.com.br';
      5107875: ConfigCidade.NameSpaceEnvelope := 'https://sapezal.fisslex.com.br';
+     5107909: ConfigCidade.NameSpaceEnvelope := 'https://sinop.fisslex.com.br';
      5107958: ConfigCidade.NameSpaceEnvelope := 'https://tangara.fisslex.com.br';
     end;
   end;
@@ -192,6 +193,10 @@ begin
   5107875: begin // Sapezal/MT
             ConfigURL.HomNomeCidade := 'sapezal';
             ConfigURL.ProNomeCidade := 'sapezal';
+           end;
+  5107909: begin // Sinop/MT
+            ConfigURL.HomNomeCidade := 'sinop';
+            ConfigURL.ProNomeCidade := 'sinop';
            end;
   5107958: begin // Tangara da Serra/MT
             ConfigURL.HomNomeCidade := 'tangara';

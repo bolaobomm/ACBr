@@ -74,7 +74,7 @@ uses
     ACBrProvedorActcon, ACBrProvedorEL, ACBrProvedorEgoverneISS,
     ACBrProvedorSisPMJP, ACBrProvedorSystemPro, ACBrProvedorSalvador,
     ACBrProvedorDBSeller, ACBrProvedorLexsom, ACBrProvedorABRASFv1,
-    ACBrProvedorABRASFv2;
+    ACBrProvedorABRASFv2, ACBrProvedorNFSEBrasil;
 
 type
 
@@ -786,6 +786,7 @@ begin
   proLexsom:      FProvedorClass := TProvedorLexsom.Create;
   proABRASFv1:    FProvedorClass := TProvedorABRASFv1.Create;
   proABRASFv2:    FProvedorClass := TProvedorABRASFv2.Create;
+  proNFSEBrasil:  FProvedorClass := TProvedorNFSEBrasil.Create;
  end;
 
  FPrefixo2 := FConfiguracoes.WebServices.Prefixo2;
@@ -1077,7 +1078,7 @@ begin
                                                       NameSpaceDad, FVersaoXML,
                                                       TNFSeEnviarLoteRps(Self).NumeroLote,
                                                       CodCidadeToCodSiafi( StrToIntDef(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
-                                                      SomenteNumeros(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
+                                                      OnlyNumber(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
                                                       TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
                                                       TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial,
                                                       LowerCase(booltostr(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Transacao, True)),
@@ -1092,7 +1093,7 @@ begin
                  FDadosMsg := TNFSeG.Gera_DadosMsgEnviarLoteEquiplano(FVersaoXML,
                                                         TNFSeEnviarLoteRps(Self).NumeroLote,
                                                         IntToStr(TNFSeEnviarLoteRps(Self).FNotasFiscais.Count),
-                                                        SomenteNumeros(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
+                                                        OnlyNumber(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
                                                         TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
                                                         FConfiguracoes.WebServices.CodigoMunicipio,
                                                         (TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.OptanteSimplesNacional = snSim),
@@ -1103,7 +1104,7 @@ begin
                                                    FConfiguracoes.WebServices.Identificador,
                                                    NameSpaceDad, VersaoDados, FVersaoXML,
                                                    TNFSeEnviarLoteRps(Self).NumeroLote,
-                                                   SomenteNumeros(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
+                                                   OnlyNumber(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
                                                    TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
                                                    IntToStr(TNFSeEnviarLoteRps(Self).FNotasFiscais.Count),
                                                    vNotas,
@@ -1208,7 +1209,7 @@ begin
   then begin
    case FProvedor of
     proEquiplano: FDadosMsg := TNFSeG.Gera_DadosMsgConsSitLoteEquiplano(FConfiguracoes.WebServices.CodigoMunicipio,
-                                                               SomenteNumeros(TNFSeConsultarSituacaoLoteRPS(Self).FCNPJ),
+                                                               OnlyNumber(TNFSeConsultarSituacaoLoteRPS(Self).FCNPJ),
                                                                TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
                                                                TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
                                                                TNFSeConsultarSituacaoLoteRPS(Self).NumeroLote,
@@ -1216,7 +1217,7 @@ begin
     else FDadosMsg := TNFSeG.Gera_DadosMsgConsSitLote(Prefixo3, Prefixo4,
                                                       NameSpaceDad, FVersaoXML,
                                                       TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
-                                                      SomenteNumeros(TNFSeConsultarSituacaoLoteRPS(Self).Cnpj),
+                                                      OnlyNumber(TNFSeConsultarSituacaoLoteRPS(Self).Cnpj),
                                                       TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
                                                       '', '', FProvedor);
    end;
@@ -1241,7 +1242,7 @@ begin
   else begin
    case FProvedor of
     proEquiplano: FDadosMsg := TNFSeG.Gera_DadosMsgConsSitLoteEquiplano(FConfiguracoes.WebServices.CodigoMunicipio,
-                                                               SomenteNumeros(TNFSeConsultarSituacaoLoteRPS(Self).FCNPJ),
+                                                               OnlyNumber(TNFSeConsultarSituacaoLoteRPS(Self).FCNPJ),
                                                                TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
                                                                TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
                                                                TNFSeConsultarSituacaoLoteRPS(Self).NumeroLote,
@@ -1249,7 +1250,7 @@ begin
     else FDadosMsg := TNFSeG.Gera_DadosMsgConsSitLote(Prefixo3, Prefixo4,
                                                       NameSpaceDad, FVersaoXML,
                                                       TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
-                                                      SomenteNumeros(TNFSeConsultarSituacaoLoteRPS(Self).Cnpj),
+                                                      OnlyNumber(TNFSeConsultarSituacaoLoteRPS(Self).Cnpj),
                                                       TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
                                                       FTagI, FTagF, FProvedor);
    end;
@@ -1329,7 +1330,7 @@ begin
  FTagI := FProvedorClass.Gera_TagI(acConsLote, Prefixo3, Prefixo4, NameSpaceDad, FConfiguracoes.WebServices.Identificador, URISig);
 
  if (TNFSeConsultarLoteRPS(Self).FCNPJ = '') then
-    TNFSeConsultarLoteRPS(Self).FCNPJ:=SomenteNumeros(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj);
+    TNFSeConsultarLoteRPS(Self).FCNPJ:=OnlyNumber(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj);
  if (TNFSeConsultarLoteRPS(Self).FIM = '') then
     TNFSeConsultarLoteRPS(Self).FIM:=TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
  if (TNFSeConsultarLoteRPS(Self).FRazaoSocial = '') and (FProvedor = proTecnos) then
@@ -1344,7 +1345,7 @@ begin
   then begin
    case FProvedor of
     proEquiplano: FDadosMsg := TNFSeG.Gera_DadosMsgConsLoteEquiplano(FConfiguracoes.WebServices.CodigoMunicipio,
-                                                            SomenteNumeros(TNFSeConsultarLoteRPS(Self).FCNPJ),
+                                                            OnlyNumber(TNFSeConsultarLoteRPS(Self).FCNPJ),
                                                             TNFSeConsultarLoteRPS(Self).IM,
                                                             TNFSeConsultarLoteRPS(Self).Protocolo,
                                                             TNFSeConsultarLoteRPS(Self).NumeroLote,
@@ -1385,7 +1386,7 @@ begin
                                                       TNFSeConsultarLoteRPS(Self).Protocolo,
                                                       FTagI, FTagF);
     proEquiplano: FDadosMsg := TNFSeG.Gera_DadosMsgConsLoteEquiplano(FConfiguracoes.WebServices.CodigoMunicipio,
-                                                            SomenteNumeros(TNFSeConsultarLoteRPS(Self).FCNPJ),
+                                                            OnlyNumber(TNFSeConsultarLoteRPS(Self).FCNPJ),
                                                             TNFSeConsultarLoteRPS(Self).IM,
                                                             TNFSeConsultarLoteRPS(Self).Protocolo,
                                                             TNFSeConsultarLoteRPS(Self).NumeroLote,
@@ -1497,7 +1498,7 @@ begin
        begin
          Gerador.wGrupoNFSe('Nota Id="nota:' + NFSe.Numero + '"');
          Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, TNFSeConsultarNfseRPS(Self).InscricaoMunicipal, ''); //NFSe.Prestador.InscricaoMunicipal
-         Gerador.wCampoNFSe(tcStr, '#1', 'NumeroNota', 01, 12, 1, SomenteNumeros(NFSe.Numero), '');
+         Gerador.wCampoNFSe(tcStr, '#1', 'NumeroNota', 01, 12, 1, OnlyNumber(NFSe.Numero), '');
          Gerador.wCampoNFSe(tcStr, '', 'CodigoVerificacao', 01, 255,  1, NFSe.CodigoVerificacao, '');
          Gerador.wGrupoNFSe('/Nota');
       end;
@@ -1513,7 +1514,7 @@ begin
 //       begin
 //         Gerador.wGrupoNFSe('RPS Id="rps:' + NFSe.Numero + '"');
 //         Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, NFSe.Prestador.InscricaoMunicipal, '');
-//         Gerador.wCampoNFSe(tcStr, '#1', 'NumeroRPS', 01, 12, 1, SomenteNumeros(NFSe.IdentificacaoRps.Numero), '');
+//         Gerador.wCampoNFSe(tcStr, '#1', 'NumeroRPS', 01, 12, 1, OnlyNumber(NFSe.IdentificacaoRps.Numero), '');
 //         Gerador.wCampoNFSe(tcStr, '', 'SeriePrestacao', 01, 2,  1, NFSe.IdentificacaoRps.Serie, '');
 //         Gerador.wGrupoNFSe('/RPS');
 //      end;
@@ -1530,14 +1531,14 @@ begin
     proIssDSF: FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPSDSF(Prefixo3, Prefixo4,
                                                          NameSpaceDad, VersaoXML,
                                                          CodCidadeToCodSiafi(FConfiguracoes.WebServices.CodigoMunicipio),
-                                                         SomenteNumeros(TNFSeConsultarNfseRPS(Self).Cnpj),
+                                                         OnlyNumber(TNFSeConsultarNfseRPS(Self).Cnpj),
                                                          LowerCase(booltostr(TNFSeConsultarNfseRPS(Self).FNotasFiscais.Transacao, True)),
                                                          TNFSeConsultarNfseRPS(Self).FNotasFiscais.NumeroLote,
                                                          vNotas,
                                                          '', '');
     proEquiplano: FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPSEquiplano(FConfiguracoes.WebServices.CodigoMunicipio,
                                                                TNFSeConsultarNfseRPS(Self).Numero,
-                                                               SomenteNumeros(TNFSeConsultarNfseRPS(Self).FCnpj),
+                                                               OnlyNumber(TNFSeConsultarNfseRPS(Self).FCnpj),
                                                                TNFSeConsultarNfseRPS(Self).InscricaoMunicipal,
                                                                '', '');
     else FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4,
@@ -1545,7 +1546,7 @@ begin
                                                       TNFSeConsultarNfseRPS(Self).Numero,
                                                       TNFSeConsultarNfseRPS(Self).Serie,
                                                       TNFSeConsultarNfseRPS(Self).Tipo,
-                                                      SomenteNumeros(TNFSeConsultarNfseRPS(Self).Cnpj),
+                                                      OnlyNumber(TNFSeConsultarNfseRPS(Self).Cnpj),
                                                       TNFSeConsultarNfseRPS(Self).InscricaoMunicipal,
                                                       TNFSeConsultarNfseRPS(Self).Senha,
                                                       TNFSeConsultarNfseRPS(Self).FraseSecreta,
@@ -1581,7 +1582,7 @@ begin
                                                          FTagI, FTagF);
     proEquiplano: FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPSEquiplano(FConfiguracoes.WebServices.CodigoMunicipio,
                                                                TNFSeConsultarNfseRPS(Self).Numero,
-                                                               SomenteNumeros(TNFSeConsultarNfseRPS(Self).FCnpj),
+                                                               OnlyNumber(TNFSeConsultarNfseRPS(Self).FCnpj),
                                                                TNFSeConsultarNfseRPS(Self).InscricaoMunicipal,
                                                                FTagI, FTagF);
     else FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4,
@@ -1589,7 +1590,7 @@ begin
                                                       TNFSeConsultarNfseRPS(Self).Numero,
                                                       TNFSeConsultarNfseRPS(Self).Serie,
                                                       TNFSeConsultarNfseRPS(Self).Tipo,
-                                                      SomenteNumeros(TNFSeConsultarNfseRPS(Self).Cnpj),
+                                                      OnlyNumber(TNFSeConsultarNfseRPS(Self).Cnpj),
                                                       TNFSeConsultarNfseRPS(Self).InscricaoMunicipal,
                                                       TNFSeConsultarNfseRPS(Self).Senha,
                                                       TNFSeConsultarNfseRPS(Self).FraseSecreta,
@@ -1677,7 +1678,7 @@ begin
     proIssDSF: FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeDSF(Prefixo3, Prefixo4,
                                                       NameSpaceDad, VersaoXML,
                                                       CodCidadeToCodSiafi(strtointDef(TNFSeConsultarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
-                                                      SomenteNumeros(TNFSeConsultarNfse(Self).Cnpj),
+                                                      OnlyNumber(TNFSeConsultarNfse(Self).Cnpj),
                                                       TNFSeConsultarNfse(Self).InscricaoMunicipal,
                                                       TNFSeConsultarNfse(Self).FNumeroNFSe,
                                                       TNFSeConsultarNfse(Self).DataInicial,
@@ -1685,7 +1686,7 @@ begin
                                                       '', ''); 
     else FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4,
                                                    NameSpaceDad, FVersaoXML,
-                                                   SomenteNumeros(TNFSeConsultarNfse(Self).Cnpj),
+                                                   OnlyNumber(TNFSeConsultarNfse(Self).Cnpj),
                                                    TNFSeConsultarNfse(Self).InscricaoMunicipal,
                                                    TNFSeConsultarNfse(Self).DataInicial,
                                                    TNFSeConsultarNfse(Self).DataFinal,
@@ -1723,7 +1724,7 @@ begin
     proIssDSF: FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeDSF(Prefixo3, Prefixo4,
                                                       NameSpaceDad, VersaoXML,
                                                       CodCidadeToCodSiafi(strtointDef(TNFSeConsultarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
-                                                      SomenteNumeros(TNFSeConsultarNfse(Self).Cnpj),
+                                                      OnlyNumber(TNFSeConsultarNfse(Self).Cnpj),
                                                       TNFSeConsultarNfse(Self).InscricaoMunicipal,
                                                       TNFSeConsultarNfse(Self).FNumeroNFSe,
                                                       TNFSeConsultarNfse(Self).DataInicial,
@@ -1731,7 +1732,7 @@ begin
                                                       FTagI, FTagF);
     else FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4,
                                                    NameSpaceDad, FVersaoXML,
-                                                   SomenteNumeros(TNFSeConsultarNfse(Self).Cnpj),
+                                                   OnlyNumber(TNFSeConsultarNfse(Self).Cnpj),
                                                    TNFSeConsultarNfse(Self).InscricaoMunicipal,
                                                    TNFSeConsultarNfse(Self).DataInicial,
                                                    TNFSeConsultarNfse(Self).DataFinal,
@@ -1912,9 +1913,9 @@ begin
  if (TNFSeCancelarNfse(Self).FCNPJ = '') then
  begin
    if (FProvedor = proDigifred) or (FProvedor = pro4R) then
-    TNFSeCancelarNfse(Self).FCNPJ := SomenteNumeros(TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj)
+    TNFSeCancelarNfse(Self).FCNPJ := OnlyNumber(TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj)
    else
-    TNFSeCancelarNfse(Self).FCNPJ := SomenteNumeros(TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj);
+    TNFSeCancelarNfse(Self).FCNPJ := OnlyNumber(TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj);
  end;
 
  if (TNFSeCancelarNfse(Self).FIM = '') then
@@ -1977,7 +1978,7 @@ begin
      begin
        Gerador.wGrupoNFSe('Nota Id="nota:' + NFSe.Numero + '"');
        Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, TNFSeCancelarNfse(Self).FIM, '');
-       Gerador.wCampoNFSe(tcStr, '#1', 'NumeroNota', 01, 12, 1, SomenteNumeros(NFSe.Numero), '');
+       Gerador.wCampoNFSe(tcStr, '#1', 'NumeroNota', 01, 12, 1, OnlyNumber(NFSe.Numero), '');
        Gerador.wCampoNFSe(tcStr, '', 'CodigoVerificacao', 01, 255,  1, NFSe.CodigoVerificacao, '');
        Gerador.wCampoNFSe(tcStr, '', 'MotivoCancelamento', 01, 80, 1, NFSe.MotivoCancelamento, '');
        Gerador.wGrupoNFSe('/Nota');
@@ -2001,7 +2002,7 @@ begin
                                                           vNotas,
                                                           '', '');
     proEquiplano: FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeEquiplano(StrToInt(TNFSeCancelarNfse(Self).FCodigoMunicipio),
-                                                                SomenteNumeros(TNFSeCancelarNfse(Self).FCnpj),
+                                                                OnlyNumber(TNFSeCancelarNfse(Self).FCnpj),
                                                                 TNFSeCancelarNfse(Self).FIM,
                                                                 TNFSeCancelarNfse(Self).FNumeroNFSe,
                                                                 TNFSeCancelarNfse(Self).FMotivoCancelamento,
@@ -2046,7 +2047,7 @@ begin
                                                           vNotas,
                                                           FTagI, FTagF);
     proEquiplano: FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeEquiplano(StrToInt(TNFSeCancelarNfse(Self).FCodigoMunicipio),
-                                                                SomenteNumeros(TNFSeCancelarNfse(Self).FCnpj),
+                                                                OnlyNumber(TNFSeCancelarNfse(Self).FCnpj),
                                                                 TNFSeCancelarNfse(Self).FIM,
                                                                 TNFSeCancelarNfse(Self).FNumeroNFSe,
                                                                 TNFSeCancelarNfse(Self).FMotivoCancelamento,
@@ -2247,7 +2248,7 @@ begin
                                             FConfiguracoes.WebServices.Identificador,
                                             NameSpaceDad, VersaoDados, FVersaoXML,
                                             IntToStr(TNFSeGerarNFSe(Self).NumeroRps),
-                                            SomenteNumeros(TNFSeGerarNFSe(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
+                                            OnlyNumber(TNFSeGerarNFSe(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
                                             TNFSeGerarNFSe(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
                                             IntToStr(TNFSeGerarNFSe(Self).FNotasFiscais.Count),
                                             vNotas,
@@ -2471,7 +2472,7 @@ begin
                                                       NameSpaceDad, FVersaoXML,
                                                       TNFSeGerarLoteRPS(Self).NumeroLote,
                                                       CodCidadeToCodSiafi( StrToIntDef(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
-                                                      SomenteNumeros(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
+                                                      OnlyNumber(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
                                                       TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
                                                       TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial,
                                                       LowerCase(booltostr(TNFSeGerarLoteRPS(Self).FNotasFiscais.Transacao, True)),
@@ -2486,7 +2487,7 @@ begin
                                                    FConfiguracoes.WebServices.Identificador,
                                                    NameSpaceDad, VersaoDados, FVersaoXML,
                                                    TNFSeGerarLoteRps(Self).NumeroLote,
-                                                   SomenteNumeros(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
+                                                   OnlyNumber(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
                                                    TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
                                                    IntToStr(TNFSeGerarLoteRps(Self).FNotasFiscais.Count),
                                                    vNotas,
@@ -2681,7 +2682,7 @@ begin
                                                  FConfiguracoes.WebServices.Identificador,
                                                  NameSpaceDad, VersaoDados, FVersaoXML,
                                                  TNFSeEnviarSincrono(Self).NumeroLote,
-                                                 SomenteNumeros(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
+                                                 OnlyNumber(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
                                                  TNFSeEnviarSincrono(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
                                                  IntToStr(TNFSeEnviarSincrono(Self).FNotasFiscais.Count),
                                                  vNotas,
@@ -2901,9 +2902,9 @@ begin
  if (TNFSeSubstituirNfse(Self).FCNPJ = '') then
  begin
    if (FProvedor = proDigifred) or (FProvedor = pro4R) then
-    TNFSeSubstituirNfse(Self).FCNPJ := SomenteNumeros(TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj)
+    TNFSeSubstituirNfse(Self).FCNPJ := OnlyNumber(TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj)
    else
-    TNFSeSubstituirNfse(Self).FCNPJ := SomenteNumeros(TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj);
+    TNFSeSubstituirNfse(Self).FCNPJ := OnlyNumber(TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj);
  end;
 
  if (TNFSeSubstituirNfse(Self).FIM = '') then
@@ -2966,7 +2967,7 @@ begin
      begin
        Gerador.wGrupoNFSe('Nota Id="nota:' + NFSe.Numero + '"');
        Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, TNFSeSubstituirNfse(Self).FIM, '');
-       Gerador.wCampoNFSe(tcStr, '#1', 'NumeroNota', 01, 12, 1, SomenteNumeros(NFSe.Numero), '');
+       Gerador.wCampoNFSe(tcStr, '#1', 'NumeroNota', 01, 12, 1, OnlyNumber(NFSe.Numero), '');
        Gerador.wCampoNFSe(tcStr, '', 'CodigoVerificacao', 01, 255,  1, NFSe.CodigoVerificacao, '');
        Gerador.wCampoNFSe(tcStr, '', 'MotivoCancelamento', 01, 80, 1, NFSe.MotivoCancelamento, '');
        Gerador.wGrupoNFSe('/Nota');
@@ -2990,7 +2991,7 @@ begin
                                                           vNotas,
                                                           '', '');
     proEquiplano: FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeEquiplano(StrToInt(TNFSeSubstituirNfse(Self).FCodigoMunicipio),
-                                                                SomenteNumeros(TNFSeSubstituirNfse(Self).FCnpj),
+                                                                OnlyNumber(TNFSeSubstituirNfse(Self).FCnpj),
                                                                 TNFSeSubstituirNfse(Self).FIM,
                                                                 TNFSeSubstituirNfse(Self).FNumeroNFSe,
                                                                 TNFSeSubstituirNfse(Self).FMotivoCancelamento,
@@ -3039,7 +3040,7 @@ begin
                                                           vNotas,
                                                           FTagI, FTagF);
     proEquiplano: FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeEquiplano(StrToInt(TNFSeSubstituirNfse(Self).FCodigoMunicipio),
-                                                                SomenteNumeros(TNFSeSubstituirNfse(Self).FCnpj),
+                                                                OnlyNumber(TNFSeSubstituirNfse(Self).FCnpj),
                                                                 TNFSeSubstituirNfse(Self).FIM,
                                                                 TNFSeSubstituirNfse(Self).FNumeroNFSe,
                                                                 TNFSeSubstituirNfse(Self).FMotivoCancelamento,
@@ -3641,8 +3642,13 @@ begin
       StrStream := TStringStream.Create('');
       StrStream.CopyFrom(HTTP.Document, 0);
 
-      FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-      FRetWS     := FProvedorClass.GetRetornoWS(acRecepcionar, FRetornoWS);
+       // Luiz Baião 2014.11.28    ACBrProvedorNFSEBrasil
+      if FProvedor = proNFSEBrasil then
+        FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+      else
+        FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+
+      FRetWS := FProvedorClass.GetRetornoWS(acRecepcionar, FRetornoWS);
 
       StrStream.Free;
     {$ELSE}
@@ -3650,9 +3656,13 @@ begin
       StrStream := TStringStream.Create('');
       StrStream.CopyFrom(Stream, 0);
 
-      FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+     // Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
+//      if FProvedor = proNFSEBrasil then
+//        FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+//      else
+        FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
 
-      FRetWS     := FProvedorClass.GetRetornoWS(acRecepcionar, FRetornoWS);
+      FRetWS := FProvedorClass.GetRetornoWS(acRecepcionar, FRetornoWS);
 
       StrStream.Free;
     {$ENDIF}
@@ -3668,9 +3678,10 @@ begin
     NFSeRetorno.Leitor.Arquivo := FRetWS;
 
     case FProvedor of
-     proEquiplano: NFSeRetorno.LerXML_provedorEquiplano;
-     proISSDSF:    NFSeRetorno.LerXml_provedorIssDsf;
-     else          NFSeRetorno.LerXml;
+     proEquiplano: 	NFSeRetorno.LerXML_provedorEquiplano;
+     proISSDSF:    	NFSeRetorno.LerXml_provedorIssDsf;
+	   proNFSEBrasil: NFSeRetorno.LerXml_provedorNFSEBrasil;
+     else           NFSeRetorno.LerXml;
     end;
 
     TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeIdle );
@@ -3813,8 +3824,15 @@ begin
     StrStream := TStringStream.Create('');
     StrStream.CopyFrom(HTTP.Document, 0);
 
-    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-    FRetWS     := FProvedorClass.GetRetornoWS(acConsSit, FRetornoWS);
+    // FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+	
+	// Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
+    if FProvedor = proNFSEBrasil then
+      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+    else
+      FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+
+    FRetWS := FProvedorClass.GetRetornoWS(acConsSit, FRetornoWS);
 
     StrStream.Free;
   {$ELSE}
@@ -3822,8 +3840,14 @@ begin
     StrStream := TStringStream.Create('');
     StrStream.CopyFrom(Stream, 0);
 
-    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-    FRetWS     := FProvedorClass.GetRetornoWS(acConsSit, FRetornoWS);
+    //FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+	// Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
+//    if FProvedor = proNFSEBrasil then
+//      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+//    else
+      FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+
+    FRetWS := FProvedorClass.GetRetornoWS(acConsSit, FRetornoWS);
     
     StrStream.Free;
   {$ENDIF}
@@ -3858,7 +3882,7 @@ begin
     for i:=0 to NFSeRetorno.InfSit.MsgRetorno.Count - 1 do
      begin
       FMsg := FMsg + NFSeRetorno.infSit.MsgRetorno.Items[i].Mensagem + IfThen(FMsg = '', '', ' / ');
-      
+
       aMsg := aMsg + 'Código Erro : ' + NFSeRetorno.InfSit.MsgRetorno.Items[i].Codigo + LineBreak +
                      'Mensagem... : ' + NFSeRetorno.infSit.MsgRetorno.Items[i].Mensagem + LineBreak+
                      'Correção... : ' + NFSeRetorno.InfSit.MsgRetorno.Items[i].Correcao + LineBreak+
@@ -4037,8 +4061,14 @@ begin
     StrStream := TStringStream.Create('');
     StrStream.CopyFrom(HTTP.Document, 0);
 
-    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-    FRetWS     := FProvedorClass.GetRetornoWS(acConsLote, FRetornoWS);
+    // FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+	     // Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
+   if FProvedor = proNFSEBrasil then
+     FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+   else
+     FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+
+    FRetWS := FProvedorClass.GetRetornoWS(acConsLote, FRetornoWS);
 
     StrStream.Free;
   {$ELSE}
@@ -4046,8 +4076,14 @@ begin
     StrStream := TStringStream.Create('');
     StrStream.CopyFrom(Stream, 0);
 
-    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-    FRetWS     := FProvedorClass.GetRetornoWS(acConsLote, FRetornoWS);
+    // FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+	     // Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
+//    if FProvedor = proNFSEBrasil then
+//      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+//    else
+      FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+
+    FRetWS := FProvedorClass.GetRetornoWS(acConsLote, FRetornoWS);
 
     StrStream.Free;
   {$ENDIF}
@@ -4377,8 +4413,14 @@ begin
     StrStream := TStringStream.Create('');
     StrStream.CopyFrom(HTTP.Document, 0);
 
-    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-    FRetWS     := FProvedorClass.GetRetornoWS(acConsNFSeRps, FRetornoWS);
+    // FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+	// Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
+    if FProvedor = proNFSEBrasil then
+      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+    else
+      FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+
+    FRetWS := FProvedorClass.GetRetornoWS(acConsNFSeRps, FRetornoWS);
 
     StrStream.Free;
   {$ELSE}
@@ -4386,8 +4428,15 @@ begin
     StrStream := TStringStream.Create('');
     StrStream.CopyFrom(Stream, 0);
 
-    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-    FRetWS     := FProvedorClass.GetRetornoWS(acConsNFSeRps, FRetornoWS);
+    // FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+	
+	// Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
+//    if FProvedor = proNFSEBrasil then
+//      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+//    else
+      FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+
+    FRetWS := FProvedorClass.GetRetornoWS(acConsNFSeRps, FRetornoWS);
 
     StrStream.Free;
   {$ENDIF}
@@ -4561,7 +4610,6 @@ begin
                        'Provedor... : ' + FxProvedor + LineBreak;
        end;
      end;
-
     if FConfiguracoes.WebServices.Visualizar
      then ShowMessage(aMsg);
    end;
@@ -4665,8 +4713,15 @@ begin
     StrStream := TStringStream.Create('');
     StrStream.CopyFrom(HTTP.Document, 0);
 
-    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-    FRetWS     := FProvedorClass.GetRetornoWS(acConsNFSe, FRetornoWS);
+    //FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+	
+	// Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
+    if FProvedor = proNFSEBrasil then
+      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+    else
+      FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+
+    FRetWS := FProvedorClass.GetRetornoWS(acConsNFSe, FRetornoWS);
 
     StrStream.Free;
   {$ELSE}
@@ -4674,8 +4729,15 @@ begin
     StrStream := TStringStream.Create('');
     StrStream.CopyFrom(Stream, 0);
 
-    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-    FRetWS     := FProvedorClass.GetRetornoWS(acConsNFSe, FRetornoWS);
+    // FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+	
+	// Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
+//    if FProvedor = proNFSEBrasil then
+//      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+//    else
+      FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+
+    FRetWS := FProvedorClass.GetRetornoWS(acConsNFSe, FRetornoWS);
 
     StrStream.Free;
   {$ENDIF}
@@ -4776,7 +4838,6 @@ begin
                        'Provedor... : ' + FxProvedor + LineBreak;
        end;
      end;
-
     if FConfiguracoes.WebServices.Visualizar
      then ShowMessage(aMsg);
    end;
@@ -4889,8 +4950,15 @@ begin
     StrStream := TStringStream.Create('');
     StrStream.CopyFrom(HTTP.Document, 0);
 
-    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-    FRetWS     := FProvedorClass.GetRetornoWS(acCancelar, FRetornoWS);
+    //FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+	
+	// Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
+    if FProvedor = proNFSEBrasil then
+      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+    else
+      FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+
+    FRetWS := FProvedorClass.GetRetornoWS(acCancelar, FRetornoWS);
 
     StrStream.Free;
   {$ELSE}
@@ -4898,8 +4966,15 @@ begin
     StrStream := TStringStream.Create('');
     StrStream.CopyFrom(Stream, 0);
 
-    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-    FRetWS     := FProvedorClass.GetRetornoWS(acCancelar, FRetornoWS);
+    //FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+	
+	// Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
+//    if FProvedor = proNFSEBrasil then
+//      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+//    else
+      FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+
+    FRetWS := FProvedorClass.GetRetornoWS(acCancelar, FRetornoWS);
 
     StrStream.Free;
   {$ENDIF}
@@ -5046,8 +5121,15 @@ begin
     StrStream := TStringStream.Create('');
     StrStream.CopyFrom(HTTP.Document, 0);
 
-    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-    FRetWS     := FProvedorClass.GetRetornoWS(acGerar, FRetornoWS);
+    //FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+	
+	// Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
+    if FProvedor = proNFSEBrasil then
+      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+    else
+      FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+
+    FRetWS := FProvedorClass.GetRetornoWS(acGerar, FRetornoWS);
 
     StrStream.Free;
   {$ELSE}
@@ -5055,9 +5137,15 @@ begin
     StrStream := TStringStream.Create('');
     StrStream.CopyFrom(Stream, 0);
 
-    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+    //FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+	
+	// Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
+//    if FProvedor = proNFSEBrasil then
+//      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+//    else
+      FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
 
-    FRetWS     := FProvedorClass.GetRetornoWS(acGerar, FRetornoWS);
+    FRetWS := FProvedorClass.GetRetornoWS(acGerar, FRetornoWS);
 
     StrStream.Free;
   {$ENDIF}
@@ -5198,7 +5286,6 @@ begin
                        'Provedor... : ' + FxProvedor + LineBreak;
        end;
      end;
-
     if FConfiguracoes.WebServices.Visualizar
      then ShowMessage(aMsg);
    end;
@@ -5342,8 +5429,14 @@ begin
     StrStream := TStringStream.Create('');
     StrStream.CopyFrom(HTTP.Document, 0);
 
-    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-    FRetWS     := FProvedorClass.GetRetornoWS(acRecSincrono, FRetornoWS);
+    //FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+	// Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
+    if FProvedor = proNFSEBrasil then
+      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+    else
+      FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+
+    FRetWS := FProvedorClass.GetRetornoWS(acRecSincrono, FRetornoWS);
 
     StrStream.Free;
   {$ELSE}
@@ -5351,8 +5444,14 @@ begin
     StrStream := TStringStream.Create('');
     StrStream.CopyFrom(Stream, 0);
 
-    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-    FRetWS     := FProvedorClass.GetRetornoWS(acRecSincrono, FRetornoWS);
+    //FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+	// Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
+//    if FProvedor = proNFSEBrasil then
+//      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+//    else
+      FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+
+    FRetWS := FProvedorClass.GetRetornoWS(acRecSincrono, FRetornoWS);
 
     StrStream.Free;
   {$ENDIF}
@@ -5518,7 +5617,6 @@ begin
                        'Provedor... : ' + FxProvedor + LineBreak;
        end;
      end;
-
     if FConfiguracoes.WebServices.Visualizar
      then ShowMessage(aMsg);
    end;
@@ -5671,7 +5769,6 @@ begin
                        'Provedor... : ' + FxProvedor + LineBreak;
        end;
      end;
-
     if FConfiguracoes.WebServices.Visualizar
      then ShowMessage(aMsg);
    end;
@@ -5771,8 +5868,14 @@ begin
     StrStream := TStringStream.Create('');
     StrStream.CopyFrom(HTTP.Document, 0);
 
-    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-    FRetWS     := FProvedorClass.GetRetornoWS(acSubstituir, FRetornoWS);
+//    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+   // Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
+    if FProvedor = proNFSEBrasil then
+      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+    else
+      FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+
+    FRetWS := FProvedorClass.GetRetornoWS(acSubstituir, FRetornoWS);
 
     StrStream.Free;
   {$ELSE}
@@ -5780,8 +5883,14 @@ begin
     StrStream := TStringStream.Create('');
     StrStream.CopyFrom(Stream, 0);
 
-    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-    FRetWS     := FProvedorClass.GetRetornoWS(acSubstituir, FRetornoWS);
+//    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+	// Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
+//    if FProvedor = proNFSEBrasil then
+//      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+//    else
+      FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+
+    FRetWS := FProvedorClass.GetRetornoWS(acSubstituir, FRetornoWS);
 
     StrStream.Free;
   {$ENDIF}

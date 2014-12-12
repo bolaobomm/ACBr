@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/12/2014
+[*] Alterações realizadas visando gerar o XML do RPS segundo o layout do 
+    provedor Virtual.
+    Por: Italo Jurisato Junior
+
 09/12/2014
 [*] Padronização das Units dos provedores para atender a funcionalidade de
     Substituição de NFS-e.

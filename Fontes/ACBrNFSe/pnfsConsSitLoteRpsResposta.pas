@@ -89,6 +89,8 @@ type
     destructor Destroy; override;
     function LerXml: boolean;
     function LerXML_provedorEquiplano: Boolean;
+	function LerXml_provedorNFSEBrasil: boolean;
+	 
   published
     property Leitor: TLeitor  read FLeitor   write FLeitor;
     property InfSit: TInfSit  read FInfSit   write FInfSit;
@@ -277,6 +279,143 @@ begin
   except
     result := False;
   end;
+end;
+
+function TretSitLote.LerXml_provedorNFSEBrasil: boolean;
+var
+  ok, nfseGerada: boolean;
+  i, Item, posI, count: Integer;
+  VersaoXML: String;
+  strAux,strAux2, strItem: AnsiString;
+  leitorAux, leitorItem:TLeitor;
+begin
+  result      := False;
+  nfseGerada  := False;
+  (*
+   // Luiz Baião 2014.12.03
+  try
+    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    VersaoXML      := '1';
+    Leitor.Grupo   := Leitor.Arquivo;
+
+    // <erros> .. </erros>
+    strAux := leitor.rExtrai_NFSEBrasil(1, 'erros');
+    if ( strAux <> emptystr) then begin
+
+        posI := 1;
+        i := 0 ;
+        while ( posI > 0 ) do begin
+             count := pos('</erro>', strAux) + 7;
+
+             LeitorAux := TLeitor.Create;
+             leitorAux.Arquivo := copy(strAux, PosI, count);
+             leitorAux.Grupo   := leitorAux.Arquivo;
+             strAux2 := leitorAux.rExtrai_NFSEBrasil(1,'erro');
+             strItem := Leitor.rCampo(tcStr, 'erro');
+
+             if strItem <> EmptyStr then begin
+                InfSit.MsgRetorno.Add;
+                InfSit.MsgRetorno.Items[i].Mensagem := strItem;
+                inc(i);
+
+                // FSituacao: 1 = Não Recebido  / 2 = Não Processado  / 3 = Processado com Erro  / 4 = Processado com Sucesso
+                InfSit.FSituacao   := '3';
+             end;
+
+             LeitorAux.free;
+             Delete(strAux, PosI, count);
+             posI := pos('<erro>', strAux);
+        end;
+    end;
+
+    // <confirmacoes> .. </confirmacoes>
+    strAux := leitor.rExtrai_NFSEBrasil(1, 'confirmacoes');
+    if ( strAux <> emptystr) then begin
+
+      // <confirmacao>
+      //    <![CDATA[As notas referentes ao lote RPS de protocolo "2878CB0EB0E8689" foram geradas.]]>
+      // </confirmacao>
+
+        posI := 1;
+        while ( posI > 0 ) do begin
+
+           count := pos('</confirmacao>', strAux)+13;
+           LeitorAux := TLeitor.Create;
+           leitorAux.Arquivo := copy(strAux, PosI, count);
+           leitorAux.Grupo   := leitorAux.Arquivo;
+           strItem := leitorAux.rCampo(tcStr, 'confirmacao');
+
+      // não alimentar a vartiável caso o restorno seja positivo  --> As notas referentes ao lote RPS de protocolo "2878CB0EB0E8689" foram geradas.
+      // if NFSeRetorno.InfSit.MsgRetorno.Count>0
+
+          if   (Pos(UpperCase('" foram geradas'), UpperCase(strItem) ) <> 0) and (InfSit.MsgRetorno.Count = 0) then begin
+
+              nfseGerada := true;
+              InfSit.MsgRetorno.Clear;
+              InfSit.FSituacao   := '4';
+          end;
+
+           // 'Lote RPS's registrado.'
+           if ( (nfseGerada = false) and (Pos( UpperCase('s registrado.'), UpperCase(strItem)) = 0)) then begin
+              InfSit.MsgRetorno.Add;
+              InfSit.MsgRetorno.Items[i].Mensagem := strItem;
+              inc(i);
+           end;
+
+           LeitorAux.free;
+           Delete(strAux, PosI, count);
+           posI := pos('<confirmacao>', strAux);
+
+        end;
+    end;
+{
+    // <notas> <nota>...</nota> </notas>
+    strAux := leitor.rExtrai_NFSEBrasil(1, 'notas');
+    if ( strAux <> emptystr) then begin
+
+        posI := 1;
+        while ( posI > 0 ) do begin
+
+           count := pos('</nota>', strAux) + 7;
+           LeitorAux := TLeitor.Create;
+           leitorAux.Arquivo := copy(strAux, PosI, count);
+           leitorAux.Grupo   := leitorAux.Arquivo;
+           strAux2 := leitorAux.rExtrai_NFSEBrasil(1,'nota');
+           strAux2 := Leitor.rCampo(tcStr, 'nota');
+           strItem  := Leitor.rCampo(tcStr, 'nota');
+
+
+
+           if (InfSit.MsgRetorno.Count = 0) then begin
+                nfseGerada := true;
+                InfSit.MsgRetorno.Clear;
+                InfSit.FSituacao   := '4';
+           end;
+
+          // FSituacao: 1 = Não Recebido  / 2 = Não Processado  / 3 = Processado com Erro  / 4 = Processado com Sucesso
+           if nfseGerada = false then begin
+              InfSit.MsgRetorno.Add;
+              InfSit.MsgRetorno.Items[i].Mensagem := strItem;
+              inc(i);
+           end;
+
+           LeitorAux.free;
+           Delete(strAux, PosI, count);
+           posI := pos('<confirmacao>', strAux);
+
+        end;
+
+    end;
+
+}
+
+
+
+    Result := True;
+  except
+    result := False;
+  end;
+  *)
 end;
 
 end.

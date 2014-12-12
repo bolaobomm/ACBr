@@ -424,7 +424,7 @@ uses
  ACBrProvedorActcon, ACBrProvedorEL, ACBrProvedorEgoverneISS,
  ACBrProvedorSisPMJP, ACBrProvedorSystemPro, ACBrProvedorSalvador,
  ACBrProvedorDBSeller, ACBrProvedorLexsom, ACBrProvedorABRASFv1,
- ACBrProvedorABRASFv2;
+ ACBrProvedorABRASFv2, ACBrProvedorNFSEBrasil;
 
 { TConfiguracoes }
 
@@ -855,6 +855,7 @@ begin
   proLexsom:      FProvedorClass := TProvedorLexsom.Create;
   proABRASFv1:    FProvedorClass := TProvedorABRASFv1.Create;
   proABRASFv2:    FProvedorClass := TProvedorABRASFv2.Create;
+  proNFSEBrasil:  FProvedorClass := TProvedorNFSEBrasil.Create;
  end;
 
  ConfigCidade   := FProvedorClass.GetConfigCidade(FCodigoMunicipio, FAmbienteCodigo);

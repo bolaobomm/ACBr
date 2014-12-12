@@ -125,6 +125,8 @@ type
     function LerXml: boolean;
     function LerXml_provedorIssDsf: boolean;
     function LerXML_provedorEquiplano: Boolean;
+	function LerXml_provedorNFSEBrasil: boolean;
+	
   published
     property Leitor: TLeitor   read FLeitor   write FLeitor;
     property InfCanc: TInfCanc read FInfCanc  write FInfCanc;
@@ -481,6 +483,76 @@ begin
     result := False;
   end;
 
+end;
+
+// Luiz Baião 2014.12.09 
+function TretCancNFSe.LerXml_provedorNFSEBrasil: boolean;
+var
+  ok: boolean;
+  i, Item, posI, count: Integer;
+  VersaoXML: String;
+  strAux,strAux2, strItem: AnsiString;
+  leitorAux, leitorItem:TLeitor;
+begin
+  result := False;
+  (*
+   // Luiz Baião 2014.12.03 
+  try
+    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    VersaoXML      := '1';
+    Leitor.Grupo   := Leitor.Arquivo;
+
+    strAux := leitor.rExtrai_NFSEBrasil(1, 'RespostaLoteRps');
+
+    strAux := leitor.rExtrai_NFSEBrasil(1, 'erros');
+    if ( strAux <> emptystr) then begin
+    
+        posI := 1;
+        i := 0 ;
+        while ( posI > 0 ) do begin
+             count := pos('</erro>', strAux) + 7;
+
+             LeitorAux := TLeitor.Create;
+             leitorAux.Arquivo := copy(strAux, PosI, count);
+             leitorAux.Grupo   := leitorAux.Arquivo;
+             strAux2 := leitorAux.rExtrai_NFSEBrasil(1,'erro');
+             strAux2 := Leitor.rCampo(tcStr, 'erro');
+             InfCanc.FMsgRetorno.Add;
+             InfCanc.FMsgRetorno.Items[i].Mensagem := Leitor.rCampo(tcStr, 'erro')+#13;
+             inc(i);
+             LeitorAux.free;
+             Delete(strAux, PosI, count);
+             posI := pos('<erro>', strAux);
+        end;
+    end;
+
+    strAux := leitor.rExtrai_NFSEBrasil(1, 'confirmacoes');
+    if ( strAux <> emptystr) then begin
+
+        posI := 1;
+        // i := 0 ;
+        while ( posI > 0 ) do begin
+        
+           count := pos('</confirmacao>', strAux) + 7;
+           LeitorAux := TLeitor.Create;
+           leitorAux.Arquivo := copy(strAux, PosI, count);
+           leitorAux.Grupo   := leitorAux.Arquivo;
+           strAux2 := leitorAux.rExtrai_NFSEBrasil(1,'confirmacao');
+           strAux2 := Leitor.rCampo(tcStr, 'confirmacao');
+           InfCanc.FMsgRetorno.Add;
+           InfCanc.FMsgRetorno.Items[i].Mensagem := Leitor.rCampo(tcStr, 'confirmacao')+#13;
+           inc(i);
+           LeitorAux.free;
+           Delete(strAux, PosI, count);
+           posI := pos('<confirmacao>', strAux);
+        end;
+    end;
+
+    Result := True;
+  except
+    result := False;
+  end;
+  *)
 end;
 
 end.

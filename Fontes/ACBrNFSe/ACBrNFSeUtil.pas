@@ -512,6 +512,7 @@ begin
       proGovDigital,
       proSisPMJP,
       proSystemPro,
+      proNFSeBrasil,
       proSaatri:    begin
                      AStr := copy(AStr, 1, pos('</InfDeclaracaoPrestacaoServico>', AStr) - 1);
                      AStr := AStr + '</InfDeclaracaoPrestacaoServico>';

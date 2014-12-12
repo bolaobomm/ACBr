@@ -452,10 +452,10 @@ begin
             ConfigURL.HomNomeCidade := 'lucasdorioverdemt';
             ConfigURL.ProNomeCidade := 'lucasdorioverdemt';
            end;
-  5107909: begin // Sinop/MT
-            ConfigURL.HomNomeCidade := 'sinop';
-            ConfigURL.ProNomeCidade := 'sinop';
-           end;
+//  5107909: begin // Sinop/MT
+//            ConfigURL.HomNomeCidade := 'sinop';
+//            ConfigURL.ProNomeCidade := 'sinop';
+//           end;
   5107305: begin // Sao Jose do Rio Claro/MT
             ConfigURL.HomNomeCidade := 'saojosedorioclaromt';
             ConfigURL.ProNomeCidade := 'saojosedorioclaromt';

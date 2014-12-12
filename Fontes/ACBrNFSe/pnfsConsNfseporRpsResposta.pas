@@ -353,7 +353,7 @@ begin
                then ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio := Leitor.rCampo(tcStr, 'MunicipioPrestacaoServico')
                else ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
 
-              Item := StrToInt(SomenteNumeros(ListaNfse.FCompNfse[i].FNfse.Servico.ItemListaServico));
+              Item := StrToInt(OnlyNumber(ListaNfse.FCompNfse[i].FNfse.Servico.ItemListaServico));
               if Item<100 then Item:=Item*100+1;
 
               ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
@@ -367,8 +367,8 @@ begin
                      FormatFloat('00000', StrToIntDef(Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio, 3, 5), 0));
 
               if TabServicosExt
-               then ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(SomenteNumeros(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico))
-               else ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico));
+               then ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(OnlyNumber(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico))
+               else ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := CodigoToDesc(OnlyNumber(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico));
 
               if Leitor.rExtrai(6, 'Valores') <> ''
                then begin
@@ -753,7 +753,7 @@ begin
           ListaNfse.FCompNfse[i].NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'NumeroRPS');
           ListaNfse.FCompNfse[i].NFSe.IdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'SerieRPS');
           ListaNfse.FCompNfse[i].NFSe.IdentificacaoRps.Tipo   := trRPS; //StrToTipoRPS(ok, Leitor.rCampo(tcStr, 'Tipo'));
-          ListaNfse.FCompNfse[i].NFSe.InfID.ID                := SomenteNumeros(ListaNfse.FCompNfse[i].NFSe.IdentificacaoRps.Numero);// + NFSe.IdentificacaoRps.Serie;
+          ListaNfse.FCompNfse[i].NFSe.InfID.ID                := OnlyNumber(ListaNfse.FCompNfse[i].NFSe.IdentificacaoRps.Numero);// + NFSe.IdentificacaoRps.Serie;
           ListaNfse.FCompNfse[i].NFSe.SeriePrestacao          := Leitor.rCampo(tcStr, 'SeriePrestacao');
 
           ListaNfse.FCompNfse[i].NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipalTomador');
