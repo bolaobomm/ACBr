@@ -54,7 +54,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnGerador;
+  pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil;
 
 type
   TDownloadNFe          = class;
@@ -172,7 +172,7 @@ begin
   Gerador.wCampo(tcStr, 'JP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
   Gerador.wCampo(tcStr, 'JP04', 'xServ', 012, 012, 1, 'DOWNLOAD NFE', DSC_XSERV);
 
-  sDoc := SomenteNumeros( FCNPJ );
+  sDoc := OnlyNumber( FCNPJ );
   Gerador.wCampo(tcStr, 'JP05', 'CNPJ', 014, 014, 1, sDoc , DSC_CNPJ);
   if not ValidarCNPJ( sDoc ) then Gerador.wAlerta('JP05', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
 

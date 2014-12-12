@@ -50,7 +50,7 @@ unit pcnConsDPEC;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil;
 
 type
 
@@ -93,7 +93,7 @@ end;
 
 function TConsDPEC.ObterNomeArquivo: String;
 begin
-  Result := SomenteNumeros(FchNFe) + '-ped-sit.xml';
+  Result := OnlyNumber(FchNFe) + '-ped-sit.xml';
 end;
 
 function TConsDPEC.GerarXML: Boolean;

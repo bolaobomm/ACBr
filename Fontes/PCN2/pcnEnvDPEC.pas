@@ -54,7 +54,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnGerador, pcnSignature;
+  pcnAuxiliar, pcnConversao, pcnGerador, pcnSignature, ACBrUtil;
 
 type
 
@@ -224,14 +224,14 @@ var
 begin
   Result := False;
 
-  Self.infDPEC.IdeDec.CNPJ := SomenteNumeros(Self.infDPEC.IdeDec.CNPJ);
-  Self.infDPEC.IdeDec.IE := SomenteNumeros(Self.infDPEC.IdeDec.IE);
+  Self.infDPEC.IdeDec.CNPJ := OnlyNumber(Self.infDPEC.IdeDec.CNPJ);
+  Self.infDPEC.IdeDec.IE := OnlyNumber(Self.infDPEC.IdeDec.IE);
     //
   Gerador.ArquivoFormatoXML := '';
   
   Gerador.wGrupo(ENCODING_UTF8, '', False);
   Gerador.wGrupo('envDPEC versao="'+  Versao + '" ' + NAME_SPACE );
-  Gerador.wGrupo('infDPEC Id="DPEC' + SomenteNumeros( Self.infDPEC.Id) + '"');
+  Gerador.wGrupo('infDPEC Id="DPEC' + OnlyNumber( Self.infDPEC.Id) + '"');
   Gerador.wGrupo('ideDec');
   Gerador.wCampo(tcInt, 'AP06', 'cUF    ', 02, 02, 1, Self.infDPEC.IdeDec.cUF, DSC_CUF);
   if not ValidarCodigoUF(Self.infDPEC.IdeDec.cUF) then
@@ -248,9 +248,9 @@ begin
   Gerador.wGrupo('/ideDec');
   for i := 0 to Self.infDPEC.resNFe.Count - 1 do
   begin
-    Self.infDPEC.resNFe[i].CNPJCPF := SomenteNumeros(Self.infDPEC.resNFe[i].CNPJCPF);
+    Self.infDPEC.resNFe[i].CNPJCPF := OnlyNumber(Self.infDPEC.resNFe[i].CNPJCPF);
     Gerador.wGrupo('resNFe');
-    Gerador.wCampo(tcStr, 'AP12', 'chNFe', 044, 044, 1, SomenteNumeros(Self.infDPEC.resNFe[i].chNFe), DSC_CHNFE);
+    Gerador.wCampo(tcStr, 'AP12', 'chNFe', 044, 044, 1, OnlyNumber(Self.infDPEC.resNFe[i].chNFe), DSC_CHNFE);
     Gerador.wCampoCNPJCPF('AP13', 'AP14', Self.infDPEC.resNFe[i].CNPJCPF, CODIGO_BRASIL);
     Gerador.wCampo(tcStr, 'AP15', 'UF   ', 02, 02, 1, Self.infDPEC.resNFe[i].UF, DSC_UF);
     Gerador.wCampo(tcDe2, 'AP16', 'vNF  ', 01, 15, 1, Self.infDPEC.resNFe[i].vNF, DSC_VNF);
@@ -269,7 +269,7 @@ begin
       Gerar := ((Self.signature.DigestValue = '') and (Self.signature.SignatureValue = '') and (Self.signature.X509Certificate = ''));
     if Gerar then
     begin
-      Self.signature.URI := somenteNumeros(Self.infDPEC.Id);
+      Self.signature.URI := OnlyNumber(Self.infDPEC.Id);
       Self.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
       Self.signature.GerarXML;
       Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Self.signature.Gerador.ArquivoFormatoXML;

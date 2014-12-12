@@ -58,7 +58,7 @@ unit pcnConsSitNFe;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil;
 
 type
 
@@ -97,7 +97,7 @@ end;
 
 function TConsSitNFe.ObterNomeArquivo: String;
 begin
-  Result := SomenteNumeros(FchNFe) + '-ped-sit.xml';
+  Result := OnlyNumber(FchNFe) + '-ped-sit.xml';
 end;
 
 function TConsSitNFe.GerarXML: Boolean;

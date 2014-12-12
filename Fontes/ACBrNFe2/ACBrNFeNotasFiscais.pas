@@ -394,7 +394,7 @@ begin
   if (Copy(NFe.infNFe.ID,4,2) <> IntToStrZero(nfe.ide.cUF, 2)) or
      (Copy(NFe.infNFe.ID,6,2) <> Copy(FormatFloat('0000', wAno), 3, 2)) or
      (Copy(NFe.infNFe.ID,8,2) <> FormatFloat('00', wMes)) or
-     (Copy(NFe.infNFe.ID,10,14) <> copy(SomenteNumeros(nfe.Emit.CNPJCPF) + '00000000000000', 1, 14)) or
+     (Copy(NFe.infNFe.ID,10,14) <> copy(OnlyNumber(nfe.Emit.CNPJCPF) + '00000000000000', 1, 14)) or
      (Copy(NFe.infNFe.ID,24,2) <> IntToStrZero(nfe.ide.modelo, 2)) or
      (Copy(NFe.infNFe.ID,26,3) <> IntToStrZero(nfe.ide.serie, 3)) or
      (Copy(NFe.infNFe.ID,29,9) <> IntToStrZero(nfe.ide.nNF, 9)) or

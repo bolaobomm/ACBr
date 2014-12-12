@@ -54,7 +54,8 @@ uses
   {$IFNDEF VER130}
    Variants,
   {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor, pcnEventoNFe;
+  pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor, pcnEventoNFe,
+  ACBrUtil;
 
 type
   TInfEventoCollection     = class;
@@ -155,7 +156,7 @@ begin
   begin
     Evento.Items[i].InfEvento.id := 'ID'+
                                       Evento.Items[i].InfEvento.TipoEvento +
-                                      SomenteNumeros(Evento.Items[i].InfEvento.chNFe) +
+                                      OnlyNumber(Evento.Items[i].InfEvento.chNFe) +
                                       Format('%.2d', [Evento.Items[i].InfEvento.nSeqEvento]);
 
     Gerador.wGrupo('evento ' + NAME_SPACE + ' versao="' + Versao + '"');
@@ -167,9 +168,9 @@ begin
     Gerador.wCampo(tcInt, 'HP08', 'cOrgao', 001, 002, 1, FEvento.Items[i].FInfEvento.cOrgao);
     Gerador.wCampo(tcStr, 'HP09', 'tpAmb', 001, 001,  1, TpAmbToStr(Evento.Items[i].InfEvento.tpAmb), DSC_TPAMB);
 
-    // SomenteNumeros ..estava executando 5 vezes na versao anterior
+    // OnlyNumber ..estava executando 5 vezes na versao anterior
     // no techo de verificar se era cnpj ou cpf.
-    sDoc := SomenteNumeros( Evento.Items[i].InfEvento.CNPJ );
+    sDoc := OnlyNumber( Evento.Items[i].InfEvento.CNPJ );
     case Length( sDoc ) of
      14: begin
            Gerador.wCampo(tcStr, 'HP10', 'CNPJ', 014, 014, 1, sDoc , DSC_CNPJ);
@@ -182,7 +183,7 @@ begin
     end;
     Gerador.wCampo(tcStr,    'HP12', 'chNFe', 044, 044,      1, Evento.Items[i].InfEvento.chNFe, DSC_CHAVE);
 
-    if not ValidarChave('NFe' + SomenteNumeros(Evento.Items[i].InfEvento.chNFe)) then
+    if not ValidarChave('NFe' + OnlyNumber(Evento.Items[i].InfEvento.chNFe)) then
       Gerador.wAlerta('HP12', 'chNFe', '', 'Chave de NFe inválida');
 
     Gerador.wCampo(tcStr,    'HP13', 'dhEvento', 001, 050,   1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',Evento.Items[i].InfEvento.dhEvento)+
@@ -223,7 +224,7 @@ begin
             if (Evento.Items[i].InfEvento.detEvento.dest.idEstrangeiro = '') and
                (Evento.Items[i].InfEvento.detEvento.dest.UF <> 'EX') then
              begin
-               sDoc := SomenteNumeros( Evento.Items[i].InfEvento.detEvento.dest.CNPJCPF );
+               sDoc := OnlyNumber( Evento.Items[i].InfEvento.detEvento.dest.CNPJCPF );
                case Length( sDoc ) of
                 14 : begin
                        Gerador.wCampo(tcStr, 'P28', 'CNPJ', 014, 014, 1, sDoc , DSC_CNPJ);

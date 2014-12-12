@@ -54,7 +54,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnGerador;
+  pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil;
 
 type
   TDetEvento               = class;
@@ -178,7 +178,7 @@ begin
   Gerador.wCampo(tcInt, 'HP03', 'idLote', 001, 015, 1, FidLote, DSC_IDLOTE);
   for i:= 0 to Evento.Count - 1 do
    begin
-     Evento.Items[i].InfEvento.id := 'ID110110' + SomenteNumeros(Evento.Items[i].InfEvento.chNFe) + Format('%.2d', [Evento.Items[i].InfEvento.nSeqEvento]);
+     Evento.Items[i].InfEvento.id := 'ID110110' + OnlyNumber(Evento.Items[i].InfEvento.chNFe) + Format('%.2d', [Evento.Items[i].InfEvento.nSeqEvento]);
 
      Gerador.wGrupo('evento ' + NAME_SPACE + ' versao="' + Versao + '"');
      Gerador.wGrupo('infEvento Id="' + Evento.Items[i].InfEvento.id + '"');
@@ -186,20 +186,20 @@ begin
        Gerador.wAlerta('HP07', 'ID', '', 'ID de carta de correção inválido');
      Gerador.wCampo(tcInt, 'HP08', 'cOrgao', 001, 002, 1, Evento.Items[i].InfEvento.cOrgao);
      Gerador.wCampo(tcStr, 'HP09', 'tpAmb', 001, 001,  1, TpAmbToStr(Evento.Items[i].InfEvento.tpAmb), DSC_TPAMB);
-     if Length(SomenteNumeros(Evento.Items[i].InfEvento.CNPJ)) = 14 then
+     if Length(OnlyNumber(Evento.Items[i].InfEvento.CNPJ)) = 14 then
       begin
-        Gerador.wCampo(tcStr, 'HP10', 'CNPJ', 014, 014, 1, SomenteNumeros(Evento.Items[i].InfEvento.CNPJ), DSC_CNPJ);
-        if not ValidarCNPJ(SomenteNumeros(Evento.Items[i].InfEvento.CNPJ)) then
+        Gerador.wCampo(tcStr, 'HP10', 'CNPJ', 014, 014, 1, OnlyNumber(Evento.Items[i].InfEvento.CNPJ), DSC_CNPJ);
+        if not ValidarCNPJ(OnlyNumber(Evento.Items[i].InfEvento.CNPJ)) then
           Gerador.wAlerta('HP10', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
       end
-     else if Length(SomenteNumeros(Evento.Items[i].InfEvento.CNPJ)) = 11 then
+     else if Length(OnlyNumber(Evento.Items[i].InfEvento.CNPJ)) = 11 then
       begin
-        Gerador.wCampo(tcStr, 'HP11', 'CPF', 011, 011, 1, SomenteNumeros(Evento.Items[i].InfEvento.CNPJ), DSC_CPF);
-        if not ValidarCPF(SomenteNumeros(Evento.Items[i].InfEvento.CNPJ)) then
+        Gerador.wCampo(tcStr, 'HP11', 'CPF', 011, 011, 1, OnlyNumber(Evento.Items[i].InfEvento.CNPJ), DSC_CPF);
+        if not ValidarCPF(OnlyNumber(Evento.Items[i].InfEvento.CNPJ)) then
           Gerador.wAlerta('HP11', 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
       end;
      Gerador.wCampo(tcStr,    'HP12', 'chNFe', 044, 044,      1, Evento.Items[i].InfEvento.chNFe, DSC_CHAVE);
-     if not ValidarChave('NFe' + SomenteNumeros(Evento.Items[i].InfEvento.chNFe)) then
+     if not ValidarChave('NFe' + OnlyNumber(Evento.Items[i].InfEvento.chNFe)) then
        Gerador.wAlerta('HP12', 'chNFe', '', 'Chave de NFe inválida');
      Gerador.wCampo(tcStr,    'HP13', 'dhEvento', 001, 050,   1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',Evento.Items[i].InfEvento.dhEvento)+
                                                                  GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.cOrgao), Evento.Items[i].InfEvento.dhEvento));

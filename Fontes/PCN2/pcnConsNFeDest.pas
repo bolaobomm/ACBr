@@ -50,7 +50,7 @@ unit pcnConsNFeDest;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil;
 
 type
 
@@ -119,7 +119,7 @@ begin
   Gerador.wCampo(tcStr, 'IP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
   Gerador.wCampo(tcStr, 'IP04', 'xServ', 018, 018, 1, 'CONSULTAR NFE DEST', DSC_XSERV);
 
-  sDoc := SomenteNumeros( FCNPJ );
+  sDoc := OnlyNumber( FCNPJ );
   Gerador.wCampo(tcStr, 'IP05', 'CNPJ', 014, 014, 1, sDoc , DSC_CNPJ);
   if not ValidarCNPJ( sDoc ) then Gerador.wAlerta('IP05', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
 

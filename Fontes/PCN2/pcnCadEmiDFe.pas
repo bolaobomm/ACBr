@@ -158,7 +158,7 @@ begin
 
   Gerador.wGrupo(ENCODING_UTF8, '',False);
   Gerador.wGrupo('cadEmiDFe ' + NAME_SPACE + ' ' + V1_07);
-  Gerador.wGrupo('infCadEmiDFe Id = "ID' + SomenteNumeros(FchNFe) + '"');
+  Gerador.wGrupo('infCadEmiDFe Id = "ID' + OnlyNumber(FchNFe) + '"');
   Gerador.wCampo(tcDat, 'O05', 'dPubCad', 010, 010, 1, FDPublic, DSC_DEMI);
   for i := 0 to Emissor.Count - 1 do
   begin
@@ -173,7 +173,7 @@ begin
     Gerador.wGrupo('/emissor');
   end;
   Gerador.wGrupo('/infCadEmiDFe');
-  Gerador.wGrupo('Signature Id = "ID' + SomenteNumeros(FchNFe) + '"');
+  Gerador.wGrupo('Signature Id = "ID' + OnlyNumber(FchNFe) + '"');
   Gerador.wGrupo('/Signature');
   Gerador.wGrupo('/cadEmiDFe');
   

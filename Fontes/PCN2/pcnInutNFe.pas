@@ -62,7 +62,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnGerador, pcnRetInutNFe;
+  pcnAuxiliar, pcnConversao, pcnGerador, pcnRetInutNFe, ACBrUtil;
 
 type
 
@@ -123,13 +123,13 @@ end;
 
 function TinutNFe.ObterNomeArquivo: String;
 begin
-  Result := SomenteNumeros(FIDInutilizacao) + '-ped-inu.xml';
+  Result := OnlyNumber(FIDInutilizacao) + '-ped-inu.xml';
 end;
 
 function TinutNFe.GerarXML: Boolean;
 begin
   FIDInutilizacao := 'ID' + IntToStrZero(FcUF, 2) +  IntToStrZero(Fano, 2)+
-                     SomenteNumeros(FCNPJ) + IntToStrZero(Fmodelo, 2) + IntToStrZero(Fserie, 3) +
+                     OnlyNumber(FCNPJ) + IntToStrZero(Fmodelo, 2) + IntToStrZero(Fserie, 3) +
                      IntToStrZero(FnNFIni, 9) + IntToStrZero(FnNFFin, 9);
 
   Gerador.ArquivoFormatoXML := '';
@@ -143,7 +143,7 @@ begin
   if not ValidarCodigoUF(FcUF) then
     Gerador.wAlerta('DP07', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
   Gerador.wCampo(tcInt, 'DP08', 'ano   ', 002, 002, 1, Fano, DSC_ANO);
-  Gerador.wCampo(tcStr, 'DP09', 'CNPJ  ', 014, 014, 1, SomenteNumeros(FCNPJ), DSC_CNPJ);
+  Gerador.wCampo(tcStr, 'DP09', 'CNPJ  ', 014, 014, 1, OnlyNumber(FCNPJ), DSC_CNPJ);
   if not ValidarCNPJ(FCNPJ) then
     Gerador.wAlerta('DP09', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
   Gerador.wCampo(tcInt, 'DP10', 'mod   ', 002, 002, 1, Fmodelo, DSC_MOD);

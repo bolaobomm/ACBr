@@ -62,7 +62,8 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnGerador, pcnNFe, pcnLayoutTXT, ACBrDFeUtil;
+  pcnAuxiliar, pcnConversao, pcnGerador, pcnNFe, pcnLayoutTXT, ACBrDFeUtil,
+  ACBrUtil;
 
 type
 
@@ -210,7 +211,7 @@ end;
 
 function TNFeW.ObterNomeArquivo: String;
 begin
-  Result := SomenteNumeros(nfe.infNFe.ID) + '-nfe.xml';
+  Result := OnlyNumber(nfe.infNFe.ID) + '-nfe.xml';
 end;
 
 function TNFeW.GerarXml: Boolean;
@@ -284,7 +285,7 @@ begin
       Gerar := ((NFe.signature.DigestValue = '') and (NFe.signature.SignatureValue = '') and (NFe.signature.X509Certificate = ''));
     if Gerar then
     begin
-      FNFe.signature.URI := somenteNumeros(NFe.infNFe.ID);
+      FNFe.signature.URI := OnlyNumber(NFe.infNFe.ID);
       FNFe.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
       FNFe.signature.GerarXML;
       Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + FNFe.signature.Gerador.ArquivoFormatoXML;
@@ -443,8 +444,8 @@ end;
 
 procedure TNFeW.GerarIdeNFrerefNFe(const i: Integer);
 begin
-  Gerador.wCampo(tcEsp, 'B13', 'refNFe', 44, 44, 1, SomenteNumeros(nfe.ide.NFref[i].refNFe), DSC_REFNFE);
-  if not ValidarChave('NFe' + SomenteNumeros(nfe.ide.NFref[i].refNFe)) then Gerador.wAlerta('B13', 'refNFe', DSC_REFNFE, ERR_MSG_INVALIDO);
+  Gerador.wCampo(tcEsp, 'B13', 'refNFe', 44, 44, 1, OnlyNumber(nfe.ide.NFref[i].refNFe), DSC_REFNFE);
+  if not ValidarChave('NFe' + OnlyNumber(nfe.ide.NFref[i].refNFe)) then Gerador.wAlerta('B13', 'refNFe', DSC_REFNFE, ERR_MSG_INVALIDO);
 end;
 
 procedure TNFeW.GerarIdeNFrefRefNF(const i: Integer);
@@ -479,8 +480,8 @@ end;
 
 procedure TNFeW.GerarIdeNFrerefCTe(const i: Integer);
 begin
-  Gerador.wCampo(tcEsp, 'B20i', 'refCTe', 44, 44, 1, SomenteNumeros(nfe.ide.NFref[i].refCTe), DSC_REFCTE);
-  if not ValidarChave('NFe'+ SomenteNumeros(nfe.ide.NFref[i].refCTe)) then Gerador.wAlerta('B20i', 'refCTe',DSC_REFCTE, ERR_MSG_INVALIDO);
+  Gerador.wCampo(tcEsp, 'B20i', 'refCTe', 44, 44, 1, OnlyNumber(nfe.ide.NFref[i].refCTe), DSC_REFCTE);
+  if not ValidarChave('NFe'+ OnlyNumber(nfe.ide.NFref[i].refCTe)) then Gerador.wAlerta('B20i', 'refCTe',DSC_REFCTE, ERR_MSG_INVALIDO);
 end;
 
 
@@ -505,7 +506,7 @@ begin
   if nfe.Emit.IE = 'ISENTO' then
     Gerador.wCampo(tcStr, 'C17', 'IE     ', 00, 14, 1, nfe.Emit.IE, DSC_IE)
   else
-    Gerador.wCampo(tcStr, 'C17', 'IE     ', 00, 14, 1, SomenteNumeros(nfe.Emit.IE), DSC_IE);
+    Gerador.wCampo(tcStr, 'C17', 'IE     ', 00, 14, 1, OnlyNumber(nfe.Emit.IE), DSC_IE);
     
   if (FOpcoes.ValidarInscricoes) and (nfe.Ide.procEmi <> peAvulsaFisco) then
   begin
@@ -552,7 +553,7 @@ begin
   Gerador.wCampo(tcInt, 'C13', 'CEP    ', 08, 08, 1, nfe.Emit.enderEmit.CEP, DSC_CEP);
   Gerador.wCampo(tcInt, 'C14', 'cPais  ', 04, 04, 0, CODIGO_BRASIL, DSC_CPAIS); // Conforme NT-2009/01
   Gerador.wCampo(tcStr, 'C15', 'xPais  ', 01, 60, 0, nfe.Emit.enderEmit.xPais, DSC_XPAIS);
-  Gerador.wCampo(tcStr, 'C16', 'fone   ', 06, 14, 0, somenteNumeros(nfe.Emit.enderEmit.fone), DSC_FONE);
+  Gerador.wCampo(tcStr, 'C16', 'fone   ', 06, 14, 0, OnlyNumber(nfe.Emit.enderEmit.fone), DSC_FONE);
   Gerador.wGrupo('/enderEmit');
 end;
 
@@ -565,7 +566,7 @@ begin
     Gerador.wCampo(tcStr, 'D03', 'xOrgao ', 01, 60, 1, nfe.Avulsa.xOrgao, DSC_XORGAO);
     Gerador.wCampo(tcStr, 'D04', 'matr   ', 01, 60, 1, nfe.Avulsa.matr, DSC_MATR);
     Gerador.wCampo(tcStr, 'D05', 'xAgente', 01, 60, 1, nfe.Avulsa.xAgente, DSC_XAGENTE);
-    Gerador.wCampo(tcStr, 'D06', 'fone   ', 06, 14, 0, somenteNumeros(nfe.Avulsa.fone), DSC_FONE);
+    Gerador.wCampo(tcStr, 'D06', 'fone   ', 06, 14, 0, OnlyNumber(nfe.Avulsa.fone), DSC_FONE);
     Gerador.wCampo(tcStr, 'D07', 'UF     ', 02, 02, 1, nfe.Avulsa.UF, DSC_UF);
     if not ValidarUF(nfe.Avulsa.UF) then
       Gerador.wAlerta('D07', 'UF', DSC_UF, ERR_MSG_INVALIDO);
@@ -638,9 +639,9 @@ begin
         if nfe.Dest.IE = 'ISENTO' then
           Gerador.wCampo(tcStr, 'E17', 'IE ', 00, 14, 1, nfe.Dest.IE, DSC_IE)
         else if (trim(nfe.Dest.IE) <> '') or (nfe.Ide.modelo <> 65)  then
-        Gerador.wCampo(tcStr, 'E17', 'IE     ', 00, 14, 1, SomenteNumeros(nfe.Dest.IE), DSC_IE);
+        Gerador.wCampo(tcStr, 'E17', 'IE     ', 00, 14, 1, OnlyNumber(nfe.Dest.IE), DSC_IE);
 
-      //  if (length(nfe.Dest.CNPJCPF) = 11) and (SomenteNumeros(nfe.Dest.IE) <> '') then
+      //  if (length(nfe.Dest.CNPJCPF) = 11) and (OnlyNumber(nfe.Dest.IE) <> '') then
       //    Gerador.wAlerta('E17', 'IE', DSC_IE, ERR_MSG_INVALIDO); // Para MG produtor rural possui CPF e IE
         if (FOpcoes.ValidarInscricoes) and (nfe.Dest.IE <> '') and (nfe.Dest.IE <> 'ISENTO') then
           if not ValidarIE(nfe.Dest.IE, UF) then
@@ -683,7 +684,7 @@ begin
   if not ValidarCodigoPais(nfe.Dest.enderDest.cPais) = -1 then
     Gerador.wAlerta('E14', 'cPais', DSC_CPAIS, ERR_MSG_INVALIDO);
   Gerador.wCampo(tcStr, 'E15', 'xPais  ', 02, 60, 0, nfe.Dest.enderDest.xPais, DSC_XPAIS);
-  Gerador.wCampo(tcStr, 'E16', 'fone   ', 06, 14, 0, somenteNumeros(nfe.Dest.enderDest.fone), DSC_FONE);
+  Gerador.wCampo(tcStr, 'E16', 'fone   ', 06, 14, 0, OnlyNumber(nfe.Dest.enderDest.fone), DSC_FONE);
   Gerador.wGrupo('/enderDest');
 end;
 
@@ -801,7 +802,7 @@ begin
   {**}GerarDetProdNVE(i);
   Gerador.wCampo(tcStr, 'I06 ', 'EXTIPI  ', 02, 03, 0, nfe.Det[i].Prod.EXTIPI, DSC_EXTIPI);
   //Gerador.wCampo(tcInt, 'I07 ', 'genero  ', 02, 02, 0, nfe.Det[i].Prod.genero, DSC_GENERO);
-  Gerador.wCampo(tcEsp, 'I08 ', 'CFOP    ', 04, 04, 1, somenteNumeros(nfe.Det[i].Prod.CFOP), DSC_CFOP);
+  Gerador.wCampo(tcEsp, 'I08 ', 'CFOP    ', 04, 04, 1, OnlyNumber(nfe.Det[i].Prod.CFOP), DSC_CFOP);
   Gerador.wCampo(tcStr, 'I09 ', 'uCom    ', 01, 06, 1, nfe.Det[i].Prod.uCom, DSC_UCOM);
   Gerador.wCampo(tcDe4, 'I10 ', 'qCom    ', 00, 15, 1, nfe.Det[i].Prod.qCom, DSC_QCOM);
   Gerador.wCampo(IIf(NFe.infNFe.Versao >= 2,tcDe10,tcDe4),'I10a', 'vUnCom  ', 00, 21, 1, nfe.Det[i].Prod.vUnCom, DSC_VUNCOM);
@@ -929,8 +930,8 @@ begin
       Gerador.wCampo(tcStr, 'I53', 'nRE    ', 12, 12, 1, nfe.Det[i].Prod.detExport[j].nRE, DSC_NRE);
       if not DFeUtil.ValidaRE(nfe.Det[i].Prod.detExport[j].nRE) then
         Gerador.wAlerta('I53', 'nRE', DSC_NRE, ERR_MSG_INVALIDO);
-      Gerador.wCampo(tcEsp, 'I54', 'chNFe  ', 44, 44, 1, SomenteNumeros(nfe.Det[i].Prod.detExport[j].chNFe), DSC_REFNFE);
-      if not ValidarChave('NFe' + SomenteNumeros(nfe.Det[i].Prod.detExport[j].chNFe)) then
+      Gerador.wCampo(tcEsp, 'I54', 'chNFe  ', 44, 44, 1, OnlyNumber(nfe.Det[i].Prod.detExport[j].chNFe), DSC_REFNFE);
+      if not ValidarChave('NFe' + OnlyNumber(nfe.Det[i].Prod.detExport[j].chNFe)) then
         Gerador.wAlerta('I54', 'chNFe', DSC_REFNFE, ERR_MSG_INVALIDO);
       Gerador.wCampo(tcDe4, 'I55', 'qExport', 00, 15, 1, nfe.Det[i].Prod.detExport[j].qExport, DSC_QEXPORT);
       Gerador.wGrupo('/exportInd');
@@ -1982,7 +1983,7 @@ begin
        Gerador.wCampo(tcStr, 'X07', 'IE      ', 02, 14, 0, nfe.Transp.Transporta.IE, DSC_IE)
     else
      begin
-       Gerador.wCampo(tcStr, 'X07', 'IE      ', 02, 14, 0, SomenteNumeros(nfe.Transp.Transporta.IE), DSC_IE);
+       Gerador.wCampo(tcStr, 'X07', 'IE      ', 02, 14, 0, OnlyNumber(nfe.Transp.Transporta.IE), DSC_IE);
        if (FOpcoes.ValidarInscricoes) and (nfe.Transp.Transporta.IE <> '') then
          if not ValidarIE(nfe.Transp.Transporta.IE, nfe.Transp.Transporta.UF) then
            Gerador.wAlerta('X07', 'IE', DSC_IE, ERR_MSG_INVALIDO);
@@ -2013,7 +2014,7 @@ begin
     Gerador.wCampo(tcDe2, 'X13', 'vBCRet  ', 01, 15, 1, nfe.Transp.retTransp.vBCRet, DSC_VBCRET);
     Gerador.wCampo(tcDe2, 'X14', 'pICMSRet', 01, 05, 1, nfe.Transp.retTransp.pICMSRet, DSC_PICMSRET);
     Gerador.wCampo(tcDe2, 'X15', 'vICMSRet', 01, 15, 1, nfe.Transp.retTransp.vICMSRet, DSC_VICMSRET);
-    Gerador.wCampo(tcEsp, 'X16', 'CFOP    ', 04, 04, 1, SomenteNumeros(nfe.Transp.retTransp.CFOP), DSC_CFOP);
+    Gerador.wCampo(tcEsp, 'X16', 'CFOP    ', 04, 04, 1, OnlyNumber(nfe.Transp.retTransp.CFOP), DSC_CFOP);
     Gerador.wCampo(tcStr, 'X17', 'cMunFG  ', 07, 07, 1, nfe.Transp.retTransp.cMunFG, DSC_CMUNFG);
     if not ValidarMunicipio(nfe.Transp.retTransp.cMunFG) then
       Gerador.wAlerta('X17', 'cMunFG', DSC_CMUNFG, ERR_MSG_INVALIDO);

@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/12/2014
+[*] Refactoring em várias Units.
+    por: Italo Jurisato Junior
+
 03/12/2014
 [*] - Refatoração de código para remover funções duplicadas e aplicar padrões
 	por : Juliomar Marchetti

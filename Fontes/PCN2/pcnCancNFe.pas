@@ -58,7 +58,7 @@ unit pcnCancNFe;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil;
 
 type
 
@@ -103,7 +103,7 @@ end;
 
 function TcancNFe.ObterNomeArquivo: String;
 begin
-  Result := SomenteNumeros(FchNFe) + '-ped-can.xml';
+  Result := OnlyNumber(FchNFe) + '-ped-can.xml';
 end;
 
 function TcancNFe.GerarXML: Boolean;
@@ -111,13 +111,13 @@ begin
   Gerador.ArquivoFormatoXML := '';
 
   Gerador.wGrupo('cancNFe ' + NAME_SPACE + ' versao="' + Versao + '"');
-  Gerador.wGrupo('infCanc Id="ID' + SomenteNumeros(FchNFe) + '"');
+  Gerador.wGrupo('infCanc Id="ID' + OnlyNumber(FchNFe) + '"');
   Gerador.wCampo(tcStr, 'CP05', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
   Gerador.wCampo(tcStr, 'CP06', 'xServ', 008, 008, 1, 'CANCELAR', DSC_XSERV);
-  Gerador.wCampo(tcEsp, 'CP07', 'chNFe', 044, 044, 1, SomenteNumeros(FchNFe), DSC_CHNFE);
-  if not ValidarChave('NFe' + SomenteNumeros(FchNFe)) then
+  Gerador.wCampo(tcEsp, 'CP07', 'chNFe', 044, 044, 1, OnlyNumber(FchNFe), DSC_CHNFE);
+  if not ValidarChave('NFe' + OnlyNumber(FchNFe)) then
     Gerador.wAlerta('CP07', 'chNFe', '', 'Chave de NFe inválida');
-  Gerador.wCampo(tcEsp, 'CP08', 'nProt', 015, 015, 1, SomenteNumeros(FnProt), DSC_NPROT);
+  Gerador.wCampo(tcEsp, 'CP08', 'nProt', 015, 015, 1, OnlyNumber(FnProt), DSC_NPROT);
   Gerador.wCampo(tcStr, 'CP09', 'xJust', 015, 255, 1, FiltrarTextoXML(true, FxJust), DSC_XJUST);
   Gerador.wGrupo('/infCanc');
   Gerador.wGrupo('/cancNFe');
