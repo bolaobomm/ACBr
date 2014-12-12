@@ -26,20 +26,18 @@ package ACBr_MDFe;
 {$IMPLICITBUILD OFF}
 
 requires
-  rtl,
   vcl,
-  PCN2,
-  ACBrComum,
+  rtl,
   designide,
-{$IFDEF COMPILER7_UP}
-  vclactnband,
-{$ENDIF}
-  ACBrCapicom,
-  synapse,
-  soaprtl,
   xmlrtl,
+  dbrtl,
   inet,
-  dbrtl;
+  soaprtl,
+  ACBrComum,
+  ACBrOpenSSL,
+  ACBrCapicom,
+  //synapse,
+  PCN2;
   
 contains
   ACBrMDFe in '..\..\..\Fontes\ACBrMDFe\ACBrMDFe.pas',

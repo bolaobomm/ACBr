@@ -28,7 +28,8 @@ package ACBrCapicom;
 
 requires
   rtl,
-  vcl;
+  vcl,
+	synapse;
 
 contains
   ACBrCAPICOM_TLB in '..\..\Fontes\ACBrCapicom\ACBrCAPICOM_TLB.pas',
@@ -37,6 +38,7 @@ contains
   JwaWinDLLNames in '..\..\Fontes\ACBrCapicom\JwaWinDLLNames.pas',
   JwaWindows in '..\..\Fontes\ACBrCapicom\JwaWindows.pas',
   JwaWinNT in '..\..\Fontes\ACBrCapicom\JwaWinNT.pas',
-  JwaWinType in '..\..\Fontes\ACBrCapicom\JwaWinType.pas';  
+  JwaWinType in '..\..\Fontes\ACBrCapicom\JwaWinType.pas',
+	ACBrHTTPReqResp in '..\..\Fontes\ACBrCapicom\ACBrHTTPReqResp.pas';
 
 end.

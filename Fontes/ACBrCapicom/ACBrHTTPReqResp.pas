@@ -49,7 +49,7 @@ unit ACBrHTTPReqResp;
 interface
 
 uses
-  Windows, Classes, SysUtils, wininet, Dialogs, ACBrCAPICOM_TLB, synautil;
+  Windows, Classes, SysUtils, wininet, Dialogs, ACBrCAPICOM_TLB;
 
 type
 
@@ -113,7 +113,7 @@ end;
 
 implementation
 
-uses StrUtils;
+uses synautil, StrUtils;
 
 { TACBrHTTPReqResp }
 
