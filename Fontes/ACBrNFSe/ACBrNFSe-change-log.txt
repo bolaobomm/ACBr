@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/12/2014
+[*] Adição da unit ACBrConsts na unit pnfsNFSeW.pas
+		Por: Juliomar Marchetti
+		
 12/12/2014
 [*] Alterações no provedor Pronim para poder realizar a assinatura.
     Por: Italo Jurisato Junior

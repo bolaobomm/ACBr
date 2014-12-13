@@ -41,7 +41,7 @@ uses
 {$ENDIF}
   SysUtils, Classes, StrUtils,
   pcnAuxiliar, pcnConversao, pcnGerador,
-  pnfsNFSe, pnfsConversao,
+  pnfsNFSe, pnfsConversao, ACBrConsts,
   ACBrNFSeConfiguracoes, synacode, CryptSHA1;
 
 type
