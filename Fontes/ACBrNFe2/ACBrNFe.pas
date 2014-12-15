@@ -435,7 +435,7 @@ begin
       end;
    end;
 
-  EnviarEventoNFe(idLote);
+  Result := EnviarEventoNFe(idLote);
 end;
 
 function TACBrNFe.EnviarEventoNFe(idLote: Integer): Boolean;

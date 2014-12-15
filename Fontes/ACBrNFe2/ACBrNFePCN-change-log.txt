@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/12/2014
+[*] Estava faltando o "Result" para pegar o retorno da function EnviarCartaCorrecao.
+    por: Italo Jurisato Junior
+
 12/12/2014
 [*] Refactoring em várias Units.
     por: Italo Jurisato Junior
