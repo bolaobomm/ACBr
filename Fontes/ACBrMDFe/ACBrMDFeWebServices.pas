@@ -514,7 +514,7 @@ end;
 procedure TWebServicesBase.AssinarXML(AXML: String; MsgErro: String);
 begin
   {$IFDEF ACBrMDFeOpenSSL}
-   if not(NotaUtil.Assinar(AXML,
+   if not(MDFeUtil.Assinar(AXML,
                            FConfiguracoes.Certificados.Certificado,
                            FConfiguracoes.Certificados.Senha,
                            FDadosMsg, FMsg)) then
