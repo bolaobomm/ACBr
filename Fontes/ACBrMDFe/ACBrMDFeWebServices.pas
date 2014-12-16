@@ -1949,7 +1949,7 @@ begin
 
   FEventoRetorno := TRetEventoMDFe.Create;
 
-  FEvento := AEvento;
+  FEvento  := AEvento;
   FStatus  := stMDFeEvento;
   FLayout  := LayMDFeEvento;
   FArqEnv  := 'ped-eve';
@@ -2096,18 +2096,18 @@ begin
   FEventoRetorno.Free;
   FEventoRetorno := TRetEventoMDFe.Create;
 
-  EventoRetorno.Leitor.Arquivo := FRetWS;
-  EventoRetorno.LerXml;
+  FEventoRetorno.Leitor.Arquivo := FRetWS;
+  FEventoRetorno.LerXml;
 
-  FcStat   := EventoRetorno.cStat;
-  FxMotivo := EventoRetorno.xMotivo;
-  FMsg     := EventoRetorno.xMotivo;
-  FTpAmb   := EventoRetorno.tpAmb;
+  FcStat   := FEventoRetorno.cStat;
+  FxMotivo := FEventoRetorno.xMotivo;
+  FMsg     := FEventoRetorno.xMotivo;
+  FTpAmb   := FEventoRetorno.tpAmb;
 
-  Result := (EventoRetorno.cStat = 128) or
-            (EventoRetorno.cStat = 135) or
-            (EventoRetorno.cStat = 136) or
-            (EventoRetorno.cStat = 155);
+  Result := (FEventoRetorno.cStat = 128) or
+            (FEventoRetorno.cStat = 135) or
+            (FEventoRetorno.cStat = 136) or
+            (FEventoRetorno.cStat = 155);
 
   //gerar arquivo proc de evento
   if Result then
@@ -2116,15 +2116,15 @@ begin
     try
       for I := 0 to FEvento.Evento.Count - 1 do
       begin
-        for J := 0 to EventoRetorno.retEvento.Count - 1 do
+        for J := 0 to FEventoRetorno.retEvento.Count - 1 do
         begin
-          if FEvento.Evento.Items[I].InfEvento.chMDFe = EventoRetorno.retEvento.Items[J].RetInfEvento.chMDFe then
+          if FEvento.Evento.Items[I].InfEvento.chMDFe = FEventoRetorno.retEvento.Items[J].RetInfEvento.chMDFe then
           begin
-            FEvento.Evento.Items[I].RetInfEvento.nProt       := EventoRetorno.retEvento.Items[J].RetInfEvento.nProt;
-            FEvento.Evento.Items[I].RetInfEvento.dhRegEvento := EventoRetorno.retEvento.Items[J].RetInfEvento.dhRegEvento;
-            FEvento.Evento.Items[I].RetInfEvento.cStat       := EventoRetorno.retEvento.Items[J].RetInfEvento.cStat;
-            FEvento.Evento.Items[I].RetInfEvento.xMotivo     := EventoRetorno.retEvento.Items[J].RetInfEvento.xMotivo;
-            FEvento.Evento.Items[i].RetInfEvento.chMDFe      := EventoRetorno.retEvento.Items[j].RetInfEvento.chMDFe;
+            FEvento.Evento.Items[I].RetInfEvento.nProt       := FEventoRetorno.retEvento.Items[J].RetInfEvento.nProt;
+            FEvento.Evento.Items[I].RetInfEvento.dhRegEvento := FEventoRetorno.retEvento.Items[J].RetInfEvento.dhRegEvento;
+            FEvento.Evento.Items[I].RetInfEvento.cStat       := FEventoRetorno.retEvento.Items[J].RetInfEvento.cStat;
+            FEvento.Evento.Items[I].RetInfEvento.xMotivo     := FEventoRetorno.retEvento.Items[J].RetInfEvento.xMotivo;
+            FEvento.Evento.Items[i].RetInfEvento.chMDFe      := FEventoRetorno.retEvento.Items[j].RetInfEvento.chMDFe;
 
             wProc := TStringList.Create;
             try
@@ -2156,7 +2156,7 @@ begin
               wProc.Add('</retEventoMDFe>');
               wProc.Add('</procEventoMDFe>');
 
-              EventoRetorno.retEvento.Items[J].RetInfEvento.XML := wProc.Text;
+              FEventoRetorno.retEvento.Items[J].RetInfEvento.XML := wProc.Text;
 
               NomeArq := OnlyNumber(FEvento.Evento.Items[i].InfEvento.Id) +
                          '-procEventoMDFe.xml';

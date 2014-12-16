@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/12/2014
+[-] Alterado a propriedade pela variável de Retorno de Eventos.
+    por: Italo Jurisato Junior
 [*] Incluido Coinitialize(nil) e CoUninitialize nos métodos ValidaModalMSXML e
     ValidaAssinaturaMSXML.
     por: Rafael
