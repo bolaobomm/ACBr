@@ -2484,6 +2484,7 @@ begin
 
     EventoCTe.GerarXML;
 
+    (*
     // Separa os grupos <evento> e coloca na variável Eventos
     I       := Pos( '<evento ', EventoCTe.Gerador.ArquivoFormatoXML );
     Lote    := Copy( EventoCTe.Gerador.ArquivoFormatoXML, 1, I - 1 );
@@ -2520,9 +2521,14 @@ begin
                    '</envEvento>'
     else
       FDadosMsg := Lote + EventosAssinados + '</envEvento>';
+    *)
+
+    AssinarXML(EventoCTe.Gerador.ArquivoFormatoXML,
+               'Falha ao assinar o Envio de Evento ' + LineBreak + FMsg);
 
     if not(CTeUtil.Valida(FDadosMsg, FMsg, TACBrCTe( FACBrCTe ).Configuracoes.Geral.PathSchemas)) then
-      GerarException('Falha na validação dos dados do Envio de Evento ' + LineBreak + FMsg);
+      GerarException('Falha na validação dos dados do Envio de Evento ' +
+                     LineBreak + FMsg);
 
     for I := 0 to FEvento.Evento.Count-1 do
       FEvento.Evento[I].InfEvento.id := EventoCTe.Evento[I].InfEvento.id;

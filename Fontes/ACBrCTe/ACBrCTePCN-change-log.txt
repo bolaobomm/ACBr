@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/12/2014
+[-] Alterado a rotina que gera o lote de eventos.
+    por: Italo Jurisato Junior
+
 15/12/2014
 [*] Alteração para resolver o problema de duplicidade das observações.
     por: Wislei de Brito Fernandes
