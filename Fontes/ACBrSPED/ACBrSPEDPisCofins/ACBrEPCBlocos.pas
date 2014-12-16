@@ -173,7 +173,7 @@ type
   TACBrIndPgto = (
                   tpVista,             // 0 - À Vista
                   tpPrazo,             // 1 - A Prazo
-                  tpSemPagamento,      // 9 - Sem pagamento
+                  tpSemPagamento,      // 9 - Sem pagamento (2 - Outros, para registros após 01/07/2012)
                   tpNenhum             // Preencher vazio
                  );
   TACBrTipoPagamento = TACBrIndPgto;
