@@ -1151,6 +1151,7 @@ var
   ArqSchema: String;
 {$ENDIF}
 begin
+  CoInitialize(nil);
 {$IFDEF PL_103}
   Result := True;
 {$ENDIF}
@@ -1337,6 +1338,7 @@ begin
   ParseError          := nil;
   Schema              := nil;
 {$ENDIF}
+  CoUninitialize;
 end;
 
 function ValidaAssinaturaMSXML(XML: AnsiString; out Msg: AnsiString): Boolean;
@@ -1346,6 +1348,7 @@ var
   pKeyInfo: IXMLDOMNode;
   pKey, pKeyOut: IXMLDSigKey;
 begin
+  CoInitialize(nil);
   xmldoc := CoDOMDocument50.Create;
   xmldsig := CoMXDigitalSignature50.Create;
 
@@ -1381,6 +1384,7 @@ begin
     xmldsig := nil;
     xmldoc := nil;
   end;
+  CoUninitialize;
 end;
 {$ENDIF}
 

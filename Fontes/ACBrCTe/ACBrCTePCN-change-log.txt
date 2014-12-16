@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/12/2014
+[*] Incluido Coinitialize(nil) e CoUninitialize nos métodos ValidaModalMSXML e
+    ValidaAssinaturaMSXML.
+    por: Rafael
 [+] Incluido a function: Cancelamento(<Justificativa>, <numLote>)
     Essa função se utiliza do envio de eventos para realizar o cancelamento de
     um CT-e.
