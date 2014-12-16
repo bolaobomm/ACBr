@@ -147,6 +147,7 @@ type
     destructor Destroy; override;
     function Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean;  overload;
     function Enviar(ALote: String; Imprimir: Boolean = True): Boolean;  overload;
+    function Cancelamento(AJustificativa:WideString; ALote: Integer = 0): Boolean;
     function Consultar: Boolean;
     function EnviarEventoCTe(idLote: Integer): Boolean;
 
@@ -371,6 +372,45 @@ begin
        end;
      end;
   end;
+end;
+
+function TACBrCTe.Cancelamento(AJustificativa: WideString;
+  ALote: Integer): Boolean;
+var
+  i : Integer;
+begin
+  if Self.Conhecimentos.Count = 0 then
+   begin
+      if Assigned(Self.OnGerarLog) then
+         Self.OnGerarLog('ERRO: Nenhum CT-e Informado!');
+      raise EACBrCTeException.Create('Nenhum CT-e Informado!');
+   end;
+
+  for i:= 0 to self.Conhecimentos.Count-1 do
+  begin
+    Self.WebServices.Consulta.CTeChave := OnlyNumber(self.Conhecimentos.Items[i].CTe.infCTe.Id);
+
+    if not Self.WebServices.Consulta.Executar then
+      raise Exception.Create(Self.WebServices.Consulta.Msg);
+
+    Self.EventoCTe.Evento.Clear;
+    with Self.EventoCTe.Evento.Add do
+     begin
+       infEvento.CNPJ   := copy(DFeUtil.LimpaNumero(Self.WebServices.Consulta.CTeChave), 7, 14);
+       infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(Self.WebServices.Consulta.CTeChave), 1, 2), 0);
+       infEvento.dhEvento := now;
+       infEvento.tpEvento := teCancelamento;
+       infEvento.chCTe := Self.WebServices.Consulta.CTeChave;
+       infEvento.detEvento.nProt := Self.WebServices.Consulta.Protocolo;
+       infEvento.detEvento.xJust := AJustificativa;
+     end;
+     try
+        Self.EnviarEventoCTe(ALote);
+     except
+        raise Exception.Create(Self.WebServices.EnvEvento.EventoRetorno.xMotivo);
+     end;
+  end;
+  Result := True;
 end;
 
 procedure TACBrCTe.EnviaEmailThread(const sSmtpHost, sSmtpPort, sSmtpUser,
