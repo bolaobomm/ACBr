@@ -489,7 +489,12 @@ case FormaEmissao of
          25: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //PB
          41: Result := NotaUtil.GetURLPR(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //PR
          26: Result := NotaUtil.GetURLPE(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //PE
-         22: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //PI
+         22: begin
+               if AModeloDF = moNFCe then
+                 Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF)  //PI
+               else
+                 Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //PI
+             end;
          33: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //RJ
          24: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //RN
          43: Result := NotaUtil.GetURLRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //RS
