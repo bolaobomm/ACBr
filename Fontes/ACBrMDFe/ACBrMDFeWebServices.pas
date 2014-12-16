@@ -2028,7 +2028,7 @@ begin
      end;
 
     EventoMDFe.GerarXML;
-
+    (*
     // Separa os grupos <evento> e coloca na variável Eventos
     I       := Pos('<evento ', EventoMDFe.Gerador.ArquivoFormatoXML);
     Lote    := Copy(EventoMDFe.Gerador.ArquivoFormatoXML, 1, I - 1);
@@ -2065,6 +2065,10 @@ begin
                    '</envEvento>'
     else
       FDadosMsg := Lote + EventosAssinados + '</envEvento>';
+    *)
+
+    AssinarXML(EventoMDFe.Gerador.ArquivoFormatoXML,
+               'Falha ao assinar o Envio de Evento ' + LineBreak + FMsg);
 
     if not(MDFeUtil.Valida(FDadosMsg, FMsg, TACBrMDFe(FACBrMDFe).Configuracoes.Geral.PathSchemas)) then
       GerarException('Falha na validação dos dados do Envio de Evento ' +

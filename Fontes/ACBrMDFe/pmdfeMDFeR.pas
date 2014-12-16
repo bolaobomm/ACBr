@@ -103,8 +103,12 @@ begin
   *)
   Leitor.Grupo := Leitor.Arquivo;
 
-  MDFe.infMDFe.ID := OnlyNumber(Leitor.rAtributo('Id='));
-  if MDFe.infMDFe.ID = '' then
+//  MDFe.infMDFe.ID := OnlyNumber(Leitor.rAtributo('Id='));
+//  if MDFe.infMDFe.ID = '' then
+//    raise Exception.Create('Não encontrei o atributo: Id');
+
+  MDFe.infMDFe.ID := Leitor.rAtributo('Id=');
+  if OnlyNumber(MDFe.infMDFe.ID) = '' then
     raise Exception.Create('Não encontrei o atributo: Id');
 
   (* Grupo da TAG <ide> *******************************************************)
