@@ -1068,6 +1068,7 @@ begin
 
    {Adicionado por Rodrigo Cardilo em 11/08/2014}
    // Observações 
+      {
       for i := 0 to ObsCont.Count - 1 do
       begin
         with ObsCont.Items[i] do
@@ -1079,7 +1080,7 @@ begin
       wObs := wObs + TmpStr;
 
       TmpStr := '';
-
+      }
 
       {$IFDEF PL_200}
       if CTe.ide.tpCTe=tcSubstituto then // Adicionado por NCC em 24/04/2014
