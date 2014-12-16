@@ -878,8 +878,8 @@ begin
       then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature')
      else if (URI <> '') and not (AProvedor in [proRecife, proRJ, proAbaco, proIssCuritiba, proFISSLex, proBetha, proPublica])
       then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature[@' + Identificador + '="AssLote_' + URI + '"]')
-     else if AProvedor = proNatal
-      then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature[@' + Identificador + '="Ass_' + URI + '"]')
+//     else if AProvedor = proNatal
+//      then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature[@' + Identificador + '="Ass_' + URI + '"]')
      else if (URI <> '') and (AProvedor = proBetha)
       then xmldsig.signature := xmldoc.selectSingleNode('.//ns3:' + EnviarLoteRps + '/ds:Signature')
      else begin
