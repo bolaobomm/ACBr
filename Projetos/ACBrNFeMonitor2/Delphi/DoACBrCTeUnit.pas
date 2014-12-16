@@ -759,7 +759,7 @@ begin
            if ACBrCTe1.Configuracoes.Geral.Salvar then
             begin
               Cmd.Resposta :=  Cmd.Resposta+
-              'Arquivo='+ACBrCTe1.WebServices.EnvEvento.PathArqResp;
+              'Arquivo='+ACBrCTe1.WebServices.EnvEvento.ArqResp;
             end;
            Cmd.Resposta := Cmd.Resposta+sLineBreak+
                            'idLote='   +IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.idLote)+sLineBreak+
@@ -803,7 +803,7 @@ begin
            if ACBrCTe1.Configuracoes.Geral.Salvar then
             begin
               Cmd.Resposta :=  Cmd.Resposta+
-              'Arquivo='+ACBrCTe1.WebServices.EnvEvento.PathArqResp;
+              'Arquivo='+ACBrCTe1.WebServices.EnvEvento.ArqResp;
             end;
            Cmd.Resposta := Cmd.Resposta+sLineBreak+
                            'idLote='   +IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.idLote)+sLineBreak+

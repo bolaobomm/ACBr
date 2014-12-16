@@ -2106,8 +2106,8 @@ begin
     ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
     if not(InputQuery('WebServices Cancelamento', 'Justificativa', vAux)) then
        exit;
-     ACBrCTe1.Cancelamento(vAux);
-     ExibeResp(ACBrCTe1.WebServices.Cancelamento.RetWS);
+//     ACBrCTe1.Cancelamento(vAux);
+//     ExibeResp(ACBrCTe1.WebServices.Cancelamento.RetWS);
   end;
 end;
 
