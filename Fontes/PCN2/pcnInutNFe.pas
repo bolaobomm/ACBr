@@ -128,7 +128,8 @@ end;
 
 function TinutNFe.GerarXML: Boolean;
 begin
-  FIDInutilizacao := 'ID' + IntToStrZero(FcUF, 2) +  IntToStrZero(Fano, 2)+
+  // Alterado por Italo em 17/12/2014
+  FIDInutilizacao := 'ID' + IntToStrZero(FcUF, 2) +  Copy(IntToStrZero(Fano, 4), 3, 2) +
                      OnlyNumber(FCNPJ) + IntToStrZero(Fmodelo, 2) + IntToStrZero(Fserie, 3) +
                      IntToStrZero(FnNFIni, 9) + IntToStrZero(FnNFFin, 9);
 
