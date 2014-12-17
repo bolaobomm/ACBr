@@ -910,33 +910,39 @@ begin
   end
   else FNameSpaceCab := '>';
 
- if FServicoEnviar <> ''
-  then begin
-   if (FProvedor = proIssDSF) then
-     FNameSpaceDad :=  'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '"'
+ if FServicoEnviar <> '' then
+ begin
+   case FProvedor of
+    proIssDSF: FNameSpaceDad :=  'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '"'
                     + ' xmlns:tipos="http://localhost:8080/WsNFe2/tp"'
                     + ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'
-                    + ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqEnvioLoteRPS.xsd"'
-					
-   else if (FProvedor = proEquiplano)
-    then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="http://www.equiplano.com.br/esnfs" ' +
+                    + ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqEnvioLoteRPS.xsd"';
+
+    proEquiplano: FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="http://www.equiplano.com.br/esnfs" ' +
                           'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                          'xsi:schemaLocation="http://www.equiplano.com.br/enfs esRecepcionarLoteRpsEnvio_v01.xsd"'
+                          'xsi:schemaLocation="http://www.equiplano.com.br/enfs esRecepcionarLoteRpsEnvio_v01.xsd"';
+
+    proNFSEBrasil: FNameSpaceDad := FNameSpaceDad + 'xmlns:xs="http://www.nfsebrasil.net.br/nfse/rps/xsd/rps.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
+
     else begin
-     if (RightStr(FHTTP_AG, 1) = '/')
-      then begin
-       if Prefixo3 <> ''
-        then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoEnviar + '"'
-        else FNameSpaceDad := 'xmlns="' + FHTTP_AG + Separador + FServicoEnviar + '"';
-      end
-      else begin
-       if Prefixo3 <> ''
-        then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
-        else FNameSpaceDad := 'xmlns="' + FHTTP_AG + '"';
-      end;
-    end;
-  end
-  else FNameSpaceDad := '';
+           if (RightStr(FHTTP_AG, 1) = '/') then
+           begin
+             if Prefixo3 <> '' then
+               FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoEnviar + '"'
+             else
+               FNameSpaceDad := 'xmlns="' + FHTTP_AG + Separador + FServicoEnviar + '"';
+           end
+           else begin
+             if Prefixo3 <> '' then
+               FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
+             else
+               FNameSpaceDad := 'xmlns="' + FHTTP_AG + '"';
+           end;
+         end;
+   end;
+ end
+ else
+   FNameSpaceDad := '';
 
  if (FDefTipos = '') and (FNameSpaceDad <> '')
   then FNameSpaceDad := FNameSpaceDad + '>';
@@ -1016,34 +1022,42 @@ begin
   end
   else begin
    for i := 0 to TNFSeEnviarLoteRPS(Self).FNotasFiscais.Count-1 do
-    begin
-     if (FProvedor in [profintelISS, proSaatri, proSisPMJP, proCoplan, proGoiania, proISSDigital,
-                       proISSe, proSystemPro, pro4R, proFiorilli, proProdata, proVitoria, proPVH,
-                       proAgili, proVirtual, proFreire, proLink3, proGovDigital])
-      then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
+   begin
+     case FProvedor of
+      profintelISS, proSaatri, proSisPMJP, proCoplan, proGoiania, proISSDigital,
+      proISSe, proSystemPro, pro4R, proFiorilli, proProdata, proVitoria, proPVH,
+      proAgili, proVirtual, proFreire, proLink3,
+      proGovDigital: vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps,
                                    '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</' + Prefixo4 + 'InfDeclaracaoPrestacaoServico>') +
                                '</' + Prefixo4 + 'InfDeclaracaoPrestacaoServico>'+
-                              '</' + Prefixo4 + 'Rps>'
-      else if (FProvedor = proIssDSF ) or (FProvedor = proEquiplano ) then
-       vNotas :=  vNotas + TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps
+                              '</' + Prefixo4 + 'Rps>';
 
-      else if (FProvedor = proTecnos)
-      then vNotas := vNotas +
+      proIssDSF,
+      proEquiplano: vNotas :=  vNotas + TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps;
+
+      proTecnos: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
                                    '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico', '</tcDeclaracaoPrestacaoServico>') +
                                '</tcDeclaracaoPrestacaoServico>'+
-                              '</' + Prefixo4 + 'Rps>'
+                              '</' + Prefixo4 + 'Rps>';
+
+      proNFSEBrasil: begin
+                       vNotas := StringReplace(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps, '</Rps>', '', [rfReplaceAll]) + '</Rps>';
+                       vNotas := StringReplace(vNotas, '<Rps>', '', [rfReplaceAll]);
+                       vNotas := '<Rps>' + StringReplace(vNotas, '<InfRps>', '', [rfReplaceAll]);
+                     end;
 
       else vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfRps' +
                                  RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps,
                                    '<' + Prefixo4 + 'InfRps', '</Rps>') +
                               '</' + Prefixo4 + 'Rps>';
-    end;
+     end;
+   end;
   end;
 
  FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab, FConfiguracoes.WebServices.CodigoMunicipio);
@@ -3643,9 +3657,9 @@ begin
       StrStream.CopyFrom(HTTP.Document, 0);
 
        // Luiz Baião 2014.11.28    ACBrProvedorNFSEBrasil
-      if FProvedor = proNFSEBrasil then
-        FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
-      else
+//      if FProvedor = proNFSEBrasil then
+//        FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+//      else
         FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
 
       FRetWS := FProvedorClass.GetRetornoWS(acRecepcionar, FRetornoWS);
@@ -3827,9 +3841,9 @@ begin
     // FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
 	
 	// Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
-    if FProvedor = proNFSEBrasil then
-      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
-    else
+//    if FProvedor = proNFSEBrasil then
+//      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+//    else
       FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
 
     FRetWS := FProvedorClass.GetRetornoWS(acConsSit, FRetornoWS);
@@ -4063,9 +4077,9 @@ begin
 
     // FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
 	     // Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
-   if FProvedor = proNFSEBrasil then
-     FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
-   else
+//   if FProvedor = proNFSEBrasil then
+//     FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+//   else
      FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
 
     FRetWS := FProvedorClass.GetRetornoWS(acConsLote, FRetornoWS);
@@ -4415,9 +4429,9 @@ begin
 
     // FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
 	// Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
-    if FProvedor = proNFSEBrasil then
-      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
-    else
+//    if FProvedor = proNFSEBrasil then
+//      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+//    else
       FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
 
     FRetWS := FProvedorClass.GetRetornoWS(acConsNFSeRps, FRetornoWS);
@@ -4716,9 +4730,9 @@ begin
     //FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
 	
 	// Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
-    if FProvedor = proNFSEBrasil then
-      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
-    else
+//    if FProvedor = proNFSEBrasil then
+//      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+//    else
       FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
 
     FRetWS := FProvedorClass.GetRetornoWS(acConsNFSe, FRetornoWS);
@@ -4953,9 +4967,9 @@ begin
     //FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
 	
 	// Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
-    if FProvedor = proNFSEBrasil then
-      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
-    else
+//    if FProvedor = proNFSEBrasil then
+//      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+//    else
       FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
 
     FRetWS := FProvedorClass.GetRetornoWS(acCancelar, FRetornoWS);
@@ -5124,9 +5138,9 @@ begin
     //FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
 	
 	// Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
-    if FProvedor = proNFSEBrasil then
-      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
-    else
+//    if FProvedor = proNFSEBrasil then
+//      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+//    else
       FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
 
     FRetWS := FProvedorClass.GetRetornoWS(acGerar, FRetornoWS);
@@ -5431,9 +5445,9 @@ begin
 
     //FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
 	// Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
-    if FProvedor = proNFSEBrasil then
-      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
-    else
+//    if FProvedor = proNFSEBrasil then
+//      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+//    else
       FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
 
     FRetWS := FProvedorClass.GetRetornoWS(acRecSincrono, FRetornoWS);
@@ -5870,9 +5884,9 @@ begin
 
 //    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
    // Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
-    if FProvedor = proNFSEBrasil then
-      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
-    else
+//    if FProvedor = proNFSEBrasil then
+//      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
+//    else
       FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
 
     FRetWS := FProvedorClass.GetRetornoWS(acSubstituir, FRetornoWS);
