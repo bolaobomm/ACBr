@@ -48,6 +48,7 @@ type
     btnB_A: TButton;
     btnB_F: TButton;
     btnB_M: TButton;
+    btnB_P: TButton;
     procedure btnB_0Click(Sender: TObject);
     procedure btnB_9Click(Sender: TObject);
     procedure btnTXTClick(Sender: TObject);
@@ -62,6 +63,7 @@ type
     procedure btnB_MClick(Sender: TObject);
     procedure btnB_AClick(Sender: TObject);
     procedure btnVariosBlocosClick(Sender: TObject);
+    procedure btnB_PClick(Sender: TObject);
   private
      procedure LoadToMemo;
     { Private declarations }
@@ -90,6 +92,60 @@ begin
    memoError.Lines.Add(MsnError);
 end;
 
+procedure TFrmSPEDPisCofins.btnB_PClick(Sender: TObject);
+begin
+   // Alimenta o componente com informações para gerar todos os registros do
+   // Bloco P.
+   with ACBrSPEDPisCofins1.Bloco_P do
+   begin
+      with RegistroP001New do
+      begin
+        IND_MOV := imComDados;
+
+        //P010 - Identificação do Estabelecimento
+        with RegistroP010New do
+        begin
+           CNPJ := '11111111000272';
+
+
+           //P100 - Demais Documentos e Operações Geradoras de Contribuição e Créditos
+           with RegistroP100New do
+           begin
+             DT_INI := StrToDate('01/04/2014');
+             DT_FIM := StrToDate('30/04/2014');
+             VL_REC_TOT_EST := 0;
+             COD_ATIV_ECON := '00000025';
+             VL_REC_ATIV_ESTAB := 0;
+             VL_EXC := 0;
+             VL_BC_CONT := 0;
+             ALIQ_CONT  := 2;
+             VL_CONT_APU := 0;
+             COD_CTA := '';
+             INFO_COMPL := '';
+           end;
+
+           //REGISTRO P200: CONSOLIDAÇÃO DA CONTRIBUIÇÃO PREVIDENCIÁRIA SOBRE A RECEITA BRUTA
+           with RegistroP200New do
+           begin
+             PER_REF := FormatDateTime('mmyyyy', StrToDate('30/04/2014'));
+             VL_TOT_CONT_APU := 0;
+             VL_TOT_AJ_REDUC := 0;
+             VL_TOT_AJ_ACRES := 0;
+             VL_TOT_CONT_DEV := 0;
+             COD_REC := '298501';
+           end;
+        end;
+      end;
+   end;
+   btnB_P.Enabled := False;
+
+   if cbConcomitante.Checked then
+   begin
+      ACBrSPEDPisCofins1.WriteBloco_P;
+      LoadToMemo;
+   end;
+end;
+
 procedure TFrmSPEDPisCofins.btnB_0Click(Sender: TObject);
 const
   strUNID: array[0..4] of string = ('PC', 'UN', 'LT', 'KG', 'MT');
@@ -109,8 +165,8 @@ begin
    btnB_C.Enabled := True ;
    with ACBrSPEDPisCofins1 do
    begin
-     DT_INI := StrToDate('01/04/2011');
-     DT_FIN := StrToDate('30/04/2011');
+     DT_INI := StrToDate('01/04/2014');
+     DT_FIN := StrToDate('30/04/2014');
      IniciaGeracao;
    end;
 
@@ -118,8 +174,8 @@ begin
    begin
       with ACBrSPEDPisCofins1 do
       begin
-//         DT_INI := StrToDate('01/04/2011');
-//         DT_FIN := StrToDate('30/04/2011');
+//         DT_INI := StrToDate('01/04/2014');
+//         DT_FIN := StrToDate('30/04/2014');
          LinhasBuffer := StrToIntDef( edBufLinhas.Text, 0 );
 
 //         IniciaGeracao;
@@ -133,7 +189,7 @@ begin
       // Dados da Empresa
       with Registro0000New do
       begin
-        COD_VER          := vlVersao101;
+        COD_VER          := vlVersao201;
         TIPO_ESCRIT      := tpEscrOriginal;
         IND_SIT_ESP      := indSitAbertura;
         NUM_REC_ANTERIOR := '';
@@ -179,6 +235,7 @@ begin
 
 
            //0140 - Tabela de Cadastro de Estabelecimento
+           //Aqui temos o exemplo de uma empresa com 2 Estabelecimentos!!!
            for int0140 := 1 to 2 do
            begin
            // FILHO
@@ -189,13 +246,28 @@ begin
                  if int0140 = 1 then
                     CNPJ    := '11111111000191'
                  else
-                    CNPJ    := '11111111000272'; //oito primeiros dígitos devem bater...
+                    CNPJ    := '11111111000272'; // os oito primeiros dígitos do CNPJ devem bater...
 
                  UF      := 'ES';
                  IE      := '';
                  COD_MUN := 3200607;
                  IM      := '';
                  SUFRAMA := '';
+
+                 //Se for o estabelecimento 2 geramos um registro 0145 que é necessário para o bloco P
+                 if int0140 = 2 then
+                 begin
+                   with Registro0145New do
+                   begin
+                     COD_INC_TRIB := '1';
+                     VL_REC_TOT   := 3;
+                     VL_REC_ATIV  := 2;
+                     VL_REC_DEMAIS_ATIV := 1;
+
+                     INFO_COMPL := '';
+                   end;
+                 end;
+
 
                  // 10 Clientes por estabelecimento
                  for int0150 := 1 to 10 do
@@ -251,8 +323,8 @@ begin
                       if (int0200 = 5) then with Registro0205New do
                       begin
                         DESCR_ANT_ITEM := 'DESCRIÇÃO ANTERIOR DO ITEM 5';
-                        DT_INI := StrToDate('01/04/2011');
-                        DT_FIM := StrToDate('15/04/2011'); //Observe que o campo é DT_FIM e não DT_FIN
+                        DT_INI := StrToDate('01/04/2014');
+                        DT_FIM := StrToDate('15/04/2014'); //Observe que o campo é DT_FIM e não DT_FIN
                       end;
                     end;
                  end;
@@ -262,7 +334,7 @@ begin
            // FILHO - REGISTRO 0500: PLANO DE CONTAS CONTÁBEIS
            with Registro0500New do
            begin
-             DT_ALT := StrToDate('01/04/2011');
+             DT_ALT := StrToDate('01/04/2014');
              COD_NAT_CC := ncgAtivo;
              IND_CTA := indCTASintetica;
              NIVEL := '0';
@@ -310,8 +382,8 @@ begin
 
    with ACBrSPEDPisCofins1 do
    begin
-      DT_INI := StrToDate('01/04/2011');
-      DT_FIN := StrToDate('30/04/2011');
+      DT_INI := StrToDate('01/04/2014');
+      DT_FIN := StrToDate('30/04/2014');
    end;
 
    // Limpa a lista de erros.
@@ -347,15 +419,15 @@ begin
   btnB_F.Click;
   btnB_M.Click;
   btnB_1.Click;
-
+  btnB_P.Click;
 end;
 
 procedure TFrmSPEDPisCofins.btnErrorClick(Sender: TObject);
 begin
    with ACBrSPEDPisCofins1 do
    begin
-      DT_INI := StrToDate('01/04/2011');
-      DT_FIN := StrToDate('30/04/2011');
+      DT_INI := StrToDate('01/04/2014');
+      DT_FIN := StrToDate('30/04/2014');
    end;
 
    // Limpa a lista de erros.
@@ -411,7 +483,9 @@ INotas: Integer;
 IItens: Integer;
 NNotas: Integer;
 BNotas: Integer;
+val: Double;
 begin
+  val := 1.65;
    // Alimenta o componente com informações para gerar todos os registros do
    // Bloco C.
    btnB_C.Enabled := false;
@@ -502,21 +576,21 @@ begin
                      VL_BC_IPI        := 0;
                      ALIQ_IPI         := 0;
                      VL_IPI           := 0;
-                     CST_PIS          := stpisOutrasOperacoes;
-                     VL_BC_PIS        := 0;
+                     CST_PIS          := stpisOperAquiAliquotaZero;
+                     VL_BC_PIS        := 1;
                      ALIQ_PIS_PERC    := 0;
                      QUANT_BC_PIS     := 0;
-                     ALIQ_PIS_R       := 1;
+                     ALIQ_PIS_R       := 0;
                      VL_PIS           := 0;
-                     CST_COFINS       := stcofinsOutrasOperacoes;
-                     VL_BC_COFINS     := 0;
+                     CST_COFINS       := stcofinsOperAquiAliquotaZero;
+                     VL_BC_COFINS     := 1;
                      ALIQ_COFINS_PERC := 0;
                      QUANT_BC_COFINS  := 0;
                      ALIQ_COFINS_R    := 0;
                      VL_COFINS        := 0;
                      COD_CTA          := '01'; //Baseado no 0500
-                  end; //Fim dos Itens;
-                end;
+                  end; //Fim do Registro;
+                end; //Fim do for Itens;
 
                 if cbConcomitante.Checked then
                 begin
@@ -554,7 +628,7 @@ begin
 //
 //             end;
 //           end;
-         end;
+         end; //C10
       end;
    end;
 
@@ -607,7 +681,7 @@ begin
           // (Códigos 07, 08, 8B, 09, 10, 11, 26, 27 e 57).
           with RegistroD200New do
           begin
-          //|D200|08|00|||11574|11854|6352|000011574|000011854|6352|25072011|6807,57|0,00|
+          //|D200|08|00|||11574|11854|6352|000011574|000011854|6352|25072014|6807,57|0,00|
             COD_MOD := '08';
             COD_SIT := sdfRegular;
             SER := '';
@@ -615,7 +689,7 @@ begin
             NUM_DOC_INI := 11574;
             NUM_DOC_FIN := 11854;
             CFOP := 6352;
-            DT_REF := DT_INI;// StrToDate('15/04/2011');
+            DT_REF := DT_INI;// StrToDate('15/04/2014');
             VL_DOC := 6807.57;
             VL_DESC := 0;
           end;
@@ -726,7 +800,7 @@ begin
               COD_CTA       := '';
               COD_CCUS      := '';
 //              COD_CCUS      := '123';//Para usar o COD_CCUS é necessário gerar, primeiro, um registro 0600 correspondente.
-              DESC_DOC_OPER := ''; 
+              DESC_DOC_OPER := '';
            end;
         end;
       end;
@@ -741,8 +815,8 @@ begin
 end;
 
 procedure TFrmSPEDPisCofins.btnB_MClick(Sender: TObject);
-var
-  vlBC, vlBcCofins, aliqCofins, vlcredNC: Real;
+//var
+//  vlBC, vlBcCofins, aliqCofins, vlcredNC: Real;
 begin
    // Alimenta o componente com informações para gerar todos os registros do
    // Bloco M.

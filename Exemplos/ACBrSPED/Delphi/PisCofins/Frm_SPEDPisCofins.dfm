@@ -150,7 +150,7 @@ object FrmSPEDPisCofins: TFrmSPEDPisCofins
     object edtFile: TEdit
       Left = 22
       Top = 28
-      Width = 204
+      Width = 164
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
@@ -159,7 +159,7 @@ object FrmSPEDPisCofins: TFrmSPEDPisCofins
       OnExit = edtFileChange
     end
     object cbConcomitante: TCheckBox
-      Left = 250
+      Left = 210
       Top = 30
       Width = 134
       Height = 19
@@ -219,7 +219,7 @@ object FrmSPEDPisCofins: TFrmSPEDPisCofins
       ExplicitWidth = 450
     end
     object btnB_0: TButton
-      Left = 23
+      Left = 22
       Top = 51
       Width = 62
       Height = 25
@@ -228,7 +228,7 @@ object FrmSPEDPisCofins: TFrmSPEDPisCofins
       OnClick = btnB_0Click
     end
     object btnB_1: TButton
-      Left = 544
+      Left = 504
       Top = 51
       Width = 62
       Height = 25
@@ -237,7 +237,7 @@ object FrmSPEDPisCofins: TFrmSPEDPisCofins
       OnClick = btnB_1Click
     end
     object btnB_C: TButton
-      Left = 197
+      Left = 183
       Top = 51
       Width = 60
       Height = 25
@@ -246,7 +246,7 @@ object FrmSPEDPisCofins: TFrmSPEDPisCofins
       OnClick = btnB_CClick
     end
     object btnB_D: TButton
-      Left = 283
+      Left = 262
       Top = 51
       Width = 62
       Height = 25
@@ -255,7 +255,7 @@ object FrmSPEDPisCofins: TFrmSPEDPisCofins
       OnClick = btnB_DClick
     end
     object btnB_A: TButton
-      Left = 110
+      Left = 103
       Top = 51
       Width = 62
       Height = 25
@@ -264,7 +264,7 @@ object FrmSPEDPisCofins: TFrmSPEDPisCofins
       OnClick = btnB_AClick
     end
     object btnB_F: TButton
-      Left = 370
+      Left = 343
       Top = 51
       Width = 62
       Height = 25
@@ -273,7 +273,7 @@ object FrmSPEDPisCofins: TFrmSPEDPisCofins
       OnClick = btnB_FClick
     end
     object btnB_M: TButton
-      Left = 457
+      Left = 424
       Top = 51
       Width = 62
       Height = 25
@@ -284,12 +284,21 @@ object FrmSPEDPisCofins: TFrmSPEDPisCofins
     object btnVariosBlocos: TButton
       Left = 22
       Top = 20
-      Width = 584
+      Width = 625
       Height = 25
       Hint = 'Gera o arquivo com os bloco 0,1,A,C,9'
       Caption = 'Todos os Blocos'
       TabOrder = 7
       OnClick = btnVariosBlocosClick
+    end
+    object btnB_P: TButton
+      Left = 585
+      Top = 51
+      Width = 62
+      Height = 25
+      Caption = 'Bloco P'
+      TabOrder = 8
+      OnClick = btnB_PClick
     end
   end
   object btnB_9: TButton
