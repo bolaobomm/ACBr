@@ -177,7 +177,8 @@ begin
   i := 0;
   
   try
-    if (Leitor.rExtrai(1, 'eventoCTe') <> '') then
+    if (Leitor.rExtrai(1, 'eventoCTe') <> '') or
+       (Leitor.rExtrai(1, 'evento') <> '') then
     begin
       if Leitor.rExtrai(2, 'infEvento', '', i + 1) <> '' then
        begin

@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/12/2014
+[-] Como tem XML procEventoCTe com TAG evento e eventoCTe foi feito uma alteração
+    visando atender essas duas situações.
+    por: Italo Jurisato Junior
 [-] Alteração visando obter o retorno de status e motivo após o envio de um
     Evento.
     por: Italo Jurisato Junior
