@@ -278,6 +278,7 @@ begin
     // Alterado por Akai - L. Massao Aihara 31/10/2013
     if (leitor.rExtrai(1, 'ConsultarLoteRpsResposta') <> '') or
        (leitor.rExtrai(1, 'Consultarloterpsresposta') <> '') or
+       (leitor.rExtrai(1, 'RespostaLoteRps') <> ''         ) or  // Luiz Baião - 2014.12.12_18:04
        (leitor.rExtrai(1, 'ConsultarLoteRpsResult') <> '') then
 //    begin
       iNivel := 1;
@@ -288,7 +289,8 @@ begin
        then ListaNfse.FSituacao := '4';
 
       // Ler a Lista de NFSe
-      if leitor.rExtrai(iNivel + 1, 'ListaNfse') <> '' then
+      if (leitor.rExtrai(iNivel + 1, 'ListaNfse') <> '') or
+         (leitor.rExtrai(iNivel + 1, 'CompNfse') <> '') then
       begin
         i := 0;
         // Alterado por Rodrigo Cantelli

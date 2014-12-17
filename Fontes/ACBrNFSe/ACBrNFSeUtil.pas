@@ -621,6 +621,10 @@ begin
                     EnviarLoteRps := 'ReqEnvioLoteRPS';
                     LoteURI := 'Lote';
                   end;
+    proInfisc:    begin
+                    EnviarLoteRps := 'envioLote';
+                    LoteURI := 'Lote';
+                  end;
     proEquiplano: begin
                     EnviarLoteRps := 'enviarLoteRpsEnvio';
                     LoteURI := 'lote';
@@ -660,6 +664,15 @@ begin
         NameSpaceLote := ' ' + Copy(NameSpaceLote, I, J - I);
      end;
 
+     if AProvedor = proInfisc then begin
+        I := I + {25} Length(EnviarLoteRps);
+        J := pos('>', AXML);
+        NameSpaceLote := Copy(AXML, I, J - I);
+        I := Pos('xmlns:ns1=', NameSpaceLote);
+        NameSpaceLote := ' ' + Copy(NameSpaceLote, I, J - I);
+        NameSpaceLote := ' envioLote versao="1.0"';
+     end;
+
      Identificador := 'Id';
      I             := pos(LoteURI + ' Id=', AXML);
      if I = 0
@@ -685,7 +698,7 @@ begin
 
      AXML := copy(AXML, 1, pos('</'+ APrefixo3 + EnviarLoteRps + '>', AXML) - 1);
 
-     if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco, proIssDSF,
+     if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco, proIssDSF, proInfisc,
                                      proIssCuritiba, proFISSLex, proGovBR,
                                      proPublica, proPronim])
       then AID := '>'
@@ -705,7 +718,7 @@ begin
                       '<Transforms>' +
                        '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
                         DFeUtil.SeSenao((AProvedor in [proActcon, profintelISS, proGovBr, proPronim,
-                                                       proISSNet, proNatal, proIssDSF]),
+                                                       proISSNet, proNatal, proIssDSF, proInfisc]),
                                         '',
                                         '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
                         DFeUtil.SeSenao((AProvedor in [proIssDSF]),
@@ -776,7 +789,7 @@ begin
                         '<Transforms>' +
                          '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
                          DFeUtil.SeSenao((AProvedor in [proActcon, profintelISS, proGovBr, proPronim,
-                                                        proISSNet, proNatal, proIssDSF]),
+                                                        proISSNet, proNatal, proIssDSF, proInfisc]),
                                          '',
                                          '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
                          DFeUtil.SeSenao((AProvedor in [proIssDSF]),
@@ -867,6 +880,12 @@ begin
      xmlRoot := xmldoc.documentElement;
      xmlRoot.setAttribute('xsi:schemaLocation','http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqEnvioLoteRPS.xsd');
    end
+   else if AProvedor = proInfisc then
+   begin
+     NameSpaceLote:=DSIGNS;
+     xmldoc.setProperty('SelectionNamespaces', NameSpaceLote );
+     xmlRoot := xmldoc.documentElement;
+   end
    else
    begin
      xmldoc.setProperty('SelectionNamespaces', DSIGNS + NameSpaceLote);
@@ -874,7 +893,7 @@ begin
 
    if ALote
     then begin
-     if (AProvedor in [proEquiplano, proPronim, proIssDSF])
+     if (AProvedor in [proEquiplano, proPronim, proIssDSF, proInfisc])
       then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature')
      else if (URI <> '') and not (AProvedor in [proRecife, proRJ, proAbaco, proIssCuritiba, proFISSLex, proBetha, proPublica])
       then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature[@' + Identificador + '="AssLote_' + URI + '"]')
@@ -1260,9 +1279,9 @@ begin
                     '<Reference URI="'+DFeUtil.SeSenao(FURIRef = '', '',Numero+FURIRef)+'">'+
                      '<Transforms>'+
                       '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />'+
-                      DFeUtil.SeSenao((AProvedor in [profintelISS, proGovBr, proPronim{Dalvan}, proISSNet]), '',
+                      DFeUtil.SeSenao((AProvedor in [profintelISS, proGovBr, proPronim{Dalvan}, proISSNet, proInfisc]), '',
                       '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315' +
-                      DFeUtil.SeSenao(AProvedor = proISSDSF, '#WithComments', '') + '" />') +
+                      DFeUtil.SeSenao(AProvedor in [proISSDSF,proInfisc], '#WithComments', '') + '" />') +
                      '</Transforms>'+
                      '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />'+
                      '<DigestValue></DigestValue>'+

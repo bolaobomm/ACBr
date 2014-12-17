@@ -88,6 +88,7 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+    procedure VisualizarDANFSe(NFSe: TNFSe = nil); virtual;
     procedure ImprimirDANFSe(NFSe: TNFSe = nil); virtual;
     procedure ImprimirDANFSePDF(NFSe: TNFSe = nil); virtual;
     procedure ImprimirDANFSeCampinas(NFSe : TNFSe = nil); virtual;
@@ -206,6 +207,11 @@ begin
         then ForceDirectories(FPathArquivos);
 
  Result := PathWithDelim(FPathArquivos);
+end;
+
+procedure TACBrNFSeDANFSeClass.VisualizarDANFSe(NFSe: TNFSe);
+begin
+ ErroAbstract('Visualizar');
 end;
 
 procedure TACBrNFSeDANFSeClass.ImprimirDANFSe(NFSe: TNFSe);

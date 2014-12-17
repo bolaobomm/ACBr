@@ -124,8 +124,9 @@ type
     destructor Destroy; override;
     function LerXml: boolean;
     function LerXml_provedorIssDsf: boolean;
-    function LerXML_provedorEquiplano: Boolean;
-	function LerXml_provedorNFSEBrasil: boolean;
+    function LerXml_provedorInfisc: Boolean;
+    function LerXML_provedorEquiplano: Boolean;    
+    function LerXml_provedorNFSEBrasil: boolean;
 	
   published
     property Leitor: TLeitor   read FLeitor   write FLeitor;
@@ -434,6 +435,44 @@ begin
     end;
   except
     result := False;
+  end;
+end;
+
+function TretCancNFSe.LerXml_provedorInfisc: boolean;
+var
+  sMotCod,sMotDes: string;
+begin
+  Result := False;
+  try
+    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
+    if leitor.rExtrai(1, 'resAnulaNFSe') <> '' then
+    begin
+      InfCanc.FSucesso := Leitor.rCampo(tcStr, 'sit');
+      if (InfCanc.FSucesso = '100') then // 100-Aceito
+      begin
+         InfCanc.FPedido.IdentificacaoNfse.Cnpj := Leitor.rCampo(tcStr, 'CNPJ');
+         InfCanc.FPedido.IdentificacaoNfse.Numero := Leitor.rCampo(tcStr, 'chvAcessoNFS-e');
+         InfCanc.FDataHora := Leitor.rCampo(tcDatHor, 'dhRecbto');
+      end
+      else if (InfCanc.FSucesso = '200') then // 200-Rejeitado
+      begin
+        sMotDes:=Leitor.rCampo(tcStr, 'mot');
+        if Pos('Error',sMotDes)>0 then
+          sMotCod:=SomenteNumeros(copy(sMotDes,1,Pos(' ',sMotDes)))
+        else
+          sMotCod:='';
+        InfCanc.MsgRetorno.Add;
+        InfCanc.MsgRetorno[0].FCodigo   := sMotCod;
+        InfCanc.MsgRetorno[0].FMensagem := sMotDes+' '+
+                                          'CNPJ '+Leitor.rCampo(tcStr, 'CNPJ')+' '+
+                                          'DATA '+Leitor.rCampo(tcStr, 'dhRecbto');
+        InfCanc.MsgRetorno[0].FCorrecao := '';
+      end;
+      Result := True;
+    end;
+  except
+    Result := False;
   end;
 end;
 

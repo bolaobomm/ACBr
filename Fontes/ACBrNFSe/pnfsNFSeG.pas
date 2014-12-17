@@ -126,6 +126,23 @@ type
      class function Gera_DadosMsgConsSeqRPSDSF(TagI, TagF: AnsiString; VersaoXML, CodCidade,
                                                IM, CNPJ, SeriePrestacao: String): AnsiString;
 
+     //-------------------------------------------------------------------------
+     // As classes abaixo são exclusivas para o provedor Infisc
+     //-------------------------------------------------------------------------
+     class function Gera_DadosMsgEnviarLoteInfisc(Prefixo3, Prefixo4,Identificador, NameSpaceDad, VersaoXML,
+                                               NumeroLote, CodCidade, CNPJ, IM, RazaoSocial, Transacao,
+                                               QtdeNotas, ValorTotalServicos, ValorTotalDeducoes: String;
+                                               DataInicial, DataFinal: TDateTime;
+                                               Notas, TagI, TagF: AnsiString): AnsiString;
+     class function Gera_DadosMsgConsSitLoteInfisc(CodCidade: Integer;
+                                                   CNPJ, IM, Protocolo, NumeroLote: String;
+                                                   TagI, TagF: AnsiString): AnsiString;
+     class function Gera_DadosMsgConsNFSeInfisc(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML, CodCidade,
+                                                CNPJ, IM, NotaInicial: String; DataInicial, DataFinal: TDateTime;
+                                                TagI, TagF: AnsiString): AnsiString;
+     class function Gera_DadosMsgCancelarNFSeInfisc(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
+                                                    CNPJ, Transacao, CodMunicipio, NumeroLote: String;
+                                                    Notas, TagI, TagF: AnsiString): AnsiString;
 
      //As classes abaixos são exclusivas do provedor Equiplano
      class function Gera_DadosMsgEnviarLoteEquiplano(VersaoXML, NumeroLote, QtdeRPS, CNPJ, IM: String;
@@ -765,7 +782,7 @@ begin
                   proBetha, proBetim, proBHIss, proDBSeller, proDigifred,
                   proEquiplano, proFIssLex, proGinfes, proGovBR, proIssCuritiba,
                   proIssIntel, proIssNet, proLexsom, proNatal, proProdemge,
-                  proRJ, proSimplIss, proThema, proTiplan, proIssDSF, proAgili,
+                  proRJ, proSimplIss, proThema, proTiplan, proIssDSF, proInfisc, proAgili,
                   proSpeedGov, proPronim, proActcon,
                   proSalvador, proNFSEBrasil] then Result := '';
 end;
@@ -1073,6 +1090,48 @@ begin
              '<nrLoteRps>' + NumeroLote + '</nrLoteRps>' +
              //'<nrProtocolo>' + Protocolo + '</nrProtocolo>' +
            TagF;
+end;
+
+class function TNFSeG.Gera_DadosMsgEnviarLoteInfisc(Prefixo3, Prefixo4, Identificador, NameSpaceDad,
+  VersaoXML, NumeroLote, CodCidade, CNPJ, IM, RazaoSocial, Transacao, QtdeNotas, ValorTotalServicos,
+  ValorTotalDeducoes: String; DataInicial, DataFinal: TDateTime; Notas, TagI,
+  TagF: AnsiString): AnsiString;
+var
+  DadosMsg: AnsiString;
+begin
+  DadosMsg := Notas;
+  Result := TagI + DadosMsg + TagF;
+end;
+
+class function TNFSeG.Gera_DadosMsgConsNFSeInfisc(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
+  CodCidade, CNPJ, IM, NotaInicial: String; DataInicial, DataFinal: TDateTime; TagI,
+  TagF: AnsiString): AnsiString;
+var
+ DadosMsg: AnsiString;
+begin
+ DadosMsg := '<CNPJ>'+CNPJ+'</CNPJ>'+
+             '<chvAcessoNFS-e>'+NotaInicial+'</chvAcessoNFS-e>';
+ Result := TagI + DadosMsg + TagF;
+end;
+
+class function TNFSeG.Gera_DadosMsgConsSitLoteInfisc(CodCidade: Integer; CNPJ, IM, Protocolo,
+  NumeroLote: String; TagI, TagF: AnsiString): AnsiString;
+var
+ DadosMsg: AnsiString;
+begin
+ DadosMsg := '<CNPJ>'+CNPJ+'</CNPJ>'+
+             '<cLote>'+Protocolo+'</cLote>';
+ Result := TagI + DadosMsg + TagF;
+end;
+
+class function TNFSeG.Gera_DadosMsgCancelarNFSeInfisc(Prefixo3, Prefixo4,
+  NameSpaceDad, VersaoXML, CNPJ, Transacao, CodMunicipio,
+  NumeroLote: String; Notas, TagI, TagF: AnsiString): AnsiString;
+var
+ DadosMsg: AnsiString;
+begin
+ DadosMsg := '<CNPJ>'+CNPJ+'</CNPJ>'+Notas;
+ Result := TagI + DadosMsg + TagF;
 end;
 
 end.

@@ -66,7 +66,7 @@ uses
     ACBrProvedorAbaco, ACBrProvedorGoiania, ACBrProvedorIssCuritiba,
     ACBrProvedorBHISS, ACBrProvedorNatal, ACBrProvedorISSDigital,
     ACBrProvedorISSe, ACBrProvedor4R, ACBrProvedorGovDigital,
-    ACBrProvedorFiorilli, ACBrProvedorIssDsf, ACBrProvedorCoplan,
+    ACBrProvedorFiorilli, ACBrProvedorIssDsf, ACBrProvedorInfisc, ACBrProvedorCoplan,
     ACBrProvedorProdata, ACBrProvedorAgili, ACBrProvedorFISSLex,
     ACBrProvedorVirtual, ACBrProvedorPVH, ACBrProvedorFreire,
     ACBrProvedorLink3, ACBrProvedorSpeedGov, ACBrProvedorVitoria,
@@ -667,7 +667,7 @@ begin
  CertContext.Get_CertContext(Integer(PCertContext));
 
  // proIssDSF incluido por Ailton Branco 16/07/2014
- if not (FProvedor in [proGovBr, proSimplISS, proAbaco, proISSNet, pro4R, proIssDSF,
+ if not (FProvedor in [proGovBr, proSimplISS, proAbaco, proISSNet, pro4R, proIssDSF, proInfisc, 
                        proFiorilli, proProdata, proCoplan, proThema, proVirtual,
                        proPVH, proFreire, proTecnos, proPronim, proPublica,
                        proEgoverneISS, proActcon, proDBSeller, proLexsom])
@@ -764,6 +764,7 @@ begin
   proGovDigital:  FProvedorClass := TProvedorGovDigital.Create;
   proFiorilli:    FProvedorClass := TProvedorFiorilli.Create;
   proIssDsf:      FProvedorClass := TProvedorIssDsf.Create;
+  proInfisc:      FProvedorClass := TProvedorInfisc.Create;
   proCoplan:      FProvedorClass := TProvedorCoplan.Create;
   proProdata:     FProvedorClass := TProvedorProdata.Create;
   proAgili:       FProvedorClass := TProvedorAgili.Create;
@@ -954,6 +955,8 @@ begin
      // Wilker
      if FProvedor = proIssDsf then
        FNameSpaceDad := FNameSpaceDad + '>'
+     else if FProvedor = proInfisc then
+       FNameSpaceDad := FNameSpaceDad + '>'
      else
        FNameSpaceDad := FNameSpaceDad + ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
     end
@@ -1012,6 +1015,8 @@ begin
 
       proIssDSF : vNotas :=  vNotas + TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps;//.XML_Rps_Ass;
 
+      proInfisc : vNotas :=  vNotas + TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps;//.XML_Rps_Ass;
+
       else vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfRps' +
                                  RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
@@ -1035,6 +1040,7 @@ begin
                               '</' + Prefixo4 + 'Rps>';
 
       proIssDSF,
+      proInfisc,
       proEquiplano: vNotas :=  vNotas + TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps;
 
       proTecnos: vNotas := vNotas +
@@ -1102,6 +1108,23 @@ begin
                                                       DataInicial, DataFinal,
                                                       vNotas,
                                                       FTagI, FTagF);
+             end;
+  proInfisc: begin
+              FDadosMsg := TNFSeG.Gera_DadosMsgEnviarLoteInfisc(Prefixo3, Prefixo4,
+                                                                FConfiguracoes.WebServices.Identificador,
+                                                                NameSpaceDad, FVersaoXML,
+                                                                TNFSeEnviarLoteRps(Self).NumeroLote,
+                                                                CodCidadeToCodSiafi( StrToIntDef(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
+                                                                OnlyNumber(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
+                                                                TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
+                                                                TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial,
+                                                                LowerCase(booltostr(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Transacao, True)),
+                                                                IntToStr(TNFSeEnviarLoteRps(Self).FNotasFiscais.Count),
+                                                                FormatFloat('0.00', TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorServicos),
+                                                                FormatFloat('0.00', TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorDeducoes),
+                                                                DataInicial, DataFinal,
+                                                                vNotas,
+                                                                FTagI, FTagF);
              end;
   proEquiplano: begin
                  FDadosMsg := TNFSeG.Gera_DadosMsgEnviarLoteEquiplano(FVersaoXML,
@@ -1223,6 +1246,12 @@ begin
   then begin
    case FProvedor of
     proEquiplano: FDadosMsg := TNFSeG.Gera_DadosMsgConsSitLoteEquiplano(FConfiguracoes.WebServices.CodigoMunicipio,
+                                                               OnlyNumber(TNFSeConsultarSituacaoLoteRPS(Self).FCNPJ),
+                                                               TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
+                                                               TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
+                                                               TNFSeConsultarSituacaoLoteRPS(Self).NumeroLote,
+                                                               '', '');
+    proInfisc: FDadosMsg := TNFSeG.Gera_DadosMsgConsSitLoteInfisc(FConfiguracoes.WebServices.CodigoMunicipio,
                                                                OnlyNumber(TNFSeConsultarSituacaoLoteRPS(Self).FCNPJ),
                                                                TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
                                                                TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
@@ -1697,7 +1726,16 @@ begin
                                                       TNFSeConsultarNfse(Self).FNumeroNFSe,
                                                       TNFSeConsultarNfse(Self).DataInicial,
                                                       TNFSeConsultarNfse(Self).DataFinal,
-                                                      '', ''); 
+                                                      '', '');
+    proInfisc: FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeInfisc(Prefixo3, Prefixo4,
+                                                      NameSpaceDad, VersaoXML,
+                                                      CodCidadeToCodSiafi(strtointDef(TNFSeConsultarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
+                                                      OnlyNumber(TNFSeConsultarNfse(Self).Cnpj),
+                                                      TNFSeConsultarNfse(Self).InscricaoMunicipal,
+                                                      TNFSeConsultarNfse(Self).FNumeroNFSe,
+                                                      TNFSeConsultarNfse(Self).DataInicial,
+                                                      TNFSeConsultarNfse(Self).DataFinal,
+                                                      '', '');
     else FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4,
                                                    NameSpaceDad, FVersaoXML,
                                                    OnlyNumber(TNFSeConsultarNfse(Self).Cnpj),
@@ -1736,6 +1774,15 @@ begin
   else begin
    case FProvedor of
     proIssDSF: FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeDSF(Prefixo3, Prefixo4,
+                                                      NameSpaceDad, VersaoXML,
+                                                      CodCidadeToCodSiafi(strtointDef(TNFSeConsultarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
+                                                      OnlyNumber(TNFSeConsultarNfse(Self).Cnpj),
+                                                      TNFSeConsultarNfse(Self).InscricaoMunicipal,
+                                                      TNFSeConsultarNfse(Self).FNumeroNFSe,
+                                                      TNFSeConsultarNfse(Self).DataInicial,
+                                                      TNFSeConsultarNfse(Self).DataFinal,
+                                                      FTagI, FTagF);
+    proInfisc: FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeInfisc(Prefixo3, Prefixo4,
                                                       NameSpaceDad, VersaoXML,
                                                       CodCidadeToCodSiafi(strtointDef(TNFSeConsultarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
                                                       OnlyNumber(TNFSeConsultarNfse(Self).Cnpj),
@@ -1877,6 +1924,12 @@ begin
                     + ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'
                     + ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote  http://localhost:8080/WsNFe2/xsd/ReqCancelamentoNFSe.xsd"'
 
+   else if (FProvedor = proInfisc)
+    then FNameSpaceDad :=  'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '"'
+                    + ' xmlns:tipos="http://localhost:8080/WsNFe2/tp"'
+                    + ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'
+                    + ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote  http://localhost:8080/WsNFe2/xsd/ReqCancelamentoNFSe.xsd"'
+
    else if (FProvedor = proEquiplano)
     then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="http://www.equiplano.com.br/esnfs" ' +
                           'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -2004,10 +2057,37 @@ begin
    Gerador.Free;
  end;
 
+ if (FProvedor = proInfisc ) then
+ begin
+   Gerador := TGerador.Create;
+   try
+     Gerador.ArquivoFormatoXML := '';
+     for i := 0 to TNFSeCancelarNfse(Self).FNotasFiscais.Count-1 do
+     begin
+       with TNFSeCancelarNfse(Self).FNotasFiscais.Items[I] do
+       begin
+         Gerador.wCampoNFSe(tcStr, '', 'chvAcessoNFS-e', 1, 39, 1, NFSe.ChaveNFSe, '');
+         Gerador.wCampoNFSe(tcStr, '', 'motivo', 1, 39, 1, NFSe.MotivoCancelamento, '');
+       end;
+     end;
+     vNotas := Gerador.ArquivoFormatoXML;
+   finally
+     Gerador.Free;
+   end;
+ end;
+
  if FProvedorClass.GetAssinarXML(acCancelar)
   then begin
    case FProvedor of
     proIssDSF: FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeDSF(Prefixo3, Prefixo4,
+                                                          NameSpaceDad, VersaoXML,
+                                                          TNFSeCancelarNfse(Self).FCnpj,
+                                                          LowerCase(booltostr(TNFSeCancelarNfse(Self).FNotasFiscais.Transacao, True)),
+                                                          CodCidadeToCodSiafi(strtoint64(TNFSeCancelarNfse(Self).FCodigoMunicipio)),
+                                                          TNFSeCancelarNfse(Self).FNotasFiscais.NumeroLote,
+                                                          vNotas,
+                                                          '', '');
+    proInfisc: FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeInfisc(Prefixo3, Prefixo4,
                                                           NameSpaceDad, VersaoXML,
                                                           TNFSeCancelarNfse(Self).FCnpj,
                                                           LowerCase(booltostr(TNFSeCancelarNfse(Self).FNotasFiscais.Transacao, True)),
@@ -2328,6 +2408,10 @@ begin
     then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' {+
                           'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="' + FURLNS1 + ' ' +
                           FHTTP_AG + FServicoEnviar + '"'}
+   else if (FProvedor = proInfisc)
+    then FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' {+
+                          'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="' + FURLNS1 + ' ' +
+                          FHTTP_AG + FServicoEnviar + '"'}
     else begin
       if (RightStr(FHTTP_AG, 1) = '/')
       then begin
@@ -2407,6 +2491,8 @@ begin
                               '</' + Prefixo4 + 'Rps>';
       proIssDSF : vNotas :=  vNotas + TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps;//.XML_Rps_Ass;
 
+      proInfisc : vNotas :=  vNotas + TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps;//.XML_Rps_Ass;
+
       proTecnos: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico' +
@@ -2437,6 +2523,8 @@ begin
                                '</' + Prefixo4 + 'InfDeclaracaoPrestacaoServico>'+
                               '</' + Prefixo4 + 'Rps>'
       else if (FProvedor = proIssDSF ) then
+       vNotas :=  vNotas + TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps
+      else if (FProvedor = proInfisc ) then
        vNotas :=  vNotas + TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps
 
       else if (FProvedor = proTecnos)
@@ -2482,6 +2570,25 @@ begin
                end;
 
               FDadosMsg := TNFSeG.Gera_DadosMsgEnviarLoteDSF(Prefixo3, Prefixo4,
+                                                      FConfiguracoes.WebServices.Identificador,
+                                                      NameSpaceDad, FVersaoXML,
+                                                      TNFSeGerarLoteRPS(Self).NumeroLote,
+                                                      CodCidadeToCodSiafi( StrToIntDef(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
+                                                      OnlyNumber(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
+                                                      TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
+                                                      TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial,
+                                                      LowerCase(booltostr(TNFSeGerarLoteRPS(Self).FNotasFiscais.Transacao, True)),
+                                                      IntToStr(TNFSeGerarLoteRPS(Self).FNotasFiscais.Count),
+                                                      FormatFloat('0.00', TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorServicos),
+                                                      FormatFloat('0.00', TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorDeducoes),
+                                                      DataInicial, DataFinal,
+                                                      vNotas,
+                                                      FTagI, FTagF);
+             end;  
+  proInfisc: begin
+              DataInicial := TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.DataEmissao;
+              DataFinal   := DataInicial;
+              FDadosMsg := TNFSeG.Gera_DadosMsgEnviarLoteInfisc(Prefixo3, Prefixo4,
                                                       FConfiguracoes.WebServices.Identificador,
                                                       NameSpaceDad, FVersaoXML,
                                                       TNFSeGerarLoteRPS(Self).NumeroLote,
@@ -3219,7 +3326,10 @@ begin
       end;
     end;
 
-   Result := Self.ConsLote.Executar;
+   if TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor = proInfisc then
+     Result := True // Para Provedor Infisc já retorna a NFS-e ao Consultar Situação Lote
+   else
+     Result := Self.ConsLote.Executar;
 
    if not (Result)
     then begin
@@ -3693,6 +3803,7 @@ begin
 
     case FProvedor of
      proEquiplano: 	NFSeRetorno.LerXML_provedorEquiplano;
+     proInfisc:    NFSeRetorno.LerXml_provedorInfisc;
      proISSDSF:    	NFSeRetorno.LerXml_provedorIssDsf;
 	   proNFSEBrasil: NFSeRetorno.LerXml_provedorNFSEBrasil;
      else           NFSeRetorno.LerXml;
@@ -3877,6 +3988,8 @@ begin
   NFSeRetorno.Leitor.Arquivo := FRetWS;
   if (FProvedor = proEquiplano) then
     NFSeRetorno.LerXML_provedorEquiplano
+  else if (FProvedor = proInfisc) then
+    NFSeRetorno.LerXML_provedorInfisc
   else
     NFSeRetorno.LerXml;
 
@@ -3983,6 +4096,10 @@ begin
     Result := (FSituacao = '2') or (FSituacao = '3') or (FSituacao = '4')
 		//1 - Aguardando processamento
 		//2 - Não Processado, lote com erro
+		//3 - Processado com sucesso
+		//4 - Processado com avisos
+  else if (FProvedor = proInfisc) then
+    Result := (FSituacao = '4')
 		//3 - Processado com sucesso
 		//4 - Processado com avisos
   else
@@ -4780,6 +4897,8 @@ begin
 
   if (FProvedor = proIssDsf) then
      NFSeRetorno.LerXml_provedorIssDsf //falta homologar
+  else if (FProvedor = proInfisc) then
+     NFSeRetorno.LerXml_provedorInfisc
   else begin
      NFSeRetorno.LerXml;
      // Utilizado para realizar as consultas as NFSe
@@ -4787,19 +4906,26 @@ begin
      FPagina := NFSeRetorno.ListaNfse.Pagina;
   end;
 
-  FRetListaNfse := SeparaDados(FRetWS, Prefixo3 + 'ListaNfse');
+  if FProvedor=proInfisc then
+    FRetListaNfse := SeparaDados(FRetWS, Prefixo3 + 'NFS-e')
+  else
+    FRetListaNfse := SeparaDados(FRetWS, Prefixo3 + 'ListaNfse');
   i := 0;
   while FRetListaNfse <> '' do
    begin
     if FProvedor = proBetha
      then j := Pos('</' + Prefixo3 + 'ComplNfse>', FRetListaNfse)
-     else j := Pos('</' + Prefixo3 + 'CompNfse>', FRetListaNfse);
+    else if FProvedor = proInfisc then j := Length(FRetListaNfse)
+    else j := Pos('</' + Prefixo3 + 'CompNfse>', FRetListaNfse);
 
     p := Length(trim(Prefixo3));
     if j > 0
      then begin
       FRetNfse := Copy(FRetListaNfse, 1, j - 1);
-      k :=  Pos('<' + Prefixo4 + 'Nfse', FRetNfse);
+      if FProvedor=proInfisc then
+        k :=  Pos('<' + Prefixo4 + 'infNFSe', FRetNfse)
+      else
+        k :=  Pos('<' + Prefixo4 + 'Nfse', FRetNfse);
       FRetNfse := Copy(FRetNfse, k, length(FRetNfse));
 
       FRetNFSe := FProvedorClass.GeraRetornoNFSe(Prefixo3, FRetNFSe, FNomeCidade);
@@ -5009,6 +5135,8 @@ begin
   else
   if FProvedor = proIssDSF then
     NFSeRetorno.LerXml_provedorIssDsf
+  else if FProvedor = proInfisc then
+    NFSeRetorno.LerXml_provedorInfisc
   else
     NFSeRetorno.LerXml;
 

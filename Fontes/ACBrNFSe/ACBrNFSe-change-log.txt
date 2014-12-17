@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/12/2014
+[+] Implementado o provedor Infisc para a cidade de Farroupilha/RS.
+    Por: Dalvan
+
 16/12/2014
 [*] Alteração na rotina que faz a assinatura, excluida uma condição criada para o
     provedor Natal

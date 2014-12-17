@@ -200,10 +200,13 @@ type
     FValorCofins: currency;
     FValorInss: currency;
     FValorIr: currency;
+    //Provedor: Infisc
+    FCodigo: string;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
+    property Codigo: string read FCodigo write FCodigo;
     property Descricao: string read FDescricao write FDescricao;
     property Quantidade: Integer read FQuantidade write FQuantidade;
     property ValorUnitario: currency read FValorUnitario write FValorUnitario;
@@ -513,6 +516,7 @@ type
     FNfseCancelamento: TConfirmacaoCancelamento;
     FNfseSubstituidora: String;
     FMotivoCancelamento: string; // para provedor ISSDSF
+    FChaveNFSe: string; // para provedor Infisc
   public
     constructor Create;
     destructor Destroy; override;
@@ -560,6 +564,7 @@ type
     property NfseCancelamento: TConfirmacaoCancelamento read FNfseCancelamento write FNfseCancelamento;
     property NfseSubstituidora: String read FNfseSubstituidora write FNfseSubstituidora;
     property MotivoCancelamento: string read FMotivoCancelamento write FMotivoCancelamento; // para provedor ISSDSF
+    property ChaveNFSe: String read FChaveNFSe write FChaveNFSe; // para provedor Infisc
   end;
 
  TLoteRps = class(TPersistent)

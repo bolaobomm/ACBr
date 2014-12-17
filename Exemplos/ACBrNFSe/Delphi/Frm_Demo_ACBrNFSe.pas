@@ -513,7 +513,7 @@ begin
      // exemplos: RoundTo5(50.535, -2) ==> 50.54
      // exemplos: RoundTo5(50.536, -2) ==> 50.54
 
-     Servico.Valores.ValorIss       := RoundTo5(ValorISS, -2);
+     Servico.Valores.ValorIss := RoundTo5(ValorISS, -2);
 
      Servico.Valores.ValorLiquidoNfse := Servico.Valores.ValorServicos -
                                          Servico.Valores.ValorPis -
@@ -526,7 +526,10 @@ begin
                                          Servico.Valores.DescontoIncondicionado -
                                          Servico.Valores.DescontoCondicionado;
 
-     Servico.ItemListaServico         := '01.07';
+     // TnfseResponsavelRetencao = ( ptTomador, rtPrestador );
+     Servico.ResponsavelRetencao := ptTomador;
+
+     Servico.ItemListaServico    := '01.07';
 
      // Para o provedor ISS.NET em ambiente de Homologação
      // o Codigo CNAE tem que ser '6511102'
@@ -575,6 +578,7 @@ begin
      Tomador.Endereco.Bairro          := 'CENTRO';
      Tomador.Endereco.CodigoMunicipio := edtCodCidade.Text;
      Tomador.Endereco.UF              := edtEmitUF.Text;
+     Tomador.Endereco.CodigoPais      := 1058; // Brasil
      Tomador.Endereco.CEP             := edtEmitCEP.Text;
 	 //Provedor Equiplano é obrigatório o pais e IE
      Tomador.Endereco.xPais           := 'BRASIL';	 

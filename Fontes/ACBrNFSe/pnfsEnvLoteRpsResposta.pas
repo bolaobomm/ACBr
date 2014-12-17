@@ -96,6 +96,7 @@ type
 
     function LerXml: Boolean;
     function LerXml_provedorIssDsf: Boolean;
+    function LerXml_provedorInfisc: Boolean;
     function LerXML_provedorEquiplano: Boolean;
 	function LerXml_provedorNFSEBrasil: boolean;
 	
@@ -328,6 +329,44 @@ begin
                posI := pos('<Erro>', strAux);
             end;
          end;
+      end;
+      Result := True;
+    end;
+  except
+    Result := False;
+  end;
+end;
+
+function TretEnvLote.LerXml_provedorInfisc: boolean;
+var
+  sMotCod,sMotDes: string;
+begin
+  Result := False;
+  try
+    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
+    if leitor.rExtrai(1, 'confirmaLote') <> '' then
+    begin
+      FInfRec.FSucesso := Leitor.rCampo(tcStr, 'sit');
+      if (FInfRec.FSucesso = '100') then // 100-Aceito
+      begin
+         FInfRec.FNumeroLote      := Leitor.rCampo(tcStr, 'cLote');
+         FInfRec.FProtocolo       := Leitor.rCampo(tcStr, 'cLote');
+         FinfRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'dhRecbto')
+      end
+      else if (FInfRec.FSucesso = '200') then // 200-Rejeitado
+      begin
+        sMotDes:=Leitor.rCampo(tcStr, 'mot');
+        if Pos('Error',sMotDes)>0 then
+          sMotCod:=SomenteNumeros(copy(sMotDes,1,Pos(' ',sMotDes)))
+        else
+          sMotCod:='';
+        InfRec.MsgRetorno.Add;
+        InfRec.MsgRetorno[0].FCodigo   := sMotCod;
+        InfRec.MsgRetorno[0].FMensagem := sMotDes+' '+
+                                          'CNPJ '+Leitor.rCampo(tcStr, 'CNPJ')+' '+
+                                          'DATA '+Leitor.rCampo(tcStr, 'dhRecbto');
+        InfRec.MsgRetorno[0].FCorrecao := '';
       end;
       Result := True;
     end;

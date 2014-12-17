@@ -269,37 +269,35 @@ end;
 
 function TACBrNFSe.Enviar(ALote: String; Imprimir: Boolean): Boolean;
 var
- i: Integer;
+  i: Integer;
 begin
- if NotasFiscais.Count <= 0
-  then begin
-   if Assigned(Self.OnGerarLog)
-    then Self.OnGerarLog('ERRO: Nenhum RPS adicionado ao Lote');
-   raise Exception.Create('ERRO: Nenhum RPS adicionado ao Lote');
-   exit;
+  if NotasFiscais.Count <= 0 then
+  begin
+    if Assigned(Self.OnGerarLog) then
+      Self.OnGerarLog('ERRO: Nenhum RPS adicionado ao Lote');
+    raise Exception.Create('ERRO: Nenhum RPS adicionado ao Lote');
+    exit;
   end;
 
- if NotasFiscais.Count > 50
-  then begin
-   if Assigned(Self.OnGerarLog)
-    then Self.OnGerarLog('ERRO: Conjunto de RPS transmitidos (máximo de 50) excedido. Quantidade atual: '+IntToStr(NotasFiscais.Count));
-   raise Exception.Create('ERRO: Conjunto de RPS transmitidos (máximo de 50) excedido. Quantidade atual: '+IntToStr(NotasFiscais.Count));
-   exit;
+  if NotasFiscais.Count > 50 then
+  begin
+    if Assigned(Self.OnGerarLog) then
+      Self.OnGerarLog('ERRO: Conjunto de RPS transmitidos (máximo de 50) excedido. Quantidade atual: '+IntToStr(NotasFiscais.Count));
+    raise Exception.Create('ERRO: Conjunto de RPS transmitidos (máximo de 50) excedido. Quantidade atual: '+IntToStr(NotasFiscais.Count));
+    exit;
   end;
 
- NotasFiscais.Assinar;
-// NotasFiscais.Assinar(FConfiguracoes.WebServices.Provedor <> proPublica); // Assina os Rps
+  // Assina os Rps
+  NotasFiscais.Assinar(FConfiguracoes.WebServices.Provedor <> proNFSeBrasil);
 
- Result := WebServices.Envia(ALote);
+  Result := WebServices.Envia(ALote);
 
- if DANFSe <> nil
-  then begin
-   for i:= 0 to NotasFiscais.Count-1 do
+  if DANFSe <> nil then
+  begin
+    for i:= 0 to NotasFiscais.Count-1 do
     begin
-     if NotasFiscais.Items[i].Confirmada and Imprimir
-      then begin
-       NotasFiscais.Items[i].Imprimir;
-      end;
+      if NotasFiscais.Items[i].Confirmada and Imprimir then
+        NotasFiscais.Items[i].Imprimir;
     end;
   end;
 end;

@@ -92,7 +92,7 @@ type
                     proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
                     proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov,
                     proVitoria, proMitra, ProTecnos, proPronim, proActcon, proEL,
-                    proEgoverneISS, proSisPMJP, proSystemPro, proSalvador,
+                    proEgoverneISS, proSisPMJP, proSystemPro, proInfisc, proSalvador,
                     proDBSeller, proLexsom, proABRASFv1, proABRASFv2, proNFSEBrasil );
 
   TnfseAcao = (acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe,
@@ -386,7 +386,7 @@ begin
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
                             '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
                             'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon',
-                            'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Salvador', 'DBSeller',
+                            'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Infisc', 'Salvador', 'DBSeller',
                             'Lexsom', 'ABRASFv1', 'ABRASFv2', 'NFSEBrasil'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
@@ -394,7 +394,7 @@ begin
                             proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
                             proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
                             proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
-                            proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP, proSystemPro,
+                            proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP, proSystemPro, proInfisc,
                             proSalvador, proDBSeller, proLexsom, proABRASFv1, proABRASFv2,proNFSEBrasil ]);
 end;
 
@@ -407,7 +407,7 @@ begin
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
                             '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
                             'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon',
-                            'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Salvador', 'DBSeller',
+                            'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Infisc', 'Salvador', 'DBSeller',
                             'Lexsom', 'ABRASFv1', 'ABRASFv2', 'NFSEBrasil'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
@@ -415,7 +415,7 @@ begin
                             proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
                             proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
                             proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
-                            proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP, proSystemPro,
+                            proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP, proSystemPro, proInfisc,
                             proSalvador, proDBSeller, proLexsom, proABRASFv1, proABRASFv2, proNFSEBrasil]);
 end;
 
@@ -1071,6 +1071,9 @@ begin
   4307005, // Erechim/RS
   4304408  // Canela/RS
          : Provedor := 'SystemPro';
+
+  4307906  // Farroupilha/RS
+         : Provedor := 'Infisc';
 
   1709500, // Gurupi/TO
   2112209, // Timon/MA

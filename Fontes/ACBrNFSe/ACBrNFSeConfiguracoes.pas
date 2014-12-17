@@ -416,7 +416,7 @@ uses
  ACBrProvedorAbaco, ACBrProvedorGoiania, ACBrProvedorIssCuritiba,
  ACBrProvedorBHISS, ACBrProvedorNatal, ACBrProvedorISSDigital,
  ACBrProvedorISSe, ACBrProvedor4R, ACBrProvedorGovDigital,
- ACBrProvedorFiorilli, ACBrProvedorISSDSF, ACBrProvedorCoplan,
+ ACBrProvedorFiorilli, ACBrProvedorISSDSF, ACBrProvedorInfisc, ACBrProvedorCoplan,
  ACBrProvedorProdata, ACBrProvedorAgili, ACBrProvedorFISSLex,
  ACBrProvedorVirtual, ACBrProvedorPVH, ACBrProvedorFreire,
  ACBrProvedorLink3, ACBrProvedorSpeedGov, ACBrProvedorVitoria,
@@ -832,6 +832,7 @@ begin
   proGovDigital:  FProvedorClass := TProvedorGovDigital.Create;
   proFiorilli:    FProvedorClass := TProvedorFiorilli.Create;
   proIssDSF:      FProvedorClass := TProvedorIssDSF.Create;
+  proInfisc:      FProvedorClass := TProvedorInfisc.Create;
   proCoplan:      FProvedorClass := TProvedorCoplan.Create;
   proProdata:     FProvedorClass := TProvedorProdata.Create;
   proAgili:       FProvedorClass := TProvedorAgili.Create;

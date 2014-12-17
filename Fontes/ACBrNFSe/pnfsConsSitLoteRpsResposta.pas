@@ -88,7 +88,8 @@ type
     constructor Create;
     destructor Destroy; override;
     function LerXml: boolean;
-    function LerXML_provedorEquiplano: Boolean;
+    function LerXML_provedorInfisc: Boolean;
+    function LerXML_provedorEquiplano: Boolean;    
 	function LerXml_provedorNFSEBrasil: boolean;
 	 
   published
@@ -223,6 +224,49 @@ begin
 
        inc(i);
      end;
+  except
+    result := False;
+  end;
+end;
+
+function TretSitLote.LerXML_provedorInfisc: Boolean;
+var
+  i: Integer;
+  sMotCod,sMotDes: string;
+begin
+  try
+    // Incluido por Dalvan em 21/11/2014
+    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
+
+    InfSit.FNumeroLote := Leitor.rCampo(tcStr, 'cLote');
+    InfSit.FSituacao   := Leitor.rCampo(tcStr, 'sit');
+    if InfSit.FSituacao='100' then
+    begin
+      InfSit.FSituacao:='4'; //4 = Processado com Sucesso
+    end
+    else if InfSit.FSituacao='200' then
+    begin
+      InfSit.FSituacao:='3'; //3 = Processado com Erro
+      i := 0;
+      if (leitor.rExtrai(1, 'motivos') <> '') then
+      begin
+        while Leitor.rExtrai(2, 'mot', '', i + 1) <> '' do
+        begin
+          sMotDes:=Leitor.rCampo(tcStr, 'mot');
+          if Pos('Error',sMotDes)>0 then
+            sMotCod:=SomenteNumeros(copy(sMotDes,1,Pos(' ',sMotDes)))
+          else
+            sMotCod:='';
+          InfSit.FMsgRetorno.Add;
+          InfSit.FMsgRetorno[i].FCodigo   := sMotCod;
+          InfSit.FMsgRetorno[i].FMensagem := sMotDes;
+          InfSit.FMsgRetorno[i].FCorrecao := '';
+          inc(i);
+        end;
+      end;
+    end;
+    result := True;
   except
     result := False;
   end;

@@ -64,6 +64,7 @@ type
   public
     constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
+    procedure Visualizar;
     procedure Imprimir;
     procedure ImprimirPDF;
     function SaveToFile(CaminhoArquivo: string = ''): boolean;
@@ -453,6 +454,13 @@ begin
  end;
 end;
 
+procedure NotaFiscal.Visualizar;
+begin
+ if not Assigned( TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).DANFSE )
+  then raise Exception.Create('Componente DANFSE não associado.')
+  else TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).DANFSE.VisualizarDANFSE(NFSe);
+end;
+
 procedure NotaFiscal.Imprimir;
 begin
  if not Assigned( TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).DANFSE )
@@ -834,7 +842,9 @@ begin
                          then Tipo := 5
                          else if pos('</listaRps>', ArquivoXML.Text) > 0
                               then Tipo := 6
-                              else Tipo := 0;
+                              else if pos('</NFS-e>', ArquivoXML.Text) > 0
+                                    then Tipo := 7 // Infisc
+                                    else Tipo := 0;
 
   case Tipo of
    1: begin
@@ -1049,6 +1059,34 @@ begin
             ArquivoXML.Text:= Trim(Copy(ArquivoXML.Text, Pos('</rps>', ArquivoXML.Text) + 6, Length(ArquivoXML.Text)));
             LocNFSeR       := TNFSeR.Create(Self.Add.NFSe);
             //LocNFSeR.Provedor:= proEquiplano;
+            LocNFSeR.NFSe.Prestador.Cnpj:= CNPJ;
+            LocNFSeR.NFSe.Prestador.InscricaoMunicipal:= IM;
+            try
+              LocNFSeR.Leitor.Arquivo := XML;
+              LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
+              LocNFSeR.TabServicosExt := self.Configuracoes.Arquivos.TabServicosExt;
+              LocNFSeR.LerXml;
+              Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
+              Items[Self.Count-1].NomeArq := CaminhoArquivo;
+            finally
+              LocNFSeR.Free;
+            end;
+          end;
+      end;
+   7: begin //Infisc
+        CNPJ:= Copy(ArquivoXML.Text,
+                    Pos('<CNPJ>', ArquivoXML.Text) + 6,
+                    Pos('</CNPJ>',ArquivoXML.Text) - (Pos('<CNPJ>', ArquivoXML.Text) + 6));
+        IM:= Copy(ArquivoXML.Text,
+                  Pos('<IM>', ArquivoXML.Text) + 4,
+                  Pos('</IM>',ArquivoXML.Text) - (Pos('<IM>', ArquivoXML.Text) + 4));
+
+        while pos('</NFS-e>',ArquivoXML.Text) > 0 do
+          begin
+            XML            := Copy(ArquivoXML.Text, Pos('<NFS-e>', ArquivoXML.Text), Pos('</NFS-e>', ArquivoXML.Text) + 7);
+            ArquivoXML.Text:= ''; //Trim(Copy(ArquivoXML.Text, Pos('</rps>', ArquivoXML.Text) + 6, Length(ArquivoXML.Text)));
+            LocNFSeR       := TNFSeR.Create(Self.Add.NFSe);
+            LocNFSeR.Provedor:= proInfisc;
             LocNFSeR.NFSe.Prestador.Cnpj:= CNPJ;
             LocNFSeR.NFSe.Prestador.InscricaoMunicipal:= IM;
             try
