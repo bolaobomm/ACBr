@@ -60,26 +60,18 @@ uses
   {$ELSE}
     Dialogs,
   {$ENDIF}
-  {$IFDEF ACBrNFSeOpenSSL}
+  {$IFDEF ACBrGNREOpenSSL}
     HTTPSend,
   {$ELSE}
-    SOAPHTTPClient, SOAPHTTPTrans, SOAPConst,
-    JwaWinCrypt, WinInet, ACBrCAPICOM_TLB,
-    ACBrMSXML2_TLB,
+     {$IFDEF SoapHTTP}
+     SoapHTTPClient, SOAPHTTPTrans, SOAPConst, JwaWinCrypt, WinInet, ACBrCAPICOM_TLB,
+     {$ELSE}
+        ACBrHTTPReqResp,
+     {$ENDIF}
   {$ENDIF}
-    pcnCabecalho,
-    pcnGerador,
-    pcnConversao,
-    pcnAuxiliar,
-    pgnreGNRE,
-    pgnreConsConfigUF,
-    pgnreConsResLoteGNRE,
-    pgnreConversao,
-    ACBrGNREGuias,
-    ACBrGNREConfiguracoes,
-    pgnreRetEnvLoteGNRE,
-    pgnreRetConsResLoteGNRE,
-    pgnreRetConsConfigUF;
+    pcnCabecalho,pcnGerador, pcnConversao,pcnAuxiliar,pgnreGNRE, pgnreConsConfigUF,
+    pgnreConsResLoteGNRE, pgnreConversao, ACBrGNREGuias, ACBrGNREConfiguracoes,
+    pgnreRetEnvLoteGNRE, pgnreRetConsResLoteGNRE, pgnreRetConsConfigUF;
 
 type
 
@@ -93,8 +85,12 @@ type
     {$IFDEF ACBrGNREOpenSSL}
       procedure ConfiguraHTTP( HTTP : THTTPSend; Action : AnsiString);
     {$ELSE}
+     {$IFDEF SoapHTTP}
       procedure ConfiguraReqResp( ReqResp : THTTPReqResp);
       procedure OnBeforePost(const HTTPReqResp: THTTPReqResp; Data:Pointer);
+     {$ELSE}
+      procedure ConfiguraReqResp( ReqResp : TACBrHTTPReqResp);
+     {$ENDIF}
     {$ENDIF}
   protected
     FCabMsg: WideString;
@@ -260,93 +256,103 @@ begin
 end;
 
 {$IFDEF ACBrGNREOpenSSL}
-procedure TWebServicesBase.ConfiguraHTTP( HTTP : THTTPSend; Action : AnsiString);
-begin
- if FileExists(FConfiguracoes.Certificados.Certificado)
-  then HTTP.Sock.SSL.PFXfile := FConfiguracoes.Certificados.Certificado
-  else HTTP.Sock.SSL.PFX     := FConfiguracoes.Certificados.Certificado;
+ procedure TWebServicesBase.ConfiguraHTTP( HTTP : THTTPSend; Action : AnsiString);
+ begin
+   if FileExists(FConfiguracoes.Certificados.Certificado) then
+     HTTP.Sock.SSL.PFXfile := FConfiguracoes.Certificados.Certificado
+   else
+     HTTP.Sock.SSL.PFX     := FConfiguracoes.Certificados.Certificado;
 
-  HTTP.Sock.SSL.KeyPassword := FConfiguracoes.Certificados.Senha;
+   HTTP.Sock.SSL.KeyPassword := FConfiguracoes.Certificados.Senha;
 
-  HTTP.ProxyHost  := FConfiguracoes.WebServices.ProxyHost;
-  HTTP.ProxyPort  := FConfiguracoes.WebServices.ProxyPort;
-  HTTP.ProxyUser  := FConfiguracoes.WebServices.ProxyUser;
-  HTTP.ProxyPass  := FConfiguracoes.WebServices.ProxyPass;
+   HTTP.ProxyHost := FConfiguracoes.WebServices.ProxyHost;
+   HTTP.ProxyPort := FConfiguracoes.WebServices.ProxyPort;
+   HTTP.ProxyUser := FConfiguracoes.WebServices.ProxyUser;
+   HTTP.ProxyPass := FConfiguracoes.WebServices.ProxyPass;
 
-//  HTTP.Sock.RaiseExcept := True;
+   if (pos('SCERECEPCAORFB', UpperCase(FURL)) <= 0) and
+      (pos('SCECONSULTARFB', UpperCase(FURL)) <= 0) then
+      HTTP.MimeType := 'application/soap+xml; charset=utf-8'
+   else
+      HTTP.MimeType := 'text/xml; charset=utf-8';
 
-  HTTP.MimeType  := 'text/xml; charset=utf-8';
-  HTTP.UserAgent := '';
-  HTTP.Protocol  := '1.1' ;
-
-  HTTP.AddPortNumberToHost := False;
-  HTTP.Headers.Add(Action);
-end;
+   HTTP.UserAgent := '';
+   HTTP.Protocol := '1.1';
+   HTTP.AddPortNumberToHost := False;
+   HTTP.Headers.Add(Action);
+ end;
 {$ELSE}
-procedure TWebServicesBase.ConfiguraReqResp(ReqResp: THTTPReqResp);
-begin
-  if FConfiguracoes.WebServices.ProxyHost <> '' then
-   begin
-     ReqResp.Proxy    := FConfiguracoes.WebServices.ProxyHost+':'+FConfiguracoes.WebServices.ProxyPort;
-     ReqResp.UserName := FConfiguracoes.WebServices.ProxyUser;
-     ReqResp.Password := FConfiguracoes.WebServices.ProxyPass;
-   end;
-  ReqResp.OnBeforePost := OnBeforePost;
-end;
+ {$IFDEF SoapHTTP}
+  procedure TWebServicesBase.ConfiguraReqResp( ReqResp : THTTPReqResp );
+  begin
+    if FConfiguracoes.WebServices.ProxyHost <> '' then
+     begin
+       ReqResp.Proxy    := FConfiguracoes.WebServices.ProxyHost + ':' +
+                           FConfiguracoes.WebServices.ProxyPort;
+       ReqResp.UserName := FConfiguracoes.WebServices.ProxyUser;
+       ReqResp.Password := FConfiguracoes.WebServices.ProxyPass;
+     end;
+    ReqResp.OnBeforePost := OnBeforePost;
+  end;
 
-procedure TWebServicesBase.OnBeforePost(const HTTPReqResp: THTTPReqResp;
-  Data: Pointer);
-
-  function GetLastErrorText: string;
+  procedure TWebServicesBase.OnBeforePost(const HTTPReqResp: THTTPReqResp;
+    Data: Pointer);
   var
-   aMsg: String;
+    Cert: ICertificate2;
+    CertContext: ICertContext;
+    PCertContext: Pointer;
+    ContentHeader: string;
   begin
-    case GetLastError of
-      12030: aMsg := 'A conexão com o servidor foi finalizada.';
-      12044: aMsg := 'O Servidor está solicitando autenticação do cliente.';
-      12046: aMsg := 'Autorização do cliente não está configurado neste computador.';
-      else aMsg := IntToStr(GetLastError);
+    Cert := FConfiguracoes.Certificados.GetCertificado;
+    CertContext :=  Cert as ICertContext;
+    CertContext.Get_CertContext(Integer(PCertContext));
+
+    if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT,
+                             PCertContext, SizeOf(CERT_CONTEXT)) then
+      GerarException('OnBeforePost: ' + IntToStr(GetLastError));
+
+    if trim(FConfiguracoes.WebServices.ProxyUser) <> '' then
+      if not InternetSetOption(Data, INTERNET_OPTION_PROXY_USERNAME,
+                               PChar(FConfiguracoes.WebServices.ProxyUser),
+                               Length(FConfiguracoes.WebServices.ProxyUser)) then
+        GerarException('OnBeforePost: ' + IntToStr(GetLastError));
+
+    if trim(FConfiguracoes.WebServices.ProxyPass) <> '' then
+      if not InternetSetOption(Data, INTERNET_OPTION_PROXY_PASSWORD,
+                               PChar(FConfiguracoes.WebServices.ProxyPass),
+                               Length(FConfiguracoes.WebServices.ProxyPass)) then
+        GerarException('OnBeforePost: ' + IntToStr(GetLastError));
+
+    if (pos('SCERECEPCAORFB', UpperCase(FURL)) <= 0) and
+       (pos('SCECONSULTARFB', UpperCase(FURL)) <= 0) then
+    begin
+       ContentHeader := Format(ContentTypeTemplate, ['application/soap+xml; charset=utf-8']);
+       HttpAddRequestHeaders(Data, PChar(ContentHeader),
+                             Length(ContentHeader), HTTP_ADDREQ_FLAG_REPLACE);
     end;
-    Result := aMsg;
+
+    HTTPReqResp.CheckContentType;
   end;
-
-var
- Cert         : ICertificate2;
- CertContext  : ICertContext;
- PCertContext : Pointer;
- ContentHeader: string;
-begin
-  Cert        := FConfiguracoes.Certificados.GetCertificado;
-  CertContext := Cert as ICertContext;
-  CertContext.Get_CertContext(Integer(PCertContext));
-
-  if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT, PCertContext, Sizeof(CERT_CONTEXT)*5) then
+ {$ELSE}
+  procedure TWebServicesBase.ConfiguraReqResp( ReqResp : TACBrHTTPReqResp);
   begin
-    if Assigned(TACBrGNRE( FACBrGNRE ).OnGerarLog) then
-      TACBrGNRE( FACBrGNRE ).OnGerarLog('ERRO: Erro OnBeforePost: ' + IntToStr(GetLastError));
-    raise Exception.Create( 'Erro OnBeforePost: ' + GetLastErrorText {IntToStr(GetLastError)} );
+    if FConfiguracoes.WebServices.ProxyHost <> '' then
+    begin
+      ReqResp.ProxyHost := FConfiguracoes.WebServices.ProxyHost;
+      ReqResp.ProxyPort := FConfiguracoes.WebServices.ProxyPort;
+      ReqResp.ProxyUser := FConfiguracoes.WebServices.ProxyUser;
+      ReqResp.ProxyPass := FConfiguracoes.WebServices.ProxyPass;
+    end;
+
+    ReqResp.SetCertificate(FConfiguracoes.Certificados.GetCertificado);
+
+    if (pos('SCERECEPCAORFB', UpperCase(FURL)) <= 0) and
+       (pos('SCECONSULTARFB', UpperCase(FURL)) <= 0) then
+      ReqResp.MimeType := 'application/soap+xml'
+    else
+      ReqResp.MimeType := 'text/xml';
   end;
-
-  if trim(FConfiguracoes.WebServices.ProxyUser) <> '' then
-  begin
-    if not InternetSetOption(Data, INTERNET_OPTION_PROXY_USERNAME, PChar(FConfiguracoes.WebServices.ProxyUser), Length(FConfiguracoes.WebServices.ProxyUser)) then
-      raise Exception.Create( 'Erro OnBeforePost: ' + IntToStr(GetLastError) );
-   end;
-
-  if trim(FConfiguracoes.WebServices.ProxyPass) <> '' then
-  begin
-    if not InternetSetOption(Data, INTERNET_OPTION_PROXY_PASSWORD, PChar(FConfiguracoes.WebServices.ProxyPass),Length (FConfiguracoes.WebServices.ProxyPass)) then
-      raise Exception.Create( 'Erro OnBeforePost: ' + IntToStr(GetLastError) );
-  end;
-
-  if (pos('SCERECEPCAORFB',UpperCase(FURL)) <= 0) and
-     (pos('SCECONSULTARFB',UpperCase(FURL)) <= 0) then
-  begin
-    ContentHeader := Format(ContentTypeTemplate, ['application/soap+xml; charset=utf-8']);
-    HttpAddRequestHeaders(Data, PChar(ContentHeader), Length(ContentHeader), HTTP_ADDREQ_FLAG_REPLACE);
-  end;
-  HTTPReqResp.CheckContentType;
-end;
+ {$ENDIF}
 {$ENDIF}
 
 function TWebServicesBase.Executar: Boolean;
@@ -554,7 +560,11 @@ var
  {$IFDEF ACBrGNREOpenSSL}
    HTTP    : THTTPSend;
  {$ELSE}
-   ReqResp : THTTPReqResp;
+  {$IFDEF SoapHTTP}
+    ReqResp: THTTPReqResp;
+   {$ELSE}
+    ReqResp: TACBrHTTPReqResp;
+   {$ENDIF}
  {$ENDIF}
 begin
   inherited Executar;
@@ -582,14 +592,18 @@ begin
 
   Acao.Text := Texto;
 
- {$IFDEF ACBrNFSeOpenSSL}
+ {$IFDEF ACBrGNREOpenSSL}
    Acao.SaveToStream(Stream);
    HTTP := THTTPSend.Create;
  {$ELSE}
-   ReqResp := THTTPReqResp.Create(nil);
+   {$IFDEF SoapHTTP}
+    ReqResp := THTTPReqResp.Create(nil);
+    ReqResp.UseUTF8InHeader := True;
+   {$ELSE}
+    ReqResp := TACBrHTTPReqResp.Create;
+   {$ENDIF}
    ConfiguraReqResp( ReqResp );
    ReqResp.URL := FURL;
-   ReqResp.UseUTF8InHeader := True;
    ReqResp.SoapAction := 'https://www.gnre.pe.gov.br/gnreWS/services/GnreLoteRecepcao';
  {$ENDIF}
 
@@ -605,18 +619,30 @@ begin
       HTTP.HTTPMethod('POST', FURL);
 
       StrStream := TStringStream.Create('');
-      StrStream.CopyFrom(HTTP.Document, 0);
+			try
+				StrStream.CopyFrom(HTTP.Document, 0);
 
-      FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-      FRetWS     := SeparaDados( FRetornoWS, 'processarResponse');
-
-      StrStream.Free;
+				FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+				FRetWS     := SeparaDados( FRetornoWS, 'processarResponse');
+			finally
+				StrStream.Free;
+			end;
     {$ELSE}
-      ReqResp.Execute(Acao.Text, Stream);
-      StrStream := TStringStream.Create('');
-      StrStream.CopyFrom(Stream, 0);
-
-      FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+		  {$IFDEF SoapHTTP}
+        Stream := TMemoryStream.Create;
+        StrStream := TStringStream.Create('');
+        try
+          ReqResp.Execute(Acao.Text, Stream);  // Dispara exceptions no caso de erro
+          StrStream.CopyFrom(Stream, 0);
+          FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+        finally
+          StrStream.Free;
+          Stream.Free;
+        end;
+      {$ELSE}
+        ReqResp.Data := Acao.Text;
+        FRetornoWS := ReqResp.Execute;
+      {$ENDIF}
       FRetWS     := SeparaDados( FRetornoWS, 'processarResponse');
 
       StrStream.Free;
@@ -662,7 +688,7 @@ begin
     end;
     
   finally
-  {$IFDEF ACBrNFSeOpenSSL}
+  {$IFDEF ACBrGNREOpenSSL}
     HTTP.Free;
   {$ELSE}
     ReqResp.Free;
@@ -702,7 +728,11 @@ function TGNRERetRecepcaoLote.Executar: Boolean;
     {$IFDEF ACBrGNREOpenSSL}
        HTTP: THTTPSend;
     {$ELSE}
-       ReqResp: THTTPReqResp;
+		 {$IFDEF SoapHTTP}
+			ReqResp: THTTPReqResp;
+		 {$ELSE}
+			ReqResp: TACBrHTTPReqResp;
+		 {$ENDIF}		
     {$ENDIF}
   begin
     inherited Executar;
@@ -728,14 +758,18 @@ function TGNRERetRecepcaoLote.Executar: Boolean;
 
     Acao.Text := Texto;
 
-    {$IFDEF ACBrCTeOpenSSL}
+    {$IFDEF ACBrGNREOpenSSL}
        Acao.SaveToStream(Stream);
        HTTP := THTTPSend.Create;
     {$ELSE}
-       ReqResp := THTTPReqResp.Create(nil);
+			 {$IFDEF SoapHTTP}
+				ReqResp := THTTPReqResp.Create(nil);
+				ReqResp.UseUTF8InHeader := True;
+			 {$ELSE}
+				ReqResp := TACBrHTTPReqResp.Create;
+			 {$ENDIF}       
        ConfiguraReqResp( ReqResp );
        ReqResp.URL := Trim(FURL);
-       ReqResp.UseUTF8InHeader := True;
        ReqResp.SoapAction := 'http://www.gnre.pe.gov.br/gnreWS/services/GnreResultadoLote';
     {$ENDIF}
 
@@ -753,18 +787,31 @@ function TGNRERetRecepcaoLote.Executar: Boolean;
            ConfiguraHTTP(HTTP,'SOAPAction: "http://www.gnre.pe.gov.br/gnreWS/services/GnreResultadoLote"');
            HTTP.HTTPMethod('POST', FURL);
            StrStream := TStringStream.Create('');
-           StrStream.CopyFrom(HTTP.Document, 0);
+					 try
+						 StrStream.CopyFrom(HTTP.Document, 0);
 
-           FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-           FRetWS := SeparaDados( FRetornoWS, 'gnreRespostaMsg');
-           StrStream.Free;
+						 FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+						 FRetWS := SeparaDados( FRetornoWS, 'gnreRespostaMsg');
+					 finally
+						 StrStream.Free;
+					 end;
         {$ELSE}
-           ReqResp.Execute(Acao.Text, Stream);
-           StrStream := TStringStream.Create('');
-           StrStream.CopyFrom(Stream, 0);
-           FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-           FRetWS := SeparaDados( FRetornoWS, 'gnreRespostaMsg');
-           StrStream.Free;
+					{$IFDEF SoapHTTP}
+						Stream := TMemoryStream.Create;
+						StrStream := TStringStream.Create('');
+						try
+							ReqResp.Execute(Acao.Text, Stream);  // Dispara exceptions no caso de erro
+							StrStream.CopyFrom(Stream, 0);
+							FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+						finally
+							StrStream.Free;
+							Stream.Free;
+						end;
+					{$ELSE}
+						ReqResp.Data := Acao.Text;
+						FRetornoWS := ReqResp.Execute;
+					{$ENDIF}
+          FRetWS := SeparaDados( FRetornoWS, 'gnreRespostaMsg');
         {$ENDIF}
 
       if FConfiguracoes.Geral.Salvar then
@@ -867,7 +914,11 @@ var
   {$IFDEF ACBrGNREOpenSSL}
      HTTP: THTTPSend;
   {$ELSE}
-     ReqResp: THTTPReqResp;
+		 {$IFDEF SoapHTTP}
+			ReqResp: THTTPReqResp;
+		 {$ELSE}
+			ReqResp: TACBrHTTPReqResp;
+		 {$ENDIF}		
   {$ENDIF}
 begin
   inherited Executar;
@@ -893,14 +944,18 @@ begin
 
   Acao.Text := Texto;
 
-  {$IFDEF ACBrCTeOpenSSL}
+  {$IFDEF ACBrGNREOpenSSL}
      Acao.SaveToStream(Stream);
      HTTP := THTTPSend.Create;
   {$ELSE}
-     ReqResp := THTTPReqResp.Create(nil);
+		 {$IFDEF SoapHTTP}
+			ReqResp := THTTPReqResp.Create(nil);
+			ReqResp.UseUTF8InHeader := True;
+		 {$ELSE}
+			ReqResp := TACBrHTTPReqResp.Create;
+		 {$ENDIF}       
      ConfiguraReqResp( ReqResp );
      ReqResp.URL := Trim(FURL);
-     ReqResp.UseUTF8InHeader := True;
      ReqResp.SoapAction := 'http://www.gnre.pe.gov.br/gnreWS/services/GnreResultadoLote';
   {$ENDIF}
 
@@ -918,18 +973,31 @@ begin
          ConfiguraHTTP(HTTP,'SOAPAction: "http://www.gnre.pe.gov.br/gnreWS/services/GnreResultadoLote"');
          HTTP.HTTPMethod('POST', FURL);
          StrStream := TStringStream.Create('');
-         StrStream.CopyFrom(HTTP.Document, 0);
+				 try
+					 StrStream.CopyFrom(HTTP.Document, 0);
 
-         FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-         FRetWS := SeparaDados( FRetornoWS, 'gnreRespostaMsg');
-         StrStream.Free;
+					 FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+					 FRetWS := SeparaDados( FRetornoWS, 'gnreRespostaMsg');
+				 finally
+					 StrStream.Free;
+				 end;
       {$ELSE}
-         ReqResp.Execute(Acao.Text, Stream);
-         StrStream := TStringStream.Create('');
-         StrStream.CopyFrom(Stream, 0);
-         FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+				{$IFDEF SoapHTTP}
+					Stream := TMemoryStream.Create;
+					StrStream := TStringStream.Create('');
+					try
+						ReqResp.Execute(Acao.Text, Stream);  // Dispara exceptions no caso de erro
+						StrStream.CopyFrom(Stream, 0);
+						FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+					finally
+						StrStream.Free;
+						Stream.Free;
+					end;
+				{$ELSE}
+					ReqResp.Data := Acao.Text;
+					FRetornoWS := ReqResp.Execute;
+				{$ENDIF}
          FRetWS := SeparaDados( FRetornoWS, 'gnreRespostaMsg');
-         StrStream.Free;
       {$ENDIF}
 
       if FConfiguracoes.Geral.Salvar then
@@ -1017,7 +1085,11 @@ var
   {$IFDEF ACBrGNREOpenSSL}
      HTTP: THTTPSend;
   {$ELSE}
-     ReqResp: THTTPReqResp;
+		 {$IFDEF SoapHTTP}
+			ReqResp: THTTPReqResp;
+		 {$ELSE}
+			ReqResp: TACBrHTTPReqResp;
+		 {$ENDIF}		
   {$ENDIF}
 begin
   if Assigned(FGNRERetorno) then
@@ -1046,14 +1118,18 @@ begin
 
   Acao.Text := Texto;
 
-  {$IFDEF ACBrCTeOpenSSL}
+  {$IFDEF ACBrGNREOpenSSL}
      Acao.SaveToStream(Stream);
      HTTP := THTTPSend.Create;
   {$ELSE}
-     ReqResp := THTTPReqResp.Create(nil);
+		 {$IFDEF SoapHTTP}
+			ReqResp := THTTPReqResp.Create(nil);
+			ReqResp.UseUTF8InHeader := True;
+		 {$ELSE}
+			ReqResp := TACBrHTTPReqResp.Create;
+		 {$ENDIF}       
      ConfiguraReqResp( ReqResp );
      ReqResp.URL := Trim(FURL);
-     ReqResp.UseUTF8InHeader := True;
      ReqResp.SoapAction := 'http://www.gnre.pe.gov.br/gnreWS/services/GnreConfigUF';
   {$ENDIF}
 
@@ -1069,18 +1145,31 @@ begin
          ConfiguraHTTP(HTTP,'SOAPAction: "http://www.gnre.pe.gov.br/gnreWS/services/GnreConfigUF"');
          HTTP.HTTPMethod('POST', FURL);
          StrStream := TStringStream.Create('');
-         StrStream.CopyFrom(HTTP.Document, 0);
+				 try
+					 StrStream.CopyFrom(HTTP.Document, 0);
 
-         FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-         FRetWS := SeparaDados( FRetornoWS, 'gnreRespostaMsg');
-         StrStream.Free;
+					 FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+					 FRetWS := SeparaDados( FRetornoWS, 'gnreRespostaMsg');
+				 finally
+					 StrStream.Free;
+				 end;
       {$ELSE}
-         ReqResp.Execute(Acao.Text, Stream);
-         StrStream := TStringStream.Create('');
-         StrStream.CopyFrom(Stream, 0);
-         FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+				{$IFDEF SoapHTTP}
+					Stream := TMemoryStream.Create;
+					StrStream := TStringStream.Create('');
+					try
+						ReqResp.Execute(Acao.Text, Stream);  // Dispara exceptions no caso de erro
+						StrStream.CopyFrom(Stream, 0);
+						FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+					finally
+						StrStream.Free;
+						Stream.Free;
+					end;
+				{$ELSE}
+					ReqResp.Data := Acao.Text;
+					FRetornoWS := ReqResp.Execute;
+				{$ENDIF}
          FRetWS := SeparaDados( FRetornoWS, 'gnreRespostaMsg');
-         StrStream.Free;
       {$ENDIF}
       FGNRERetorno := TTConfigUf.Create;
       FGNRERetorno.Leitor.Arquivo := GNREUtil.RetirarPrefixos(FRetWS);

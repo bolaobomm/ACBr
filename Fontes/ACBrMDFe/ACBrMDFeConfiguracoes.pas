@@ -602,7 +602,7 @@ end;
 
 function TCertificadosConf.GetCNPJ: String;
 begin
-{$IFNDEF ACBrNFeOpenSSL}
+{$IFNDEF ACBrMDFeOpenSSL}
  if DFeUtil.NaoEstaVazio(FNumeroSerie) then
   begin
     if FCNPJ = '' then

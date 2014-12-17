@@ -257,6 +257,8 @@ begin
     ComentarLinha('{$DEFINE ACBrNFeOpenSSL}', not(AUtilizar));
     ComentarLinha('{$DEFINE ACBrCTeOpenSSL}', not(AUtilizar));
     ComentarLinha('{$DEFINE ACBrNFSeOpenSSL}', not(AUtilizar));
+		ComentarLinha('{$DEFINE ACBrMDFeOpenSSL}', not(AUtilizar));
+		ComentarLinha('{$DEFINE ACBrGNREOpenSSL}', not(AUtilizar));
 
     WriteToTXT(PathArquivo, F.Text, False, False);
   finally

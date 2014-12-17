@@ -51,8 +51,7 @@ interface
 
 uses
 {$IFNDEF ACBrGNREOpenSSL}
-  ACBrCAPICOM_TLB, ACBrMSXML2_TLB,
-  JwaWinCrypt, JwaWinType,
+  Windows, ACBrCAPICOM_TLB, JwaWinCrypt, JwaWinType, ACBrMSXML2_TLB,
 {$ENDIF}
   Classes, Sysutils, pgnreConversao, pcnConversao, ActiveX;
 
