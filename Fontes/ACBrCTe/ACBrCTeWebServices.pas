@@ -2601,15 +2601,17 @@ begin
   FEventoRetorno.Leitor.Arquivo := FRetWS;
   FEventoRetorno.LerXml;
 
-  FcStat   := FEventoRetorno.cStat;
-  FxMotivo := FEventoRetorno.xMotivo;
-  FMsg     := FEventoRetorno.xMotivo;
-  FTpAmb   := FEventoRetorno.tpAmb;
+//  FcStat   := FEventoRetorno.cStat;
+//  FxMotivo := FEventoRetorno.xMotivo;
+//  FMsg     := FEventoRetorno.xMotivo;
+//  FTpAmb   := FEventoRetorno.tpAmb;
 
-  Result := (FEventoRetorno.cStat = 128) or
-            (FEventoRetorno.cStat = 135) or
-            (FEventoRetorno.cStat = 136) or
-            (FEventoRetorno.cStat = 155);
+  FcStat   := FEventoRetorno.retEvento.Items[0].RetInfEvento.cStat;
+  FxMotivo := FEventoRetorno.retEvento.Items[0].RetInfEvento.xMotivo;
+  FMsg     := FEventoRetorno.retEvento.Items[0].RetInfEvento.xMotivo;
+  FTpAmb   := FEventoRetorno.retEvento.Items[0].RetInfEvento.tpAmb;
+
+  Result := (FcStat in [128, 135, 136, 155]);
 
   //gerar arquivo proc de evento
   if Result then
@@ -2634,7 +2636,7 @@ begin
               wProc.Add('<procEventoCTe versao="' + GetVersaoCTe(FConfiguracoes.Geral.VersaoDF,
                                                                  LayCTeEvento) +
                                       '" xmlns="http://www.portalfiscal.inf.br/cte">');
-              wProc.Add('<evento versao="' + GetVersaoCTe(FConfiguracoes.Geral.VersaoDF,
+              wProc.Add('<eventoCTe versao="' + GetVersaoCTe(FConfiguracoes.Geral.VersaoDF,
                                                           LayCTeEvento) + '">');
               Leitor.Arquivo := FDadosMSG;
               wProc.Add(UTF8Encode(Leitor.rExtrai(1, 'infEvento', '', I + 1)));
@@ -2649,13 +2651,13 @@ begin
               Leitor.Arquivo := FDadosMSG;
               wProc.Add(UTF8Encode(Leitor.rExtrai(1, 'KeyInfo', '', I + 1)));
               wProc.Add('</Signature>');
-              wProc.Add('</evento>');
-              wProc.Add('<retEvento versao="' + GetVersaoCTe(FConfiguracoes.Geral.VersaoDF,
+              wProc.Add('</eventoCTe>');
+              wProc.Add('<retEventoCTe versao="' + GetVersaoCTe(FConfiguracoes.Geral.VersaoDF,
                                                              LayCTeEvento) + '">');
 
               Leitor.Arquivo := FRetWS;
               wProc.Add(UTF8Encode(Leitor.rExtrai(1, 'infEvento', '', J + 1)));
-              wProc.Add('</retEvento>');
+              wProc.Add('</retEventoCTe>');
               wProc.Add('</procEventoCTe>');
 
               FEventoRetorno.retEvento.Items[J].RetInfEvento.XML := wProc.Text;

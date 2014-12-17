@@ -208,7 +208,7 @@ begin
            infEvento.detEvento.UFFim      := Leitor.rCampo(tcStr, 'UFFim');
 
            // Carrega os dados da informação da Correção aplicada
-           i := 0 ;
+           i := 0;
            while Leitor.rExtrai(4, 'infCorrecao', '', i + 1) <> '' do
            begin
              with infEvento.detEvento.infCorrecao.Add do
@@ -218,7 +218,7 @@ begin
                valorAlterado   := Leitor.rCampo(tcStr, 'valorAlterado');
                nroItemAlterado := Leitor.rCampo(tcInt, 'nroItemAlterado');
              end;
-             inc(i) ;
+             inc(i);
            end;
 
          end;

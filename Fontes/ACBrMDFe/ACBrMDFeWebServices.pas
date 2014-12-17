@@ -2099,15 +2099,17 @@ begin
   FEventoRetorno.Leitor.Arquivo := FRetWS;
   FEventoRetorno.LerXml;
 
-  FcStat   := FEventoRetorno.cStat;
-  FxMotivo := FEventoRetorno.xMotivo;
-  FMsg     := FEventoRetorno.xMotivo;
-  FTpAmb   := FEventoRetorno.tpAmb;
+//  FcStat   := FEventoRetorno.cStat;
+//  FxMotivo := FEventoRetorno.xMotivo;
+//  FMsg     := FEventoRetorno.xMotivo;
+//  FTpAmb   := FEventoRetorno.tpAmb;
 
-  Result := (FEventoRetorno.cStat = 128) or
-            (FEventoRetorno.cStat = 135) or
-            (FEventoRetorno.cStat = 136) or
-            (FEventoRetorno.cStat = 155);
+  FcStat   := FEventoRetorno.retEvento.Items[0].RetInfEvento.cStat;
+  FxMotivo := FEventoRetorno.retEvento.Items[0].RetInfEvento.xMotivo;
+  FMsg     := FEventoRetorno.retEvento.Items[0].RetInfEvento.xMotivo;
+  FTpAmb   := FEventoRetorno.retEvento.Items[0].RetInfEvento.tpAmb;
+
+  Result := (FcStat in [128, 135, 136, 155]);
 
   //gerar arquivo proc de evento
   if Result then

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/12/2014
+[-] Alteração visando obter o retorno de status e motivo após o envio de um
+    Evento.
+    por: Italo Jurisato Junior
+
 16/12/2014
 [-] Alterado a propriedade pela variável de Retorno de Eventos.
     por: Italo Jurisato Junior
