@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/12/2014
+[*] Incluido a linha para alimentar a propriedade XML que conterá o resultado
+    do processamento do evento.
+    por: Italo Jurisato Junior
+
 17/12/2014
 [-] Como tem XML procEventoCTe com TAG evento e eventoCTe foi feito uma alteração
     visando atender essas duas situações.

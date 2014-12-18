@@ -3333,6 +3333,8 @@ begin
 
               EventoRetorno.retEvento.Items[J].RetInfEvento.XML := wProc.Text;
 
+              FEvento.Evento.Items[I].RetInfEvento.XML := wProc.Text;
+
               NomeArq := OnlyNumber(FEvento.Evento.Items[i].InfEvento.Id) +
                          '-procEventoNFe.xml';
 
