@@ -910,7 +910,7 @@ object framePacotes: TframePacotes
       Caption = 'NFS-e'
       ImageIndex = 2
       OnHide = tsNFeHide
-      object CheckBox2: TCheckBox
+      object ACBrNFSeDanfseRLpkg_dpk: TCheckBox
         AlignWithMargins = True
         Left = 20
         Top = 38
@@ -930,7 +930,7 @@ object framePacotes: TframePacotes
         TabOrder = 1
         OnClick = VerificarCheckboxes
       end
-      object CheckBox4: TCheckBox
+      object ACBrNFSeDanfseFRpkg_dpk: TCheckBox
         AlignWithMargins = True
         Left = 20
         Top = 7
@@ -950,7 +950,7 @@ object framePacotes: TframePacotes
         TabOrder = 0
         OnClick = VerificarCheckboxes
       end
-      object CheckBox5: TCheckBox
+      object ACBrNFSeDanfseQRpkg_dpk: TCheckBox
         AlignWithMargins = True
         Left = 20
         Top = 69

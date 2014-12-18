@@ -965,9 +965,9 @@ begin
     // Adiciona os paths dos fontes na versão do delphi selecionada
     AddLibrarySearchPath;
     pgbInstalacao.Position := pgbInstalacao.Position + 1;
-    lstMsgInstalacao.Items.Add('Adicionando libray paths...');
+    lstMsgInstalacao.Items.Add('Adicionando library paths...');
     Application.ProcessMessages;
-    WriteToTXT(AnsiString(PathArquivoLog), AnsiString('Adicionando libray paths...'));
+    WriteToTXT(AnsiString(PathArquivoLog), AnsiString('Adicionando library paths...'));
 
     // compilar os pacotes primeiramente
     lstMsgInstalacao.Items.Add('');
@@ -1219,7 +1219,7 @@ begin
   begin
     Stop := True;
     Application.MessageBox(
-      'Tortoise não foi instalado, instale primeiro o tortoise antes de continuar.',
+      'TortoiseSVN não foi instalado, instale o TortoiseSVN antes de continuar.',
       PWideChar(Application.Title),
       MB_ICONERROR + MB_OK
     );

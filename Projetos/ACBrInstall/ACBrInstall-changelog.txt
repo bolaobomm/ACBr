@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/12/2014
+[*] Adição de funcionalidades para desmarcar opções e descrições
+	  http://www.projetoacbr.com.br/forum/index.php?/topic/19198-altera%C3%A7%C3%B5es-no-acbrinstall/
+		
 21/11/2014
 [*] Modificado para adicionar ao Library path somente o diretorio dcu e 
     adicionado corretamente do browser path o caminho das unit

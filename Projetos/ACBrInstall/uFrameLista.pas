@@ -94,9 +94,9 @@ type
     ACBrCTeDacteFR_dpk: TCheckBox;
     ACBrCTeDacteQR_dpk: TCheckBox;
     ACBrCTeDacteRLpkg: TCheckBox;
-    CheckBox2: TCheckBox;
-    CheckBox4: TCheckBox;
-    CheckBox5: TCheckBox;
+    ACBrNFSeDanfseRLpkg_dpk: TCheckBox;
+    ACBrNFSeDanfseFRpkg_dpk: TCheckBox;
+    ACBrNFSeDanfseQRpkg_dpk: TCheckBox;
 	ACBrNFSeDANFSeRVpkg_dpk: TCheckBox;
     ACBr_BoletoFC_FR_dpk: TCheckBox;
     ACBr_BoletoFC_Quick_dpk: TCheckBox;
@@ -372,6 +372,29 @@ begin
   begin
 	FUtilizarBotoesMarcar := True;/// caso algum evento abaixo dispare novamente
 	try
+  		// quando não for selecionado o NFe devemos desmarcar
+		if not ACBr_NFe2_dpk.Checked then
+		begin
+    	  ACBrNFeDanfeFR_dpk.Checked := False;
+    	  ACBrNFeDanfeRL_dpk.Checked := False;
+    	  ACBrNFeDanfeQR_dpk.Checked := False;
+    	  ACBrNFeDanfeRV_dpk.Checked := False;
+		end;
+  		// quando não for selecionado o CTe devemos desmarcar
+		if not ACBr_CTe_dpk.Checked then
+		begin
+    	  ACBrCTeDacteFR_dpk.Checked := False;
+    	  ACBrCTeDacteQR_dpk.Checked := False;
+    	  ACBrCTeDacteRLpkg.Checked := False;
+		end;
+  		// quando não for selecionado o NFSe devemos desmarcar
+		if not ACBr_NFSe_dpk.Checked then
+		begin
+    	  ACBrNFSeDanfseFRpkg_dpk.Checked := False;
+    	  ACBrNFSeDanfseRLpkg_dpk.Checked := False;
+    	  ACBrNFSeDanfseQRpkg_dpk.Checked := False;
+    	  ACBrNFSeDanfseRVpkg_dpk.Checked := False;
+		end;
 		// quando não for selecionado o Boleto devemos desmarcar
 		if not ACBr_Boleto_dpk.Checked then
 		begin
@@ -379,6 +402,25 @@ begin
 		  ACBr_BoletoFC_Quick_dpk.Checked := False;
 		  ACBr_BoletoFC_Fortes_dpk.Checked := False;
 		end;
+		// quando não for selecionado o MDF-e devemos desmarcar
+		if not ACBr_MDFe_dpk.Checked then
+		begin
+		  ACBrMDFeDAMDFEFRpkg_dpk.Checked := False;
+		  ACBrMDFeDAMDFeRLpkg_dpk.Checked := False;
+		  ACBrMDFeDAMDFEQRpkg_dpk.Checked := False;
+		end;
+		// quando não for selecionado o SAT devemos desmarcar
+		if not ACBr_SAT_dpk.Checked then
+		begin
+		  ACBr_SAT_Extrato_Fortes_dpk.Checked := False;
+		end;
+		// quando não for selecionado o GNRE devemos desmarcar
+		if not ACBr_GNRE_dpk.Checked then
+		begin
+		  ACBrGNREGuiaFRpkg_dpk.Checked := False;
+    ACBrGNREGuiaRLpkg_dpk.Checked := False;
+		end;
+
 		  // dependencia do NFe
 		if ACBrNFeDanfeESCPOS_dpk.Checked and (not (ACBr_NFe2_dpk.Checked) or not(ACBrSerial_dpk.Checked))  then
 		begin
