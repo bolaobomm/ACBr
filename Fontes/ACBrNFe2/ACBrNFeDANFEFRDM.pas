@@ -990,9 +990,13 @@ begin
 
       //Modificado por Fábio Gabriel - 10/06/2013 - Para evitar que fique truncado.
       cdsEmitenteDADOS_ENDERECO.AsString :=
-        Trim(FieldByName('XLgr').AsString) + ', ' + trim(FieldByName('Nro').AsString) + ' - ' +
-        Trim(FieldByName('XBairro').AsString) + ' - ' + Trim(FieldByName('XMun').AsString) + ' - ' + Trim(FieldByName('UF').AsString) + #13 +
-        'Fone: ' + Trim(FieldByName('Fone').AsString) +
+        Trim(FieldByName('XLgr').AsString) + ', ' + trim(FieldByName('Nro').AsString);
+	   if (trim(FieldByName('XCpl').AsString) <> '') then
+          cdsEmitenteDADOS_ENDERECO.AsString := cdsEmitenteDADOS_ENDERECO.AsString + ', ' +
+            Trim(FieldByName('XCpl').AsString);
+       cdsEmitenteDADOS_ENDERECO.AsString := cdsEmitenteDADOS_ENDERECO.AsString + ' - ' +
+											 Trim(FieldByName('XBairro').AsString) + ' - ' + Trim(FieldByName('XMun').AsString) + ' - ' + Trim(FieldByName('UF').AsString) + #13 +
+											'Fone: ' + Trim(FieldByName('Fone').AsString) +
         DFeUtil.SeSenao(trim(FDANFEClassOwner.Fax) <> '',
                         ' - FAX: ' + DFeUtil.FormatarFone(trim(FDANFEClassOwner.Fax)),'')+
         ' - CEP: ' + Trim(FieldByName('CEP').AsString);
