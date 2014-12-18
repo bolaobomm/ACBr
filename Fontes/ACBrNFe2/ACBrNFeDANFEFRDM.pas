@@ -308,6 +308,7 @@ type
     cdsDadosProdutosqLote: TFloatField;
     cdsDadosProdutosdFab: TDateField;
     cdsDadosProdutosdVal: TDateField;
+    cdsParametrosExpandirDadosAdicionaisAuto: TStringField;
     constructor Create(AOwner: TComponent); override;
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
   private
@@ -325,6 +326,7 @@ type
     FURLConsultaPublica:String;
     FDescricaoViaEstabelec: string;
     FImprimirUnQtVlComercial: boolean;
+    FExpandirDadosAdicionaisAuto: boolean;
     procedure CarregaIdentificacao;
     procedure CarregaEmitente;
     procedure CarregaDestinatario;
@@ -352,6 +354,7 @@ type
     property TributosPercentualPersonalizado: double read FTributosPercentualPersonalizado write FTributosPercentualPersonalizado;
     property MarcaDaguaMSG: string read FMarcaDaguaMSG write FMarcaDaguaMSG;
     property ImprimirUnQtVlComercial: boolean read FImprimirUnQtVlComercial write FImprimirUnQtVlComercial;
+    property ExpandirDadosAdicionaisAuto: boolean read FExpandirDadosAdicionaisAuto write FExpandirDadosAdicionaisAuto;
     property vTroco: Currency read FvTroco write FvTroco;
     property Detalhado: Boolean read FDetalhado write FDetalhado;
     property URLConsultaPublica:String read FURLConsultaPublica write FURLConsultaPublica;
@@ -1544,6 +1547,10 @@ begin
     end;
 
     FieldByName('LinhasPorPagina').AsInteger := FDANFEClassOwner.ProdutosPorPagina;
+    if ExpandirDadosAdicionaisAuto then
+      FieldByName('ExpandirDadosAdicionaisAuto').AsString := 'S'
+    else
+      FieldByName('ExpandirDadosAdicionaisAuto').AsString := 'N';
 
     FieldByName('Mask_qCom').AsString     := FDANFEClassOwner.CasasDecimais._Mask_qCom;
     FieldByName('Mask_vUnCom').AsString   := FDANFEClassOwner.CasasDecimais._Mask_vUnCom;

@@ -21,6 +21,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     FitWindow = False
     CenterWindow = False
     PrintScaling = False
+    CheckboxAsShape = False
     Left = 48
     Top = 92
   end
@@ -523,6 +524,10 @@ object dmACBrNFeFR: TdmACBrNFeFR
     object cdsParametrosQtdeItens: TIntegerField
       FieldName = 'QtdeItens'
     end
+    object cdsParametrosExpandirDadosAdicionaisAuto: TStringField
+      FieldName = 'ExpandirDadosAdicionaisAuto'
+      Size = 1
+    end
   end
   object cdsInformacoesAdicionais: TClientDataSet
     Aggregates = <>
@@ -981,7 +986,8 @@ object dmACBrNFeFR: TdmACBrNFeFR
       'LogoCarregado=LogoCarregado'
       'QrCodeCarregado=QrCodeCarregado'
       'DescricaoViaEstabelec=DescricaoViaEstabelec'
-      'QtdeItens=QtdeItens')
+      'QtdeItens=QtdeItens'
+      'ExpandirDadosAdicionaisAuto=ExpandirDadosAdicionaisAuto')
     OpenDataSource = False
     DataSet = cdsParametros
     BCDToCurrency = False
@@ -1108,7 +1114,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     Top = 148
   end
   object frxReport: TfrxReport
-    Version = '4.14'
+    Version = '4.15.6'
     DotMatrixReport = False
     EngineOptions.DoublePass = True
     IniFile = '\Software\Fast Reports'
@@ -1118,7 +1124,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40401.475989294000000000
-    ReportOptions.LastChange = 41852.744346828700000000
+    ReportOptions.LastChange = 41991.668248865740000000
     ScriptLanguage = 'PascalScript'
     StoreInDFM = False
     OnBeforePrint = frxReportBeforePrint

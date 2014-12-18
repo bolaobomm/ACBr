@@ -78,6 +78,7 @@ type
     FURLConsultaPublica:String;
     FDescricaoViaEstabelec: string;
     FImprimirUnQtVlComercial: boolean;
+    FExpandirDadosAdicionaisAuto: boolean;
     function GetPreparedReport: TfrxReport;
     function GetPreparedReportEvento: TfrxReport;
     function PrepareReport(NFE: TNFe = nil): Boolean;
@@ -111,6 +112,7 @@ type
     property Detalhado: Boolean read FDetalhado write FDetalhado;
     property URLConsultaPublica:String read FURLConsultaPublica write FURLConsultaPublica;
     property DescricaoViaEstabelec: string read FDescricaoViaEstabelec write FDescricaoViaEstabelec;
+    property ExpandirDadosAdicionaisAuto: boolean read FExpandirDadosAdicionaisAuto write FExpandirDadosAdicionaisAuto;
   end;
 
 implementation
@@ -130,6 +132,7 @@ begin
   FTributosPercentualPersonalizado := 0;
   FMarcaDaguaMSG:='';
   FImprimirUnQtVlComercial:=false;
+  ExpandirDadosAdicionaisAuto:=false;
   { NFC-e }
   FvTroco := 0;
   FDetalhado := False;
@@ -183,6 +186,7 @@ begin
   dmDanfe.TributosPercentualPersonalizado :=  FTributosPercentualPersonalizado;
   dmDanfe.MarcaDaguaMSG :=  FMarcaDaguaMSG;
   dmDanfe.ImprimirUnQtVlComercial := FImprimirUnQtVlComercial;
+  dmDanfe.ExpandirDadosAdicionaisAuto := FExpandirDadosAdicionaisAuto;
   dmDanfe.vTroco := FvTroco;
   dmDanfe.Detalhado := FDetalhado;
   dmDanfe.DescricaoViaEstabelec := FDescricaoViaEstabelec;
