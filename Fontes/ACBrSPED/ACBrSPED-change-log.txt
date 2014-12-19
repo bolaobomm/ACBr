@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 19/12/2014
+[*] Alteração da unit ACBrEFDBlocos.pas para informar a versão do arquivo e os procedimentos de conversão
+		por: Juliomar Marchetti
+		
 Data 03/12/2014
 [+] Adição da geração dos registros C800, C850..
 	http://www.projetoacbr.com.br/forum/index.php?/topic/18991-registros-cfe-modelo-59-sat/

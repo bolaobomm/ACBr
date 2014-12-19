@@ -682,35 +682,41 @@ begin
    if AValue = '008' then
       Result := vlVersao107
    else
+   if AValue = '009' then
+      Result := vlVersao108
+   else
+   if AValue = '010' then
+      Result := vlVersao109
+   else
      raise Exception.CreateFmt('Versão desconhecida. Versao "%s" não é um valor válido.', [AValue]);
 end;
 
 function CodVerToStr(AValue: TACBrCodVer): string;
 begin
-   if AValue = vlVersao100 then
-      Result := '001'
-   else
-   if AValue = vlVersao101 then
-      Result := '002'
-   else
-   if AValue = vlVersao102 then
-      Result := '003'
-   else
-   if AValue = vlVersao103 then
-      Result := '004'
-   else
-   if AValue = vlVersao104 then
-      Result := '005'
-   else
-   if AValue = vlVersao105 then
-      Result := '006'
-   else
-   if AValue = vlVersao106 then
-      Result := '007'
-   else
-   if AValue = vlVersao107 then
-      Result := '008'
-      ;
+  case AValue of
+    vlVersao100:
+      Result := '001';
+    vlVersao101:
+      Result := '002';
+    vlVersao102:
+      Result := '003';
+    vlVersao103:
+      Result := '004';
+    vlVersao104:
+      Result := '005';
+    vlVersao105:
+      Result := '006';
+    vlVersao106:
+      Result := '007';
+    vlVersao107:
+      Result := '008';
+    vlVersao108:
+      Result := '009';
+    vlVersao109:
+      Result := '010';
+  else
+    Result := EmptyStr;
+  end;
 end;
 
 function IndOperToStr(AValue: TACBrIndOper): string;
