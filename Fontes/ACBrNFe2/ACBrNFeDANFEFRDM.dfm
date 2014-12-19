@@ -21,7 +21,6 @@ object dmACBrNFeFR: TdmACBrNFeFR
     FitWindow = False
     CenterWindow = False
     PrintScaling = False
-    CheckboxAsShape = False
     Left = 48
     Top = 92
   end
