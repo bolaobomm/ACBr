@@ -21,7 +21,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Cupom Fiscal Eletrônico SAT - (http://www.projetoacbr.com.br/)"/>
     <Version Minor="1"/>
-    <Files Count="10">
+    <Files Count="12">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSAT.pas"/>
         <UnitName Value="ACBrSAT"/>
@@ -63,6 +63,14 @@
         <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATDinamico_stdcall.pas"/>
         <UnitName Value="ACBrSATDinamico_stdcall"/>
       </Item10>
+      <Item11>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\pcnRede.pas"/>
+        <UnitName Value="pcnRede"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\pcnRedeW.pas"/>
+        <UnitName Value="pcnRedeW"/>
+      </Item12>
     </Files>
     <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="3">
