@@ -33,6 +33,19 @@ requires
   ACBrComum;
 
 contains
-  ACBrSATReg in '..\..\..\Fontes\ACBrSAT\ACBrSATReg.pas';
+  ACBrSATReg in '..\..\..\Fontes\ACBrSAT\ACBrSATReg.pas',
+  ACBrSAT in '..\..\..\Fontes\ACBrSAT\ACBrSAT.pas',
+  ACBrSATClass in '..\..\..\Fontes\ACBrSAT\ACBrSATClass.pas',
+  ACBrSATDinamico_cdecl in '..\..\..\Fontes\ACBrSAT\ACBrSATDinamico_cdecl.pas',
+  ACBrSATDinamico_stdcall in '..\..\..\Fontes\ACBrSAT\ACBrSATDinamico_stdcall.pas',
+  pcnCFe in '..\..\..\Fontes\ACBrSAT\pcnCFe.pas',
+  pcnCFeCanc in '..\..\..\Fontes\ACBrSAT\pcnCFeCanc.pas',
+  pcnCFeCancR in '..\..\..\Fontes\ACBrSAT\pcnCFeCancR.pas',
+  pcnCFeCancW in '..\..\..\Fontes\ACBrSAT\pcnCFeCancW.pas',
+  pcnCFeR in '..\..\..\Fontes\ACBrSAT\pcnCFeR.pas',
+  pcnCFeW in '..\..\..\Fontes\ACBrSAT\pcnCFeW.pas',
+  pcnRede in '..\..\..\Fontes\ACBrSAT\pcnRede.pas',
+  pcnRedeR in '..\..\..\Fontes\ACBrSAT\pcnRedeR.pas',
+  pcnRedeW in '..\..\..\Fontes\ACBrSAT\pcnRedeW.pas';
 
 end.
