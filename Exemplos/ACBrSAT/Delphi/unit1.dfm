@@ -40,6 +40,12 @@ object Form1: TForm1
         Width = 786
         Height = 184
         Align = alClient
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Lucida Console'
+        Font.Style = []
+        ParentFont = False
         ScrollBars = ssBoth
         TabOrder = 0
       end
@@ -95,7 +101,7 @@ object Form1: TForm1
           Left = 1
           Top = 1
           Width = 105
-          Height = 23
+          Height = 13
           Align = alLeft
           Caption = 'Chave Cancelamento:'
           Color = clBtnFace
@@ -600,7 +606,7 @@ object Form1: TForm1
               Left = 160
               Top = 21
               Width = 29
-              Height = 14
+              Height = 13
               Caption = 'DNS1'
               Color = clBtnFace
               ParentColor = False
@@ -609,7 +615,7 @@ object Form1: TForm1
               Left = 159
               Top = 49
               Width = 29
-              Height = 14
+              Height = 13
               Caption = 'DNS2'
               Color = clBtnFace
               ParentColor = False

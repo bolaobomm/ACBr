@@ -24,21 +24,24 @@ object Form1: TForm1
     Height = 250
     Top = 208
     Width = 793
-    ActivePage = tsRedeXML
+    ActivePage = tsLog
     Align = alClient
-    TabIndex = 4
+    TabIndex = 0
     TabOrder = 1
     object tsLog: TTabSheet
       Caption = 'Log de Comandos'
       ClientHeight = 222
-      ClientWidth = 719
+      ClientWidth = 785
       object mLog: TMemo
         Left = 0
         Height = 222
         Top = 0
-        Width = 719
+        Width = 785
         Align = alBottom
         Anchors = [akTop, akLeft, akRight, akBottom]
+        Font.Height = -11
+        Font.Name = 'Lucida Console'
+        ParentFont = False
         ScrollBars = ssAutoBoth
         TabOrder = 0
       end

@@ -235,6 +235,7 @@ type
     { private declarations }
 
     procedure ConfiguraRedeSAT;
+    procedure LeDadosRedeSAT;
     procedure PrepararImpressao;
     procedure TrataErros(Sender : TObject ; E : Exception) ;
     procedure AjustaACBrSAT ;
@@ -694,9 +695,30 @@ end;
 
 procedure TForm1.mConsultarStatusOperacionalClick(Sender : TObject) ;
 begin
-  //mLog.Lines.Add( ConsultarStatusOperacional( Random(999999), '123456' ) ) ;
-
   ACBrSAT1.ConsultarStatusOperacional;
+
+  with ACBrSAT1.Status do
+  begin
+    mLog.Lines.Add('NSERIE.........: '+NSERIE);
+    mLog.Lines.Add('LAN_MAC........: '+LAN_MAC);
+    mLog.Lines.Add('STATUS_LAN.....: '+StatusLanToStr(STATUS_LAN));
+    mLog.Lines.Add('NIVEL_BATERIA..: '+NivelBateriaToStr(NIVEL_BATERIA));
+    mLog.Lines.Add('MT_TOTAL.......: '+MT_TOTAL);
+    mLog.Lines.Add('MT_USADA.......: '+MT_USADA);
+    mLog.Lines.Add('DH_ATUAL.......: '+DateTimeToStr(DH_ATUAL));
+    mLog.Lines.Add('VER_SB.........: '+VER_SB);
+    mLog.Lines.Add('VER_LAYOUT.....: '+VER_LAYOUT);
+    mLog.Lines.Add('ULTIMO_CFe.....: '+ULTIMO_CFe);
+    mLog.Lines.Add('LISTA_INICIAL..: '+LISTA_INICIAL);
+    mLog.Lines.Add('LISTA_FINAL....: '+LISTA_FINAL);
+    mLog.Lines.Add('DH_CFe.........: '+DateTimeToStr(DH_CFe));
+    mLog.Lines.Add('DH_ULTIMA......: '+DateTimeToStr(DH_CFe));
+    mLog.Lines.Add('CERT_EMISSAO...: '+DateToStr(CERT_EMISSAO));
+    mLog.Lines.Add('CERT_VENCIMENTO: '+DateToStr(CERT_VENCIMENTO));
+    mLog.Lines.Add('ESTADO_OPERACAO: '+EstadoOperacaoToStr(ESTADO_OPERACAO));
+  end;
+
+  LeDadosRedeSAT;
 end;
 
 procedure TForm1.mDesbloquearSATClick(Sender : TObject) ;
@@ -1043,29 +1065,8 @@ begin
   begin
     ACBrSAT1.Rede.LoadFromFile( OpenDialog1.FileName );
 
-    with ACBrSAT1.Rede do
-    begin
-      rgRedeTipoInter.ItemIndex := Integer(tipoInter);
-      edRedeSSID.Text           := SSID ;
-      cbxRedeSeg.ItemIndex      := Integer(seg) ;
-      edRedeCodigo.Text         := codigo ;
-      rgRedeTipoLan.ItemIndex   := Integer(tipoLan);
-      edRedeIP.Text             := lanIP;
-      edRedeMask.Text           := lanMask;
-      edRedeGW.Text             := lanGW;
-      edRedeDNS1.Text           := lanDNS1;
-      edRedeDNS2.Text           := lanDNS2;
-      edRedeUsuario.Text        := usuario;
-      edRedeSenha.Text          := senha;
-      cbxRedeProxy.ItemIndex    := proxy;
-      edRedeProxyIP.Text        := proxy_ip;
-      edRedeProxyPorta.Value    := proxy_porta;
-      edRedeProxyUser.Text      := proxy_user;
-      edRedeProxySenha.Text     := proxy_senha;
-    end;
-
+    LeDadosRedeSAT;
     ACBrSAT1.ConfigurarInterfaceDeRede( );
-
   end ;
 end;
 
@@ -1115,6 +1116,30 @@ begin
   StatusBar1.Panels[0].Text := IntToStr( ACBrSAT1.Resposta.numeroSessao );
   StatusBar1.Panels[1].Text := IntToStr( ACBrSAT1.Resposta.codigoDeRetorno );
   Tratado := False;
+end;
+
+procedure TForm1.LeDadosRedeSAT;
+begin
+  with ACBrSAT1.Rede do
+  begin
+    rgRedeTipoInter.ItemIndex := Integer(tipoInter);
+    edRedeSSID.Text           := SSID ;
+    cbxRedeSeg.ItemIndex      := Integer(seg) ;
+    edRedeCodigo.Text         := codigo ;
+    rgRedeTipoLan.ItemIndex   := Integer(tipoLan);
+    edRedeIP.Text             := lanIP;
+    edRedeMask.Text           := lanMask;
+    edRedeGW.Text             := lanGW;
+    edRedeDNS1.Text           := lanDNS1;
+    edRedeDNS2.Text           := lanDNS2;
+    edRedeUsuario.Text        := usuario;
+    edRedeSenha.Text          := senha;
+    cbxRedeProxy.ItemIndex    := proxy;
+    edRedeProxyIP.Text        := proxy_ip;
+    edRedeProxyPorta.Value    := proxy_porta;
+    edRedeProxyUser.Text      := proxy_user;
+    edRedeProxySenha.Text     := proxy_senha;
+  end;
 end;
 
 end.
