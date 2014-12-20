@@ -103,6 +103,8 @@ TACBrComponent = class( TComponent )
                            stored false ;
   end ;
 
+TACBrGravarLog = procedure(const ALogLine: String; var Tratado: Boolean) of object ;
+
 { Essa classe emula um TTimer, porem em uma Thread, evitando sobrecarregar
   o Application. Usada por ACBrLCB e ACBrDIS quando em modo CONSOLE, ou NOGUI }
 TACBrThreadTimer = class(TThread)

@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 20/12/2014   
+-- ACBrBase --    (por: DSA)
+[+] Adicionado evento padrão para chamada de Log:
+    TACBrGravarLog = procedure(const ALogLine: String; var Tratado: Boolean) of object ;
+
 Data: 27/11/2014
 [-] Corrigido problema na unit DFeUtil onde estava errado o Define impossibilitando
 	compilar no lazarus
