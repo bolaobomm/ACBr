@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, FileUtil, SynMemo, SynHighlighterXML, PrintersDlgs, Forms,
   Controls, Graphics, Dialogs, StdCtrls, ActnList, Menus, ExtCtrls, Buttons,
   ComCtrls, Spin, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS,
-  ACBrSATExtratoFortesFr;
+  ACBrSATExtratoFortesFr, ACBrBase;
 
 const
   cAssinatura = '9d4c4eef8c515e2c1269c2e4fff0719d526c5096422bf1defa20df50ba06469'+
@@ -32,6 +32,7 @@ type
     btSerial: TBitBtn;
     cbUsarEscPos: TRadioButton;
     cbUsarFortes: TRadioButton;
+    cbxRedeProxy: TComboBox;
     cbxSalvarCFe: TCheckBox;
     cbxModelo : TComboBox ;
     cbxAmbiente : TComboBox ;
@@ -41,28 +42,68 @@ type
     cbxUTF8: TCheckBox;
     cbxFormatXML: TCheckBox;
     cbPreview: TCheckBox;
+    cbxRedeSeg: TComboBox;
     edChaveCancelamento: TEdit;
     edLog : TEdit ;
+    edRedeIP: TEdit;
+    edRedeProxyPorta: TSpinEdit;
+    edRedeProxyUser: TEdit;
+    edRedeProxySenha: TEdit;
+    edRedeMask: TEdit;
+    edRedeGW: TEdit;
+    edRedeDNS1: TEdit;
+    edRedeDNS2: TEdit;
+    edRedeUsuario: TEdit;
+    edRedeSenha: TEdit;
+    edRedeProxyIP: TEdit;
+    edRedeSSID: TEdit;
+    edRedeCodigo: TEdit;
     edtPorta: TEdit;
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
     GroupBox4: TGroupBox;
+    gbWiFi: TGroupBox;
+    gbIPFix: TGroupBox;
+    gbPPPoE: TGroupBox;
+    gbProxy: TGroupBox;
     Label18: TLabel;
     Label19: TLabel;
     Label20: TLabel;
     Label21: TLabel;
     Label22: TLabel;
     Label23: TLabel;
+    Label24: TLabel;
     Label6: TLabel;
     Label7: TLabel;
     lImpressora: TLabel;
+    lSSID: TLabel;
+    lSSID1: TLabel;
+    lSSID10: TLabel;
+    lSSID11: TLabel;
+    lSSID12: TLabel;
+    lSSID2: TLabel;
+    lSSID3: TLabel;
+    lSSID4: TLabel;
+    lSSID5: TLabel;
+    lSSID6: TLabel;
+    lSSID7: TLabel;
+    lSSID8: TLabel;
+    lSSID9: TLabel;
     mCancelamentoEnviar: TSynMemo;
+    mRede: TSynMemo;
+    MenuItem10: TMenuItem;
+    MenuItem11: TMenuItem;
+    MenuItem13: TMenuItem;
+    MenuItem9: TMenuItem;
     miGerarXMLCancelamento: TMenuItem;
     miEnviarCancelamento: TMenuItem;
     MenuItem12: TMenuItem;
     miImprimirExtratoCancelamento: TMenuItem;
     Panel2: TPanel;
     PrintDialog1: TPrintDialog;
+    rgRedeTipoInter: TRadioGroup;
+    rgRedeTipoLan: TRadioGroup;
+    SaveDialog1: TSaveDialog;
     seLargura: TSpinEdit;
     seMargemDireita: TSpinEdit;
     seMargemEsquerda: TSpinEdit;
@@ -134,6 +175,8 @@ type
     mRecebido: TSynMemo;
     SynXMLSyn1: TSynXMLSyn;
     Impressao: TTabSheet;
+    tsRedeXML: TTabSheet;
+    tsRede: TTabSheet;
     tsCancelamento: TTabSheet;
     tsDadosEmit : TTabSheet ;
     tsDadosSAT : TTabSheet ;
@@ -143,7 +186,7 @@ type
     tsGerado : TTabSheet ;
     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
     procedure ACBrSAT1GetsignAC(var Chave : AnsiString) ;
-    procedure ACBrSAT1Log(const AString: String);
+    procedure ACBrSAT1GravarLog(const ALogLine: String; var Tratado: Boolean);
     procedure bImpressoraClick(Sender: TObject);
     procedure bInicializarClick(Sender : TObject) ;
     procedure btLerParamsClick(Sender : TObject) ;
@@ -152,12 +195,17 @@ type
     procedure cbUsarEscPosClick(Sender: TObject);
     procedure cbUsarFortesClick(Sender: TObject);
     procedure cbxModeloChange(Sender : TObject) ;
+    procedure cbxRedeProxyChange(Sender: TObject);
     procedure cbxSalvarCFeChange(Sender: TObject);
     procedure cbxUTF8Change(Sender: TObject);
+    procedure MenuItem10Click(Sender: TObject);
+    procedure MenuItem13Click(Sender: TObject);
     procedure miGerarXMLCancelamentoClick(Sender: TObject);
     procedure miEnviarCancelamentoClick(Sender: TObject);
     procedure miImprimirExtratoCancelamentoClick(Sender: TObject);
     procedure mTesteFimAFimClick(Sender: TObject);
+    procedure rgRedeTipoInterClick(Sender: TObject);
+    procedure rgRedeTipoLanClick(Sender: TObject);
     procedure sfeVersaoEntChange(Sender: TObject);
     procedure FormCreate(Sender : TObject) ;
     procedure mAssociarAssinaturaClick(Sender : TObject) ;
@@ -180,6 +228,7 @@ type
     procedure SbArqLogClick(Sender : TObject) ;
     procedure sePagCodChange(Sender: TObject);
   private
+    procedure ConfiguraRedeSAT;
     procedure PrepararImpressao;
     procedure TrataErros(Sender : TObject ; E : Exception) ;
     procedure AjustaACBrSAT ;
@@ -193,7 +242,7 @@ var
 
 implementation
 
-Uses typinfo, ACBrUtil, pcnConversao, synacode, IniFiles, ConfiguraSerial,
+Uses typinfo, ACBrUtil, pcnConversao, pcnRede, synacode, IniFiles, ConfiguraSerial,
   RLPrinters, Printers;
 
 {$R *.lfm}
@@ -282,16 +331,18 @@ begin
   Chave := AnsiString( edtSwHAssinatura.Text );
 end;
 
+procedure TForm1.ACBrSAT1GravarLog(const ALogLine: String; var Tratado: Boolean
+  );
+begin
+  mLog.Lines.Add(ALogLine);
+  StatusBar1.Panels[0].Text := IntToStr( ACBrSAT1.Resposta.numeroSessao );
+  StatusBar1.Panels[1].Text := IntToStr( ACBrSAT1.Resposta.codigoDeRetorno );
+  Tratado := True;
+end;
+
 procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
 begin
   Chave := AnsiString( edtCodigoAtivacao.Text );
-end;
-
-procedure TForm1.ACBrSAT1Log(const AString: String);
-begin
-  mLog.Lines.Add(AString);
-  StatusBar1.Panels[0].Text := IntToStr( ACBrSAT1.Resposta.numeroSessao );
-  StatusBar1.Panels[1].Text := IntToStr( ACBrSAT1.Resposta.codigoDeRetorno );
 end;
 
 procedure TForm1.bImpressoraClick(Sender: TObject);
@@ -357,6 +408,25 @@ begin
     cbPreview.Checked      := INI.ReadBool('Fortes','Preview',True);
 
     lImpressora.Caption := INI.ReadString('Printer','Name',Printer.PrinterName);
+
+    rgRedeTipoInter.ItemIndex := INI.ReadInteger('Rede','tipoInter',0);
+    rgRedeTipoLan.ItemIndex   := INI.ReadInteger('Rede','tipoLan',0);
+    edRedeSSID.Text           := INI.ReadString('Rede','SSID','');
+    cbxRedeSeg.ItemIndex      := INI.ReadInteger('Rede','seg',0);
+    edRedeCodigo.Text         := INI.ReadString('Rede','codigo','');
+    edRedeIP.Text             := INI.ReadString('Rede','lanIP','');
+    edRedeMask.Text           := INI.ReadString('Rede','lanMask','');
+    edRedeGW.Text             := INI.ReadString('Rede','lanGW','');
+    edRedeDNS1.Text           := INI.ReadString('Rede','lanDNS1','');
+    edRedeDNS2.Text           := INI.ReadString('Rede','lanDNS2','');
+    edRedeUsuario.Text        := INI.ReadString('Rede','usuario','');
+    edRedeSenha.Text          := INI.ReadString('Rede','senha','');
+    cbxRedeProxy.ItemIndex    := INI.ReadInteger('Rede','proxy',0);
+    edRedeProxyIP.Text        := INI.ReadString('Rede','proxy_ip','');
+    edRedeProxyPorta.Value    := INI.ReadInteger('Rede','proxy_porta',0);
+    edRedeProxyUser.Text      := INI.ReadString('Rede','proxy_user','');
+    edRedeProxySenha.Text     := INI.ReadString('Rede','proxy_senha','');
+
   finally
      INI.Free ;
   end ;
@@ -405,6 +475,24 @@ begin
     INI.WriteBool('Fortes','Preview',cbPreview.Checked);
 
     INI.WriteString('Printer','Name',Printer.PrinterName);
+
+    INI.WriteInteger('Rede','tipoInter',rgRedeTipoInter.ItemIndex);
+    INI.WriteInteger('Rede','tipoLan',rgRedeTipoLan.ItemIndex);
+    INI.WriteString('Rede','SSID',edRedeSSID.Text);
+    INI.WriteInteger('Rede','seg',cbxRedeSeg.ItemIndex);
+    INI.WriteString('Rede','codigo',edRedeCodigo.Text);
+    INI.WriteString('Rede','lanIP',edRedeIP.Text);
+    INI.WriteString('Rede','lanMask',edRedeMask.Text);
+    INI.WriteString('Rede','lanGW',edRedeGW.Text);
+    INI.WriteString('Rede','lanDNS1',edRedeDNS1.Text);
+    INI.WriteString('Rede','lanDNS2',edRedeDNS2.Text);
+    INI.WriteString('Rede','usuario',edRedeUsuario.Text);
+    INI.WriteString('Rede','senha',edRedeSenha.Text);
+    INI.WriteInteger('Rede','proxy',cbxRedeProxy.ItemIndex);
+    INI.WriteString('Rede','proxy_ip',edRedeProxyIP.Text);
+    INI.WriteInteger('Rede','proxy_porta',edRedeProxyPorta.Value);
+    INI.WriteString('Rede','proxy_user',edRedeProxyUser.Text);
+    INI.WriteString('Rede','proxy_senha',edRedeProxySenha.Text);
   finally
      INI.Free ;
   end ;
@@ -451,6 +539,14 @@ begin
   end ;
 end;
 
+procedure TForm1.cbxRedeProxyChange(Sender: TObject);
+begin
+  edRedeProxyIP.Enabled := (cbxRedeProxy.ItemIndex > 0);
+  edRedeProxyPorta.Enabled := edRedeProxyIP.Enabled;
+  edRedeProxyUser.Enabled  := edRedeProxyIP.Enabled;
+  edRedeProxySenha.Enabled := edRedeProxyIP.Enabled;
+end;
+
 procedure TForm1.cbxSalvarCFeChange(Sender: TObject);
 begin
   ACBrSAT1.SalvarCFes := cbxSalvarCFe.Checked;
@@ -460,6 +556,29 @@ procedure TForm1.cbxUTF8Change(Sender: TObject);
 begin
   ACBrSAT1.Config.EhUTF8 := cbxUTF8.Checked;
   sePagCod.Value := ACBrSAT1.Config.PaginaDeCodigo;
+end;
+
+procedure TForm1.MenuItem10Click(Sender: TObject);
+begin
+  ConfiguraRedeSAT;
+  mRede.Text := ACBrSAT1.Rede.AsXMLString;
+
+  ACBrSAT1.ConfigurarInterfaceDeRede( );
+end;
+
+procedure TForm1.MenuItem13Click(Sender: TObject);
+begin
+  ConfiguraRedeSAT;
+  mRede.Text := ACBrSAT1.Rede.AsXMLString;
+
+  PageControl1.ActivePage := tsRedeXML;
+
+  SaveDialog1.Filter   := 'Arquivo XML|*.xml';
+  SaveDialog1.FileName := 'Rede.xml';
+  if SaveDialog1.Execute then
+  begin
+     ACBrSAT1.Rede.SaveToFile(SaveDialog1.FileName);
+  end;
 end;
 
 procedure TForm1.miGerarXMLCancelamentoClick(Sender: TObject);
@@ -524,6 +643,17 @@ begin
   end;
 end;
 
+procedure TForm1.rgRedeTipoInterClick(Sender: TObject);
+begin
+  gbWiFi.Visible := (rgRedeTipoInter.ItemIndex = 1);
+end;
+
+procedure TForm1.rgRedeTipoLanClick(Sender: TObject);
+begin
+  gbPPPoE.Visible := (rgRedeTipoLan.ItemIndex = 1);
+  gbIPFix.Visible := (rgRedeTipoLan.ItemIndex = 2);
+end;
+
 procedure TForm1.sfeVersaoEntChange(Sender: TObject);
 begin
   ACBrSAT1.Config.infCFe_versaoDadosEnt := sfeVersaoEnt.Value;
@@ -558,20 +688,34 @@ begin
 end;
 
 procedure TForm1.mConfigurarInterfaceRedeClick(Sender : TObject) ;
-Var
-  SL : TStringList;
 begin
   OpenDialog1.Filter := 'Arquivo XML|*.xml';
   if OpenDialog1.Execute then
   begin
-    SL := TStringList.Create;
-    try
-      SL.LoadFromFile( OpenDialog1.FileName );
+    ACBrSAT1.Rede.LoadFromFile( OpenDialog1.FileName );
 
-      ACBrSAT1.ConfigurarInterfaceDeRede( SL.Text );
-    finally
-      SL.Free;
-    end ;
+    ACBrSAT1.ConfigurarInterfaceDeRede( );
+
+    with ACBrSAT1.Rede do
+    begin
+      rgRedeTipoInter.ItemIndex := Integer(tipoInter);
+      edRedeSSID.Text           := SSID ;
+      cbxRedeSeg.ItemIndex      := Integer(seg) ;
+      edRedeCodigo.Text         := codigo ;
+      rgRedeTipoLan.ItemIndex   := Integer(tipoLan);
+      edRedeIP.Text             := lanIP;
+      edRedeMask.Text           := lanMask;
+      edRedeGW.Text             := lanGW;
+      edRedeDNS1.Text           := lanDNS1;
+      edRedeDNS2.Text           := lanDNS2;
+      edRedeUsuario.Text        := usuario;
+      edRedeSenha.Text          := senha;
+      cbxRedeProxy.ItemIndex    := proxy;
+      edRedeProxyIP.Text        := proxy_ip;
+      edRedeProxyPorta.Value    := proxy_porta;
+      edRedeProxyUser.Text      := proxy_user;
+      edRedeProxySenha.Text     := proxy_senha;
+    end;
   end ;
 end;
 
@@ -887,6 +1031,30 @@ procedure TForm1.sePagCodChange(Sender: TObject);
 begin
   ACBrSAT1.Config.PaginaDeCodigo := sePagCod.Value;
   cbxUTF8.Checked := ACBrSAT1.Config.EhUTF8;
+end;
+
+procedure TForm1.ConfiguraRedeSAT;
+begin
+  with ACBrSAT1.Rede do
+  begin
+    tipoInter   := TTipoInterface( rgRedeTipoInter.ItemIndex );
+    SSID        := edRedeSSID.Text ;
+    seg         := TSegSemFio( cbxRedeSeg.ItemIndex ) ;
+    codigo      := edRedeCodigo.Text ;
+    tipoLan     := TTipoLan( rgRedeTipoLan.ItemIndex ) ;
+    lanIP       := edRedeIP.Text ;
+    lanMask     := edRedeMask.Text ;
+    lanGW       := edRedeGW.Text ;
+    lanDNS1     := edRedeDNS1.Text ;
+    lanDNS2     := edRedeDNS2.Text ;
+    usuario     := edRedeUsuario.Text ;
+    senha       := edRedeSenha.Text ;
+    proxy       := cbxRedeProxy.ItemIndex ;
+    proxy_ip    := edRedeProxyIP.Text ;
+    proxy_porta := edRedeProxyPorta.Value ;
+    proxy_user  := edRedeProxyUser.Text ;
+    proxy_senha := edRedeProxySenha.Text ;
+  end;
 end;
 
 procedure TForm1.PrepararImpressao;
