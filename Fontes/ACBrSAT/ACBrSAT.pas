@@ -600,10 +600,24 @@ begin
 end;
 
 function TACBrSAT.TesteFimAFim(dadosVenda : AnsiString) : String ;
+var
+  XMLRecebido, NomeCFe : String;
 begin
   fsComandoLog := 'TesteFimAFim(' +dadosVenda+' )';
   IniciaComando;
   Result := FinalizaComando( fsSATClass.TesteFimAFim( dadosVenda ) );
+
+  if fsResposta.codigoDeRetorno = 9000 then
+  begin
+     XMLRecebido := DecodeBase64(fsResposta.RetornoLst[5]);
+     CFe.AsXMLString := XMLRecebido;
+
+     if SalvarCFes then
+     begin
+       NomeCFe := PastaCFeVenda + PathDelim + CPREFIXO_CFe + CFe.infCFe.ID + '-teste.xml';
+       WriteToTXT(NomeCFe, XMLRecebido, False, False);
+     end;
+  end;
 end ;
 
 function TACBrSAT.TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: AnsiString;

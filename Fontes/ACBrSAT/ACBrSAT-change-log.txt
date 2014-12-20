@@ -47,6 +47,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 20/12/2014
+-- ACBrSAT --        (por: DSA)
+[*] Mecanismo de Gravação de Log modificado, para permitir que a aplicação trate
+    a gravação das linhas por si..
+[*] TACBrSAT agora passa a descender de TACBrComponent
+[+] Adicionada a propriedade: Rede : TRede, para permitir gerar e manipular os
+    XMLs para configuração da Interface de Rede do SAT
+[*] ConfigurarInterfaceDeRede modificado para caso não receba o conteudo de um
+    XML como parâmetro de entrada, irá gerar um XML com os valores atribuidos a
+    ACBrSAT.Rede
+[*] Metodo TesteFimAFim modificado para salvar o conteudo do XML de resposta em
+    ACBrSAT.CFe, no caso de sucesso.
+
+
 Data: 22/10/2014     (por: DSA)
 -- ACBrSAT --
 [-] Metodo CFe.Clear e CFeCanc.Clear não limpavam a sessão de assinatura
