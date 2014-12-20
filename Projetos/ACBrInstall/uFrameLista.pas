@@ -438,6 +438,9 @@ begin
 		if (ACBr_SAT_Extrato_Fortes_dpk.Checked) and not(ACBr_SAT_dpk.Checked) then
 		  ACBr_SAT_dpk.Checked := true;
 
+    if ACBr_SAT_dpk.Checked and not(PCN2_dpk.Checked) then
+      PCN2_dpk.Checked := True;
+
 		// dependencias da NFe e CTe
 		if (ACBr_NFe2_dpk.Checked) or (ACBr_CTe_dpk.Checked) or (ACBr_NFSe_dpk.Checked) or (ACBr_MDFe_dpk.Checked) then
 		begin
