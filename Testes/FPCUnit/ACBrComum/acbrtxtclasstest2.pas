@@ -1,11 +1,18 @@
-unit acbrtxtclasstest2;
+﻿unit acbrtxtclasstest2;
 
+{$IFDEF FPC}
 {$mode objfpc}{$H+}
-
+{$ENDIF}
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry, ACBrTXTClass;
+  Classes,
+  {$ifdef FPC}
+  fpcunit, testutils, testregistry,
+  {$else}
+  TestFramework,
+  {$endif}
+  SysUtils, ACBrTXTClass;
 
 type
 
@@ -205,7 +212,7 @@ var
 begin
   vValue  := 0.123456;
   CheckEquals('|0000123456', fACBrTXTClass.LFill(vValue, 10, 6, True), 'Erro no Double');
-  //vValue3 := 0.123456; //Não é possível pois Currency só tem precisão de 4 casas decimais
+  //vValue3 := 0.123456; //NÃ£o Ã© possÃ­vel pois Currency sÃ³ tem precisÃ£o de 4 casas decimais
   //CheckEquals('|0000123456', fACBrTXTClass.LFill(vValue3, 10, 6, True), 'Erro no Currency');
 end;
 
@@ -279,6 +286,6 @@ end;
 
 initialization
 
-  RegisterTest(TTACBrTXTClass_MetodosFill_Arredondamentos);
+  RegisterTest(TTACBrTXTClass_MetodosFill_Arredondamentos{$ifndef FPC}.Suite{$endif});
 end.
 

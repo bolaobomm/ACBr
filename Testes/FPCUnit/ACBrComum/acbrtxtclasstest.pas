@@ -1,11 +1,19 @@
-unit ACBrTXTClassTest;
+﻿unit ACBrTXTClassTest;
 
+{$IFDEF FPC}
 {$mode objfpc}{$H+}
+{$ENDIF}
 
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry, ACBrTXTClass;
+  Classes,
+  {$ifdef FPC}
+  fpcunit, testutils, testregistry,
+  {$else}
+  TestFramework,
+  {$endif}
+  SysUtils, ACBrTXTClass;
 
 type
 
@@ -137,6 +145,6 @@ end;
 
 initialization
 
-  RegisterTest(TTACBrTXTClass_MetodosFill_CasosVazios);
+  RegisterTest(TTACBrTXTClass_MetodosFill_CasosVazios{$ifndef FPC}.Suite{$endif});
 end.
 
