@@ -1057,7 +1057,11 @@ begin
      if (Length(Retorno) >= 2) and (copy(Retorno,1,2) <> #0+#0) then  // Retornou Erro, não virá ETX
         Result := True
      else
-        Result := (pos(ETX, RightStr(Retorno,6)) > 0)
+      begin
+        Result := (pos(ETX, RightStr(Retorno,6)) > 0) ;
+        if Result then
+           Result := not fpDevice.Serial.CanReadEx(1000);  // Aguarda por 1 seg sem dados
+      end;
 
   { Nota sobre o VerificaFimLeitura: A Bematech responde muito antes da
     Impressao terminar, o que pode causar problemas com comandos enviados logo

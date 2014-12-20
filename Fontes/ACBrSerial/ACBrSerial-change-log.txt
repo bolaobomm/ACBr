@@ -102,6 +102,10 @@ Data: 19/12/2014
 [-] Aplicado workaround para problema em emissão de Vinculado na Epson TM-T800F
     http://www.projetoacbr.com.br/forum/index.php?showtopic=18825
 
+-- ACBrECFBematech --
+[-] Aplicado workaround para termino prematuro de Relatórios enviados pela Serial
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=19179
+
 Data: 11/12/2014
 -- ACBrECF --  (por: DSA)
 [-] Correção para acentuação no método "GetRodapeImposto", em sistemas com UTF8
