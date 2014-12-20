@@ -70,6 +70,7 @@ type
      fsModelo : TACBrSATModelo ;
      fsConfig : TACBrSATConfig ;
      fsRede   : TRede ;
+     fsStatus : TACBrSATStatus;
 
      fsSalvarCFes: Boolean;
      fsPastaCFeCancelamento: String;
@@ -123,6 +124,8 @@ type
 
      property CFe : TCFe read fsCFe ;
      property CFeCanc : TCFeCanc read fsCFeCanc ;
+
+     property Status : TACBrSATStatus read fsStatus;
      property Resposta : TACBrSATResposta read fsResposta;
      property PrefixoCFe: String read fsPrefixoCFe;
 
@@ -211,6 +214,7 @@ begin
   fsCFe     := TCFe.Create;
   fsCFeCanc := TCFeCanc.Create;
   fsResposta:= TACBrSATResposta.Create;
+  fsStatus  := TACBrSATStatus.Create;
   fsSATClass:= TACBrSATClass.Create( Self ) ;
 
   fsSalvarCFes           := False;
@@ -226,6 +230,7 @@ begin
   fsCFe.Free;
   fsCFeCanc.Free;
   fsResposta.Free;
+  fsStatus.Free;
 
   if Assigned( fsSATClass ) then
     FreeAndNil( fsSATClass );
@@ -493,10 +498,48 @@ begin
 end ;
 
 function TACBrSAT.ConsultarStatusOperacional : String ;
+Var
+  ok : Boolean;
 begin
   fsComandoLog := 'ConsultarStatusOperacional';
   IniciaComando;
   Result := FinalizaComando( fsSATClass.ConsultarStatusOperacional ) ;
+  ok := True;
+
+  if fsResposta.codigoDeRetorno = 10000 then
+  begin
+    with fsRede do
+    begin
+      tipoLan := StrToTipoLan(ok, fsResposta.RetornoLst[06]) ;
+      lanIP   := fsResposta.RetornoLst[07];
+      lanMask := fsResposta.RetornoLst[09];
+      lanGW   := fsResposta.RetornoLst[10];
+      lanDNS1 := fsResposta.RetornoLst[11];
+      lanDNS2 := fsResposta.RetornoLst[12];
+    end;
+
+    with fsStatus do
+    begin
+      Clear;
+      NSERIE         := fsResposta.RetornoLst[05];
+      LAN_MAC        := fsResposta.RetornoLst[08];
+      STATUS_LAN     := StrToStatusLan(ok, fsResposta.RetornoLst[13]) ;;
+      NIVEL_BATERIA  := StrToNivelBateria(ok, fsResposta.RetornoLst[14]) ;;
+      MT_TOTAL       := fsResposta.RetornoLst[15];
+      MT_USADA       := fsResposta.RetornoLst[16];
+      DH_ATUAL       := StoD( fsResposta.RetornoLst[17] );
+      VER_SB         := fsResposta.RetornoLst[18];
+      VER_LAYOUT     := fsResposta.RetornoLst[19];
+      ULTIMO_CFe     := fsResposta.RetornoLst[20];
+      LISTA_INICIAL  := fsResposta.RetornoLst[21];
+      LISTA_FINAL    := fsResposta.RetornoLst[22];
+      DH_CFe         := StoD( fsResposta.RetornoLst[23] );
+      DH_ULTIMA      := StoD( fsResposta.RetornoLst[24] );
+      CERT_EMISSAO   := StoD( fsResposta.RetornoLst[25] ) ;
+      CERT_VENCIMENTO:= StoD( fsResposta.RetornoLst[26] ) ;
+      ESTADO_OPERACAO:= StrToEstadoOperacao(ok, fsResposta.RetornoLst[27]) ;;
+    end;
+  end;
 end ;
 
 function TACBrSAT.DesbloquearSAT : String ;

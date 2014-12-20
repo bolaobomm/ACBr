@@ -137,6 +137,64 @@ type
     property RetornoStr : String read fRetornoStr write SetRetornoStr ;
   end ;
 
+  TACBrSATStatusLan = ( lanCONECTADO, lanNAO_CONECTADO ) ;
+  TACBrSATNivelBateria = ( batALTO, batMEDIO, batBAIXO ) ;
+  TACBrSATEstadoOperacao = ( opDESBLOQUEADO, opBLOQUEIO_SEFAZ,
+                             opBLOQUEIO_CONTRIBUINTE, opBLOQUEIO_AUTONOMO,
+                             opBLOQUEIO_DESATIVACAO );
+
+  { TACBrSATStatus }
+
+  TACBrSATStatus = class
+  private
+    fCERT_EMISSAO: TDateTime;
+    fCERT_VENCIMENTO: TDateTime;
+    fDH_ATUAL: TDateTime;
+    fDH_CFe: TDateTime;
+    fDH_ULTIMA: TDateTime;
+    fESTADO_OPERACAO: TACBrSATEstadoOperacao;
+    fLAN_MAC: String;
+    fLISTA_FINAL: String;
+    fLISTA_INICIAL: String;
+    fMT_TOTAL: String;
+    fMT_USADA: String;
+    fNIVEL_BATERIA: TACBrSATNivelBateria;
+    fNSERIE: String;
+    fSTATUS_LAN: TACBrSATStatusLan;
+    fULTIMO_CFe: String;
+    fVER_LAYOUT: String;
+    fVER_SB: String;
+  public
+    procedure Clear;
+    function StatusLanToStr(const t: TACBrSATStatusLan ): string;
+    function StrToStatusLan(var ok: boolean; const s: string): TACBrSATStatusLan ;
+    function NivelBateriaToStr(const t: TACBrSATNivelBateria ): string;
+    function StrToNivelBateria(var ok: boolean; const s: string): TACBrSATNivelBateria ;
+    function EstadoOperacaoToStr(const t: TACBrSATEstadoOperacao ): string;
+    function StrToEstadoOperacao(var ok: boolean; const s: string): TACBrSATEstadoOperacao ;
+
+    property NSERIE: String read fNSERIE write fNSERIE;
+    property LAN_MAC: String read fLAN_MAC write fLAN_MAC;
+    property STATUS_LAN: TACBrSATStatusLan read fSTATUS_LAN
+       write fSTATUS_LAN;
+    property NIVEL_BATERIA: TACBrSATNivelBateria read fNIVEL_BATERIA
+       write fNIVEL_BATERIA;
+    property MT_TOTAL: String read fMT_TOTAL write fMT_TOTAL;
+    property MT_USADA: String read fMT_USADA write fMT_USADA;
+    property DH_ATUAL: TDateTime read fDH_ATUAL write fDH_ATUAL;
+    property VER_SB: String read fVER_SB write fVER_SB;
+    property VER_LAYOUT: String read fVER_LAYOUT write fVER_LAYOUT;
+    property ULTIMO_CFe: String read fULTIMO_CFe write fULTIMO_CFe;
+    property LISTA_INICIAL: String read fLISTA_INICIAL write fLISTA_INICIAL;
+    property LISTA_FINAL: String read fLISTA_FINAL write fLISTA_FINAL;
+    property DH_CFe: TDateTime read fDH_CFe write fDH_CFe;
+    property DH_ULTIMA: TDateTime read fDH_ULTIMA write fDH_ULTIMA;
+    property CERT_EMISSAO: TDateTime read fCERT_EMISSAO write fCERT_EMISSAO;
+    property CERT_VENCIMENTO: TDateTime read fCERT_VENCIMENTO write fCERT_VENCIMENTO;
+    property ESTADO_OPERACAO: TACBrSATEstadoOperacao read fESTADO_OPERACAO
+       write fESTADO_OPERACAO;
+  end;
+
   { TACBrSATClass }
 
    TACBrSATClass = class( TComponent )
@@ -200,6 +258,72 @@ type
 implementation
 
 Uses ACBrSAT, ACBrUtil, ACBrConsts ;
+
+{ TACBrSATStatus }
+
+procedure TACBrSATStatus.Clear;
+begin
+  fCERT_EMISSAO     := 0;
+  fCERT_VENCIMENTO  := 0;
+  fDH_ATUAL         := 0;
+  fDH_CFe           := 0;
+  fDH_ULTIMA        := 0;
+  fESTADO_OPERACAO  := opDESBLOQUEADO;
+  fLAN_MAC          := '';
+  fLISTA_FINAL      := '';
+  fLISTA_INICIAL    := '';
+  fMT_TOTAL         := '';
+  fMT_USADA         := '';
+  fNIVEL_BATERIA    := batALTO;
+  fNSERIE           := '';
+  fSTATUS_LAN       := lanCONECTADO;
+  fULTIMO_CFe       := '';
+  fVER_LAYOUT       := '';
+  fVER_SB           := '';
+end;
+
+function TACBrSATStatus.StatusLanToStr(const t: TACBrSATStatusLan): string;
+begin
+  result := EnumeradoToStr(t, ['CONECTADO', 'NAO_CONECTADO'], [lanCONECTADO, lanNAO_CONECTADO]);
+end;
+
+function TACBrSATStatus.StrToStatusLan(var ok: boolean; const s: string
+  ): TACBrSATStatusLan;
+begin
+  result := StrToEnumerado(ok, s, ['CONECTADO', 'NAO_CONECTADO'], [lanCONECTADO, lanNAO_CONECTADO]);
+end;
+
+function TACBrSATStatus.NivelBateriaToStr(const t: TACBrSATNivelBateria
+  ): string;
+begin
+  result := EnumeradoToStr(t, ['ALTO', 'MEDIO', 'BAIXO'], [batALTO, batMEDIO, batBAIXO]);
+end;
+
+function TACBrSATStatus.StrToNivelBateria(var ok: boolean; const s: string
+  ): TACBrSATNivelBateria;
+begin
+  result := StrToEnumerado(ok, s, ['ALTO', 'MEDIO', 'BAIXO'], [batALTO, batMEDIO, batBAIXO]);
+end;
+
+function TACBrSATStatus.EstadoOperacaoToStr(const t: TACBrSATEstadoOperacao
+  ): string;
+begin
+  result := EnumeradoToStr(t,
+                ['DESBLOQUEADO', 'BLOQUEIO_SEFAZ', 'BLOQUEIO_CONTRIBUINTE',
+                 'BLOQUEIO_AUTONOMO', 'BLOQUEIO_DESATIVACAO'],
+                [opDESBLOQUEADO, opBLOQUEIO_SEFAZ, opBLOQUEIO_CONTRIBUINTE,
+                 opBLOQUEIO_AUTONOMO, opBLOQUEIO_DESATIVACAO]);
+end;
+
+function TACBrSATStatus.StrToEstadoOperacao(var ok: boolean; const s: string
+  ): TACBrSATEstadoOperacao;
+begin
+  result := StrToEnumerado(ok, s,
+                ['DESBLOQUEADO', 'BLOQUEIO_SEFAZ', 'BLOQUEIO_CONTRIBUINTE',
+                 'BLOQUEIO_AUTONOMO', 'BLOQUEIO_DESATIVACAO'],
+                [opDESBLOQUEADO, opBLOQUEIO_SEFAZ, opBLOQUEIO_CONTRIBUINTE,
+                 opBLOQUEIO_AUTONOMO, opBLOQUEIO_DESATIVACAO]);
+end;
 
 { TACBrSATRespostaClass }
 

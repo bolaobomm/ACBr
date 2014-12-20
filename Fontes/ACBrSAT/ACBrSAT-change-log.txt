@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/12/2014
+-- ACBrSAT --        (por: DSA)
+[+] Adicionada nova propriedade "Status: TACBrSATStatus", que conterá os valores
+    já tratados da resposta ao método: "ConsultarStatusOperacional"
+
 Data: 20/12/2014
 -- ACBrSAT --        (por: DSA)
 [*] Mecanismo de Gravação de Log modificado, para permitir que a aplicação trate
