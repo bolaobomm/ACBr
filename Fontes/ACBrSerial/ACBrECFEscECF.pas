@@ -1723,6 +1723,23 @@ procedure TACBrECFEscECF.AbreCupomVinculado(COO, CodFormaPagto,
 Var
   Sequencia, NumPagtos, P : Integer ;
   APagto, CodPagto : String ;
+
+  procedure EnviaComandoCCD;
+  begin
+    with EscECFComando do
+    begin
+       CMD := 8;
+       AddParamInteger(Sequencia) ;
+       AddParamString(CodFormaPagto) ;
+       AddParamInteger(1) ;   // Qtd Parcelas ??
+       AddParamInteger(1) ;   // Num Parcela ??
+       AddParamString(LeftStr(OnlyNumber(Consumidor.Documento),14)) ;
+       AddParamString(LeftStr(Consumidor.Nome,30)) ;
+       AddParamString(LeftStr(Consumidor.Endereco,79)) ;
+    end;
+    EnviaComando;
+  end;
+
 begin
   // Achando a Sequencia do Pagamento de acordo com o Indice //
   Sequencia := 1;
@@ -1746,18 +1763,21 @@ begin
   except
   end ;
 
-  with EscECFComando do
-  begin
-     CMD := 8;
-     AddParamInteger(Sequencia) ;
-     AddParamString(CodFormaPagto) ;
-     AddParamInteger(1) ;   // Qtd Parcelas ??
-     AddParamInteger(1) ;   // Num Parcela ??
-     AddParamString(LeftStr(OnlyNumber(Consumidor.Documento),14)) ;
-     AddParamString(LeftStr(Consumidor.Nome,30)) ;
-     AddParamString(LeftStr(Consumidor.Endereco,79)) ;
+  try
+    EnviaComandoCCD;
+  except
+    On Exception do
+    begin
+      // Woraround para Epson, que em algumas situações não reconhece o Nu. de Sequencia corretamente
+      if IsEpson and (EscECFResposta.CAT = 16) and (EscECFResposta.RET.ECF = 11) then
+      begin
+        Dec(Sequencia);
+        EnviaComandoCCD;
+      end
+      else
+        raise;
+    end;
   end;
-  EnviaComando;
 
   //RespostasComando.Clear;
   RespostasComando.AddField( 'Pagto'+IntToStr(Sequencia), APagto );

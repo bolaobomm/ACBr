@@ -97,6 +97,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/12/2014
+-- ACBrECFEscECF --  (por: DSA)
+[-] Aplicado workaround para problema em emissão de Vinculado na Epson TM-T800F
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=18825
+
 Data: 11/12/2014
 -- ACBrECF --  (por: DSA)
 [-] Correção para acentuação no método "GetRodapeImposto", em sistemas com UTF8
