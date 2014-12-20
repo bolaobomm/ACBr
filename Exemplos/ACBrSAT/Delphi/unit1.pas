@@ -138,6 +138,49 @@ type
     tsRecebido : TTabSheet ;
     tsLog : TTabSheet ;
     tsGerado : TTabSheet ;
+    tsRede: TTabSheet;
+    gbPPPoE: TGroupBox;
+    lSSID7: TLabel;
+    edRedeUsuario: TEdit;
+    lSSID8: TLabel;
+    edRedeSenha: TEdit;
+    gbIPFix: TGroupBox;
+    lSSID2: TLabel;
+    edRedeIP: TEdit;
+    lSSID3: TLabel;
+    edRedeMask: TEdit;
+    lSSID4: TLabel;
+    edRedeGW: TEdit;
+    lSSID5: TLabel;
+    lSSID6: TLabel;
+    edRedeDNS1: TEdit;
+    edRedeDNS2: TEdit;
+    rgRedeTipoInter: TRadioGroup;
+    gbWiFi: TGroupBox;
+    lSSID: TLabel;
+    edRedeSSID: TEdit;
+    Label24: TLabel;
+    cbxRedeSeg: TComboBox;
+    lSSID1: TLabel;
+    edRedeCodigo: TEdit;
+    rgRedeTipoLan: TRadioGroup;
+    gbProxy: TGroupBox;
+    cbxRedeProxy: TComboBox;
+    lSSID9: TLabel;
+    edRedeProxyIP: TEdit;
+    lSSID10: TLabel;
+    lSSID11: TLabel;
+    edRedeProxyUser: TEdit;
+    lSSID12: TLabel;
+    edRedeProxySenha: TEdit;
+    edRedeProxyPorta: TSpinEdit;
+    tsRedeXML: TTabSheet;
+    mRede: TWebBrowser;
+    N1: TMenuItem;
+    N2: TMenuItem;
+    LerXMLinterfaceRede1: TMenuItem;
+    GerarXMLInterfaceRede1: TMenuItem;
+    SaveDialog1: TSaveDialog;
     {$IFDEF DELPHI9_UP}
      procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
      procedure ACBrSAT1GetsignAC(var Chave: AnsiString);
@@ -181,9 +224,17 @@ type
     procedure mLimparClick(Sender : TObject) ;
     procedure SbArqLogClick(Sender : TObject) ;
     procedure sePagCodChange(Sender: TObject);
+    procedure rgRedeTipoInterClick(Sender: TObject);
+    procedure rgRedeTipoLanClick(Sender: TObject);
+    procedure cbxRedeProxyChange(Sender: TObject);
+    procedure LerXMLinterfaceRede1Click(Sender: TObject);
+    procedure GerarXMLInterfaceRede1Click(Sender: TObject);
+    procedure ACBrSAT1GravarLog(const ALogLine: String;
+      var Tratado: Boolean);
   private
     { private declarations }
 
+    procedure ConfiguraRedeSAT;
     procedure PrepararImpressao;
     procedure TrataErros(Sender : TObject ; E : Exception) ;
     procedure AjustaACBrSAT ;
@@ -197,7 +248,7 @@ var
 
 implementation
 
-Uses typinfo, ACBrUtil, pcnConversao, synacode, IniFiles, ConfiguraSerial,
+Uses typinfo, ACBrUtil, pcnConversao, pcnRede, synacode, IniFiles, ConfiguraSerial,
   RLPrinters, Printers;
 
 {$R *.dfm}
@@ -373,6 +424,25 @@ begin
     cbPreview.Checked      := INI.ReadBool('Fortes','Preview',True);
 
     lImpressora.Caption := INI.ReadString('Printer','Name','');
+
+    rgRedeTipoInter.ItemIndex := INI.ReadInteger('Rede','tipoInter',0);
+    rgRedeTipoLan.ItemIndex   := INI.ReadInteger('Rede','tipoLan',0);
+    edRedeSSID.Text           := INI.ReadString('Rede','SSID','');
+    cbxRedeSeg.ItemIndex      := INI.ReadInteger('Rede','seg',0);
+    edRedeCodigo.Text         := INI.ReadString('Rede','codigo','');
+    edRedeIP.Text             := INI.ReadString('Rede','lanIP','');
+    edRedeMask.Text           := INI.ReadString('Rede','lanMask','');
+    edRedeGW.Text             := INI.ReadString('Rede','lanGW','');
+    edRedeDNS1.Text           := INI.ReadString('Rede','lanDNS1','');
+    edRedeDNS2.Text           := INI.ReadString('Rede','lanDNS2','');
+    edRedeUsuario.Text        := INI.ReadString('Rede','usuario','');
+    edRedeSenha.Text          := INI.ReadString('Rede','senha','');
+    cbxRedeProxy.ItemIndex    := INI.ReadInteger('Rede','proxy',0);
+    edRedeProxyIP.Text        := INI.ReadString('Rede','proxy_ip','');
+    edRedeProxyPorta.Value    := INI.ReadInteger('Rede','proxy_porta',0);
+    edRedeProxyUser.Text      := INI.ReadString('Rede','proxy_user','');
+    edRedeProxySenha.Text     := INI.ReadString('Rede','proxy_senha','');
+
   finally
      INI.Free ;
   end ;
@@ -421,6 +491,25 @@ begin
     INI.WriteBool('Fortes','Preview',cbPreview.Checked);
 
     INI.WriteString('Printer','Name',lImpressora.Caption);
+
+    INI.WriteInteger('Rede','tipoInter',rgRedeTipoInter.ItemIndex);
+    INI.WriteInteger('Rede','tipoLan',rgRedeTipoLan.ItemIndex);
+    INI.WriteString('Rede','SSID',edRedeSSID.Text);
+    INI.WriteInteger('Rede','seg',cbxRedeSeg.ItemIndex);
+    INI.WriteString('Rede','codigo',edRedeCodigo.Text);
+    INI.WriteString('Rede','lanIP',edRedeIP.Text);
+    INI.WriteString('Rede','lanMask',edRedeMask.Text);
+    INI.WriteString('Rede','lanGW',edRedeGW.Text);
+    INI.WriteString('Rede','lanDNS1',edRedeDNS1.Text);
+    INI.WriteString('Rede','lanDNS2',edRedeDNS2.Text);
+    INI.WriteString('Rede','usuario',edRedeUsuario.Text);
+    INI.WriteString('Rede','senha',edRedeSenha.Text);
+    INI.WriteInteger('Rede','proxy',cbxRedeProxy.ItemIndex);
+    INI.WriteString('Rede','proxy_ip',edRedeProxyIP.Text);
+    INI.WriteInteger('Rede','proxy_porta',edRedeProxyPorta.Value);
+    INI.WriteString('Rede','proxy_user',edRedeProxyUser.Text);
+    INI.WriteString('Rede','proxy_senha',edRedeProxySenha.Text);
+    
   finally
      INI.Free ;
   end ;
@@ -533,10 +622,10 @@ begin
 
   ACBrSAT1.TesteFimAFim( mVendaEnviar.Text );
 
-  if ACBrSAT1.Resposta.codigoDeRetorno = 6000 then
+  if ACBrSAT1.Resposta.codigoDeRetorno = 9000 then
   begin
-     LoadXML( DecodeBase64(ACBrSAT1.Resposta.RetornoLst[6]), mRecebido );
-     PageControl1.ActivePage := tsRecebido;
+    LoadXML( ACBrSAT1.CFe.AsXMLString,  mRecebido);
+    PageControl1.ActivePage := tsRecebido;
   end;
 end;
 
@@ -574,21 +663,11 @@ begin
 end;
 
 procedure TForm1.mConfigurarInterfaceRedeClick(Sender : TObject) ;
-Var
-  SL : TStringList;
 begin
-  OpenDialog1.Filter := 'Arquivo XML|*.xml';
-  if OpenDialog1.Execute then
-  begin
-    SL := TStringList.Create;
-    try
-      SL.LoadFromFile( OpenDialog1.FileName );
+  ConfiguraRedeSAT;
+  LoadXML( ACBrSAT1.Rede.AsXMLString,  mRede );
 
-      ACBrSAT1.ConfigurarInterfaceDeRede( SL.Text );
-    finally
-      SL.Free;
-    end ;
-  end ;
+  ACBrSAT1.ConfigurarInterfaceDeRede( );
 end;
 
 procedure TForm1.mConsultarNumeroSessaoClick(Sender : TObject) ;
@@ -936,6 +1015,106 @@ begin
   WriteToTXT( PathWithDelim(ExtractFileDir(application.ExeName))+MyWebBrowser.Name+'-temp.xml',
               AXML, False, False);
   MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName))+MyWebBrowser.Name+'-temp.xml');
+end;
+
+procedure TForm1.rgRedeTipoInterClick(Sender: TObject);
+begin
+  gbWiFi.Visible := (rgRedeTipoInter.ItemIndex = 1);
+end;
+
+procedure TForm1.rgRedeTipoLanClick(Sender: TObject);
+begin
+  gbPPPoE.Visible := (rgRedeTipoLan.ItemIndex = 1);
+  gbIPFix.Visible := (rgRedeTipoLan.ItemIndex = 2);
+end;
+
+procedure TForm1.cbxRedeProxyChange(Sender: TObject);
+begin
+  edRedeProxyIP.Enabled    := (cbxRedeProxy.ItemIndex > 0);
+  edRedeProxyPorta.Enabled := edRedeProxyIP.Enabled;
+  edRedeProxyUser.Enabled  := edRedeProxyIP.Enabled;
+  edRedeProxySenha.Enabled := edRedeProxyIP.Enabled;
+end;
+
+procedure TForm1.LerXMLinterfaceRede1Click(Sender: TObject);
+begin
+  OpenDialog1.Filter := 'Arquivo XML|*.xml';
+  if OpenDialog1.Execute then
+  begin
+    ACBrSAT1.Rede.LoadFromFile( OpenDialog1.FileName );
+
+    with ACBrSAT1.Rede do
+    begin
+      rgRedeTipoInter.ItemIndex := Integer(tipoInter);
+      edRedeSSID.Text           := SSID ;
+      cbxRedeSeg.ItemIndex      := Integer(seg) ;
+      edRedeCodigo.Text         := codigo ;
+      rgRedeTipoLan.ItemIndex   := Integer(tipoLan);
+      edRedeIP.Text             := lanIP;
+      edRedeMask.Text           := lanMask;
+      edRedeGW.Text             := lanGW;
+      edRedeDNS1.Text           := lanDNS1;
+      edRedeDNS2.Text           := lanDNS2;
+      edRedeUsuario.Text        := usuario;
+      edRedeSenha.Text          := senha;
+      cbxRedeProxy.ItemIndex    := proxy;
+      edRedeProxyIP.Text        := proxy_ip;
+      edRedeProxyPorta.Value    := proxy_porta;
+      edRedeProxyUser.Text      := proxy_user;
+      edRedeProxySenha.Text     := proxy_senha;
+    end;
+
+    ACBrSAT1.ConfigurarInterfaceDeRede( );
+
+  end ;
+end;
+
+procedure TForm1.GerarXMLInterfaceRede1Click(Sender: TObject);
+begin
+  ConfiguraRedeSAT;
+  LoadXML( ACBrSAT1.Rede.AsXMLString,  mRede );
+
+  PageControl1.ActivePage := tsRedeXML;
+
+  SaveDialog1.Filter   := 'Arquivo XML|*.xml';
+  SaveDialog1.FileName := 'Rede.xml';
+  if SaveDialog1.Execute then
+  begin
+     ACBrSAT1.Rede.SaveToFile(SaveDialog1.FileName);
+  end;
+end;
+
+procedure TForm1.ConfiguraRedeSAT;
+begin
+  with ACBrSAT1.Rede do
+  begin
+    tipoInter   := TTipoInterface( rgRedeTipoInter.ItemIndex );
+    SSID        := edRedeSSID.Text ;
+    seg         := TSegSemFio( cbxRedeSeg.ItemIndex ) ;
+    codigo      := edRedeCodigo.Text ;
+    tipoLan     := TTipoLan( rgRedeTipoLan.ItemIndex ) ;
+    lanIP       := edRedeIP.Text ;
+    lanMask     := edRedeMask.Text ;
+    lanGW       := edRedeGW.Text ;
+    lanDNS1     := edRedeDNS1.Text ;
+    lanDNS2     := edRedeDNS2.Text ;
+    usuario     := edRedeUsuario.Text ;
+    senha       := edRedeSenha.Text ;
+    proxy       := cbxRedeProxy.ItemIndex ;
+    proxy_ip    := edRedeProxyIP.Text ;
+    proxy_porta := edRedeProxyPorta.Value ;
+    proxy_user  := edRedeProxyUser.Text ;
+    proxy_senha := edRedeProxySenha.Text ;
+  end;
+end;
+
+procedure TForm1.ACBrSAT1GravarLog(const ALogLine: String;
+  var Tratado: Boolean);
+begin
+  mLog.Lines.Add(ALogLine);
+  StatusBar1.Panels[0].Text := IntToStr( ACBrSAT1.Resposta.numeroSessao );
+  StatusBar1.Panels[1].Text := IntToStr( ACBrSAT1.Resposta.codigoDeRetorno );
+  Tratado := False;
 end;
 
 end.

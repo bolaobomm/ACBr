@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 338
   Top = 132
-  Width = 727
+  Width = 810
   Height = 501
   Caption = 'SAT Teste - Projeto ACBr'
   Color = clBtnFace
@@ -19,7 +19,7 @@ object Form1: TForm1
   object Splitter1: TSplitter
     Left = 0
     Top = 202
-    Width = 711
+    Width = 794
     Height = 6
     Cursor = crVSplit
     Align = alTop
@@ -27,9 +27,9 @@ object Form1: TForm1
   object PageControl1: TPageControl
     Left = 0
     Top = 208
-    Width = 711
+    Width = 794
     Height = 212
-    ActivePage = tsGerado
+    ActivePage = tsLog
     Align = alClient
     TabOrder = 0
     object tsLog: TTabSheet
@@ -37,9 +37,10 @@ object Form1: TForm1
       object mLog: TMemo
         Left = 0
         Top = 0
-        Width = 703
+        Width = 786
         Height = 184
         Align = alClient
+        ScrollBars = ssBoth
         TabOrder = 0
       end
     end
@@ -48,7 +49,7 @@ object Form1: TForm1
       inline mVendaEnviar: TMemo
         Left = 0
         Top = 0
-        Width = 703
+        Width = 786
         Height = 184
         Align = alClient
         ScrollBars = ssBoth
@@ -60,12 +61,12 @@ object Form1: TForm1
       inline mRecebido: TWebBrowser
         Left = 0
         Top = 0
-        Width = 703
+        Width = 786
         Height = 184
         Align = alClient
         TabOrder = 0
         ControlData = {
-          4C000000A8480000041300000000000000000000000000000000000000000000
+          4C0000003C510000041300000000000000000000000000000000000000000000
           000000004C000000000000000000000001000000E0D057007335CF11AE690800
           2B2E126208000000000000004C0000000114020000000000C000000000000046
           8000000000000000000000000000000000000000000000000000000000000000
@@ -77,7 +78,7 @@ object Form1: TForm1
       inline mCancelamentoEnviar: TMemo
         Left = 0
         Top = 0
-        Width = 703
+        Width = 786
         Height = 159
         Align = alClient
         ScrollBars = ssBoth
@@ -86,7 +87,7 @@ object Form1: TForm1
       object Panel2: TPanel
         Left = 0
         Top = 159
-        Width = 703
+        Width = 786
         Height = 25
         Align = alBottom
         TabOrder = 1
@@ -110,11 +111,29 @@ object Form1: TForm1
         end
       end
     end
+    object tsRedeXML: TTabSheet
+      Caption = 'XML Rede'
+      ImageIndex = 4
+      inline mRede: TWebBrowser
+        Left = 0
+        Top = 0
+        Width = 786
+        Height = 184
+        Align = alClient
+        TabOrder = 0
+        ControlData = {
+          4C0000003C510000041300000000000000000000000000000000000000000000
+          000000004C000000000000000000000001000000E0D057007335CF11AE690800
+          2B2E126208000000000000004C0000000114020000000000C000000000000046
+          8000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000100000000000000000000000000000000000000}
+      end
+    end
   end
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 711
+    Width = 794
     Height = 202
     Align = alTop
     TabOrder = 2
@@ -189,7 +208,7 @@ object Form1: TForm1
     object GroupBox1: TGroupBox
       Left = 170
       Top = 1
-      Width = 540
+      Width = 623
       Height = 200
       Align = alClient
       Caption = 'Configura'#231#227'o'
@@ -197,15 +216,15 @@ object Form1: TForm1
       object PageControl2: TPageControl
         Left = 2
         Top = 15
-        Width = 536
+        Width = 619
         Height = 183
-        ActivePage = Impressao
+        ActivePage = tsRede
         Align = alClient
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
           DesignSize = (
-            528
+            611
             155)
           object Label9: TLabel
             Left = 21
@@ -300,7 +319,7 @@ object Form1: TForm1
           object edNomeDLL: TEdit
             Left = 217
             Top = 24
-            Width = 305
+            Width = 388
             Height = 21
             Cursor = crIBeam
             Anchors = [akLeft, akTop, akRight]
@@ -372,7 +391,7 @@ object Form1: TForm1
           object cbxAmbiente: TComboBox
             Left = 385
             Top = 72
-            Width = 137
+            Width = 220
             Height = 21
             Style = csDropDownList
             Anchors = [akLeft, akTop, akRight]
@@ -502,7 +521,7 @@ object Form1: TForm1
         object tsDadosSwHouse: TTabSheet
           Caption = 'Dados Sw.House'
           DesignSize = (
-            528
+            611
             155)
           object Label2: TLabel
             Left = 10
@@ -525,7 +544,7 @@ object Form1: TForm1
           object edtSwHCNPJ: TEdit
             Left = 10
             Top = 31
-            Width = 246
+            Width = 329
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             TabOrder = 0
@@ -533,10 +552,334 @@ object Form1: TForm1
           object edtSwHAssinatura: TEdit
             Left = 10
             Top = 89
-            Width = 511
+            Width = 594
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             TabOrder = 1
+          end
+        end
+        object tsRede: TTabSheet
+          Caption = 'Rede'
+          ImageIndex = 4
+          object gbIPFix: TGroupBox
+            Left = 160
+            Top = 48
+            Width = 289
+            Height = 105
+            Caption = 'IPFIX'
+            TabOrder = 1
+            Visible = False
+            object lSSID2: TLabel
+              Left = 36
+              Top = 21
+              Width = 10
+              Height = 13
+              Caption = 'IP'
+              Color = clBtnFace
+              ParentColor = False
+            end
+            object lSSID3: TLabel
+              Left = 21
+              Top = 51
+              Width = 26
+              Height = 13
+              Caption = 'Mask'
+              Color = clBtnFace
+              ParentColor = False
+            end
+            object lSSID4: TLabel
+              Left = 4
+              Top = 81
+              Width = 42
+              Height = 13
+              Caption = 'Gateway'
+              Color = clBtnFace
+              ParentColor = False
+            end
+            object lSSID5: TLabel
+              Left = 160
+              Top = 21
+              Width = 29
+              Height = 14
+              Caption = 'DNS1'
+              Color = clBtnFace
+              ParentColor = False
+            end
+            object lSSID6: TLabel
+              Left = 159
+              Top = 49
+              Width = 29
+              Height = 14
+              Caption = 'DNS2'
+              Color = clBtnFace
+              ParentColor = False
+            end
+            object edRedeIP: TEdit
+              Left = 60
+              Top = 13
+              Width = 88
+              Height = 21
+              TabOrder = 0
+            end
+            object edRedeMask: TEdit
+              Left = 60
+              Top = 43
+              Width = 88
+              Height = 21
+              TabOrder = 1
+            end
+            object edRedeGW: TEdit
+              Left = 60
+              Top = 73
+              Width = 88
+              Height = 21
+              TabOrder = 2
+            end
+            object edRedeDNS1: TEdit
+              Left = 196
+              Top = 13
+              Width = 87
+              Height = 21
+              TabOrder = 3
+            end
+            object edRedeDNS2: TEdit
+              Left = 196
+              Top = 43
+              Width = 87
+              Height = 21
+              TabOrder = 4
+            end
+          end
+          object gbPPPoE: TGroupBox
+            Left = 160
+            Top = 48
+            Width = 289
+            Height = 105
+            Caption = 'PPPoE'
+            TabOrder = 0
+            Visible = False
+            object lSSID7: TLabel
+              Left = 17
+              Top = 24
+              Width = 36
+              Height = 13
+              Caption = 'Usuario'
+              Color = clBtnFace
+              ParentColor = False
+            end
+            object lSSID8: TLabel
+              Left = 17
+              Top = 54
+              Width = 31
+              Height = 13
+              Caption = 'Senha'
+              Color = clBtnFace
+              ParentColor = False
+            end
+            object edRedeUsuario: TEdit
+              Left = 64
+              Top = 16
+              Width = 88
+              Height = 21
+              TabOrder = 0
+            end
+            object edRedeSenha: TEdit
+              Left = 64
+              Top = 46
+              Width = 88
+              Height = 21
+              TabOrder = 1
+            end
+          end
+          object rgRedeTipoInter: TRadioGroup
+            Left = 4
+            Top = 0
+            Width = 144
+            Height = 41
+            Caption = 'Tipo Rede'
+            Columns = 2
+            ItemIndex = 0
+            Items.Strings = (
+              'ETHE'
+              'WIFI')
+            TabOrder = 2
+            OnClick = rgRedeTipoInterClick
+          end
+          object gbWiFi: TGroupBox
+            Left = 4
+            Top = 48
+            Width = 144
+            Height = 105
+            Caption = 'WiFi'
+            TabOrder = 3
+            Visible = False
+            object lSSID: TLabel
+              Left = 8
+              Top = 22
+              Width = 28
+              Height = 13
+              Caption = 'SSID:'
+              Color = clBtnFace
+              ParentColor = False
+            end
+            object Label24: TLabel
+              Left = 8
+              Top = 52
+              Width = 22
+              Height = 13
+              Caption = 'Seg:'
+              Color = clBtnFace
+              ParentColor = False
+            end
+            object lSSID1: TLabel
+              Left = 8
+              Top = 82
+              Width = 31
+              Height = 13
+              Caption = 'Senha'
+              Color = clBtnFace
+              ParentColor = False
+            end
+            object edRedeSSID: TEdit
+              Left = 47
+              Top = 14
+              Width = 82
+              Height = 21
+              TabOrder = 0
+            end
+            object cbxRedeSeg: TComboBox
+              Left = 47
+              Top = 44
+              Width = 82
+              Height = 21
+              Style = csDropDownList
+              ItemHeight = 13
+              ItemIndex = 1
+              TabOrder = 1
+              Text = 'WEP'
+              Items.Strings = (
+                'NONE'
+                'WEP'
+                'WPA-PERSONAL'
+                'WPA-ENTERPRISE')
+            end
+            object edRedeCodigo: TEdit
+              Left = 47
+              Top = 74
+              Width = 82
+              Height = 21
+              TabOrder = 2
+            end
+          end
+          object rgRedeTipoLan: TRadioGroup
+            Left = 160
+            Top = 0
+            Width = 288
+            Height = 41
+            Caption = 'Tipo Rede'
+            Columns = 3
+            ItemIndex = 0
+            Items.Strings = (
+              'DHCP'
+              'PPPoE'
+              'IPFIX')
+            TabOrder = 4
+            OnClick = rgRedeTipoLanClick
+          end
+          object gbProxy: TGroupBox
+            Left = 458
+            Top = 0
+            Width = 150
+            Height = 153
+            Caption = 'Proxy'
+            TabOrder = 5
+            object lSSID9: TLabel
+              Left = 24
+              Top = 48
+              Width = 10
+              Height = 13
+              Caption = 'IP'
+              Color = clBtnFace
+              ParentColor = False
+            end
+            object lSSID10: TLabel
+              Left = 11
+              Top = 78
+              Width = 25
+              Height = 13
+              Caption = 'Porta'
+              Color = clBtnFace
+              ParentColor = False
+            end
+            object lSSID11: TLabel
+              Left = 3
+              Top = 104
+              Width = 36
+              Height = 13
+              Caption = 'Usuario'
+              Color = clBtnFace
+              ParentColor = False
+            end
+            object lSSID12: TLabel
+              Left = 8
+              Top = 130
+              Width = 31
+              Height = 13
+              Caption = 'Senha'
+              Color = clBtnFace
+              ParentColor = False
+            end
+            object cbxRedeProxy: TComboBox
+              Left = 8
+              Top = 16
+              Width = 129
+              Height = 21
+              Style = csDropDownList
+              ItemHeight = 13
+              ItemIndex = 0
+              TabOrder = 0
+              Text = '0= N'#227'o usa proxy'
+              OnChange = cbxRedeProxyChange
+              Items.Strings = (
+                '0= N'#227'o usa proxy'
+                '1= Proxy com configura'#231#227'o'
+                '2= Proxy transparente')
+            end
+            object edRedeProxyIP: TEdit
+              Left = 49
+              Top = 44
+              Width = 88
+              Height = 21
+              Enabled = False
+              TabOrder = 1
+            end
+            object edRedeProxyUser: TEdit
+              Left = 49
+              Top = 96
+              Width = 88
+              Height = 21
+              Enabled = False
+              TabOrder = 2
+            end
+            object edRedeProxySenha: TEdit
+              Left = 49
+              Top = 122
+              Width = 88
+              Height = 21
+              Enabled = False
+              TabOrder = 3
+            end
+            object edRedeProxyPorta: TSpinEdit
+              Left = 49
+              Top = 70
+              Width = 88
+              Height = 22
+              Enabled = False
+              MaxValue = 999999
+              MinValue = 0
+              TabOrder = 4
+              Value = 0
+            end
           end
         end
         object Impressao: TTabSheet
@@ -544,7 +887,7 @@ object Form1: TForm1
           object GroupBox3: TGroupBox
             Left = 0
             Top = 0
-            Width = 272
+            Width = 355
             Height = 155
             Align = alClient
             Caption = 'Fortes'
@@ -681,7 +1024,7 @@ object Form1: TForm1
             end
           end
           object GroupBox4: TGroupBox
-            Left = 272
+            Left = 355
             Top = 0
             Width = 256
             Height = 155
@@ -766,7 +1109,7 @@ object Form1: TForm1
   object StatusBar1: TStatusBar
     Left = 0
     Top = 420
-    Width = 711
+    Width = 794
     Height = 23
     Panels = <
       item
@@ -864,8 +1207,22 @@ object Form1: TForm1
     object MenuItem7: TMenuItem
       Caption = 'Configura'#231#227'o'
       object mAtaulizarSoftwareSAT: TMenuItem
-        Caption = 'Ataulizar Software SAT'
+        Caption = 'Atualizar Software SAT'
         OnClick = mAtaulizarSoftwareSATClick
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object LerXMLinterfaceRede1: TMenuItem
+        Caption = 'Ler XML Interface Rede'
+        OnClick = LerXMLinterfaceRede1Click
+      end
+      object GerarXMLInterfaceRede1: TMenuItem
+        Caption = 'Gerar XML Interface Rede'
+        OnClick = GerarXMLInterfaceRede1Click
+      end
+      object N2: TMenuItem
+        Caption = '-'
       end
       object mConfigurarInterfaceRede: TMenuItem
         Caption = 'Configurar Interface Rede'
@@ -895,7 +1252,7 @@ object Form1: TForm1
   object ACBrSAT1: TACBrSAT
     Extrato = ACBrSATExtratoFortes1
     NomeDLL = 'c:\sat\SAT.DLL'
-    OnLog = ACBrSAT1Log
+    OnGravarLog = ACBrSAT1GravarLog
     Config.infCFe_versaoDadosEnt = 0.050000000000000000
     Config.ide_numeroCaixa = 0
     Config.ide_tpAmb = taHomologacao
@@ -904,6 +1261,11 @@ object Form1: TForm1
     Config.emit_indRatISSQN = irSim
     Config.EhUTF8 = True
     Config.PaginaDeCodigo = 65001
+    Rede.tipoInter = infETHE
+    Rede.seg = segNONE
+    Rede.tipoLan = lanDHCP
+    Rede.proxy = 0
+    Rede.proxy_porta = 0
     OnGetcodigoDeAtivacao = ACBrSAT1GetcodigoDeAtivacao
     OnGetsignAC = ACBrSAT1GetsignAC
     Left = 64
@@ -930,5 +1292,9 @@ object Form1: TForm1
   object PrintDialog1: TPrintDialog
     Left = 608
     Top = 256
+  end
+  object SaveDialog1: TSaveDialog
+    Left = 260
+    Top = 280
   end
 end

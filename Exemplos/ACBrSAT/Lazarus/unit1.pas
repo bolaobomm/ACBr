@@ -337,7 +337,7 @@ begin
   mLog.Lines.Add(ALogLine);
   StatusBar1.Panels[0].Text := IntToStr( ACBrSAT1.Resposta.numeroSessao );
   StatusBar1.Panels[1].Text := IntToStr( ACBrSAT1.Resposta.codigoDeRetorno );
-  Tratado := True;
+  Tratado := False;
 end;
 
 procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
@@ -636,10 +636,10 @@ begin
 
   ACBrSAT1.TesteFimAFim( mVendaEnviar.Text );
 
-  if ACBrSAT1.Resposta.codigoDeRetorno = 6000 then
+  if ACBrSAT1.Resposta.codigoDeRetorno = 9000 then
   begin
-     mRecebido.Text := DecodeBase64(ACBrSAT1.Resposta.RetornoLst[6]) ;
-     PageControl1.ActivePage := tsRecebido;
+    mRecebido.Lines.Text := ACBrSAT1.CFe.AsXMLString;
+    PageControl1.ActivePage := tsRecebido;
   end;
 end;
 
@@ -694,8 +694,6 @@ begin
   begin
     ACBrSAT1.Rede.LoadFromFile( OpenDialog1.FileName );
 
-    ACBrSAT1.ConfigurarInterfaceDeRede( );
-
     with ACBrSAT1.Rede do
     begin
       rgRedeTipoInter.ItemIndex := Integer(tipoInter);
@@ -716,6 +714,9 @@ begin
       edRedeProxyUser.Text      := proxy_user;
       edRedeProxySenha.Text     := proxy_senha;
     end;
+
+    ACBrSAT1.ConfigurarInterfaceDeRede( );
+
   end ;
 end;
 
