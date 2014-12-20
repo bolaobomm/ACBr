@@ -42,14 +42,6 @@ interface
 
 uses
   SysUtils, Classes,
-{$IFDEF DELPHI16_UP}
-  Vcl.Dialogs,
-{$ELSE}
-  Dialogs,
-{$ENDIF}
-{$IFNDEF VER130}
-  Variants,
-{$ENDIF}
   pcnConversao, pcnSignature;
 
 type

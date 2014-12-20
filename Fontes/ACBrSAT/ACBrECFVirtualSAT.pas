@@ -527,3 +527,7 @@ begin
 end;
 
 end.
+
+// TODO:
+// Buferizar o cancelamento, para não perder a sequencia
+// Criar formas de pagamento padrão (de acordo com as da lei)

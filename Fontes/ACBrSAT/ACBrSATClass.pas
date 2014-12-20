@@ -74,7 +74,6 @@ type
 
   { Eventos do componente }
   TACBrSATGetChave = procedure(var Chave: AnsiString) of object ;
-  TACBrSATDoLog = procedure(const AString: String) of object ;
 
   { TACBrSATConfig }
 

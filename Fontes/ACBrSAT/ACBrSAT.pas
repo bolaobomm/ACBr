@@ -38,7 +38,7 @@ unit ACBrSAT;
 interface
 
 uses
-  Classes, SysUtils, pcnCFe, pcnCFeCanc, ACBrSATClass,
+  Classes, SysUtils, pcnCFe, pcnRede, pcnCFeCanc, ACBrBase, ACBrSATClass,
   ACBrSATExtratoClass, synacode, StrUtils
   {$IFNDEF NOGUI}
     {$IFDEF FPC} ,LResources {$ENDIF}
@@ -49,14 +49,14 @@ const CPREFIXO_CFe = 'CFe';
 type
    { TACBrSAT }
 
-   TACBrSAT = class( TComponent )
+   TACBrSAT = class( TACBrComponent )
    private
      fsCFe : TCFe ;
      fsCFeCanc : TCFeCanc ;
      fsnumeroSessao : Integer ;
      fsOnGetcodigoDeAtivacao : TACBrSATGetChave ;
      fsOnGetsignAC : TACBrSATGetChave ;
-     fsOnLog : TACBrSATDoLog ;
+     fsOnGravarLog : TACBrGravarLog ;
      fsNomeDLL : String ;
      fsPrefixoCFe: String;
      fsResposta : TACBrSATResposta ;
@@ -69,6 +69,7 @@ type
      fsInicializado : Boolean ;
      fsModelo : TACBrSATModelo ;
      fsConfig : TACBrSATConfig ;
+     fsRede   : TRede ;
 
      fsSalvarCFes: Boolean;
      fsPastaCFeCancelamento: String;
@@ -140,7 +141,7 @@ type
        String ; overload;
      function ComunicarCertificadoICPBRASIL( certificado : AnsiString ) :
        String ;
-     function ConfigurarInterfaceDeRede( dadosConfiguracao : AnsiString ) :
+     function ConfigurarInterfaceDeRede( dadosConfiguracao : AnsiString = '') :
        String ;
      function ConsultarNumeroSessao( cNumeroDeSessao : Integer) : String ;
      function ConsultarSAT : String ;
@@ -169,9 +170,10 @@ type
 
      property About : String read GetAbout write SetAbout stored False ;
      property ArqLOG : String read fsArqLOG write fsArqLOG ;
-     property OnLog : TACBrSATDoLog read fsOnLog write fsOnLog;
+     property OnGravarLog : TACBrGravarLog read fsOnGravarLog write fsOnGravarLog;
 
      property Config : TACBrSATConfig read fsConfig write fsConfig;
+     property Rede : TRede read fsRede write fsRede;
 
      property OnGetcodigoDeAtivacao : TACBrSATGetChave read fsOnGetcodigoDeAtivacao
         write fsOnGetcodigoDeAtivacao;
@@ -202,9 +204,10 @@ begin
 
   fsOnGetcodigoDeAtivacao := nil;
   fsOnGetsignAC           := nil;
-  fsOnLog                 := nil;
+  fsOnGravarLog           := nil;
 
   fsConfig  := TACBrSATConfig.Create;
+  fsRede    := TRede.Create;
   fsCFe     := TCFe.Create;
   fsCFeCanc := TCFeCanc.Create;
   fsResposta:= TACBrSATResposta.Create;
@@ -219,6 +222,7 @@ end ;
 destructor TACBrSAT.Destroy ;
 begin
   fsConfig.Free;
+  fsRede.Free;
   fsCFe.Free;
   fsCFeCanc.Free;
   fsResposta.Free;
@@ -284,8 +288,7 @@ begin
   Result := fsRespostaComando;
 
   fsComandoLog := '';
-  AStr := '   '+FormatDateTime('hh:nn:ss:zzz',now) +
-          ' - numeroSessao: '+IntToStr(numeroSessao) ;
+  AStr := 'NumeroSessao: '+IntToStr(numeroSessao) ;
   if fsRespostaComando <> '' then
      AStr := AStr + ' - Resposta:'+fsRespostaComando;
 
@@ -312,11 +315,15 @@ begin
 end;
 
 procedure TACBrSAT.DoLog(AString : String) ;
+var
+  Tratado: Boolean;
 begin
-  GravaLog(AString);
+  Tratado := False;
+  if Assigned( fsOnGravarLog ) then
+    fsOnGravarLog( AString, Tratado );
 
-  if Assigned( fsOnLog ) then
-    fsOnLog( AString );
+  if not Tratado then
+    GravaLog( AString );
 end ;
 
 procedure TACBrSAT.GravaLog(AString : AnsiString) ;
@@ -324,7 +331,7 @@ begin
   if (ArqLOG = '') then
     exit;
 
-  WriteToTXT( ArqLOG, AString );
+  WriteLog( ArqLOG, ' - '+FormatDateTime('hh:nn:ss:zzz',now) + ' - ' + AString );
 end ;
 
 function TACBrSAT.GerarnumeroSessao : Integer ;
@@ -460,6 +467,11 @@ end ;
 function TACBrSAT.ConfigurarInterfaceDeRede(dadosConfiguracao : AnsiString
   ) : String ;
 begin
+  if dadosConfiguracao = '' then
+    dadosConfiguracao := Rede.AsXMLString
+  else
+    Rede.AsXMLString := dadosConfiguracao;
+
   fsComandoLog := 'ConfigurarInterfaceDeRede( '+dadosConfiguracao+' )';
   IniciaComando;
   Result := FinalizaComando( fsSATClass.ConfigurarInterfaceDeRede( dadosConfiguracao ) );
