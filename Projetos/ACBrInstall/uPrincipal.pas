@@ -656,9 +656,9 @@ procedure TfrmPrincipal.AddLibrarySearchPath;
               begin
                  with oACBr.Installations[iVersion] do
                  begin
-                   //AddToLibrarySearchPath(ADirRoot + oDirList.Name, tPlatform);
+                   AddToLibrarySearchPath(ADirRoot + oDirList.Name, tPlatform);
                    AddToLibraryBrowsingPath(ADirRoot + oDirList.Name, tPlatform);
-                   RemoveFromLibrarySearchPath(ADirRoot + oDirList.Name, tPlatform);
+                   //RemoveFromLibrarySearchPath(ADirRoot + oDirList.Name, tPlatform);
                  end;
                  //-- Procura subpastas
                  FindDirs(ADirRoot + oDirList.Name);
@@ -679,7 +679,7 @@ begin
   // --
   with oACBr.Installations[iVersion] do
   begin
-    //AddToLibraryBrowsingPath(sDirLibrary, tPlatform);
+    AddToLibraryBrowsingPath(sDirLibrary, tPlatform);
     AddToLibrarySearchPath(sDirLibrary, tPlatform);
     AddToDebugDCUPath(sDirLibrary, tPlatform);
   end;

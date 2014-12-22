@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/12/2014
+[-] Correção de bug adicionando novamente processos removidos pois a compilação dos pacotes não consegue 
+		encontrar sem os mesmos
+		por: Juliomar Marchetti
+
 18/12/2014
 [*] Adição de funcionalidades para desmarcar opções e descrições
 	  http://www.projetoacbr.com.br/forum/index.php?/topic/19198-altera%C3%A7%C3%B5es-no-acbrinstall/
