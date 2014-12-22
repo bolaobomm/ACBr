@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/12/2014
+[-] Na unit pnfsNFSeR.pas esta ocorrendo um erro de compilação no lazarus,
+    foi feita uma alteração a fim de resolver o problema.
+    Por: Italo Jurisato Junior
 [*] Liberado a funcionalidade GerarNfse para o provedor Digifred.
     Por: Italo Jurisato Junior
 [*] Alteração visando corrigir o problema de consultar lote rps no provedor

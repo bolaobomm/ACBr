@@ -1561,7 +1561,9 @@ begin
    NFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'cNFS-e');
    NFSe.SeriePrestacao    := Leitor.rCampo(tcStr, 'serie');
    NFSe.Competencia       := Leitor.rCampo(tcStr, 'dEmi');
-   NFSe.DataEmissao       := Leitor.rCampo(tcDat, 'dEmi') + StrToTimeDef(Leitor.rCampo(tcStr, 'hEmi'), 0);
+//   NFSe.DataEmissao       := Leitor.rCampo(tcDat, 'dEmi') + StrToTimeDef(Leitor.rCampo(tcStr, 'hEmi'), 0);
+   // Alterado por Italo em 22/12/2014
+   NFSe.DataEmissao       := StrToDateTimeDef(Leitor.rCampo(tcStr, 'dEmi') + ' ' + Leitor.rCampo(tcStr, 'hEmi'), 0);
    NFSe.Status            := StrToEnumerado(ok, Leitor.rCampo(tcStr, 'anulada'),['N','S'],[srNormal, srCancelado]);
    NFSe.InfID.ID          := SomenteNumeros(NFSe.CodigoVerificacao);
 
