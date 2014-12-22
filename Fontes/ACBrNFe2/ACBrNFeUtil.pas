@@ -2077,7 +2077,7 @@ begin
    31: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // MG
    15: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PA
    25: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PB
-   41: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'www.dfeportal.fazenda.pr.gov.br/dfe-portal/rest/servico/consultaNFCe?', 'www.dfeportal.fazenda.pr.gov.br/dfe-portal/rest/servico/consultaNFCe?'); // PR
+   41: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'www.dfeportal.fazenda.pr.gov.br/dfe-portal/rest/servico/consultaNFCe', 'www.dfeportal.fazenda.pr.gov.br/dfe-portal/rest/servico/consultaNFCe'); // PR
    26: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PE
    22: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PI
 //   33: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www.sefaz.rs.gov.br/NFE/NFE-COM.aspx',              'https://www.sefaz.rs.gov.br/NFE/NFE-COM.aspx');              // RJ

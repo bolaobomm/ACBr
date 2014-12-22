@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/12/2014
+[*] Removido da URL do PR o caracter "?" pois este já é incluido através do passo 6
+    ao montar a URL do QR-code.
+    por: Italo Jurisato Junior
 [*] Alteração na montagem da URL do QR-Code, para o Estado do Paraná tanto a 
     data e hora de emissão e Digest Value ao serem convertidos para Hex devemos
     converter as letras para minusculo.
