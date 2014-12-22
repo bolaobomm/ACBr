@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/12/2014
+[*] Alteração na montagem da URL do QR-Code, para o Estado do Paraná tanto a 
+    data e hora de emissão e Digest Value ao serem convertidos para Hex devemos
+    converter as letras para minusculo.
+    por: Anderson.D
 [*] Para o Estado do Pará o componente utilizará as URLs da SV-AN para a NF-e
     e as URLs da SV-RS para a NFC-e.
     por: Italo Jurisato Junior

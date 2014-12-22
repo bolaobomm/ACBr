@@ -2095,10 +2095,19 @@ begin
   AchNFe := OnlyNumber(AchNFe);
 
   // Passo 1
-  sdhEmi_HEX  := AsciiToHex(DateTimeTodh(AdhEmi) + GetUTC(CodigoParaUF(AUF), AdhEmi));
+  // Alterado por Italo em 22/12/2014
+  if AUF = 41 then
+   sdhEmi_HEX  := LowerCase(AsciiToHex(DateTimeTodh(AdhEmi) + GetUTC(CodigoParaUF(AUF), AdhEmi)))
+  else
+   sdhEmi_HEX  := AsciiToHex(DateTimeTodh(AdhEmi) + GetUTC(CodigoParaUF(AUF), AdhEmi));
+
 
   // Passo 2
-  sdigVal_HEX := AsciiToHex(AdigVal);
+  // Alterado por Italo em 22/12/2014
+  if AUF = 41 then
+   sdigVal_HEX := LowerCase(AsciiToHex(AdigVal))
+  else
+   sdigVal_HEX := AsciiToHex(AdigVal);
 
   // Passo 3 e 4
   cIdToken  := AidToken;
