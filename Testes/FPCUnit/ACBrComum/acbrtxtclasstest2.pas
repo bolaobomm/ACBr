@@ -168,7 +168,8 @@ var
 begin
   //10^-9
   vValue2 := 0.000000001;
-  CheckEquals('|0000000000', fACBrTXTClass.LFill(vValue2, 10, 6, True), 'Erro no Double');
+  CheckEquals('|0000000000', fACBrTXTClass.LFill(vValue2, 10, 6, False), 'Erro no Double, not Null');
+  CheckEquals('|', fACBrTXTClass.LFill(vValue2, 10, 6, True), 'Erro no Double, Null');
 end;
 
 procedure TTACBrTXTClass_MetodosFill_Arredondamentos.LFillExtendedSeisCasas_UmBilionesimoExtended_Retorno;
@@ -177,7 +178,8 @@ var
 begin
   //10^-9
   vValue  := 0.000000001;
-  CheckEquals('|0000000000', fACBrTXTClass.LFill(vValue,  10, 6, True), 'Erro no Extended');
+  CheckEquals('|0000000000', fACBrTXTClass.LFill(vValue,  10, 6, False), 'Erro no Extended, not Null');
+  CheckEquals('|', fACBrTXTClass.LFill(vValue, 10, 6, True), 'Erro no Extended, Null');
 end;
 
 procedure TTACBrTXTClass_MetodosFill_Arredondamentos.LFillExtendedSeisCasas_0Ponto48Extended_Retorno;
