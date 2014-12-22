@@ -267,6 +267,7 @@ function TACBrTXTClass.LFill(Value: Extended;
 var
 intFor, intP: Integer;
 strCurMascara: string;
+AInt: Int64;
 begin
   strCurMascara := FCurMascara;
   // Se recebeu uma mascara como parametro substitue a principal
@@ -288,7 +289,10 @@ begin
   if (strCurMascara <> '#') and (strCurMascara <> '') then
      Result := FDelimitador + FormatCurr(strCurMascara, Value)
   else
-     Result := LFill(Trunc(Value * intP), Size, Nulo, Caracter);
+  begin
+     AInt := TruncFix(Value * intP);
+     Result := LFill(AInt, Size, Nulo, Caracter);
+  end;
 end;
 
 function TACBrTXTClass.DFill(Value: Double;

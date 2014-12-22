@@ -38,6 +38,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/12/2014
+-- ACBrTXTClass --  (por: DSA)
+[-] Ajustes para algumas situações de erro de calculo de arredondamento em LFILL
+
 Data: 20/12/2014   
 -- ACBrBase --    (por: DSA)
 [+] Adicionado evento padrão para chamada de Log:
