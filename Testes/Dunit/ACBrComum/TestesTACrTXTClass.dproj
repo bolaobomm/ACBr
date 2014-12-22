@@ -32,6 +32,7 @@
 			<DCC_ImageBase>00400000</DCC_ImageBase>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_1)'!=''">
+			<DCC_DcuOutput>.\DCU\$(Config)\$(Platform)</DCC_DcuOutput>
 			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
 			<DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
 			<DCC_Optimize>false</DCC_Optimize>
@@ -104,6 +105,8 @@
 				<UnitTesting>
 					<TestFramework>DUnit / Delphi Win32</TestFramework>
 					<TestRunner>GUI</TestRunner>
+					<TestProjectName/>
+					<SourceProjectName/>
 				</UnitTesting>
 			</BorlandProject>
 			<ProjectFileVersion>12</ProjectFileVersion>
