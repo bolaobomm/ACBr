@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/12/2014
+[*] Alteração visando corrigir o problema de consultar lote rps no provedor
+    FISSLex.
+    Por: Italo Jurisato Junior
+
 17/12/2014
 [+] Implementado o provedor Infisc para a cidade de Farroupilha/RS.
     Por: Dalvan

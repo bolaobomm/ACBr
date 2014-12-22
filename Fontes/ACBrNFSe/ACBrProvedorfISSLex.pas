@@ -364,6 +364,20 @@ function TProvedorFISSLEX.GeraEnvelopeConsultarLoteRPS(URLNS: String;
 begin
  DadosMsg := SeparaDados( DadosMsg, 'ConsultarLoteRpsEnvio' );
 
+ // Alterado por Italo em 22/12/2014
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fiss="FISS-LEX">' +
+            '<s:Header/>' +
+            '<s:Body>' +
+             '<fiss:WS_ConsultarLoteRps.Execute>' +
+              '<fiss:Consultarloterpsenvio>' +
+                DadosMsg +
+              '</fiss:Consultarloterpsenvio>' +
+             '</fiss:WS_ConsultarLoteRps.Execute>' +
+            '</s:Body>' +
+           '</s:Envelope>';
+
+(*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -372,24 +386,11 @@ begin
              '<WS_ConsultaLoteRps.Execute xmlns="FISS-LEX">' +
               '<Consultarloterpsenvio xmlns="FISS-LEX">' +
                 DadosMsg +
-//                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</Consultarloterpsenvio>' +
              '</WS_ConsultaLoteRps.Execute>' +
             '</s:Body>' +
            '</s:Envelope>';
-(*
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fiss="FISS-LEX">' +
-            '<soapenv:Header/>' +
-            '<soapenv:Body>' +
-             '<fiss:WS_ConsultaLoteRps.Execute>' +
-              '<fiss:Consultarloterpsenvio>' +
-                DadosMsg +
-              '</fiss:Consultarloterpsenvio>' +
-             '</fiss:WS_ConsultaLoteRps.Execute>' +
-            '</soapenv:Body>' +
-           '</soapenv:Envelope>';
-*)
+*)           
 end;
 
 function TProvedorFISSLEX.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
