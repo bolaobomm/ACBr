@@ -308,7 +308,7 @@ begin
                     with Registro0200New do
                     begin
                        COD_ITEM     := FormatFloat('000000', int0200);
-                       DESCR_ITEM   := 'DESCRIÇÃO DO ITEM';
+                       DESCR_ITEM   := 'DESCRIÇÃO DO ITEM' + FormatFloat('000000', int0200);
                        COD_BARRA    := '';
                        COD_ANT_ITEM := '';
                        UNID_INV     := strUNID[int0200 mod (High(strUNID))];
@@ -406,6 +406,7 @@ begin
    btnB_D.Enabled := true;
    btnB_F.Enabled := true;
    btnB_M.Enabled := true;
+   btnB_P.Enabled := True;
    btnTXT.Enabled := True ;
    cbConcomitante.Enabled := True ;
 end;
@@ -483,9 +484,9 @@ INotas: Integer;
 IItens: Integer;
 NNotas: Integer;
 BNotas: Integer;
-val: Double;
+//val: Double;
 begin
-  val := 1.65;
+//  val := 1.65;
    // Alimenta o componente com informações para gerar todos os registros do
    // Bloco C.
    btnB_C.Enabled := false;
@@ -604,6 +605,55 @@ begin
                 end;
 
               end;
+           end;
+
+           //Registros c180
+           for IItens := 1 to 3  do
+           begin
+             // C180 - Consolidação de Notas Fiscais Eletrônicas Emitidas pela Pessoa
+             // Jurídica (Código 55) – Operações de Vendas
+             with RegistroC180New do
+             begin
+
+               COD_MOD := '55';
+               DT_DOC_INI := DT_INI;
+               DT_DOC_FIN := DT_INI + INotas;
+               COD_ITEM := FormatFloat('000000',IItens); //Código do item (campo 02 do Registro 0200)
+               COD_NCM := '12345678';
+               EX_IPI := '';
+               VL_TOT_ITEM := 0;
+
+               //Registros C181 e C185
+               with RegistroC181New do
+               begin
+                 CST_PIS := stpisValorAliquotaNormal;
+                 CFOP := '5101';
+                 VL_ITEM := 1;
+                 VL_DESC := 0;
+                 VL_BC_PIS := 0;
+                 ALIQ_PIS := 1.65;
+                 QUANT_BC_PIS := Null;
+                 ALIQ_PIS_QUANT := Null;
+                 VL_PIS := 0;
+                 COD_CTA := '';
+               end;
+
+               with RegistroC185New do
+               begin
+                 CST_COFINS := stcofinsValorAliquotaNormal;
+                 CFOP := '5101';
+                 VL_ITEM := 1;
+                 VL_DESC := 0;
+                 VL_BC_COFINS := 0;
+                 ALIQ_COFINS := 7.60;
+                 QUANT_BC_COFINS := Null;
+                 ALIQ_COFINS_QUANT := Null;
+                 VL_COFINS := 0;
+                 COD_CTA := '';
+               end;
+
+
+             end;
            end;
 
 
