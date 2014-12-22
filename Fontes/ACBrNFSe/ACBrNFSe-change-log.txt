@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/12/2014
+[*] Liberado a funcionalidade GerarNfse para o provedor Digifred.
+    Por: Italo Jurisato Junior
 [*] Alteração visando corrigir o problema de consultar lote rps no provedor
     FISSLex.
     Por: Italo Jurisato Junior

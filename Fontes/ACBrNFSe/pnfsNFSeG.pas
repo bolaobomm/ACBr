@@ -717,69 +717,48 @@ begin
  if AProvedor = proBetha then Prefixo3 := '';
 
  case AProvedor of
-  pro4R,
-  profintelIss,
-  proGoiania,
-  proGovDigital,
-  proIssDigital,
-  proISSe,
-  proProdata,
-  proVitoria,
-  proPVH,
-  proAgili,
-  proCoplan,
-  proVirtual,
-  proFreire,
-  proRecife,
-  proSaatri,
-  proSisPMJP,
-  proFiorilli,
-  proPublica,
-  proSystemPro,
-  proNFSEBrasil,
-  proEGoverneISS: Result := TagI + Notas + TagF;
+  proWebISS: begin
+               DadosMsg := '<' + Prefixo3 + 'LoteRps'+
+                              DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') +
+                              DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '') + '>' +
+                             '<' + Prefixo4 + 'NumeroLote>' +
+                               NumeroLote +
+                             '</' + Prefixo4 + 'NumeroLote>' +
 
-  else begin // proWebISS
-   DadosMsg := '<' + Prefixo3 + 'LoteRps'+
-                 DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') +
-                 DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '') + '>' +
-                '<' + Prefixo4 + 'NumeroLote>' +
-                  NumeroLote +
-                '</' + Prefixo4 + 'NumeroLote>' +
+                             DFeUtil.SeSenao((VersaoXML = '2') or (AProvedor = proISSNet),
 
-                DFeUtil.SeSenao((VersaoXML = '2') or (AProvedor = proISSNet),
+                             '<' + Prefixo4 + 'CpfCnpj>' +
+                                DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
+                               '<' + Prefixo4 + 'Cpf>' +
+                                  Cnpj +
+                               '</' + Prefixo4 + 'Cpf>',
+                               '<' + Prefixo4 + 'Cnpj>' +
+                                  Cnpj +
+                               '</' + Prefixo4 + 'Cnpj>') +
+                             '</' + Prefixo4 + 'CpfCnpj>',
 
-                  '<' + Prefixo4 + 'CpfCnpj>' +
-                   DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
-                   '<' + Prefixo4 + 'Cpf>' +
-                     Cnpj +
-                   '</' + Prefixo4 + 'Cpf>',
-                   '<' + Prefixo4 + 'Cnpj>' +
-                     Cnpj +
-                   '</' + Prefixo4 + 'Cnpj>') +
-                  '</' + Prefixo4 + 'CpfCnpj>',
+                             '<' + Prefixo4 + 'Cnpj>' +
+                                Cnpj +
+                             '</' + Prefixo4 + 'Cnpj>') +
 
-                  '<' + Prefixo4 + 'Cnpj>' +
-                    Cnpj +
-                  '</' + Prefixo4 + 'Cnpj>') +
+                             '<' + Prefixo4 + 'InscricaoMunicipal>' +
+                                IM +
+                             '</' + Prefixo4 + 'InscricaoMunicipal>' +
+                             '<' + Prefixo4 + 'QuantidadeRps>' +
+                                QtdeNotas +
+                             '</' + Prefixo4 + 'QuantidadeRps>' +
+                             '<' + Prefixo4 + 'ListaRps>' +
+                                Notas +
+                             '</' + Prefixo4 + 'ListaRps>' +
+                           '</' + Prefixo3 + 'LoteRps>';
 
-                '<' + Prefixo4 + 'InscricaoMunicipal>' +
-                  IM +
-                '</' + Prefixo4 + 'InscricaoMunicipal>' +
-                '<' + Prefixo4 + 'QuantidadeRps>' +
-                  QtdeNotas +
-                '</' + Prefixo4 + 'QuantidadeRps>' +
-                '<' + Prefixo4 + 'ListaRps>' +
-                 Notas +
-                '</' + Prefixo4 + 'ListaRps>' +
-               '</' + Prefixo3 + 'LoteRps>';
-
-   Result := TagI + DadosMsg + TagF;
-  end;
+               Result := TagI + DadosMsg + TagF;
+             end;
+  else Result := TagI + Notas + TagF;
  end;
 
- if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, 
-                  proBetha, proBetim, proBHIss, proDBSeller, proDigifred,
+ if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco,
+                  proBetha, proBetim, proBHIss, proDBSeller, {proDigifred,}
                   proEquiplano, proFIssLex, proGinfes, proGovBR, proIssCuritiba,
                   proIssIntel, proIssNet, proLexsom, proNatal, proProdemge,
                   proRJ, proSimplIss, proThema, proTiplan, proIssDSF, proInfisc, proAgili,
