@@ -302,7 +302,7 @@ begin
                  end;
 
                  //10 produtos/serviços
-                 for int0200 := 1 to 10 do
+                 for int0200 := 1 to 11 do
                  begin
                     // 0200 - Tabela de Identificação do Item (Produtos e Serviços)
                     with Registro0200New do
@@ -607,7 +607,7 @@ begin
               end;
            end;
 
-           //Registros c180
+           //Registros c180 exemplo de VL_BC_PIS e ALIQ_PIS não nulo
            for IItens := 1 to 3  do
            begin
              // C180 - Consolidação de Notas Fiscais Eletrônicas Emitidas pela Pessoa
@@ -651,8 +651,47 @@ begin
                  VL_COFINS := 0;
                  COD_CTA := '';
                end;
+             end;
+           end;
 
+           //Exemplo com campo VL_BC_PIS nulo
+           with RegistroC180New do
+           begin
 
+             COD_MOD := '55';
+             DT_DOC_INI := DT_INI;
+             DT_DOC_FIN := DT_INI + INotas;
+             COD_ITEM := FormatFloat('000000', 11); //Código do item (campo 02 do Registro 0200)
+             COD_NCM := '12345678';
+             EX_IPI := '';
+             VL_TOT_ITEM := 0;
+
+             with RegistroC181New do
+             begin
+               CST_PIS := stpisOutrasOperacoesSaida;
+               CFOP := '5101';
+               VL_ITEM := 1;
+               VL_DESC := 0;
+               VL_BC_PIS := Null;
+               ALIQ_PIS := Null;
+               QUANT_BC_PIS := 0;
+               ALIQ_PIS_QUANT := 0;
+               VL_PIS := 0;
+               COD_CTA := '';
+             end;
+
+             with RegistroC185New do
+             begin
+               CST_COFINS := stcofinsOutrasOperacoesSaida;
+               CFOP := '5101';
+               VL_ITEM := 1;
+               VL_DESC := 0;
+               VL_BC_COFINS := Null;
+               ALIQ_COFINS := Null;
+               QUANT_BC_COFINS := 0;
+               ALIQ_COFINS_QUANT := 0;
+               VL_COFINS := 0;
+               COD_CTA := '';
              end;
            end;
 
