@@ -312,17 +312,25 @@ begin
                        COD_BARRA    := '';
                        COD_ANT_ITEM := '';
                        UNID_INV     := strUNID[int0200 mod (High(strUNID))];
-                       TIPO_ITEM    := tiMercadoriaRevenda;
-                       COD_NCM      := '12345678';
+                       if int0200 = 11 then
+                       begin
+                         TIPO_ITEM    := tiOutrosInsumos;
+                         COD_NCM      := '';
+                       end
+                       else
+                       begin
+                         TIPO_ITEM    := tiMercadoriaRevenda;
+                         COD_NCM      := '12345678';
+                       end;
                        EX_IPI       := '';
                        COD_GEN      := '';
                        COD_LST      := '';
                        ALIQ_ICMS    := 0;
 
-                      //Cria uma alteração apenas para o item 5...
-                      if (int0200 = 5) then with Registro0205New do
+                      //Cria uma alteração apenas para o item 11...
+                      if (int0200 = 11) then with Registro0205New do
                       begin
-                        DESCR_ANT_ITEM := 'DESCRIÇÃO ANTERIOR DO ITEM 5';
+                        DESCR_ANT_ITEM := 'DESCRIÇÃO ANTERIOR DO ITEM 11';
                         DT_INI := StrToDate('01/04/2014');
                         DT_FIM := StrToDate('15/04/2014'); //Observe que o campo é DT_FIM e não DT_FIN
                       end;
@@ -662,7 +670,7 @@ begin
              DT_DOC_INI := DT_INI;
              DT_DOC_FIN := DT_INI + INotas;
              COD_ITEM := FormatFloat('000000', 11); //Código do item (campo 02 do Registro 0200)
-             COD_NCM := '12345678';
+             COD_NCM := '';
              EX_IPI := '';
              VL_TOT_ITEM := 0;
 
@@ -675,7 +683,7 @@ begin
                VL_BC_PIS := Null;
                ALIQ_PIS := Null;
                QUANT_BC_PIS := 0;
-               ALIQ_PIS_QUANT := 0;
+               ALIQ_PIS_QUANT := 0.1;
                VL_PIS := 0;
                COD_CTA := '';
              end;
@@ -689,34 +697,105 @@ begin
                VL_BC_COFINS := Null;
                ALIQ_COFINS := Null;
                QUANT_BC_COFINS := 0;
-               ALIQ_COFINS_QUANT := 0;
+               ALIQ_COFINS_QUANT := 0.1;
                VL_COFINS := 0;
                COD_CTA := '';
              end;
            end;
 
 
-//           //Registros c190
-//           for INotas := 1 to NNotas  do
-//           begin
-//             // c190 - Consolidação de Notas Fiscais Eletrônicas (Código 55) – Operações de
-//             // Aquisição com Direito a Crédito, e Operações de Devolução de Compras e
-//             // Vendas.
-//             with RegistroC190New do
-//             begin
-//               COD_MOD := '55';
-//               DT_REF_INI := Date;
-//               DT_REF_FIN := Date;
-//               COD_ITEM := ''; //Código do item (campo 02 do Registro 0200)
-//               COD_NCM := '';
-//               EX_IPI := '';
-//               VL_TOT_ITEM := 0;
-//
-//               //Registros C191 e C195
-//
-//
-//             end;
-//           end;
+           //Registros c190 exemplo de VL_BC_PIS e ALIQ_PIS não nulo
+           for IItens := 1 to 3  do
+           begin
+             // c190 - Consolidação de Notas Fiscais Eletrônicas (Código 55) – Operações de
+             // Aquisição com Direito a Crédito, e Operações de Devolução de Compras e
+             // Vendas.
+             with RegistroC190New do
+             begin
+               COD_MOD := '55';
+               DT_REF_INI := DT_INI;
+               DT_REF_FIN := DT_INI + INotas;
+               COD_ITEM := FormatFloat('000000',IItens); //Código do item (campo 02 do Registro 0200)
+               COD_NCM := '12345678';
+               EX_IPI := '';
+               VL_TOT_ITEM := 0;
+
+               //Registros C191 e C195
+               with RegistroC191New do
+               begin
+                 CNPJ_CPF_PART :=  '12345678909';
+                 CST_PIS := stpisCredPresAquiRecTribENaoTribMercIntEExportacao;
+                 CFOP := 1102;
+                 VL_ITEM := 1;
+                 VL_DESC := 0;
+                 VL_BC_PIS := 0;
+                 ALIQ_PIS  := 0.99;
+                 QUANT_BC_PIS := 0;
+                 ALIQ_PIS_QUANT := 0;
+                 VL_PIS := 0;
+                 COD_CTA := '';
+               end;
+
+               with RegistroC195New do
+               begin
+                 CNPJ_CPF_PART :=  '12345678909';
+                 CST_COFINS := stcofinsCredPresAquiRecTribENaoTribMercIntEExportacao;
+                 CFOP := 1102;
+                 VL_ITEM := 1;
+                 VL_DESC := 0;
+                 VL_BC_COFINS := 0;
+                 ALIQ_COFINS  := 4.56;
+                 QUANT_BC_COFINS := 0;
+                 ALIQ_COFINS_QUANT := 0;
+                 VL_COFINS := 0;
+                 COD_CTA := '';
+               end;
+
+
+             end;
+           end;
+
+           with RegistroC190New do
+           begin
+             COD_MOD := '55';
+             DT_REF_INI := DT_INI;
+             DT_REF_FIN := DT_INI + INotas;
+             COD_ITEM := FormatFloat('000000', 11); //Código do item (campo 02 do Registro 0200)
+             COD_NCM := '';
+             EX_IPI := '';
+             VL_TOT_ITEM := 0;
+
+             //Registros C191 e C195
+             with RegistroC191New do
+             begin
+               CNPJ_CPF_PART :=  '12345678909';
+               CST_PIS := stpisOutrasOperacoesEntrada;
+               CFOP := 1102;
+               VL_ITEM := 1;
+               VL_DESC := 0;
+               VL_BC_PIS := 0;
+               ALIQ_PIS  := 0;
+               QUANT_BC_PIS := 0;
+               ALIQ_PIS_QUANT := 0.1;
+               VL_PIS := 0;
+               COD_CTA := '';
+             end;
+
+             with RegistroC195New do
+             begin
+               CNPJ_CPF_PART :=  '12345678909';
+               CST_COFINS := stcofinsOutrasOperacoesEntrada;
+               CFOP := 1102;
+               VL_ITEM := 1;
+               VL_DESC := 0;
+               VL_BC_COFINS := 0;
+               ALIQ_COFINS  := 0;
+               QUANT_BC_COFINS := 0;
+               ALIQ_COFINS_QUANT := 0.1;
+               VL_COFINS := 0;
+               COD_CTA := '';
+             end;
+           end;
          end; //C10
       end;
    end;
