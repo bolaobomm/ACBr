@@ -920,6 +920,7 @@ var
   strAux, strItem: AnsiString;
   leitorAux, leitorItem:TLeitor;
   sMotDes,sMotCod: String;
+  dEmi, hEmi :string;
 begin
   result := False;
 
@@ -943,7 +944,10 @@ begin
        ListaNfse.FCompNfse[i].FNFSe.CodigoVerificacao := LeitorAux.rCampo(tcStr, 'cNFS-e');
        ListaNfse.FCompNfse[i].FNFSe.SeriePrestacao    := LeitorAux.rCampo(tcStr, 'serie');
        ListaNfse.FCompNfse[i].FNFSe.Competencia       := LeitorAux.rCampo(tcStr, 'dEmi');
-       ListaNfse.FCompNfse[i].FNFSe.DataEmissao       := LeitorAux.rCampo(tcDat, 'dEmi') + StrToTimeDef(LeitorAux.rCampo(tcStr, 'hEmi'), 0);
+       dEmi                                           := Leitor.rCampo(tcStr, 'dEmi');
+       hEmi                                           := Leitor.rCampo(tcStr, 'hEmi');
+       ListaNfse.FCompNfse[i].FNFSe.DataEmissao       := StrToDateTimeDef(dEmi + ' ' + hEmi, 0);
+       //ListaNfse.FCompNfse[i].FNFSe.DataEmissao       := StrToDateTimeDef(Leitor.rCampo(tcStr, 'dEmi') + ' ' + Leitor.rCampo(tcStr, 'hEmi'), 0);
        ListaNfse.FCompNfse[i].FNFSe.Status            := StrToEnumerado(ok, LeitorAux.rCampo(tcStr, 'anulada'),['N','S'],[srNormal, srCancelado]);
        ListaNfse.FCompNfse[i].FNFSe.InfID.ID          := SomenteNumeros(ListaNfse.FCompNfse[i].FNFSe.CodigoVerificacao);
 

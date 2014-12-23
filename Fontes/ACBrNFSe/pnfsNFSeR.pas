@@ -34,7 +34,7 @@ unit pnfsNFSeR;
 interface
 
 uses
-  SysUtils, Classes, Forms,
+  SysUtils, Classes, Forms, DateUtils,
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
@@ -1544,26 +1544,30 @@ begin
 end;
 
 function TNFSeR.LerNFSe_Infisc: Boolean;
-var ok  : Boolean;
-    Item, posI, count: integer;
-    sOperacao, sTributacao: string;
-    strItem: ansiString;
-    leitorAux: TLeitor;
+var
+  ok  : Boolean;
+  Item, posI, count: integer;
+  sOperacao, sTributacao: string;
+  strItem: ansiString;
+  leitorAux: TLeitor;
+  dEmi : String;
+  hEmi : String;
 begin
- Leitor.Grupo := Leitor.Arquivo;
+  Leitor.Grupo := Leitor.Arquivo;
 
- if (Pos('<NFS-e>', Leitor.Arquivo) > 0) then
- begin
-   VersaoXML := '1';
+  if (Pos('<NFS-e>', Leitor.Arquivo) > 0) then
+  begin
+    VersaoXML := '1';
 
    // Ident.
    NFSe.Numero            := Leitor.rCampo(tcStr, 'nNFS-e');
    NFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'cNFS-e');
    NFSe.SeriePrestacao    := Leitor.rCampo(tcStr, 'serie');
    NFSe.Competencia       := Leitor.rCampo(tcStr, 'dEmi');
-//   NFSe.DataEmissao       := Leitor.rCampo(tcDat, 'dEmi') + StrToTimeDef(Leitor.rCampo(tcStr, 'hEmi'), 0);
-   // Alterado por Italo em 22/12/2014
-   NFSe.DataEmissao       := StrToDateTimeDef(Leitor.rCampo(tcStr, 'dEmi') + ' ' + Leitor.rCampo(tcStr, 'hEmi'), 0);
+   dEmi                   := Leitor.rCampo(tcStr, 'dEmi');
+   hEmi                   := Leitor.rCampo(tcStr, 'hEmi');
+   NFSe.DataEmissao       := StrToDateTimeDef(dEmi + ' ' + hEmi, 0);
+   //NFSe.DataEmissao       := StrToDateTimeDef(Leitor.rCampo(tcStr, 'dEmi') + ' ' + Leitor.rCampo(tcStr, 'hEmi'), 0);
    NFSe.Status            := StrToEnumerado(ok, Leitor.rCampo(tcStr, 'anulada'),['N','S'],[srNormal, srCancelado]);
    NFSe.InfID.ID          := SomenteNumeros(NFSe.CodigoVerificacao);
 

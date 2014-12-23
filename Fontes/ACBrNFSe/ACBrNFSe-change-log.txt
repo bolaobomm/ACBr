@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/12/2014
+[-] Na unit pnfsNFSeR.pas e pnfsConsNfseResposta.pas continua ocorrendo o erro no lazarus
+		aplicado uma possível correção para manter compatível com o delphi
+		por : Juliomar Marchetti
+
 22/12/2014
 [-] Na unit pnfsNFSeR.pas esta ocorrendo um erro de compilação no lazarus,
     foi feita uma alteração a fim de resolver o problema.
