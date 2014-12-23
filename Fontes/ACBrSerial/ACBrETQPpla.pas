@@ -378,7 +378,9 @@ begin
          STX + 'f' + IntToStrZero(AvancoEtq,3);           // Ajusta o avanço para corte da etiqueta
 
   ListaCmd.Add(Cmd);
-  fpEtqFinalizada := True;
+
+  fpEtqFinalizada   := True;
+  fpEtqInicializada := False;
 end;
 
 procedure TACBrETQPpla.Imprimir(Copias: Integer = 1; AvancoEtq: Integer = 0);

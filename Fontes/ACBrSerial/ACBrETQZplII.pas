@@ -232,7 +232,8 @@ begin
 
   ListaCmd.Add('^XZ');
 
-  fpEtqFinalizada := True;
+  fpEtqFinalizada   := True;
+  fpEtqInicializada := False;
 end;
 
 procedure TACBrETQZplII.Imprimir(Copias: Integer; AvancoEtq: Integer);

@@ -366,7 +366,6 @@ begin
 
   fpEtqInicializada := True;
   fpEtqFinalizada   := False;
-
 end;
 
 procedure TACBrETQEpl2.FinalizarEtiqueta(Copias: Integer; AvancoEtq: Integer);
@@ -379,7 +378,9 @@ begin
   Cmd := 'P' + IntToStr(Copias) ;
 
   ListaCmd.Add(Cmd);
-  fpEtqFinalizada := True;
+
+  fpEtqFinalizada   := True;
+  fpEtqInicializada := False;
 end;
 
 procedure TACBrETQEpl2.Imprimir(Copias: Integer; AvancoEtq: Integer);
