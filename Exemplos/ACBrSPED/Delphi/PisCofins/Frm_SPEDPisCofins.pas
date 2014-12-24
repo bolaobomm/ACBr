@@ -796,6 +796,90 @@ begin
                COD_CTA := '';
              end;
            end;
+
+
+           //Registros c380 exemplo de VL_BC_PIS e ALIQ_PIS não nulo
+           for IItens := 1 to 3  do
+           begin
+             // C380: NOTA FISCAL DE VENDA A CONSUMIDOR (CÓDIGO 02) -
+             // CONSOLIDAÇÃO DE DOCUMENTOS EMITIDOS.
+             with RegistroC380New do
+             begin
+               COD_MOD := '02';
+               DT_DOC_INI := DT_INI + (4 * (IItens - 1));
+               DT_DOC_FIN := DT_DOC_INI + 3;
+               NUM_DOC_INI := IItens + (3 * (IItens - 1));
+               NUM_DOC_FIN := NUM_DOC_INI + 3;
+               VL_DOC := 0;
+               VL_DOC_CANC := 0;
+
+               //Registros C381 e C385
+               with RegistroC381New do
+               begin
+                 CST_PIS := stpisValorAliquotaNormal;
+                 COD_ITEM := FormatFloat('000000', IItens); //Código do item (campo 02 do Registro 0200)
+                 VL_ITEM := 1;
+                 VL_BC_PIS := 0;
+                 ALIQ_PIS := 1.65;
+                 QUANT_BC_PIS := 0;
+                 ALIQ_PIS_QUANT := 0;
+                 VL_PIS := 0;
+                 COD_CTA := '';
+               end;
+
+               with RegistroC385New do
+               begin
+                 CST_COFINS := stcofinsValorAliquotaNormal;
+                 COD_ITEM := FormatFloat('000000', IItens); //Código do item (campo 02 do Registro 0200)
+                 VL_ITEM := 1;
+                 VL_BC_COFINS := 0;
+                 ALIQ_COFINS := 7.60;
+                 QUANT_BC_COFINS := 0;
+                 ALIQ_COFINS_QUANT := 0;
+                 VL_COFINS := 0;
+                 COD_CTA := '';
+               end;
+             end;
+           end;
+
+           //Exemplo com campo VL_BC_PIS nulo
+           with RegistroC380New do
+           begin
+
+             COD_MOD := '02';
+             DT_DOC_INI := DT_INI + (4 * (IItens - 1));
+             DT_DOC_FIN := DT_DOC_INI + 3;
+             NUM_DOC_INI := IItens + (3 * (IItens - 1));
+             NUM_DOC_FIN := NUM_DOC_INI + 3;
+             VL_DOC := 0;
+             VL_DOC_CANC := 0;
+
+             with RegistroC381New do
+             begin
+               CST_PIS := stpisOutrasOperacoesSaida;
+               COD_ITEM := FormatFloat('000000', 11); //Código do item (campo 02 do Registro 0200)
+               VL_ITEM := 1;
+               VL_BC_PIS := 0;
+               ALIQ_PIS := 0;
+               QUANT_BC_PIS := 0;
+               ALIQ_PIS_QUANT := 0.1;
+               VL_PIS := 0;
+               COD_CTA := '';
+             end;
+
+             with RegistroC385New do
+             begin
+               CST_COFINS := stcofinsOutrasOperacoesSaida;
+               COD_ITEM := FormatFloat('000000', 11); //Código do item (campo 02 do Registro 0200)
+               VL_ITEM := 1;
+               VL_BC_COFINS := 0;
+               ALIQ_COFINS := 0;
+               QUANT_BC_COFINS := 0;
+               ALIQ_COFINS_QUANT := 0.1;
+               VL_COFINS := 0;
+               COD_CTA := '';
+             end;
+           end;
          end; //C10
       end;
    end;
