@@ -1692,7 +1692,7 @@ begin
 
   XmlAss := copy(XmlAss,1,PosIni)+copy(XmlAss,PosFim,length(XmlAss));
 
-  AXMLAssinado := XmlAss ;
+  AXMLAssinado := StringReplace( XmlAss, '<?xml version="1.0"?>', '', [] );
 
   Result := True;
 end;
