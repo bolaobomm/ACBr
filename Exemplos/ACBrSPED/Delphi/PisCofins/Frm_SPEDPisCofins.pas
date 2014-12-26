@@ -893,7 +893,7 @@ begin
              //REGISTRO C405: REDUÇÃO Z (CÓDIGOS 02 e 2D)
              with RegistroC405New do
              begin
-               DT_DOC := DT_INI;
+               DT_DOC := DT_INI+7;
                CRO := 1;
                CRZ := 30;
                NUM_COO_FIN := 100;
@@ -964,6 +964,86 @@ begin
                  COD_ITEM := FormatFloat('000000', 11);
                  COD_CTA := '';
                end;
+
+               //REGISTRO C490: CONSOLIDAÇÃO DE DOCUMENTOS EMITIDOS POR ECF (CÓDIGOS
+               // 02, 2D, 59 e 60)
+               with RegistroC490New do
+               begin
+                 DT_DOC_INI := DT_INI;
+                 DT_DOC_FIN := DT_INI + 7;
+                 COD_MOD := '02';
+
+                 //REGISTRO C491: REGISTRO C491: DETALHAMENTO DA CONSOLIDAÇÃO DE DOCUMENTOS EMITIDOS
+                 //POR ECF (CÓDIGOS 02, 2D e 59) – PIS/PASEP
+                 with RegistroC491New do
+                 begin
+                   //Exemplo com valores não nulos
+                   COD_ITEM := FormatFloat('000000', 1);
+                   CST_PIS := stpisValorAliquotaNormal;
+                   CFOP := 5101;
+                   VL_ITEM := 1;
+                   VL_BC_PIS := 0;
+                   ALIQ_PIS  := 1.65;
+                   QUANT_BC_PIS   := 0;
+                   ALIQ_PIS_QUANT := 0;
+                   VL_PIS := 0;
+                   COD_CTA := '';
+                 end;
+
+                 //REGISTRO C495: DETALHAMENTO DA CONSOLIDAÇÃO DE DOCUMENTOS EMITIDOS
+                 // POR ECF (CÓDIGOS 02, 2D e 59) – COFINS
+                 with RegistroC495New do
+                 begin
+                   //Exemplo com valores não nulos
+                   COD_ITEM := FormatFloat('000000', 1);
+                   CST_COFINS := stcofinsValorAliquotaNormal;
+                   CFOP := 5101;
+                   VL_ITEM := 1;
+                   VL_BC_COFINS := 0;
+                   ALIQ_COFINS  := 7.6;
+                   QUANT_BC_COFINS   := 0;
+                   ALIQ_COFINS_QUANT := 0;
+                   VL_COFINS := 0;
+                   COD_CTA := '';
+                 end;
+
+                 //Exemplo com valores NULOS
+                 //REGISTRO C491: REGISTRO C491: DETALHAMENTO DA CONSOLIDAÇÃO DE DOCUMENTOS EMITIDOS
+                 //POR ECF (CÓDIGOS 02, 2D e 59) – PIS/PASEP
+                 with RegistroC491New do
+                 begin
+                   //Exemplo com valores nulos
+                   COD_ITEM := FormatFloat('000000', 11);
+                   CST_PIS := stpisOutrasOperacoesSaida;
+                   CFOP := 5101;
+                   VL_ITEM := 1;
+                   VL_BC_PIS := 0;
+                   ALIQ_PIS  := 0;
+                   QUANT_BC_PIS   := 0;
+                   ALIQ_PIS_QUANT := 0.1;
+                   VL_PIS := 0;
+                   COD_CTA := '';
+                 end;
+
+                 //REGISTRO C495: DETALHAMENTO DA CONSOLIDAÇÃO DE DOCUMENTOS EMITIDOS
+                 // POR ECF (CÓDIGOS 02, 2D e 59) – COFINS
+                 with RegistroC495New do
+                 begin
+                   //Exemplo com valores nulos
+                   COD_ITEM := FormatFloat('000000', 11);
+                   CST_COFINS := stcofinsOutrasOperacoesSaida;
+                   CFOP := 5101;
+                   VL_ITEM := 1;
+                   VL_BC_COFINS := 0;
+                   ALIQ_COFINS  := 0;
+                   QUANT_BC_COFINS   := 0;
+                   ALIQ_COFINS_QUANT := 0.1;
+                   VL_COFINS := 0;
+                   COD_CTA := '';
+                 end;
+
+               end;
+
 
              end;
 
