@@ -38,7 +38,18 @@ unit ACBrECFVirtualSAT;
 interface
 
 uses ACBrECFVirtual, ACBrECFVirtualPrinter, ACBrSAT, ACBrUtil, ACBrConsts,
-  Classes, SysUtils, pcnCFe, pcnConversao, ACBrECF, ACBrDevice;
+  Classes, SysUtils, pcnCFe, pcnConversao, ACBrECF, ACBrDevice,
+	{$IFDEF VisualCLX} QDialogs {$ELSE} Dialogs, FileCtrl {$ENDIF},
+  {$IFDEF FPC}
+     LResources, LazarusPackageIntf, PropEdits, componenteditors
+  {$ELSE}
+    {$IFNDEF COMPILER6_UP}
+       DsgnIntf
+    {$ELSE}
+       DesignIntf,
+       DesignEditors
+    {$ENDIF}
+  {$ENDIF};
 
 const
   ACBrECFVirtualSAT_VERSAO = '0.1.0a';
@@ -128,11 +139,19 @@ type
   end;
 
 
+{$IFNDEF FPC}
+   {$R ACBrSAT.dcr}
+{$ENDIF}
+
 procedure Register;
 
 implementation
 
 uses ACBrECFClass, ACBrSATClass;
+
+{$IFNDEF FPC}
+   {$R ACBrSAT.dcr}
+{$ENDIF}
 
 procedure Register;
 begin
@@ -525,6 +544,20 @@ begin
 
   inherited GravaArqINIVirtual(ConteudoINI);
 end;
+
+{$IFDEF FPC}
+{$IFNDEF NOGUI}
+initialization
+   {$I ACBrSAT.lrs}
+{$ENDIF}
+{$ENDIF}
+
+{$IFDEF FPC}
+{$IFNDEF NOGUI}
+initialization
+   {$I ACBrSAT.lrs}
+{$ENDIF}
+{$ENDIF}
 
 end.
 

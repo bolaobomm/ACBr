@@ -299,7 +299,7 @@ uses  ACBrDelphiZXingQRCode, math, RLTypes;
   {$R *.lfm}
 {$else}
   {$R *.dfm}
-  {$R ACBrSATExtratoFortes.dcr}
+  {$R ACBrSAT.dcr}
 {$ENDIF}
 
 procedure Register;
@@ -985,7 +985,7 @@ end;
 
 {$ifdef FPC}
 initialization
-   {$I ACBrSATExtratoFortes.lrs}
+   {$I ACBrSAT.lrs}
 {$endif}
 
 end.

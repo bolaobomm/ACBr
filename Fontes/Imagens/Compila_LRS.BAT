@@ -26,7 +26,7 @@ echo "****************************************"
 echo.
 
 :Serial
-%1\tools\lazres.exe ACBrSerial.lrs TACBrECF.bmp TACBrGAV.bmp TACBrCHQ.bmp TACBrLCB.bmp TACBrDIS.bmp TACBrBAL.bmp TACBrTER.bmp TACBrETQ.bmp TACBrRFD.bmp TACBrSMS.bmp
+%1\tools\lazres.exe ACBrSerial.lrs TACBrECF.bmp TACBrGAV.bmp TACBrCHQ.bmp TACBrLCB.bmp TACBrDIS.bmp TACBrBAL.bmp TACBrTER.bmp TACBrETQ.bmp TACBrRFD.bmp TACBrSMS.bmp TACBrECFVirtualNaoFiscal.png
 move ACBrSerial.lrs ..\ACBrSerial
 echo.
 echo "****************************************"
@@ -44,7 +44,7 @@ echo "****************************************"
 echo.
 
 :TCP
-%1\tools\lazres.exe ACBrTCP.lrs TACBrTCPServer.bmp TACBrCEP.bmp TACBrIBGE.bmp TACBrNFPws.bmp TACBrCNIEE.bmp TACBrSuframa.bmp TACBrDownload.bmp TACBrIBPTax.bmp TACBrConsultaCNPJ.bmp TACBrMail.bmp TACBrConsultaCPF.png TACBrSpedTabelas.bmp TACBrSedex.bmp TACBrNCMs.bmp
+%1\tools\lazres.exe ACBrTCP.lrs TACBrTCPServer.bmp TACBrCEP.bmp TACBrIBGE.bmp TACBrNFPws.bmp TACBrCNIEE.bmp TACBrSuframa.bmp TACBrDownload.bmp TACBrIBPTax.bmp TACBrConsultaCNPJ.bmp TACBrMail.bmp TACBrConsultaCPF.png TACBrSpedTabelas.bmp TACBrSedex.bmp TACBrNCMs.bmp TACBrSpedECF.png
 move ACBrTCP.lrs ..\ACBrTCP
 echo.
 echo "****************************************"
@@ -91,7 +91,7 @@ echo "****************************************"
 echo.
 
 :NFe2
-%1\tools\lazres.exe ACBrNFe.lrs TACBrNFe.bmp 
+%1\tools\lazres.exe ACBrNFe.lrs TACBrNFe.bmp TACBrECFVirtualNFCe.png
 move ACBrNFe.lrs ..\ACBrNFe2
 
 %1\tools\lazres.exe ACBrNFeDANFeRL.lrs TACBrNFeDANFeRL.bmp 
@@ -123,11 +123,8 @@ echo "****************************************"
 echo.
 
 :NFSe
-%1\tools\lazres.exe ACBrNFSe.lrs TACBrNFSe.bmp 
+%1\tools\lazres.exe ACBrNFSe.lrs TACBrNFSe.bmp TACBrNFSeDANFSeRL.png 
 move ACBrNFSe.lrs ..\ACBrNFSe
-
-%1\tools\lazres.exe ACBrNFSeDANFSeRL.lrs TACBrNFSeDANFSeRL.png 
-move ACBrNFSeDANFSeRL.lrs ..\ACBrNFSe
 
 echo.
 echo "****************************************"
@@ -136,11 +133,8 @@ echo "****************************************"
 echo.
 
 :CTe
-%1\tools\lazres.exe ACBrCTe.lrs TACBrCTe.bmp 
+%1\tools\lazres.exe ACBrCTe.lrs TACBrCTe.bmp TACBrCTeDACTeRL.png 
 move ACBrCTe.lrs ..\ACBrCTe
-
-%1\tools\lazres.exe ACBrCTeDACTeRL.lrs TACBrCTeDACTeRL.png 
-move ACBrCTeDACTeRL.lrs ..\ACBrCTe
 
 echo.
 echo "****************************************"
@@ -178,11 +172,8 @@ echo "****************************************"
 echo.
 
 :SAT
-%1\tools\lazres.exe ACBrSAT.lrs TACBrSAT.bmp TACBrSATExtratoESCPOS.bmp
+%1\tools\lazres.exe ACBrSAT.lrs TACBrSAT.bmp TACBrSATExtratoESCPOS.bmp TACBrSATExtratoFortes.bmp TACBrECFVirtualSAT.png
 move ACBrSAT.lrs ..\ACBrSAT
-
-%1\tools\lazres.exe ACBrSATExtratoFortes.lrs TACBrSATExtratoFortes.bmp
-move ACBrSATExtratoFortes.lrs ..\ACBrSAT
 
 echo.
 echo "********************************************************************"

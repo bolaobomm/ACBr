@@ -38,7 +38,18 @@ unit ACBrECFVirtualNFCe;
 interface
 
 uses ACBrECFVirtual, ACBrECFVirtualPrinter, ACBrNFe, ACBrUtil, ACBrConsts,
-  Classes, SysUtils, pcnNFe, pcnConversao, ACBrECF, ACBrDevice, ACBrDFeUtil;
+  Classes, SysUtils, pcnNFe, pcnConversao, ACBrECF, ACBrDevice, ACBrDFeUtil,
+	{$IFDEF VisualCLX} QDialogs {$ELSE} Dialogs, FileCtrl {$ENDIF},
+  {$IFDEF FPC}
+     LResources, LazarusPackageIntf, PropEdits, componenteditors
+  {$ELSE}
+    {$IFNDEF COMPILER6_UP}
+       DsgnIntf
+    {$ELSE}
+       DesignIntf,
+       DesignEditors
+    {$ENDIF}
+  {$ENDIF};
 
 const
   ACBrECFVirtualNFCe_VERSAO = '0.1.0a';
@@ -154,11 +165,19 @@ type
   end;
 
 
+{$IFNDEF FPC}
+   {$R ACBrNFe.dcr}
+{$ENDIF}
+
 procedure Register;
 
 implementation
 
 uses ACBrECFClass;
+
+{$IFNDEF FPC}
+   {$R ACBrNFe.dcr}
+{$ENDIF}
 
 procedure Register;
 begin
@@ -706,5 +725,15 @@ begin
 
   inherited GravaArqINIVirtual(ConteudoINI);
 end;
+
+{$ifdef FPC}
+initialization
+   {$i ACBrNFe.lrs}
+{$endif}
+
+{$ifdef FPC}
+initialization
+   {$i ACBrNFe.lrs}
+{$endif}
 
 end.
