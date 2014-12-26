@@ -880,6 +880,95 @@ begin
                COD_CTA := '';
              end;
            end;
+
+           //RegistroC400New
+           //REGISTRO C400: EQUIPAMENTO ECF (CÓDIGOS 02 e 2D)
+           with RegistroC400New  do
+           begin
+             COD_MOD := '02';
+             ECF_MOD := 'ECF-IF';
+             ECF_FAB := 'XX123456789012345678';
+             ECF_CX  := 1;
+
+             //REGISTRO C405: REDUÇÃO Z (CÓDIGOS 02 e 2D)
+             with RegistroC405New do
+             begin
+               DT_DOC := DT_INI;
+               CRO := 1;
+               CRZ := 30;
+               NUM_COO_FIN := 100;
+               GT_FIN := 1000000;
+               VL_BRT := 10000;
+
+               //REGISTRO C481: RESUMO DIÁRIO DE DOCUMENTOS EMITIDOS POR ECF – PIS/PASEP
+               // (CÓDIGOS 02 e 2D)
+               with RegistroC481New do
+               begin
+                 //Exemplo com valores não nulos
+                 CST_PIS := stpisValorAliquotaNormal;
+                 VL_ITEM := 1;
+                 VL_BC_PIS := 0;
+                 ALIQ_PIS  := 1.65;
+                 QUANT_BC_PIS   := 0;
+                 ALIQ_PIS_QUANT := 0;
+                 VL_PIS := 0;
+                 COD_ITEM := FormatFloat('000000', 1);
+                 COD_CTA := '';
+               end;
+
+               //REGISTRO C485: RESUMO DIÁRIO DE DOCUMENTOS EMITIDOS POR ECF – COFINS
+               // (CÓDIGOS 02 e 2D)
+               with RegistroC485New do
+               begin
+                 //Exemplo com valores não nulos
+                 CST_COFINS := stcofinsValorAliquotaNormal;
+                 VL_ITEM := 1;
+                 VL_BC_COFINS := 0;
+                 ALIQ_COFINS  := 7.6;
+                 QUANT_BC_COFINS   := 0;
+                 ALIQ_COFINS_QUANT := 0;
+                 VL_COFINS := 0;
+                 COD_ITEM := FormatFloat('000000', 1);
+                 COD_CTA := '';
+               end;
+
+               //Exemplo com valores NULOS
+               //REGISTRO C481: RESUMO DIÁRIO DE DOCUMENTOS EMITIDOS POR ECF – PIS/PASEP
+               // (CÓDIGOS 02 e 2D)
+               with RegistroC481New do
+               begin
+                 //Exemplo com valores nulos
+                 CST_PIS := stpisOutrasOperacoesSaida;
+                 VL_ITEM := 1;
+                 VL_BC_PIS := 0;
+                 ALIQ_PIS  := 0;
+                 QUANT_BC_PIS   := 0;
+                 ALIQ_PIS_QUANT := 0.1;
+                 VL_PIS := 0;
+                 COD_ITEM := FormatFloat('000000', 11);
+                 COD_CTA := '';
+               end;
+
+               //REGISTRO C485: RESUMO DIÁRIO DE DOCUMENTOS EMITIDOS POR ECF – COFINS
+               // (CÓDIGOS 02 e 2D)
+               with RegistroC485New do
+               begin
+                 //Exemplo com valores não nulos
+                 CST_COFINS := stcofinsOutrasOperacoesSaida;
+                 VL_ITEM := 1;
+                 VL_BC_COFINS := 0;
+                 ALIQ_COFINS  := 0;
+                 QUANT_BC_COFINS   := 0;
+                 ALIQ_COFINS_QUANT := 0.1;
+                 VL_COFINS := 0;
+                 COD_ITEM := FormatFloat('000000', 11);
+                 COD_CTA := '';
+               end;
+
+             end;
+
+           end;
+
          end; //C10
       end;
    end;
