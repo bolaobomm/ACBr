@@ -1247,7 +1247,103 @@ begin
       begin
         IND_MOV := imComDados;
 
-        //M100 - Crédito de PIS/PASEP Relativo ao Período
+         //M100 - Crédito de PIS/PASEP Relativo ao Período
+         with RegistroM100New do
+         begin
+            COD_CRED       := '306';
+            IND_CRED_ORI   := icoOperProprias;
+            VL_BC_PIS      := 0;
+            ALIQ_PIS       := 0.99;
+            QUANT_BC_PIS   := 0;
+            ALIQ_PIS_QUANT := 0;
+            VL_CRED        := 0; //OBRIGATORIO
+            VL_AJUS_ACRES  := 0;
+            VL_AJUS_REDUC  := 0;
+            VL_CRED_DIF    := 0;
+            VL_CRED_DISP   := 0;
+            IND_DESC_CRED  := idcTotal;
+            VL_CRED_DESC   := 0; //Valor do Crédito disponível, descontado da contribuição apurada no próprio período. Se IND_DESC_CRED=0, informar o valor total do Campo 12; Se IND_DESC_CRED=1, informar o valor parcial do Campo 12.
+            SLD_CRED       := 0;
+
+            with RegistroM105New do
+            begin
+              NAT_BC_CRED := bccAqBensRevenda;
+              CST_PIS := stpisCredPresAquiRecTribENaoTribMercIntEExportacao;
+              VL_BC_PIS_TOT := 0;
+              VL_BC_PIS_CUM := 0;
+              VL_BC_PIS_NC := 0;
+              VL_BC_PIS := 0;
+              QUANT_BC_PIS_TOT := 0;
+              QUANT_BC_PIS := 0;
+              DESC_CRED := '';
+            end;
+
+         end;
+
+         with RegistroM100New do
+         begin
+            COD_CRED       := '206';
+            IND_CRED_ORI   := icoOperProprias;
+            VL_BC_PIS      := 0;
+            ALIQ_PIS       := 0.99;
+            QUANT_BC_PIS   := 0;
+            ALIQ_PIS_QUANT := 0;
+            VL_CRED        := 0; //OBRIGATORIO
+            VL_AJUS_ACRES  := 0;
+            VL_AJUS_REDUC  := 0;
+            VL_CRED_DIF    := 0;
+            VL_CRED_DISP   := 0;
+            IND_DESC_CRED  := idcTotal;
+            VL_CRED_DESC   := 0; //Valor do Crédito disponível, descontado da contribuição apurada no próprio período. Se IND_DESC_CRED=0, informar o valor total do Campo 12; Se IND_DESC_CRED=1, informar o valor parcial do Campo 12.
+            SLD_CRED       := 0;
+
+            with RegistroM105New do
+            begin
+              NAT_BC_CRED := bccAqBensRevenda;
+              CST_PIS := stpisCredPresAquiRecTribENaoTribMercIntEExportacao;
+              VL_BC_PIS_TOT := 0;
+              VL_BC_PIS_CUM := 0;
+              VL_BC_PIS_NC := 0;
+              VL_BC_PIS := 0;
+              QUANT_BC_PIS_TOT := 0;
+              QUANT_BC_PIS := 0;
+              DESC_CRED := '';
+            end;
+
+         end;
+
+         with RegistroM100New do
+         begin
+            COD_CRED       := '106';
+            IND_CRED_ORI   := icoOperProprias;
+            VL_BC_PIS      := 0;
+            ALIQ_PIS       := 0.99;
+            QUANT_BC_PIS   := 0;
+            ALIQ_PIS_QUANT := 0;
+            VL_CRED        := 0; //OBRIGATORIO
+            VL_AJUS_ACRES  := 0;
+            VL_AJUS_REDUC  := 0;
+            VL_CRED_DIF    := 0;
+            VL_CRED_DISP   := 0;
+            IND_DESC_CRED  := idcTotal;
+            VL_CRED_DESC   := 0; //Valor do Crédito disponível, descontado da contribuição apurada no próprio período. Se IND_DESC_CRED=0, informar o valor total do Campo 12; Se IND_DESC_CRED=1, informar o valor parcial do Campo 12.
+            SLD_CRED       := 0;
+
+            with RegistroM105New do
+            begin
+              NAT_BC_CRED := bccAqBensRevenda;
+              CST_PIS := stpisCredPresAquiRecTribENaoTribMercIntEExportacao;
+              VL_BC_PIS_TOT := 0;
+              VL_BC_PIS_CUM := 0;
+              VL_BC_PIS_NC := 0;
+              VL_BC_PIS := 0;
+              QUANT_BC_PIS_TOT := 0;
+              QUANT_BC_PIS := 0;
+              DESC_CRED := '';
+            end;
+
+         end;
+
          with RegistroM100New do
          begin
             COD_CRED       := '106';
@@ -1268,7 +1364,7 @@ begin
             with RegistroM105New do
             begin
               NAT_BC_CRED := bccAqBensRevenda;
-              CST_PIS := stpisCredPresAquiExcRecTribMercInt;
+              CST_PIS := stpisCredPresAquiRecTribENaoTribMercIntEExportacao;
               VL_BC_PIS_TOT := 0;
               VL_BC_PIS_CUM := 0;
               VL_BC_PIS_NC := 0;
@@ -1279,6 +1375,7 @@ begin
             end;
 
          end;
+
 
          with RegistroM200New do
          begin
@@ -1295,30 +1392,45 @@ begin
            VL_CONT_CUM_REC := 0;
            VL_TOT_CONT_REC := 0;
 
-//           with RegistroM210New do
-//           begin
-//             COD_CONT := ccNaoAcumAliqBasica;
-//             VL_REC_BRT := 0;
-//             VL_BC_CONT := 0;
-//             ALIQ_PIS := 0;
-//             QUANT_BC_PIS := 0;
-//             ALIQ_PIS_QUANT := 0;
-//             VL_CONT_APUR := 0.01;
-//             VL_AJUS_ACRES := 0;
-//             VL_AJUS_REDUC := 0;
-//             VL_CONT_DIFER := 0;
-//             VL_CONT_DIFER_ANT := 0;
-//             VL_CONT_PER := 0.01;
-//           end;
+           with RegistroM210New do
+           begin
+             COD_CONT := ccNaoAcumAliqBasica;
+             VL_REC_BRT := 7;
+             VL_BC_CONT := 0;
+             ALIQ_PIS := 1.65;
+             QUANT_BC_PIS := 0;
+             ALIQ_PIS_QUANT := 0;
+             VL_CONT_APUR := 0.01;
+             VL_AJUS_ACRES := 0;
+             VL_AJUS_REDUC := 0;
+             VL_CONT_DIFER := 0;
+             VL_CONT_DIFER_ANT := 0;
+             VL_CONT_PER := 0.01;
+           end;
 
+           with RegistroM210New do
+           begin
+             COD_CONT := ccNaoAcumAliqBasica;
+             VL_REC_BRT := 1;
+             VL_BC_CONT := 0;
+             ALIQ_PIS := 1.65;
+             QUANT_BC_PIS := 0;
+             ALIQ_PIS_QUANT := 0;
+             VL_CONT_APUR := 0.01;
+             VL_AJUS_ACRES := 0;
+             VL_AJUS_REDUC := 0;
+             VL_CONT_DIFER := 0;
+             VL_CONT_DIFER_ANT := 0;
+             VL_CONT_PER := 0.01;
+           end;
          end;
 
          with RegistroM500New do
          begin
-           COD_CRED           := '106';
+           COD_CRED           := '306';
            IND_CRED_ORI       := icoOperProprias;
            VL_BC_COFINS       := 0;
-           ALIQ_COFINS        := 3.0400;
+           ALIQ_COFINS        := 4.56;
            QUANT_BC_COFINS    := 0;
            ALIQ_COFINS_QUANT  := 0;
            VL_CRED            := 0; //OBRIGATORIO
@@ -1333,7 +1445,7 @@ begin
            with RegistroM505New do
            begin
               NAT_BC_CRED := bccAqBensRevenda;
-              CST_COFINS := stcofinsCredPresAquiExcRecTribMercInt;
+              CST_COFINS := stcofinsCredPresAquiRecTribENaoTribMercIntEExportacao;
               VL_BC_COFINS_TOT := 0;
               VL_BC_COFINS_CUM := 0;
               VL_BC_COFINS_NC := 0;
@@ -1345,6 +1457,101 @@ begin
 
          end;
 
+         with RegistroM500New do
+         begin
+           COD_CRED           := '206';
+           IND_CRED_ORI       := icoOperProprias;
+           VL_BC_COFINS       := 0;
+           ALIQ_COFINS        := 4.56;
+           QUANT_BC_COFINS    := 0;
+           ALIQ_COFINS_QUANT  := 0;
+           VL_CRED            := 0; //OBRIGATORIO
+           VL_AJUS_ACRES      := 0;
+           VL_AJUS_REDUC      := 0;
+           VL_CRED_DIFER      := 0;
+           VL_CRED_DISP       := 0;
+           IND_DESC_CRED      := idcTotal;
+           VL_CRED_DESC       := 0;
+           SLD_CRED           := 0;
+
+           with RegistroM505New do
+           begin
+              NAT_BC_CRED := bccAqBensRevenda;
+              CST_COFINS := stcofinsCredPresAquiRecTribENaoTribMercIntEExportacao;
+              VL_BC_COFINS_TOT := 0;
+              VL_BC_COFINS_CUM := 0;
+              VL_BC_COFINS_NC := 0;
+              VL_BC_COFINS := 0;
+              QUANT_BC_COFINS_TOT := 0;
+              QUANT_BC_COFINS := 0;
+              DESC_CRED := '';
+           end;
+
+         end;
+
+         with RegistroM500New do
+         begin
+           COD_CRED           := '106';
+           IND_CRED_ORI       := icoOperProprias;
+           VL_BC_COFINS       := 0;
+           ALIQ_COFINS        := 3.04;
+           QUANT_BC_COFINS    := 0;
+           ALIQ_COFINS_QUANT  := 0;
+           VL_CRED            := 0; //OBRIGATORIO
+           VL_AJUS_ACRES      := 0;
+           VL_AJUS_REDUC      := 0;
+           VL_CRED_DIFER      := 0;
+           VL_CRED_DISP       := 0;
+           IND_DESC_CRED      := idcTotal;
+           VL_CRED_DESC       := 0;
+           SLD_CRED           := 0;
+
+           with RegistroM505New do
+           begin
+              NAT_BC_CRED := bccAqBensRevenda;
+              CST_COFINS := stcofinsCredPresAquiRecTribENaoTribMercIntEExportacao;
+              VL_BC_COFINS_TOT := 0;
+              VL_BC_COFINS_CUM := 0;
+              VL_BC_COFINS_NC := 0;
+              VL_BC_COFINS := 0;
+              QUANT_BC_COFINS_TOT := 0;
+              QUANT_BC_COFINS := 0;
+              DESC_CRED := '';
+           end;
+
+         end;
+
+         with RegistroM500New do
+         begin
+           COD_CRED           := '106';
+           IND_CRED_ORI       := icoOperProprias;
+           VL_BC_COFINS       := 0;
+           ALIQ_COFINS        := 4.56;
+           QUANT_BC_COFINS    := 0;
+           ALIQ_COFINS_QUANT  := 0;
+           VL_CRED            := 0; //OBRIGATORIO
+           VL_AJUS_ACRES      := 0;
+           VL_AJUS_REDUC      := 0;
+           VL_CRED_DIFER      := 0;
+           VL_CRED_DISP       := 0;
+           IND_DESC_CRED      := idcTotal;
+           VL_CRED_DESC       := 0;
+           SLD_CRED           := 0;
+
+           with RegistroM505New do
+           begin
+              NAT_BC_CRED := bccAqBensRevenda;
+              CST_COFINS := stcofinsCredPresAquiRecTribENaoTribMercIntEExportacao;
+              VL_BC_COFINS_TOT := 0;
+              VL_BC_COFINS_CUM := 0;
+              VL_BC_COFINS_NC := 0;
+              VL_BC_COFINS := 0;
+              QUANT_BC_COFINS_TOT := 0;
+              QUANT_BC_COFINS := 0;
+              DESC_CRED := '';
+           end;
+
+         end;
 
          with RegistroM600 do
          begin
@@ -1360,23 +1567,39 @@ begin
            VL_OUT_DED_CUM := 0;
            VL_CONT_CUM_REC := 0;
            VL_TOT_CONT_REC := 0;
-//
-//           with RegistroM610New do
-//           begin
-//             COD_CONT := ccNaoAcumAliqBasica;
-//             VL_REC_BRT := 2;
-//             VL_BC_CONT := 3;
-//             ALIQ_COFINS := 4;
-//             QUANT_BC_COFINS := 5;
-//             ALIQ_COFINS_QUANT := 6;
-//             VL_CONT_APUR := 7;
-//             VL_AJUS_ACRES := 8;
-//             VL_AJUS_REDUC := 9;
-//             VL_CONT_DIFER := 10;
-//             VL_CONT_DIFER_ANT := 11;
-//             VL_CONT_PER := 12;
-//           end;
-//
+
+           with RegistroM610New do
+           begin
+             COD_CONT := ccNaoAcumAliqBasica;
+             VL_REC_BRT := 7;
+             VL_BC_CONT := 0;
+             ALIQ_COFINS := 7.6;
+             QUANT_BC_COFINS := 0;
+             ALIQ_COFINS_QUANT := 0;
+             VL_CONT_APUR := 0;
+             VL_AJUS_ACRES := 0;
+             VL_AJUS_REDUC := 0;
+             VL_CONT_DIFER := 0;
+             VL_CONT_DIFER_ANT := 0;
+             VL_CONT_PER := 0;
+           end;
+
+           with RegistroM610New do
+           begin
+             COD_CONT := ccNaoAcumAliqBasica;
+             VL_REC_BRT := 1;
+             VL_BC_CONT := 0;
+             ALIQ_COFINS := 7.6;
+             QUANT_BC_COFINS := 0;
+             ALIQ_COFINS_QUANT := 0;
+             VL_CONT_APUR := 0;
+             VL_AJUS_ACRES := 0;
+             VL_AJUS_REDUC := 0;
+             VL_CONT_DIFER := 0;
+             VL_CONT_DIFER_ANT := 0;
+             VL_CONT_PER := 0;
+           end;
+
          end;
 
 //          vlBC := 293040.02;
