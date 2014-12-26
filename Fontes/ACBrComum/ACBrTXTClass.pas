@@ -50,6 +50,8 @@ uses {$IFDEF MSWINDOWS}
      SysUtils, Classes, DateUtils, Math, Variants;
 
 type
+  EACBrTXTClassErro            = class(Exception) ;
+
   TErrorEvent = procedure(const MsnError: AnsiString) of object;
 
   { TACBrTXTClass }
@@ -141,7 +143,7 @@ var
   FS : TFileStream ;
 begin
   if NomeArquivo = '' then
-     raise Exception.Create( ACBrStr('"NomeArquivo" não especificado') ) ;
+     raise EACBrTXTClassErro.Create( ACBrStr('"NomeArquivo" não especificado') ) ;
 
   if (not FileExists( NomeArquivo )) then
      {$IFDEF UNICODE}
@@ -172,7 +174,7 @@ end;
 procedure TACBrTXTClass.LoadFromFile ;
 begin
    if NomeArquivo = '' then
-      raise Exception.Create( ACBrStr('"Nome do Arquivo" não especificado') ) ;
+      raise EACBrTXTClassErro.Create( ACBrStr('"Nome do Arquivo" não especificado') ) ;
 
    FConteudo.LoadFromFile( NomeArquivo );
 end;
@@ -381,7 +383,7 @@ begin
   end;
   // Checa se é um valor numérico
   if not VarIsNumeric(Value) then
-     raise Exception.Create( Format('[%a] Não é um valor numérico!', [Value]) );
+     raise EACBrTXTClassErro.Create( ACBrStr('Parâmetro "Value" não possui um valor numérico.'));
 
   intP := 1;
   for intFor := 1 to Decimal do
