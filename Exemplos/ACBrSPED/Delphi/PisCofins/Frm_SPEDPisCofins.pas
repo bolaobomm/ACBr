@@ -1364,7 +1364,7 @@ begin
             with RegistroM105New do
             begin
               NAT_BC_CRED := bccAqBensRevenda;
-              CST_PIS := stpisCredPresAquiRecTribENaoTribMercIntEExportacao;
+              CST_PIS := stpisCredPresAquiExcRecTribMercInt;
               VL_BC_PIS_TOT := 0;
               VL_BC_PIS_CUM := 0;
               VL_BC_PIS_NC := 0;
@@ -1400,12 +1400,12 @@ begin
              ALIQ_PIS := 1.65;
              QUANT_BC_PIS := 0;
              ALIQ_PIS_QUANT := 0;
-             VL_CONT_APUR := 0.01;
+             VL_CONT_APUR := 0;
              VL_AJUS_ACRES := 0;
              VL_AJUS_REDUC := 0;
              VL_CONT_DIFER := 0;
              VL_CONT_DIFER_ANT := 0;
-             VL_CONT_PER := 0.01;
+             VL_CONT_PER := 0;
            end;
 
            with RegistroM210New do
@@ -1416,12 +1416,12 @@ begin
              ALIQ_PIS := 1.65;
              QUANT_BC_PIS := 0;
              ALIQ_PIS_QUANT := 0;
-             VL_CONT_APUR := 0.01;
+             VL_CONT_APUR := 0;
              VL_AJUS_ACRES := 0;
              VL_AJUS_REDUC := 0;
              VL_CONT_DIFER := 0;
              VL_CONT_DIFER_ANT := 0;
-             VL_CONT_PER := 0.01;
+             VL_CONT_PER := 0;
            end;
          end;
 
@@ -1509,7 +1509,7 @@ begin
            with RegistroM505New do
            begin
               NAT_BC_CRED := bccAqBensRevenda;
-              CST_COFINS := stcofinsCredPresAquiRecTribENaoTribMercIntEExportacao;
+              CST_COFINS := stcofinsCredPresAquiExcRecTribMercInt;
               VL_BC_COFINS_TOT := 0;
               VL_BC_COFINS_CUM := 0;
               VL_BC_COFINS_NC := 0;
@@ -1553,7 +1553,7 @@ begin
 
          end;
 
-         with RegistroM600 do
+         with RegistroM600New do
          begin
            VL_TOT_CONT_NC_PER := 0;
            VL_TOT_CRED_DESC := 0;
@@ -1601,41 +1601,6 @@ begin
            end;
 
          end;
-
-//          vlBC := 293040.02;
-//          vlBcCofins := 20823.48;
-//          aliqCofins := 7.6;
-//          vlcredNC := 0;
-//          with RegistroM600New do begin
-//            {02} VL_TOT_CONT_NC_PER := StrToCurr(FormatCurr('#####0.00',(vlBcCofins*aliqCofins)/100));
-//            {03} VL_TOT_CRED_DESC := vlcredNC;
-//            {04} VL_TOT_CRED_DESC_ANT := 0;
-//            {05} VL_TOT_CONT_NC_DEV := StrToCurr(FormatCurr('#####0.00',(vlBcCofins*aliqCofins)/100))-vlcredNC;
-//            {06} VL_RET_NC := 0;
-//            {07} VL_OUT_DED_NC := 0;
-//            {08} VL_CONT_NC_REC := StrToCurr(FormatCurr('#####0.00',(vlBcCofins*aliqCofins)/100))-vlcredNC;
-//            {09} VL_TOT_CONT_CUM_PER := 0;
-//            {10} VL_RET_CUM := 0;
-//            {11} VL_OUT_DED_CUM := 0;
-//            {12} VL_CONT_CUM_REC := 0;
-//            {13} VL_TOT_CONT_REC := StrToCurr(FormatCurr('#####0.00',(vlBcCofins*aliqCofins)/100))-vlcredNC;
-//
-//            with RegistroM610New do begin
-//            {02} COD_CONT := ccNaoAcumAliqBasica;
-//            {03} VL_REC_BRT := vlBC;
-//            {04} VL_BC_CONT := vlBcCofins;
-//            {05} ALIQ_COFINS := aliqCofins;
-//            {06} QUANT_BC_COFINS := 0;
-//            {07} ALIQ_COFINS_QUANT := 0;
-//            {08} VL_CONT_APUR := StrToCurr(FormatCurr('#####0.00',(vlBcCofins*aliqCofins)/100));
-//            {09} VL_AJUS_ACRES := 0;
-//            {10} VL_AJUS_REDUC := 0;
-//            {11} VL_CONT_DIFER := 0;
-//            {12} VL_CONT_DIFER_ANT:= 0;
-//            {13} VL_CONT_PER := StrToCurr(FormatCurr('#####0.00',(vlBcCofins*aliqCofins)/100));
-//            end;
-//          end;
-
 
       end;
    end;
