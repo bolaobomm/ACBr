@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 29/12/2014
+-- ACBrSEF2
+[*] Adicionado validação na geração do bloco H
+		http://www.projetoacbr.com.br/forum/index.php?/topic/4822-arquivo-sef-pernambuco/page-6#entry122390
+		por : Juliomar Marchetti
 Data: 18/11/2014
 -- ACBrSEF2
 [+] Adicionado o registro E550 e correções

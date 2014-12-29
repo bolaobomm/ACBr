@@ -518,9 +518,13 @@ end;
 
 procedure TACBrSEF2.WriteBloco_H;
 begin
+  if Bloco_H.Gravado then
+    Exit;
+
   WriteRegistroH001;
   WriteRegistroH990;
   Bloco_H.WriteBuffer;
+  Bloco_H.Conteudo.Clear;
   Bloco_H.Gravado := True;
 end;
 
