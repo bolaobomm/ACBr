@@ -349,6 +349,7 @@ type
     btnDadosUltimaRZ: TButton;
     ProgramaIdentificaoPafECF1: TMenuItem;
     ACBrECFVirtualNaoFiscal1: TACBrECFVirtualNaoFiscal;
+    VendaFrentica1: TMenuItem;
     procedure cbxModeloChange(Sender: TObject);
     procedure Sair1Click(Sender: TObject);
     procedure bAtivarClick(Sender: TObject);
@@ -561,6 +562,7 @@ type
       var Tratado: Boolean);
     procedure ACBrECFVirtualNaoFiscal1LeArqINI(ConteudoINI: TStrings;
       var Tratado: Boolean);
+    procedure VendaFrentica1Click(Sender: TObject);
   private
     { Private declarations }
     Function Converte( cmd : String) : String;
@@ -592,7 +594,7 @@ implementation
 
 uses ACBrUtil, ACBrECFBematech, VendeItem, EfetuaPagamento,
      Relatorio, Sobre, TypInfo, Math, ActiveX, MSHTML, IniFiles,
-  ConfiguraSerial, ACBrPAFClass, RelatorioGerencialFormatado, uDAV, uDAVOS;
+  ConfiguraSerial, ACBrPAFClass, RelatorioGerencialFormatado, uDAV, uDAVOS, uVendaFrenetica;
 
 {$R *.dfm}
 
@@ -4096,6 +4098,11 @@ procedure TForm1.ACBrECFVirtualNaoFiscal1LeArqINI(ConteudoINI: TStrings;
   var Tratado: Boolean);
 begin
   mResp.Lines.Add('INI será Lido')
+end;
+
+procedure TForm1.VendaFrentica1Click(Sender: TObject);
+begin
+  FrVendaFrenetica.Show;
 end;
 
 end.

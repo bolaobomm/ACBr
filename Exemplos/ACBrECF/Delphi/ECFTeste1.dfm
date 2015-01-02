@@ -2176,6 +2176,10 @@ object Form1: TForm1
         Caption = 'Teste de Velocidade'
         OnClick = TestedeVelocidade1Click
       end
+      object VendaFrentica1: TMenuItem
+        Caption = 'Venda Fren'#233'tica'
+        OnClick = VendaFrentica1Click
+      end
     end
     object NoFiscal1: TMenuItem
       Caption = 'N'#227'o Fiscal'

@@ -10,7 +10,8 @@ uses
   ConfiguraSerial in 'ConfiguraSerial.pas' {frConfiguraSerial},
   RelatorioGerencialFormatado in 'RelatorioGerencialFormatado.pas' {frmGerencialFormatado},
   uDAV in 'uDAV.pas',
-  uDAVOS in 'uDAVOS.pas';
+  uDAVOS in 'uDAVOS.pas',
+  uVendaFrenetica in 'uVendaFrenetica.pas' {FrVendaFrenetica};
 
 {$R *.res}
 
@@ -21,5 +22,6 @@ begin
   Application.CreateForm(TfrVendeItem, frVendeItem);
   Application.CreateForm(TfrRelatorio, frRelatorio);
   Application.CreateForm(TfrPagamento, frPagamento);
+  Application.CreateForm(TFrVendaFrenetica, FrVendaFrenetica);
   Application.Run;
 end.
