@@ -552,13 +552,6 @@ initialization
 {$ENDIF}
 {$ENDIF}
 
-{$IFDEF FPC}
-{$IFNDEF NOGUI}
-initialization
-   {$I ACBrSAT.lrs}
-{$ENDIF}
-{$ENDIF}
-
 end.
 
 // TODO:
