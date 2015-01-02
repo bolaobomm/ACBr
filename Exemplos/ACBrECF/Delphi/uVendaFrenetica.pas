@@ -154,9 +154,6 @@ begin
     MessageDlg('ECF não Ativo.', mtInformation, [mbOk], 0);
   end;
 
-  //Desabilitar o ProcessMessages
-  chkProcessMessages.Checked := False;
-
   // Opcionalmente diminuir o IntervaloAposComando;
   //form1.ACBrECF1.IntervaloAposComando := 0;
 
