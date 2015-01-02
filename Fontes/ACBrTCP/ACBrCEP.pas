@@ -1239,7 +1239,7 @@ begin
             begin
               if (sMun <> Municipio) then  // Evita buscar municipio já encontrado
               begin
-                fACBrIBGE.BuscarPorNome( Municipio, UF, True ) ;
+                fACBrIBGE.BuscarPorNome( Municipio, UF, True, False ) ;
                 sMun := Municipio;
               end ;
 
