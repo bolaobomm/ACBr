@@ -28,6 +28,8 @@ type
   published
     procedure VDFill_VariantNula;
     procedure VLFill_VariantNula;
+    procedure VDFill_VariantUndefined;
+    procedure VLFill_VariantUndefined;
     procedure DFill_ExtendedZero_ResultadoVazio;
     procedure DFill_ExtendedZero_ResultadoNaoVazio;
     procedure LFill_TDateTimeZero_ResultadoVazio;
@@ -56,6 +58,22 @@ var
 begin
   vValue := Null;
   CheckEquals('|', fACBrTXTClass.VLFill(vValue, 4), 'Não tratou Variant Nula corretamente.');
+end;
+
+procedure TTACBrTXTClass_MetodosFill_CasosVazios.VDFill_VariantUndefined;
+var
+  vValue: Variant;
+begin
+  //vValue := Undefined;
+  CheckEquals('|', fACBrTXTClass.VDFill(vValue), 'Não tratou Variant "não definida" corretamente.');
+end;
+
+procedure TTACBrTXTClass_MetodosFill_CasosVazios.VLFill_VariantUndefined;
+var
+  vValue: Variant;
+begin
+  //vValue := Undefined;
+  CheckEquals('|', fACBrTXTClass.VLFill(vValue, 4), 'Não tratou Variant "não definida" corretamente.');
 end;
 
 procedure TTACBrTXTClass_MetodosFill_CasosVazios.DFill_ExtendedZero_ResultadoVazio;

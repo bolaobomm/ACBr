@@ -313,8 +313,8 @@ end;
 function TACBrTXTClass.VDFill(Value: Variant;
                         Decimal: Integer = 2): String;
 begin
-  /// Se o parametro Nulo = true e Value = 0, será retornado '|'
-  if Value = Null then
+  /// Se o parametro Value é Null ou Undefined será retornado '|'
+  if VarIsNull(Value) or VarIsEmpty(Value) then
   begin
      Result := FDelimitador;
      Exit;
@@ -375,8 +375,8 @@ begin
   if Mascara <> '' then
      strCurMascara := Mascara;
 
-  // Se o parametro Value = Null, será retornado '|'
-  if (Value = Null) then
+  // Se o parametro Value = Null ou não foi preenchido será retornado '|'
+  if VarIsNull(Value) or VarIsEmpty(Value) then
   begin
      Result := FDelimitador;
      Exit;
