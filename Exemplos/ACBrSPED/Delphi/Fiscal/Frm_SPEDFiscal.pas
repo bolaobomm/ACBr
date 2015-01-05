@@ -48,6 +48,7 @@ type
     ACBrSPEDFiscal1: TACBrSPEDFiscal;
     btnB_G: TButton;
     btnB_Completo: TButton;
+    btnCancelaGeração: TButton;
     procedure btnB_0Click(Sender: TObject);
     procedure btnB_9Click(Sender: TObject);
     procedure btnTXTClick(Sender: TObject);
@@ -62,6 +63,7 @@ type
     procedure ACBrSPEDFiscal1Error(const MsnError: AnsiString);
     procedure btnB_CompletoClick(Sender: TObject);
     procedure btnB_GClick(Sender: TObject);
+    procedure btnCancelaGeraçãoClick(Sender: TObject);
   private
     procedure LoadToMemo;
     { Private declarations }
@@ -80,6 +82,9 @@ implementation
 {$R *.dfm}
 {$ENDIF}
 
+const
+  strUNID: array [0 .. 4] of string = ('PC', 'UN', 'LT', 'PC', 'MT');
+
 procedure TFrmSPEDFiscal.ACBrSPEDFiscal1Error(const MsnError: AnsiString);
 begin
   memoError.Lines.Add(MsnError);
@@ -87,17 +92,14 @@ end;
 
 procedure TFrmSPEDFiscal.btnB_0Click(Sender: TObject);
 
-const
-  strUNID: array [0 .. 4] of string = ('PC', 'UN', 'LT', 'PC', 'MT');
-
 var
   int0150: integer;
-  int0175: integer;
+//  int0175: integer;
   int0300: integer;
   int0190: integer;
   int0500: Integer;
   int0600: Integer;
-
+  int0200: Integer;
 begin
   // Alimenta o componente com informações para gerar todos os registros do
   // Bloco 0.
@@ -106,24 +108,13 @@ begin
   btnB_0.Enabled := False;
   btnB_C.Enabled := True;
 
-  //Definindo
-  with ACBrSPEDFiscal1 do
-  begin
-    DT_INI := StrToDate('01/11/2011');
-    DT_FIN := StrToDate('30/11/2011');
-  end;
+  ACBrSPEDFiscal1.DT_INI := StrToDate('01/11/2014');
+  ACBrSPEDFiscal1.DT_FIN := StrToDate('30/11/2014');
 
   if cbConcomitante.Checked then
   begin
-    with ACBrSPEDFiscal1 do
-    begin
-//      DT_INI := StrToDate('01/11/2011');
-//      DT_FIN := StrToDate('30/11/2011');
-      LinhasBuffer := StrToIntDef(edBufLinhas.Text, 0);
-
-      IniciaGeracao;
-    end;
-
+    ACBrSPEDFiscal1.LinhasBuffer := StrToIntDef(edBufLinhas.Text, 0);
+    ACBrSPEDFiscal1.IniciaGeracao;
     LoadToMemo;
   end;
 
@@ -132,10 +123,10 @@ begin
     // Dados da Empresa
     with Registro0000New do
     begin
-      COD_VER := vlVersao103;
+      COD_VER := vlVersao107;
       COD_FIN := raOriginal;
       NOME := 'RAZÃO SOCIAL DA EMPRESA EMITENTE';
-      CNPJ := '11111111111180';
+      CNPJ := '11111111000191';
       CPF := '';
       UF := 'RS';
       IE := '1111111119';
@@ -190,43 +181,43 @@ begin
       // Check(Reg0001.Registro0190.LocalizaRegistro(UNID), '(0-0190) UNIDADE MEDIDA: A unidade de medida "%s" foi duplicada na lista de registros 0190!', [UNID]);
 
       // FILHO
-      for int0150 := 1 to 10 do
+      for int0150 := 1 to 4 do
       begin
         // 10 Clientes
         with Registro0150New do
         begin
           COD_PART := IntToStr(int0150);
           NOME := 'CLIENTE DE TESTES ' + IntToStr(int0150);
-          if int0150 = 9 then //um exemplo de cliente no exterior.
+          if int0150 = 3 then //um exemplo de cliente no exterior.
           begin
             COD_PAIS := '3131'; //GUAM
             CNPJ := '';
             CPF := '';
-//            COD_MUN := 43140070 + int0150; //O código do município é deixado de fora propositalmente. O componente vai fazê-lo ficar vazio
+//            COD_MUN := '' //O código do município é deixado de fora propositalmente. O componente vai fazê-lo ficar vazio
           end
           else
           begin
-            CNPJ := '11111111111180';
+//            CNPJ := '11111111000191';
             CPF := '12345678909';
             COD_PAIS := '1058';
           end;
 
           IE := '';
-          COD_MUN := 43140070 + int0150;
+          COD_MUN := 3553005;
           SUFRAMA := '';
           ENDERECO := 'ENDERECO CLIENTE' + IntToStr(int0150);
           NUM := '';
           COMPL := 'COMPLEMENTO'+ IntToStr(int0150);
           BAIRRO := 'BAIRRO CLIENTE' + IntToStr(int0150);
-          //
-          // FILHO - 1 Alteração para cada cliente de 2 a 3
-          if (int0150 = 2) or (int0150 = 3) then
+
+          // Alteração de nome para Participantes 2 e 4
+          if (int0150 = 2) or (int0150 = 4) then
           begin
             with Registro0175New do
             begin
               DT_ALT := DT_INI + 1;
-              NR_CAMPO := '1';
-              CONT_ANT := 'CAMPO ANTERIOR ' + '1';
+              NR_CAMPO := '03'; //03 -> Nome
+              CONT_ANT := 'Nome anterior do Participante' + IntToStr(int0150);
             end;
           end;
         end;
@@ -247,26 +238,29 @@ begin
         end;
       end;
 
-      with Registro0200New do
+      for int0200 := 1 to 10 do
       begin
-        COD_ITEM := '000001';
-        DESCR_ITEM := 'PRODUTO 1';
-        COD_BARRA := '';
-        UNID_INV := 'UN';
-        TIPO_ITEM := tiMercadoriaRevenda;
-        COD_NCM := '30049026';
-        COD_GEN := '30';
-        ALIQ_ICMS := 17.00;
+        with Registro0200New do
+        begin
+          COD_ITEM   := FormatFloat('000000', int0200);
+          DESCR_ITEM := 'DESCRIÇÃO DO ITEM' + FormatFloat('000000', int0200);
+          COD_BARRA := '';
+          UNID_INV  := strUNID[int0200 mod (High(strUNID)+1)];
+          TIPO_ITEM := tiMercadoriaRevenda;
+          COD_NCM := '30049026';
+          COD_GEN := '30';
+          ALIQ_ICMS := 17.00;
 
-        //REGISTRO 0206: CÓDIGO DE PRODUTO CONFORME TABELA PUBLICADA PELA ANP (COMBUSTÍVEIS)
-//        With Registro0206New do
-//        begin
-//          COD_COMB := '910101001';
-//        end;
+          //REGISTRO 0206: CÓDIGO DE PRODUTO CONFORME TABELA PUBLICADA PELA ANP (COMBUSTÍVEIS)
+  //        With Registro0206New do
+  //        begin
+  //          COD_COMB := '910101001';
+  //        end;
+        end;
       end;
 
       // FILHO
-      for int0300 := 1 to 10 do
+      for int0300 := 1 to 1 do
       begin
         // 10 Bens Imobilizados
         with Registro0300New do
@@ -275,13 +269,13 @@ begin
           IDENT_MERC := 1;
           DESCR_ITEM := 'DESCRIÇÃO DO ITEM';
           COD_PRNC := '';
-          COD_CTA := '';
+          COD_CTA := '1'; //0500
           NR_PARC := 10;
           // FILHO
           with Registro0305New do
           begin
-            COD_CCUS := '1';
-//            FUNC := 'BREVE DESCRIÇÃO DA FUNÇÃO DO IMOBILIZADO ' +FormatFloat('000000', int0300);;
+            COD_CCUS := '1'; //0600
+            FUNC := 'BREVE DESCRIÇÃO DA FUNÇÃO DO IMOBILIZADO ' +FormatFloat('000000', int0300);;
             VIDA_UTIL := 60;
           end;
         end;
@@ -289,7 +283,7 @@ begin
 
       with Registro0400New do
       begin
-        COD_NAT := '12020';
+        COD_NAT := '99991';
         DESCR_NAT := 'DESCRIÇÃO DA NATUREZA DE OPERAÇÃO 12020';
       end;
 
@@ -309,7 +303,7 @@ begin
       begin
         with Registro0500New do
         begin
-          DT_ALT := StrToDate('30/11/2011');
+          DT_ALT := StrToDate('30/11/2014');
           COD_NAT_CC := '01';
           IND_CTA := 'A';
           NIVEL := '1';
@@ -322,7 +316,7 @@ begin
       begin
         with Registro0600New do
         begin
-          DT_ALT := StrToDate('30/11/2011');
+          DT_ALT := StrToDate('30/11/2014');
           COD_CCUS := IntToStr(int0600);
           CCUS := 'CENTRO DE CUSTOS ' + IntToStr(int0600);
         end;
@@ -361,12 +355,6 @@ begin
 
   ACBrSPEDFiscal1.LinhasBuffer := StrToIntDef(edBufLinhas.Text, 0);
 
-  with ACBrSPEDFiscal1 do
-  begin
-    DT_INI := StrToDate('01/11/2011');
-    DT_FIN := StrToDate('30/11/2011');
-  end;
-
   // Limpa a lista de erros.
   memoError.Lines.Clear;
   // Informa o pata onde será salvo o arquivo TXT.
@@ -384,14 +372,13 @@ begin
   cbConcomitante.Enabled := True;
 end;
 
+procedure TFrmSPEDFiscal.btnCancelaGeraçãoClick(Sender: TObject);
+begin
+  ACBrSPEDFiscal1.CancelaGeracao;
+end;
+
 procedure TFrmSPEDFiscal.btnErrorClick(Sender: TObject);
 begin
-  with ACBrSPEDFiscal1 do
-  begin
-    DT_INI := StrToDate('01/07/2011');
-    DT_FIN := StrToDate('01/07/2011');
-  end;
-
   // Limpa a lista de erros.
   memoError.Lines.Clear;
 
@@ -475,8 +462,8 @@ begin
           if Odd(INotas) then IND_EMIT := edEmissaoPropria
           else IND_EMIT := edTerceiros;
 
-          COD_PART := '001';
-          COD_MOD := '';
+          COD_PART := '1' ; //Baseado no registro 0150
+          COD_MOD := '01';
           COD_SIT := sdRegular;
           SER := '';
           NUM_DOC := FormatFloat('11000000', INotas);
@@ -484,15 +471,15 @@ begin
           DT_DOC := DT_INI + INotas;
           DT_E_S := DT_INI + INotas;
           VL_DOC := 0;
-          IND_PGTO := tpSemPagamento;
+          IND_PGTO := tpVista;
           VL_DESC := 0;
           VL_ABAT_NT := 0;
-          VL_MERC := 0;
+          VL_MERC := 10;
           IND_FRT := tfSemCobrancaFrete;
           VL_SEG := 0;
           VL_OUT_DA := 0;
-          VL_BC_ICMS := 0;
-          VL_ICMS := 0;
+          VL_BC_ICMS := 10;
+          VL_ICMS := 1.7;
           VL_BC_ICMS_ST := 0;
           VL_ICMS_ST := 0;
           VL_IPI := 0;
@@ -503,7 +490,7 @@ begin
 
 
           { Gera registros específicos para notas emitidas por terceiros }
-          if IND_EMIT = edTerceiros then
+          if (INotas = 2) and (IND_EMIT = edTerceiros) then
           begin
             With RegistroC110New do
             begin
@@ -514,13 +501,17 @@ begin
               begin
                 IND_OPER := tpEntradaAquisicao;
                 IND_EMIT := edEmissaoPropria;
-                COD_PART := '001';
-                COD_MOD := '1';
+                COD_PART := '2';
+                COD_MOD := '01';
                 SER := '1';
                 SUB := '1';
                 NUM_DOC := '333';
-                DT_DOC := StrToDate('02/11/2011');
+                DT_DOC := StrToDate('02/11/2014');
               end;
+//              with RegistroC114New do
+//              begin
+//                COD_MOD := 'a';
+//              end;
             end;
           end;
 
@@ -560,19 +551,19 @@ begin
             begin
               NUM_ITEM := FormatFloat('000', IItens);
               COD_ITEM := FormatFloat('000000', StrToInt(NUM_ITEM));
-              DESCR_COMPL := FormatFloat('11000000', INotas) + ' -> ITEM '
-                + COD_ITEM;
+              //DESCR_COMPL := 'Nota:'FormatFloat('11000000', INotas) + ' -> ITEM ' + COD_ITEM;
+              DESCR_COMPL := 'DESCRIÇÃO Complementar DO ITEM' + FormatFloat('000000', IItens);
               QTD := 1;
               UNID := 'UN';
-              VL_ITEM := 0;
+              VL_ITEM := 1;
               VL_DESC := 0;
               IND_MOV := mfNao;
-              CST_ICMS := '001';
-              CFOP := '1252';
-              COD_NAT := '64';
-              VL_BC_ICMS := 0;
-              ALIQ_ICMS := 0;
-              VL_ICMS := 0;
+              CST_ICMS := '010';
+              CFOP := '1102';
+              COD_NAT := '99991'; //0400
+              VL_BC_ICMS := 1;
+              ALIQ_ICMS := 17;
+              VL_ICMS := 0.17;
               VL_BC_ICMS_ST := 0;
               ALIQ_ST := 0;
               VL_ICMS_ST := 0;
@@ -624,21 +615,21 @@ begin
           end;
 
           // REGISTRO C190: REGISTRO ANALÍTICO DO DOCUMENTO (CÓDIGO 01, 1B, 04 E 55).
-          for IItens := 1 to 10 do
+          for IItens := 1 to 1 do
           begin
             with RegistroC190New do
             begin
-              CST_ICMS := '040';
-              CFOP := '1252';
-              ALIQ_ICMS := 0;
+              CST_ICMS := '010';
+              CFOP := '1102';
+              ALIQ_ICMS := 17;
               VL_OPR := 0;
-              VL_BC_ICMS := 0;
-              VL_ICMS := 0;
+              VL_BC_ICMS := 10;
+              VL_ICMS := 1.7;
               VL_BC_ICMS_ST := 0;
               VL_ICMS_ST := 0;
               VL_RED_BC := 0;
               VL_IPI := 0;
-              COD_OBS := '000';
+              COD_OBS := '000001';
             end; // Fim dos Itens;
           end;
         end;
@@ -665,7 +656,7 @@ begin
 
         With RegistroC405New do
         begin
-          DT_DOC := DT_FIN; //StrToDate('30/11/2011');
+          DT_DOC := DT_FIN; //StrToDate('30/11/2014');
           CRO := 1;
           CRZ := 1;
           NUM_COO_FIN := 1;
@@ -707,11 +698,11 @@ begin
               COD_MOD := '2D';
               COD_SIT := sdRegular;
               NUM_DOC := '000001';
-              DT_DOC := StrToDate('30/11/2011');
+              DT_DOC := StrToDate('30/11/2014');
               VL_DOC := 100.00;
               VL_PIS := 0.00;
               VL_COFINS := 0.00;
-              CPF_CNPJ := '33333333333';
+              CPF_CNPJ := '12345678909';
               NOM_ADQ := 'TESTE';
 
               with RegistroC470New do
@@ -805,14 +796,14 @@ begin
       begin
         IND_OPER := tpEntradaAquisicao;
         IND_EMIT := edTerceiros;
-        COD_PART := '000001';
-        COD_MOD := '57';
+        COD_PART := '3';
+        COD_MOD := '08';
         COD_SIT := sdRegular;
         SER := '1';
         NUM_DOC := '012345';
         CHV_CTE := '';
-        DT_DOC := DT_FIN - 1; //StrToDate('30/11/2011');
-        DT_A_P := DT_FIN - 1; //StrToDate('30/11/2011');
+        DT_DOC := DT_FIN - 1;
+        DT_A_P := DT_FIN - 1;
         TP_CT_e := '1';
         VL_DOC := 100.00;
         VL_DESC := 0.00;
@@ -864,8 +855,8 @@ begin
 
       with RegistroE100New do
       begin
-        DT_INI := StrToDate('01/11/2011');
-        DT_FIN := StrToDate('30/11/2011');
+        DT_INI := StrToDate('01/11/2014');
+        DT_FIN := StrToDate('30/11/2014');
 
         with RegistroE110New do
         begin
@@ -873,7 +864,7 @@ begin
           VL_AJ_DEBITOS := 0.00;
           VL_TOT_AJ_DEBITOS := 0.00;
           VL_ESTORNOS_CRED := 0;
-          VL_TOT_CREDITOS := 17.00;
+          VL_TOT_CREDITOS := 20.4;
           VL_AJ_CREDITOS := 0;
           VL_TOT_AJ_CREDITOS := 0;
           VL_ESTORNOS_DEB := 0;
@@ -881,7 +872,7 @@ begin
           VL_SLD_APURADO := 0.00;
           VL_TOT_DED := 0.00;
           VL_ICMS_RECOLHER := 0.00;
-          VL_SLD_CREDOR_TRANSPORTAR := 0;
+          VL_SLD_CREDOR_TRANSPORTAR := 3.4;
           DEB_ESP := 0;
 
           // with RegistroE111New do begin
@@ -921,7 +912,7 @@ begin
             COD_OR := '000';
             VL_OR := 0;
             DT_VCTO := Now;
-            COD_REC := '123';
+            COD_REC := '0057';
             NUM_PROC := '10';
             IND_PROC := opSefaz;
             PROC := 'DESCRIÇÃO DO PROCESSO';
@@ -936,8 +927,8 @@ begin
       begin
         with RegistroE200New do
         begin
-          DT_INI := StrToDate('01/11/2011');
-          DT_FIN := StrToDate('30/11/2011');
+          DT_INI := StrToDate('01/11/2014');
+          DT_FIN := StrToDate('30/11/2014');
           UF := ESTADOS[I];
 
           with RegistroE210New do
@@ -985,7 +976,7 @@ begin
               COD_OR := '000';
               VL_OR := 0;
               DT_VCTO := Now;
-              COD_REC := '123';
+              COD_REC := '600016';
               NUM_PROC := '1020304050';
               IND_PROC := opOutros;
               PROC := 'DESCRIÇÃO RESUMIDA';
@@ -996,42 +987,47 @@ begin
         end;
       end;
 
-      with RegistroE500New do
+
+      //Só deve gerar o bloco E em caso de atividades Industriais
+      if ACBrSPEDFiscal1.Bloco_0.Registro0000.IND_ATIV = atIndustrial then
       begin
-        IND_APUR := iaMensal;
-        DT_INI := StrToDate('01/11/2011');
-        DT_FIN := StrToDate('30/11/2011');
-
-        with RegistroE510New do
+        with RegistroE500New do
         begin
-          CFOP := '5120';
-          CST_IPI := '50';
-          VL_CONT_IPI := 0;
-          VL_BC_IPI := 0;
-          VL_IPI := 0;
-        end;
+          IND_APUR := iaMensal;
+          DT_INI := StrToDate('01/11/2014');
+          DT_FIN := StrToDate('30/11/2014');
 
-        with RegistroE520New do
-        begin
-          VL_SD_ANT_IPI := 0;
-          VL_DEB_IPI := 0;
-          VL_CRED_IPI := 0;
-          VL_OD_IPI := 10.00;
-          VL_OC_IPI := 0;
-          VL_SC_IPI := 0;
-          VL_SD_IPI := 10.00;
-
-          with RegistroE530New do
+          with RegistroE510New do
           begin
-            IND_AJ := ajDebito;
-            VL_AJ := 10;
-            COD_AJ := '001';
-            IND_DOC := odOutros;
-            NUM_DOC := '123';
-            DESCR_AJ := 'DESCRIÇÃO DETALHADA';
+            CFOP := '5120';
+            CST_IPI := '50';
+            VL_CONT_IPI := 0;
+            VL_BC_IPI := 0;
+            VL_IPI := 0;
           end;
+
+          with RegistroE520New do
+          begin
+            VL_SD_ANT_IPI := 0;
+            VL_DEB_IPI := 0;
+            VL_CRED_IPI := 0;
+            VL_OD_IPI := 10.00;
+            VL_OC_IPI := 0;
+            VL_SC_IPI := 0;
+            VL_SD_IPI := 10.00;
+
+            with RegistroE530New do
+            begin
+              IND_AJ := ajDebito;
+              VL_AJ := 10;
+              COD_AJ := '001';
+              IND_DOC := odOutros;
+              NUM_DOC := '123';
+              DESCR_AJ := 'DESCRIÇÃO DETALHADA';
+            end;
+          end;
+          { fim registro E500 }
         end;
-        { fim registro E500 }
       end;
     end;
   end;
@@ -1057,8 +1053,8 @@ begin
 
       With RegistroG110New do
       begin
-        DT_INI := Now;
-        DT_FIN := Now;
+        DT_INI := StrToDate('01/11/2014');
+        DT_FIN := StrToDate('30/11/2014');
         SALDO_IN_ICMS := 44.00;
         SOM_PARC := 4.40;
         VL_TRIB_EXP := 10.999;
@@ -1070,7 +1066,7 @@ begin
         With RegistroG125New do
         begin
           COD_IND_BEM := '000001';
-          DT_MOV := StrToDate('01/11/2011');
+          DT_MOV := StrToDate('01/11/2014');
           TIPO_MOV := mbcSI;
           VL_IMOB_ICMS_OP := 10.999;
           VL_IMOB_ICMS_ST := 10.999;
@@ -1094,12 +1090,12 @@ begin
           With RegistroG130New do
           begin
             IND_EMIT := edEmissaoPropria;
-            COD_PART := '000001';
+            COD_PART := '4';
             COD_MOD := '55';
             SERIE := '1';
             NUM_DOC := '000068849';
             CHV_NFE_CTE := '35100260318797000100550010000688490882775007';
-            DT_DOC := Now;
+            DT_DOC := DT_INI;
 
             With RegistroG140New do
             begin
@@ -1144,19 +1140,19 @@ begin
         begin
           with RegistroH010New do
           begin
-            COD_ITEM := FormatFloat('00000000000000', IInvent);
-            UNID := 'UN';
+            COD_ITEM := FormatFloat('000000', IInvent);
+            UNID := strUNID[IInvent mod (High(strUNID)+1)];
             QTD := 1;
             VL_UNIT := 100;
             VL_ITEM := 100;
             IND_PROP := piInformante;
             COD_PART := '';
             TXT_COMPL := '';
-            COD_CTA := '';
+            COD_CTA := '1';
 
             with RegistroH020New do
             begin
-              CST_ICMS := '00';
+              CST_ICMS := '010';
               BC_ICMS  := 1;
               VL_ICMS := 2;
             end;

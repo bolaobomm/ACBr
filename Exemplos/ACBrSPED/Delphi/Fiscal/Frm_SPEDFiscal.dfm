@@ -1,4 +1,4 @@
-object FrmSPEDFiscal: TFrmSPEDFiscal
+﻿object FrmSPEDFiscal: TFrmSPEDFiscal
   Left = 356
   Top = 153
   Caption = 'ACBrSpedFiscal - Demo'
@@ -90,6 +90,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
     Height = 25
     Anchors = [akRight, akBottom]
     Caption = 'Gerar TXT Error'
+    Enabled = False
     TabOrder = 7
     OnClick = btnErrorClick
   end
@@ -153,7 +154,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
     object edtFile: TEdit
       Left = 22
       Top = 28
-      Width = 307
+      Width = 291
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
@@ -162,7 +163,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
       OnExit = edtFileChange
     end
     object cbConcomitante: TCheckBox
-      Left = 353
+      Left = 337
       Top = 30
       Width = 134
       Height = 19
@@ -185,7 +186,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
     object edNotas: TEdit
       Left = 526
       Top = 29
-      Width = 70
+      Width = 54
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 2
@@ -205,7 +206,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
     object Label4: TLabel
       Left = 1
       Top = 1
-      Width = 450
+      Width = 747
       Height = 16
       Align = alTop
       Alignment = taCenter
@@ -329,12 +330,21 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
     Text = '1000'
   end
   object ProgressBar1: TProgressBar
-    Left = 198
-    Top = 155
+    Left = 79
+    Top = 152
     Width = 348
     Height = 20
     TabOrder = 9
     Visible = False
+  end
+  object btnCancelaGeração: TButton
+    Left = 480
+    Top = 150
+    Width = 102
+    Height = 25
+    Caption = 'Cancela Gera'#231#227'o'
+    TabOrder = 10
+    OnClick = btnCancelaGeraçãoClick
   end
   object ACBrSPEDFiscal1: TACBrSPEDFiscal
     Path = '.\'
