@@ -80,7 +80,7 @@ object FrmSPEDPisCofins: TFrmSPEDPisCofins
     WordWrap = False
   end
   object btnError: TButton
-    Left = 395
+    Left = 388
     Top = 519
     Width = 100
     Height = 25
@@ -159,8 +159,8 @@ object FrmSPEDPisCofins: TFrmSPEDPisCofins
       OnExit = edtFileChange
     end
     object cbConcomitante: TCheckBox
-      Left = 210
-      Top = 30
+      Left = 192
+      Top = 29
       Width = 134
       Height = 19
       Hint = 

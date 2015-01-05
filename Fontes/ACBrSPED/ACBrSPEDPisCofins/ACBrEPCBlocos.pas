@@ -755,7 +755,8 @@ type
                   stpisOperAqui_SemIncidenciaContribuicao,             // '74' // Operação de Aquisição sem Incidência da Contribuição
                   stpisOperAquiPorST,                                  // '75' // Operação de Aquisição por Substituição Tributária
                   stpisOutrasOperacoesEntrada,                         // '98' // Outras Operações de Entrada
-                  stpisOutrasOperacoes                                 // '99' // Outras Operações
+                  stpisOutrasOperacoes,                                // '99' // Outras Operações
+                  stpisNenhum                                          // '00' // Nenhum
                  );
   TACBrSituacaoTribPIS = TACBrCstPis;
 
@@ -793,7 +794,8 @@ type
                     stcofinsOperAqui_SemIncidenciaContribuicao,            // '74' // Operação de Aquisição sem Incidência da Contribuição
                     stcofinsOperAquiPorST,                                 // '75' // Operação de Aquisição por Substituição Tributária
                     stcofinsOutrasOperacoesEntrada,                        // '98' // Outras Operações de Entrada
-                    stcofinsOutrasOperacoes                                // '99' // Outras Operações
+                    stcofinsOutrasOperacoes,                               // '99' // Outras Operações
+                    stcofinsNenhum                                         // '00' // Nenhum
                   );
   TACBrSituacaoTribCOFINS = TACBrCstCofins;
 
