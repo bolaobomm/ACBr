@@ -41,7 +41,7 @@ uses ACBrECFVirtual, ACBrECFVirtualPrinter, ACBrSAT, ACBrUtil, ACBrConsts,
   Classes, SysUtils, pcnCFe, pcnConversao, ACBrECF, ACBrDevice,
 	{$IFDEF VisualCLX} QDialogs {$ELSE} Dialogs, FileCtrl {$ENDIF},
   {$IFDEF FPC}
-     LResources, LazarusPackageIntf, PropEdits, componenteditors
+     LResources, LazarusPackageIntf, PropEdits, ComponentEditors
   {$ELSE}
     {$IFNDEF COMPILER6_UP}
        DsgnIntf
@@ -138,10 +138,6 @@ type
       read fsQuandoEfetuarPagamento write fsQuandoEfetuarPagamento ;
   end;
 
-
-{$IFNDEF FPC}
-   {$R ACBrSAT.dcr}
-{$ENDIF}
 
 procedure Register;
 
