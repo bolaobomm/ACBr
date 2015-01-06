@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/01/2014
+[-] correção de geração do numero do banestes
+    http://www.projetoacbr.com.br/forum/index.php?/topic/19359-atualiza%C3%A7%C3%A3o-da-unit-banestes/
+		
 Data: 18/11/2014
 [*] Modificação do boleto em fortes para trocar de pagador para sacador
     http://www.projetoacbr.com.br/forum/index.php?/topic/18680-trocar-pagador-avalista-por-sacadoravalista/

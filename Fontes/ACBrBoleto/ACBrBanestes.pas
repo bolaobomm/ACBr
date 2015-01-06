@@ -221,7 +221,7 @@ begin
                'REMESSA'                       + // Literal de Remessa
                '01'                            + // Código do Tipo de Serviço
                padL('COBRANCA', 15 )           +
-               padR(OnlyNumber(Conta), 11, '0')+ // Codigo da Empresa no Banco
+               padR(OnlyNumber(Copy(Trim(Conta),2,10)+trim(ContaDigito)), 11, '0')+ // Codigo da Empresa no Banco
                space(9)                        + // COMPLEMENTO DO REGISTRO
                padL(Nome, 30)                  + // Nome da Empresa
                IntToStrzero(Numero,3)          +
@@ -337,7 +337,7 @@ begin
         wLinha := '1'                                                     +  // ID Registro
                   ATipoInscricao                                          +  // TIPO INSCRICAO EMPRESA(CNPJ, CPF);
                   padL(OnlyNumber(Cedente.CNPJCPF), 14, '0')              +
-                  padL(OnlyNumber(Cedente.Conta), 11, '0')                +
+                  padR(OnlyNumber(Copy(Trim(Cedente.Conta),2,10)+trim(cedente.ContaDigito)), 11, '0')+ // Codigo da Empresa no Banco
                   Space(9)                                                +
                   padR(SeuNumero, 10, '0') + Space(15)                    +  // identificacao da operacao na empresa
                   padl(Copy(NossoNumero, 2, 8) + DigitoNossoNumero, 10, '0')          +
