@@ -39,16 +39,20 @@ interface
 
 uses ACBrECFVirtual, ACBrECFVirtualPrinter, ACBrSAT, ACBrUtil, ACBrConsts,
   Classes, SysUtils, pcnCFe, pcnConversao, ACBrECF, ACBrDevice,
-	{$IFDEF VisualCLX} QDialogs {$ELSE} Dialogs, FileCtrl {$ENDIF},
+	{$IFDEF VisualCLX} QDialogs {$ELSE} Dialogs, FileCtrl {$ENDIF}
   {$IFDEF FPC}
-     LResources, LazarusPackageIntf, PropEdits, ComponentEditors
+     , LResources, LazarusPackageIntf, PropEdits, ComponentEditors
   {$ELSE}
-    {$IFNDEF COMPILER6_UP}
-       DsgnIntf
-    {$ELSE}
-       DesignIntf,
-       DesignEditors
-    {$ENDIF}
+// Código comentado devido a problemas com versões do Delphi. Veja:
+// http://www.projetoacbr.com.br/forum/index.php?/topic/19295-erro-ao-instalar-acbrecfvirtualsat/
+// http://stackoverflow.com/a/4287608/460775
+// http://edn.embarcadero.com/article/27717
+//    {$IFNDEF COMPILER6_UP}
+//       DsgnIntf
+//    {$ELSE}
+//       DesignIntf,
+//       DesignEditors
+//    {$ENDIF}
   {$ENDIF};
 
 const
