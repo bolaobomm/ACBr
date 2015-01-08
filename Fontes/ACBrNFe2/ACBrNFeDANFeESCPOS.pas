@@ -74,6 +74,7 @@ type
     FLinhasBuffer : Integer;
 
     cCmdImpZera: String;
+    cCmdAbreGaveta: String;
     cCmdEspacoLinha: String;
     cCmdPagCod: String;
     cCmdImpNegrito: String;
@@ -150,6 +151,7 @@ type
     procedure ImprimirRelatorio(const ATexto: TStrings; const AVias: Integer = 1;
       const ACortaPapel: Boolean = True);
     procedure CortarPapel;
+    procedure AbrirGaveta;
   published
     property Device: TACBrDevice read FDevice;
     property ConfigBarras: TACBrECFConfigBarras read FConfigBarras write FConfigBarras;
@@ -424,8 +426,9 @@ begin
   if MarcaImpressora = iBematech then
   begin
     cCmdImpZera          := ESC + '@'#29#249#32#48;  // ESC + +'@' Inicializa impressora, demais selecionam ESC/Bema temporariamente
+    cCmdAbreGaveta       := ESC + 'v'#200;
     cCmdEspacoLinha      := ESC + '3'#14;  // Verificar comando BEMA/POS
-    cCmdPagCod           := ESC + 't'#8; // codepage UTF-8
+    cCmdPagCod           := ESC + 't'#8;   // codepage UTF-8
     cCmdImpNegrito       := ESC + 'E';
     cCmdImpFimNegrito    := ESC + 'F';
     cCmdImpExpandido     := ESC + 'W'#1;
@@ -460,6 +463,7 @@ begin
   else if MarcaImpressora = iDaruma then
   begin
     cCmdImpZera          := ESC + '@';
+    cCmdAbreGaveta       := ESC + 'p';
     cCmdEspacoLinha      := ESC + '2';
     cCmdPagCod           := ''; // pelo aplicativo da Daruma (Tool) selecione ISO 8859-1 (TODO: tentar implementar essa mudança via código)
     cCmdImpNegrito       := ESC + 'E';
@@ -495,30 +499,32 @@ begin
   end
   else if MarcaImpressora = iDiebold then
    begin
-     cCmdImpZera     := #27+'@';
-     cCmdEspacoLinha := #27+'3'+#14;
-     cCmdPagCod      := #27+'t'+#2;
-     cCmdImpNegrito  := #27+'E';
-     cCmdImpFimNegrito := #27+'F';
-     cCmdImpExpandido  := #27 +'A';
-     cCmdImpFimExpandido := #27+'B';
-     cCmdFonteNormal   := #20;
-     cCmdFontePequena  := #15;
-     cCmdAlinhadoEsquerda := #27#106#0;
-     cCmdAlinhadoCentro   := #27#106#1;
-     cCmdAlinhadoDireita  := #27#106#2;
-     cCmdCortaPapel       := #27#109;
+     cCmdImpZera          := ESC + '@';
+     cCmdAbreGaveta       := '';
+     cCmdEspacoLinha      := ESC + '3'+#14;
+     cCmdPagCod           := ESC + 't'+#2;
+     cCmdImpNegrito       := ESC + 'E';
+     cCmdImpFimNegrito    := ESC + 'F';
+     cCmdImpExpandido     := ESC + 'A';
+     cCmdImpFimExpandido  := ESC + 'B';
+     cCmdFonteNormal      := #20;
+     cCmdFontePequena     := #15;
+     cCmdAlinhadoEsquerda := ESC + #106#0;
+     cCmdAlinhadoCentro   := ESC + #106#1;
+     cCmdAlinhadoDireita  := ESC + #106#2;
+     cCmdCortaPapel       := ESC + #109;
      cCmdImprimeLogo      := '';
    end
   else
   begin
     cCmdImpZera          := ESC + '@';
+    cCmdAbreGaveta       := ESC + 'p' + #0 + #10 + #100;
     cCmdEspacoLinha      := ESC + '3'#14;
     cCmdPagCod           := ESC + 't'#39;
     cCmdImpNegrito       := ESC + 'E1';
     cCmdImpFimNegrito    := ESC + 'E2';
-    cCmdImpExpandido     := GS + '!'#16;
-    cCmdImpFimExpandido  := GS + '!'#0;
+    cCmdImpExpandido     := GS  + '!'#16;
+    cCmdImpFimExpandido  := GS  + '!'#0;
     cCmdFonteNormal      := ESC + 'M0';
     cCmdFontePequena     := ESC + 'M1';
     cCmdImpSublinhado    := ESC + '-'#1;
@@ -1133,6 +1139,12 @@ procedure TACBrNFeDANFeESCPOS.CortarPapel;
 begin
   InicializarComandos;
   ImprimePorta(cCmdImpZera + cCmdEspacoLinha + cCmdPagCod + cCmdFonteNormal + cCmdCortaPapel);
+end;
+
+procedure TACBrNFeDANFeESCPOS.AbrirGaveta;
+begin
+  InicializarComandos;
+  ImprimePorta(cCmdImpZera + cCmdAbreGaveta);
 end;
 
 procedure TACBrNFeDANFeESCPOS.DoLinesChange(Sender: TObject);

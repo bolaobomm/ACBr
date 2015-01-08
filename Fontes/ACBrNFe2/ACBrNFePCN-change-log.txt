@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/01/2015
+[+] Adicionado o metodo de abertura da gaveta para impressoras bematech, epson e daruma
+    por: Regys Silveira
+
 05/01/2015
 [*] Correção na URL de produção do WebServices: NFeDistribuicaoDFe
     por: LVR
