@@ -856,7 +856,9 @@ begin
     else if oACBr.Installations[iFor].VersionNumberStr = 'd20' then
       edtDelphiVersion.Items.Add('Delphi XE6')
     else if oACBr.Installations[iFor].VersionNumberStr = 'd21' then
-      edtDelphiVersion.Items.Add('Delphi XE7');
+      edtDelphiVersion.Items.Add('Delphi XE7')
+    else if oACBr.Installations[iFor].VersionNumberStr = 'd22' then
+      edtDelphiVersion.Items.Add('Delphi XE8');
 
     // -- Evento disparado antes de iniciar a execução do processo.
     oACBr.Installations[iFor].DCC32.OnBeforeExecute := BeforeExecute;
