@@ -958,6 +958,10 @@ begin
       Cedente.Conta   := rConta;
       Cedente.ContaDigito:= rDigitoConta;
 
+      DataArquivo   := StringToDateTimeDef(Copy(ARetorno[0],95,2)+'/'+
+                                           Copy(ARetorno[0],97,2)+'/'+
+                                           Copy(ARetorno[0],99,2),0, 'DD/MM/YY' );
+
       case StrToIntDef(Copy(ARetorno[1],2,2),0) of
          01: Cedente.TipoInscricao:= pFisica;
          else
