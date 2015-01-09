@@ -58,7 +58,7 @@ uses  ACBrBase,  {Units da ACBr}
      Graphics, Contnrs, Classes;
 
 const
-  CACBrBoleto_Versao = '0.0.98a' ;
+  CACBrBoleto_Versao = '0.0.99a' ;
 
 type
   TACBrTipoCobranca =
@@ -303,6 +303,7 @@ type
     fpTamanhoMaximoNossoNum: Integer;
     fpOrientacoesBanco: TStringList;
     fpCodigosMoraAceitos: String;
+    fpCodigosGeracaoAceitos: String;
     function CalcularFatorVencimento(const DataVencimento: TDateTime): String; virtual;
     function CalcularDigitoCodigoBarras(const CodigoBarras: String): String; virtual;
   public
@@ -320,6 +321,7 @@ type
     property TamanhoCarteira :Integer read fpTamanhoCarteira;
     property OrientacoesBanco: TStringList read fpOrientacoesBanco;
     property CodigosMoraAceitos: String read fpCodigosMoraAceitos;
+    property CodigosGeracaoAceitos: String read fpCodigosGeracaoAceitos;
 
     function CalcularDigitoVerificador(const ACBrTitulo : TACBrTitulo): String; virtual;
     function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''): Integer; virtual;
@@ -364,6 +366,7 @@ type
     function GetTamanhoConta: Integer;
     function GetTamanhoMaximoNossoNum : Integer;
     function GetCodigosMoraAceitos: String;
+    function GetCodigosGeracaoAceitos: string;
     procedure SetDigito(const AValue: Integer);
     procedure SetNome(const AValue: String);
     procedure SetTipoCobranca(const AValue: TACBrTipoCobranca);
@@ -380,6 +383,7 @@ type
     property TamanhoConta          :Integer read GetTamanhoConta;
     property TamanhoCarteira       :Integer read GetTamanhoCarteira;
     property CodigosMoraAceitos    :String  read GetCodigosMoraAceitos;
+    property CodigosGeracaoAceitos :String  read GetCodigosGeracaoAceitos;
 
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia;
@@ -625,12 +629,14 @@ type
     fCodigoLiquidacao     : String;
     fCodigoLiquidacaoDescricao: String;
     fCarteiraEnvio        : TACBrCarteiraEnvio;
+    fCodigoGeracao        : String;
 
     procedure SetCarteira(const AValue: String);
     procedure SetCodigoMora(AValue: String);
     procedure SetNossoNumero ( const AValue: String ) ;
     procedure SetParcela ( const AValue: Integer ) ;
     procedure SetTotalParcelas ( const AValue: Integer );
+    procedure SetCodigoGeracao (AValue: String);
    public
      constructor Create(ACBrBoleto:TACBrBoleto);
      destructor Destroy; override;
@@ -690,6 +696,7 @@ type
      property TipoDiasProtesto     : TACBrTipoDiasIntrucao read fTipoDiasProtesto write fTipoDiasProtesto;
      property TipoImpressao        : TACBrTipoImpressao read fTipoImpressao write fTipoImpressao;
      property LinhaDigitada : String read fpLinhaDigitada;
+     property CodigoGeracao: String read fCodigoGeracao write SetCodigoGeracao;
    end;
 
   { TListadeBoletos }
@@ -1074,6 +1081,17 @@ begin
   fCodigoMora := AValue;
 end;
 
+procedure TACBrTitulo.SetCodigoGeracao(AValue: String);
+begin
+  if fCodigoGeracao = AValue then
+      exit;
+
+  if Pos(AValue,ACBrBoleto.Banco.CodigosGeracaoAceitos) = 0 then
+     raise Exception.Create( ACBrStr('Código de Geração Inválido!') );
+
+  fCodigoGeracao := AValue;
+end;
+
 procedure TACBrTitulo.SetParcela ( const AValue: Integer ) ;
 begin
    if (AValue > TotalParcelas) and (ACBrBoleto.ACBrBoletoFC.LayOut = lCarne) then
@@ -1136,7 +1154,8 @@ begin
    fReferencia           := '';
    fVersao               := '';
 
-   fCodigoMora := '12';
+   fCodigoMora    := '12';
+   fCodigoGeracao := '2';
 end;
 
 destructor TACBrTitulo.Destroy;
@@ -1716,6 +1735,11 @@ begin
   Result := BancoClass.CodigosMoraAceitos;
 end;
 
+function TACBrBanco.GetCodigosGeracaoAceitos: String;
+begin
+  Result := BancoClass.CodigosGeracaoAceitos;
+end;
+
 procedure TACBrBanco.SetDigito(const AValue: Integer);
 begin
   {Apenas para aparecer no ObjectInspector do D7}
@@ -1892,6 +1916,7 @@ begin
    fpTamanhoAgencia        := 4;
    fpTamanhoConta          := 10;
    fpCodigosMoraAceitos    := '12';
+   fpCodigosGeracaoAceitos := '0123456789';
    fpModulo := TACBrCalcDigito.Create;
    fpOrientacoesBanco := TStringList.Create;
 end;
