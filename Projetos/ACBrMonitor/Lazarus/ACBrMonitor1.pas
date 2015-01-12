@@ -2082,6 +2082,8 @@ begin
     Cedente.Convenio      := edtConvenio.Text;
     Cedente.CodigoTransmissao:= edtCodTransmissao.Text;
 
+    Banco.TipoCobranca := TACBrTipoCobranca( cbxBOLBanco.ItemIndex );
+
     Cedente.Agencia       := edtBOLAgencia.Text;
     Cedente.AgenciaDigito := edtBOLDigitoAgencia.Text;
     Cedente.Conta         := edtBOLConta.Text;
@@ -2100,7 +2102,6 @@ begin
     else
        LayoutRemessa := c400;
 
-    Banco.TipoCobranca := TACBrTipoCobranca( cbxBOLBanco.ItemIndex );
     DirArqRemessa := deBolDirRemessa.Text;
     DirArqRetorno := deBolDirRetorno.Text;
   end;
