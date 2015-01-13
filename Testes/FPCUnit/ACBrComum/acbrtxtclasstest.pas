@@ -163,6 +163,6 @@ end;
 
 initialization
 
-  RegisterTest(TTACBrTXTClass_MetodosFill_CasosVazios{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrTXTClass', TTACBrTXTClass_MetodosFill_CasosVazios{$ifndef FPC}.Suite{$endif});
 end.
 

@@ -103,22 +103,27 @@
         <PackageName Value="FCL"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="4">
       <Unit0>
         <Filename Value="ACBrComumTestCases.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ACBrComumTestCases"/>
       </Unit0>
       <Unit1>
+        <Filename Value="acbrutiltest.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ACBrUtilTest"/>
+      </Unit1>
+      <Unit2>
         <Filename Value="acbrtxtclasstest.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ACBrTXTClassTest"/>
-      </Unit1>
-      <Unit2>
+      </Unit2>
+      <Unit3>
         <Filename Value="acbrtxtclasstest2.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="acbrtxtclasstest2"/>
-      </Unit2>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

@@ -193,7 +193,6 @@ end;
 procedure TTACBrTXTClass_MetodosFill_Arredondamentos.LFillExtendedSeisCasas_0Ponto48Double_Retorno;
 var
   vValue2: Double;
-  vValue3: Currency;
 begin
   vValue2 := 0.48;
   CheckEquals('|0000480000', fACBrTXTClass.LFill(vValue2, 10, 6, True), 'Erro no Double');
@@ -288,6 +287,6 @@ end;
 
 initialization
 
-  RegisterTest(TTACBrTXTClass_MetodosFill_Arredondamentos{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrTXTClass', TTACBrTXTClass_MetodosFill_Arredondamentos{$ifndef FPC}.Suite{$endif});
 end.
 
