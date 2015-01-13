@@ -1,11 +1,19 @@
-unit ACBrUtilTest;
+﻿unit ACBrUtilTest;
 
+{$IFDEF FPC}
 {$mode objfpc}{$H+}
+{$ENDIF}
 
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry, ACBrUtil, ACBrComum;
+  Classes, SysUtils,
+  {$ifdef FPC}
+  fpcunit, testutils, testregistry,
+  {$else}
+  TestFramework,
+  {$endif}
+  ACBrUtil;
 
 type
 
@@ -411,43 +419,39 @@ begin
 end;
 
 procedure ParseTextTest.VerificarConversao;
-var
-  v: AnsiString;
 begin
   CheckEquals('&', ParseText('&amp;'));
   CheckEquals('<', ParseText('&lt;'));
   CheckEquals('>', ParseText('&gt;'));
   CheckEquals('"', ParseText('&quot;'));
   CheckEquals(#39, ParseText('&#39;'));
-  v := ParseText('&aacute;');
-  CheckEquals(v, ParseText('&aacute;'));
-//  CheckEquals('á', ParseText('&aacute;'));
-  CheckEquals('Á', ParseText('&Aacute;'));
-  CheckEquals('â', ParseText('&acirc;'));
-  CheckEquals('Â', ParseText('&Acirc;'));
-  CheckEquals('ã', ParseText('&atilde;'));
-  CheckEquals('Ã', ParseText('&Atilde;'));
-  CheckEquals('à', ParseText('&agrave;'));
-  CheckEquals('À', ParseText('&Agrave;'));
-  CheckEquals('é', ParseText('&eacute;'));
-  CheckEquals('É', ParseText('&Eacute;'));
-  CheckEquals('ê', ParseText('&ecirc;'));
-  CheckEquals('Ê', ParseText('&Ecirc;'));
-  CheckEquals('í', ParseText('&iacute;'));
-  CheckEquals('Í', ParseText('&Iacute;'));
-  CheckEquals('ó', ParseText('&oacute;'));
-  CheckEquals('Ó', ParseText('&Oacute;'));
-  CheckEquals('õ', ParseText('&otilde;'));
-  CheckEquals('Õ', ParseText('&Otilde;'));
-  CheckEquals('ô', ParseText('&ocirc;'));
-  CheckEquals('Ô', ParseText('&Ocirc;'));
-  CheckEquals('ú', ParseText('&uacute;'));
-  CheckEquals('Ú', ParseText('&Uacute;'));
-  CheckEquals('ü', ParseText('&uuml;'));
-  CheckEquals('Ü', ParseText('&Uuml;'));
-  CheckEquals('ç', ParseText('&ccedil;'));
-  CheckEquals('Ç', ParseText('&Ccedil;'));
-  CheckEquals('''', ParseText('&apos;'));
+  CheckEquals('á', ParseText('&aacute;', True, False));
+  CheckEquals('Á', ParseText('&Aacute;', True, False));
+  CheckEquals('â', ParseText('&acirc;',  True, False));
+  CheckEquals('Â', ParseText('&Acirc;',  True, False));
+  CheckEquals('ã', ParseText('&atilde;', True, False));
+  CheckEquals('Ã', ParseText('&Atilde;', True, False));
+  CheckEquals('à', ParseText('&agrave;', True, False));
+  CheckEquals('À', ParseText('&Agrave;', True, False));
+  CheckEquals('é', ParseText('&eacute;', True, False));
+  CheckEquals('É', ParseText('&Eacute;', True, False));
+  CheckEquals('ê', ParseText('&ecirc;',  True, False));
+  CheckEquals('Ê', ParseText('&Ecirc;',  True, False));
+  CheckEquals('í', ParseText('&iacute;', True, False));
+  CheckEquals('Í', ParseText('&Iacute;', True, False));
+  CheckEquals('ó', ParseText('&oacute;', True, False));
+  CheckEquals('Ó', ParseText('&Oacute;', True, False));
+  CheckEquals('õ', ParseText('&otilde;', True, False));
+  CheckEquals('Õ', ParseText('&Otilde;', True, False));
+  CheckEquals('ô', ParseText('&ocirc;',  True, False));
+  CheckEquals('Ô', ParseText('&Ocirc;',  True, False));
+  CheckEquals('ú', ParseText('&uacute;', True, False));
+  CheckEquals('Ú', ParseText('&Uacute;', True, False));
+  CheckEquals('ü', ParseText('&uuml;',   True, False));
+  CheckEquals('Ü', ParseText('&Uuml;',   True, False));
+  CheckEquals('ç', ParseText('&ccedil;', True, False));
+  CheckEquals('Ç', ParseText('&Ccedil;', True, False));
+  CheckEquals('''', ParseText('&apos;',  True, False));
 end;
 
 procedure ParseTextTest.VerificarConversaoTextoLongo;
@@ -460,15 +464,15 @@ end;
 
 initialization
 
-  RegisterTest('ACBrComum.ACBrUtil', ParseTextTest);
-  RegisterTest('ACBrComum.ACBrUtil', LerTagXMLTest);
-  RegisterTest('ACBrComum.ACBrUtil', SepararDadosTest);
-  RegisterTest('ACBrComum.ACBrUtil', padLTest);
-  RegisterTest('ACBrComum.ACBrUtil', padRTest);
-  RegisterTest('ACBrComum.ACBrUtil', padCTest);
-  RegisterTest('ACBrComum.ACBrUtil', padSTest);
-  RegisterTest('ACBrComum.ACBrUtil', RemoverEspacosDuplosTest);
-  RegisterTest('ACBrComum.ACBrUtil', RemoveStringTest);
-  RegisterTest('ACBrComum.ACBrUtil', RemoveStringsTest);
+  RegisterTest('ACBrComum.ACBrUtil', ParseTextTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', LerTagXMLTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', SepararDadosTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', padLTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', padRTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', padCTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', padSTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', RemoverEspacosDuplosTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', RemoveStringTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', RemoveStringsTest{$ifndef FPC}.Suite{$endif});
 end.
 

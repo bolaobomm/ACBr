@@ -3,7 +3,7 @@
 			<ProjectGuid>{8CDE26B7-9BFF-49B3-9DC5-314FA7F22105}</ProjectGuid>
 		</PropertyGroup>
 		<ItemGroup>
-			<Projects Include="ACBrComum\TestesTACrTXTClass.dproj">
+			<Projects Include="ACBrComum\ACBrComum.dproj">
 				<Dependencies/>
 			</Projects>
 			<Projects Include="ACBrDiversos\ACBrDiversos.dproj">
@@ -17,14 +17,14 @@
 				<Default.Personality/>
 			</BorlandProject>
 		</ProjectExtensions>
-		<Target Name="TestesTACrTXTClass">
-			<MSBuild Projects="ACBrComum\TestesTACrTXTClass.dproj"/>
+		<Target Name="ACBrComum">
+			<MSBuild Projects="ACBrComum\ACBrComum.dproj"/>
 		</Target>
-		<Target Name="TestesTACrTXTClass:Clean">
-			<MSBuild Targets="Clean" Projects="ACBrComum\TestesTACrTXTClass.dproj"/>
+		<Target Name="ACBrComum:Clean">
+			<MSBuild Targets="Clean" Projects="ACBrComum\ACBrComum.dproj"/>
 		</Target>
-		<Target Name="TestesTACrTXTClass:Make">
-			<MSBuild Targets="Make" Projects="ACBrComum\TestesTACrTXTClass.dproj"/>
+		<Target Name="ACBrComum:Make">
+			<MSBuild Targets="Make" Projects="ACBrComum\ACBrComum.dproj"/>
 		</Target>
 		<Target Name="ACBrDiversos">
 			<MSBuild Projects="ACBrDiversos\ACBrDiversos.dproj"/>
@@ -36,13 +36,13 @@
 			<MSBuild Targets="Make" Projects="ACBrDiversos\ACBrDiversos.dproj"/>
 		</Target>
 		<Target Name="Build">
-			<CallTarget Targets="TestesTACrTXTClass;ACBrDiversos"/>
+			<CallTarget Targets="ACBrComum;ACBrDiversos"/>
 		</Target>
 		<Target Name="Clean">
-			<CallTarget Targets="TestesTACrTXTClass:Clean;ACBrDiversos:Clean"/>
+			<CallTarget Targets="ACBrComum:Clean;ACBrDiversos:Clean"/>
 		</Target>
 		<Target Name="Make">
-			<CallTarget Targets="TestesTACrTXTClass:Make;ACBrDiversos:Make"/>
+			<CallTarget Targets="ACBrComum:Make;ACBrDiversos:Make"/>
 		</Target>
 		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')" Project="$(BDS)\Bin\CodeGear.Group.Targets"/>
 	</Project>
