@@ -72,20 +72,20 @@
         <UnitName Value="ACBrBancoHSBC"/>
       </Item12>
       <Item13>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBanestes.pas"/>
-        <UnitName Value="ACBrBanestes"/>
-      </Item13>
-      <Item14>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoNordeste.pas"/>
         <UnitName Value="ACBrBancoNordeste"/>
-      </Item14>
-      <Item15>
+      </Item13>
+      <Item14>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBRB.pas"/>
         <UnitName Value="ACBrBancoBRB"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBic.pas"/>
+        <UnitName Value="ACBrBancoBic"/>
       </Item15>
       <Item16>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBicBanco.pas"/>
-        <UnitName Value="ACBrBicBanco"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBanestes.pas"/>
+        <UnitName Value="ACBrBancoBanestes"/>
       </Item16>
     </Files>
     <Type Value="RunAndDesignTime"/>

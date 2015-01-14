@@ -33,7 +33,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrBanestes;
+unit ACBrBancoBanestes;
 
 interface
 
@@ -43,9 +43,9 @@ uses
 
 type
 
-  { TACBrBanestes }
+  { TACBrBancoBanestes }
 
-  TACBrBanestes = class(TACBrBancoClass)
+  TACBrBancoBanestes = class(TACBrBancoClass)
   private
     fASBACE: string;
     function GetASBACE: string;
@@ -75,9 +75,9 @@ implementation
 
 uses ACBrUtil, StrUtils;
 
-{ TACBrBanestes }
+{ TACBrBancoBanestes }
 
-constructor TACBrBanestes.create(AOwner: TACBrBanco);
+constructor TACBrBancoBanestes.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
    fpDigito := 3;
@@ -89,7 +89,7 @@ begin
    fpTamanhoCarteira:= 2;
 end;
 
-function TACBrBanestes.CalcularCampoASBACE(
+function TACBrBancoBanestes.CalcularCampoASBACE(
   const ACBrTitulo: TACBrTitulo): string;
 var
   cIndice, cLivreAsbace: String;
@@ -161,7 +161,7 @@ begin
   result := cLivreAsbace;
 end;
 
-function TACBrBanestes.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
+function TACBrBancoBanestes.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
 var
    ADigitoNossoNumero : string;
 begin
@@ -175,7 +175,7 @@ begin
    Result:= AdigitoNossoNumero+inttostr(Modulo.DigitoFinal);
 end;
 
-function TACBrBanestes.MontarCodigoBarras ( const ACBrTitulo: TACBrTitulo) : String;
+function TACBrBancoBanestes.MontarCodigoBarras ( const ACBrTitulo: TACBrTitulo) : String;
 var
   CodigoBarras,FatorVencimento, DigitoCodBarras:String;
 begin
@@ -197,13 +197,13 @@ begin
   Result:= IntToStrZero(Numero,3) + '9'+ DigitoCodBarras + Copy(CodigoBarras,5,39);
 end;
 
-function TACBrBanestes.MontarCampoNossoNumero (
+function TACBrBancoBanestes.MontarCampoNossoNumero (
    const ACBrTitulo: TACBrTitulo ) : String;
 begin
    Result := ACBrTitulo.NossoNumero+'-'+CalcularDigitoVerificador(ACBrTitulo);
 end;
 
-function TACBrBanestes.MontarCampoCodigoCedente (
+function TACBrBancoBanestes.MontarCampoCodigoCedente (
    const ACBrTitulo: TACBrTitulo ) : String;
 begin
    // Banestes não usa digitos verificadores em agência e conta
@@ -211,7 +211,7 @@ begin
              ACBrTitulo.ACBrBoleto.Cedente.Conta;
 end;
 
-procedure TACBrBanestes.GerarRegistroHeader400(NumeroRemessa: Integer; aRemessa: TStringList );
+procedure TACBrBancoBanestes.GerarRegistroHeader400(NumeroRemessa: Integer; aRemessa: TStringList );
 var
   wLinha: String;
 begin
@@ -236,7 +236,7 @@ begin
 
 end;
 
-procedure TACBrBanestes.GerarRegistroTrailler400(ARemessa: TStringList);
+procedure TACBrBancoBanestes.GerarRegistroTrailler400(ARemessa: TStringList);
 var
   wLinha: String;
 begin
@@ -247,7 +247,7 @@ begin
 
 end;
 
-procedure TACBrBanestes.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo; aRemessa: TStringList);
+procedure TACBrBancoBanestes.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo; aRemessa: TStringList);
 var
    ATipoInscricao, TipoBoleto, ATipoAceite: String;
    DigitoNossoNumero, Ocorrencia: String;
@@ -386,7 +386,7 @@ begin
 
 end;
 
-function TACBrBanestes.GetASBACE: string;
+function TACBrBancoBanestes.GetASBACE: string;
 begin
   Result := copy(fASBACE,1,4)+' '+ copy(fASBACE,5,4)+' '+
                           copy(fASBACE,9,4)+' '+ copy(fASBACE,13,4)+' '+
@@ -394,7 +394,7 @@ begin
                           copy(fASBACE,25,1);
 end;
 
-procedure TACBrBanestes.LerRetorno400(ARetorno: TStringList);
+procedure TACBrBancoBanestes.LerRetorno400(ARetorno: TStringList);
 var
   ContLinha: Integer;
   Titulo   : TACBrTitulo;
@@ -548,7 +548,7 @@ begin
    end;
 end;
 
-function TACBrBanestes.TipoOcorrenciaToDescricao(
+function TACBrBancoBanestes.TipoOcorrenciaToDescricao(
   const TipoOcorrencia: TACBrTipoOcorrencia): String;
 var
  CodOcorrencia: Integer;
@@ -588,7 +588,7 @@ begin
   end;
 end;
 
-function TACBrBanestes.CodOcorrenciaToTipo(
+function TACBrBancoBanestes.CodOcorrenciaToTipo(
   const CodOcorrencia: Integer): TACBrTipoOcorrencia;
 begin
   case CodOcorrencia of
@@ -628,7 +628,7 @@ begin
    end;
 end;
 
-function TACBrBanestes.TipoOCorrenciaToCod(
+function TACBrBancoBanestes.TipoOCorrenciaToCod(
   const TipoOcorrencia: TACBrTipoOcorrencia): String;
 begin
   case TipoOcorrencia of
@@ -665,7 +665,7 @@ begin
    end;
 end;
 
-function TACBrBanestes.CodMotivoRejeicaoToDescricao(
+function TACBrBancoBanestes.CodMotivoRejeicaoToDescricao(
   const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String;
 begin
   case TipoOcorrencia of

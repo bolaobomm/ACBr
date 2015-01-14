@@ -33,7 +33,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrBicBanco;
+unit ACBrBancoBic;
 
 interface
 
@@ -43,9 +43,9 @@ uses
 
 type
 
-  { TACBrBicBanco }
+  { TACBrBancoBic }
 
-  TACBrBicBanco = class(TACBrBancoClass)
+  TACBrBancoBic = class(TACBrBancoClass)
   private
   protected
   public
@@ -69,9 +69,9 @@ implementation
 
 uses ACBrUtil, StrUtils;
 
-{ TACBrBicBanco }
+{ TACBrBancoBic }
 
-constructor TACBrBicBanco.create(AOwner: TACBrBanco);
+constructor TACBrBancoBic.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
    fpDigito := 2;
@@ -83,7 +83,7 @@ begin
    fpTamanhoCarteira:= 2;
 end;
 
-function TACBrBicBanco.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
+function TACBrBancoBic.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
 begin
    Modulo.CalculoPadrao;
    Modulo.MultiplicadorFinal := 7;
@@ -99,7 +99,7 @@ begin
       Result:= IntToStr(Modulo.DigitoFinal);
 end;
 
-function TACBrBicBanco.MontarCodigoBarras ( const ACBrTitulo: TACBrTitulo) : String;
+function TACBrBancoBic.MontarCodigoBarras ( const ACBrTitulo: TACBrTitulo) : String;
 var
   CodigoBarras, FatorVencimento, DigitoCodBarras:String;
 begin
@@ -122,7 +122,7 @@ begin
    Result:= IntToStr(Numero) + '9'+ DigitoCodBarras + Copy(CodigoBarras,5,39);
 end;
 
-function TACBrBicBanco.MontarCampoNossoNumero (
+function TACBrBancoBic.MontarCampoNossoNumero (
    const ACBrTitulo: TACBrTitulo ) : String;
 begin
    Result:= ACBrTitulo.Carteira+'/'+
@@ -133,7 +133,7 @@ begin
             CalcularDigitoVerificador(ACBrTitulo);
 end;
 
-function TACBrBicBanco.MontarCampoCodigoCedente (
+function TACBrBancoBic.MontarCampoCodigoCedente (
    const ACBrTitulo: TACBrTitulo ) : String;
 begin
    Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia+'-'+
@@ -142,7 +142,7 @@ begin
              ACBrTitulo.ACBrBoleto.Cedente.ContaDigito;
 end;
 
-procedure TACBrBicBanco.GerarRegistroHeader400(NumeroRemessa : Integer; ARemessa:TStringList);
+procedure TACBrBancoBic.GerarRegistroHeader400(NumeroRemessa : Integer; ARemessa:TStringList);
 var
   wLinha: String;
 begin
@@ -168,7 +168,7 @@ begin
    end;
 end;
 
-procedure TACBrBicBanco.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
+procedure TACBrBancoBic.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
   DigitoNossoNumero, Ocorrencia, aEspecie, aAgencia, aDiasProtesto :String;
   Protesto, TipoSacado, TipoSacador, TipoSacadorAvalista, MensagemCedente, aConta     :String;
@@ -333,7 +333,7 @@ begin
    end;
 end;
 
-procedure TACBrBicBanco.GerarRegistroTrailler400( ARemessa:TStringList );
+procedure TACBrBancoBic.GerarRegistroTrailler400( ARemessa:TStringList );
 var
   wLinha: String;
 begin
@@ -343,7 +343,7 @@ begin
    ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
 end;
 
-function TACBrBicBanco.TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;
+function TACBrBancoBic.TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;
 var
   CodOcorrencia: Integer;
 begin
@@ -384,7 +384,7 @@ begin
    end;
 end;
 
-function TACBrBicBanco.CodOcorrenciaToTipo(const CodOcorrencia:
+function TACBrBancoBic.CodOcorrenciaToTipo(const CodOcorrencia:
    Integer ) : TACBrTipoOcorrencia;
 begin
    case CodOcorrencia of
@@ -421,7 +421,7 @@ begin
    end;
 end;
 
-function TACBrBicBanco.TipoOcorrenciaToCod ( const TipoOcorrencia: TACBrTipoOcorrencia ) : String;
+function TACBrBancoBic.TipoOcorrenciaToCod ( const TipoOcorrencia: TACBrTipoOcorrencia ) : String;
 begin
   case TipoOcorrencia of
     toRetornoRegistroConfirmado                : Result := '02';
@@ -458,7 +458,7 @@ begin
   end;
 end;
 
-function TACBrBicBanco.CalcularDigitoVerificadorArquivo(
+function TACBrBancoBic.CalcularDigitoVerificadorArquivo(
   const ACBrTitulo: TACBrTitulo): String;
 begin
    Modulo.CalculoPadrao;
@@ -475,7 +475,7 @@ begin
       Result:= IntToStr(Modulo.DigitoFinal);
 end;
 
-function TACBrBicBanco.COdMotivoRejeicaoToDescricao( const TipoOcorrencia:TACBrTipoOcorrencia ;CodMotivo: Integer) : String;
+function TACBrBancoBic.COdMotivoRejeicaoToDescricao( const TipoOcorrencia:TACBrTipoOcorrencia ;CodMotivo: Integer) : String;
 begin
    case TipoOcorrencia of
       toRetornoRegistroConfirmado:
