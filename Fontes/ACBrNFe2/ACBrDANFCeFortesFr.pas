@@ -196,7 +196,7 @@ type
     fHeightDetItem: Integer;
     fResumido: Boolean;
     fFiltro: TACBrSATExtratoFiltro;
-
+    procedure CarregarLogo;
     procedure PintarQRCode(QRCodeData: String; APict: TPicture);
     function CompoemEnderecoCFe: String ;
     function CompoemCliche: String;
@@ -363,6 +363,24 @@ begin
   Result := Endereco;
 end;
 
+procedure TACBrNFeDANFCeFortesFr.CarregarLogo;
+var
+  LogoStream: TStringStream;
+begin
+  if TACBrNFe( ACBrNFeDANFCeFortes.ACBrNFe ).DANFE.Logo <> '' then
+		if FilesExists(TACBrNFe( ACBrNFeDANFCeFortes.ACBrNFe ).DANFE.Logo) then
+			imgLogo.Picture.LoadFromFile(TACBrNFe( ACBrNFeDANFCeFortes.ACBrNFe ).DANFE.Logo)
+		else 
+		begin
+			LogoStream := TStringStream.Create(TACBrNFe( ACBrNFeDANFCeFortes.ACBrNFe ).DANFE.Logo);
+			try
+				imgLogo.Picture.Bitmap.LoadFromStream(LogoStream);
+			finally
+				LogoStream.Free;
+			end;
+		end;
+end;
+
 function TACBrNFeDANFCeFortesFr.CompoemCliche: String;
 var
   CNPJ_IE_IM: String;
@@ -398,8 +416,7 @@ begin
     lRazaoSocial.Caption    := Emit.xNome ;
     lEmitCNPJ_IE_IM.Caption := CompoemCliche;
     lEndereco.Lines.Text    := CompoemEnderecoCFe;
-    if TACBrNFe( ACBrNFeDANFCeFortes.ACBrNFe ).DANFE.Logo <> '' then
-       imgLogo.Picture.LoadFromFile( TACBrNFe( ACBrNFeDANFCeFortes.ACBrNFe ).DANFE.Logo );
+    CarregarLogo;
 
     // QRCode  //
 

@@ -48,9 +48,9 @@ contains
   ACBrBancoSantander in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSantander.pas',
   ACBrCaixaEconomicaSICOB in '..\..\..\Fontes\ACBrBoleto\ACBrCaixaEconomicaSICOB.pas',
   ACBrBancoHSBC in '..\..\..\Fontes\ACBrBoleto\ACBrBancoHSBC.pas',
-  ACBrBanestes in '..\..\..\Fontes\ACBrBoleto\ACBrBanestes.pas',
+  ACBrBancoBanestes in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBanestes.pas',
   ACBrBancoNordeste in '..\..\..\Fontes\ACBrBoleto\ACBrBancoNordeste.pas',
   ACBrBancoBRB in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBRB.pas',
-  ACBrBicBanco in '..\..\..\Fontes\ACBrBoleto\ACBrBicBanco.pas';
+  ACBrBancoBic in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBic.pas';
 
 end.
