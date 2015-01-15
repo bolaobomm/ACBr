@@ -344,6 +344,8 @@ type
 
 implementation
 
+  uses Math;
+
 { StrIsAlphaTest }
 
 procedure StrIsAlphaTest.SetUp;
@@ -542,8 +544,20 @@ begin
 end;
 
 procedure StringToFloatDefTest.Normal;
+//var
+//  t: Double;
 begin
-  CheckEquals(123.45, StringToFloatDef('123.45', 10.00));
+  CheckTrue(SameValue(123.45, StringToFloatDef('123,45', 10.00), 1));
+  CheckTrue(SameValue(123.45, StringToFloatDef('123,45', 10.00), 0.1));
+  CheckTrue(SameValue(123.45, StringToFloatDef('123,45', 10.00), 0.01));
+  CheckTrue(SameValue(123.45, StringToFloatDef('123,45', 10.00), 0.001));
+  CheckTrue(SameValue(123.45, StringToFloatDef('123,45', 10.00), 0.0001));
+  CheckTrue(SameValue(123.45, StringToFloatDef('123,45', 10.00), 0.00001));
+  CheckTrue(SameValue(123.45, StringToFloatDef('123,45', 10.00), 0.000001));
+  CheckTrue(SameValue(123.45, StringToFloatDef('123,45', 10.00), 0.0000001));
+  CheckTrue(SameValue(123.45, StringToFloatDef('123,45', 10.00), 0.00000000001));
+//  t:= 123.45;
+//  CheckEquals(t, StringToFloatDef('123,45', 10.00));
 end;
 
 procedure StringToFloatDefTest.ValorDefault;
