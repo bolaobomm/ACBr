@@ -53,7 +53,6 @@ uses  ACBrBase,  {Units da ACBr}
        LResources,
      {$ENDIF}
      SysUtils, ACBrValidador,
-     {$IFDEF COMPILER6_UP} Types, {$ELSE} Windows, {$ENDIF}
      smtpsend, ssl_openssl, mimemess, mimepart, // units para enviar email
      Graphics, Contnrs, Classes;
 
@@ -535,8 +534,6 @@ type
   private
     fSacadoAvalista : TACBrSacadoAvalista;
     fTipoPessoa     : TACBrPessoa;
-
-    fAvalista    : String;
     fNomeSacado  : String;
     fCNPJCPF     : String;
     fLogradouro  : String;
