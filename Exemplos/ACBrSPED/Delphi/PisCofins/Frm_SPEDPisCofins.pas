@@ -587,15 +587,15 @@ begin
                      VL_IPI           := 0;
                      CST_PIS          := stpisOperAquiAliquotaZero;
                      VL_BC_PIS        := 1;
-                     ALIQ_PIS_PERC    := 0;
-                     QUANT_BC_PIS     := 0;
-                     ALIQ_PIS_R       := 0;
+                     ALIQ_PIS_PERC    := Null;
+                     QUANT_BC_PIS     := Null;
+                     ALIQ_PIS_R       := Null;
                      VL_PIS           := 0;
                      CST_COFINS       := stcofinsOperAquiAliquotaZero;
                      VL_BC_COFINS     := 1;
-                     ALIQ_COFINS_PERC := 0;
-                     QUANT_BC_COFINS  := 0;
-                     ALIQ_COFINS_R    := 0;
+                     ALIQ_COFINS_PERC := Null;
+                     QUANT_BC_COFINS  := Null;
+                     ALIQ_COFINS_R    := Null;
                      VL_COFINS        := 0;
                      COD_CTA          := '01'; //Baseado no 0500
                   end; //Fim do Registro;
@@ -730,8 +730,8 @@ begin
                  VL_DESC := 0;
                  VL_BC_PIS := 0;
                  ALIQ_PIS  := 0.99;
-                 QUANT_BC_PIS := 0;
-                 ALIQ_PIS_QUANT := 0;
+                 QUANT_BC_PIS   := Null;
+                 ALIQ_PIS_QUANT := Null;
                  VL_PIS := 0;
                  COD_CTA := '';
                end;
@@ -745,8 +745,8 @@ begin
                  VL_DESC := 0;
                  VL_BC_COFINS := 0;
                  ALIQ_COFINS  := 4.56;
-                 QUANT_BC_COFINS := 0;
-                 ALIQ_COFINS_QUANT := 0;
+                 QUANT_BC_COFINS   := Null;
+                 ALIQ_COFINS_QUANT := Null;
                  VL_COFINS := 0;
                  COD_CTA := '';
                end;
@@ -773,8 +773,8 @@ begin
                CFOP := 1102;
                VL_ITEM := 1;
                VL_DESC := 0;
-               VL_BC_PIS := 0;
-               ALIQ_PIS  := 0;
+               VL_BC_PIS := Null;
+               ALIQ_PIS  := Null;
                QUANT_BC_PIS := 0;
                ALIQ_PIS_QUANT := 0.1;
                VL_PIS := 0;
@@ -788,8 +788,8 @@ begin
                CFOP := 1102;
                VL_ITEM := 1;
                VL_DESC := 0;
-               VL_BC_COFINS := 0;
-               ALIQ_COFINS  := 0;
+               VL_BC_COFINS := Null;
+               ALIQ_COFINS  := Null;
                QUANT_BC_COFINS := 0;
                ALIQ_COFINS_QUANT := 0.1;
                VL_COFINS := 0;
@@ -820,9 +820,9 @@ begin
                  COD_ITEM := FormatFloat('000000', IItens); //Código do item (campo 02 do Registro 0200)
                  VL_ITEM := 1;
                  VL_BC_PIS := 0;
-                 ALIQ_PIS := 1.65;
-                 QUANT_BC_PIS := 0;
-                 ALIQ_PIS_QUANT := 0;
+                 ALIQ_PIS  := 1.65;
+                 QUANT_BC_PIS   := Null;
+                 ALIQ_PIS_QUANT := Null;
                  VL_PIS := 0;
                  COD_CTA := '';
                end;
@@ -833,9 +833,9 @@ begin
                  COD_ITEM := FormatFloat('000000', IItens); //Código do item (campo 02 do Registro 0200)
                  VL_ITEM := 1;
                  VL_BC_COFINS := 0;
-                 ALIQ_COFINS := 7.60;
-                 QUANT_BC_COFINS := 0;
-                 ALIQ_COFINS_QUANT := 0;
+                 ALIQ_COFINS  := 7.60;
+                 QUANT_BC_COFINS   := Null;
+                 ALIQ_COFINS_QUANT := Null;
                  VL_COFINS := 0;
                  COD_CTA := '';
                end;
@@ -859,9 +859,9 @@ begin
                CST_PIS := stpisOutrasOperacoesSaida;
                COD_ITEM := FormatFloat('000000', 11); //Código do item (campo 02 do Registro 0200)
                VL_ITEM := 1;
-               VL_BC_PIS := 0;
-               ALIQ_PIS := 0;
-               QUANT_BC_PIS := 0;
+               VL_BC_PIS := Null;
+               ALIQ_PIS  := Null;
+               QUANT_BC_PIS   := 0;
                ALIQ_PIS_QUANT := 0.1;
                VL_PIS := 0;
                COD_CTA := '';
@@ -872,9 +872,9 @@ begin
                CST_COFINS := stcofinsOutrasOperacoesSaida;
                COD_ITEM := FormatFloat('000000', 11); //Código do item (campo 02 do Registro 0200)
                VL_ITEM := 1;
-               VL_BC_COFINS := 0;
-               ALIQ_COFINS := 0;
-               QUANT_BC_COFINS := 0;
+               VL_BC_COFINS := Null;
+               ALIQ_COFINS  := Null;
+               QUANT_BC_COFINS   := 0;
                ALIQ_COFINS_QUANT := 0.1;
                VL_COFINS := 0;
                COD_CTA := '';
@@ -909,8 +909,8 @@ begin
                  VL_ITEM := 1;
                  VL_BC_PIS := 0;
                  ALIQ_PIS  := 1.65;
-                 QUANT_BC_PIS   := 0;
-                 ALIQ_PIS_QUANT := 0;
+                 QUANT_BC_PIS   := Null;
+                 ALIQ_PIS_QUANT := Null;
                  VL_PIS := 0;
                  COD_ITEM := FormatFloat('000000', 1);
                  COD_CTA := '';
@@ -925,8 +925,8 @@ begin
                  VL_ITEM := 1;
                  VL_BC_COFINS := 0;
                  ALIQ_COFINS  := 7.6;
-                 QUANT_BC_COFINS   := 0;
-                 ALIQ_COFINS_QUANT := 0;
+                 QUANT_BC_COFINS   := Null;
+                 ALIQ_COFINS_QUANT := Null;
                  VL_COFINS := 0;
                  COD_ITEM := FormatFloat('000000', 1);
                  COD_CTA := '';
@@ -940,8 +940,8 @@ begin
                  //Exemplo com valores nulos
                  CST_PIS := stpisOutrasOperacoesSaida;
                  VL_ITEM := 1;
-                 VL_BC_PIS := 0;
-                 ALIQ_PIS  := 0;
+                 VL_BC_PIS := Null;
+                 ALIQ_PIS  := Null;
                  QUANT_BC_PIS   := 0;
                  ALIQ_PIS_QUANT := 0.1;
                  VL_PIS := 0;
@@ -956,8 +956,8 @@ begin
                  //Exemplo com valores não nulos
                  CST_COFINS := stcofinsOutrasOperacoesSaida;
                  VL_ITEM := 1;
-                 VL_BC_COFINS := 0;
-                 ALIQ_COFINS  := 0;
+                 VL_BC_COFINS := Null;
+                 ALIQ_COFINS  := Null;
                  QUANT_BC_COFINS   := 0;
                  ALIQ_COFINS_QUANT := 0.1;
                  VL_COFINS := 0;
@@ -984,8 +984,8 @@ begin
                    VL_ITEM := 1;
                    VL_BC_PIS := 0;
                    ALIQ_PIS  := 1.65;
-                   QUANT_BC_PIS   := 0;
-                   ALIQ_PIS_QUANT := 0;
+                   QUANT_BC_PIS   := Null;
+                   ALIQ_PIS_QUANT := Null;
                    VL_PIS := 0;
                    COD_CTA := '';
                  end;
@@ -1001,8 +1001,8 @@ begin
                    VL_ITEM := 1;
                    VL_BC_COFINS := 0;
                    ALIQ_COFINS  := 7.6;
-                   QUANT_BC_COFINS   := 0;
-                   ALIQ_COFINS_QUANT := 0;
+                   QUANT_BC_COFINS   := Null;
+                   ALIQ_COFINS_QUANT := Null;
                    VL_COFINS := 0;
                    COD_CTA := '';
                  end;
@@ -1017,8 +1017,8 @@ begin
                    CST_PIS := stpisOutrasOperacoesSaida;
                    CFOP := 5101;
                    VL_ITEM := 1;
-                   VL_BC_PIS := 0;
-                   ALIQ_PIS  := 0;
+                   VL_BC_PIS := Null;
+                   ALIQ_PIS  := Null;
                    QUANT_BC_PIS   := 0;
                    ALIQ_PIS_QUANT := 0.1;
                    VL_PIS := 0;
@@ -1034,8 +1034,8 @@ begin
                    CST_COFINS := stcofinsOutrasOperacoesSaida;
                    CFOP := 5101;
                    VL_ITEM := 1;
-                   VL_BC_COFINS := 0;
-                   ALIQ_COFINS  := 0;
+                   VL_BC_COFINS := Null;
+                   ALIQ_COFINS  := Null;
                    QUANT_BC_COFINS   := 0;
                    ALIQ_COFINS_QUANT := 0.1;
                    VL_COFINS := 0;
@@ -1255,8 +1255,8 @@ begin
             VL_BC_PIS      := 0;
             ALIQ_PIS       := 0.99;
             QUANT_BC_PIS   := 0;
-            ALIQ_PIS_QUANT := 0;
-            VL_CRED        := 0; //OBRIGATORIO
+            ALIQ_PIS_QUANT := Null;
+            VL_CRED        := 0;
             VL_AJUS_ACRES  := 0;
             VL_AJUS_REDUC  := 0;
             VL_CRED_DIF    := 0;
@@ -1270,10 +1270,10 @@ begin
               NAT_BC_CRED := bccAqBensRevenda;
               CST_PIS := stpisCredPresAquiRecTribENaoTribMercIntEExportacao;
               VL_BC_PIS_TOT := 0;
-              VL_BC_PIS_CUM := 0;
+              VL_BC_PIS_CUM := Null;
               VL_BC_PIS_NC := 0;
               VL_BC_PIS := 0;
-              QUANT_BC_PIS_TOT := 0;
+              QUANT_BC_PIS_TOT := Null;
               QUANT_BC_PIS := 0;
               DESC_CRED := '';
             end;
@@ -1287,7 +1287,7 @@ begin
             VL_BC_PIS      := 0;
             ALIQ_PIS       := 0.99;
             QUANT_BC_PIS   := 0;
-            ALIQ_PIS_QUANT := 0;
+            ALIQ_PIS_QUANT := Null;
             VL_CRED        := 0; //OBRIGATORIO
             VL_AJUS_ACRES  := 0;
             VL_AJUS_REDUC  := 0;
@@ -1302,10 +1302,10 @@ begin
               NAT_BC_CRED := bccAqBensRevenda;
               CST_PIS := stpisCredPresAquiRecTribENaoTribMercIntEExportacao;
               VL_BC_PIS_TOT := 0;
-              VL_BC_PIS_CUM := 0;
+              VL_BC_PIS_CUM := Null;
               VL_BC_PIS_NC := 0;
               VL_BC_PIS := 0;
-              QUANT_BC_PIS_TOT := 0;
+              QUANT_BC_PIS_TOT := Null;
               QUANT_BC_PIS := 0;
               DESC_CRED := '';
             end;
@@ -1319,7 +1319,7 @@ begin
             VL_BC_PIS      := 0;
             ALIQ_PIS       := 0.99;
             QUANT_BC_PIS   := 0;
-            ALIQ_PIS_QUANT := 0;
+            ALIQ_PIS_QUANT := Null;
             VL_CRED        := 0; //OBRIGATORIO
             VL_AJUS_ACRES  := 0;
             VL_AJUS_REDUC  := 0;
@@ -1334,10 +1334,10 @@ begin
               NAT_BC_CRED := bccAqBensRevenda;
               CST_PIS := stpisCredPresAquiRecTribENaoTribMercIntEExportacao;
               VL_BC_PIS_TOT := 0;
-              VL_BC_PIS_CUM := 0;
+              VL_BC_PIS_CUM := Null;
               VL_BC_PIS_NC := 0;
               VL_BC_PIS := 0;
-              QUANT_BC_PIS_TOT := 0;
+              QUANT_BC_PIS_TOT := Null;
               QUANT_BC_PIS := 0;
               DESC_CRED := '';
             end;
@@ -1351,7 +1351,7 @@ begin
             VL_BC_PIS      := 0;
             ALIQ_PIS       := 1.2375;
             QUANT_BC_PIS   := 0;
-            ALIQ_PIS_QUANT := 0;
+            ALIQ_PIS_QUANT := Null;
             VL_CRED        := 0; //OBRIGATORIO
             VL_AJUS_ACRES  := 0;
             VL_AJUS_REDUC  := 0;
@@ -1366,10 +1366,10 @@ begin
               NAT_BC_CRED := bccAqBensRevenda;
               CST_PIS := stpisCredPresAquiExcRecTribMercInt;
               VL_BC_PIS_TOT := 0;
-              VL_BC_PIS_CUM := 0;
+              VL_BC_PIS_CUM := Null;
               VL_BC_PIS_NC := 0;
               VL_BC_PIS := 0;
-              QUANT_BC_PIS_TOT := 0;
+              QUANT_BC_PIS_TOT := Null;
               QUANT_BC_PIS := 0;
               DESC_CRED := '';
             end;
@@ -1399,7 +1399,7 @@ begin
              VL_BC_CONT := 0;
              ALIQ_PIS := 1.65;
              QUANT_BC_PIS := 0;
-             ALIQ_PIS_QUANT := 0;
+             ALIQ_PIS_QUANT := Null;
              VL_CONT_APUR := 0;
              VL_AJUS_ACRES := 0;
              VL_AJUS_REDUC := 0;
@@ -1432,7 +1432,7 @@ begin
            VL_BC_COFINS       := 0;
            ALIQ_COFINS        := 4.56;
            QUANT_BC_COFINS    := 0;
-           ALIQ_COFINS_QUANT  := 0;
+           ALIQ_COFINS_QUANT  := Null;
            VL_CRED            := 0; //OBRIGATORIO
            VL_AJUS_ACRES      := 0;
            VL_AJUS_REDUC      := 0;
@@ -1447,10 +1447,10 @@ begin
               NAT_BC_CRED := bccAqBensRevenda;
               CST_COFINS := stcofinsCredPresAquiRecTribENaoTribMercIntEExportacao;
               VL_BC_COFINS_TOT := 0;
-              VL_BC_COFINS_CUM := 0;
+              VL_BC_COFINS_CUM := Null;
               VL_BC_COFINS_NC := 0;
               VL_BC_COFINS := 0;
-              QUANT_BC_COFINS_TOT := 0;
+              QUANT_BC_COFINS_TOT := Null;
               QUANT_BC_COFINS := 0;
               DESC_CRED := '';
            end;
@@ -1464,7 +1464,7 @@ begin
            VL_BC_COFINS       := 0;
            ALIQ_COFINS        := 4.56;
            QUANT_BC_COFINS    := 0;
-           ALIQ_COFINS_QUANT  := 0;
+           ALIQ_COFINS_QUANT  := Null;
            VL_CRED            := 0; //OBRIGATORIO
            VL_AJUS_ACRES      := 0;
            VL_AJUS_REDUC      := 0;
@@ -1479,10 +1479,10 @@ begin
               NAT_BC_CRED := bccAqBensRevenda;
               CST_COFINS := stcofinsCredPresAquiRecTribENaoTribMercIntEExportacao;
               VL_BC_COFINS_TOT := 0;
-              VL_BC_COFINS_CUM := 0;
+              VL_BC_COFINS_CUM := Null;
               VL_BC_COFINS_NC := 0;
               VL_BC_COFINS := 0;
-              QUANT_BC_COFINS_TOT := 0;
+              QUANT_BC_COFINS_TOT := Null;
               QUANT_BC_COFINS := 0;
               DESC_CRED := '';
            end;
@@ -1496,7 +1496,7 @@ begin
            VL_BC_COFINS       := 0;
            ALIQ_COFINS        := 3.04;
            QUANT_BC_COFINS    := 0;
-           ALIQ_COFINS_QUANT  := 0;
+           ALIQ_COFINS_QUANT  := Null;
            VL_CRED            := 0; //OBRIGATORIO
            VL_AJUS_ACRES      := 0;
            VL_AJUS_REDUC      := 0;
@@ -1511,10 +1511,10 @@ begin
               NAT_BC_CRED := bccAqBensRevenda;
               CST_COFINS := stcofinsCredPresAquiExcRecTribMercInt;
               VL_BC_COFINS_TOT := 0;
-              VL_BC_COFINS_CUM := 0;
+              VL_BC_COFINS_CUM := Null;
               VL_BC_COFINS_NC := 0;
               VL_BC_COFINS := 0;
-              QUANT_BC_COFINS_TOT := 0;
+              QUANT_BC_COFINS_TOT := Null;
               QUANT_BC_COFINS := 0;
               DESC_CRED := '';
            end;
@@ -1528,7 +1528,7 @@ begin
            VL_BC_COFINS       := 0;
            ALIQ_COFINS        := 4.56;
            QUANT_BC_COFINS    := 0;
-           ALIQ_COFINS_QUANT  := 0;
+           ALIQ_COFINS_QUANT  := Null;
            VL_CRED            := 0; //OBRIGATORIO
            VL_AJUS_ACRES      := 0;
            VL_AJUS_REDUC      := 0;
@@ -1543,10 +1543,10 @@ begin
               NAT_BC_CRED := bccAqBensRevenda;
               CST_COFINS := stcofinsCredPresAquiRecTribENaoTribMercIntEExportacao;
               VL_BC_COFINS_TOT := 0;
-              VL_BC_COFINS_CUM := 0;
+              VL_BC_COFINS_CUM := Null;
               VL_BC_COFINS_NC := 0;
               VL_BC_COFINS := 0;
-              QUANT_BC_COFINS_TOT := 0;
+              QUANT_BC_COFINS_TOT := Null;
               QUANT_BC_COFINS := 0;
               DESC_CRED := '';
            end;
@@ -1575,7 +1575,7 @@ begin
              VL_BC_CONT := 0;
              ALIQ_COFINS := 7.6;
              QUANT_BC_COFINS := 0;
-             ALIQ_COFINS_QUANT := 0;
+             ALIQ_COFINS_QUANT := Null;
              VL_CONT_APUR := 0;
              VL_AJUS_ACRES := 0;
              VL_AJUS_REDUC := 0;
