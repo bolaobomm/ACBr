@@ -38,22 +38,8 @@ unit ACBrECFVirtualSAT;
 interface
 
 uses ACBrECFVirtual, ACBrECFVirtualPrinter, ACBrSAT, ACBrUtil, ACBrConsts,
-  Classes, SysUtils, pcnCFe, pcnConversao, ACBrECF, ACBrDevice,
-	{$IFDEF VisualCLX} QDialogs {$ELSE} Dialogs, FileCtrl {$ENDIF}
-  {$IFDEF FPC}
-     , LResources, LazarusPackageIntf, PropEdits, ComponentEditors
-  {$ELSE}
-// Código comentado devido a problemas com versões do Delphi. Veja:
-// http://www.projetoacbr.com.br/forum/index.php?/topic/19295-erro-ao-instalar-acbrecfvirtualsat/
-// http://stackoverflow.com/a/4287608/460775
-// http://edn.embarcadero.com/article/27717
-//    {$IFNDEF COMPILER6_UP}
-//       DsgnIntf
-//    {$ELSE}
-//       DesignIntf,
-//       DesignEditors
-//    {$ENDIF}
-  {$ENDIF};
+  Classes, SysUtils, pcnCFe, pcnConversao, ACBrECF, ACBrDevice
+  {$IFDEF FPC}, LResources {$ENDIF};
 
 const
   ACBrECFVirtualSAT_VERSAO = '0.1.0a';
@@ -548,7 +534,7 @@ end;
 {$IFDEF FPC}
 {$IFNDEF NOGUI}
 initialization
-   {$I ACBrSAT.lrs}
+   {$I ACBrECFVirtualSAT.lrs}
 {$ENDIF}
 {$ENDIF}
 

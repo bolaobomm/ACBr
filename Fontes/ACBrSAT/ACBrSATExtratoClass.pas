@@ -142,7 +142,7 @@ type
 
 implementation
 
-uses ACBrSAT, ACBrDFeUtil, ACBrSATClass;
+uses ACBrSAT, ACBrSATClass, ACBrUtil;
 
 { TACBrSATExtratoMargem }
 
@@ -209,7 +209,7 @@ function TACBrSATExtratoClass.CalcularConteudoQRCode(ID: String;
 begin
   Result := ID + '|' +
             FormatDateTime('yyyymmddhhmmss',dEmi_hEmi) + '|' +
-            DFeUtil.FormatFloat(Valor,'0.00') + '|' +
+            FormatFloat('0.00', Valor) + '|' +
             Trim(CNPJCPF) + '|' +
             assinaturaQRCODE;
 end;

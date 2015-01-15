@@ -384,6 +384,8 @@ begin
   FBuffer.Add(FLinhaCmd);
   FBuffer.Add(' ');
 
+  cCaracter := '';
+
   if ImprimeQRCode then
   begin
     qrcode := CalcularConteudoQRCode( CFe.infCFe.ID,
