@@ -3413,31 +3413,54 @@ begin
 
         with ACBrNFe1.EventoNFe.Evento.Add do
          begin
-           infEvento.chNFe  := INIRec.ReadString(  sSecao,'chNFe' ,'');
            infEvento.cOrgao := INIRec.ReadInteger( sSecao,'cOrgao' ,0);
            infEvento.CNPJ   := INIRec.ReadString(  sSecao,'CNPJ' ,'');
+           infEvento.chNFe  := INIRec.ReadString(  sSecao,'chNFe' ,'');
            infEvento.dhEvento :=  NotaUtil.StringToDateTime(INIRec.ReadString(  sSecao,'dhEvento' ,''));
            if CCe then
             begin
               infEvento.tpEvento := teCCe;
-              infEvento.detEvento.descEvento := 'Carta de Correção';
+//              infEvento.detEvento.descEvento := 'Carta de Correção';
             end
            else
             begin
              infEvento.tpEvento := StrToTpEvento(ok,INIRec.ReadString(  sSecao,'tpEvento' ,''));
-             infEvento.detEvento.descEvento := INIRec.ReadString(  sSecao,'descEvento' ,'');
+//             infEvento.detEvento.descEvento := INIRec.ReadString(  sSecao,'descEvento' ,'');
             end;
+
            infEvento.nSeqEvento   := INIRec.ReadInteger( sSecao,'nSeqEvento' ,1);
            infEvento.versaoEvento := INIRec.ReadString(  sSecao,'versaoEvento' ,'1.00');;
-           infEvento.detEvento.xCorrecao  := INIRec.ReadString(  sSecao,'xCorrecao' ,'');
-           infEvento.detEvento.xCondUso   := INIRec.ReadString(  sSecao,'xCondUso' ,''); //Texto fixo conforme NT 2011.003 -  http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=tsiloeZ6vBw=
-           infEvento.detEvento.nProt      := INIRec.ReadString(  sSecao,'nProt' ,'');
-           infEvento.detEvento.xJust      := INIRec.ReadString(  sSecao,'xJust' ,'');
+
+           // Alterado por Italo em 15/01/2015
+           if infEvento.tpEvento = teEPECNFe then
+           begin
+             infEvento.detEvento.cOrgaoAutor := INIRec.ReadInteger(sSecao, 'cOrgaoAutor', 0);
+//           TpcnTipoAutor = (taEmpresaEmitente, taEmpresaDestinataria, taEmpresa, taFisco, taRFB, taOutros)
+             infEvento.detEvento.tpAutor     := StrToTipoAutor(ok,INIRec.ReadString(sSecao, 'tpAutor', '1'));
+             infEvento.detEvento.verAplic    := INIRec.ReadString(sSecao, 'verAplic', '1.0');
+             infEvento.detEvento.dhEmi       := NotaUtil.StringToDateTime(INIRec.ReadString(sSecao, 'dhEmi', ''));
+//           TpcnTipoNFe = (tnEntrada, tnSaida)
+             infEvento.detEvento.tpNF        := StrToTpNF(ok,INIRec.ReadString(sSecao, 'tpNF', '1'));
+             infEvento.detEvento.IE          := INIRec.ReadString(sSecao, 'IE', '');
+
+             infEvento.detEvento.dest.UF      := INIRec.ReadString('DEST', 'UF', '');
+             infEvento.detEvento.dest.CNPJCPF := INIRec.ReadString('DEST', 'CNPJCPF', '');
+             infEvento.detEvento.dest.IE      := INIRec.ReadString('DEST', 'IE', '');
+             infEvento.detEvento.dest.vNF     := StringToFloatDef(INIRec.ReadString('DEST', 'vNF', ''), 0);
+             infEvento.detEvento.dest.vICMS   := StringToFloatDef(INIRec.ReadString('DEST', 'vICMS', ''), 0);
+             infEvento.detEvento.dest.vST     := StringToFloatDef(INIRec.ReadString('DEST', 'vST', ''), 0);
+           end
+           else begin
+             infEvento.detEvento.xCorrecao := INIRec.ReadString(  sSecao,'xCorrecao' ,'');
+             infEvento.detEvento.xCondUso  := INIRec.ReadString(  sSecao,'xCondUso' ,''); //Texto fixo conforme NT 2011.003 -  http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=tsiloeZ6vBw=
+             infEvento.detEvento.nProt     := INIRec.ReadString(  sSecao,'nProt' ,'');
+             infEvento.detEvento.xJust     := INIRec.ReadString(  sSecao,'xJust' ,'');
+           end;
          end;
         Inc(I);
       end;
    finally
-      INIRec.Free ;
+      INIRec.Free;
    end;
  end;
 end;

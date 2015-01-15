@@ -48,6 +48,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/01/2015
+[*] : Incluido o evento EPEC na procedure GerarIniEvento.
+      Por: Italo Jurisato Junior
+
 10/12/2014
 [-] : Ao passar a chave para a function ValidarChave esta sendo colocado o prefixo:
       MDFe, mas a function só reconhece os prefixos NFe e CTe, portanto foi alterado
