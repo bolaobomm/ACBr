@@ -44,7 +44,7 @@ echo "****************************************"
 echo.
 
 :TCP
-%1\tools\lazres.exe ACBrTCP.lrs TACBrTCPServer.bmp TACBrCEP.bmp TACBrIBGE.bmp TACBrNFPws.bmp TACBrCNIEE.bmp TACBrSuframa.bmp TACBrDownload.bmp TACBrIBPTax.bmp TACBrConsultaCNPJ.bmp TACBrMail.bmp TACBrConsultaCPF.png TACBrSpedTabelas.bmp TACBrSedex.bmp TACBrNCMs.bmp TACBrSpedECF.png
+%1\tools\lazres.exe ACBrTCP.lrs TACBrTCPServer.bmp TACBrCEP.bmp TACBrIBGE.bmp TACBrNFPws.bmp TACBrCNIEE.bmp TACBrSuframa.bmp TACBrDownload.bmp TACBrIBPTax.bmp TACBrConsultaCNPJ.bmp TACBrMail.bmp TACBrConsultaCPF.png TACBrSpedTabelas.bmp TACBrSedex.bmp TACBrNCMs.bmp 
 move ACBrTCP.lrs ..\ACBrTCP
 echo.
 echo "****************************************"
@@ -56,13 +56,17 @@ echo.
 %1\tools\lazres.exe ACBrSpedFiscal.lrs TACBrSpedFiscal.bmp
 %1\tools\lazres.exe ACBrSpedContabil.lrs TACBrSpedContabil.bmp
 %1\tools\lazres.exe ACBrSpedPisCofins.lrs TACBrSpedPisCofins.bmp
+%1\tools\lazres.exe ACBrSpedECF.lrs TACBrSpedECF.png
 move ACBrSpedFiscal.lrs ..\ACBrSPED\ACBrSPEDFiscal
 move ACBrSpedContabil.lrs ..\ACBrSPED\ACBrSPEDContabil
 move ACBrSpedPisCofins.lrs ..\ACBrSPED\ACBrSpedPisCofins
+move ACBrSpedECF.lrs ..\ACBrSPED\ACBrSPEDECF
 echo.
 echo "****************************************"
 echo "* Arquivo  ACBrSpedFiscal.lrs   gerado *"
 echo "* Arquivo  ACBrSpedContabil.lrs gerado *"
+echo "* Arquivo  ACBrSpedPisCofins.lrs gerado*"
+echo "* Arquivo  ACBrSpedECF.lrs gerado      *"
 echo "****************************************"
 echo.
 
