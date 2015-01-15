@@ -565,7 +565,7 @@ end;
 
 procedure StringToFloatTest.Normal;
 begin
-  CheckEquals(123.45, StringToFloat('123.45'));
+  CheckEquals(123.45, StringToFloat('123,45'));
 end;
 
 
@@ -1036,32 +1036,32 @@ begin
   CheckEquals('>', ParseText('&gt;'));
   CheckEquals('"', ParseText('&quot;'));
   CheckEquals(#39, ParseText('&#39;'));
-  CheckEquals('Ã¡', ParseText('&aacute;', True, False));
-  CheckEquals('Ã', ParseText('&Aacute;', True, False));
-  CheckEquals('Ã¢', ParseText('&acirc;',  True, False));
-  CheckEquals('Ã‚', ParseText('&Acirc;',  True, False));
-  CheckEquals('Ã£', ParseText('&atilde;', True, False));
-  CheckEquals('Ãƒ', ParseText('&Atilde;', True, False));
-  CheckEquals('Ã ', ParseText('&agrave;', True, False));
-  CheckEquals('Ã€', ParseText('&Agrave;', True, False));
-  CheckEquals('Ã©', ParseText('&eacute;', True, False));
-  CheckEquals('Ã‰', ParseText('&Eacute;', True, False));
-  CheckEquals('Ãª', ParseText('&ecirc;',  True, False));
-  CheckEquals('ÃŠ', ParseText('&Ecirc;',  True, False));
-  CheckEquals('Ã­', ParseText('&iacute;', True, False));
-  CheckEquals('Ã', ParseText('&Iacute;', True, False));
-  CheckEquals('Ã³', ParseText('&oacute;', True, False));
-  CheckEquals('Ã“', ParseText('&Oacute;', True, False));
-  CheckEquals('Ãµ', ParseText('&otilde;', True, False));
-  CheckEquals('Ã•', ParseText('&Otilde;', True, False));
-  CheckEquals('Ã´', ParseText('&ocirc;',  True, False));
-  CheckEquals('Ã”', ParseText('&Ocirc;',  True, False));
-  CheckEquals('Ãº', ParseText('&uacute;', True, False));
-  CheckEquals('Ãš', ParseText('&Uacute;', True, False));
-  CheckEquals('Ã¼', ParseText('&uuml;',   True, False));
-  CheckEquals('Ãœ', ParseText('&Uuml;',   True, False));
-  CheckEquals('Ã§', ParseText('&ccedil;', True, False));
-  CheckEquals('Ã‡', ParseText('&Ccedil;', True, False));
+  CheckEquals('á', ParseText('&aacute;', True, False));
+  CheckEquals('Á', ParseText('&Aacute;', True, False));
+  CheckEquals('â', ParseText('&acirc;',  True, False));
+  CheckEquals('Â', ParseText('&Acirc;',  True, False));
+  CheckEquals('ã', ParseText('&atilde;', True, False));
+  CheckEquals('Ã', ParseText('&Atilde;', True, False));
+  CheckEquals('à', ParseText('&agrave;', True, False));
+  CheckEquals('À', ParseText('&Agrave;', True, False));
+  CheckEquals('é', ParseText('&eacute;', True, False));
+  CheckEquals('É', ParseText('&Eacute;', True, False));
+  CheckEquals('ê', ParseText('&ecirc;',  True, False));
+  CheckEquals('Ê', ParseText('&Ecirc;',  True, False));
+  CheckEquals('í', ParseText('&iacute;', True, False));
+  CheckEquals('Í', ParseText('&Iacute;', True, False));
+  CheckEquals('ó', ParseText('&oacute;', True, False));
+  CheckEquals('Ó', ParseText('&Oacute;', True, False));
+  CheckEquals('õ', ParseText('&otilde;', True, False));
+  CheckEquals('Õ', ParseText('&Otilde;', True, False));
+  CheckEquals('ô', ParseText('&ocirc;',  True, False));
+  CheckEquals('Ô', ParseText('&Ocirc;',  True, False));
+  CheckEquals('ú', ParseText('&uacute;', True, False));
+  CheckEquals('Ú', ParseText('&Uacute;', True, False));
+  CheckEquals('ü', ParseText('&uuml;',   True, False));
+  CheckEquals('Ü', ParseText('&Uuml;',   True, False));
+  CheckEquals('ç', ParseText('&ccedil;', True, False));
+  CheckEquals('Ç', ParseText('&Ccedil;', True, False));
   CheckEquals('''', ParseText('&apos;',  True, False));
 end;
 
