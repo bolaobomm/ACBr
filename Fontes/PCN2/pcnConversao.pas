@@ -352,89 +352,89 @@ const
   LineBreak = #13#10;
 
 function StrToHex(S: String): String;
-function StrToEnumerado(var ok: boolean; const s: string; const AString: array of string;
+function StrToEnumerado(out ok: boolean; const s: string; const AString: array of string;
   const AEnumerados: array of variant): variant;
 function EnumeradoToStr(const t: variant; const AString:
   array of string; const AEnumerados: array of variant): variant;
 
-function StrToEnumerado2(var ok: boolean;  const s: string; Const AString: array of string ): variant;
+function StrToEnumerado2(out ok: boolean;  const s: string; Const AString: array of string ): variant;
 function EnumeradoToStr2(const t: variant; const AString: array of string ): variant;
 
 function SchemaToStr(const t: TpcnSchema): string;
-function StrToSchema(var ok: boolean; const s: string): TpcnSchema;
+function StrToSchema(out ok: boolean; const s: string): TpcnSchema;
 function TipoLayoutToStr(const t: TpcnTipoLayout): string;
-function StrToTipoLayout(var ok: boolean; const s: string): TpcnTipoLayout;
+function StrToTipoLayout(out ok: boolean; const s: string): TpcnTipoLayout;
 function IndpagToStr(const t: TpcnIndicadorPagamento): string;
-function StrToIndpag(var ok: boolean; const s: string): TpcnIndicadorPagamento;
+function StrToIndpag(out ok: boolean; const s: string): TpcnIndicadorPagamento;
 function tpNFToStr(const t: TpcnTipoNFe): string;
-function StrToTpNF(var ok: boolean; const s: string): TpcnTipoNFe;
+function StrToTpNF(out ok: boolean; const s: string): TpcnTipoNFe;
 function TpImpToStr(const t: TpcnTipoImpressao): string;
-function StrToTpImp(var ok: boolean; const s: string): TpcnTipoImpressao;
+function StrToTpImp(out ok: boolean; const s: string): TpcnTipoImpressao;
 function PercTribToStr(const t: TpcnPercentualTributos): string;
-function StrToPercTrib(var ok: boolean; const s: string): TpcnPercentualTributos;
+function StrToPercTrib(out ok: boolean; const s: string): TpcnPercentualTributos;
 function TpEmisToStr(const t: TpcnTipoEmissao): string;
-function StrToTpEmis(var ok: boolean; const s: string): TpcnTipoEmissao;
+function StrToTpEmis(out ok: boolean; const s: string): TpcnTipoEmissao;
 function TpAmbToStr(const t: TpcnTipoAmbiente): string;
-function StrToTpAmb(var ok: boolean; const s: string): TpcnTipoAmbiente;
+function StrToTpAmb(out ok: boolean; const s: string): TpcnTipoAmbiente;
 function TpSitToStr(const t: TpcnSituacaoEmissor): string;
-function StrToTpSit(var ok: boolean; const s: string): TpcnSituacaoEmissor;
+function StrToTpSit(out ok: boolean; const s: string): TpcnSituacaoEmissor;
 function FinNFeToStr(const t: TpcnFinalidadeNFe): string;
-function StrToFinNFe(var ok: boolean; const s: string): TpcnFinalidadeNFe;
+function StrToFinNFe(out ok: boolean; const s: string): TpcnFinalidadeNFe;
 function procEmiToStr(const t: TpcnProcessoEmissao): string;
-function StrToprocEmi(var ok: boolean; const s: string): TpcnProcessoEmissao;
+function StrToprocEmi(out ok: boolean; const s: string): TpcnProcessoEmissao;
 function tpOPToStr(const t: TpcnTipoOperacao): string;
-function StrTotpOP(var ok: boolean; const s: string): TpcnTipoOperacao;
+function StrTotpOP(out ok: boolean; const s: string): TpcnTipoOperacao;
 function condVeicToStr(const t: TpcnCondicaoVeiculo): string;
-function StrTocondVeic(var ok: boolean; const s: string): TpcnCondicaoVeiculo;
+function StrTocondVeic(out ok: boolean; const s: string): TpcnCondicaoVeiculo;
 function tpArmaToStr(const t: TpcnTipoArma): string;
-function StrTotpArma(var ok: boolean; const s: string): TpcnTipoArma;
+function StrTotpArma(out ok: boolean; const s: string): TpcnTipoArma;
 function OrigToStr(const t: TpcnOrigemMercadoria): string;
-function StrToOrig(var ok: boolean; const s: string): TpcnOrigemMercadoria;
+function StrToOrig(out ok: boolean; const s: string): TpcnOrigemMercadoria;
 function CSTICMSToStr(const t: TpcnCSTIcms): string;
-function StrToCSTICMS(var ok: boolean; const s: string): TpcnCSTIcms;
+function StrToCSTICMS(out ok: boolean; const s: string): TpcnCSTIcms;
 function CSOSNIcmsToStr(const t: TpcnCSOSNIcms): string;
-function StrToCSOSNIcms(var ok: boolean; const s: string): TpcnCSOSNIcms;
+function StrToCSOSNIcms(out ok: boolean; const s: string): TpcnCSOSNIcms;
 function CSTICMSToStrTagPos(const t: TpcnCSTIcms): string;
 function CSTICMSToStrTagPosText(const t: TpcnCSTIcms): string;
 function CSOSNToStrTagPos(const t: TpcnCSOSNIcms): string;
 function CSOSNToStrID(const t: TpcnCSOSNIcms): string;
 
 function modBCToStr(const t: TpcnDeterminacaoBaseIcms): string;
-function StrTomodBC(var ok: boolean; const s: string): TpcnDeterminacaoBaseIcms;
+function StrTomodBC(out ok: boolean; const s: string): TpcnDeterminacaoBaseIcms;
 function modBCSTToStr(const t: TpcnDeterminacaoBaseIcmsST): string;
-function StrTomodBCST(var ok: boolean; const s: string): TpcnDeterminacaoBaseIcmsST;
+function StrTomodBCST(out ok: boolean; const s: string): TpcnDeterminacaoBaseIcmsST;
 function motDesICMSToStr(const t: TpcnMotivoDesoneracaoICMS): string;
-function StrTomotDesICMS(var ok: boolean; const s: string): TpcnMotivoDesoneracaoICMS;
+function StrTomotDesICMS(out ok: boolean; const s: string): TpcnMotivoDesoneracaoICMS;
 function CSTIPIToStr(const t: TpcnCstIpi): string;
-function StrToCSTIPI(var ok: boolean; const s: string): TpcnCstIpi;
+function StrToCSTIPI(out ok: boolean; const s: string): TpcnCstIpi;
 function CSTPISToStr(const t: TpcnCstPIS): string;
-function StrToCSTPIS(var ok: boolean; const s: string): TpcnCstPIS;
+function StrToCSTPIS(out ok: boolean; const s: string): TpcnCstPIS;
 function CSTCOFINSToStr(const t: TpcnCstCOFINS): string;
-function StrToCSTCOFINS(var ok: boolean; const s: string): TpcnCstCOFINS;
+function StrToCSTCOFINS(out ok: boolean; const s: string): TpcnCstCOFINS;
 function modFreteToStr(const t: TpcnModalidadeFrete): string;
-function StrTomodFrete(var ok: boolean; const s: string): TpcnModalidadeFrete;
+function StrTomodFrete(out ok: boolean; const s: string): TpcnModalidadeFrete;
 function indProcToStr(const t: TpcnIndicadorProcesso): string;
-function StrToindProc(var ok: boolean; const s: string): TpcnIndicadorProcesso;
+function StrToindProc(out ok: boolean; const s: string): TpcnIndicadorProcesso;
 function CRTToStr(const t: TpcnCRT): string;
-function StrToCRT(var ok: boolean; const s: string): TpcnCRT;
+function StrToCRT(out ok: boolean; const s: string): TpcnCRT;
 function indTotToStr(const t: TpcnIndicadorTotal): string;
-function StrToindTot(var ok: boolean; const s: string): TpcnIndicadorTotal;
+function StrToindTot(out ok: boolean; const s: string): TpcnIndicadorTotal;
 
 function tpforPagToStr(const t: TpcteFormaPagamento): string;
 function tpforPagToStrText(const t: TpcteFormaPagamento): string;
-function StrTotpforPag(var ok: boolean; const s: string): TpcteFormaPagamento;
+function StrTotpforPag(out ok: boolean; const s: string): TpcteFormaPagamento;
 function tpCTePagToStr(const t: TpcteTipoCTe): string;
 function tpCTToStr(const t: TpcteTipoCTe): string;
 function tpCTToStrText(const t: TpcteTipoCTe): string;
-function StrTotpCTe(var ok: boolean; const s: string): TpcteTipoCTe;
+function StrTotpCTe(out ok: boolean; const s: string): TpcteTipoCTe;
 function TpModalToStr(const t: TpcteModal): string;
 function TpModalToStrText(const t: TpcteModal): string;
-function StrToTpModal(var ok: boolean; const s: string): TpcteModal;
+function StrToTpModal(out ok: boolean; const s: string): TpcteModal;
 function TpServPagToStr(const t: TpcteTipoServico): string;
 function TpServToStrText(const t: TpcteTipoServico): string;
-function StrToTpServ(var ok: boolean; const s: string): TpcteTipoServico;
+function StrToTpServ(out ok: boolean; const s: string): TpcteTipoServico;
 function TpRetiraPagToStr(const t: TpcteRetira): string;
-function StrToTpRetira(var ok: boolean; const s: string): TpcteRetira;
+function StrToTpRetira(out ok: boolean; const s: string): TpcteRetira;
 function TpTomadorPagToStr(const t: TpcteTomador): string;
 function TpTomadorToStr(const t: TpcteTomador): String;
 function TpTomadorToStrText(const t: TpcteTomador): String;
@@ -443,123 +443,123 @@ function TpRspSeguroToStrText(const t: TpcteRspSeg): String;
 function TpLotacaoToStr(const t: TpcteLotacao): string;
 function TpPropToStr(const t: TpcteProp): String;
 function UnidMedToStr(const t: UnidMed): string;
-function StrToTpTomador(var ok: boolean; const s: String ): TpcteTomador;
-function StrToTpRspSeguro(var ok: boolean; const s: String ): TpcteRspSeg;
-function StrToTpLotacao(var ok: boolean; const s: String ): TpcteLotacao;
-function StrToTpProp(var ok: boolean; const s: String ): TpcteProp;
-function StrToUnidMed(var ok: boolean; const s: String ): UnidMed;
+function StrToTpTomador(out ok: boolean; const s: String ): TpcteTomador;
+function StrToTpRspSeguro(out ok: boolean; const s: String ): TpcteRspSeg;
+function StrToTpLotacao(out ok: boolean; const s: String ): TpcteLotacao;
+function StrToTpProp(out ok: boolean; const s: String ): TpcteProp;
+function StrToUnidMed(out ok: boolean; const s: String ): UnidMed;
 function TpMaskToStrText(const t: TpcteMask): string;
-function StrToTpMask(var ok: boolean; const s: string): TpcteMask;
+function StrToTpMask(out ok: boolean; const s: string): TpcteMask;
 
 function ECFModRefToStr(const t:  TpcnECFModRef ): string;
-function StrToECFModRef(var ok: boolean; const s: string): TpcnECFModRef;
+function StrToECFModRef(out ok: boolean; const s: string): TpcnECFModRef;
 
 function ISSQNcSitTribToStr(const t: TpcnISSQNcSitTrib ): string;
-function StrToISSQNcSitTrib(var ok: boolean; const s: string) : TpcnISSQNcSitTrib;
+function StrToISSQNcSitTrib(out ok: boolean; const s: string) : TpcnISSQNcSitTrib;
 
 function TpDirecaoToStr(const t: TpcteDirecao): string;
-function StrToTpDirecao(var ok: boolean; const s: string): TpcteDirecao;
+function StrToTpDirecao(out ok: boolean; const s: string): TpcteDirecao;
 function TpNavegacaoToStr(const t: TpcteTipoNavegacao): string;
-function StrToTpNavegacao(var ok: boolean; const s: string): TpcteTipoNavegacao;
+function StrToTpNavegacao(out ok: boolean; const s: string): TpcteTipoNavegacao;
 
 function TpTrafegoToStr(const t: TpcteTipoTrafego): string;
-function StrToTpTrafego(var ok: boolean; const s: string): TpcteTipoTrafego;
+function StrToTpTrafego(out ok: boolean; const s: string): TpcteTipoTrafego;
 
 function TpDataPeriodoToStr(const t: TpcteTipoDataPeriodo): string;
-function StrToTpDataPeriodo(var ok: boolean; const s: string): TpcteTipoDataPeriodo;
+function StrToTpDataPeriodo(out ok: boolean; const s: string): TpcteTipoDataPeriodo;
 function TpHorarioIntervaloToStr(const t: TpcteTipoHorarioIntervalo): string;
-function StrToTpHorarioIntervalo(var ok: boolean; const s: string): TpcteTipoHorarioIntervalo;
+function StrToTpHorarioIntervalo(out ok: boolean; const s: string): TpcteTipoHorarioIntervalo;
 function TpDocumentoToStr(const t: TpcteTipoDocumento): string;
-function StrToTpDocumento(var ok: boolean; const s: string): TpcteTipoDocumento;
+function StrToTpDocumento(out ok: boolean; const s: string): TpcteTipoDocumento;
 function TpDocumentoAnteriorToStr(const t: TpcteTipoDocumentoAnterior): string;
-function StrToTpDocumentoAnterior(var ok: boolean; const s: string): TpcteTipoDocumentoAnterior;
+function StrToTpDocumentoAnterior(out ok: boolean; const s: string): TpcteTipoDocumentoAnterior;
 function RspPagPedagioToStr(const t: TpcteRspPagPedagio): string;
-function StrToRspPagPedagio(var ok: boolean; const s: string): TpcteRspPagPedagio;
+function StrToRspPagPedagio(out ok: boolean; const s: string): TpcteRspPagPedagio;
 function TpDispositivoToStr(const t: TpcteTipoDispositivo): string;
-function StrToTpDispositivo(var ok: boolean; const s: string): TpcteTipoDispositivo;
+function StrToTpDispositivo(out ok: boolean; const s: string): TpcteTipoDispositivo;
 function TpPropriedadeToStr(const t: TpcteTipoPropriedade): string;
-function StrToTpPropriedade(var ok: boolean; const s: string): TpcteTipoPropriedade;
+function StrToTpPropriedade(out ok: boolean; const s: string): TpcteTipoPropriedade;
 function TpVeiculoToStr(const t: TpcteTipoVeiculo): string;
-function StrToTpVeiculo(var ok: boolean; const s: string): TpcteTipoVeiculo;
+function StrToTpVeiculo(out ok: boolean; const s: string): TpcteTipoVeiculo;
 function TpRodadoToStr(const t: TpcteTipoRodado): string;
-function StrToTpRodado(var ok: boolean; const s: string): TpcteTipoRodado;
+function StrToTpRodado(out ok: boolean; const s: string): TpcteTipoRodado;
 function TpCarroceriaToStr(const t: TpcteTipoCarroceria): string;
-function StrToTpCarroceria(var ok: boolean; const s: string): TpcteTipoCarroceria;
+function StrToTpCarroceria(out ok: boolean; const s: string): TpcteTipoCarroceria;
 
 function ModeloNFToStr(const t: TpcteModeloNF): string;
-function StrToModeloNF(var ok: boolean; const s: string): TpcteModeloNF;
+function StrToModeloNF(out ok: boolean; const s: string): TpcteModeloNF;
 function TrafegoMutuoToStr(const t: TpcteTrafegoMutuo): string;
-function StrToTrafegoMutuo(var ok: boolean; const s: string): TpcteTrafegoMutuo;
+function StrToTrafegoMutuo(out ok: boolean; const s: string): TpcteTrafegoMutuo;
 
-function StrToTpEvento(var ok: boolean; const s: string): TpcnTpEvento;
+function StrToTpEvento(out ok: boolean; const s: string): TpcnTpEvento;
 function TpEventoToStr(const t: TpcnTpEvento): string;
 
 function IndicadorNFeToStr(const t: TpcnIndicadorNFe): string;
-function StrToIndicadorNFe(var ok: boolean; const s: string): TpcnIndicadorNFe;
+function StrToIndicadorNFe(out ok: boolean; const s: string): TpcnIndicadorNFe;
 function IndicadorEmissorToStr(const t: TpcnIndicadorEmissor): string;
-function StrToIndicadorEmissor(var ok: boolean; const s: string): TpcnIndicadorEmissor;
+function StrToIndicadorEmissor(out ok: boolean; const s: string): TpcnIndicadorEmissor;
 function IndicadorContinuacaoToStr(const t: TpcnIndicadorContinuacao): string;
-function StrToIndicadorContinuacao(var ok: boolean; const s: string): TpcnIndicadorContinuacao;
+function StrToIndicadorContinuacao(out ok: boolean; const s: string): TpcnIndicadorContinuacao;
 function SituacaoNFeToStr(const t: TpcnSituacaoNFe): string;
-function StrToSituacaoNFe(var ok: boolean; const s: string): TpcnSituacaoNFe;
+function StrToSituacaoNFe(out ok: boolean; const s: string): TpcnSituacaoNFe;
 function SituacaoManifDestToStr(const t: TpcnSituacaoManifDest): string;
-function StrToSituacaoManifDest(var ok: boolean; const s: string): TpcnSituacaoManifDest;
+function StrToSituacaoManifDest(out ok: boolean; const s: string): TpcnSituacaoManifDest;
 
 function ModeloDFToStr(const t: TpcnModeloDF): string;
-function StrToModeloDF(var ok: boolean; const s: string): TpcnModeloDF;
+function StrToModeloDF(out ok: boolean; const s: string): TpcnModeloDF;
 function DestinoOperacaoToStr(const t: TpcnDestinoOperacao): string;
-function StrToDestinoOperacao(var ok: boolean; const s: string): TpcnDestinoOperacao;
+function StrToDestinoOperacao(out ok: boolean; const s: string): TpcnDestinoOperacao;
 function ConsumidorFinalToStr(const t: TpcnConsumidorFinal): string;
-function StrToConsumidorFinal(var ok: boolean; const s: string): TpcnConsumidorFinal;
+function StrToConsumidorFinal(out ok: boolean; const s: string): TpcnConsumidorFinal;
 function PresencaCompradorToStr(const t: TpcnPresencaComprador): string;
-function StrToPresencaComprador(var ok: boolean; const s: string): TpcnPresencaComprador;
+function StrToPresencaComprador(out ok: boolean; const s: string): TpcnPresencaComprador;
 function FormaPagamentoToStr(const t: TpcnFormaPagamento): string;
 function FormaPagamentoToDescricao(const t: TpcnFormaPagamento): string;
-function StrToFormaPagamento(var ok: boolean; const s: string): TpcnFormaPagamento;
+function StrToFormaPagamento(out ok: boolean; const s: string): TpcnFormaPagamento;
 function BandeiraCartaoToStr(const t: TpcnBandeiraCartao): string;
-function StrToBandeiraCartao(var ok: boolean; const s: string): TpcnBandeiraCartao;
+function StrToBandeiraCartao(out ok: boolean; const s: string): TpcnBandeiraCartao;
 
 function RegTribToStr(const t: TpcnRegTrib ): string;
-function StrToRegTrib(var ok: boolean; const s: string): TpcnRegTrib ;
+function StrToRegTrib(out ok: boolean; const s: string): TpcnRegTrib ;
 function RegTribISSQNToStr(const t: TpcnRegTribISSQN ): string;
-function StrToRegTribISSQN(var ok: boolean; const s: string): TpcnRegTribISSQN ;
+function StrToRegTribISSQN(out ok: boolean; const s: string): TpcnRegTribISSQN ;
 function indRatISSQNToStr(const t: TpcnindRatISSQN ): string;
-function StrToindRatISSQN(var ok: boolean; const s: string): TpcnindRatISSQN ;
+function StrToindRatISSQN(out ok: boolean; const s: string): TpcnindRatISSQN ;
 function indRegraToStr(const t: TpcnindRegra ): string;
-function StrToindRegra(var ok: boolean; const s: string): TpcnindRegra ;
+function StrToindRegra(out ok: boolean; const s: string): TpcnindRegra ;
 function CodigoMPToStr(const t: TpcnCodigoMP ): string;
-function StrToCodigoMP(var ok: boolean; const s: string): TpcnCodigoMP ;
+function StrToCodigoMP(out ok: boolean; const s: string): TpcnCodigoMP ;
 function CodigoMPToDescricao(const t: TpcnCodigoMP ): string;
 
 function UnidTranspToStr(const t: TpcnUnidTransp):string;
-function StrToUnidTransp(var ok: boolean; const s: string): TpcnUnidTransp;
+function StrToUnidTransp(out ok: boolean; const s: string): TpcnUnidTransp;
 function UnidCargaToStr(const t: TpcnUnidCarga):string;
-function StrToUnidCarga(var ok: boolean; const s: string):TpcnUnidCarga;
+function StrToUnidCarga(out ok: boolean; const s: string):TpcnUnidCarga;
 function indNegociavelToStr(const t: TpcnindNegociavel ): string;
-function StrToindNegociavel(var ok: boolean; const s: string): TpcnindNegociavel;
+function StrToindNegociavel(out ok: boolean; const s: string): TpcnindNegociavel;
 function indIEDestToStr(const t: TpcnindIEDest ): string;
-function StrToindIEDest(var ok: boolean; const s: string): TpcnindIEDest;
+function StrToindIEDest(out ok: boolean; const s: string): TpcnindIEDest;
 function TipoViaTranspToStr(const t: TpcnTipoViaTransp ): string;
-function StrToTipoViaTransp(var ok: boolean; const s: string): TpcnTipoViaTransp;
+function StrToTipoViaTransp(out ok: boolean; const s: string): TpcnTipoViaTransp;
 function TipoIntermedioToStr(const t: TpcnTipoIntermedio ): string;
-function StrToTipoIntermedio(var ok: boolean; const s: string): TpcnTipoIntermedio;
+function StrToTipoIntermedio(out ok: boolean; const s: string): TpcnTipoIntermedio;
 function indISSRetToStr(const t: TpcnindISSRet ): string;
-function StrToindISSRet(var ok: boolean; const s: string): TpcnindISSRet;
+function StrToindISSRet(out ok: boolean; const s: string): TpcnindISSRet;
 function indISSToStr(const t: TpcnindISS ): string;
-function StrToindISS(var ok: boolean; const s: string): TpcnindISS;
+function StrToindISS(out ok: boolean; const s: string): TpcnindISS;
 function indIncentivoToStr(const t: TpcnindIncentivo ): string;
-function StrToindIncentivo(var ok: boolean; const s: string): TpcnindIncentivo;
+function StrToindIncentivo(out ok: boolean; const s: string): TpcnindIncentivo;
 
-function StrToVersaoDF(var ok: boolean; const s: string): TpcnVersaoDF;
+function StrToVersaoDF(out ok: boolean; const s: string): TpcnVersaoDF;
 function VersaoDFToStr(const t: TpcnVersaoDF): string;
 function GetVersaoNFe(AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF; ALayOut: TLayOut): string;
 function GetVersaoCTe(AVersaoDF: TpcnVersaoDF; ALayOut: TLayOutCTe): string;
 
 function TipoAutorToStr(const t: TpcnTipoAutor ): string;
-function StrToTipoAutor(var ok: boolean; const s: string): TpcnTipoAutor;
+function StrToTipoAutor(out ok: boolean; const s: string): TpcnTipoAutor;
 
 function IndOperacaoToStr(const t: TpcnIndOperacao ): string;
-function StrToIndOperacao(var ok: boolean; const s: string): TpcnIndOperacao;
+function StrToIndOperacao(out ok: boolean; const s: string): TpcnIndOperacao;
 
 implementation
 
@@ -571,7 +571,7 @@ begin
     Result:= Result+IntToHex(ord(S[i]),2);
 end;
 
-function StrToEnumerado(var ok: boolean; const s: string; const AString:
+function StrToEnumerado(out ok: boolean; const s: string; const AString:
   array of string; const AEnumerados: array of variant): variant;
 var
   i: integer;
@@ -603,7 +603,7 @@ begin
   result := EnumeradoToStr(t, ['PL005C'], [TsPL005c]);
 end;
 
-function StrToSchema(var ok: boolean; const s: string): TpcnSchema;
+function StrToSchema(out ok: boolean; const s: string): TpcnSchema;
 begin
   result := StrToEnumerado(ok, s, ['PL005C'], [TsPL005c]);
 end;
@@ -625,7 +625,7 @@ begin
        tlEnvEventoNFe, tlConsNFeDest, tlDownloadNFe{, tlProcMDFe}]);
 end;
 
-function StrToTipoLayout(var ok: boolean; const s: string): TpcnTipoLayout;
+function StrToTipoLayout(out ok: boolean; const s: string): TpcnTipoLayout;
 begin
   result := StrToEnumerado(ok, s, ['AtuCadEmiDFe', 'CadEmiDFe', 'CancNFe', 'ConsCad',
                                    'ConsReciNFe', 'ConsSitNFe', 'ConsStatServ', 'InutNFe',
@@ -647,7 +647,7 @@ begin
   result := EnumeradoToStr(t, ['0', '1', '2'], [ipVista, ipPrazo, ipOutras]);
 end;
 
-function StrToIndpag(var ok: boolean; const s: string): TpcnIndicadorPagamento;
+function StrToIndpag(out ok: boolean; const s: string): TpcnIndicadorPagamento;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2'], [ipVista, ipPrazo, ipOutras]);
 end;
@@ -668,7 +668,7 @@ begin
   result := EnumeradoToStr(t, ['NORMAL', 'COMPLEMENTO', 'ANULAÇÃO', 'SUBSTITUTO'], [tcNormal, tcComplemento, tcAnulacao, tcSubstituto]);
 end;
 
-function StrToTpNF(var ok: boolean; const s: string): TpcnTipoNFe;
+function StrToTpNF(out ok: boolean; const s: string): TpcnTipoNFe;
 begin
   result := StrToEnumerado(ok, s, ['0', '1'], [tnEntrada, tnSaida]);
 end;
@@ -681,7 +681,7 @@ begin
                                tiNFCe, tiMsgEletronica, tiNFCeA4]);
 end;
 
-function StrToTpImp(var ok: boolean; const s: string): TpcnTipoImpressao;
+function StrToTpImp(out ok: boolean; const s: string): TpcnTipoImpressao;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5', '4'],
                                   [tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado,
@@ -694,7 +694,7 @@ begin
                               [ptValorProdutos, ptValorNF]);
 end;
 
-function StrToPercTrib(var ok: boolean; const s: string): TpcnPercentualTributos;
+function StrToPercTrib(out ok: boolean; const s: string): TpcnPercentualTributos;
 begin
   result := StrToEnumerado(ok, s, ['0', '1'],
                                   [ptValorProdutos, ptValorNF]);
@@ -706,7 +706,7 @@ begin
     [msk4x2, msk7x2, msk9x2, msk10x2, msk13x2, msk15x2, msk6x3, mskAliq]);
 end;
 
-function StrToTpMask(var ok: boolean; const s: string): TpcteMask;
+function StrToTpMask(out ok: boolean; const s: string): TpcteMask;
 begin
   result := StrToEnumerado(ok, s, ['#,##0.00', '#,###,##0.00', '#,###,###,##0.00', '#,###,###,###,##0.00', '###,###,###,###,##0.00', '###,##0.000', '#00%'],
     [msk4x2, msk7x2, msk10x2, msk13x2, msk15x2, msk6x3, mskAliq]);
@@ -719,7 +719,7 @@ begin
                               [teNormal, teContingencia, teSCAN, teDPEC, teFSDA, teSVCAN, teSVCRS, teSVCSP, teOffLine]);
 end;
 
-function StrToTpEmis(var ok: boolean; const s: string): TpcnTipoEmissao;
+function StrToTpEmis(out ok: boolean; const s: string): TpcnTipoEmissao;
 begin
   result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
                                   [teNormal, teContingencia, teSCAN, teDPEC, teFSDA, teSVCAN, teSVCRS, teSVCSP, teOffLine]);
@@ -731,7 +731,7 @@ begin
   result := EnumeradoToStr(t, ['1', '2'], [taProducao, taHomologacao]);
 end;
 
-function StrToTpAmb(var ok: boolean; const s: string): TpcnTipoAmbiente;
+function StrToTpAmb(out ok: boolean; const s: string): TpcnTipoAmbiente;
 begin
   result := StrToEnumerado(ok, s, ['1', '2'], [taProducao, taHomologacao]);
 end;
@@ -742,7 +742,7 @@ begin
   result := EnumeradoToStr(t, ['0', '1'], [seHomologacao, seProducao]);
 end;
 
-function StrToTpSit(var ok: boolean; const s: string): TpcnSituacaoEmissor;
+function StrToTpSit(out ok: boolean; const s: string): TpcnSituacaoEmissor;
 begin
   result := StrToEnumerado(ok, s, ['0', '1'], [seHomologacao, seProducao]);
 end;
@@ -754,7 +754,7 @@ begin
                               [fnNormal, fnComplementar, fnAjuste, fnDevolucao]);
 end;
 
-function StrToFinNFe(var ok: boolean; const s: string): TpcnFinalidadeNFe;
+function StrToFinNFe(out ok: boolean; const s: string): TpcnFinalidadeNFe;
 begin
   result := StrToEnumerado(ok, s, ['1', '2', '3', '4'],
                                   [fnNormal, fnComplementar, fnAjuste, fnDevolucao]);
@@ -770,7 +770,7 @@ begin
   result := EnumeradoToStr(t, ['0', '1', '2', '3'], [peAplicativoContribuinte, peAvulsaFisco, peAvulsaContribuinte, peContribuinteAplicativoFisco]);
 end;
 
-function StrToprocEmi(var ok: boolean; const s: string): TpcnProcessoEmissao;
+function StrToprocEmi(out ok: boolean; const s: string): TpcnProcessoEmissao;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2', '3'], [peAplicativoContribuinte, peAvulsaFisco, peAvulsaContribuinte, peContribuinteAplicativoFisco]);
 end;
@@ -781,7 +781,7 @@ begin
   result := EnumeradoToStr(t, ['1', '2', '3', '0'], [toVendaConcessionaria, toFaturamentoDireto, toVendaDireta, toOutros]);
 end;
 
-function StrTotpOP(var ok: boolean; const s: string): TpcnTipoOperacao;
+function StrTotpOP(out ok: boolean; const s: string): TpcnTipoOperacao;
 begin
   result := StrToEnumerado(ok, s, ['1', '2', '3', '0'], [toVendaConcessionaria, toFaturamentoDireto, toVendaDireta, toOutros]);
 end;
@@ -792,7 +792,7 @@ begin
   result := EnumeradoToStr(t, ['1', '2', '3'], [cvAcabado, cvInacabado, cvSemiAcabado]);
 end;
 
-function StrTocondVeic(var ok: boolean; const s: string): TpcnCondicaoVeiculo;
+function StrTocondVeic(out ok: boolean; const s: string): TpcnCondicaoVeiculo;
 begin
   result := StrToEnumerado(ok, s, ['1', '2', '3'], [cvAcabado, cvInacabado, cvSemiAcabado]);
 end;
@@ -803,7 +803,7 @@ begin
   result := EnumeradoToStr(t, ['0', '1'], [taUsoPermitido, taUsoRestrito]);
 end;
 
-function StrTotpArma(var ok: boolean; const s: string): TpcnTipoArma;
+function StrTotpArma(out ok: boolean; const s: string): TpcnTipoArma;
 begin
   result := StrToEnumerado(ok, s, ['0', '1'], [taUsoPermitido, taUsoRestrito]);
 end;
@@ -819,7 +819,7 @@ begin
       oeNacionalConteudoImportacaoSuperior70]);
 end;
 
-function StrToOrig(var ok: boolean; const s: string): TpcnOrigemMercadoria;
+function StrToOrig(out ok: boolean; const s: string): TpcnOrigemMercadoria;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5', '6', '7', '8'],
      [oeNacional, oeEstrangeiraImportacaoDireta, oeEstrangeiraAdquiridaBrasil,
@@ -836,7 +836,7 @@ begin
     [csosnVazio,csosn101, csosn102, csosn103, csosn201, csosn202, csosn203, csosn300, csosn400, csosn500,csosn900]);
 end;
 
-function StrToCSOSNIcms(var ok: boolean; const s: string): TpcnCSOSNIcms;
+function StrToCSOSNIcms(out ok: boolean; const s: string): TpcnCSOSNIcms;
 begin
   result := StrToEnumerado(ok, s, [ '','101', '102', '103', '201', '202', '203', '300', '400', '500','900'],
     [csosnVazio, csosn101, csosn102, csosn103, csosn201, csosn202, csosn203, csosn300, csosn400, csosn500,csosn900]);
@@ -890,7 +890,7 @@ begin
                               [cst00, cst10, cst20, cst30, cst40, cst41, cst50, cst51, cst60, cst70, cst80, cst81, cst90, cstPart10 , cstPart90 , cstRep41, cstICMSOutraUF, cstICMSSN]);
 end;
 
-function StrToCSTICMS(var ok: boolean; const s: string): TpcnCSTIcms;
+function StrToCSTICMS(out ok: boolean; const s: string): TpcnCSTIcms;
 begin
   result := StrToEnumerado(ok, s, ['00', '10', '20', '30', '40', '41', '50', '51', '60', '70', '80', '81', '90', '91', '92'],
     [cst00, cst10, cst20, cst30, cst40, cst41, cst50, cst51, cst60, cst70, cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN]);
@@ -935,7 +935,7 @@ begin
     [dbiMargemValorAgregado, dbiPauta, dbiPrecoTabelado, dbiValorOperacao]);
 end;
 
-function StrTomodBC(var ok: boolean; const s: string): TpcnDeterminacaoBaseIcms;
+function StrTomodBC(out ok: boolean; const s: string): TpcnDeterminacaoBaseIcms;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2', '3'],
     [dbiMargemValorAgregado, dbiPauta, dbiPrecoTabelado, dbiValorOperacao]);
@@ -954,7 +954,7 @@ begin
     [dbisPrecoTabelado, dbisListaNegativa, dbisListaPositiva, dbisListaNeutra, dbisMargemValorAgregado, dbisPauta]);
 end;
 
-function StrTomodBCST(var ok: boolean; const s: string): TpcnDeterminacaoBaseIcmsST;
+function StrTomodBCST(out ok: boolean; const s: string): TpcnDeterminacaoBaseIcmsST;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5'],
     [dbisPrecoTabelado, dbisListaNegativa, dbisListaPositiva, dbisListaNeutra, dbisMargemValorAgregado, dbisPauta]);
@@ -985,7 +985,7 @@ begin
      mdiOutros, mdiDeficienteCondutor, mdiDeficienteNaoCondutor, mdiOrgaoFomento]);
 end;
 
-function StrTomotDesICMS(var ok: boolean; const s: string): TpcnMotivoDesoneracaoICMS;
+function StrTomotDesICMS(out ok: boolean; const s: string): TpcnMotivoDesoneracaoICMS;
 begin
   result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
     [mdiTaxi, mdiDeficienteFisico, mdiProdutorAgropecuario, mdiFrotistaLocadora,
@@ -1000,7 +1000,7 @@ begin
     [ipi00, ipi49, ipi50, ipi99, ipi01, ipi02, ipi03, ipi04, ipi05, ipi51, ipi52, ipi53, ipi54, ipi55]);
 end;
 
-function StrToCSTIPI(var ok: boolean; const s: string): TpcnCstIpi;
+function StrToCSTIPI(out ok: boolean; const s: string): TpcnCstIpi;
 begin
   result := StrToEnumerado(ok, s, ['00', '49', '50', '99', '01', '02', '03', '04', '05', '51', '52', '53', '54', '55'],
     [ipi00, ipi49, ipi50, ipi99, ipi01, ipi02, ipi03, ipi04, ipi05, ipi51, ipi52, ipi53, ipi54, ipi55]);
@@ -1013,7 +1013,7 @@ begin
     [pis01, pis02, pis03, pis04, pis05, pis06, pis07, pis08, pis09, pis49, pis50, pis51, pis52, pis53, pis54, pis55, pis56, pis60, pis61, pis62, pis63, pis64, pis65, pis66, pis67, pis70, pis71, pis72, pis73, pis74, pis75, pis98, pis99]);
 end;
 
-function StrToCSTPIS(var ok: boolean; const s: string): TpcnCstPIS;
+function StrToCSTPIS(out ok: boolean; const s: string): TpcnCstPIS;
 begin
   result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '49', '50', '51', '52', '53', '54', '55', '56', '60', '61', '62', '63', '64', '65', '66', '67', '70', '71', '72', '73', '74', '75', '98', '99'],
     [pis01, pis02, pis03, pis04, pis05, pis06, pis07, pis08, pis09, pis49, pis50, pis51, pis52, pis53, pis54, pis55, pis56, pis60, pis61, pis62, pis63, pis64, pis65, pis66, pis67, pis70, pis71, pis72, pis73, pis74, pis75, pis98, pis99]);
@@ -1026,7 +1026,7 @@ begin
     [cof01, cof02, cof03, cof04, cof05, cof06, cof07, cof08, cof09, cof49, cof50, cof51, cof52, cof53, cof54, cof55, cof56, cof60, cof61, cof62, cof63, cof64, cof65, cof66, cof67, cof70, cof71, cof72, cof73, cof74, cof75, cof98, cof99]);
 end;
 
-function StrToCSTCOFINS(var ok: boolean; const s: string): TpcnCstCOFINS;
+function StrToCSTCOFINS(out ok: boolean; const s: string): TpcnCstCOFINS;
 begin
   result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '49', '50', '51', '52', '53', '54', '55', '56', '60', '61', '62', '63', '64', '65', '66', '67', '70', '71', '72', '73', '74', '75', '98', '99'],
     [cof01, cof02, cof03, cof04, cof05, cof06, cof07, cof08, cof09, cof49, cof50, cof51, cof52, cof53, cof54, cof55, cof56, cof60, cof61, cof62, cof63, cof64, cof65, cof66, cof67, cof70, cof71, cof72, cof73, cof74, cof75, cof98, cof99]);
@@ -1038,7 +1038,7 @@ begin
   result := EnumeradoToStr(t, ['0', '1', '2', '9'], [mfContaEmitente, mfContaDestinatario, mfContaTerceiros, mfSemFrete]);
 end;
 
-function StrTomodFrete(var ok: boolean; const s: string): TpcnModalidadeFrete;
+function StrTomodFrete(out ok: boolean; const s: string): TpcnModalidadeFrete;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2', '9'], [mfContaEmitente, mfContaDestinatario, mfContaTerceiros, mfSemFrete]);
 end;
@@ -1049,7 +1049,7 @@ begin
   result := EnumeradoToStr(t, ['0', '1', '2', '3', '9'], [ipSEFAZ, ipJusticaFederal, ipJusticaEstadual, ipSecexRFB, ipOutros]);
 end;
 
-function StrToindProc(var ok: boolean; const s: string): TpcnIndicadorProcesso;
+function StrToindProc(out ok: boolean; const s: string): TpcnIndicadorProcesso;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '9'], [ipSEFAZ, ipJusticaFederal, ipJusticaEstadual, ipSecexRFB, ipOutros]);
 end;
@@ -1060,7 +1060,7 @@ begin
   result := EnumeradoToStr(t, ['','1', '2', '3'], [crtRegimeNormal,crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal]);
 end;
 
-function StrToCRT(var ok: boolean; const s: string): TpcnCRT;
+function StrToCRT(out ok: boolean; const s: string): TpcnCRT;
 begin
   result := StrToEnumerado(ok, s, ['','1', '2', '3'],[crtRegimeNormal,crtSimplesNacional,crtSimplesExcessoReceita, crtRegimeNormal]);
 end;
@@ -1071,7 +1071,7 @@ begin
   result := EnumeradoToStr(t, ['0', '1'], [itNaoSomaTotalNFe, itSomaTotalNFe]);
 end;
 
-function StrToindTot(var ok: boolean; const s: string): TpcnIndicadorTotal;
+function StrToindTot(out ok: boolean; const s: string): TpcnIndicadorTotal;
 begin
   result := StrToEnumerado(ok, s, ['0', '1'], [itNaoSomaTotalNFe, itSomaTotalNFe]);
 end;
@@ -1086,7 +1086,7 @@ begin
   result := EnumeradoToStr(t, ['PAGO','A PAGAR', 'OUTROS'], [fpPago, fpAPagar, fpOutros]);
 end;
 
-function StrTotpforPag(var ok: boolean; const s: string): TpcteFormaPagamento;
+function StrTotpforPag(out ok: boolean; const s: string): TpcteFormaPagamento;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2'], [fpPago, fpAPagar, fpOutros]);
 end;
@@ -1096,7 +1096,7 @@ begin
   result := EnumeradoToStr(t, ['0','1', '2', '3'], [tcNormal, tcComplemento, tcAnulacao, tcSubstituto]);
 end;
 
-function StrTotpCTe(var ok: boolean; const s: string): TpcteTipoCTe;
+function StrTotpCTe(out ok: boolean; const s: string): TpcteTipoCTe;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2', '3'], [tcNormal, tcComplemento, tcAnulacao, tcSubstituto]);
 end;
@@ -1113,7 +1113,7 @@ begin
                               [mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal]);
 end;
 
-function StrToTpModal(var ok: boolean; const s: string): TpcteModal;
+function StrToTpModal(out ok: boolean; const s: string): TpcteModal;
 begin
   result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06'],
                                   [mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal]);
@@ -1131,7 +1131,7 @@ begin
                               [tsNormal, tsSubcontratacao, tsRedespacho, tsIntermediario, tsMultimodal]);
 end;
 
-function StrToTpServ(var ok: boolean; const s: string): TpcteTipoServico;
+function StrToTpServ(out ok: boolean; const s: string): TpcteTipoServico;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4'],
                                   [tsNormal, tsSubcontratacao, tsRedespacho, tsIntermediario, tsMultimodal]);
@@ -1142,7 +1142,7 @@ begin
   result := EnumeradoToStr(t, ['0','1'], [rtSim, rtNao]);
 end;
 
-function StrToTpRetira(var ok: boolean; const s: string): TpcteRetira;
+function StrToTpRetira(out ok: boolean; const s: string): TpcteRetira;
 begin
   result := StrToEnumerado(ok, s, ['0', '1'], [rtSim, rtNao]);
 end;
@@ -1184,22 +1184,22 @@ begin
   result := EnumeradoToStr(t, ['0', '1', '2'], [tpTACAgregado, tpTACIndependente, tpOutros]);
 end;
 
-function StrToTpTomador(var ok: boolean; const s: String ): TpcteTomador;
+function StrToTpTomador(out ok: boolean; const s: String ): TpcteTomador;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4'], [tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros]);
 end;
 
-function StrToTpRspSeguro(var ok: boolean; const s: String ): TpcteRspSeg;
+function StrToTpRspSeguro(out ok: boolean; const s: String ): TpcteRspSeg;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5'], [rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario, rsEmitenteCTe, rsTomadorServico]);
 end;
 
-function StrToTpLotacao(var ok: boolean; const s: String ): TpcteLotacao;
+function StrToTpLotacao(out ok: boolean; const s: String ): TpcteLotacao;
 begin
   result := StrToEnumerado(ok, s, ['0', '1'], [ltNao, ltSim]);
 end;
 
-function StrToTpProp(var ok: boolean; const s: String ): TpcteProp;
+function StrToTpProp(out ok: boolean; const s: String ): TpcteProp;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2'], [tpTACAgregado, tpTACIndependente, tpOutros]);
 end;
@@ -1210,7 +1210,7 @@ begin
    [uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU]);
 end;
 
-function StrToUnidMed(var ok: boolean; const s: String ): UnidMed;
+function StrToUnidMed(out ok: boolean; const s: String ): UnidMed;
 begin
   result := StrToEnumerado(ok, s, ['00', '01', '02', '03', '04', '05'],
    [uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU]);
@@ -1222,7 +1222,7 @@ begin
     result := EnumeradoToStr(t, ['', '2B', '2C','2D'],[ECFModRefVazio ,ECFModRef2B,ECFModRef2C,ECFModRef2D]);
 end;
 
-function StrToECFModRef(var ok: boolean; const s: string): TpcnECFModRef;
+function StrToECFModRef(out ok: boolean; const s: string): TpcnECFModRef;
 begin
   result := StrToEnumerado(ok, s, ['', '2B', '2C','2D'],[ECFModRefVazio, ECFModRef2B,ECFModRef2C,ECFModRef2D]);
 end;
@@ -1232,7 +1232,7 @@ begin
     result := EnumeradoToStr(t, ['','N','R','S','I'],[ISSQNcSitTribVazio , ISSQNcSitTribNORMAL, ISSQNcSitTribRETIDA, ISSQNcSitTribSUBSTITUTA,ISSQNcSitTribISENTA]);
 end;
 
-function StrToISSQNcSitTrib(var ok: boolean; const s: string) : TpcnISSQNcSitTrib;
+function StrToISSQNcSitTrib(out ok: boolean; const s: string) : TpcnISSQNcSitTrib;
 begin
   result := StrToEnumerado(ok, s, ['','N','R','S','I'],[ISSQNcSitTribVazio , ISSQNcSitTribNORMAL, ISSQNcSitTribRETIDA, ISSQNcSitTribSUBSTITUTA,ISSQNcSitTribISENTA]);
 end;
@@ -1242,7 +1242,7 @@ begin
   result := EnumeradoToStr(t, ['N','L','S','O'], [drNorte , drLeste, drSul, drOeste]);
 end;
 
-function StrToTpDirecao(var ok: boolean; const s: string): TpcteDirecao;
+function StrToTpDirecao(out ok: boolean; const s: string): TpcteDirecao;
 begin
   result := StrToEnumerado(ok, s, ['N','L','S','O'], [drNorte , drLeste, drSul, drOeste]);
 end;
@@ -1252,7 +1252,7 @@ begin
   result := EnumeradoToStr(t, ['0','1'], [tnInterior , tnCabotagem]);
 end;
 
-function StrToTpNavegacao(var ok: boolean; const s: string): TpcteTipoNavegacao;
+function StrToTpNavegacao(out ok: boolean; const s: string): TpcteTipoNavegacao;
 begin
   result := StrToEnumerado(ok, s, ['0','1'], [tnInterior , tnCabotagem]);
 end;
@@ -1262,7 +1262,7 @@ begin
   result := EnumeradoToStr(t, ['0','1','2','3'], [ttProprio , ttMutuo, ttRodoferroviario, ttRodoviario]);
 end;
 
-function StrToTpTrafego(var ok: boolean; const s: string): TpcteTipoTrafego;
+function StrToTpTrafego(out ok: boolean; const s: string): TpcteTipoTrafego;
 begin
   result := StrToEnumerado(ok, s, ['0','1','2','3'], [ttProprio , ttMutuo, ttRodoferroviario, ttRodoviario]);
 end;
@@ -1273,7 +1273,7 @@ begin
                               [tdSemData, tdNaData, tdAteData, tdApartirData, tdNoPeriodo, tdNaoInformado]);
 end;
 
-function StrToTpDataPeriodo(var ok: boolean; const s: string): TpcteTipoDataPeriodo;
+function StrToTpDataPeriodo(out ok: boolean; const s: string): TpcteTipoDataPeriodo;
 begin
   result := StrToEnumerado(ok, s, ['0','1','2','3','4','N'],
                                   [tdSemData, tdNaData, tdAteData, tdApartirData, tdNoPeriodo, tdNaoInformado]);
@@ -1285,7 +1285,7 @@ begin
                               [thSemHorario, thNoHorario, thAteHorario, thApartirHorario, thNoIntervalo, thNaoInformado]);
 end;
 
-function StrToTpHorarioIntervalo(var ok: boolean; const s: string): TpcteTipoHorarioIntervalo;
+function StrToTpHorarioIntervalo(out ok: boolean; const s: string): TpcteTipoHorarioIntervalo;
 begin
   result := StrToEnumerado(ok, s, ['0','1','2','3','4','N'],
                                   [thSemHorario, thNoHorario, thAteHorario, thApartirHorario, thNoIntervalo, thNaoInformado]);
@@ -1296,7 +1296,7 @@ begin
   result := EnumeradoToStr(t, ['00','10','99'], [tdDeclaracao, tdDutoviario, tdOutros]);
 end;
 
-function StrToTpDocumento(var ok: boolean; const s: string): TpcteTipoDocumento;
+function StrToTpDocumento(out ok: boolean; const s: string): TpcteTipoDocumento;
 begin
   result := StrToEnumerado(ok, s, ['00','10','99'], [tdDeclaracao, tdDutoviario, tdOutros]);
 end;
@@ -1307,7 +1307,7 @@ begin
    [daCTRC, daCTAC, daACT, daNF7, daNF27, daCAN, daCTMC, daATRE, daDTA, daCAI, daCCPI, daCA, daTIF, daOutros]);
 end;
 
-function StrToTpDocumentoAnterior(var ok: boolean; const s: string): TpcteTipoDocumentoAnterior;
+function StrToTpDocumentoAnterior(out ok: boolean; const s: string): TpcteTipoDocumentoAnterior;
 begin
   result := StrToEnumerado(ok, s, ['00','01','02','03','04','05','06','07','08','09','10','11','12','99'],
    [daCTRC, daCTAC, daACT, daNF7, daNF27, daCAN, daCTMC, daATRE, daDTA, daCAI, daCCPI, daCA, daTIF, daOutros]);
@@ -1318,7 +1318,7 @@ begin
   result := EnumeradoToStr(t, ['0','1','2','3','4','5'], [rpEmitente, rpRemetente, rpExpedidor, rpRecebedor, rpDestinatario, rpTomadorServico]);
 end;
 
-function StrToRspPagPedagio(var ok: boolean; const s: string): TpcteRspPagPedagio;
+function StrToRspPagPedagio(out ok: boolean; const s: string): TpcteRspPagPedagio;
 begin
   result := StrToEnumerado(ok, s, ['0','1','2','3','4','5'], [rpEmitente, rpRemetente, rpExpedidor, rpRecebedor, rpDestinatario, rpTomadorServico]);
 end;
@@ -1328,7 +1328,7 @@ begin
   result := EnumeradoToStr(t, ['1','2','3'], [tdCartaoMagnetico, tdTAG, tdTicket]);
 end;
 
-function StrToTpDispositivo(var ok: boolean; const s: string): TpcteTipoDispositivo;
+function StrToTpDispositivo(out ok: boolean; const s: string): TpcteTipoDispositivo;
 begin
   result := StrToEnumerado(ok, s, ['1','2','3'], [tdCartaoMagnetico, tdTAG, tdTicket]);
 end;
@@ -1338,7 +1338,7 @@ begin
   result := EnumeradoToStr(t, ['P','T'], [tpProprio, tpTerceiro]);
 end;
 
-function StrToTpPropriedade(var ok: boolean; const s: string): TpcteTipoPropriedade;
+function StrToTpPropriedade(out ok: boolean; const s: string): TpcteTipoPropriedade;
 begin
   result := StrToEnumerado(ok, s, ['P','T'], [tpProprio, tpTerceiro]);
 end;
@@ -1348,7 +1348,7 @@ begin
   result := EnumeradoToStr(t, ['0','1'], [tvTracao, tvReboque]);
 end;
 
-function StrToTpVeiculo(var ok: boolean; const s: string): TpcteTipoVeiculo;
+function StrToTpVeiculo(out ok: boolean; const s: string): TpcteTipoVeiculo;
 begin
   result := StrToEnumerado(ok, s, ['0','1'], [tvTracao, tvReboque]);
 end;
@@ -1359,7 +1359,7 @@ begin
    [trNaoAplicavel, trTruck, trToco, trCavaloMecanico, trVAN, trUtilitario, trOutros]);
 end;
 
-function StrToTpRodado(var ok: boolean; const s: string): TpcteTipoRodado;
+function StrToTpRodado(out ok: boolean; const s: string): TpcteTipoRodado;
 begin
   result := StrToEnumerado(ok, s, ['00','01','02','03','04','05','06'],
    [trNaoAplicavel, trTruck, trToco, trCavaloMecanico, trVAN, trUtilitario, trOutros]);
@@ -1371,7 +1371,7 @@ begin
    [tcNaoAplicavel, tcAberta, tcFechada, tcGraneleira, tcPortaContainer, tcSider]);
 end;
 
-function StrToTpCarroceria(var ok: boolean; const s: string): TpcteTipoCarroceria;
+function StrToTpCarroceria(out ok: boolean; const s: string): TpcteTipoCarroceria;
 begin
   result := StrToEnumerado(ok, s, ['00','01','02','03','04','05'],
    [tcNaoAplicavel, tcAberta, tcFechada, tcGraneleira, tcPortaContainer, tcSider]);
@@ -1383,7 +1383,7 @@ begin
    [moNF011AAvulsa, moNFProdutor]);
 end;
 
-function StrToModeloNf(var ok: boolean; const s: string): TpcteModeloNF;
+function StrToModeloNf(out ok: boolean; const s: string): TpcteModeloNF;
 begin
   result := StrToEnumerado(ok, s, ['01','04'],
    [moNF011AAvulsa, moNFProdutor]);
@@ -1395,13 +1395,13 @@ begin
    [tmOrigem, tmDestino]);
 end;
 
-function StrToTrafegoMutuo(var ok: boolean; const s: string): TpcteTrafegoMutuo;
+function StrToTrafegoMutuo(out ok: boolean; const s: string): TpcteTrafegoMutuo;
 begin
   result := StrToEnumerado(ok, s, ['1','2'],
    [tmOrigem, tmDestino]);
 end;
 
-function StrToTpEvento(var ok: boolean;const s: string): TpcnTpEvento;
+function StrToTpEvento(out ok: boolean;const s: string): TpcnTpEvento;
 begin
   result  := TpcnTpEvento( StrToEnumerado2(ok , s, TpcnTpEventoString ) );
 end;
@@ -1411,7 +1411,7 @@ begin
   result := EnumeradoToStr2( t , TpcnTpEventoString );
 end;
 
-function StrToEnumerado2(var ok: boolean;  const s: string; Const AString: array of string ): variant;
+function StrToEnumerado2(out ok: boolean;  const s: string; Const AString: array of string ): variant;
 // Atencao  NÃo Funciona em Alguns Enumerados ja existentes
 var
   i: integer;
@@ -1444,7 +1444,7 @@ begin
                                inSemManifestacaoSemCiencia]);
 end;
 
-function StrToIndicadorNFe(var ok: boolean; const s: string): TpcnIndicadorNFe;
+function StrToIndicadorNFe(out ok: boolean; const s: string): TpcnIndicadorNFe;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2'],
                                   [inTodas, inSemManifestacaoComCiencia,
@@ -1457,7 +1457,7 @@ begin
                               [ieTodos, ieRaizCNPJDiferente]);
 end;
 
-function StrToIndicadorEmissor(var ok: boolean; const s: string): TpcnIndicadorEmissor;
+function StrToIndicadorEmissor(out ok: boolean; const s: string): TpcnIndicadorEmissor;
 begin
   result := StrToEnumerado(ok, s, ['0', '1'],
                                   [ieTodos, ieRaizCNPJDiferente]);
@@ -1469,7 +1469,7 @@ begin
                               [icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos]);
 end;
 
-function StrToIndicadorContinuacao(var ok: boolean; const s: string): TpcnIndicadorContinuacao;
+function StrToIndicadorContinuacao(out ok: boolean; const s: string): TpcnIndicadorContinuacao;
 begin
   result := StrToEnumerado(ok, s, ['0', '1'],
                                   [icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos]);
@@ -1481,7 +1481,7 @@ begin
                               [snAutorizado,snDenegado,snCancelada]);
 end;
 
-function StrToSituacaoNFe(var ok: boolean; const s: string): TpcnSituacaoNFe;
+function StrToSituacaoNFe(out ok: boolean; const s: string): TpcnSituacaoNFe;
 begin
   result := StrToEnumerado(ok, s, ['1', '2', '3'],
                                   [snAutorizado,snDenegado,snCancelada]);
@@ -1493,7 +1493,7 @@ begin
                               [smdSemManifestacao, smdConfirmada, smdDesconhecida, smdOperacaoNaoRealizada, smdCiencia]);
 end;
 
-function StrToSituacaoManifDest(var ok: boolean; const s: string): TpcnSituacaoManifDest;
+function StrToSituacaoManifDest(out ok: boolean; const s: string): TpcnSituacaoManifDest;
 begin
   result := StrToEnumerado(ok, s, ['0','1','2','3','4'],
                                   [smdSemManifestacao, smdConfirmada, smdDesconhecida, smdOperacaoNaoRealizada, smdCiencia]);
@@ -1505,7 +1505,7 @@ begin
                               [moNFe, moNFCe]);
 end;
 
-function StrToModeloDF(var ok: boolean; const s: string): TpcnModeloDF;
+function StrToModeloDF(out ok: boolean; const s: string): TpcnModeloDF;
 begin
   result := StrToEnumerado(ok, s, ['55', '65'],
                                   [moNFe, moNFCe]);
@@ -1517,7 +1517,7 @@ begin
                               [doInterna, doInterestadual, doExterior]);
 end;
 
-function StrToDestinoOperacao(var ok: boolean; const s: string): TpcnDestinoOperacao;
+function StrToDestinoOperacao(out ok: boolean; const s: string): TpcnDestinoOperacao;
 begin
   result := StrToEnumerado(ok, s, ['1', '2', '3'],
                                   [doInterna, doInterestadual, doExterior]);
@@ -1529,7 +1529,7 @@ begin
                               [cfNao, cfConsumidorFinal]);
 end;
 
-function StrToConsumidorFinal(var ok: boolean; const s: string): TpcnConsumidorFinal;
+function StrToConsumidorFinal(out ok: boolean; const s: string): TpcnConsumidorFinal;
 begin
   result := StrToEnumerado(ok, s, ['0', '1'],
                                   [cfNao, cfConsumidorFinal]);
@@ -1541,7 +1541,7 @@ begin
                               [pcNao, pcPresencial, pcInternet, pcTeleatendimento, pcEntregaDomicilio, pcOutros]);
 end;
 
-function StrToPresencaComprador(var ok: boolean; const s: string): TpcnPresencaComprador;
+function StrToPresencaComprador(out ok: boolean; const s: string): TpcnPresencaComprador;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '9'],
                                   [pcNao, pcPresencial, pcInternet, pcTeleatendimento, pcEntregaDomicilio, pcOutros]);
@@ -1566,7 +1566,7 @@ begin
 end;
 
 
-function StrToFormaPagamento(var ok: boolean; const s: string): TpcnFormaPagamento;
+function StrToFormaPagamento(out ok: boolean; const s: string): TpcnFormaPagamento;
 begin
   result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '99'],
                                   [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
@@ -1580,7 +1580,7 @@ begin
                               [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred, bcOutros]);
 end;
 
-function StrToBandeiraCartao(var ok: boolean; const s: string): TpcnBandeiraCartao;
+function StrToBandeiraCartao(out ok: boolean; const s: string): TpcnBandeiraCartao;
 begin
   result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '99'],
                                   [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred, bcOutros]);
@@ -1591,7 +1591,7 @@ begin
   result := EnumeradoToStr(t, ['','1', '3'], [RTRegimeNormal, RTSimplesNacional, RTRegimeNormal]);
 end;
 
-function StrToRegTrib(var ok: boolean; const s: string): TpcnRegTrib ;
+function StrToRegTrib(out ok: boolean; const s: string): TpcnRegTrib ;
 begin
   result := StrToEnumerado(ok, s, ['','1', '3'],[RTRegimeNormal, RTSimplesNacional, RTRegimeNormal]);
 end;
@@ -1603,7 +1603,7 @@ begin
                                RTISSCooperativa, RTISSMEI, RTISSMEEPP]);
 end;
 
-function StrToRegTribISSQN(var ok: boolean; const s: string): TpcnRegTribISSQN ;
+function StrToRegTribISSQN(out ok: boolean; const s: string): TpcnRegTribISSQN ;
 begin
   result := StrToEnumerado(ok, s, ['', '1', '2', '3', '4', '5', '6'],
                                   [RTISSNenhum, RTISSMicroempresaMunicipal, RTISSEstimativa, RTISSSociedadeProfissionais,
@@ -1615,7 +1615,7 @@ begin
   result := EnumeradoToStr(t, ['S', 'N'], [irSim, irNao]);
 end;
 
-function StrToindRatISSQN(var ok: boolean; const s: string): TpcnindRatISSQN ;
+function StrToindRatISSQN(out ok: boolean; const s: string): TpcnindRatISSQN ;
 begin
   result := StrToEnumerado(ok, s, ['S', 'N'],[irSim, irNao]);
 end;
@@ -1625,7 +1625,7 @@ begin
   result := EnumeradoToStr(t, ['A', 'T'], [irArredondamento, irTruncamento]);
 end;
 
-function StrToindRegra(var ok: boolean; const s: string): TpcnindRegra  ;
+function StrToindRegra(out ok: boolean; const s: string): TpcnindRegra  ;
 begin
   result := StrToEnumerado(ok, s, ['A', 'T'],[irArredondamento, irTruncamento]);
 end;
@@ -1635,7 +1635,7 @@ begin
   result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '99'], [MPDinheiro, MPCheque, MPCartaodeCredito, MPCartaodeDebito, MPCreditoLoja, MPValeAlimentacao, MPValeRefeicao, MPValePresente, MPValeCombustivel, MPOutros]);
 end;
 
-function StrToCodigoMP(var ok: boolean; const s: string): TpcnCodigoMP ;
+function StrToCodigoMP(out ok: boolean; const s: string): TpcnCodigoMP ;
 begin
   result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '99'],[MPDinheiro, MPCheque, MPCartaodeCredito, MPCartaodeDebito, MPCreditoLoja, MPValeAlimentacao, MPValeRefeicao, MPValePresente, MPValeCombustivel, MPOutros]);
 end;
@@ -1662,7 +1662,7 @@ begin
                             utAeronave, utVagao, utOutros]);
 end;
 
-function StrToUnidTransp(var ok: boolean; const s: string): TpcnUnidTransp;
+function StrToUnidTransp(out ok: boolean; const s: string): TpcnUnidTransp;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4', '5', '6', '7'],
@@ -1679,7 +1679,7 @@ begin
                            [ucContainer, ucULD, ucPallet, ucOutros]);
 end;
 
-function StrToUnidCarga(var ok: boolean; const s: string): TpcnUnidCarga;
+function StrToUnidCarga(out ok: boolean; const s: string): TpcnUnidCarga;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4'],
@@ -1691,7 +1691,7 @@ begin
   result := EnumeradoToStr(t, ['0', '1'], [inNaoNegociavel, inNegociavel]);
 end;
 
-function StrToindNegociavel(var ok: boolean; const s: string): TpcnindNegociavel;
+function StrToindNegociavel(out ok: boolean; const s: string): TpcnindNegociavel;
 begin
   result := StrToEnumerado(ok, s, ['0', '1'], [inNaoNegociavel, inNegociavel]);
 end;
@@ -1701,7 +1701,7 @@ begin
   result := EnumeradoToStr(t, ['1', '2', '9'], [inContribuinte, inIsento, inNaoContribuinte]);
 end;
 
-function StrToindIEDest(var ok: boolean; const s: string): TpcnindIEDest;
+function StrToindIEDest(out ok: boolean; const s: string): TpcnindIEDest;
 begin
   result := StrToEnumerado(ok, s, ['1', '2', '9'], [inContribuinte, inIsento, inNaoContribuinte]);
 end;
@@ -1715,7 +1715,7 @@ begin
                                tvEntradaSaidaFicta, tvCourier, tvHandcarry]);
 end;
 
-function StrToTipoViaTransp(var ok: boolean; const s: string): TpcnTipoViaTransp;
+function StrToTipoViaTransp(out ok: boolean; const s: string): TpcnTipoViaTransp;
 begin
   result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5', '6', '7', '8', '9',
                                    '10', '11', '12'],
@@ -1730,7 +1730,7 @@ begin
                               [tiContaPropria, tiContaOrdem, tiEncomenda]);
 end;
 
-function StrToTipoIntermedio(var ok: boolean; const s: string): TpcnTipoIntermedio;
+function StrToTipoIntermedio(out ok: boolean; const s: string): TpcnTipoIntermedio;
 begin
   result := StrToEnumerado(ok, s, ['1', '2', '3'],
                                   [tiContaPropria, tiContaOrdem, tiEncomenda]);
@@ -1742,7 +1742,7 @@ begin
                               [iirSim, iirNao]);
 end;
 
-function StrToindISSRet(var ok: boolean; const s: string): TpcnindISSRet;
+function StrToindISSRet(out ok: boolean; const s: string): TpcnindISSRet;
 begin
   result := StrToEnumerado(ok, s, ['1', '2'],
                                   [iirSim, iirNao]);
@@ -1755,7 +1755,7 @@ begin
                                iiImunidade, iiExigSuspDecisaoJudicial, iiExigSuspProcessoAdm]);
 end;
 
-function StrToindISS(var ok: boolean; const s: string): TpcnindISS;
+function StrToindISS(out ok: boolean; const s: string): TpcnindISS;
 begin
   result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5', '6', '7'],
                                   [iiExigivel, iiNaoIncidencia, iiIsencao, iiExportacao,
@@ -1768,13 +1768,13 @@ begin
                               [iiSim, iiNao]);
 end;
 
-function StrToindIncentivo(var ok: boolean; const s: string): TpcnindIncentivo;
+function StrToindIncentivo(out ok: boolean; const s: string): TpcnindIncentivo;
 begin
   result := StrToEnumerado(ok, s, ['1', '2'],
                                   [iiSim, iiNao]);
 end;
 
-function StrToVersaoDF(var ok: boolean; const s: string): TpcnVersaoDF;
+function StrToVersaoDF(out ok: boolean; const s: string): TpcnVersaoDF;
 begin
   result := StrToEnumerado(ok, s, ['2.00', '3.00', '3.10'],
                                   [ve200, ve300, ve310]);
@@ -1791,106 +1791,112 @@ begin
   result := '';
 
   case AModeloDF of
-   moNFe:  begin
-             case AVersaoDF of
-              ve200: begin
-                       case ALayOut of
-                        LayNfeStatusServico:  result := '2.00';
-                        LayNfeRecepcao:       result := '2.00';
-                        LayNfeRetRecepcao:    result := '2.00';
-                        LayNfeConsulta:       result := '2.01';
-                        LayNfeCancelamento:   result := '2.00';
-                        LayNfeInutilizacao:   result := '2.00';
-                        LayNfeCadastro:       result := '2.00';
-                        LayNfeEnvDPEC:        result := '1.01';
-                        LayNfeConsultaDPEC:   result := '1.01';
-                        LayNFeCCe:            result := '1.00';
-                        LayNFeEvento:         result := '1.00';
-                        LayNFeEventoAN:       result := '1.00';
-                        LayNFeConsNFeDest:    result := '1.01';
-                        LayNFeDownloadNFe:    result := '1.00';
-                        LayNfeAutorizacao:    result := '2.00';
-                        LayNfeRetAutorizacao: result := '2.00';
-                        LayDistDFeInt:        result := '1.00';
+    moNFe:
+      begin
+        case AVersaoDF of
+          ve200:
+            begin
+              case ALayOut of
+                LayNfeStatusServico:  result := '2.00';
+                LayNfeRecepcao:       result := '2.00';
+                LayNfeRetRecepcao:    result := '2.00';
+                LayNfeConsulta:       result := '2.01';
+                LayNfeCancelamento:   result := '2.00';
+                LayNfeInutilizacao:   result := '2.00';
+                LayNfeCadastro:       result := '2.00';
+                LayNfeEnvDPEC:        result := '1.01';
+                LayNfeConsultaDPEC:   result := '1.01';
+                LayNFeCCe:            result := '1.00';
+                LayNFeEvento:         result := '1.00';
+                LayNFeEventoAN:       result := '1.00';
+                LayNFeConsNFeDest:    result := '1.01';
+                LayNFeDownloadNFe:    result := '1.00';
+                LayNfeAutorizacao:    result := '2.00';
+                LayNfeRetAutorizacao: result := '2.00';
+                LayDistDFeInt:        result := '1.00';
+                LayAdministrarCSCNFCe:result := '0.00';
+              end;
+            end;
 
-                        LayAdministrarCSCNFCe: result := '0.00';
-                       end;
-                     end;
-              ve310: begin
-                       case ALayOut of
-                        LayNfeStatusServico:  result := '3.10';
-                        LayNfeRecepcao:       result := '3.10';
-                        LayNfeRetRecepcao:    result := '3.10';
-                        LayNfeConsulta:       result := '3.10';
-                        LayNfeCancelamento:   result := '3.10';
-                        LayNfeInutilizacao:   result := '3.10';
-                        LayNfeCadastro:       result := '2.00';
-                        LayNfeEnvDPEC:        result := '1.01';
-                        LayNfeConsultaDPEC:   result := '1.01';
-                        LayNFeCCe:            result := '1.00';
-                        LayNFeEvento:         result := '1.00';
-                        LayNFeEventoAN:       result := '1.00';
-                        LayNFeConsNFeDest:    result := '1.01';
-                        LayNFeDownloadNFe:    result := '1.00';
-                        LayNfeAutorizacao:    result := '3.10';
-                        LayNfeRetAutorizacao: result := '3.10';
-                        LayDistDFeInt:        result := '1.00';
+          ve310:
+            begin
+              case ALayOut of
+                LayNfeStatusServico:  result := '3.10';
+                LayNfeRecepcao:       result := '3.10';
+                LayNfeRetRecepcao:    result := '3.10';
+                LayNfeConsulta:       result := '3.10';
+                LayNfeCancelamento:   result := '3.10';
+                LayNfeInutilizacao:   result := '3.10';
+                LayNfeCadastro:       result := '2.00';
+                LayNfeEnvDPEC:        result := '1.01';
+                LayNfeConsultaDPEC:   result := '1.01';
+                LayNFeCCe:            result := '1.00';
+                LayNFeEvento:         result := '1.00';
+                LayNFeEventoAN:       result := '1.00';
+                LayNFeConsNFeDest:    result := '1.01';
+                LayNFeDownloadNFe:    result := '1.00';
+                LayNfeAutorizacao:    result := '3.10';
+                LayNfeRetAutorizacao: result := '3.10';
+                LayDistDFeInt:        result := '1.00';
+                LayAdministrarCSCNFCe: result := '0.00';
+              end;
+            end;
+        end;
+      end;
 
-                        LayAdministrarCSCNFCe: result := '0.00';
-                       end;
-                     end;
-             end;
-           end;
-   moNFCe: begin
-             case AVersaoDF of
-              ve300: begin
-                       case ALayOut of
-                        LayNfeStatusServico:  result := '3.00';
-                        LayNfeRecepcao:       result := '3.00';
-                        LayNfeRetRecepcao:    result := '3.00';
-                        LayNfeConsulta:       result := '3.00';
-                        LayNfeCancelamento:   result := '3.00';
-                        LayNfeInutilizacao:   result := '3.00';
-                        LayNfeCadastro:       result := '2.00';
-                        LayNfeEnvDPEC:        result := '1.01';
-                        LayNfeConsultaDPEC:   result := '1.01';
-                        LayNFeCCe:            result := '1.00';
-                        LayNFeEvento:         result := '1.00';
-                        LayNFeEventoAN:       result := '1.00';
-                        LayNFeConsNFeDest:    result := '1.01';
-                        LayNFeDownloadNFe:    result := '1.00';
-                        LayNfeAutorizacao:    result := '3.00';
-                        LayNfeRetAutorizacao: result := '3.00';
-                        LayDistDFeInt:        result := '1.00';
+    moNFCe:
+      begin
+        case AVersaoDF of
+          ve300:
+            begin
+              case ALayOut of
+                LayNfeStatusServico:  result := '3.00';
+                LayNfeRecepcao:       result := '3.00';
+                LayNfeRetRecepcao:    result := '3.00';
+                LayNfeConsulta:       result := '3.00';
+                LayNfeCancelamento:   result := '3.00';
+                LayNfeInutilizacao:   result := '3.00';
+                LayNfeCadastro:       result := '2.00';
+                LayNfeEnvDPEC:        result := '1.01';
+                LayNfeConsultaDPEC:   result := '1.01';
+                LayNFeCCe:            result := '1.00';
+                LayNFeEvento:         result := '1.00';
+                LayNFeEventoAN:       result := '1.00';
+                LayNFeConsNFeDest:    result := '1.01';
+                LayNFeDownloadNFe:    result := '1.00';
+                LayNfeAutorizacao:    result := '3.00';
+                LayNfeRetAutorizacao: result := '3.00';
+                LayDistDFeInt:        result := '1.00';
+                LayAdministrarCSCNFCe: result := '1.00';
+              end;
+            end;
 
-                        LayAdministrarCSCNFCe: result := '1.00';
-                       end;
-                     end;
-              ve310: begin
-                       case ALayOut of
-                        LayNfeStatusServico:  result := '3.10';
-                        LayNfeRecepcao:       result := '3.10';
-                        LayNfeRetRecepcao:    result := '3.10';
-                        LayNfeConsulta:       result := '3.10';
-                        LayNfeCancelamento:   result := '3.10';
-                        LayNfeInutilizacao:   result := '3.10';
-                        LayNfeCadastro:       result := '2.00';
-                        LayNfeEnvDPEC:        result := '1.01';
-                        LayNfeConsultaDPEC:   result := '1.01';
-                        LayNFeCCe:            result := '1.00';
-                        LayNFeEvento:         result := '1.00';
-                        LayNFeEventoAN:       result := '1.00';
-                        LayNFeConsNFeDest:    result := '1.01';
-                        LayNFeDownloadNFe:    result := '1.00';
-                        LayNfeAutorizacao:    result := '3.10';
-                        LayNfeRetAutorizacao: result := '3.10';
-                        LayDistDFeInt:        result := '1.00';
+          ve310:
+            begin
+              case ALayOut of
+                LayNfeStatusServico:  result := '3.10';
+                LayNfeRecepcao:       result := '3.10';
+                LayNfeRetRecepcao:    result := '3.10';
+                LayNfeConsulta:       result := '3.10';
+                LayNfeCancelamento:   result := '3.10';
+                LayNfeInutilizacao:   result := '3.10';
+                LayNfeCadastro:       result := '2.00';
+                LayNfeEnvDPEC:        result := '1.01';
+                LayNfeConsultaDPEC:   result := '1.01';
+                LayNFeCCe:            result := '1.00';
+                LayNFeEvento:         result := '1.00';
+                LayNFeEventoAN:       result := '1.00';
+                LayNFeConsNFeDest:    result := '1.01';
+                LayNFeDownloadNFe:    result := '1.00';
+                LayNfeAutorizacao:    result := '3.10';
+                LayNfeRetAutorizacao: result := '3.10';
+                LayDistDFeInt:        result := '1.00';
 
-                        LayAdministrarCSCNFCe: result := '1.00';
-                       end;
-                     end;
-             end;
-           end;
+                LayAdministrarCSCNFCe: result := '1.00';
+              end;
+            end;
+        end;
+      end;
   end;
 end;
 
@@ -1922,7 +1928,7 @@ begin
                                taEmpresa, taFisco, taRFB, taOutros]);
 end;
 
-function StrToTipoAutor(var ok: boolean; const s: string): TpcnTipoAutor;
+function StrToTipoAutor(out ok: boolean; const s: string): TpcnTipoAutor;
 begin
   result := StrToEnumerado(ok, s, ['1', '2', '3', '5', '6', '9'],
                                   [taEmpresaEmitente, taEmpresaDestinataria,
@@ -1935,7 +1941,7 @@ begin
                               [ioConsultaCSC, ioNovoCSC, ioRevogaCSC]);
 end;
 
-function StrToIndOperacao(var ok: boolean; const s: string): TpcnIndOperacao;
+function StrToIndOperacao(out ok: boolean; const s: string): TpcnIndOperacao;
 begin
   result := StrToEnumerado(ok, s, ['1', '2', '3'],
                                   [ioConsultaCSC, ioNovoCSC, ioRevogaCSC]);

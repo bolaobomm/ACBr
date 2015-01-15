@@ -119,6 +119,9 @@ type
 
 implementation
 
+Uses
+  pcnGerador;
+
 { TRetNFeCollection }
 
 function TRetNFeCollection. Add: TRetNFeCollectionItem;
@@ -203,7 +206,7 @@ begin
         (*JR10 *)FretNFe.Items[i].FcStat   := Leitor.rCampo(tcInt, 'cStat');
         (*JR11 *)FretNFe.Items[i].FxMotivo := Leitor.rCampo(tcStr, 'xMotivo');
 
-        (*JR12 *)FretNFe.Items[i].FprocNFe := '<?xml version="1.0" encoding="utf-8"?>' +
+        (*JR12 *)FretNFe.Items[i].FprocNFe := '<'+ENCODING_UTF8+'>' +
                                               SeparaDados(Leitor.Grupo, 'procNFe');
         inc(i);
       end;

@@ -140,6 +140,7 @@ const
 
   CODIGO_BRASIL = 1058;
 
+  XML_V01           = '?xml version="1.0"?';
   ENCODING_UTF8     = '?xml version="1.0" encoding="UTF-8"?';
   ENCODING_UTF8_STD = '?xml version="1.0" encoding="UTF-8" standalone="no"?';
 
