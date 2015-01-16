@@ -342,9 +342,528 @@ type
    procedure TextoComCaractersAcentuados;
   end;
 
+  { StrIsAlphaNumTest }
+
+  StrIsAlphaNumTest = class(TTestCase)
+  private
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure Texto;
+    procedure TextoComNumeros;
+    procedure TextoComCaractersEspeciais;
+    procedure TextoComCaractersAcentuados;
+  end;
+
+  { StrIsNumberTest }
+
+  StrIsNumberTest = class(TTestCase)
+  private
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure Texto;
+    procedure Numeros;
+    procedure TextoComNumeros;
+    procedure TextoComCaractersEspeciais;
+  end;
+
+  { IsNumberTest }
+
+  IsNumberTest = class(TTestCase)
+  private
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure Numeros;
+  end;
+
+  { CharIsAlphaTest }
+
+  CharIsAlphaTest = class(TTestCase)
+  private
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure Caracter;
+    procedure Numero;
+    procedure CaracterEspecial;
+  end;
+
+  { CharIsAlphaNumTest }
+
+  CharIsAlphaNumTest = class(TTestCase)
+  private
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure Caracter;
+    procedure Numero;
+    procedure CaracterEspecial;
+  end;
+
+  { CharIsNumTest }
+
+  CharIsNumTest = class(TTestCase)
+  private
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure Caracter;
+    procedure Numero;
+    procedure CaracterEspecial;
+  end;
+
+  { OnlyNumberTest }
+
+  OnlyNumberTest = class(TTestCase)
+  private
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure Texto;
+    procedure Numeros;
+    procedure TextoComNumeros;
+    procedure TextoComCaractersEspeciais;
+  end;
+
+  { OnlyAlphaTest }
+
+  OnlyAlphaTest = class(TTestCase)
+  private
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure Texto;
+    procedure Numeros;
+    procedure TextoComNumeros;
+    procedure TextoComCaractersEspeciais;
+  end;
+
+  { OnlyAlphaNumTest }
+
+  OnlyAlphaNumTest = class(TTestCase)
+  private
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure Texto;
+    procedure Numeros;
+    procedure TextoComNumeros;
+    procedure TextoComCaractersEspeciais;
+  end;
+
+  { StrIsIPTest }
+
+  StrIsIPTest = class(TTestCase)
+  private
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure Normal;
+    procedure SemPonto;
+  end;
+
+  { TiraAcentosTest }
+
+  TiraAcentosTest = class(TTestCase)
+  private
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure Normal;
+  end;
+
+  { TiraAcentoTest }
+
+  TiraAcentoTest = class(TTestCase)
+  private
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure Normal;
+  end;
+
 implementation
 
   uses Math;
+
+{ TiraAcentoTest }
+
+procedure TiraAcentoTest.SetUp;
+begin
+  inherited SetUp;
+end;
+
+procedure TiraAcentoTest.TearDown;
+begin
+  inherited TearDown;
+end;
+
+procedure TiraAcentoTest.Normal;
+begin
+   CheckEquals('a', TiraAcento('á'));
+   CheckEquals('a', TiraAcento('à'));
+   CheckEquals('a', TiraAcento('ã'));
+   CheckEquals('a', TiraAcento('ä'));
+   CheckEquals('a', TiraAcento('â'));
+   CheckEquals('A', TiraAcento('À'));
+   CheckEquals('A', TiraAcento('Á'));
+   CheckEquals('A', TiraAcento('Ã'));
+   CheckEquals('A', TiraAcento('Ä'));
+   CheckEquals('A', TiraAcento('Â'));
+   CheckEquals('e', TiraAcento('è'));
+   CheckEquals('e', TiraAcento('é'));
+   CheckEquals('e', TiraAcento('ë'));
+   CheckEquals('e', TiraAcento('ê'));
+   CheckEquals('E', TiraAcento('È'));
+   CheckEquals('E', TiraAcento('É'));
+   CheckEquals('E', TiraAcento('Ë'));
+   CheckEquals('E', TiraAcento('Ê'));
+   CheckEquals('i', TiraAcento('ì'));
+   CheckEquals('i', TiraAcento('í'));
+   CheckEquals('i', TiraAcento('ï'));
+   CheckEquals('i', TiraAcento('î'));
+   CheckEquals('I', TiraAcento('Ì'));
+   CheckEquals('I', TiraAcento('Í'));
+   CheckEquals('I', TiraAcento('Ï'));
+   CheckEquals('I', TiraAcento('Î'));
+   CheckEquals('o', TiraAcento('ò'));
+   CheckEquals('o', TiraAcento('ó'));
+   CheckEquals('o', TiraAcento('õ'));
+   CheckEquals('o', TiraAcento('ö'));
+   CheckEquals('o', TiraAcento('ô'));
+   CheckEquals('O', TiraAcento('Ò'));
+   CheckEquals('O', TiraAcento('Ó'));
+   CheckEquals('O', TiraAcento('Õ'));
+   CheckEquals('O', TiraAcento('Ö'));
+   CheckEquals('O', TiraAcento('Ô'));
+   CheckEquals('u', TiraAcento('ù'));
+   CheckEquals('u', TiraAcento('ú'));
+   CheckEquals('u', TiraAcento('ü'));
+   CheckEquals('u', TiraAcento('û'));
+   CheckEquals('U', TiraAcento('Ù'));
+   CheckEquals('U', TiraAcento('Ú'));
+   CheckEquals('U', TiraAcento('Ü'));
+   CheckEquals('U', TiraAcento('Û'));
+   CheckEquals('c', TiraAcento('ç'));
+   CheckEquals('C', TiraAcento('Ç'));
+   CheckEquals('n', TiraAcento('ñ'));
+   CheckEquals('N', TiraAcento('Ñ'));
+end;
+
+{ TiraAcentosTest }
+
+procedure TiraAcentosTest.SetUp;
+begin
+  inherited SetUp;
+end;
+
+procedure TiraAcentosTest.TearDown;
+begin
+  inherited TearDown;
+end;
+
+procedure TiraAcentosTest.Normal;
+begin
+  //CheckEquals('TesteACBrUtil', TiraAcentos('TêstéÃCBrÜtìl'));
+end;
+
+{ StrIsIPTest }
+
+procedure StrIsIPTest.SetUp;
+begin
+  inherited SetUp;
+end;
+
+procedure StrIsIPTest.TearDown;
+begin
+  inherited TearDown;
+end;
+
+procedure StrIsIPTest.Normal;
+begin
+  CheckTrue(StrIsIP('192.168.0.1'));
+end;
+
+procedure StrIsIPTest.SemPonto;
+begin
+   CheckFalse(StrIsIP('19216801'));
+end;
+
+{ OnlyAlphaNumTest }
+
+procedure OnlyAlphaNumTest.SetUp;
+begin
+  inherited SetUp;
+end;
+
+procedure OnlyAlphaNumTest.TearDown;
+begin
+  inherited TearDown;
+end;
+
+procedure OnlyAlphaNumTest.Texto;
+begin
+  CheckEquals('TesteACBr', OnlyAlphaNum('TesteACBr'));
+end;
+
+procedure OnlyAlphaNumTest.Numeros;
+begin
+  CheckEquals('12345', OnlyAlphaNum('12345'));
+end;
+
+procedure OnlyAlphaNumTest.TextoComNumeros;
+begin
+  CheckEquals('TesteACBr12345', OnlyAlphaNum('TesteACBr12345'));
+end;
+
+procedure OnlyAlphaNumTest.TextoComCaractersEspeciais;
+begin
+  CheckEquals('TesteACBr12345', OnlyAlphaNum('T!e@s#t$e%A&C*B(r)1_2-3=4+5"'));
+end;
+
+{ OnlyAlphaTest }
+
+procedure OnlyAlphaTest.SetUp;
+begin
+  inherited SetUp;
+end;
+
+procedure OnlyAlphaTest.TearDown;
+begin
+  inherited TearDown;
+end;
+
+procedure OnlyAlphaTest.Texto;
+begin
+  CheckEquals('TesteACBr', OnlyAlpha('TesteACBr'));
+end;
+
+procedure OnlyAlphaTest.Numeros;
+begin
+  CheckEquals('', OnlyAlpha('12345'));
+end;
+
+procedure OnlyAlphaTest.TextoComNumeros;
+begin
+   CheckEquals('TesteACBr', OnlyAlpha('TesteACBr12345'));
+end;
+
+procedure OnlyAlphaTest.TextoComCaractersEspeciais;
+begin
+   CheckEquals('TesteACBr', OnlyAlpha('T!e@s#t$e%A&C*B(r)'));
+end;
+
+{ OnlyNumberTest }
+
+procedure OnlyNumberTest.SetUp;
+begin
+  inherited SetUp;
+end;
+
+procedure OnlyNumberTest.TearDown;
+begin
+  inherited TearDown;
+end;
+
+procedure OnlyNumberTest.Texto;
+begin
+   CheckEquals('', OnlyNumber('TesteACBr'));
+end;
+
+procedure OnlyNumberTest.Numeros;
+begin
+   CheckEquals('12345', OnlyNumber('12345'));
+end;
+
+procedure OnlyNumberTest.TextoComNumeros;
+begin
+   CheckEquals('12345', OnlyNumber('TesteACBr12345'));
+end;
+
+procedure OnlyNumberTest.TextoComCaractersEspeciais;
+begin
+  CheckEquals('12345', OnlyNumber('!1@2#34$5%'));
+end;
+
+{ CharIsNumTest }
+
+procedure CharIsNumTest.SetUp;
+begin
+  inherited SetUp;
+end;
+
+procedure CharIsNumTest.TearDown;
+begin
+  inherited TearDown;
+end;
+
+procedure CharIsNumTest.Caracter;
+begin
+  CheckFalse(CharIsNum('A'));
+end;
+
+procedure CharIsNumTest.Numero;
+begin
+  CheckTrue(CharIsNum('1'));
+end;
+
+procedure CharIsNumTest.CaracterEspecial;
+begin
+  CheckFalse(CharIsNum('#'));
+end;
+
+{ CharIsAlphaNumTest }
+
+procedure CharIsAlphaNumTest.SetUp;
+begin
+  inherited SetUp;
+end;
+
+procedure CharIsAlphaNumTest.TearDown;
+begin
+  inherited TearDown;
+end;
+
+procedure CharIsAlphaNumTest.Caracter;
+begin
+  CheckTrue(CharIsAlphaNum('A'));
+end;
+
+procedure CharIsAlphaNumTest.Numero;
+begin
+  CheckTrue(CharIsAlphaNum('1'));
+end;
+
+procedure CharIsAlphaNumTest.CaracterEspecial;
+begin
+  CheckFalse(CharIsAlphaNum('#'));
+end;
+
+{ CharIsAlphaTest }
+
+procedure CharIsAlphaTest.SetUp;
+begin
+  inherited SetUp;
+end;
+
+procedure CharIsAlphaTest.TearDown;
+begin
+  inherited TearDown;
+end;
+
+procedure CharIsAlphaTest.Caracter;
+begin
+  CheckTrue(CharIsAlpha('A'));
+end;
+
+procedure CharIsAlphaTest.Numero;
+begin
+  CheckFalse(CharIsAlpha('1'));
+end;
+
+procedure CharIsAlphaTest.CaracterEspecial;
+begin
+  CheckFalse(CharIsAlpha('#'));
+end;
+
+{ IsNumberTest }
+
+procedure IsNumberTest.SetUp;
+begin
+  inherited SetUp;
+end;
+
+procedure IsNumberTest.TearDown;
+begin
+  inherited TearDown;
+end;
+
+procedure IsNumberTest.Numeros;
+var
+  v:Variant;
+begin
+  v := 123.45;
+  Checktrue(v);
+end;
+
+{ StrIsNumberTest }
+
+procedure StrIsNumberTest.SetUp;
+begin
+  inherited SetUp;
+end;
+
+procedure StrIsNumberTest.TearDown;
+begin
+  inherited TearDown;
+end;
+
+procedure StrIsNumberTest.Texto;
+begin
+  CheckFalse(StrIsNumber('TesteACBrUtil'));
+end;
+
+procedure StrIsNumberTest.Numeros;
+begin
+  CheckTrue(StrIsNumber('0123456789'));
+end;
+
+procedure StrIsNumberTest.TextoComNumeros;
+begin
+   CheckFalse(StrIsNumber('TesteACBrUtil1234'));
+end;
+
+procedure StrIsNumberTest.TextoComCaractersEspeciais;
+begin
+   CheckFalse(StrIsNumber('_%#$@$*&!""'));
+end;
+
+
+{ StrIsAlphaNumTest }
+
+procedure StrIsAlphaNumTest.SetUp;
+begin
+  inherited SetUp;
+end;
+
+procedure StrIsAlphaNumTest.TearDown;
+begin
+  inherited TearDown;
+end;
+
+procedure StrIsAlphaNumTest.Texto;
+begin
+  CheckTrue(StrIsAlphaNum('TesteACBrUtil'));
+end;
+
+procedure StrIsAlphaNumTest.TextoComNumeros;
+begin
+  CheckTrue(StrIsAlphaNum('TesteACBrUtil1234'));
+end;
+
+procedure StrIsAlphaNumTest.TextoComCaractersEspeciais;
+begin
+  CheckFalse(StrIsAlphaNum('_%#$@$*&!""'));
+end;
+
+procedure StrIsAlphaNumTest.TextoComCaractersAcentuados;
+begin
+  CheckFalse(StrIsAlphaNum('TesteACBrÃštil'));
+end;
 
 { StrIsAlphaTest }
 
@@ -375,7 +894,7 @@ end;
 
 procedure StrIsAlphaTest.TextoComCaractersAcentuados;
 begin
-  CheckTrue(StrIsAlpha('TesteACBrÃštil'));
+  CheckFalse(StrIsAlpha('TesteACBrÃštil'));
 end;
 
 { DTtoSTest }
@@ -1081,10 +1600,11 @@ end;
 
 procedure ParseTextTest.VerificarConversaoTextoLongo;
 begin
-  //A Fazer
   CheckEquals('&<>"', ParseText('&amp;&lt;&gt;&quot;'));
   CheckEquals('&"<>', ParseText('&amp;&quot;&lt;&gt;'));
   CheckEquals('<&">', ParseText('&lt;&amp;&quot;&gt;'));
+  CheckEquals(#39'áÃÇÜÉÊÕ''', ParseText('&#39;&aacute;&Atilde;&Ccedil;&Uuml;'
+              + '&Eacute;&Ecirc;&Otilde;&apos;', True, False));
 end;
 
 initialization
@@ -1114,5 +1634,17 @@ initialization
   RegisterTest('ACBrComum.ACBrUtil', DtoSTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', DTtoSTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', StrIsAlphaTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', StrIsAlphaNumTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', StrIsNumberTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', IsNumberTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', CharIsAlphaTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', CharIsAlphaNumTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', CharIsNumTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', OnlyNumberTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', OnlyAlphaTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', OnlyAlphaNumTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', StrIsIPTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', TiraAcentosTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', TiraAcentoTest{$ifndef FPC}.suite{$endif});
 end.
 
