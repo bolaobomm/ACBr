@@ -49,6 +49,7 @@ type
     btnB_G: TButton;
     btnB_Completo: TButton;
     btnCancelaGeração: TButton;
+    btnB_K: TButton;
     procedure btnB_0Click(Sender: TObject);
     procedure btnB_9Click(Sender: TObject);
     procedure btnTXTClick(Sender: TObject);
@@ -64,6 +65,7 @@ type
     procedure btnB_CompletoClick(Sender: TObject);
     procedure btnB_GClick(Sender: TObject);
     procedure btnCancelaGeraçãoClick(Sender: TObject);
+    procedure btnB_KClick(Sender: TObject);
   private
     procedure LoadToMemo;
     { Private declarations }
@@ -75,6 +77,9 @@ var
   FrmSPEDFiscal: TFrmSPEDFiscal;
 
 implementation
+
+uses
+  ACBrEFDBloco_K;
 
 {$IFDEF FPC}
 {$R *.lfm}
@@ -108,8 +113,8 @@ begin
   btnB_0.Enabled := False;
   btnB_C.Enabled := True;
 
-  ACBrSPEDFiscal1.DT_INI := StrToDate('01/11/2014');
-  ACBrSPEDFiscal1.DT_FIN := StrToDate('30/11/2014');
+  ACBrSPEDFiscal1.DT_INI := StrToDate('01/01/2015');
+  ACBrSPEDFiscal1.DT_FIN := StrToDate('31/01/2015');
 
   if cbConcomitante.Checked then
   begin
@@ -123,7 +128,7 @@ begin
     // Dados da Empresa
     with Registro0000New do
     begin
-      COD_VER := vlVersao107;
+      COD_VER := vlVersao108;
       COD_FIN := raOriginal;
       NOME := 'RAZÃO SOCIAL DA EMPRESA EMITENTE';
       CNPJ := '11111111000191';
@@ -776,6 +781,7 @@ begin
   btnB_EClick(Self);
   btnB_GClick(Self);
   btnB_HClick(Self);
+  btnB_KClick(Self);
   btnB_1Click(Self);
 
 end;
@@ -1121,7 +1127,7 @@ var
   IInvent: integer;
 begin
   btnB_H.Enabled := False;
-  btnB_1.Enabled := True;
+  btnB_K.Enabled := True;
 
   // Alimenta o componente com informações para gerar todos os registros do
   // Bloco H.
@@ -1168,6 +1174,23 @@ begin
     ACBrSPEDFiscal1.WriteBloco_H;
     LoadToMemo;
   end;
+end;
+
+procedure TFrmSPEDFiscal.btnB_KClick(Sender: TObject);
+var
+  vReg_K001: TRegistroK001;
+begin
+
+  btnB_K.Enabled := False;
+  btnB_1.Enabled := True;
+
+  // Alimenta o componente com informações para gerar registros do
+  // Bloco K.
+
+  vReg_K001 := ACBrSPEDFiscal1.Bloco_K.RegistroK001New;
+
+  vReg_K001.IND_MOV := imSemDados;
+
 end;
 
 procedure TFrmSPEDFiscal.edtFileChange(Sender: TObject);
