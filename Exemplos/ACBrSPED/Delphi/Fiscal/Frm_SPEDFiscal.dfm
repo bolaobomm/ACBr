@@ -141,6 +141,7 @@
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
+      ExplicitWidth = 341
     end
     object Label6: TLabel
       Left = 526
@@ -154,7 +155,7 @@
     object edtFile: TEdit
       Left = 22
       Top = 28
-      Width = 287
+      Width = 279
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
@@ -163,7 +164,7 @@
       OnExit = edtFileChange
     end
     object cbConcomitante: TCheckBox
-      Left = 333
+      Left = 325
       Top = 30
       Width = 134
       Height = 19
@@ -186,7 +187,7 @@
     object edNotas: TEdit
       Left = 526
       Top = 29
-      Width = 50
+      Width = 42
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 2
@@ -221,6 +222,7 @@
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
+      ExplicitWidth = 450
     end
     object btnB_0: TButton
       Left = 16

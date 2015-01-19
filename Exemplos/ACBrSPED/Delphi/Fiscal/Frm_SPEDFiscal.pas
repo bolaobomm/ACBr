@@ -308,7 +308,7 @@ begin
       begin
         with Registro0500New do
         begin
-          DT_ALT := StrToDate('30/11/2014');
+          DT_ALT := StrToDate('31/01/2015');
           COD_NAT_CC := '01';
           IND_CTA := 'A';
           NIVEL := '1';
@@ -321,7 +321,7 @@ begin
       begin
         with Registro0600New do
         begin
-          DT_ALT := StrToDate('30/11/2014');
+          DT_ALT := StrToDate('31/01/2015');
           COD_CCUS := IntToStr(int0600);
           CCUS := 'CENTRO DE CUSTOS ' + IntToStr(int0600);
         end;
@@ -511,7 +511,7 @@ begin
                 SER := '1';
                 SUB := '1';
                 NUM_DOC := '333';
-                DT_DOC := StrToDate('02/11/2014');
+                DT_DOC := StrToDate('02/01/2015');
               end;
 //              with RegistroC114New do
 //              begin
@@ -703,7 +703,7 @@ begin
               COD_MOD := '2D';
               COD_SIT := sdRegular;
               NUM_DOC := '000001';
-              DT_DOC := StrToDate('30/11/2014');
+              DT_DOC := StrToDate('31/01/2015');
               VL_DOC := 100.00;
               VL_PIS := 0.00;
               VL_COFINS := 0.00;
@@ -861,8 +861,8 @@ begin
 
       with RegistroE100New do
       begin
-        DT_INI := StrToDate('01/11/2014');
-        DT_FIN := StrToDate('30/11/2014');
+        DT_INI := StrToDate('01/01/2015');
+        DT_FIN := StrToDate('31/01/2015');
 
         with RegistroE110New do
         begin
@@ -933,8 +933,8 @@ begin
       begin
         with RegistroE200New do
         begin
-          DT_INI := StrToDate('01/11/2014');
-          DT_FIN := StrToDate('30/11/2014');
+          DT_INI := StrToDate('01/01/2015');
+          DT_FIN := StrToDate('31/01/2015');
           UF := ESTADOS[I];
 
           with RegistroE210New do
@@ -1000,8 +1000,8 @@ begin
         with RegistroE500New do
         begin
           IND_APUR := iaMensal;
-          DT_INI := StrToDate('01/11/2014');
-          DT_FIN := StrToDate('30/11/2014');
+          DT_INI := StrToDate('01/01/2015');
+          DT_FIN := StrToDate('31/01/2015');
 
           with RegistroE510New do
           begin
@@ -1059,8 +1059,8 @@ begin
 
       With RegistroG110New do
       begin
-        DT_INI := StrToDate('01/11/2014');
-        DT_FIN := StrToDate('30/11/2014');
+        DT_INI := StrToDate('01/01/2015');
+        DT_FIN := StrToDate('31/01/2015');
         SALDO_IN_ICMS := 44.00;
         SOM_PARC := 4.40;
         VL_TRIB_EXP := 10.999;
@@ -1072,7 +1072,7 @@ begin
         With RegistroG125New do
         begin
           COD_IND_BEM := '000001';
-          DT_MOV := StrToDate('01/11/2014');
+          DT_MOV := StrToDate('01/01/2015');
           TIPO_MOV := mbcSI;
           VL_IMOB_ICMS_OP := 10.999;
           VL_IMOB_ICMS_ST := 10.999;
