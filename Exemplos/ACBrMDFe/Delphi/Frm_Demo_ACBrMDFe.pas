@@ -381,6 +381,7 @@ begin
  ACBrMDFe1.Configuracoes.WebServices.ProxyPort                := edtProxyPorta.Text;
  ACBrMDFe1.Configuracoes.WebServices.ProxyUser                := edtProxyUser.Text;
  ACBrMDFe1.Configuracoes.WebServices.ProxyPass                := edtProxySenha.Text;
+ ACBrMDFe1.Configuracoes.WebServices.Salvar                   := True;
 
  // DAMDFe
  if ACBrMDFe1.DAMDFe <> nil then
@@ -507,7 +508,7 @@ begin
        begin
         //TpcnUnidTransp = ( utRodoTracao, utRodoReboque, utNavio, utBalsa, utAeronave, utVagao, utOutros );
         tpUnidTransp := utRodoTracao;
-        idUnidTransp := 'Caminhao';
+        idUnidTransp := 'ABC1234'; // informar a placa se rodoviário
         with lacUnidTransp.Add do
          begin
           nLacre := '123';
@@ -517,7 +518,7 @@ begin
          begin
           // TpcnUnidCarga  = ( ucContainer, ucULD, ucPallet, ucOutros );
           tpUnidCarga := ucOutros;
-          idUnidCarga := 'Caixas';
+          idUnidCarga := 'AB45'; // informar o numero da unidade da carga
           with lacUnidCarga.Add do
            begin
             nLacre := '123';
@@ -539,7 +540,7 @@ begin
        begin
         //TpcnUnidTransp = ( utRodoTracao, utRodoReboque, utNavio, utBalsa, utAeronave, utVagao, utOutros );
         tpUnidTransp := utRodoReboque;
-        idUnidTransp := 'Carreta';
+        idUnidTransp := 'XYZ5678';
         with lacUnidTransp.Add do
          begin
           nLacre := '321';
@@ -549,7 +550,7 @@ begin
          begin
           // TpcnUnidCarga  = ( ucContainer, ucULD, ucPallet, ucOutros );
           tpUnidCarga := ucOutros;
-          idUnidCarga := 'Caixas';
+          idUnidCarga := 'DD98';
           with lacUnidCarga.Add do
            begin
             nLacre := '321';
@@ -575,7 +576,7 @@ begin
        begin
         //TpcnUnidTransp = ( utRodoTracao, utRodoReboque, utNavio, utBalsa, utAeronave, utVagao, utOutros );
         tpUnidTransp := utRodoReboque;
-        idUnidTransp := 'Carreta';
+        idUnidTransp := 'XXX9999';
         with lacUnidTransp.Add do
          begin
           nLacre := '456';
@@ -585,7 +586,7 @@ begin
          begin
           // TpcnUnidCarga  = ( ucContainer, ucULD, ucPallet, ucOutros );
           tpUnidCarga := ucOutros;
-          idUnidCarga := 'Caixas';
+          idUnidCarga := 'AA56';
           with lacUnidCarga.Add do
            begin
             nLacre := '789';
