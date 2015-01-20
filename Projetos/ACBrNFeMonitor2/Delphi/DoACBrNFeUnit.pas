@@ -3446,9 +3446,10 @@ begin
              infEvento.detEvento.dest.UF      := INIRec.ReadString('DEST', 'UF', '');
              infEvento.detEvento.dest.CNPJCPF := INIRec.ReadString('DEST', 'CNPJCPF', '');
              infEvento.detEvento.dest.IE      := INIRec.ReadString('DEST', 'IE', '');
-             infEvento.detEvento.dest.vNF     := StringToFloatDef(INIRec.ReadString('DEST', 'vNF', ''), 0);
-             infEvento.detEvento.dest.vICMS   := StringToFloatDef(INIRec.ReadString('DEST', 'vICMS', ''), 0);
-             infEvento.detEvento.dest.vST     := StringToFloatDef(INIRec.ReadString('DEST', 'vST', ''), 0);
+
+             infEvento.detEvento.vNF   := StringToFloatDef(INIRec.ReadString(sSecao, 'vNF', ''), 0);
+             infEvento.detEvento.vICMS := StringToFloatDef(INIRec.ReadString(sSecao, 'vICMS', ''), 0);
+             infEvento.detEvento.vST   := StringToFloatDef(INIRec.ReadString(sSecao, 'vST', ''), 0);
            end
            else begin
              infEvento.detEvento.xCorrecao := INIRec.ReadString(  sSecao,'xCorrecao' ,'');

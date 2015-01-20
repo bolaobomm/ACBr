@@ -48,6 +48,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/01/2015
+[-] : Correção em 3 linhas que impedia a compilação do Monitor.
+      Por: Italo Jurisato Junior
+
 15/01/2015
 [*] : Incluido o evento EPEC na procedure GerarIniEvento.
       Por: Italo Jurisato Junior
