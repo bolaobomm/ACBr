@@ -48,7 +48,7 @@ type
     ACBrSPEDFiscal1: TACBrSPEDFiscal;
     btnB_G: TButton;
     btnB_Completo: TButton;
-    btnCancelaGeração: TButton;
+    btnCancelaGeracao: TButton;
     btnB_K: TButton;
     procedure btnB_0Click(Sender: TObject);
     procedure btnB_9Click(Sender: TObject);
@@ -61,10 +61,10 @@ type
     procedure btnErrorClick(Sender: TObject);
     procedure edtFileChange(Sender: TObject);
     procedure cbConcomitanteClick(Sender: TObject);
-    procedure ACBrSPEDFiscal1Error(const MsnError: AnsiString);
+    procedure ACBrSPEDFiscal1Error(const MsnError: String);
     procedure btnB_CompletoClick(Sender: TObject);
     procedure btnB_GClick(Sender: TObject);
-    procedure btnCancelaGeraçãoClick(Sender: TObject);
+    procedure btnCancelaGeracaoClick(Sender: TObject);
     procedure btnB_KClick(Sender: TObject);
   private
     procedure LoadToMemo;
@@ -377,7 +377,7 @@ begin
   cbConcomitante.Enabled := True;
 end;
 
-procedure TFrmSPEDFiscal.btnCancelaGeraçãoClick(Sender: TObject);
+procedure TFrmSPEDFiscal.btnCancelaGeracaoClick(Sender: TObject);
 begin
   ACBrSPEDFiscal1.CancelaGeracao;
 end;

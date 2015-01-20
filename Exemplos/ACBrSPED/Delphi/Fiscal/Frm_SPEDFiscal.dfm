@@ -13,7 +13,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
   OldCreateOrder = True
   Position = poScreenCenter
   DesignSize = (
-    770
+    765
     540)
   PixelsPerInch = 96
   TextHeight = 13
@@ -56,7 +56,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
   object memoError: TMemo
     Left = 8
     Top = 178
-    Width = 737
+    Width = 732
     Height = 83
     TabStop = False
     Anchors = [akLeft, akTop, akRight]
@@ -67,7 +67,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
   object memoTXT: TMemo
     Left = 8
     Top = 283
-    Width = 737
+    Width = 732
     Height = 211
     TabStop = False
     Anchors = [akLeft, akTop, akRight, akBottom]
@@ -84,7 +84,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
     WordWrap = False
   end
   object btnError: TButton
-    Left = 541
+    Left = 536
     Top = 507
     Width = 100
     Height = 25
@@ -95,7 +95,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
     OnClick = btnErrorClick
   end
   object btnTXT: TButton
-    Left = 647
+    Left = 642
     Top = 507
     Width = 100
     Height = 25
@@ -107,14 +107,14 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 770
+    Width = 765
     Height = 58
     Align = alTop
     BevelOuter = bvNone
     BorderStyle = bsSingle
     TabOrder = 0
     DesignSize = (
-      766
+      761
       54)
     object Label1: TLabel
       Left = 22
@@ -128,7 +128,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
     object Label5: TLabel
       Left = 0
       Top = 0
-      Width = 766
+      Width = 761
       Height = 16
       Align = alTop
       Alignment = taCenter
@@ -154,7 +154,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
     object edtFile: TEdit
       Left = 22
       Top = 28
-      Width = 287
+      Width = 282
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
@@ -163,7 +163,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
       OnExit = edtFileChange
     end
     object cbConcomitante: TCheckBox
-      Left = 333
+      Left = 328
       Top = 30
       Width = 134
       Height = 19
@@ -186,7 +186,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
     object edNotas: TEdit
       Left = 526
       Top = 29
-      Width = 50
+      Width = 45
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 2
@@ -196,7 +196,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
   object Panel2: TPanel
     Left = 0
     Top = 58
-    Width = 770
+    Width = 765
     Height = 87
     Align = alTop
     BevelOuter = bvNone
@@ -206,7 +206,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
     object Label4: TLabel
       Left = 1
       Top = 1
-      Width = 764
+      Width = 759
       Height = 16
       Align = alTop
       Alignment = taCenter
@@ -224,69 +224,69 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
     end
     object btnB_0: TButton
       Left = 16
-      Top = 51
-      Width = 90
+      Top = 54
+      Width = 55
       Height = 25
-      Caption = 'Registros Bloco 0'
+      Caption = 'Bloco 0'
       TabOrder = 1
       OnClick = btnB_0Click
     end
     object btnB_1: TButton
-      Left = 576
-      Top = 51
-      Width = 90
+      Left = 676
+      Top = 54
+      Width = 59
       Height = 25
-      Caption = 'Registros Bloco 1'
+      Caption = 'Bloco 1'
       Enabled = False
       TabOrder = 7
       OnClick = btnB_1Click
     end
     object btnB_C: TButton
-      Left = 110
-      Top = 51
-      Width = 90
+      Left = 107
+      Top = 54
+      Width = 59
       Height = 25
-      Caption = 'Registros Bloco C'
+      Caption = 'Bloco C'
       Enabled = False
       TabOrder = 2
       OnClick = btnB_CClick
     end
     object btnB_D: TButton
-      Left = 203
-      Top = 51
-      Width = 90
+      Left = 202
+      Top = 54
+      Width = 59
       Height = 25
-      Caption = 'Registros Bloco D'
+      Caption = 'Bloco D'
       Enabled = False
       TabOrder = 3
       OnClick = btnB_DClick
     end
     object btnB_E: TButton
-      Left = 296
-      Top = 51
-      Width = 90
+      Left = 297
+      Top = 54
+      Width = 59
       Height = 25
-      Caption = 'Registros Bloco E'
+      Caption = 'Bloco E'
       Enabled = False
       TabOrder = 4
       OnClick = btnB_EClick
     end
     object btnB_H: TButton
-      Left = 482
-      Top = 51
-      Width = 90
+      Left = 486
+      Top = 54
+      Width = 59
       Height = 25
-      Caption = 'Registros Bloco H'
+      Caption = 'Bloco H'
       Enabled = False
       TabOrder = 6
       OnClick = btnB_HClick
     end
     object btnB_G: TButton
-      Left = 389
-      Top = 51
-      Width = 90
+      Left = 391
+      Top = 54
+      Width = 59
       Height = 25
-      Caption = 'Registros Bloco G'
+      Caption = 'Bloco G'
       Enabled = False
       TabOrder = 5
       OnClick = btnB_GClick
@@ -294,25 +294,25 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
     object btnB_Completo: TButton
       Left = 16
       Top = 23
-      Width = 614
+      Width = 719
       Height = 25
       Caption = 'Gerar o arquivo do SPED Fiscal completo'
       TabOrder = 0
       OnClick = btnB_CompletoClick
     end
     object btnB_K: TButton
-      Left = 670
-      Top = 51
-      Width = 90
+      Left = 581
+      Top = 54
+      Width = 59
       Height = 25
-      Caption = 'Registros Bloco K'
+      Caption = 'Bloco K'
       Enabled = False
       TabOrder = 8
       OnClick = btnB_KClick
     end
   end
   object btnB_9: TButton
-    Left = 435
+    Left = 430
     Top = 507
     Width = 100
     Height = 25
@@ -361,6 +361,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
     Delimitador = '|'
     TrimString = True
     CurMascara = '#0.00'
+    OnError = ACBrSPEDFiscal1Error
     Left = 44
     Top = 441
   end
