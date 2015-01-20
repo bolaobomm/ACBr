@@ -281,7 +281,7 @@ begin
         FMemo.PrintStart:=12;
         FMemo.PrintEnd:=188;
         FMemo.NoNewLine:=True;
-        FMemo.PrintLines(10,False);
+        FMemo.PrintLines(0,False);
         FMemo.Free;
       end;
       
