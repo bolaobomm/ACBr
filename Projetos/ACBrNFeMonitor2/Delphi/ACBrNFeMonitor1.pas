@@ -305,6 +305,7 @@ type
     cbxImprimirDescAcresItemESCPOS: TCheckBox;
     TcpServer: TACBrTCPServer;
     cbxSalvarNFesProcessadas: TCheckBox;
+    cbxImprimirTributos: TCheckBox;
     procedure DoACBrTimer(Sender: TObject);
     procedure edOnlyNumbers(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
@@ -939,6 +940,7 @@ begin
      rgCasasDecimaisQtd.ItemIndex   := Ini.ReadInteger('DANFE','DecimaisQTD',2) ;
      spedtDecimaisVUnit.Value  := Ini.ReadInteger('DANFE','DecimaisValor',2) ;
      cbxExibeResumo.Checked    := Ini.ReadBool(   'DANFE','ExibeResumo',False) ;
+     cbxImprimirTributos.Checked   := Ini.ReadBool(   'DANFE','ImprimirTributosItem',False) ;
      cbxImpValLiq.Checked      := Ini.ReadBool(   'DANFE','ImprimirValLiq',False) ;
      cbxFormCont.Checked       := Ini.ReadBool(   'DANFE','PreImpresso',False) ;
      cbxMostraStatus.Checked   := Ini.ReadBool(   'DANFE','MostrarStatus',True) ;
@@ -1178,6 +1180,7 @@ begin
      Ini.WriteInteger('DANFE','DecimaisQTD'   ,rgCasasDecimaisQtd.ItemIndex  );
      Ini.WriteInteger('DANFE','DecimaisValor' ,spedtDecimaisVUnit.Value);
      Ini.WriteBool(   'DANFE','ExibeResumo'   ,cbxExibeResumo.Checked) ;
+     Ini.WriteBool(   'DANFE','ImprimirTributosItem',cbxImprimirTributos.Checked) ;
      Ini.WriteBool(   'DANFE','ImprimirValLiq',cbxImpValLiq.Checked) ;
      Ini.WriteBool(   'DANFE','PreImpresso'   ,cbxFormCont.Checked) ;
      Ini.WriteBool(   'DANFE','MostrarStatus' ,cbxMostraStatus.Checked) ;
@@ -2235,6 +2238,7 @@ begin
       begin
         ACBrNFeDANFERaveCB1.EspessuraBorda := StrToIntDef(edtEspBorda.Text, 1);
         ACBrNFeDANFERaveCB1.Fonte  := DFeUtil.SeSenao(rgTipoFonte.ItemIndex=0,ftTimes,ftCourier);
+        ACBrNFeDANFERaveCB1.ImprimirTributosItem := cbxImprimirTributos.Checked;
       end
      else if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
       begin

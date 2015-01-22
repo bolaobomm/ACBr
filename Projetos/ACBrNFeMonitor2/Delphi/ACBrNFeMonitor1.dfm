@@ -4133,7 +4133,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
       Top = 1
       Width = 569
       Height = 261
-      ActivePage = Diretorios
+      ActivePage = DANFE
       Align = alClient
       Style = tsFlatButtons
       TabOrder = 0
@@ -5062,7 +5062,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Top = 0
           Width = 561
           Height = 230
-          ActivePage = TabSheet1
+          ActivePage = tsDanfe
           Align = alClient
           Style = tsFlatButtons
           TabOrder = 0
@@ -5136,7 +5136,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Width = 219
               Height = 21
               ItemHeight = 13
-              TabOrder = 5
+              TabOrder = 10
             end
             object cbxImpDescPorc: TCheckBox
               Left = 316
@@ -5148,7 +5148,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
             end
             object cbxMostrarPreview: TCheckBox
               Left = 316
-              Top = 16
+              Top = 14
               Width = 200
               Height = 17
               Caption = 'Mostrar Preview antes da impress'#227'o'
@@ -5159,7 +5159,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Top = 50
               Width = 66
               Height = 21
-              TabOrder = 6
+              TabOrder = 11
               Text = '1'
               OnKeyPress = edtNumCopiaKeyPress
             end
@@ -5169,7 +5169,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Width = 291
               Height = 54
               Caption = 'Margens'
-              TabOrder = 9
+              TabOrder = 12
               object Label2: TLabel
                 Left = 8
                 Top = 12
@@ -5251,7 +5251,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
             end
             object cbxExibeResumo: TCheckBox
               Left = 316
-              Top = 34
+              Top = 30
               Width = 200
               Height = 17
               Caption = 'Exibir Resumo no Canhoto'
@@ -5259,19 +5259,19 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
             end
             object cbxImpValLiq: TCheckBox
               Left = 316
-              Top = 52
+              Top = 46
               Width = 200
               Height = 17
               Caption = 'Imprimir Valor L'#237'quido do Produto'
-              TabOrder = 7
+              TabOrder = 5
             end
             object cbxFormCont: TCheckBox
               Left = 316
-              Top = 70
+              Top = 62
               Width = 200
               Height = 17
               Caption = 'Formulario Pr'#233'-Impresso'
-              TabOrder = 8
+              TabOrder = 6
             end
             object rgTipoFonte: TRadioGroup
               Left = 316
@@ -5284,23 +5284,23 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Items.Strings = (
                 'Times'
                 'Courier')
-              TabOrder = 18
+              TabOrder = 20
             end
             object cbxMostraStatus: TCheckBox
               Left = 316
-              Top = 88
+              Top = 94
               Width = 200
               Height = 17
               Caption = 'Mostrar Status'
-              TabOrder = 10
+              TabOrder = 8
             end
             object cbxExpandirLogo: TCheckBox
               Left = 316
-              Top = 106
+              Top = 110
               Width = 200
               Height = 17
               Caption = 'Expandir Logo '
-              TabOrder = 12
+              TabOrder = 9
             end
             object edtProdPag: TEdit
               Left = 6
@@ -5350,7 +5350,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 '2'
                 '3'
                 '4')
-              TabOrder = 17
+              TabOrder = 18
             end
             object spedtDecimaisVUnit: TSpinEdit
               Left = 177
@@ -5373,7 +5373,15 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Items.Strings = (
                 'Cabe'#231'alho'
                 'Rodap'#233)
-              TabOrder = 11
+              TabOrder = 17
+            end
+            object cbxImprimirTributos: TCheckBox
+              Left = 316
+              Top = 78
+              Width = 205
+              Height = 17
+              Caption = 'Imprimir Valor dos Tributos por Item'
+              TabOrder = 7
             end
           end
           object tsDadosEmpresa: TTabSheet
