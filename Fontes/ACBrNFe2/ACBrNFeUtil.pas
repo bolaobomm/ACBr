@@ -2032,7 +2032,7 @@ begin
    50: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //MS
    31: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //MG
    15: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PA
-   25: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PB
+   25: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www5.receita.pb.gov.br/atf/seg/SEGf_AcessarFuncao.jsp?cdFuncao=FIS_1410', 'https://www6.receita.pb.gov.br/atf/seg/SEGf_AcessarFuncao.jsp?cdFuncao=FIS_1410'); //PB
    41: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.fazenda.pr.gov.br/', 'http://www.fazenda.pr.gov.br/'); //PR
    26: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PE
    22: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PI
@@ -2040,7 +2040,7 @@ begin
    24: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://nfce.set.rn.gov.br/portalDFE/NFCe/ConsultaNFCe.aspx', ''); // RN
    43: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www.sefaz.rs.gov.br/NFE/NFE-NFC.aspx',               'https://www.sefaz.rs.gov.br/NFE/NFE-NFC.aspx');              // RS
    11: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp',  'http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp'); // RO
-   14: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RR
+   14: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www.sefaz.rr.gov.br/nfce/servlet/wp_consulta_nfce',  'http://200.174.88.103:8080/nfce/servlet/wp_consulta_nfce'); //RR
    42: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //SC
    35: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //SP
    28: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //SE
@@ -2076,7 +2076,7 @@ begin
    50: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // MS
    31: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // MG
    15: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PA
-   25: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PB
+   25: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www5.receita.pb.gov.br/atf/seg/SEGf_AcessarFuncao.jsp?cdFuncao=FIS_1410', 'https://www6.receita.pb.gov.br/atf/seg/SEGf_AcessarFuncao.jsp?cdFuncao=FIS_1410'); //PB
    41: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'www.dfeportal.fazenda.pr.gov.br/dfe-portal/rest/servico/consultaNFCe', 'www.dfeportal.fazenda.pr.gov.br/dfe-portal/rest/servico/consultaNFCe'); // PR
    26: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PE
    22: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PI
@@ -2085,7 +2085,7 @@ begin
    24: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://nfce.set.rn.gov.br/consultarNFCe.aspx',              'http://nfce.set.rn.gov.br/consultarNFCe.aspx');              // RN
    43: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx',            'https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx');            // RS
    11: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp', 'http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp'); // RO
-   14: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // RR
+   14: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www.sefaz.rr.gov.br/nfce/servlet/qrcode',           'http://200.174.88.103:8080/nfce/servlet/qrcode'); // RR
    42: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // SC
    35: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', 'https://homologacao.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx'); // SP
    28: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.nfe.se.gov.br/portal/consultarNFCe.jsp', 'http://www.hom.nfe.se.gov.br/portal/consultarNFCe.jsp'); // SE
