@@ -110,6 +110,7 @@ type
 
     nColunasPapel: Integer;
     FConfigBarras: TACBrECFConfigBarras;
+    FUsaCodigoEanImpressao: Boolean;
 
     procedure InicializarComandos;
     procedure ImprimePorta(AString: AnsiString);
@@ -159,6 +160,7 @@ type
     property LinhasEntreCupons: Integer read FLinhasEntreCupons write FLinhasEntreCupons default 21;
     property ImprimeEmUmaLinha: Boolean read FImprimeEmUmaLinha write FImprimeEmUmaLinha default True;
     property ImprimeDescAcrescItem: Boolean read FImprimeDescAcrescItem write FImprimeDescAcrescItem default True;
+    property UsaCodigoEanImpressao: Boolean read FUsaCodigoEanImpressao write FUsaCodigoEanImpressao default False;
     property IgnorarTagsFormatacao: Boolean read FIgnorarTagsFormatacao write FIgnorarTagsFormatacao default False;
     property LinhasBuffer: Integer read FLinhasBuffer write FLinhasBuffer default 0;
   end;
@@ -587,7 +589,11 @@ begin
   FBuffer.clear;
   FBuffer.Add(cCmdImpZera + cCmdEspacoLinha + cCmdPagCod + cCmdFonteNormal + cCmdAlinhadoCentro + cCmdImprimeLogo);
 
-  FBuffer.Add(cCmdAlinhadoCentro + cCmdImpNegrito + FpNFe.Emit.xNome + cCmdImpFimNegrito);
+  if Length ( Trim( FpNFe.Emit.xNome ) ) > nColunasPapel then
+    FBuffer.Add(cCmdAlinhadoCentro + cCmdImpNegrito + cCmdFontePequena + FpNFe.Emit.xNome + cCmdImpFimNegrito)
+  else
+    FBuffer.Add(cCmdAlinhadoCentro + cCmdImpNegrito + FpNFe.Emit.xNome + cCmdImpFimNegrito);
+
   FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(QuebraLinhas(
     Trim(FpNFe.Emit.EnderEmit.xLgr) + ', ' +
     Trim(FpNFe.Emit.EnderEmit.nro) + '  ' +
@@ -641,16 +647,20 @@ begin
   if ImprimeItens then
   begin
     FBuffer.Add(GetLinhaSimples);
-    FBuffer.Add(cCmdFonteNormal + ParseTextESCPOS('#|COD|DESCRIÇÃO|QTD|UN|VL UN R$|VL TOTAL R$'));
+    FBuffer.Add(cCmdFonteNormal + ParseTextESCPOS('#|CODIGO|DESCRIÇÃO|QTD|UN|VL UN R$|VL TOTAL R$'));
     FBuffer.Add(GetLinhaSimples);
 
     for i := 0 to FpNFe.Det.Count - 1 do
     begin
       sItem        := IntToStrZero(FpNFe.Det.Items[i].Prod.nItem, 3);
-      sCodigo      := Trim(FpNFe.Det.Items[i].Prod.cProd);
       sDescricao   := Trim(FpNFe.Det.Items[i].Prod.xProd);
       sUnidade     := Trim(FpNFe.Det.Items[i].Prod.uCom);
       sVlrProduto  := FormatFloat('#,###,##0.00', FpNFe.Det.Items[i].Prod.vProd);
+
+      if (Length( Trim( FpNFe.Det.Items[i].Prod.cEAN ) ) > 0) and (UsaCodigoEanImpressao) then
+        sCodigo := Trim(FpNFe.Det.Items[i].Prod.cEAN)
+      else
+        sCodigo := Trim(FpNFe.Det.Items[i].Prod.cProd);
 
       // formatar conforme configurado
       sVlrUnitario := DFeUtil.FormatFloat(FpNFe.Det.Items[i].Prod.VUnCom,
@@ -887,7 +897,7 @@ var
 begin
   FBuffer.Add(GetLinhaSimples);
   FBuffer.Add(cCmdAlinhadoCentro + ParseTextESCPOS('Consulta via leitor de QR Code'));
-  FBuffer.Add(' ');
+//  FBuffer.Add(' ');
 
   qrcode := NotaUtil.GetURLQRCode(
     FpNFe.ide.cUF,
@@ -943,8 +953,12 @@ begin
   FBuffer.Add(FLinhaCmd);
 
   // protocolo de autorização
-  FBuffer.Add(cCmdFontePequena + ParseTextESCPOS('Protocolo de Autorização'));
-  FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(Trim(FpNFe.procNFe.nProt) + ' ' + DFeUtil.SeSenao(FpNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FpNFe.procNFe.dhRecbto), '')) + cCmdFonteNormal);
+  if FpNFe.Ide.tpEmis <> teOffLine then
+  begin
+    FBuffer.Add(cCmdFontePequena + ParseTextESCPOS('Protocolo de Autorização'));
+    FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(Trim(FpNFe.procNFe.nProt) + ' ' + DFeUtil.SeSenao(FpNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FpNFe.procNFe.dhRecbto), '')) + cCmdFonteNormal);
+  end;
+
   FBuffer.Add(GetLinhaSimples);
 
   // sistema
