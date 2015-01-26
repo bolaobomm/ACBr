@@ -653,6 +653,30 @@ begin
                 wInfAdProd := wInfAdProd + vTemp2.Text;
                 vTemp2.Clear;
               end;
+
+              if arma.Count > 0 then
+              begin
+                for j := 0 to arma.Count - 1 do
+                  begin
+                    with arma.Items[j] do
+                      begin
+                        if tpArma=taUsoPermitido then
+                          vTemp2.Add('-USO PERMITIDO')
+                        else
+                          vTemp2.Add('-USO RESTRITO');
+                        vTemp2.Add(' N.SÉRIE: ' + nSerie);
+                        vTemp2.Add(' N.SÉRIE CANO.: ' +nCano );
+                        vTemp2.Add(' DESC.: ' + descr);
+                      end;
+                  end;
+
+                if (Trim(wInfAdProd) <> '') then
+                   wInfAdProd := wInfAdProd + ';'; //insere quebra de linha antes do detalhamento
+
+                wInfAdProd := wInfAdProd + vTemp2.Text;
+                vTemp2.Clear;
+              end;
+
             end;
 
             if Trim(winfAdProd) <> '' then
