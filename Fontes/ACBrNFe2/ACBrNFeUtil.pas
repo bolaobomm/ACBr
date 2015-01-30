@@ -449,6 +449,7 @@ case FormaEmissao of
          LayNfeConsNFeDest  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.nfe.fazenda.gov.br/NFeConsultaDest/NFeConsultaDest.asmx',        'https://hom.nfe.fazenda.gov.br/NFeConsultaDest/NFeConsultaDest.asmx');
          LayNfeDownloadNFe  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.nfe.fazenda.gov.br/NfeDownloadNF/NfeDownloadNF.asmx',            'https://hom.nfe.fazenda.gov.br/NfeDownloadNF/NfeDownloadNF.asmx');
          LayDistDFeInt      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www1.nfe.fazenda.gov.br/NFeDistribuicaoDFe/NFeDistribuicaoDFe.asmx', 'https://hom.nfe.fazenda.gov.br/NFeDistribuicaoDFe/NFeDistribuicaoDFe.asmx');
+//                                                                    https://www1.nfe.fazenda.gov.br/NFeDistribuicaoDFe/NFeDistribuicaoDFe.asmx
        end;
 
        // Alguns Estados Brasiseiros deixaram de autorizar as NF-e no SEFAZ Virtual do Ambiente Nacional

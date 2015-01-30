@@ -53,7 +53,7 @@ uses
   Classes, Sysutils,
   pcnNFe, pcnConversao, pcnCCeNFe, pcnRetCCeNFe,
   pcnEnvEventoNFe, pcnRetEnvEventoNFe, pcnInutNFe, pcnRetInutNFe,
-  pcnDownloadNFe,
+  pcnDownloadNFe, pcnRetDistDFeInt,
   {$IFDEF CLX} QDialogs,{$ELSE} Dialogs,{$ENDIF}
   ACBrNFeNotasFiscais,
   ACBrNFeConfiguracoes,
@@ -103,6 +103,7 @@ type
     FEventoNFe: TEventoNFe;
     FInutNFe: TInutNFe;
     FDownloadNFe: TDownload;
+    FRetDistDFeInt: TRetDistDFeInt;
     FWebServices: TWebServices;
     FConfiguracoes: TConfiguracoes;
     FStatus : TStatusACBrNFe;
@@ -143,6 +144,7 @@ type
     property EventoNFe: TEventoNFe         read FEventoNFe     write FEventoNFe;
     property InutNFe: TInutNFe             read FInutNFe       write FInutNFe;
     property DownloadNFe: TDownload        read FDownloadNFe   write FDownloadNFe;
+    property RetDistDFeInt: TRetDistDFeInt read FRetDistDFeInt write FRetDistDFeInt;
     property Status: TStatusACBrNFe        read FStatus;
 
     procedure SetStatus( const stNewStatus : TStatusACBrNFe );
@@ -241,6 +243,7 @@ begin
   FEventoNFe         := TEventoNFe.Create;
   FInutNFe           := TInutNFe.Create;
   FDownloadNFe       := TDownload.Create(Self);
+  FRetDistDFeInt     := TRetDistDFeInt.Create;
   FWebServices       := TWebServices.Create(Self);
 
   if FConfiguracoes.WebServices.Tentativas <= 0 then
@@ -264,6 +267,7 @@ begin
   FEventoNFe.Free;
   FInutNFe.Free;
   FDownloadNFe.Free;
+  FRetDistDFeInt.Free;
   FWebServices.Free;
   inherited;
 end;
