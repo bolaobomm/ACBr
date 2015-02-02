@@ -261,11 +261,20 @@ object frmPrincipal: TfrmPrincipal
     TabOrder = 15
     Text = 'edtLogomarca'
   end
+  object chkAbrirGaveta: TCheckBox
+    Left = 291
+    Top = 218
+    Width = 215
+    Height = 17
+    Caption = 'Abrir Gaveta'
+    TabOrder = 16
+  end
   object ACBrNFe: TACBrNFe
     Configuracoes.Geral.PathSalvar = 'C:\Program Files (x86)\Embarcadero\RAD Studio\7.0\bin\'
     Configuracoes.Geral.ExibirErroSchema = True
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.RetirarAcentos = True
+    Configuracoes.Geral.ValidarDigest = False
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.IntervaloTentativas = 0

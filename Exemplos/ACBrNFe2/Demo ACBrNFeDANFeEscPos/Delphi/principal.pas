@@ -39,6 +39,7 @@ type
     Label6: TLabel;
     edtCSCNumero: TEdit;
     Label7: TLabel;
+    chkAbrirGaveta: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure btnNFCeImprimirDANFEClick(Sender: TObject);
     procedure btnProcurarLogomarcaClick(Sender: TObject);
@@ -196,6 +197,9 @@ begin
       ACBrNFe.DANFE.ImprimeItens  := not chkDanfeResumido.Checked;
 
       ACBrNFe.NotasFiscais[0].Imprimir;
+
+      if chkAbrirGaveta.Checked then
+        ACBrNFeDANFeESCPOS.AbrirGaveta;
     finally
       ACBrNFeDANFeESCPOS.Device.Desativar;
     end;
