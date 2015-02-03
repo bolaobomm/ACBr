@@ -19,7 +19,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     Left = 0
     Top = 0
     Width = 297
-    Height = 534
+    Height = 530
     Align = alLeft
     TabOrder = 0
     object lblColaborador: TLabel
@@ -802,14 +802,14 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
   object Panel2: TPanel
     Left = 297
     Top = 0
-    Width = 566
-    Height = 534
+    Width = 558
+    Height = 530
     Align = alClient
     TabOrder = 1
     object Panel3: TPanel
       Left = 1
       Top = 1
-      Width = 564
+      Width = 556
       Height = 176
       Align = alTop
       TabOrder = 0
@@ -952,8 +952,8 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     object PageControl2: TPageControl
       Left = 1
       Top = 177
-      Width = 564
-      Height = 356
+      Width = 556
+      Height = 352
       ActivePage = TabSheet5
       Align = alClient
       TabOrder = 1
@@ -962,8 +962,8 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         object MemoResp: TMemo
           Left = 0
           Top = 0
-          Width = 556
-          Height = 328
+          Width = 548
+          Height = 324
           Align = alClient
           TabOrder = 0
         end
@@ -1005,8 +1005,8 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         object trvwMDFe: TTreeView
           Left = 0
           Top = 0
-          Width = 556
-          Height = 328
+          Width = 548
+          Height = 324
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -1075,6 +1075,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
     MDFeCancelada = False
+    MDFeEncerrado = False
     Left = 574
     Top = 257
   end

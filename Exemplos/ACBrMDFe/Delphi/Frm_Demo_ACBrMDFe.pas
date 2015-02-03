@@ -463,12 +463,21 @@ begin
    rodo.RNTRC := '12345678';
    rodo.CIOT  := '123456789012';
 
-   rodo.veicTracao.cInt  := '001';
-   rodo.veicTracao.placa := 'ABC1234';
-   rodo.veicTracao.tara  := 5000;
-   rodo.veicTracao.capKG := 4500;
-   rodo.veicTracao.capM3 := 400;
-//   rodo.veicTracao.RNTRC := '12345678';
+   rodo.veicTracao.cInt    := '001';
+   rodo.veicTracao.placa   := 'ABC1234';
+   rodo.veicTracao.RENAVAM := '123456789';
+   rodo.veicTracao.tara    := 5000;
+   rodo.veicTracao.capKG   := 4500;
+   rodo.veicTracao.capM3   := 400;
+
+   // TpcteTipoRodado = (trNaoAplicavel, trTruck, trToco, trCavaloMecanico, trVAN, trUtilitario, trOutros);
+   // Para o MDF-e não utilizar o trNaoAplicavel.
+   rodo.veicTracao.tpRod := trTruck;
+
+   // TpcteTipoCarroceria = (tcNaoAplicavel, tcAberta, tcFechada, tcGraneleira, tcPortaContainer, tcSider);
+   rodo.veicTracao.tpCar := tcFechada;
+
+   rodo.veicTracao.UF := edtEmitUF.Text;
 
    with rodo.veicTracao.condutor.Add do
     begin
@@ -478,12 +487,17 @@ begin
 
    with rodo.veicReboque.Add do
     begin
-     cInt  := '002';
-     placa := 'XYZ4567';
-     tara  := 4000;
-     capKG := 3000;
-     capM3 := 300;
-//     RNTRC := '87654321';
+     cInt    := '002';
+     placa   := 'XYZ4567';
+     RENAVAM := '123456789';
+     tara    := 4000;
+     capKG   := 3000;
+     capM3   := 300;
+
+     // TpcteTipoCarroceria = (tcNaoAplicavel, tcAberta, tcFechada, tcGraneleira, tcPortaContainer, tcSider);
+     tpCar := tcFechada;
+
+     UF := edtEmitUF.Text;
     end;
 
    with rodo.valePed.disp.Add do
@@ -562,46 +576,9 @@ begin
 
       end; // fim do with
 
-     with infCT.Add do
-      begin
-       nCT    := '13245';
-       serie  := 1;
-       subser := 0;
-       dEmi   := date;
-       vCarga := 230.00;
-
-      // Informações das Unidades de Transporte (Carreta/Reboque/Vagão)
-
-      with infUnidTransp.Add do
-       begin
-        //TpcnUnidTransp = ( utRodoTracao, utRodoReboque, utNavio, utBalsa, utAeronave, utVagao, utOutros );
-        tpUnidTransp := utRodoReboque;
-        idUnidTransp := 'XXX9999';
-        with lacUnidTransp.Add do
-         begin
-          nLacre := '456';
-         end;
-        // Informações das Unidades de carga (Containeres/ULD/Outros)
-        with infUnidCarga.Add do
-         begin
-          // TpcnUnidCarga  = ( ucContainer, ucULD, ucPallet, ucOutros );
-          tpUnidCarga := ucOutros;
-          idUnidCarga := 'AA56';
-          with lacUnidCarga.Add do
-           begin
-            nLacre := '789';
-           end;
-          qtdRat := 1.0;
-         end;
-        qtdRat := 1.0;
-       end;
-
-      end; // fim do with
-
     end;
 
    tot.qCTe := 2;
-   tot.qCT  := 1;
    tot.vCarga := 3500.00;
    // UnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS);
    tot.cUnid  :=  uTon;
