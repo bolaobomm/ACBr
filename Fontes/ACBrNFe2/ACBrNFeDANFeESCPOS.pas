@@ -72,6 +72,7 @@ type
     FImprimeDescAcrescItem: Boolean;
     FIgnorarTagsFormatacao: Boolean;
     FLinhasBuffer : Integer;
+    FCortaPapel : Boolean;
 
     cCmdImpZera: String;
     cCmdAbreGaveta: String;
@@ -136,7 +137,7 @@ type
     procedure GerarObsCliente;
     procedure GerarObsFisco;
     procedure GerarDadosConsumidor;
-    procedure GerarRodape(CortaPapel: Boolean = True; Cancelamento: Boolean = False);
+    procedure GerarRodape(Cancelamento: Boolean = False);
     procedure GerarDadosEvento;
     procedure GerarObservacoesEvento;
     procedure GerarClicheEmpresa;
@@ -163,6 +164,7 @@ type
     property UsaCodigoEanImpressao: Boolean read FUsaCodigoEanImpressao write FUsaCodigoEanImpressao default False;
     property IgnorarTagsFormatacao: Boolean read FIgnorarTagsFormatacao write FIgnorarTagsFormatacao default False;
     property LinhasBuffer: Integer read FLinhasBuffer write FLinhasBuffer default 0;
+    property CortaPapel: Boolean read FCortaPapel write FCortaPapel default True;
   end;
 
 procedure Register;
@@ -412,6 +414,7 @@ begin
   FBuffer.OnChange   := DoLinesChange;
   FMarcaImpressora   := iEpson;
   FLinhasEntreCupons := 21;
+  FCortaPapel        := True;  
 end;
 
 destructor TACBrNFeDANFeESCPOS.Destroy;
@@ -888,7 +891,7 @@ begin
   end;
 end;
 
-procedure TACBrNFeDANFeESCPOS.GerarRodape(CortaPapel: Boolean = True; Cancelamento: Boolean = False);
+procedure TACBrNFeDANFeESCPOS.GerarRodape(Cancelamento: Boolean = False);
 var
   qrcode: string;
   cCaracter: String;
@@ -897,6 +900,7 @@ var
 begin
   FBuffer.Add(GetLinhaSimples);
   FBuffer.Add(cCmdAlinhadoCentro + ParseTextESCPOS('Consulta via leitor de QR Code'));
+//  FBuffer.Add(' ');
 
   qrcode := NotaUtil.GetURLQRCode(
     FpNFe.ide.cUF,
@@ -968,7 +972,7 @@ begin
 
   // pular linhas e cortar o papel
   PulaLinhas;
-  if CortaPapel then
+  if FCortaPapel then
     FBuffer.Add(cCmdCortaPapel);
 end;
 
