@@ -501,6 +501,7 @@ end;
 destructor TWebServices.Destroy;
 begin
   FEnviar.Free;
+  FRetorno.Free;
   FConsResLote.Free;
   FConsConfigUF.Free;
  inherited;
