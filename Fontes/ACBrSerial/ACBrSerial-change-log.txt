@@ -97,6 +97,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 05/02/2015
+-- ACBrECF --
+[-] acerto para adicionar a chave no rodape de imposto aproximado, 
+    conforme manual a chave deve ser impressa. por Regys Silveira
+[-] Acerto na impressão do numero do DAV, está duplicando a quebra de linha.
+
 Data: 30/01/2014
 -- ACBrECFEscECF --   (por: DSA)
 [*] Workaround para erro 16-3 (Data em intervalo inválido.), durante a Impressão
