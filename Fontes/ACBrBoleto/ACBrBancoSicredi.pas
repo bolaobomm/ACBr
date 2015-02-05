@@ -453,7 +453,12 @@ begin
     Cedente.Nome := rCedente;
 
     if Copy(rCNPJCPF,1,10) <> '0000000000' then
-       Cedente.CNPJCPF      := rCNPJCPF;
+    begin
+      if Copy(rCNPJCPF,1,3)= '000' then
+        rCNPJCPF := Copy(rCNPJCPF,4,11);
+
+      Cedente.CNPJCPF := rCNPJCPF; 
+    end;
 
     Cedente.CodigoCedente:= rCodCedente;
     Cedente.Agencia      := rAgencia;
@@ -587,7 +592,7 @@ begin
       end;
     end;
   end;
-  fpTamanhoMaximoNossoNum := 9;
+  fpTamanhoMaximoNossoNum := 8;
 end;
 
 function TACBrBancoSicredi.CodMotivoRejeicaoToDescricao(
