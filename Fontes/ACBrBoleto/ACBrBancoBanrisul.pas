@@ -309,6 +309,7 @@ begin
     case ACBrBoleto.Cedente.ResponEmissao of
       tbCliEmite    : TipoBoleto:='08';   //Cobrança credenciada Banrisul
       tbBancoReemite: TipoBoleto:='04'; //Cobrança Direta
+      tbBancoEmite: TipoBoleto:='06'; //Cobrança Direta
     else
       TipoBoleto:='08'; //Cobrança credenciada Banrisul
     end;

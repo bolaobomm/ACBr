@@ -21,7 +21,7 @@
     <Description Value="ACBr - Boleto - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Minor="1"/>
-    <Files Count="16">
+    <Files Count="17">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
         <HasRegisterProc Value="True"/>
@@ -87,6 +87,10 @@
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBanestes.pas"/>
         <UnitName Value="ACBrBancoBanestes"/>
       </Item16>
+      <Item17>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoCecred.pas"/>
+        <UnitName Value="ACBrBancoCecred"/>
+      </Item17>
     </Files>
     <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="3">

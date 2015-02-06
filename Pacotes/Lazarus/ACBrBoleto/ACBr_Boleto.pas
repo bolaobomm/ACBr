@@ -11,7 +11,7 @@ uses
   ACBrBancoSicredi, ACBrBancoMercantil, ACBrCaixaEconomica, ACBrBancoBanrisul, 
   ACBrBancoSantander, ACBrBancoob, ACBrCaixaEconomicaSICOB, ACBrBancoHSBC, 
   ACBrBancoNordeste, ACBrBancoBRB, ACBrBancoBic, ACBrBancoBanestes, 
-  LazarusPackageIntf;
+  ACBrBancoCecred, LazarusPackageIntf;
 
 implementation
 
