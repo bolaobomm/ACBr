@@ -48,6 +48,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+Data: 06/02/2015 ver. 0.0.107a
+
+-- ACBrBancoSicredi --
+[*] Adição da leitura do % de juros no retorno CNAB400.(guilhermeservice)
+http://www.projetoacbr.com.br/forum/index.php?/topic/19824-modifica%C3%A7%C3%A3o-na-unit-acbrbancosicredi/
+
+-- ACBrBancoBanrisul --
+[*] Adição da leitura do código 06 para o responsavel pela emissão na remessa CNAB400.(Frederico Hahn)
+http://www.projetoacbr.com.br/forum/index.php?/topic/17972-altera%C3%A7%C3%A3o-acbrboleto/
+
+
 Data: 05/02/2015 ver. 0.0.106a
 
 -- ACBrBoleto --
