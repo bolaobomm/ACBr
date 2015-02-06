@@ -162,6 +162,7 @@ type
     procedure Insert(Index: Integer; Obj: TACBrConvenio115Item);
   public
     function Add(Obj: TACBrConvenio115Item): Integer;
+    function New: TACBrConvenio115Item;
     property Objects[Index: Integer]: TACBrConvenio115Item read GetObject write SetObject; default;
   end;
 
@@ -253,6 +254,7 @@ type
     procedure Insert(Index: Integer; Obj: TACBrConvenio115Mestre);
   public
     function Add(Obj: TACBrConvenio115Mestre): Integer;
+    function New: TACBrConvenio115Mestre;
     property Objects[Index: Integer]: TACBrConvenio115Mestre read GetObject write SetObject; default;
   end;
 
@@ -441,6 +443,12 @@ end;
 function TACBrConvenio115Mestres.Add(Obj: TACBrConvenio115Mestre): Integer;
 begin
   Result := inherited Add(Obj);
+end;
+
+function TACBrConvenio115Mestres.New: TACBrConvenio115Mestre;
+begin
+  Result := TACBrConvenio115Mestre.Create;
+  Add(Result);
 end;
 
 function TACBrConvenio115Mestres.GetObject(Index: Integer): TACBrConvenio115Mestre;
@@ -768,6 +776,12 @@ end;
 function TACBrConvenio115Items.Add(Obj: TACBrConvenio115Item): Integer;
 begin
   Result := inherited Add(Obj);
+end;
+
+function TACBrConvenio115Items.New: TACBrConvenio115Item;
+begin
+  Result := TACBrConvenio115Item.Create;
+  Add(Result);
 end;
 
 function TACBrConvenio115Items.GetObject(Index: Integer): TACBrConvenio115Item;
