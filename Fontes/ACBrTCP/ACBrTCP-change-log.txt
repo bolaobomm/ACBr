@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/02/2015
+-- ACBrConsultaCNPJ --
+[+] Adicionado suporte para leitura dos campos: EndEletronico, Telefone, EFR, 
+    MotivoSituacaoCad  (por: Eliomar0910)
+	http://www.projetoacbr.com.br/forum/index.php?/topic/11174-inclusão-de-3-campos-no-acbrconsultacnpj-e-inclusão-de-acbrtaxadolar/?p=126683
+
 02/01/2015
 -- ACBrIBGE --
 [+] Criado tipo EACBrIBGEException;
