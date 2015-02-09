@@ -186,7 +186,7 @@ type
 implementation
 
 uses Math, pcnNFeR
-  {$IFDEF FPC},zstream {$ELSE},ZLibExGZ{$ENDIF};
+  {$IFDEF FPC},zstream {$ELSE},ACBrZLibExGZ{$ENDIF};
 
 { TdocZipCollection }
 
