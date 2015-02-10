@@ -197,6 +197,22 @@ begin
     teInclusaoCondutor    : Result := '110114';
     teRegistroPassagem    : Result := '310620';
     teRegistroPassagemBRId: Result := '510620';
+    (*
+110110 - Carta de Correção
+110113 - EPEC CT-e
+110140 - EPEC NF-e
+110160 - Registro Multimodal
+210200 - Confirmação da Operação
+210210 - Ciência da Operação
+210220 - Desconhecimento da Operação
+210240 - Operação não Realizada
+610600 - CT-e Autorizado para NF-e
+610501 - Registro de Passagem para NF-e Cancelado
+610550 - Registro de Passagem para NF-e RFID
+610601 - CT-e Cancelado
+610611 - MDF-e Cancelado
+990900 - Vistoria Suframa
+    *)
   else
     raise EventoException.Create('Tipo do Evento não Implementado!');
   end;
