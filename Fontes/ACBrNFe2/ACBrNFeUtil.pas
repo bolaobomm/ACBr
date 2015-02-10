@@ -466,7 +466,13 @@ case FormaEmissao of
          27: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //AL
          16: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //AP
          13: Result := NotaUtil.GetURLAM(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //AM
-         29: Result := NotaUtil.GetURLBA(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //BA
+//         29: Result := NotaUtil.GetURLBA(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //BA
+         29: begin
+               if AModeloDF = moNFCe then
+                 Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF)  //MA
+               else
+                 Result := NotaUtil.GetURLBA(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //BA
+             end;
          23: Result := NotaUtil.GetURLCE(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //CE
          53: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //DF
 
@@ -1097,7 +1103,7 @@ begin
         LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/ws/nfeconsulta2.asmx',         'https://homologacao.nfe.fazenda.sp.gov.br/ws/nfeconsulta2.asmx');
         LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/ws/nfestatusservico2.asmx',    'https://homologacao.nfe.fazenda.sp.gov.br/ws/nfestatusservico2.asmx');
         LayNfeCadastro       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/ws/cadconsultacadastro2.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/ws/cadconsultacadastro2.asmx');
-        LayNFeCCe,                                                                                                                   
+        LayNFeCCe,
         LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/ws/recepcaoevento.asmx',       'https://homologacao.nfe.fazenda.sp.gov.br/ws/recepcaoevento.asmx');
         LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/ws/nfeautorizacao.asmx',       'https://homologacao.nfe.fazenda.sp.gov.br/ws/nfeautorizacao.asmx');
         LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/ws/nferetautorizacao.asmx',    'https://homologacao.nfe.fazenda.sp.gov.br/ws/nferetautorizacao.asmx');
@@ -1107,13 +1113,13 @@ begin
   else
    begin
     case ALayOut of
-      LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
-      LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
-      LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
-      LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
-      LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.fazenda.sp.gov.br/ws/nfeautorizacao.asmx',    'https://homologacao.nfce.fazenda.sp.gov.br/ws/nfeautorizacao.asmx');
+      LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.fazenda.sp.gov.br/ws/nferetautorizacao.asmx', 'https://homologacao.nfce.fazenda.sp.gov.br/ws/nferetautorizacao.asmx');
+      LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.fazenda.sp.gov.br/ws/nfeinutilizacao2.asmx',  'https://homologacao.nfce.fazenda.sp.gov.br/ws/nfeinutilizacao2.asmx');
+      LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.fazenda.sp.gov.br/ws/nfeconsulta2.asmx',      'https://homologacao.nfce.fazenda.sp.gov.br/ws/nfeconsulta2.asmx');
+      LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.fazenda.sp.gov.br/ws/nfestatusservico2.asmx', 'https://homologacao.nfce.fazenda.sp.gov.br/ws/nfestatusservico2.asmx');
       LayNFeCCe,
-      LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.fazenda.sp.gov.br/ws/recepcaoevento.asmx',    'https://homologacao.nfce.fazenda.sp.gov.br/ws/recepcaoevento.asmx');
 
       LayAdministrarCSCNFCe: Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
     end;
@@ -2019,11 +2025,11 @@ begin
   // As URLs abaixo são impressas no DANFE NFC-e e servem para que o
   // consumidor possa realizar a consulta mediante a digitação da chave de acesso.
   case AUF of
-   12: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.sefaznet.ac.gov.br/nfce/', 'http://hml.sefaznet.ac.gov.br/nfce/'); //AC
+   12: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.sefaznet.ac.gov.br/nfce/', 'http://hml.sefaznet.ac.gov.br/nfce/'); // AC
    27: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //AL
    16: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //AP
-   13: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://sistemas.sefaz.am.gov.br/nfceweb/formConsulta.do', 'http://homnfce.sefaz.am.gov.br/nfceweb/formConsulta.do'); //AM
-   29: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //BA
+   13: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://sistemas.sefaz.am.gov.br/nfceweb/formConsulta.do', 'http://homnfce.sefaz.am.gov.br/nfceweb/formConsulta.do'); // AM
+   29: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://nfe.sefaz.ba.gov.br/servicos/nfce/default.aspx',   'http://hnfe.sefaz.ba.gov.br/servicos/nfce/default.aspx'); // BA
    23: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //CE
    53: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //DF
    32: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //ES
@@ -2067,7 +2073,7 @@ begin
    27: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // AL
    16: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // AP
    13: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://sistemas.sefaz.am.gov.br/nfceweb/consultarNFCe.jsp', 'http://homnfce.sefaz.am.gov.br/nfceweb/consultarNFCe.jsp'); // AM
-   29: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // BA
+   29: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://nfe.sefaz.ba.gov.br/servicos/nfce/modulos/geral/NFCEC_consulta_chave_acesso.aspx', 'http://hnfe.sefaz.ba.gov.br/servicos/nfce/modulos/geral/NFCEC_consulta_chave_acesso.aspx'); // BA
    23: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // CE
    53: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // DF
    32: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // ES
@@ -2088,7 +2094,7 @@ begin
    11: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp', 'http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp'); // RO
    14: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www.sefaz.rr.gov.br/nfce/servlet/qrcode',           'http://200.174.88.103:8080/nfce/servlet/qrcode'); // RR
    42: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // SC
-   35: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', 'https://homologacao.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx'); // SP
+   35: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx', 'https://www.homologacao.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx'); // SP
    28: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.nfe.se.gov.br/portal/consultarNFCe.jsp', 'http://www.hom.nfe.se.gov.br/portal/consultarNFCe.jsp'); // SE
    17: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // TO
   end;
