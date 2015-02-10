@@ -270,6 +270,20 @@ begin
     teManifDestDesconhecimento : Result := '210220'; // Manif. Destinatario: Desconhecimento da Operacao
     teManifDestOperNaoRealizada: Result := '210240'; // Manif. Destinatario: Operação nao Realizada
     teEPECNFe                  : Result := '110140'; // EPEC
+    (*
+110112 - Encerramento Homologado
+110113 - EPEC CT-e
+110114 - Inclusão de Condutor
+110160 - Registro Multimodal
+310620 - Registro de Passagem
+510620 - Registro de Passagem BRID
+610600 - CT-e Autorizado para NF-e
+610501 - Registro de Passagem para NF-e Cancelado
+610550 - Registro de Passagem para NF-e RFID
+610601 - CT-e Cancelado
+610611 - MDF-e Cancelado
+990900 - Vistoria Suframa
+    *)
   else
     raise EventoException.Create('Tipo do Evento não Implementado!');
   end;
