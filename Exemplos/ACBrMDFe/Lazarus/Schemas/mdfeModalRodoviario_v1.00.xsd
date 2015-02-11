@@ -33,7 +33,7 @@
 						</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="CIOT" minOccurs="0">
+				<xs:element name="CIOT" minOccurs="0" maxOccurs="unbounded">
 					<xs:annotation>
 						<xs:documentation>Código Identificador da Operação de Transporte</xs:documentation>
 						<xs:documentation>Também Conhecido como conta frete</xs:documentation>
@@ -145,7 +145,7 @@ Só preenchido quando o veículo não pertencer à empresa emitente do MDF-e</xs
 											<xs:simpleType>
 												<xs:restriction base="TString">
 													<xs:maxLength value="60"/>
-													<xs:minLength value="1"/>
+													<xs:minLength value="2"/>
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
@@ -197,7 +197,7 @@ Só preenchido quando o veículo não pertencer à empresa emitente do MDF-e</xs
 											<xs:simpleType>
 												<xs:restriction base="TString">
 													<xs:maxLength value="60"/>
-													<xs:minLength value="1"/>
+													<xs:minLength value="2"/>
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>

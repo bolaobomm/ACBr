@@ -80,6 +80,7 @@
 			<xs:enumeration value="90"/>
 			<xs:enumeration value="91"/>
 			<xs:enumeration value="92"/>
+			<xs:enumeration value="93"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TChCTe">
@@ -106,6 +107,14 @@
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
 			<xs:pattern value="[0-9]{44}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TSegCodBarra">
+		<xs:annotation>
+			<xs:documentation>Tipo Segundo Codigo Barra</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{36}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TProt">
