@@ -98,6 +98,7 @@ type
     function LerXml_provedorIssDsf: Boolean;
     function LerXml_provedorInfisc: Boolean;
     function LerXML_provedorEquiplano: Boolean;
+    function LerXML_provedorEL: Boolean;
 	function LerXml_provedorNFSEBrasil: boolean;
 	
   published
@@ -501,6 +502,44 @@ begin
     result := False;
   end;
   *)
+end;
+
+function TretEnvLote.LerXML_provedorEL: Boolean;
+var
+  i: Integer;
+  Cod, Msg: String;
+  strAux: AnsiString;
+begin
+  try
+    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
+
+    infRec.FNumeroLote      := Leitor.rCampo(tcStr, 'numeroLote');
+    infRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'dataRecebimento');
+    infRec.FProtocolo       := Leitor.rCampo(tcStr, 'numeroProtocolo');
+
+    if (Leitor.rExtrai(1, 'mensagens') <> '') then
+    begin
+      i:= 0;
+      while Leitor.rExtrai(1, 'mensagens', '', i + 1) <> '' do
+      begin
+        strAux := Leitor.rCampo(tcStr, 'mensagens');
+        Cod    := Copy(strAux, 1, 4);
+        Msg    := Copy(strAux, 8, Length(strAux));
+        if Trim(Msg) <> '' then begin
+          InfRec.FMsgRetorno.Add;
+          InfRec.FMsgRetorno[i].Codigo   := Cod;
+          InfRec.FMsgRetorno[i].Mensagem := Msg;
+          Inc(i);
+        end else
+          Break;
+      end;
+    end;
+
+    Result := True;
+  except
+    Result := False;
+  end;
 end;
 
 end.

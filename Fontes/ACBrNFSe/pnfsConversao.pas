@@ -816,7 +816,8 @@ begin
   5100201, // Água Boa/MT
   5102686, // Campos de Júlio/MT
   5103379, // Cotriguacu/MT
-  5103502  // Diamantino/MT
+  5103502, // Diamantino/MT
+  3108404  // Botelhos/MG
          : Provedor := 'Betha';
 
 //  3106705  // Betim/MG
@@ -849,6 +850,7 @@ begin
   4310009  // Ibiruba/RS
          : Provedor := 'Digifred';
 
+  3202603, // Iconha/ES
   3203205  // Linhares/ES
          : Provedor := 'EL';
 

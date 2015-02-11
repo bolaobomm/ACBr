@@ -89,7 +89,8 @@ type
     destructor Destroy; override;
     function LerXml: boolean;
     function LerXML_provedorInfisc: Boolean;
-    function LerXML_provedorEquiplano: Boolean;    
+    function LerXML_provedorEquiplano: Boolean;
+    function LerXML_provedorEL: Boolean;
 	function LerXml_provedorNFSEBrasil: boolean;
 	 
   published
@@ -460,6 +461,49 @@ begin
     result := False;
   end;
   *)
+end;
+
+function TretSitLote.LerXML_provedorEL: Boolean;
+var
+  i: Integer;
+  Cod, Msg: String;
+  strAux: AnsiString;
+begin
+  try
+    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
+
+    InfSit.FNumeroLote := Leitor.rCampo(tcStr, 'numeroLote');
+    InfSit.FSituacao   := Leitor.rCampo(tcStr, 'situacaoLoteRps');
+
+    // FSituacao: 1 = Não Recebido
+    //            2 = Não Processado
+    //            3 = Processado com Erro
+    //            4 = Processado com Sucesso
+
+    if leitor.rExtrai(1, 'mensagens') <> '' then
+    begin
+      i := 0;
+      while Leitor.rExtrai(1, 'mensagens', '', i + 1) <> '' do
+      begin
+        strAux := Leitor.rCampo(tcStr, 'mensagens');
+        Cod    := Copy(strAux, 1, 4);
+        Msg    := Copy(strAux, 8, Length(strAux));
+        if Trim(Msg) <> '' then
+        begin
+          InfSit.FMsgRetorno.Add;
+          InfSit.FMsgRetorno[i].Codigo   := Cod;
+          InfSit.FMsgRetorno[i].Mensagem := Msg;
+          Inc(i);
+        end else
+          Break;
+      end;
+    end;
+
+    result := True;
+  except
+    result := False;
+  end;
 end;
 
 end.

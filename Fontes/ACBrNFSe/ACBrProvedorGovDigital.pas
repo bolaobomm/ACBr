@@ -305,6 +305,7 @@ begin
 // <ns2:versaoDados>2.00</ns2:versaoDados>
 // </ns2:cabecalho>
 
+(*
  Result := '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
            '<ns2:cabecalho xmlns:ns2="http://www.abrasf.org.br/nfse.xsd" versao="' + VersaoLayOut + '">' +
             '<ns2:versaoDados>' + VersaoDados + '</ns2:versaoDados>'+
@@ -312,6 +313,12 @@ begin
 
  Result := StringReplace(StringReplace(Result, '<', '&lt;', [rfReplaceAll]),
                            '>', '&gt;', [rfReplaceAll]);
+*)
+ Result := '<![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+           '<ns2:cabecalho xmlns:ns2="http://www.abrasf.org.br/nfse.xsd" versao="' + VersaoLayOut + '">' +
+            '<ns2:versaoDados>' + VersaoDados + '</ns2:versaoDados>'+
+           '</ns2:cabecalho>]]>';
+
 end;
 
 function TProvedorGovDigital.Gera_DadosSenha(CNPJ, Senha: String): AnsiString;
@@ -419,7 +426,7 @@ end;
 function TProvedorGovDigital.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- DadosMsg := '<?xml version="1.0" encoding="utf-8"?>' + DadosMsg;
+{ DadosMsg := '<?xml version="1.0" encoding="utf-8"?>' + DadosMsg;
  DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]),
                            '>', '&gt;', [rfReplaceAll]);
 
@@ -438,11 +445,25 @@ begin
              '</GerarNfseRequest>' +
             '</S:Body>' +
            '</S:Envelope>';
+}
+  DadosMsg := '<![CDATA[<?xml version="1.0" encoding="UTF-8"?>' + DadosMsg+']]>';
+
+  Result := '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nfse="http://nfse.abrasf.org.br">' +
+              '<soapenv:Header/>' +
+              '<soapenv:Body>' +
+                 '<nfse:GerarNfseRequest>' +
+                     '<nfseCabecMsg>'+CabMsg+'</nfseCabecMsg>' +
+                     '<nfseDadosMsg>'+DadosMsg+'</nfseDadosMsg>' +
+                 '</nfse:GerarNfseRequest>' +
+              '</soapenv:Body>' +
+            '</soapenv:Envelope>';
+
 end;
 
 function TProvedorGovDigital.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+(*
  DadosMsg := '<?xml version="1.0" encoding="utf-8"?>' + DadosMsg;
  DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]),
                            '>', '&gt;', [rfReplaceAll]);
@@ -462,6 +483,20 @@ begin
              '</RecepcionarLoteRpsSincronoRequest>' +
             '</S:Body>' +
            '</S:Envelope>';
+*)
+
+  DadosMsg := '<![CDATA[<?xml version="1.0" encoding="UTF-8"?>' + DadosMsg+']]>';
+
+  Result := '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nfse="http://nfse.abrasf.org.br">' +
+              '<soapenv:Header/>' +
+              '<soapenv:Body>' +
+                 '<nfse:RecepcionarLoteRpsSincronoRequest>' +
+                    '<nfseCabecMsg>'+CabMsg+'</nfseCabecMsg>' +
+                    '<nfseDadosMsg>'+DadosMsg+'</nfseDadosMsg>' +
+                 '</nfse:RecepcionarLoteRpsSincronoRequest>' +
+              '</soapenv:Body>' +
+            '</soapenv:Envelope>';
+
 end;
 
 function TProvedorGovDigital.GeraEnvelopeSubstituirNFSe(URLNS: String;
