@@ -1537,11 +1537,23 @@ begin
 
     // Consta no Retorno da NFC-e
     FRecibo  := FNFeRetornoSincrono.nRec;
-    FcStat   := FNFeRetornoSincrono.protNFe.cStat;
     FcUF     := FNFeRetornoSincrono.cUF;
-    FMsg     := FNFeRetornoSincrono.protNFe.xMotivo;
-    FxMotivo := FNFeRetornoSincrono.protNFe.xMotivo;
     chNFe    := FNFeRetornoSincrono.ProtNFe.chNFe;
+
+    if (FNFeRetornoSincrono.protNFe.cStat > 0) then
+      FcStat := FNFeRetornoSincrono.protNFe.cStat
+    else
+      FcStat := FNFeRetornoSincrono.cStat;
+
+    if (FNFeRetornoSincrono.protNFe.xMotivo <> '') then
+    begin
+      FMsg     := FNFeRetornoSincrono.protNFe.xMotivo;
+      FxMotivo := FNFeRetornoSincrono.protNFe.xMotivo;
+    end else
+    begin
+      FMsg     := FNFeRetornoSincrono.xMotivo;
+      FxMotivo := FNFeRetornoSincrono.xMotivo;
+    end;
 
     // Verificar se a NF-e foi autorizada com sucesso
     Result := (FNFeRetornoSincrono.cStat = 104) and
@@ -3458,6 +3470,8 @@ begin
   FretConsNFeDest.Leitor.Arquivo := FRetWS;
   FretConsNFeDest.LerXml;
 
+  FMsg := FretConsNFeDest.xMotivo;
+
   Result := (FretConsNFeDest.CStat =137) or
             (FretConsNFeDest.CStat =138);
 end;
@@ -3556,6 +3570,8 @@ begin
   FRetDownloadNFe.Leitor.Arquivo := FRetWS;
   FRetDownloadNFe.LerXml;
 
+  FMsg := FretDownloadNFe.xMotivo;
+
   Result := (FRetDownloadNFe.cStat = 139);
 
   for I := 0 to FRetDownloadNFe.retNFe.Count - 1 do
@@ -3650,6 +3666,8 @@ begin
 
   FretAdmCSCNFCe.Leitor.Arquivo := FRetWS;
   FretAdmCSCNFCe.LerXml;
+
+  FMsg := FretAdmCSCNFCe.xMotivo;
 
   Result := (FretAdmCSCNFCe.CStat in [150..153]);
 end;
@@ -3753,6 +3771,8 @@ begin
 
   FretDistDFeInt.Leitor.Arquivo := FRetWS;
   FretDistDFeInt.LerXml;
+
+  FMsg := FretDistDFeInt.xMotivo;
 
   Result := (FretDistDFeInt.CStat = 137) or
             (FretDistDFeInt.CStat = 138);
