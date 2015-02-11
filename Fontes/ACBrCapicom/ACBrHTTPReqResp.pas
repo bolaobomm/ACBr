@@ -122,7 +122,7 @@ const
    winetdll = 'wininet.dll';
 var
   Len: Integer;
-  Buffer: PAnsiChar;
+  Buffer: {$IFDEF UNICODE}PWideChar{$ELSE}PChar{$ENDIF};
 begin
   Len := FormatMessage(
   FORMAT_MESSAGE_FROM_HMODULE or FORMAT_MESSAGE_FROM_SYSTEM or
