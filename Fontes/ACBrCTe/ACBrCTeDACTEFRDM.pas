@@ -97,6 +97,8 @@ type
     frxcdsAnuladoComple: TfrxDBDataset;
     cdsEventos: TClientDataSet;
     frxEventos: TfrxDBDataset;
+    cdsModalAereo: TClientDataSet;
+    frxModalAereo: TfrxDBDataset;
     constructor Create(AOwner: TComponent); override;
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
   private
@@ -117,6 +119,7 @@ type
     procedure CarregaVolumes;
     procedure CarregaComponentesPrestacao;
     procedure CarregaSeguro;
+    procedure CarregaModalAereo;
     procedure CarregaModalRodoviario;
     procedure CarregaInformacoesAdicionais;
     procedure CarregaDocumentoAnterior; // Adicionado por NCC - 04/04/2014
@@ -457,10 +460,9 @@ begin
   CarregaInformacoesAdicionais;
   CarregaSeguro;
   CarregaModalRodoviario;
-
+  CarregaModalAereo;
   CarregaDocumentoAnterior;
   CarregaCTeAnuladoComplementado;
-
 end;
 
 procedure TdmACBrCTeFR.CarregaDadosEventos;
@@ -987,7 +989,7 @@ begin
     FieldDefs.Add('cMunEmi', ftString, 7);
     FieldDefs.Add('xMunEmi', ftString, 60);
     FieldDefs.Add('UFEmi', ftString, 2);
-    FieldDefs.Add('modal', ftString, 1);
+    FieldDefs.Add('modal', ftString, 2);
     FieldDefs.Add('tpServ', ftString, 50);
     FieldDefs.Add('cMunIni', ftString, 7);
     FieldDefs.Add('xMunIni', ftString, 60);
@@ -1043,9 +1045,9 @@ begin
       FieldByName('xMunEmi').AsString := xMunEnv;
       FieldByName('UFEmi').AsString := UFEnv;
 {$ENDIF}
-
-      FieldByName('modal').AsString := DFeUtil.SeSenao(modal = mdRodoviario, '0', '0');
-
+      // end;
+    //  FieldByName('modal').AsString := DFeUtil.SeSenao(modal = mdRodoviario, '0', '0');
+      FieldByName('modal').AsString := TpModalToStr(CTe.ide.modal); // Criado mudar o modal correto Jemison Vidal
       case tpServ of
         tsNormal: FieldByName('tpServ').AsString := 'Normal';
         tsSubcontratacao: FieldByName('tpServ').AsString := 'Subcontratação';
@@ -1091,6 +1093,7 @@ var
   wContingencia: string;
   wObs: string;
   wSubstituto: string;
+  wFile: string;
   i:integer;
 begin
 
@@ -1189,6 +1192,16 @@ begin
       FieldByName('Fluxo_xRota').AsString := fluxo.xRota;
 
     end;
+
+    if FCTe.compl.ObsCont.Count>0 then
+    begin
+      for I := 0 to FCTe.compl.ObsCont.Count - 1 do
+        begin
+           if not ContainsStr(BufferObs,FCTe.compl.ObsCont[i].xTexto) then
+              BufferObs:= BufferObs + FCTe.compl.ObsCont[i].xCampo+' : '+FCTe.compl.ObsCont[i].xTexto+';';
+        end;
+      end;
+
     FieldByName('OBS').AsString := BufferObs;
 
 // adicionado por NCC em 22/04/14 - Início
@@ -1221,7 +1234,10 @@ begin
     begin
       wObs:='';
       for I := 0 to FCTe.compl.ObsCont.Count - 1 do
-        wObs:= wObs + FCTe.compl.ObsCont[i].xCampo+' : '+FCTe.compl.ObsCont[i].xTexto+';';
+        begin
+           if not ContainsStr(wObs,FCTe.compl.ObsCont[i].xTexto) then
+              wObs:= wObs + FCTe.compl.ObsCont[i].xCampo+' : '+FCTe.compl.ObsCont[i].xTexto+';';
+        end;
 
       vTemp := TStringList.Create;
       try
@@ -1242,12 +1258,50 @@ begin
       end;
 
     end;
-    FieldByName('ObsCont').AsString := BufferObs;
+    //FieldByName('ObsCont').AsString := BufferObs;
 // adicionado por NCC em 22/04/14 - Fim
 
     Post;
   end;
 
+end;
+
+procedure TdmACBrCTeFR.CarregaModalAereo;
+begin
+  with cdsModalAereo do
+  begin
+    Close;
+    FieldDefs.Clear;
+    FieldDefs.Add('nOCA',ftString,14);
+    FieldDefs.Add('CL',ftString,1);
+    FieldDefs.Add('cTar',ftString,4);
+    FieldDefs.Add('vTar',ftFloat);
+    FieldDefs.Add('cIMP',ftString,4);
+    FieldDefs.Add('cinfManu',ftInteger);
+    FieldDefs.Add('nMinu',ftInteger);
+    FieldDefs.Add('IdT',ftString,14);
+    FieldDefs.Add('xLAgEmi',ftString,14);
+    FieldDefs.Add('xOrig',ftString,15);
+    FieldDefs.Add('xDest',ftString,15);
+    FieldDefs.Add('xRota',ftString,15);
+
+    CreateDataSet;
+    Append;
+    FieldByName('nOCA').AsString := CTe.infCTeNorm.aereo.nOCA;
+    FieldByName('CL').AsString := CTe.infCTeNorm.aereo.tarifa.CL;
+    FieldByName('cTar').AsString := CTe.InfCTeNorm.aereo.tarifa.cTar;
+    FieldByName('vTar').AsCurrency := CTe.infCTeNorm.aereo.tarifa.vTar;
+    FieldByName('cIMP').AsString := CTe.infCTeNorm.aereo.natCarga.cIMP;
+    FieldByName('cinfManu').AsInteger := CTe.infCTeNorm.aereo.natCarga.cinfManu;
+    FieldByName('nMinu').AsInteger := CTe.infCTeNorm.aereo.nMinu;
+    FieldByName('IdT').AsString := CTe.infCTeNorm.aereo.Idt;
+    FieldByName('xLAgEmi').AsString := CTe.infCTeNorm.aereo.xLAgEmi;
+    FieldByName('xOrig').AsString := CTe.compl.fluxo.xOrig;
+    FieldByName('xDest').AsString := CTe.compl.fluxo.xDest;
+    FieldByName('xRota').AsString := CTe.compl.fluxo.xRota;
+
+    Post;
+  end;
 end;
 
 procedure TdmACBrCTeFR.CarregaModalRodoviario;
