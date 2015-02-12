@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/02/2015
+[*] Alterações visando o provedor GovDigital.
+    Por: Nilton Olher
+
 10/02/2015
 [+] Implementado o provedor EL.
     Por: jperim

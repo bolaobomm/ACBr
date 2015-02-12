@@ -224,7 +224,7 @@ begin
 
                // Não Incluir a versão para os provedores abaixo
                DFeUtil.SeSenao(AProvedor in [proAbaco, proBetha, proDBSeller,
-                                             proGinfes, proGoiania, proGovDigital, proGovBR, proIssCuritiba,
+                                             proGinfes, proGoiania, proGovBR, proIssCuritiba,
                                              proISSNET, proLexsom, proNatal, proTinus, proRecife, proRJ,
                                              proSimplISS, proThema, proTiplan, proAgili,
                                              proFISSLex, proSpeedGov, proPronim, proCoplan,
@@ -670,7 +670,7 @@ begin
                                                  proDigifred, proSystempro, proVirtual,
                                                  proISSDigital, proSaatri, proCoplan,
                                                  proVitoria, proTecnos, proPVH,
-                                                 proSisPMJP, proActcon],
+                                                 proSisPMJP, proActcon, proGovDigital],
 
                     //Adicionei o SeSenao para poder cancelar nota onde o pretador é pessoa física (Cartório em Vitória-ES). - Eduardo Silva dos Santos - 11/01/2014 - DRD SISTEMAS
                     DFeUtil.SeSenao( length(Cnpj)=14,
@@ -796,7 +796,7 @@ begin
  if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco,
                   proBetha, proBetim, proBHISS, proDBSeller, proDigifred,
                   proEquiplano, profintelISS, proFISSLex, proGinfes, proGoiania,
-                  proGovBR, proGovDigital, proIssCuritiba, proISSDigital,
+                  proGovBR, {proGovDigital,} proIssCuritiba, proISSDigital,
                   proISSIntel, proISSNet, proLexsom, proNatal, proTinus, proProdemge,
                   proPublica, proRecife, proRJ, proSaatri, proFreire,
                   proSimplISS, proThema, proTiplan, proWebISS, proProdata,

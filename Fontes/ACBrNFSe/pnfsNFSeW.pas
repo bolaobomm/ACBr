@@ -92,7 +92,7 @@ type
   public
     constructor Create(AOwner: TNFSe);
     destructor Destroy; override;
-    function GerarXml: boolean;
+    function GerarXml(ASincrono: Boolean = False): boolean; // Alterado por Nilton Olher - 11/02/2015
     function ObterNomeArquivo: string;
   published
     property Gerador: TGerador read FGerador write FGerador;
@@ -163,7 +163,7 @@ begin
  Result := OnlyNumber(NFSe.infID.ID) + '.xml';
 end;
 
-function TNFSeW.GerarXml: boolean;
+function TNFSeW.GerarXml(ASincrono: Boolean = False): boolean;  // Alterado por Nilton Olher - 11/02/2015
 var
  Gerar : boolean;
 begin
@@ -190,8 +190,9 @@ begin
    then Atributo := ' Id="' +  (NFSe.IdentificacaoRps.Numero) + '"';
 
  if not (FProvedor in [proIssDsf, proInfisc, proEquiplano, proEgoverneISS, proNFSEBrasil]) then
-   if (FProvedor in [proGoiania, proGovDigital, proProdata, proVitoria, proFiorilli, proVirtual, proPublica{, proSystemPro}])
-     then begin
+   if (FProvedor in [proGoiania, proProdata, proVitoria, proFiorilli, proVirtual, proPublica{, proSystemPro}])
+      or ((FProvedor = proGovDigital) and (not ASincrono)) then   // Alterado por Nilton Olher - 11/02/2015
+     begin
       Gerador.wGrupo('GerarNfseEnvio' + Atributo);
 	    Gerador.wGrupo('Rps');
      end
@@ -313,8 +314,9 @@ begin
    end;
 
  if not (FProvedor in [proIssDsf, proInfisc, proEquiplano, proEgoverneISS]) then
-   if (FProvedor in [proGoiania, proGovDigital, proProdata, proVitoria, proFiorilli, proVirtual, proPublica{, proSystemPro}])
-     then begin
+   if (FProvedor in [proGoiania, proProdata, proVitoria, proFiorilli, proVirtual, proPublica{, proSystemPro}])
+      or ((FProvedor = proGovDigital) and (not ASincrono)) then // Alterado por Nilton Olher - 11/02/2015
+     begin
       Gerador.wGrupo('/Rps');
       Gerador.wGrupo('/GerarNfseEnvio');
      end

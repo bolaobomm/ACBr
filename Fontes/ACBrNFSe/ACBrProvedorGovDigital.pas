@@ -260,7 +260,7 @@ begin
    acConsLote:    Result := False;
    acConsNFSeRps: Result := False;
    acConsNFSe:    Result := False;
-   acCancelar:    Result := False;
+   acCancelar:    Result := True;
    acGerar:       Result := False;
    acRecSincrono: Result := False;
    acSubstituir:  Result := False;
@@ -298,22 +298,6 @@ end;
 function TProvedorGovDigital.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
   NameSpaceCab: String; ACodCidade: Integer): AnsiString;
 begin
-// Exemplo fornecido pelo provedor
-//
-// <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-// <ns2:cabecalho xmlns:ns2="http://www.abrasf.org.br/nfse.xsd" versao="2.00">
-// <ns2:versaoDados>2.00</ns2:versaoDados>
-// </ns2:cabecalho>
-
-(*
- Result := '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
-           '<ns2:cabecalho xmlns:ns2="http://www.abrasf.org.br/nfse.xsd" versao="' + VersaoLayOut + '">' +
-            '<ns2:versaoDados>' + VersaoDados + '</ns2:versaoDados>'+
-           '</ns2:cabecalho>';
-
- Result := StringReplace(StringReplace(Result, '<', '&lt;', [rfReplaceAll]),
-                           '>', '&gt;', [rfReplaceAll]);
-*)
  Result := '<![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
            '<ns2:cabecalho xmlns:ns2="http://www.abrasf.org.br/nfse.xsd" versao="' + VersaoLayOut + '">' +
             '<ns2:versaoDados>' + VersaoDados + '</ns2:versaoDados>'+
@@ -413,39 +397,23 @@ end;
 function TProvedorGovDigital.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">' +
-            '<s:Body>' +
-             '<CancelarNfseRequest xmlns="' + URLNS + '">' +
-                DadosMsg +
-             '</CancelarNfseRequest>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+  DadosMsg := '<![CDATA[<?xml version="1.0" encoding="UTF-8"?>' + DadosMsg+']]>';
+
+  Result := '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nfse="http://nfse.abrasf.org.br">' +
+              '<soapenv:Header/>' +
+              '<soapenv:Body>' +
+                 '<nfse:CancelarNfseRequest>' +
+                     '<nfseCabecMsg>'+CabMsg+'</nfseCabecMsg>' +
+                     '<nfseDadosMsg>'+DadosMsg+'</nfseDadosMsg>' +
+                 '</nfse:CancelarNfseRequest>' +
+              '</soapenv:Body>' +
+            '</soapenv:Envelope>';
+
 end;
 
 function TProvedorGovDigital.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
-{ DadosMsg := '<?xml version="1.0" encoding="utf-8"?>' + DadosMsg;
- DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]),
-                           '>', '&gt;', [rfReplaceAll]);
-
- result := '<?xml version="1.0" encoding="utf-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             '<GerarNfseRequest xmlns="' + URLNS + '">' +
-              '<nfseCabecMsg>' +
-                CabMsg +
-              '</nfseCabecMsg>' +
-              '<nfseDadosMsg>' +
-                DadosMsg +
-              '</nfseDadosMsg>' +
-             '</GerarNfseRequest>' +
-            '</S:Body>' +
-           '</S:Envelope>';
-}
   DadosMsg := '<![CDATA[<?xml version="1.0" encoding="UTF-8"?>' + DadosMsg+']]>';
 
   Result := '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nfse="http://nfse.abrasf.org.br">' +
@@ -463,28 +431,6 @@ end;
 function TProvedorGovDigital.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
-(*
- DadosMsg := '<?xml version="1.0" encoding="utf-8"?>' + DadosMsg;
- DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]),
-                           '>', '&gt;', [rfReplaceAll]);
-
- result := '<?xml version="1.0" encoding="utf-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             '<RecepcionarLoteRpsSincronoRequest xmlns="' + URLNS + '">' +
-              '<nfseCabecMsg>' +
-                CabMsg +
-              '</nfseCabecMsg>' +
-              '<nfseDadosMsg>' +
-                DadosMsg +
-              '</nfseDadosMsg>' +
-             '</RecepcionarLoteRpsSincronoRequest>' +
-            '</S:Body>' +
-           '</S:Envelope>';
-*)
-
   DadosMsg := '<![CDATA[<?xml version="1.0" encoding="UTF-8"?>' + DadosMsg+']]>';
 
   Result := '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nfse="http://nfse.abrasf.org.br">' +
@@ -535,7 +481,7 @@ var
 begin
  case Acao of
    acRecepcionar: begin
-                   RetWS := SeparaDados( RetornoWS, 'RecepcionarLoteRpsResponse>' );
+                   RetWS := SeparaDados( RetornoWS, 'RecepcionarLoteRpsResponse' );
                    RetWS := RetWS + '</RecepcionarLoteRpsResponse>';
                    Result := RetWS;
                   end;
@@ -547,12 +493,12 @@ begin
                    Result := RetWS;
                   end;
    acConsNFSe:    begin
-                   RetWS := SeparaDados( RetornoWS, 'ConsultarNfsePorFaixaResponse>' );
+                   RetWS := SeparaDados( RetornoWS, 'ConsultarNfsePorFaixaResponse' );
                    RetWS := RetWS + '</ConsultarNfsePorFaixaResponse>';
                    Result := RetWS;
                   end;
    acCancelar:    begin
-                   RetWS := SeparaDados( RetornoWS, 'CancelarNfseResponse>' );
+                   RetWS := SeparaDados( RetornoWS, 'CancelarNfseResponse' );
                    RetWS := RetWS + '</CancelarNfseResponse>';
                    Result := RetWS;
                   end;
@@ -562,7 +508,7 @@ begin
                    Result := RetWS;
                   end;
    acRecSincrono:  begin
-                   RetWS := SeparaDados( RetornoWS, 'RecepcionarLoteRpsSincronoResponse>' );
+                   RetWS := SeparaDados( RetornoWS, 'RecepcionarLoteRpsSincronoResponse' );
                    RetWS := RetWS + '</RecepcionarLoteRpsSincronoResponse>';
                    Result := RetWS;
                   end;

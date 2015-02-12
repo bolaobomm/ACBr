@@ -2074,13 +2074,14 @@ begin
   proDigifred:  URISig := 'CANC' + TNFSeCancelarNfse(Self).FNumeroNFSe;
   proSaatri: URISig := 'Cancelamento_' + TNFSeCancelarNfse(Self).FCnpj;
   proIssIntel,
-  proISSNet: begin
-              URISig := '';
-              URIRef := 'http://www.w3.org/TR/2000/REC-xhtml1-20000126/';
-             end;
-  proTecnos: URISig := '2' + TNFSeCancelarNfse(Self).FCnpj + IntToStrZero(StrToInt(TNFSeCancelarNfse(Self).FNumeroNFSe), 16);
- else        URISig := 'pedidoCancelamento_' + TNFSeCancelarNfse(Self).FCnpj +
-                    TNFSeCancelarNfse(Self).FIM + TNFSeCancelarNfse(Self).FNumeroNFSe;
+  proISSNet    : begin
+                   URISig := '';
+                   URIRef := 'http://www.w3.org/TR/2000/REC-xhtml1-20000126/';
+                 end;
+  proTecnos    : URISig := '2' + TNFSeCancelarNfse(Self).FCnpj + IntToStrZero(StrToInt(TNFSeCancelarNfse(Self).FNumeroNFSe), 16);
+// Alterado por Nilton Olher - 12/02/2015
+  proGovDigital: URISig := TNFSeCancelarNfse(Self).FNumeroNFSe;
+ else            URISig := 'pedidoCancelamento_' + TNFSeCancelarNfse(Self).FCnpj + TNFSeCancelarNfse(Self).FIM + TNFSeCancelarNfse(Self).FNumeroNFSe;
  end;
 
  if FProvedor <> proISSNet
@@ -5569,6 +5570,11 @@ begin
   TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeIdle );
 
   FRetListaNfse := SeparaDados(FRetWS, Prefixo3 + 'ListaNfse');
+
+  // Alterado por Nilton Olher - 11/02/2015
+  if FProvedor = proGovDigital then
+    FRetListaNfse := StringReplace(FRetListaNfse,'ns2:','',[rfReplaceAll]);
+
   i := 0;
   while FRetListaNfse <> '' do
    begin
@@ -5872,6 +5878,10 @@ begin
 
   if FProvedor = proSisPMJP then
     Prefixo3 := '';
+
+  // Alterado por Nilton Olher - 11/02/2015
+  if FProvedor = proGovDigital then
+    FRetListaNfse := StringReplace(FRetListaNfse,'ns2:','',[rfReplaceAll]);
 
   i := 0;
   while FRetListaNfse <> '' do
