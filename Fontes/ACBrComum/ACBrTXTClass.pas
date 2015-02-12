@@ -234,7 +234,7 @@ begin
   /// Se a propriedade TrimString = true, Result retorna sem espaços em branco
   /// iniciais e finais.
   if FTrimString then
-     Result := Trim(Value);
+     Result := Trim(Result);
 end;
 
 function TACBrTXTClass.LFill(Value: String;
@@ -258,7 +258,7 @@ begin
   /// Se a propriedade TrimString = true, Result retorna sem espaços em branco
   /// iniciais e finais.
   if FTrimString then
-     Result := Trim(Value);
+     Result := Trim(Result);
 end;
 
 function TACBrTXTClass.LFill(Value: Extended;
