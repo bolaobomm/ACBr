@@ -247,10 +247,6 @@ begin
      Result := FDelimitador;
      Exit;
   end;
-  /// Se a propriedade TrimString = true, Result retorna sem espaços em branco
-  /// iniciais e finais.
-  if FTrimString then
-     Result := Trim(Value);
 
   if (Size > 0) and (Length(Value) > Size) then
      Result := Copy(Value, 1, Size)
@@ -258,6 +254,11 @@ begin
      Result := StringOfChar(Caracter, Size - length(Value)) + Value;
 
   Result := FDelimitador + Result;
+
+  /// Se a propriedade TrimString = true, Result retorna sem espaços em branco
+  /// iniciais e finais.
+  if FTrimString then
+     Result := Trim(Value);
 end;
 
 function TACBrTXTClass.LFill(Value: Extended;
