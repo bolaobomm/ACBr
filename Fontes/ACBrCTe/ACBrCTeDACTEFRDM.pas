@@ -1197,7 +1197,7 @@ begin
     begin
       for I := 0 to FCTe.compl.ObsCont.Count - 1 do
         begin
-           if not ContainsStr(BufferObs,FCTe.compl.ObsCont[i].xTexto) then
+           if not AnsiContainsStr(BufferObs,FCTe.compl.ObsCont[i].xTexto) then
               BufferObs:= BufferObs + FCTe.compl.ObsCont[i].xCampo+' : '+FCTe.compl.ObsCont[i].xTexto+';';
         end;
       end;
@@ -1235,7 +1235,7 @@ begin
       wObs:='';
       for I := 0 to FCTe.compl.ObsCont.Count - 1 do
         begin
-           if not ContainsStr(wObs,FCTe.compl.ObsCont[i].xTexto) then
+           if not AnsiContainsStr(wObs,FCTe.compl.ObsCont[i].xTexto) then
               wObs:= wObs + FCTe.compl.ObsCont[i].xCampo+' : '+FCTe.compl.ObsCont[i].xTexto+';';
         end;
 

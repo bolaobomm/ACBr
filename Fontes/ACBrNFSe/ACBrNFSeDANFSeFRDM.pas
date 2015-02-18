@@ -192,7 +192,7 @@ begin
       begin
         Append;
         cdsItensServicoDiscriminacaoServico.AsString := Descricao;
-        cdsItensServicoQuantidade.AsInteger          := Quantidade;
+        cdsItensServicoQuantidade.AsFloat            := Quantidade;
         cdsItensServicoValorUnitario.AsFloat         := ValorUnitario;
         cdsItensServicoValorTotal.AsFloat            := ValorTotal;
         cdsItensServicoTributavel.AsString           := SimNaoToStr(Tributavel);
