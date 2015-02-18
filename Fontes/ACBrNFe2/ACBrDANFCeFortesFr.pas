@@ -66,6 +66,7 @@ type
   protected
     FpNFe: TNFe;
 
+    FMargensAjustaveis: boolean;
     procedure Imprimir(const DanfeResumido : Boolean = False; const AFiltro : TACBrSATExtratoFiltro = fiNenhum);
   public
     constructor Create(AOwner: TComponent); override;
@@ -76,6 +77,7 @@ type
     procedure ImprimirDANFEPDF(NFE : TNFe = nil); override;
     procedure ImprimirDANFEResumidoPDF(NFE : TNFe = nil);override;
   published
+    property MargensAjustaveis: boolean read FMargensAjustaveis write FMargensAjustaveis default false;
   end ;
 
   { TACBrNFeDANFCeFortesFr }
@@ -727,6 +729,12 @@ begin
   try
     with frACBrNFeDANFCeFortesFr do
     begin
+      // Tratamento para as margens da impressão, necessário para impressão em papel A4
+      if MargensAjustaveis then
+        begin
+          rlVenda.AdjustableMargins := True;
+          rlVenda.PageSetup.PaperWidth := 80.5;
+        end;
       Filtro := AFiltro;
       RLLayout := rlVenda;
       Resumido := DanfeResumido;
