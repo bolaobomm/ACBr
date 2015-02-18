@@ -470,6 +470,9 @@ begin
 end;
 
 function EnviarBoletosPorEmail(aAnexo: String; aEmail: String): String;
+var
+  vEmails: TStringList;
+  i: Integer;
 begin
   with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrMail1 {$ELSE}dm.ACBrMail1 {$ENDIF} do
   begin
@@ -478,8 +481,23 @@ begin
       RecuperarDadosIniciais;
       Subject   := FrmACBrMonitor.edtBOLEmailAssunto.Text;
       Body.Text := FrmACBrMonitor.edtBOLEmailMensagem.Text;
-      AddAddress(aEmail);
-      AddAttachment(aAnexo);
+
+      vEmails := TStringList.Create;
+
+      try
+        vEmails.Delimiter       := ';';
+        vEmails.StrictDelimiter := True;
+        vEmails.DelimitedText   := aEmail;
+
+        for i := 0 to vEmails.Count -1 do
+          AddAddress(vEmails.Strings[i]);
+
+      finally
+        vEmails.Free;
+      end;
+
+      if Trim(aAnexo) <> '' then
+         AddAttachment(aAnexo);
 
       Send;
       Result := 'OK';

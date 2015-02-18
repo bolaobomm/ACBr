@@ -157,6 +157,7 @@ type
     cbxSedexFormato: TComboBox;
     cbxSedexAvisoReceb: TComboBox;
     deNcmSalvar: TDirectoryEdit;
+    edBALLog: TEdit;
     edtNcmNumero: TEdit;
     edtSedexContrato: TEdit;
     edtSedexValorDeclarado: TEdit;
@@ -258,6 +259,7 @@ type
     Label105: TLabel;
     Label106: TLabel;
     Label107: TLabel;
+    Label108: TLabel;
     Label11: TLabel;
     Label12: TLabel;
     Label13: TLabel;
@@ -409,6 +411,7 @@ type
     sbCHQSerial: TSpeedButton;
     sbDirRFD: TSpeedButton;
     sbECFLog: TSpeedButton;
+    sbBALLog: TSpeedButton;
     sbECFSerial: TSpeedButton;
     sbLog: TSpeedButton;
     sbTCArqPrecosEdit: TSpeedButton;
@@ -530,6 +533,7 @@ type
     procedure deBolDirRetornoExit ( Sender: TObject ) ;
     procedure deUSUDataCadastroExit(Sender : TObject) ;
     procedure deRFDDataSwBasicoExit(Sender : TObject) ;
+    procedure edBALLogChange(Sender: TObject);
     procedure edEmailEnderecoExit(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);{%h-}
     procedure FormCreate(Sender: TObject);
@@ -543,6 +547,7 @@ type
     procedure bECFAtivarClick(Sender: TObject);
     procedure meUSUHoraCadastroExit(Sender : TObject) ;
     procedure meRFDHoraSwBasicoExit(Sender : TObject) ;
+    procedure sbBALLogClick(Sender: TObject);
     procedure sbSobreClick(Sender : TObject) ;
     procedure sedECFLinhasEntreCuponsChange(Sender: TObject);
     procedure sedECFMaxLinhasBufferChange(Sender: TObject);
@@ -988,8 +993,20 @@ begin
       mResp.Lines.Add( 'Email: Enviando dados.');
     pmsLogoutSMTP:
       mResp.Lines.Add( 'Email: Fazendo Logout no servidor de e-mail.');
+    pmsDone, pmsError:
+    begin
+      bEmailTestarConf.Enabled := True;
+      bCancelar.Enabled        := True;
+      bConfig.Enabled          := True;
+      pbEmailTeste.Visible     := False;
+      Screen.Cursor := crDefault;
+
+      if aStatus = pmsError then
+         mResp.Lines.Add(ACBrMail1.GetLastSmtpError)
+      else
+         mResp.Lines.Add( 'Email: E-mail de teste enviado.');
+    end;
   end;
-  Application.ProcessMessages;
 end;
 
 procedure TFrmACBrMonitor.ApplicationProperties1Minimize(Sender: TObject);
@@ -1092,13 +1109,6 @@ begin
     Exit;
   end;
 
-  if Application.MessageBox('Durante o teste, o programa pode parar ' +
-  'de responder por até três minutos. Deseja prosseguir?', 'ATENÇÃO', 6) <> 6 then
-     Exit;
-
-  bEmailTestarConf.Enabled := False;
-  pbEmailTeste.Visible     := True;
-  pbEmailTeste.Position    := 1;
   Application.ProcessMessages;
 
   with ACBrMail1 do
@@ -1125,21 +1135,21 @@ begin
      Body.Add('');
      Body.Add('ACBrMonitor');
 
+     bEmailTestarConf.Enabled := False;
+     bCancelar.Enabled        := False;
+     bConfig.Enabled          := False;
+     pbEmailTeste.Visible     := True;
+     pbEmailTeste.Position    := 1;
+     Screen.Cursor := crHourGlass;
+     Application.ProcessMessages;
      try
-        try
-          Screen.Cursor := crHourGlass;
-          Application.ProcessMessages;
-          Send;
-        except
-           on e: Exception do
-           begin
-              mResp.Lines.Add( e.Message );
-           end;
-        end;
-     finally
-        Screen.Cursor := crDefault;
-        pbEmailTeste.Visible     := False;
-        bEmailTestarConf.Enabled := True;
+       Send(True);
+     except
+       bEmailTestarConf.Enabled := True;
+       bCancelar.Enabled        := True;
+       bConfig.Enabled          := True;
+       pbEmailTeste.Visible     := False;
+       Screen.Cursor := crDefault;
      end;
    end;
 end;
@@ -1420,6 +1430,11 @@ begin
    end ;
 end;
 
+procedure TFrmACBrMonitor.edBALLogChange(Sender: TObject);
+begin
+  ACBrBAL1.ArqLOG := edBALLog.Text;
+end;
+
 procedure TFrmACBrMonitor.edEmailEnderecoExit(Sender: TObject);
 begin
   if ( Trim(edEmailEndereco.Text) <> '' ) and not ValidarEmail( edEmailEndereco.Text )  then
@@ -1675,6 +1690,10 @@ begin
   // Ajustado LOG do ECF //
   if (edECFLog.Text <> '') then
     AjustaLogFile(edECFLog.Text, sedLogLinhas.Value);
+
+  // Ajustado LOG do Balança //
+  if (edBALLog.Text <> '') then
+    AjustaLogFile(edBALLog.Text, sedLogLinhas.Value);
 end;
 
 {------------------------------------------------------------------------------}
@@ -1805,6 +1824,7 @@ begin
     cbBALModeloChange(Self);
     cbBALPorta.Text := Ini.ReadString('BAL', 'Porta', '');
     sedBALIntervalo.Value := Ini.ReadInteger('BAL', 'Intervalo', 200);
+    edBALLog.Text := Ini.ReadString('BAL', 'ArqLog', '');
 
     { Parametros do ETQ }
     cbETQModelo.ItemIndex := Ini.ReadInteger('ETQ', 'Modelo', 0);
@@ -1997,9 +2017,10 @@ begin
   begin
     Desativar;
     Intervalo := sedBALIntervalo.Value;
-    Modelo := TACBrBALModelo(cbBALModelo.ItemIndex);
-    Porta := cbBALPorta.Text;
-    Ativo := BALAtivado;
+    Modelo    := TACBrBALModelo(cbBALModelo.ItemIndex);
+    Porta     := cbBALPorta.Text;
+    Ativo     := BALAtivado;
+    ArqLOG    := edBALLog.Text;
   end;
 
   with ACBrETQ1 do
@@ -2323,6 +2344,7 @@ begin
     Ini.WriteInteger('BAL', 'Modelo', cbBALModelo.ItemIndex);
     Ini.WriteString( 'BAL', 'Porta', cbBALPorta.Text);
     Ini.WriteInteger('BAL', 'Intervalo', sedBALIntervalo.Value);
+    Ini.WriteString( 'BAL', 'ArqLog', edBALLog.Text);
 
     { Parametros do ETQ }
     Ini.WriteInteger('ETQ', 'Modelo', cbETQModelo.ItemIndex);
@@ -3156,6 +3178,11 @@ begin
      mResp.Lines.Add( 'Hora Inválida' );
      meRFDHoraSwBasico.SetFocus;
   end ;
+end;
+
+procedure TFrmACBrMonitor.sbBALLogClick(Sender: TObject);
+begin
+  OpenURL(ExtractFilePath(Application.ExeName) + edBALLog.Text);
 end;
 
 procedure TFrmACBrMonitor.sbSobreClick(Sender : TObject) ;

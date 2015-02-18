@@ -614,7 +614,8 @@ begin
   if FNumCopias > 0 then
     RLPrinters.RLPrinter.Copies := FNumCopias
   else
-    RLPrinters.RLPrinter.Copies := 1;  
+
+    RLPrinters.RLPrinter.Copies := 1;
 end;
 
 procedure TfrlDANFeRLPaisagem.rlbEmitenteBeforePrint(Sender: TObject;

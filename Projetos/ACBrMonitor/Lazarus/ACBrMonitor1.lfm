@@ -3781,7 +3781,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
         object bBALAtivar: TBitBtn
           Left = 190
           Height = 32
-          Top = 111
+          Top = 79
           Width = 90
           Caption = '&Ativar'
           OnClick = bBALAtivarClick
@@ -3790,7 +3790,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
         object bBALTestar: TBitBtn
           Left = 310
           Height = 32
-          Top = 111
+          Top = 79
           Width = 90
           Caption = '&Testar'
           Glyph.Data = {
@@ -3823,6 +3823,42 @@ object FrmACBrMonitor: TFrmACBrMonitor
           }
           OnClick = bBALTestarClick
           TabOrder = 4
+        end
+        object Label108: TLabel
+          AnchorSideTop.Control = edBALLog
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = edBALLog
+          Left = 24
+          Height = 17
+          Top = 180
+          Width = 49
+          Alignment = taRightJustify
+          Anchors = [akTop, akRight]
+          BorderSpacing.Right = 3
+          Caption = 'Arq.Log:'
+          FocusControl = edBALLog
+          ParentColor = False
+        end
+        object edBALLog: TEdit
+          Cursor = crIBeam
+          Left = 76
+          Height = 25
+          Top = 176
+          Width = 435
+          Anchors = [akTop, akLeft, akRight]
+          OnChange = edBALLogChange
+          TabOrder = 5
+        end
+        object sbBALLog: TSpeedButton
+          AnchorSideTop.Control = edBALLog
+          AnchorSideTop.Side = asrCenter
+          Left = 516
+          Height = 23
+          Top = 177
+          Width = 23
+          Anchors = [akTop, akRight]
+          Caption = '...'
+          OnClick = sbBALLogClick
         end
       end
       object tsETQ: TTabSheet
@@ -5918,7 +5954,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     ConfigBarras.MostrarCodigo = True
     ConfigBarras.LarguraLinha = 3
     ConfigBarras.Altura = 10
-    left = 281
+    InfoRodapeCupom.Imposto.ModoCompacto = False
+    left = 280
     top = 24
   end
   object ImageList1: TImageList
@@ -7042,6 +7079,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
