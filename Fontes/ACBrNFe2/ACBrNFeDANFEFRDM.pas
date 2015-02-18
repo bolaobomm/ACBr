@@ -1435,7 +1435,10 @@ begin
            ((DFeUtil.NaoEstaVazio(FNFe.procNFe.nProt)) and
             (FNFe.procNFe.cStat in [101,151,155])) then
           FieldByName('Mensagem0').AsString := 'NFe Cancelada'
-        else if FNFe.procNFe.cStat = 110 then
+        else if ( FNFe.procNFe.cStat = 110 ) or
+                ( FNFe.procNFe.cStat = 301 ) or
+                ( FNFe.procNFe.cStat = 302 ) or
+                ( FNFe.procNFe.cStat = 303 ) then
           FieldByName('Mensagem0').AsString := 'NFe denegada pelo Fisco'
         else if ((DFeUtil.EstaVazio(FDANFEClassOwner.ProtocoloNFe)) and
                  (DFeUtil.EstaVazio(FNFe.procNFe.nProt))) then
