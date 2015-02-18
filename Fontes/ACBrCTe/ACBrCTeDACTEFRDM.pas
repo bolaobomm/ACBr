@@ -523,7 +523,10 @@ begin
 
             case InfEvento.tpAmb of
               taProducao:
-                FieldByName('tpAmb').AsString := 'PRODU플O';
+                begin
+                  FieldByName('tpAmb').AsString := 'PRODU플O';
+                  frxReport.Variables['HOMOLOGACAO'] := False;
+                end;
               taHomologacao:
                 begin
                   FieldByName('tpAmb').AsString      := 'HOMOLOGA플O - SEM VALOR FISCAL';
@@ -562,7 +565,10 @@ begin
 
               case InfEvento.tpAmb of
                 taProducao:
-                  FieldByName('tpAmb').AsString := 'PRODU플O';
+                  begin
+                    FieldByName('tpAmb').AsString := 'PRODU플O';
+                    frxReport.Variables['HOMOLOGACAO'] := False;
+                  end;
                 taHomologacao:
                   begin
                     FieldByName('tpAmb').AsString      := 'HOMOLOGA플O - SEM VALOR FISCAL';
