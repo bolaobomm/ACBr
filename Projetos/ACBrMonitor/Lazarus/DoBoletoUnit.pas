@@ -148,6 +148,7 @@ var
    MudouDados: boolean;
    NumeroBanco: LongInt;
    IndiceACBr: LongInt;
+   wLayoutBoleto: Integer;
 begin
   MudouDados := False;
   IniBoletos := TMemIniFile.Create('boletos.ini');
@@ -204,7 +205,11 @@ begin
 
               with FrmACBrMonitor do
               begin
-                 cbxBOLLayout.ItemIndex := IniBoletos.ReadInteger('CEDENTE','LAYOUTBOL',0);
+                 wLayoutBoleto:= IniBoletos.ReadInteger('CEDENTE','LAYOUTBOL',-1);
+
+                 if wLayoutBoleto >= 0 then
+                   cbxBOLLayout.ItemIndex := wLayoutBoleto;
+
                  try
                    ACBrBoletoFCFortes1.LayOut:= TACBrBolLayOut(cbxBOLLayout.ItemIndex);
                  except
