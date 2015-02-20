@@ -35,11 +35,11 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnLeitor, pnfsConversao, ACBrNFSeUtil;
+  pcnAuxiliar, pcnConversao, pcnLeitor, pnfsConversao, ACBrNFSeUtil, pnfsNFSe;
 
 type
 
- TMsgRetornoEnvCollection = class;
+ TMsgRetornoEnvCollection     = class;
  TMsgRetornoEnvCollectionItem = class;
 
   TInfRec = class
@@ -72,8 +72,21 @@ type
     property Items[Index: Integer]: TMsgRetornoEnvCollectionItem read GetItem write SetItem; default;
   end;
 
+ // Alterado por Nilton Olher - 20/02/2015
+ TMsgRetornoEnvIdentificacaoRps = class(TPersistent)
+  private
+    FNumero: string;
+    FSerie: string;
+    FTipo: TnfseTipoRps;
+  published
+    property Numero: string read FNumero write FNumero;
+    property Serie: string read FSerie write FSerie;
+    property Tipo: TnfseTipoRps read FTipo write FTipo;
+  end;
+
  TMsgRetornoEnvCollectionItem = class(TCollectionItem)
   private
+    FIdentificacaoRps: TMsgRetornoEnvIdentificacaoRps;  // Alterado por Nilton Olher - 20/02/2015
     FCodigo: String;
     FMensagem: String;
     FCorrecao: String;
@@ -81,6 +94,7 @@ type
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
+    property IdentificacaoRps: TMsgRetornoEnvIdentificacaoRps  read FIdentificacaoRps write FIdentificacaoRps;   // Alterado por Nilton Olher - 20/02/2015
     property Codigo: String   read FCodigo   write FCodigo;
     property Mensagem: String read FMensagem write FMensagem;
     property Correcao: String read FCorrecao write FCorrecao;
@@ -156,12 +170,15 @@ end;
 
 constructor TMsgRetornoEnvCollectionItem.Create;
 begin
-
+  // Alterado por Nilton Olher - 20/02/2015
+  FIdentificacaoRps       := TMsgRetornoEnvIdentificacaoRps.Create;
+  FIdentificacaoRps.FTipo := trRPS;
 end;
 
 destructor TMsgRetornoEnvCollectionItem.Destroy;
 begin
-
+  // Alterado por Nilton Olher - 20/02/2015
+  FIdentificacaoRps.Free;
   inherited;
 end;
 
@@ -209,6 +226,10 @@ begin
     while Leitor.rExtrai(iNivel, 'MensagemRetorno', '', i + 1) <> '' do
      begin
        InfRec.FMsgRetorno.Add;
+       InfRec.FMsgRetorno[i].FIdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
+       InfRec.FMsgRetorno[i].FIdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
+       InfRec.FMsgRetorno[i].FIdentificacaoRps.Tipo   := Leitor.rCampo(tcStr, 'Tipo');
+
        InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
        InfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
        InfRec.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
