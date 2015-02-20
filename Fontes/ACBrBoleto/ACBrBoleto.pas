@@ -57,7 +57,7 @@ uses  ACBrBase,  {Units da ACBr}
      Graphics, Contnrs, Classes;
 
 const
-  CACBrBoleto_Versao = '0.0.111a' ;
+  CACBrBoleto_Versao = '0.0.112a' ;
 
 type
   TACBrTipoCobranca =
@@ -1177,6 +1177,7 @@ begin
    fOcorrenciaOriginal.Free;
    fMotivoRejeicaoComando.Free;
    fDescricaoMotivoRejeicaoComando.Free;
+
    inherited;
 end;
 
@@ -2205,7 +2206,7 @@ begin
      NomeArq := fDirArqRetorno + PathDelim + NomeArqRetorno;
 
      if not FilesExists( NomeArq ) then
-        raise Exception.Create(ACBrStr('Arquivo não encontrado:'+sLineBreak+NomeArq));
+       raise Exception.Create(ACBrStr('Arquivo não encontrado:'+sLineBreak+NomeArq));
 
      SlRetorno.LoadFromFile( NomeArq );
 
