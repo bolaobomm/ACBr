@@ -94,6 +94,9 @@ type
   private
     FVersao: String;
     FDescEvento: String;
+    FnProt: String;
+    FxJust: String;
+
     FCTe: TDetEventoCTe;
     Femit: TDetEventoEmit;
   public
@@ -102,6 +105,8 @@ type
 
     property versao: String     read FVersao     write FVersao;
     property descEvento: String read FDescEvento write FDescEvento;
+    property nProt: String      read FnProt      write FnProt;
+    property xJust: String      read FxJust      write FxJust;
 
     property CTe: TDetEventoCTe   read FCTe  write FCTe;
     property emit: TDetEventoEmit read Femit write Femit;
@@ -604,6 +609,8 @@ begin
           begin
             FdocZip.Items[i].FprocEvento.detEvento.FVersao     := oLeitorInfZip.rAtributo('versao');
             FdocZip.Items[i].FprocEvento.detEvento.FDescEvento := oLeitorInfZip.rCampo(tcStr, 'descEvento');
+            FdocZip.Items[i].FprocEvento.detEvento.FnProt      := oLeitorInfZip.rCampo(tcStr, 'nProt');
+            FdocZip.Items[i].FprocEvento.detEvento.FxJust      := oLeitorInfZip.rCampo(tcStr, 'xJust');
 
             if (oLeitorInfZip.rExtrai(3, 'CTe') <> '') then
             begin
