@@ -145,6 +145,7 @@ begin
      FieldDefs.Add('Numero', ftString, 20);
      FieldDefs.Add('Digito', ftString, 1);
      FieldDefs.Add('Nome', ftString, 100);
+     FieldDefs.Add('OrientacoesBanco', ftString, 100);
      FieldDefs.Add('DirLogo', ftString, 254);
      CreateDataSet;
    end;
@@ -408,6 +409,7 @@ begin
                                                   IntToStrZero(Banco.Digito, 1));
          FieldByName('Nome').AsString    := Banco.Nome;
          FieldByName('DirLogo').AsString := DirLogo;
+         FieldByName('OrientacoesBanco').AsString := Banco.OrientacoesBanco.Text;
          Post;
       end;
       // Cedente
