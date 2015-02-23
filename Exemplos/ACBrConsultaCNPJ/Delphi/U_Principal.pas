@@ -3,6 +3,7 @@ unit U_Principal;
 interface
 
 uses
+  pngimage,
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, Dialogs, ExtCtrls, StdCtrls, Buttons,
   ACBrBase, ACBrSocket, ACBrConsultaCNPJ, JPEG, Mask; 
@@ -122,20 +123,20 @@ end;
 procedure TF_Principal.LabAtualizarCaptchaClick(Sender: TObject);
 var
   Stream: TMemoryStream;
-  Jpg: TJPEGImage;
+  Png: TPngImage;
 begin
-  Stream:= TMemoryStream.Create;
-  Jpg:= TJPEGImage.Create;
+  Stream := TMemoryStream.Create;
+  Png := TPNGImage.Create;
   try
     ACBrConsultaCNPJ1.Captcha(Stream);
-    Jpg.LoadFromStream(Stream);
-    Image1.Picture.Assign(Jpg);
+    Png.LoadFromStream(Stream);
+    Image1.Picture.Assign(Png);
 
     EditCaptcha.Clear;
     EditCaptcha.SetFocus;
   finally
     Stream.Free;
-    Jpg.Free;
+    Png.Free;
   end;
 end;
 
