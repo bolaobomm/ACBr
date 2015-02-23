@@ -683,6 +683,8 @@ begin
       LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2');
       LayNFeCCe,
       LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento',    'https://homnfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento');
+
+      LayAdministrarCSCNFCe: Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/CscNFCe',           'https://homnfce.sefaz.am.gov.br/nfce-services/services/CscNFCe');
     end;
     *)
 
@@ -699,7 +701,7 @@ begin
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento',    'https://homnfce.sefaz.am.gov.br/nfce-services-nac/services/RecepcaoEvento');
 
-      LayAdministrarCSCNFCe: Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayAdministrarCSCNFCe: Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/CscNFCe',           'https://homnfce.sefaz.am.gov.br/nfce-services/services/CscNFCe');
     end;
    end;
 end;
