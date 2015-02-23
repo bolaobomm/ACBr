@@ -266,7 +266,7 @@ begin
               Restaurar1.Click;
               Application.BringToFront;
               ACBrNFe1.DANFE.MostrarPreview := True;
-            end;              
+            end;
 
            if DFeUtil.NaoEstaVazio(Cmd.Params(1)) then
               ACBrNFe1.DANFE.Impressora := Cmd.Params(1)
@@ -1146,7 +1146,7 @@ begin
                  ArqPDF := OnlyNumber(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID);
                  ArqPDF := PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ArqPDF+'-nfe.pdf';
 
-                 
+
               except
                  raise Exception.Create('Erro ao criar o arquivo PDF');
               end;
@@ -1471,6 +1471,9 @@ begin
 
         else if Cmd.Metodo = 'versao' then
            Cmd.Resposta := Versao
+
+        else if Cmd.Metodo = 'versaonome' then
+           Cmd.Resposta := {$IFDEF ACBrNFeOpenSSL} 'OpenSSL' {$ELSE} 'CAPICOM' {$ENDIF}
 
         else if pos('|'+Cmd.Metodo+'|', '|exit|bye|fim|sair|') > 0 then {fecha conexao}
          begin
