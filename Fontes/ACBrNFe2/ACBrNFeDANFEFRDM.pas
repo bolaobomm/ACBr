@@ -939,10 +939,21 @@ begin
           FieldByName('Consumidor').AsString := 'CONSUMIDOR NÃO IDENTIFICADO'
         else
           FieldByName('Consumidor').AsString :=
-             'CPF: ' + Trim(FieldByName('CNPJCPF').AsString) + ' ' + trim(FieldByName('XNome').AsString) + #13 +
-             Trim(FieldByName('XLgr').AsString) + ', ' + Trim(FieldByName('Nro').AsString) + #13 +
-             Trim(FieldByName('XBairro').AsString) + ' - ' +
-             Trim(FieldByName('XMun').AsString) + ' - ' + Trim(FieldByName('UF').AsString);
+            IfThen(Length(CNPJCPF) = 11, 'CPF: ', 'CNPJ: ') + Trim(FieldByName('CNPJCPF').AsString) + ' ' + trim(FieldByName('XNome').AsString);
+
+          if Trim(FieldByName('XLgr').AsString) <> '' then
+          begin
+            FieldByName('Consumidor').AsString := FieldByName('Consumidor').AsString + #13 +
+               Trim(FieldByName('XLgr').AsString) + ', ' + Trim(FieldByName('Nro').AsString);
+          end;
+
+          if Trim(FieldByName('XMun').AsString) <> '' then
+          begin
+            FieldByName('Consumidor').AsString := FieldByName('Consumidor').AsString + #13 +
+              Trim(FieldByName('XBairro').AsString) + ' - ' +
+              Trim(FieldByName('XMun').AsString) + '/' +
+              Trim(FieldByName('UF').AsString);
+          end;
       end
       else
         FieldByName('Consumidor').AsString := '';
