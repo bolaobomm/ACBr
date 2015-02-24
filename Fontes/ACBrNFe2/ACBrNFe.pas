@@ -247,6 +247,7 @@ begin
   FDownloadNFe       := TDownload.Create(Self);
   FRetDistDFeInt     := TRetDistDFeInt.Create;
   FWebServices       := TWebServices.Create(Self);
+  FRetDownloadNFe    := TRetDownloadNFe.Create;
 
   if FConfiguracoes.WebServices.Tentativas <= 0 then
      FConfiguracoes.WebServices.Tentativas := 5;
@@ -271,6 +272,8 @@ begin
   FDownloadNFe.Free;
   FRetDistDFeInt.Free;
   FWebServices.Free;
+  FRetDownloadNFe.Free;
+
   inherited;
 end;
 
