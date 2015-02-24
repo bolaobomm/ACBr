@@ -54,7 +54,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnLeitor, ACBrUtil;
+  pcnAuxiliar, pcnConversao, pcnLeitor, ACBrUtil, synacode;
 
 type
   TRetNFeCollection     = class;
@@ -77,14 +77,20 @@ type
     FcStat: Integer;
     FxMotivo: String;
     FprocNFe: AnsiString;
+
+    FNFeZip: String;
+    FProtNFeZip: String;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property chNFe: String       read FchNFe   write FchNFe;
-    property cStat: Integer      read FcStat   write FcStat;
-    property xMotivo: String     read FxMotivo write FxMotivo;
-    property procNFe: AnsiString read FprocNFe write FprocNFe;
+    property chNFe: String       read FchNFe      write FchNFe;
+    property cStat: Integer      read FcStat      write FcStat;
+    property xMotivo: String     read FxMotivo    write FxMotivo;
+    property procNFe: AnsiString read FprocNFe    write FprocNFe;
+
+    property NFeZip: String      read FNFeZip     write FNFeZip;
+    property ProtNFeZip: String  read FProtNFeZip write FProtNFeZip;
   end;
 
   TRetDownloadNFe = class(TPersistent)
@@ -104,6 +110,7 @@ type
     constructor Create;
     destructor Destroy; override;
     function LerXml: boolean;
+    function LerXMLFromFile(CaminhoArquivo: String): Boolean;
   published
     property Leitor: TLeitor           read FLeitor   write FLeitor;
     property versao: String            read Fversao   write Fversao;
@@ -116,11 +123,11 @@ type
     property XML: AnsiString           read FXML      write FXML;
   end;
 
-
 implementation
 
-Uses
-  pcnGerador;
+uses
+  pcnGerador
+  {$IFDEF FPC},zstream {$ELSE},ACBrZLibExGZ{$ENDIF};
 
 { TRetNFeCollection }
 
@@ -182,8 +189,60 @@ end;
 
 function TRetDownloadNFe.LerXml: boolean;
 var
-  ok: Boolean;
+  ok: boolean;
   i: Integer;
+  StrStream: TStringStream;
+  StrAux, StrDecod: String;
+  oLeitorInfZip: TLeitor;
+  XMLNFe: String;
+
+  {$IFDEF FPC}
+  { Descompacta um arquivo padrão GZIP de Stream... Fontes:
+    http://wiki.freepascal.org/paszlib
+    http://www.gocher.me/GZIP
+  }
+  function UnZipMsg(S: TStringStream): String;
+  var
+    DS: TDecompressionStream;
+    MS: TMemoryStream;
+    readCount: integer;
+    Buf: array[0..1023] of byte;
+    hdr: longword;
+  begin
+    S.Position := 0; // goto start of input stream
+    hdr := S.ReadDWord;
+    if (hdr and $00088B1F) = $00088B1F then // gzip header (deflate method)
+      S.Position := 10     // Pula cabeçalho gzip
+    else if (hdr and $00009C78) = $00009C78 then // zlib header
+      S.Position := 2      // Pula cabeçalho zlib
+    else
+      S.Position := 0;
+
+    MS := TMemoryStream.Create;
+    DS := Tdecompressionstream.Create(S, (S.Position > 0) );
+    try
+      repeat
+        readCount := DS.Read(Buf, SizeOf(Buf));
+        if readCount <> 0 then
+          MS.Write(Buf, readCount);
+      until readCount < SizeOf(Buf);
+
+      MS.Position := 0;
+      Result := '';
+      SetLength(Result, MS.Size);
+      MS.ReadBuffer(Result[1], MS.Size);
+    finally
+      DS.Free;
+      MS.Free;
+    end;
+  end;
+  {$ELSE}
+  function UnZipMsg(S: TStringStream): String;
+  begin
+    Result := GZDecompressStr(S.DataString);
+  end;
+  {$ENDIF}
+
 begin
   Result := False;
   try
@@ -206,17 +265,100 @@ begin
         (*JR10 *)FretNFe.Items[i].FcStat   := Leitor.rCampo(tcInt, 'cStat');
         (*JR11 *)FretNFe.Items[i].FxMotivo := Leitor.rCampo(tcStr, 'xMotivo');
 
-        (*JR12 *)FretNFe.Items[i].FprocNFe := '<'+ENCODING_UTF8+'>' +
-                                              SeparaDados(Leitor.Grupo, 'procNFe');
+        if pos('procNFeZip', Leitor.Grupo) > 0 then
+        begin
+          StrStream := TStringStream.Create('');
+
+          try
+            try
+              // XML da NF-e
+              StrAux := RetornarConteudoEntre(Leitor.Grupo, '<procNFeZip>', '</procNFeZip');
+              StrDecod := DecodeBase64(StrAux);
+              StrStream.WriteString(StrDecod);
+              FretNFe.Items[i].FNFeZip := UnZipMsg(StrStream);
+            except
+              on e : Exception do
+              begin
+                Raise Exception.Create(e.message);
+              end;
+            end;
+          finally
+            FreeAndNil(StrStream);
+          end;
+
+         (*JR12 *)FretNFe.Items[i].FprocNFe := '<'+ENCODING_UTF8+'>' +
+                                               FretNFe.Items[i].FNFeZip;
+        end;
+
+        if pos('procNFe', Leitor.Grupo) > 0 then
+        begin
+          (*JR12 *)FretNFe.Items[i].FprocNFe := '<'+ENCODING_UTF8+'>' +
+                                           SeparaDados(Leitor.Grupo, 'procNFe');
+        end;
+
+        if (Leitor.rExtrai(3, 'procNFeGrupoZip') <> '') then
+        begin
+          StrStream := TStringStream.Create('');
+
+          try
+            try
+              // XML da NF-e
+              StrAux := RetornarConteudoEntre(Leitor.Grupo, '<NFeZip>', '</NFeZip');
+              StrDecod := DecodeBase64(StrAux);
+              StrStream.WriteString(StrDecod);
+              FretNFe.Items[i].FNFeZip := UnZipMsg(StrStream);
+
+              // XML do Protocolo da NF-e
+              StrAux := RetornarConteudoEntre(Leitor.Grupo, '<protNFeZip>', '</protNFeZip');
+              StrDecod := DecodeBase64(StrAux);
+              StrStream.WriteString(StrDecod);
+              FretNFe.Items[i].FProtNFeZip := UnZipMsg(StrStream);
+            except
+              on e : Exception do
+              begin
+                Raise Exception.Create(e.message);
+              end;
+            end;
+          finally
+            FreeAndNil(StrStream);
+          end;
+
+          oLeitorInfZip := TLeitor.Create;
+          oLeitorInfZip.Arquivo := FretNFe.Items[i].FNFeZip;
+
+          (*JR12 *)FretNFe.Items[i].FprocNFe := '<' + ENCODING_UTF8 + '>' +
+                  '<nfeProc versao="' + oLeitorInfZip.rAtributo('versao') + '" ' +
+                      NAME_SPACE + '>' +
+                    FretNFe.Items[i].FNFeZip +
+                    FretNFe.Items[i].FProtNFeZip +
+                  '</nfeProc>';
+        end;
+
         inc(i);
       end;
       Result := True;
     end;
 
-    if i = 0 then
-      FretNFe.Add;
+//    if i = 0 then
+//      FretNFe.Add;
   except
     result := False;
+  end;
+end;
+
+function TRetDownloadNFe.LerXMLFromFile(CaminhoArquivo: String): Boolean;
+var
+  ArqDown: TStringList;
+begin
+  ArqDown := TStringList.Create;
+  try
+     ArqDown.LoadFromFile(CaminhoArquivo);
+
+     Self.Leitor.Arquivo := ArqDown.Text;
+
+     Result := LerXml;
+  finally
+     ArqDown.Free;
   end;
 end;
 

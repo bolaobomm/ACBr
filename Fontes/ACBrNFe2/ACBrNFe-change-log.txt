@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/02/2015
+[*] Implementação da descompactação do retorno do Web Services NFeDownloadDF.
+    Algumas UF retornam o XML da NF-e compactado.
+    por: Italo Jurisato Junior
+
 23/02/2015
 [*] Inclusão das novas URLs para atender o novo serviço de Administração do 
     Código de Segurança do Contribuinte - CSC (Somente SEFAZ-AM).
