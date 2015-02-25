@@ -38,6 +38,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/02/2015
+[-] Corrigido o erro da função que valida o numero de Drawback.
+    Por: Italo Jurisato Junior
+
 Data: 22/12/2014
 -- ACBrTXTClass --  (por: DSA)
 [-] Ajustes para algumas situações de erro de calculo de arredondamento em LFILL
