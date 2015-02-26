@@ -678,7 +678,7 @@ var
  FMsg      : AnsiString;
 begin
  try
-  if FConfiguracoes.Certificados.AssinaLote
+  if FConfiguracoes.Certificados.AssinaLote {juaumkiko}and (FConfiguracoes.Certificados.NumeroSerie <> '') 
    then begin
     {$IFDEF ACBrNFSeOpenSSL}
       if not(NotaUtil.Assinar(vLote,
