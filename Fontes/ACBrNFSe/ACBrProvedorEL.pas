@@ -179,6 +179,25 @@ begin
                         ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
                         ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
                    end;
+          3128006: begin // Guanhães/MG
+                        ConfigURL.HomNomeCidade := 'nfse00.el.com.br:17080/';
+                        ConfigURL.ProNomeCidade := 'nfse00.el.com.br:17080/';
+                        nfse                    := 'nfse_mg_guanhaes';
+
+                        ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + nfse + '/RpsServiceService?wsdl';
+                        ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+                        ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+                        ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+                        ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+                        ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+
+                        ConfigURL.ProRecepcaoLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + nfse + '/RpsServiceService?wsdl';
+                        ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+                        ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+                        ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+                        ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+                        ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+                   end;
      end;
      Result := ConfigURL;
 

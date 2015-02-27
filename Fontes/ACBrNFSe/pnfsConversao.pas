@@ -864,6 +864,7 @@ begin
   4310009  // Ibiruba/RS
          : Provedor := 'Digifred';
 
+  3128006, // Guanhães/MG
   3202603, // Iconha/ES
   3203205  // Linhares/ES
          : Provedor := 'EL';
@@ -1124,7 +1125,7 @@ begin
   3113305, // Carangola/MG
   3114402, // Carmo do Rio Claro/MG
   3116605, // Cláudio/MG
-  3128006, // Guanhães/MG
+//  3128006, // Guanhães/MG
   3128105, // Guapé/MG
 //  3131307, // Ipatinga/MG
 //  3147907, // Passos/MG
