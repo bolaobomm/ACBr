@@ -283,6 +283,9 @@ type
     FMes: SmallInt;
     FStatus: TStatusArquivoConv115;
     FResponsavel: TACBrConvenio115Responsavel;
+{$IFNDEF FPC}
+    FOrdernar: Boolean;
+{$ENDIF}
     function GetVersao: string;
     procedure SetSalvarEm(const Value: string);
     procedure DoGerarMestre;
@@ -304,6 +307,9 @@ type
     property Mes: SmallInt read FMes write FMes;
     property Status: TStatusArquivoConv115 read FStatus write FStatus;
     property Responsavel: TACBrConvenio115Responsavel read FResponsavel write FResponsavel;
+{$IFNDEF FPC}
+    property Ordernar: Boolean read FOrdernar write FOrdernar;
+{$ENDIF}
   end;
 
 function SortMestre(Item1: Pointer; Item2: Pointer): Integer;
@@ -473,11 +479,9 @@ var
 begin
   OItem1 := TACBrConvenio115Mestre(Item1);
   OItem2 := TACBrConvenio115Mestre(Item2);
-  if (OItem1.NumeroNF > OItem2.NumeroNF) and
-     (OItem1.NumeroNF > OItem2.NumeroNF) then
+  if (OItem1.NumeroNF > OItem2.NumeroNF) then
     Result := 1
-  else if (OItem1.NumeroNF = OItem2.NumeroNF) and
-          (OItem1.NumeroNF = OItem2.NumeroNF) then
+  else if (OItem1.NumeroNF = OItem2.NumeroNF) then
     Result := 0
   else
     Result := -1;
@@ -495,6 +499,7 @@ begin
   inherited;
   FMestre := TACBrConvenio115Mestres.Create;
   FResponsavel := TACBrConvenio115Responsavel.Create(Self);
+  Ordernar := False;
 end;
 
 destructor TACBrConvenio115.Destroy;
@@ -568,9 +573,10 @@ var
   I: Integer;
   OStr: TStringList;
 begin
-  {$IFNDEF FPC}
-  Mestre.Sort(SortMestre);
-  {$ENDIF}
+{$IFNDEF FPC}
+  if Ordernar then
+    Mestre.Sort(SortMestre);
+{$ENDIF}
   OStr := TStringList.Create;
   try
     for I := 0 to FMestre.Count - 1 do
