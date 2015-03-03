@@ -61,7 +61,7 @@ const aHeigthPadrao:Double=5.7;
       FontSizeEmit_Nome:Integer=12;
       FontSizeEmit_Outros:Integer=8;
       FontSizeItens:Integer=6;
-      FontSizeInfComplementares:Integer=6;
+      //FontSizeInfComplementares:Integer=6;
 
       // # consult atech
       ColsTitle    : array[1..18] of String = ('CÓDIGO','DESCRIÇÃO DO PRODUTO / SERVIÇO','NCM/SH','CST','CFOP','UND','QUANT.','VALOR'   ,'VALOR','VALOR','V.APROX','B.CÁLC.','B.CÁLC.ICMS','VAL.ICMS'   ,'VALOR','VALOR','ALÍQ.','ALÍQ.');
@@ -95,12 +95,13 @@ type
      FExibirResumoCanhoto:boolean;
      FExibirResumoCanhoto_Texto:string;
      FImprimirDescPorc: boolean;
-     FImprimirDesconto: boolean; // #consult atech
+     FImprimirDesconto: boolean; 
      FImprimirValorLiquido: boolean;
      FImprimirDetalhamentoEspecifico: boolean;
      FTamanhoCampoCodigo:integer;
      FTamanhoFonte_DemaisCampos:integer;
      FTamanhoFonte_ANTT:integer;
+     FTamanhoFonte_infComplementares:integer;
      FLinhasPorPagina: Integer;
      FEspessuraBorda:integer;
      FFormularioContinuo: boolean;
@@ -108,13 +109,13 @@ type
      FMostrarStatus: Boolean;
      FNFeCancelada: Boolean;
      FMostrarSetup: boolean;
-    FTributosFonte: string;
-    FTributosPercentual: TpcnPercentualTributos;
-    FMarcaDaguaMSG: string;
-    FTamanhoCampoVlUnit: integer;
-    FPosicaoCanhoto: integer;
-    FExpandirDadosAdicionaisAuto: boolean;
-    FImprimirTributosItem: boolean;
+     FTributosFonte: string;
+     FTributosPercentual: TpcnPercentualTributos;
+     FMarcaDaguaMSG: string;
+     FTamanhoCampoVlUnit: integer;
+     FPosicaoCanhoto: integer;
+     FExpandirDadosAdicionaisAuto: boolean;
+     FImprimirTributosItem: boolean;
   public
      FCurrentPage, FPageNum, FNFIndex, FNumNFe:Integer;
      FChaveNFe, FNumeroNF, FSerie: String;
@@ -158,6 +159,7 @@ type
      property TamanhoCampoVlUnit:integer read FTamanhoCampoVlUnit write FTamanhoCampoVlUnit;
      property TamanhoFonte_DemaisCampos:integer read FTamanhoFonte_DemaisCampos write FTamanhoFonte_DemaisCampos;
      property TamanhoFonte_ANTT:integer read FTamanhoFonte_ANTT write FTamanhoFonte_ANTT;
+     property TamanhoFonte_infComplementares:integer read FTamanhoFonte_infComplementares write FTamanhoFonte_infComplementares;
      property LinhasPorPagina:integer read FLinhasPorPagina write FLinhasPorPagina;
      property EspessuraBorda:integer read FEspessuraBorda write FEspessuraBorda;
      property FormularioContinuo:boolean read FFormularioContinuo write FFormularioContinuo;
@@ -307,12 +309,13 @@ procedure ImprimirDANFeRave(aACBrNFe:TACBrNFe;
                             aTamanhoCampoVlUnit:integer=0;
                             aTamanhoFonte_DemaisCampos:integer=10;
                             aTamanhoFonte_ANTT:integer=10;
+                            aTamanhoFonte_infComplementares:integer=6;
                             aProdutosPorPagina:integer=0;
                             aEspessuraBorda:integer=2;
                             aExibirResumoCanhoto:boolean=false;
                             aExibirResumoCanhoto_Texto:string='';
                             aImprimirDescPorc:boolean=false;
-                            aImprimirDesconto:boolean=true; // #consult atech
+                            aImprimirDesconto:boolean=true; 
                             aImprimirValorLiquido:boolean=false;
                             aImprimirDetalhamentoEspecifico:boolean=true;
                             aImprimirTributosItem:boolean=false;
@@ -410,12 +413,13 @@ procedure ImprimirDANFeRave(aACBrNFe:TACBrNFe;
                             aTamanhoCampoVlUnit:integer=0;
                             aTamanhoFonte_DemaisCampos:integer=10;
                             aTamanhoFonte_ANTT:integer=10;
+                            aTamanhoFonte_infComplementares:integer=6;
                             aProdutosPorPagina:integer=0;
                             aEspessuraBorda:integer=2;
                             aExibirResumoCanhoto:boolean=false;
                             aExibirResumoCanhoto_Texto:string='';
                             aImprimirDescPorc:boolean=false;
-                            aImprimirDesconto:boolean=true; // #consult atech
+                            aImprimirDesconto:boolean=true;
                             aImprimirValorLiquido:boolean=false;
                             aImprimirDetalhamentoEspecifico:boolean=true;
                             aImprimirTributosItem:boolean=false;
@@ -489,12 +493,13 @@ begin
     DANFeRave.TamanhoCampoVlUnit:=aTamanhoCampoVlUnit;
     DANFeRave.TamanhoFonte_DemaisCampos:=aTamanhoFonte_DemaisCampos;
     DANFeRave.TamanhoFonte_ANTT:=aTamanhoFonte_ANTT;
+    DANFeRave.TamanhoFonte_infComplementares:=aTamanhoFonte_infComplementares;
     DANFeRave.LinhasPorPagina:=aProdutosPorPagina;
     DANFeRave.EspessuraBorda:=aEspessuraBorda;
     DANFeRave.ExibirResumoCanhoto:=aExibirResumoCanhoto;
     DANFeRave.ExibirResumoCanhoto_Texto:=aExibirResumoCanhoto_Texto;
     DANFeRave.ImprimirDescPorc:=aImprimirDescPorc;
-    DANFeRave.ImprimirDesconto:=aImprimirDesconto; // #consult atech
+    DANFeRave.ImprimirDesconto:=aImprimirDesconto; 
     DANFeRave.ImprimirValorLiquido:=aImprimirValorLiquido;
     DANFeRave.ImprimirDetalhamentoEspecifico:=aImprimirDetalhamentoEspecifico;
     DANFeRave.ImprimirTributosItem:=aImprimirTributosItem;

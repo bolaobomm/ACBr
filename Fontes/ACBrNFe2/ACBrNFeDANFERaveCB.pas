@@ -60,6 +60,7 @@ type
    private
      FTamanhoCampoCodigo: integer;
      FTamanhoFonte_ANTT: integer;
+     FTamanhoFonte_infComplementares: integer; 
      FFonte : TFont;
      FEspessuraBorda: Integer;
      FMostrarSetup: boolean;
@@ -69,7 +70,7 @@ type
      FTamanhoCampoVlUnit: integer;
      FExpandirDadosAdicionaisAuto: boolean;
      FimprimirDesconto: Boolean;
-    FImprimirTributosItem: Boolean; // #consult atech
+    FImprimirTributosItem: Boolean; 
 
      function SeSenaoJPEG(ACondicao: Boolean; ATrue, AFalse: TJPEGImage): TJPEGImage;
      function BMPtoJPGString(aBMPFile: string): string;
@@ -87,6 +88,7 @@ type
      property TamanhoCampoCodigo:integer read FTamanhoCampoCodigo write FTamanhoCampoCodigo;
      property TamanhoCampoVlUnit:integer read FTamanhoCampoVlUnit write FTamanhoCampoVlUnit;
      property TamanhoFonte_ANTT:integer read FTamanhoFonte_ANTT write FTamanhoFonte_ANTT;
+     property TamanhoFonte_infComplementares:integer read FTamanhoFonte_infComplementares write FTamanhoFonte_infComplementares;
      property Fonte:TFont read FFonte write FFonte;
      property EspessuraBorda:Integer read FEspessuraBorda write FEspessuraBorda;
      property ExpandirDadosAdicionaisAuto: boolean read FExpandirDadosAdicionaisAuto write FExpandirDadosAdicionaisAuto;
@@ -175,6 +177,7 @@ begin
   FTamanhoCampoCodigo:=0;
   FTamanhoCampoVlUnit:=0;
   FTamanhoFonte_ANTT:=10;
+  TamanhoFonte_infComplementares:=6; 
   FEspessuraBorda:=2;
   FMostrarSetup:=False;
   FTributosPercentual:=ptValorProdutos;
@@ -225,12 +228,13 @@ begin
                       TamanhoCampoVlUnit,
                       TamanhoFonte_DemaisCampos,
                       TamanhoFonte_ANTT,
+                      TamanhoFonte_infComplementares,
                       ProdutosPorPagina,
                       EspessuraBorda,
                       ExibirResumoCanhoto,
                       ExibirResumoCanhoto_Texto,
                       ImprimirDescPorc,
-                      ImprimirDesconto,  // #consult atech
+                      ImprimirDesconto, 
                       ImprimirTotalLiquido,
                       ImprimirDetalhamentoEspecifico,
                       ImprimirTributosItem,
@@ -292,12 +296,13 @@ begin
                        TamanhoCampoVlUnit,
                        TamanhoFonte_DemaisCampos,
                        TamanhoFonte_ANTT,
+                       TamanhoFonte_infComplementares,
                        ProdutosPorPagina,
                        EspessuraBorda,
                        ExibirResumoCanhoto,
                        ExibirResumoCanhoto_Texto,
                        ImprimirDescPorc,
-                       ImprimirDesconto, // #consult atech
+                       ImprimirDesconto, 
                        ImprimirTotalLiquido,
                        ImprimirDetalhamentoEspecifico,
                        ImprimirTributosItem,

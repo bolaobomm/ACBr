@@ -1054,7 +1054,7 @@ begin
             if FPageNum=1 then
               Box([fsLeft],XPos,YPos,70,aHeigth,'Reservado ao Fisco','',taLeftJustify,True);
 
-            SetFont(FontNameUsed,FontSizeInfComplementares);
+            SetFont(FontNameUsed,TamanhoFonte_infComplementares); 
             //informacoes complementares
             GotoXY(PosX,PosY+4);
             NewLine;
@@ -1093,7 +1093,7 @@ begin
      if FPageNum=1 then
         Box([fsLeft],XPos,YPos,70,aHeigth,'Reservado ao Fisco','',taLeftJustify,True);
 
-     SetFont(FontNameUsed,FontSizeInfComplementares);
+     SetFont(FontNameUsed,TamanhoFonte_infComplementares);
      //informacoes complementares
      GotoXY(PosX,PosY+4);
      NewLine;
