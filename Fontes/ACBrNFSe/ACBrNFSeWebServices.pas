@@ -74,7 +74,7 @@ uses
     ACBrProvedorActcon, ACBrProvedorEL, ACBrProvedorEgoverneISS,
     ACBrProvedorSisPMJP, ACBrProvedorSystemPro, ACBrProvedorSalvador,
     ACBrProvedorDBSeller, ACBrProvedorLexsom, ACBrProvedorABRASFv1,
-    ACBrProvedorABRASFv2, ACBrProvedorNFSEBrasil;
+    ACBrProvedorABRASFv2, ACBrProvedorNFSEBrasil, ACBrProvedorSJP;
 
 type
 
@@ -792,6 +792,7 @@ begin
   proABRASFv1:    FProvedorClass := TProvedorABRASFv1.Create;
   proABRASFv2:    FProvedorClass := TProvedorABRASFv2.Create;
   proNFSEBrasil:  FProvedorClass := TProvedorNFSEBrasil.Create;
+  proSJP:         FProvedorClass := TProvedorSJP.Create;
  end;
 
  FPrefixo2 := FConfiguracoes.WebServices.Prefixo2;

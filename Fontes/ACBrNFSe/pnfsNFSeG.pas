@@ -228,7 +228,7 @@ begin
                                              proISSNET, proLexsom, proNatal, proTinus, proRecife, proRJ,
                                              proSimplISS, proThema, proTiplan, proAgili,
                                              proFISSLex, proSpeedGov, proPronim, proCoplan,
-                                             proSalvador],
+                                             proSalvador, proSJP],
                                '',
                                DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '')
                               ) +

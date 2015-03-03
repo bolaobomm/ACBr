@@ -255,6 +255,7 @@ begin
   proRJ,
   proSalvador,
   proSimplISS,
+  proSJP,
   proSpeedGov,
   proThema,
   proTinus,
