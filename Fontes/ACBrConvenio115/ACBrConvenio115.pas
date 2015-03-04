@@ -499,7 +499,9 @@ begin
   inherited;
   FMestre := TACBrConvenio115Mestres.Create;
   FResponsavel := TACBrConvenio115Responsavel.Create(Self);
+{$IFNDEF FPC}
   Ordernar := False;
+{$ENDIF}
 end;
 
 destructor TACBrConvenio115.Destroy;
