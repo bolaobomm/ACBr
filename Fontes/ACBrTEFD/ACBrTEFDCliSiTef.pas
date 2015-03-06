@@ -124,6 +124,8 @@ type
       fParametrosAdicionais : TStringList;
       fRespostas: TStringList;
       fRestricoes : AnsiString;
+      fDocumentoFiscal: AnsiString;
+      fDataHoraFiscal: TDateTime;
       fDocumentosProcessados : AnsiString ;
       fPathDLL: string;
 
@@ -190,6 +192,8 @@ type
         {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
         
      procedure AvaliaErro(Sts : Integer);
+     function GetDataHoraFiscal: TDateTime;
+     function GetDocumentoFiscal: AnsiString;
      procedure LoadDLLFunctions;
      procedure UnLoadDLLFunctions;
      procedure SetParametrosAdicionais(const AValue : TStringList) ;
@@ -260,6 +264,10 @@ type
      property ParametrosAdicionais : TStringList read fParametrosAdicionais
         write SetParametrosAdicionais ;
      property Restricoes : AnsiString read fRestricoes write fRestricoes ;
+     property DocumentoFiscal  : AnsiString read GetDocumentoFiscal
+        write fDocumentoFiscal ;
+     property DataHoraFiscal  : TDateTime read GetDataHoraFiscal
+        write fDataHoraFiscal ;
      property OperacaoATV : Integer read fOperacaoATV write fOperacaoATV
         default 111 ;
      property OperacaoADM : Integer read fOperacaoADM write fOperacaoADM
@@ -462,6 +470,9 @@ begin
   fNumeroTerminal := '' ;
   fOperador       := '' ;
   fRestricoes     := '' ;
+
+  fDocumentoFiscal := '';
+  fDataHoraFiscal  := 0;
 
   fOperacaoATV         := 111 ; // 111 - Teste de comunicação com o SiTef
   fOperacaoReImpressao := 112 ; // 112 - Menu Re-impressão
@@ -690,7 +701,7 @@ procedure TACBrTEFDCliSiTef.ATV;
 var
    Sts : Integer;
 begin
-  Sts := FazerRequisicao( fOperacaoATV, 'ATV', 0, HMS ) ;
+  Sts := FazerRequisicao( fOperacaoATV, 'ATV' ) ;
 
   if Sts = 10000 then
      Sts := ContinuarRequisicao( CACBrTEFD_CliSiTef_ImprimeGerencialConcomitante ) ;
@@ -706,7 +717,7 @@ function TACBrTEFDCliSiTef.ADM: Boolean;
 var
    Sts : Integer;
 begin
-  Sts := FazerRequisicao( fOperacaoADM, 'ADM', 0, HMS, fRestricoes ) ;
+  Sts := FazerRequisicao( fOperacaoADM, 'ADM', 0, '', fRestricoes ) ;
 
   if Sts = 10000 then
      Sts := ContinuarRequisicao( CACBrTEFD_CliSiTef_ImprimeGerencialConcomitante ) ;
@@ -731,6 +742,9 @@ begin
   Restr := fRestricoes;
   if Restr = '' then
      Restr := '[10]' ;     // 10 - Cheques
+
+  if DocumentoVinculado = '' then
+     DocumentoVinculado := fDocumentoFiscal;
 
   Sts := FazerRequisicao( fOperacaoCRT, 'CRT', Valor, DocumentoVinculado, Restr ) ;
 
@@ -760,7 +774,8 @@ var
   end ;
 
 begin
-  VerificarTransacaoPagamento( Valor );
+  if DocumentoVinculado <> '' then
+     VerificarTransacaoPagamento( Valor );
 
   Respostas.Values['501'] := ifthen(TipoPessoa = 'J','1','0');
 
@@ -785,6 +800,9 @@ begin
   Restr := fRestricoes;
   if Restr = '' then
      Restr := '[15;25]' ;  // 15 - Cartão Credito; 25 - Cartao Debito
+
+  if DocumentoVinculado = '' then
+     DocumentoVinculado := fDocumentoFiscal;
 
   Sts := FazerRequisicao( fOperacaoCHQ, 'CHQ', Valor, DocumentoVinculado, Restr ) ;
 
@@ -817,7 +835,7 @@ begin
   Respostas.Values['515'] := FormatDateTime('DDMMYYYY',DataHoraTransacao) ;
   Respostas.Values['516'] := NSU ;
 
-  Sts := FazerRequisicao( fOperacaoCNC, 'CNC', 0, HMS ) ;
+  Sts := FazerRequisicao( fOperacaoCNC, 'CNC' ) ;
 
   if Sts = 10000 then
      Sts := ContinuarRequisicao( CACBrTEFD_CliSiTef_ImprimeGerencialConcomitante ) ;
@@ -864,6 +882,7 @@ begin
   ANow    := Now ;
   DataStr := FormatDateTime('YYYYMMDD', ANow );
   HoraStr := FormatDateTime('HHNNSS', ANow );
+  Buffer := #0;
   FillChar(Buffer, SizeOf(Buffer), 0);
 
   GravaLog( 'EnviaRecebeSiTefDireto -> Rede:' +IntToStr(RedeDestino) +', Funcao:'+
@@ -891,11 +910,13 @@ function TACBrTEFDCliSiTef.FazerRequisicao(Funcao: Integer;
   ListaRestricoes: AnsiString): Integer;
 Var
   ValorStr, DataStr, HoraStr : AnsiString;
-  ANow : TDateTime ;
+  DataHora : TDateTime ;
 begin
-  Req.DocumentoVinculado  := Documento;
-  Req.ValorTotal          := Valor;
+   if Documento = '' then
+      Documento := DocumentoFiscal;
 
+   Req.DocumentoVinculado  := Documento;
+   Req.ValorTotal          := Valor;
 
    if fpAguardandoResposta then
       raise Exception.Create( ACBrStr( CACBrTEFD_CliSiTef_NaoConcluido ) ) ;
@@ -909,9 +930,9 @@ begin
 
    fIniciouRequisicao := True;
 
-   ANow     := Now ;
-   DataStr  := FormatDateTime('YYYYMMDD', ANow );
-   HoraStr  := FormatDateTime('HHNNSS', ANow );
+   DataHora := DataHoraFiscal ;
+   DataStr  := FormatDateTime('YYYYMMDD', DataHora );
+   HoraStr  := FormatDateTime('HHNNSS', DataHora );
    ValorStr := StringReplace( FormatFloat( '0.00', Valor ),
                               DecimalSeparator, ',', [rfReplaceAll]) ;
    fDocumentosProcessados := '' ;
@@ -1413,6 +1434,29 @@ begin
    if Erro <> '' then
       TACBrTEFD(Owner).DoExibeMsg( opmOK, Erro );
 end ;
+
+function TACBrTEFDCliSiTef.GetDataHoraFiscal: TDateTime;
+begin
+  if (csDesigning in Owner.ComponentState) then
+     Result := fDataHoraFiscal
+  else
+     if fDataHoraFiscal = 0 then
+        Result := Now
+     else
+        Result := fDataHoraFiscal;
+end;
+
+function TACBrTEFDCliSiTef.GetDocumentoFiscal: AnsiString;
+begin
+  if (csDesigning in Owner.ComponentState) then
+     Result := fDocumentoFiscal
+  else
+     if fDocumentoFiscal = '' then
+        Result := HMS
+     else
+        Result := fDocumentoFiscal;
+end;
+
 
 function TACBrTEFDCliSiTef.ProcessarRespostaPagamento(
   const IndiceFPG_ECF: String; const Valor: Double): Boolean;
