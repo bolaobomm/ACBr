@@ -569,6 +569,7 @@ begin
   Desativar ;
 
   inherited Destroy ;
+  IOResult;
 end;
 
 procedure TACBrECFNaoFiscal.Ativar;
