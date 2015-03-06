@@ -51,17 +51,10 @@ unit ACBrConvenio115;
 interface
 
 uses
-  SysUtils, Classes, Contnrs, ACBrBase, ACBrConsts, StrUtils;
-//{$IFDEF FPC}
-//   LResources, LazarusPackageIntf, PropEdits, componenteditors
-//{$ELSE}
-//  {$IFNDEF COMPILER6_UP}
-//     DsgnIntf
-//  {$ELSE}
-//     DesignIntf,
-//     DesignEditors
-//  {$ENDIF}
-//{$ENDIF} ;
+  SysUtils, Classes, Contnrs, ACBrConsts, StrUtils
+  {$IFDEF FPC}
+   ,LResources
+  {$ENDIF} ;
 
 {$R ACBrConvenio115.dcr}
 
@@ -283,9 +276,7 @@ type
     FMes: SmallInt;
     FStatus: TStatusArquivoConv115;
     FResponsavel: TACBrConvenio115Responsavel;
-{$IFNDEF FPC}
     FOrdernar: Boolean;
-{$ENDIF}
     function GetVersao: string;
     procedure SetSalvarEm(const Value: string);
     procedure DoGerarMestre;
@@ -307,9 +298,7 @@ type
     property Mes: SmallInt read FMes write FMes;
     property Status: TStatusArquivoConv115 read FStatus write FStatus;
     property Responsavel: TACBrConvenio115Responsavel read FResponsavel write FResponsavel;
-{$IFNDEF FPC}
     property Ordernar: Boolean read FOrdernar write FOrdernar;
-{$ENDIF}
   end;
 
 function SortMestre(Item1: Pointer; Item2: Pointer): Integer;
@@ -499,9 +488,7 @@ begin
   inherited;
   FMestre := TACBrConvenio115Mestres.Create;
   FResponsavel := TACBrConvenio115Responsavel.Create(Self);
-{$IFNDEF FPC}
   Ordernar := False;
-{$ENDIF}
 end;
 
 destructor TACBrConvenio115.Destroy;
@@ -575,10 +562,9 @@ var
   I: Integer;
   OStr: TStringList;
 begin
-{$IFNDEF FPC}
   if Ordernar then
     Mestre.Sort(SortMestre);
-{$ENDIF}
+
   OStr := TStringList.Create;
   try
     for I := 0 to FMestre.Count - 1 do
@@ -834,6 +820,6 @@ end;
 
 initialization
 {$IFDEF FPC}
-//   {$i ACBrConvenio115.lrs}
+   {$I ACBrConvenio115.lrs}
 {$ENDIF}
 end.
