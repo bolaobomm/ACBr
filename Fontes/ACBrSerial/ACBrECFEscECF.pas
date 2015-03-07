@@ -244,7 +244,7 @@ TACBrECFEscECF = class( TACBrECFClass )
     }
     function GetNumCOOInicial: String; override ;
 
-    { TODO (não encontrado): function GetNumUltimoItem: Integer; override ;}
+    function GetNumUltimoItem: Integer; override ;
 
     function GetDadosUltimaReducaoZ: AnsiString; override ;
 
@@ -2843,6 +2843,15 @@ begin
   Result := EscECFResposta.Params[2] ;
 end;
 
+function TACBrECFEscECF.GetNumUltimoItem: Integer;
+begin
+  try
+    Result := RespostasComando.FieldByName('NumUltItem').AsInteger;
+  except
+    Result := 0;
+  end ;
+end;
+
 function TACBrECFEscECF.GetDadosUltimaReducaoZ : AnsiString ;
 var
   DataStr, ECFCRZ  : String ;
@@ -3194,8 +3203,6 @@ begin
 end ;
 
 function TACBrECFEscECF.GetDataHoraSB : TDateTime ;
-var
-   RetCmd: String;
 begin
   if fsDataHoraSB = 0 then
   begin
