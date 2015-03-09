@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/03/2015
+[*] Incluido a leitura do Atributo Id do grupo infProt.
+    por: Italo Jurisato Junior
+
 24/02/2015
 [*] Otimização de código.
     por: Italo Jurisato Junior
