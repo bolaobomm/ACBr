@@ -315,13 +315,13 @@ begin
         NFe.ide.NFref[i].refCTe := LerCampo(tcEsp, 'refCTe'); 
   end;
 
-  if ((ID = 'B20D') or (ID = 'B13')) and  (NFe.ide.NFref.Count > 0) then
+  if ((ID = 'B20D') or (ID = 'B13') or (ID = 'BA13')) and  (NFe.ide.NFref.Count > 0) then
    begin
      i := NFe.ide.NFref.Count - 1;
     (*B20d*)NFe.Ide.NFref[i].refNFP.CNPJCPF := LerCampo(tcEsp, 'CNPJ');
    end;
 
-  if ((ID = 'B20E') or (ID = 'B14')) and  (NFe.ide.NFref.Count > 0) then
+  if ((ID = 'B20E') or (ID = 'B14') or (ID = 'BA14')) and  (NFe.ide.NFref.Count > 0) then
    begin
      i := NFe.ide.NFref.Count - 1;
     (*B20e*)NFe.Ide.NFref[i].refNFP.CNPJCPF := LerCampo(tcEsp, 'CPF');

@@ -1474,6 +1474,19 @@ begin
             trvwNFe.Items.AddChild(Node,'nECF= ' +Ide.NFref.Items[i].RefECF.nECF);
             trvwNFe.Items.AddChild(Node,'nCOO= ' +Ide.NFref.Items[i].RefECF.nCOO);
           end;
+					
+          if Ide.NFref.Items[i].RefNFP.nNF > 0 then
+          begin
+            Node := trvwNFe.Items.AddChild(Node,'RefNFP'+IntToStrZero(i+1,3));
+
+            trvwNFe.Items.AddChild(Node,'cUF= ' + IntToStr(Ide.NFref.Items[i].RefNFP.cUF));
+            trvwNFe.Items.AddChild(Node,'AAMM= ' + Ide.NFref.Items[i].RefNFP.AAMM);
+            trvwNFe.Items.AddChild(Node,'CNPJCPF= ' + Ide.NFref.Items[i].RefNFP.CNPJCPF);
+            trvwNFe.Items.AddChild(Node,'IE= ' + Ide.NFref.Items[i].RefNFP.IE);
+            trvwNFe.Items.AddChild(Node,'modelo= ' + Ide.NFref.Items[i].RefNFP.modelo);
+            trvwNFe.Items.AddChild(Node,'serie= ' + IntToStr(Ide.NFref.Items[i].RefNFP.serie));
+            trvwNFe.Items.AddChild(Node,'nNF= ' + IntToStr(Ide.NFref.Items[i].RefNFP.nNF));
+          end;					
         end;
 
        Node := trvwNFe.Items.AddChild(Nota,'Emit');
