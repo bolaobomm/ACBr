@@ -267,11 +267,11 @@ begin
 
         if pos('procNFeZip', Leitor.Grupo) > 0 then
         begin
-          StrStream := TStringStream.Create('');
 
+          // XML da NF-e
+          StrStream := TStringStream.Create('');
           try
             try
-              // XML da NF-e
               StrAux := RetornarConteudoEntre(Leitor.Grupo, '<procNFeZip>', '</procNFeZip');
               StrDecod := DecodeBase64(StrAux);
               StrStream.WriteString(StrDecod);
@@ -298,17 +298,29 @@ begin
 
         if (Leitor.rExtrai(3, 'procNFeGrupoZip') <> '') then
         begin
-          StrStream := TStringStream.Create('');
 
+          // XML da NF-e
+          StrStream := TStringStream.Create('');
           try
             try
-              // XML da NF-e
               StrAux := RetornarConteudoEntre(Leitor.Grupo, '<NFeZip>', '</NFeZip');
               StrDecod := DecodeBase64(StrAux);
               StrStream.WriteString(StrDecod);
               FretNFe.Items[i].FNFeZip := UnZipMsg(StrStream);
+            except
+              on e : Exception do
+              begin
+                Raise Exception.Create(e.message);
+              end;
+            end;
+          finally
+            FreeAndNil(StrStream);
+          end;
 
-              // XML do Protocolo da NF-e
+          // XML do Protocolo da NF-e
+          StrStream := TStringStream.Create('');
+          try
+            try
               StrAux := RetornarConteudoEntre(Leitor.Grupo, '<protNFeZip>', '</protNFeZip');
               StrDecod := DecodeBase64(StrAux);
               StrStream.WriteString(StrDecod);
@@ -338,9 +350,6 @@ begin
       end;
       Result := True;
     end;
-
-//    if i = 0 then
-//      FretNFe.Add;
   except
     result := False;
   end;
