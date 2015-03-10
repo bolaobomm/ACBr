@@ -306,14 +306,13 @@ begin
                space(8)                                                   + // 50 a 57 - Brancos
                padL('', 5, '0')                                           + // 58 a 62 - Complemento
                padL(NumeroDocumento, 10, ' ')                             + // 63 a 72 - Número que identifica o título na empresa [ Alterado conforme instruções da CSO Brasília ] {27-07-09}
-
                space(5)                                                   + // 73 a 77 - Brancos
                FormatDateTime('ddmmyyyy', Vencimento)                     + // 78 a 85 - Data de vencimento do título
                IntToStrZero( round( ValorDocumento * 100), 15)            + // 86 a 100 - Valor nominal do título
                '00000'                                                    + // 101 a 105 - Agência cobradora. // Ficando com Zeros o Itaú definirá a agência cobradora pelo CEP do sacado
-               ' '                                                        + // 106 - Dígito da agência cobradora
-               padL(EspecieDoc,2)                                                 + // 107 a 108 - Espécie do documento
-               ATipoAceite                             + // 109 - Identificação de título Aceito / Não aceito
+               '0'                                                        + // 106 - Dígito da agência cobradora
+               padL(EspecieDoc,2)                                         + // 107 a 108 - Espécie do documento
+               ATipoAceite                                                + // 109 - Identificação de título Aceito / Não aceito
                FormatDateTime('ddmmyyyy', DataDocumento)                  + // 110 a 117 - Data da emissão do documento
                '0'                                                        + // 118 - Zeros
                ADataMoraJuros                                             + //119 a 126 - Data a partir da qual serão cobrados juros
@@ -354,7 +353,7 @@ begin
       else
         ATipoInscricaoAvalista:= '0';
 
-      Result:= Result + #13#10 +
+      Result:= Result +  #13#10 +
                IntToStrZero(ACBrBanco.Numero, 3)                          + //Código do banco
                '0001'                                                     + //Número do lote
                '3'                                                        + //Tipo do registro: Registro detalhe
@@ -378,18 +377,22 @@ begin
                padL(Sacado.SacadoAvalista.NomeAvalista, 30, ' ')          + //Nome do sacador/avalista
                space(10)                                                  + //Uso exclusivo FEBRABAN/CNAB
                padL('0',3, '0')                                           + //Uso exclusivo FEBRABAN/CNAB
-               space(28);                                            //Uso exclusivo FEBRABAN/CNAB
+               space(28) ;                                            //Uso exclusivo FEBRABAN/CNAB
       end;
 end;
 
 function TACBrBancoItau.GerarRegistroTrailler240( ARemessa : TStringList ): String;
+var
+  wRegsLote: Integer;
 begin
-          {REGISTRO TRAILER DO LOTE}
+   wRegsLote:= (ARemessa.Count -1) * 2;
+
+   {REGISTRO TRAILER DO LOTE}
    Result:= IntToStrZero(ACBrBanco.Numero, 3)                          + //Código do banco
             '0001'                                                     + //Número do lote
             '5'                                                        + //Tipo do registro: Registro trailer do lote
             Space(9)                                                   + //Uso exclusivo FEBRABAN/CNAB
-            IntToStrZero(ARemessa.Count + 2, 6)                        + //Quantidade de Registro da Remessa (Somando 1 para o header do lote e 1 para o trailer do lote)
+            IntToStrZero( wRegsLote  + 2, 6)                           + //Quantidade de Registro da Remessa (Somando 1 para o header do lote e 1 para o trailer do lote)
             padR('', 6, '0')                                           + //Quantidade de títulos em cobrança simples
             padR('',17, '0')                                           + //Valor dos títulos em cobrança simples
             padR('', 6, '0')                                           + //Quantidade títulos em cobrança vinculada
@@ -398,14 +401,14 @@ begin
             padL('', 8, ' ')                                           + //Referencia do aviso bancario
             space(117);
 
-          {GERAR REGISTRO TRAILER DO ARQUIVO}
+   {GERAR REGISTRO TRAILER DO ARQUIVO}
    Result:= Result + #13#10 +
             IntToStrZero(ACBrBanco.Numero, 3)                          + //Código do banco
             '9999'                                                     + //Lote de serviço
             '9'                                                        + //Tipo do registro: Registro trailer do arquivo
             space(9)                                                   + //Uso exclusivo FEBRABAN/CNAB}
             '000001'                                                   + //Quantidade de lotes do arquivo}
-            IntToStrZero(ARemessa.Count + 4, 6)                        + //Quantidade de registros do arquivo
+            IntToStrZero(wRegsLote + 4, 6)                             + //Quantidade de registros do arquivo
                                                                            {Somando 1 para o header do arquivo,
                                                                                     1 para o header do lote,
                                                                                     1 para o trailer do lote e
