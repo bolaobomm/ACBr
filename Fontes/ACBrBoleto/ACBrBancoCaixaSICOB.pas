@@ -38,7 +38,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrCaixaEconomicaSICOB;
+unit ACBrBancoCaixaSICOB;
 
 interface
 

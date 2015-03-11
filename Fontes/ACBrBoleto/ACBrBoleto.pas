@@ -903,8 +903,8 @@ procedure Register;
 implementation
 
 Uses ACBrUtil, ACBrBancoBradesco, ACBrBancoBrasil, ACBrBancoBanestes, ACBrBancoItau,
-     ACBrBancoSicredi, ACBrBancoMercantil, ACBrCaixaEconomica, ACBrBancoBanrisul,
-     ACBrBancoSantander, ACBrBancoob, ACBrCaixaEconomicaSICOB ,ACBrBancoHSBC,
+     ACBrBancoSicredi, ACBrBancoMercantil, ACBrBancoCaixa, ACBrBancoBanrisul,
+     ACBrBancoSantander, ACBrBancoob, ACBrBancoCaixaSICOB ,ACBrBancoHSBC,
      ACBrBancoNordeste , ACBrBancoBRB, ACBrBancoBic, ACBrBancoBradescoSICOOB,
      ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred,
      Forms, Math, dateutils, strutils;
