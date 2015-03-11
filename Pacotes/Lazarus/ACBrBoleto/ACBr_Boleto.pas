@@ -8,10 +8,10 @@ interface
 
 uses
   ACBrBoleto, ACBrBancoBradesco, ACBrBancoBrasil, ACBrBancoItau, 
-  ACBrBancoSicredi, ACBrBancoMercantil, ACBrCaixaEconomica, ACBrBancoBanrisul, 
-  ACBrBancoSantander, ACBrBancoob, ACBrCaixaEconomicaSICOB, ACBrBancoHSBC, 
-  ACBrBancoNordeste, ACBrBancoBRB, ACBrBancoBic, ACBrBancoBanestes, 
-  ACBrBancoCecred, LazarusPackageIntf;
+  ACBrBancoSicredi, ACBrBancoMercantil, ACBrBancoBanrisul, ACBrBancoSantander, 
+  ACBrBancoob, ACBrBancoHSBC, ACBrBancoNordeste, ACBrBancoBRB, ACBrBancoBic, 
+  ACBrBancoBanestes, ACBrBancoCecred, ACBrBancoCaixa, ACBrBancoCaixaSICOB, 
+  LazarusPackageIntf;
 
 implementation
 
