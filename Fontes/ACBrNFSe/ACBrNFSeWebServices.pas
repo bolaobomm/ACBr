@@ -5974,9 +5974,12 @@ begin
 
   TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeIdle );
 
-  FDataRecebimento := NFSeRetorno.ListaNfse.CompNfse[0].Nfse.dhRecebimento;
-  FProtocolo       := NFSeRetorno.ListaNfse.CompNfse[0].Nfse.Protocolo;
-
+  if NFSeRetorno.ListaNfse.CompNfse.Count > 0 then
+  begin
+    FDataRecebimento := NFSeRetorno.ListaNfse.CompNfse[0].Nfse.dhRecebimento;
+    FProtocolo       := NFSeRetorno.ListaNfse.CompNfse[0].Nfse.Protocolo;
+  end;
+  
   // Lista de Mensagem de Retorno
   FMsg := '';
   if NFSeRetorno.ListaNfse.MsgRetorno.Count>0

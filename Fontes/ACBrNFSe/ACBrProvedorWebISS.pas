@@ -437,6 +437,10 @@ begin
             ConfigURL.HomNomeCidade := 'montecastelosc';
             ConfigURL.ProNomeCidade := 'montecastelosc';
            end;
+  4212205: begin // Papanduva/SC
+            ConfigURL.HomNomeCidade := 'papanduvasc';
+            ConfigURL.ProNomeCidade := 'papanduvasc';
+           end;
   4301602: begin // Bage/RS
             ConfigURL.HomNomeCidade := 'bagers';
             ConfigURL.ProNomeCidade := 'bagers';
@@ -571,6 +575,7 @@ begin
   2916401,
   3147907,
   4210100,
+  4212205,
   5107305: begin
             ConfigURL.HomRecepcaoLoteRPS    := 'https://www5.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
 
