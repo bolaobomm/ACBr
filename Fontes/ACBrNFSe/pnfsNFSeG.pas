@@ -228,10 +228,15 @@ begin
                                              proISSNET, proLexsom, proNatal, proTinus, proRecife, proRJ,
                                              proSimplISS, proThema, proTiplan, proAgili,
                                              proFISSLex, proSpeedGov, proPronim, proCoplan,
-                                             proSalvador, proSJP],
+                                             proSalvador, proSJP, proFintelISS],
                                '',
                                DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '')
                               ) +
+
+               // Inclui a versão com V em maiusculo
+               DFeUtil.SeSenao(AProvedor in [proFintelISS],
+                               DFeUtil.SeSenao(VersaoDados <> '', ' Versao="' + VersaoDados + '"', '' ),
+                               '') +
 
                // Inclui o Name Space ou não
                DFeUtil.SeSenao(AProvedor = proSimplISS,

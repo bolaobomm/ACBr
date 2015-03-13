@@ -262,6 +262,13 @@ begin
              ConfigURL.ProNomeCidade         := '';
              ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.pmsj.sc.gov.br:90/NFSEWS/Services.svc';
            end;
+  4303509: begin // Camaqua/RS
+             ConfigURL.HomNomeCidade         := '';
+             ConfigURL.HomRecepcaoLoteRPS    := 'http://portal.camaqua.rs.gov.br:8181/nfsewsteste/Services.svc';
+
+             ConfigURL.ProNomeCidade         := '';
+             ConfigURL.ProRecepcaoLoteRPS    := 'http://portal.camaqua.rs.gov.br/nfsews/Services.svc';
+           end;
   4308102: begin // Feliz/RS
              ConfigURL.HomNomeCidade         := '';
              ConfigURL.HomRecepcaoLoteRPS    := 'http://187.84.56.69:8082/nfsewsteste/Services.svc';
