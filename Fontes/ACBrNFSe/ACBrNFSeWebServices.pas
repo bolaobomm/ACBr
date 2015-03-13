@@ -2907,16 +2907,6 @@ begin
   else raise Exception.Create('A funcionalidade [Enviar Sincrono] não foi disponibilizada pelo provedor: ' + FxProvedor);
 end;
 
-
-
-
-
-
-
-
-
-
-
 procedure TWebServicesBase.DoNFSeSubstituirNFSe;
 var
  i         : Integer;
@@ -3269,17 +3259,6 @@ begin
   if DadosMsg = '' then
    raise Exception.Create('A funcionalidade [Substituir NFSe] não foi disponibilizada pelo provedor: ' + FxProvedor);
 end;
-
-
-
-
-
-
-
-
-
-
-
 
 { TWebServices }
 
@@ -5352,7 +5331,7 @@ begin
     StrStream.CopyFrom(Stream, 0);
 
     //FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-	
+
 	// Luiz Baião 2014.12.02    ACBrProvedorNFSEBrasil
 //    if FProvedor = proNFSEBrasil then
 //      FRetornoWS := TiraAcentos(CaracterEmTagXML(StrStream.DataString, True))
