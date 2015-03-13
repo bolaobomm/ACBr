@@ -56,8 +56,8 @@
         <UnitName Value="ACBrBancoSantander"/>
       </Item8>
       <Item9>
-        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoob.pas"/>
-        <UnitName Value="ACBrBancoob"/>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoBancoob.pas"/>
+        <UnitName Value="ACBrBancoBancoob"/>
       </Item9>
       <Item10>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoHSBC.pas"/>
