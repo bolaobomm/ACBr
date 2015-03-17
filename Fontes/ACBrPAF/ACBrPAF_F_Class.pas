@@ -36,7 +36,7 @@ unit ACBrPAF_F_Class;
 
 interface
 
-uses SysUtils, Classes, DateUtils, ACBrTXTClass, ACBrPAFRegistros, ACBrPAF_F;
+uses SysUtils, Classes, DateUtils, ACBrTXTClass, ACBrPAF_F;
 
 type
   /// TACBrPAF_F -
@@ -65,7 +65,7 @@ type
 
 implementation
 
-uses ACBrSpedUtils;
+uses ACBrTXTUtils;
 
 { TPAF_F }
 constructor TPAF_F.Create;

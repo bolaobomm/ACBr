@@ -38,7 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-25/02/2015
+Data: 17/03/2015
+[*] ACBrSPEDUtils.pas renomeado para ACBrTXTUtil.pas e movido para pasta do 
+ACBrComum em preparação para o refactoring geral.
+-- ACBrTXTClass --  (por: DSA)
+[-] Remoção de Units não utilizada;
+
+Data: 25/02/2015
 [-] Corrigido o erro da função que valida o numero de Drawback.
     Por: Italo Jurisato Junior
 

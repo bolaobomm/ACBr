@@ -8,7 +8,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrSPED;..\..\..\Fontes\ACBrSPED\ACBrSPEDFiscal;..\..\..\Fontes\ACBrSPED\ACBrSPEDContabil;..\..\..\Fontes\ACBrSPED\ACBrSPEDPisCofins"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrSPED;..\..\..\Fontes\ACBrSPED\ACBrSPEDFiscal;..\..\..\Fontes\ACBrSPED\ACBrSPEDContabil;..\..\..\Fontes\ACBrSPED\ACBrSPEDPisCofins;..\..\..\Fontes\ACBrComum"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrSPED\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
@@ -29,8 +29,8 @@
         <UnitName Value="ACBrSped"/>
       </Item1>
       <Item2>
-        <Filename Value="..\..\..\Fontes\ACBrSPED\ACBrSpedUtils.pas"/>
-        <UnitName Value="ACBrSpedUtils"/>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrTXTUtils.pas"/>
+        <UnitName Value="ACBrTXTUtils"/>
       </Item2>
       <Item3>
         <Filename Value="..\..\..\Fontes\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_0.pas"/>

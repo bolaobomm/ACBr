@@ -44,7 +44,7 @@ unit ACBrPAF_N_Class;
 
 interface
 
-uses SysUtils, Classes, DateUtils, ACBrTXTClass, ACBrPAFRegistros,
+uses SysUtils, Classes, DateUtils, ACBrTXTClass,
   ACBrPAF_N;
 
 type
@@ -82,7 +82,7 @@ type
 
 implementation
 
-uses ACBrSPEDUtils, ACBrUtil, ACBrPAF;
+uses ACBrTXTUtils, ACBrUtil, ACBrPAF;
 
 { TPAF_N }
 

@@ -38,7 +38,7 @@
 |*  - Criação e distribuição da Primeira Versao
 *******************************************************************************}
 
-unit ACBrSpedUtils;
+unit ACBrTXTUtils;
 
 interface
 

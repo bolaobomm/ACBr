@@ -44,8 +44,7 @@ unit ACBrEFDBloco_0_Class;
 
 interface
 
-uses SysUtils, Classes, DateUtils, ACBrSped, ACBrEFDBloco_0, ACBrEFDBlocos,
-     ACBrTXTClass;
+uses SysUtils, Classes, DateUtils, ACBrSped, ACBrEFDBloco_0, ACBrEFDBlocos;
 
 
 type
@@ -189,7 +188,7 @@ type
 
 implementation
 
-uses ACBrSpedUtils, StrUtils;
+uses ACBrTXTUtils, StrUtils;
 
 { TBloco_0 }
 

@@ -341,7 +341,7 @@ uses
 
 procedure Register;
 begin
-  RegisterComponents('ACBr', [TACBrConvenio115]);
+  RegisterComponents('ACBrTXT', [TACBrConvenio115]);
 end;
 
 function MD5String(const texto: string): string;

@@ -7,7 +7,7 @@ unit ACBr_SPED;
 interface
 
 uses
-  ACBrSped, ACBrSpedUtils, ACBrEFDBloco_0, ACBrEFDBloco_0_Class, 
+  ACBrSped, ACBrTXTUtils, ACBrEFDBloco_0, ACBrEFDBloco_0_Class, 
   ACBrEFDBloco_1, ACBrEFDBloco_1_Class, ACBrEFDBloco_9, ACBrEFDBloco_9_Class, 
   ACBrEFDBloco_C, ACBrEFDBloco_C_Class, ACBrEFDBloco_D, ACBrEFDBloco_D_Class, 
   ACBrEFDBloco_E, ACBrEFDBloco_E_Class, ACBrEFDBloco_H, ACBrEFDBloco_H_Class, 
