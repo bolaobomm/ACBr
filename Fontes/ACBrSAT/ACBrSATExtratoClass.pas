@@ -209,7 +209,8 @@ function TACBrSATExtratoClass.CalcularConteudoQRCode(ID: String;
 var
   ValorStr: String;
 begin
-  ValorStr := StringReplace( FormatFloat('0.00', Valor), DecimalSeparator, '.', [rfReplaceAll]);
+  ValorStr := StringReplace( FormatFloat('0.00', Valor),
+     {$IFDEF DELPHI17_UP}FormatSettings.{$ENDIF}DecimalSeparator, '.', [rfReplaceAll]);
 
   Result := ID + '|' +
             FormatDateTime('yyyymmddhhmmss',dEmi_hEmi) + '|' +
