@@ -184,9 +184,7 @@ begin
           ANossoNumero := padR(AConvenio, 4, '0') + padR(ANossoNumero, 7, '0')
       else if (Length(AConvenio) > 4) and (Length(AConvenio) <= 6) then
           ANossoNumero := padR(AConvenio, 6, '0') + padR(ANossoNumero, 5, '0')
-      else if (Length(AConvenio) = 7) and (ACBrTitulo.Carteira = '11') then
-          ANossoNumero := padR('0', 7, '0') + padR(ANossoNumero, 10, '0')
-      else if (Length(AConvenio) = 7) and ((ACBrTitulo.Carteira <> '11')) then
+      else if (Length(AConvenio) = 7) then
           ANossoNumero := padR(AConvenio, 7, '0') + padR(ANossoNumero, 10, '0');
    end;
    Result := ANossoNumero;
@@ -456,7 +454,7 @@ begin
       {Mora Juros}
       if (ValorMoraJuros > 0) then
        begin
-         if (DataMoraJuros > 0) then
+         if (DataMoraJuros <> Null) then
             ADataMoraJuros := FormatDateTime('ddmmyyyy', DataMoraJuros)
          else
             ADataMoraJuros := padL('', 8, '0');
