@@ -715,7 +715,7 @@ var
 begin
   { Sobrescrever apenas se necessário }
 
-  Texto := '<?xml version="1.0" encoding="utf-8"?>';
+  Texto := '<?xml version="1.0" encoding="UTF-8"?>';
   Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
                                    ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"' +
                                    ' xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
@@ -1770,7 +1770,7 @@ begin
 
                 aEventos := Copy(FRetWS, Inicio, Fim - Inicio + 1);
 
-                aMDFeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
+                aMDFeDFe := '<?xml version="1.0" encoding="UTF-8"?>' +
                             '<MDFeDFe>' +
                              '<procMDFe versao="' + MDFeenviMDFe + '">' +
                                SeparaDados(aMDFe, 'MDFeProc') +
@@ -1803,7 +1803,7 @@ begin
 
                 aEventos := Copy(FRetWS, Inicio, Fim - Inicio + 1);
 
-                aMDFeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
+                aMDFeDFe := '<?xml version="1.0" encoding="UTF-8"?>' +
                             '<MDFeDFe>' +
                              '<procMDFe versao="' + MDFeenviMDFe + '">' +
                                SeparaDados(aMDFe, 'MDFeProc') +
@@ -1886,7 +1886,7 @@ begin
 
               aEventos := Copy(FRetWS, Inicio, Fim - Inicio + 1);
 
-              aMDFeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
+              aMDFeDFe := '<?xml version="1.0" encoding="UTF-8"?>' +
                           '<MDFeDFe>' +
                            '<procMDFe versao="' + MDFeenviMDFe + '">' +
                              SeparaDados(aMDFe, 'MDFeProc') +
@@ -2130,7 +2130,7 @@ begin
 
             wProc := TStringList.Create;
             try
-              wProc.Add('<?xml version="1.0" encoding="UTF-8" ?>');
+              wProc.Add('<?xml version="1.0" encoding="UTF-8"?>');
               wProc.Add('<procEventoMDFe versao="' + GetVersaoMDFe(FConfiguracoes.Geral.VersaoDF,
                                                                  LayMDFeEvento) +
                                       '" xmlns="http://www.portalfiscal.inf.br/mdfe">');

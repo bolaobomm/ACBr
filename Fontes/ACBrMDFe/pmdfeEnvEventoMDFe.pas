@@ -132,6 +132,8 @@ var
   sDoc: String;
 begin
   Gerador.ArquivoFormatoXML := '';
+
+  Gerador.wGrupo(ENCODING_UTF8, '', False);
   Gerador.wGrupo('eventoMDFe ' + NAME_SPACE_MDFE + ' versao="' + MDFeEventoMDFe + '"');
 
   Evento.Items[0].InfEvento.Id := 'ID'+ Evento.Items[0].InfEvento.TipoEvento +

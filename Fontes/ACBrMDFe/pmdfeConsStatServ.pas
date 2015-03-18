@@ -94,6 +94,7 @@ function TConsStatServ.GerarXML: Boolean;
 begin
  Gerador.ArquivoFormatoXML := '';
 
+ Gerador.wGrupo(ENCODING_UTF8, '', False);
  Gerador.wGrupo('consStatServMDFe ' + NAME_SPACE_MDFE + ' versao="' + MDFeconsStatServ + '"');
  Gerador.wCampo(tcStr, 'DP03', 'tpAmb', 1, 1, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
  Gerador.wCampo(tcStr, 'DP04', 'xServ', 6, 6, 1, 'STATUS', DSC_XSERV);

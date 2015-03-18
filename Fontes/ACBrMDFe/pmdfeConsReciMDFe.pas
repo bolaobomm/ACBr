@@ -86,6 +86,7 @@ function TConsReciMDFe.GerarXML: Boolean;
 begin
   Gerador.ArquivoFormatoXML := '';
 
+  Gerador.wGrupo(ENCODING_UTF8, '', False);
   Gerador.wGrupo('consReciMDFe ' + NAME_SPACE_MDFe + ' versao="' + MDFeconsReciMDFe + '"');
   Gerador.wCampo(tcStr, 'BP03', 'tpAmb', 01, 01, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
   Gerador.wCampo(tcEsp, 'BP04', 'nRec ', 15, 15, 1, FnRec, DSC_NREC);
