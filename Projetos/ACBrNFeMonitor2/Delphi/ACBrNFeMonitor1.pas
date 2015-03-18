@@ -2247,6 +2247,7 @@ begin
         ACBrNFeDANFeESCPOS1.Device.Baud           := StrToInt(cbVelocidadeESCPOS.Text);
         ACBrNFeDANFeESCPOS1.ImprimeEmUmaLinha     := cbxImprimirItem1LinhaESCPOS.Checked;
         ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemESCPOS.Checked;
+				ACBrNFeDANFeESCPOS1.LinhasEntreCupons     := sedLinhasEntreCupom.Value
 
         if not ACBrNFeDANFeESCPOS1.Device.Ativo then
            ACBrNFeDANFeESCPOS1.Device.Ativar;
