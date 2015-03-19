@@ -86,7 +86,7 @@ function TConsSitMDFe.GerarXML: Boolean;
 begin
  Gerador.ArquivoFormatoXML := '';
 
- Gerador.wGrupo(ENCODING_UTF8, '', False);
+// Gerador.wGrupo(ENCODING_UTF8, '', False);
  Gerador.wGrupo('consSitMDFe ' + NAME_SPACE_MDFE + ' versao="' + MDFeconsSitMDFe + '"');
  Gerador.wCampo(tcStr, 'CP03', 'tpAmb ', 01, 01, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
  Gerador.wCampo(tcStr, 'CP04', 'xServ ', 09, 09, 1, 'CONSULTAR', DSC_XSERV);

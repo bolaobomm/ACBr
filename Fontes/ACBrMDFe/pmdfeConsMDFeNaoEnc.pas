@@ -95,7 +95,7 @@ function TConsMDFeNaoEnc.GerarXML: Boolean;
 begin
  Gerador.ArquivoFormatoXML := '';
 
- Gerador.wGrupo(ENCODING_UTF8, '', False);
+// Gerador.wGrupo(ENCODING_UTF8, '', False);
  Gerador.wGrupo('consMDFeNaoEnc ' + NAME_SPACE_MDFE + ' versao="' + MDFeConsNaoEnc + '"');
  Gerador.wCampo(tcStr, 'CP03', 'tpAmb', 01, 01, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
  Gerador.wCampo(tcStr, 'CP04', 'xServ', 24, 24, 1, 'CONSULTAR NÃO ENCERRADOS', DSC_XSERV);
