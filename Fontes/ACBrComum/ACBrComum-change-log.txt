@@ -38,6 +38,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/03/2015
+[-] Corrigido o erro da função que valida o numero RE.
+    Por: Italo Jurisato Junior
+
 Data: 17/03/2015
 [*] ACBrSPEDUtils.pas renomeado para ACBrTXTUtil.pas e movido para pasta do 
 ACBrComum em preparação para o refactoring geral.
