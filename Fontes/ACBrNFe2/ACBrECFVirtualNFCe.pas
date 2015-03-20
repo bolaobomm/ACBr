@@ -65,7 +65,7 @@ type
 
   TACBrECFVirtualNFCeQuandoFecharDocumento = procedure(NFe: TNFe) of object;
 
-  TACBrECFVirtualNFCeQuandoCancelarDocumento = procedure(Justificativa : String) of object;
+  TACBrECFVirtualNFCeQuandoCancelarDocumento = procedure(out Justificativa : String) of object;
 
   { TACBrECFVirtualNFCe }
 
