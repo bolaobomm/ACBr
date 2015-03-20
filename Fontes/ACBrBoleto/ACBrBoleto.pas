@@ -57,7 +57,7 @@ uses  ACBrBase,  {Units da ACBr}
      Graphics, Contnrs, Classes;
 
 const
-  CACBrBoleto_Versao = '0.0.119a' ;
+  CACBrBoleto_Versao = '0.0.120a' ;
 
 type
   TACBrTipoCobranca =
@@ -509,6 +509,19 @@ type
     property ACBrBoleto  : TACBrBoleto read fACBrBoleto;
   end;
 
+  TACBrTituloLiquidacao = class
+  private
+    fBanco: Integer;
+    fAgencia: String;
+    fOrigem: String;
+    fFormaPagto: String;
+  public
+    property Banco     : Integer read fBanco      write fBanco;
+    property Agencia   : String  read fAgencia    write fAgencia;
+    property Origem    : String  read fOrigem     write fOrigem;
+    property FormaPagto: String  read fFormaPagto write fFormaPagto;
+  end;
+
   TACBrSacadoAvalista = class
   private
     fTipoPessoa  : TACBrPessoa;
@@ -611,6 +624,7 @@ type
     fMensagem          : TStrings;
     fInstrucoes        : TStrings;
     fSacado            : TACBrSacado;
+    fLiquidacao        : TACBrTituloLiquidacao;
 
     fMotivoRejeicaoComando          : TStrings;
     fDescricaoMotivoRejeicaoComando : TStrings;
@@ -640,6 +654,7 @@ type
     fCodigoLiquidacaoDescricao: String;
     fCarteiraEnvio        : TACBrCarteiraEnvio;
     fCodigoGeracao        : String;
+    fValorPago: Currency;
 
     procedure SetCarteira(const AValue: String);
     procedure SetCodigoMora(AValue: String);
@@ -695,6 +710,7 @@ type
      property ValorIOF             : Currency read fValorIOF              write fValorIOF;
      property ValorOutrasDespesas  : Currency read fValorOutrasDespesas   write fValorOutrasDespesas;
      property ValorOutrosCreditos  : Currency read fValorOutrosCreditos   write fValorOutrosCreditos;
+     property ValorPago            : Currency read fValorPago             write fValorPago;
      property ValorRecebido        : Currency read fValorRecebido         write fValorRecebido;
      property Referencia           : String   read fReferencia            write fReferencia;
      property Versao               : String   read fVersao                write fVersao;
@@ -707,6 +723,7 @@ type
      property TipoImpressao        : TACBrTipoImpressao read fTipoImpressao write fTipoImpressao;
      property LinhaDigitada : String read fpLinhaDigitada;
      property CodigoGeracao: String read fCodigoGeracao write SetCodigoGeracao;
+     property Liquidacao: TACBrTituloLiquidacao read fLiquidacao write fLiquidacao;
    end;
 
   { TListadeBoletos }
@@ -1141,6 +1158,7 @@ begin
    fMensagem          := TStringList.Create;
    fInstrucoes        := TStringList.Create;
    fSacado            := TACBrSacado.Create;
+   fLiquidacao        := TACBrTituloLiquidacao.Create;
 
    fOcorrenciaOriginal:= TACBrOcorrencia.Create(Self);
    fMotivoRejeicaoComando          := TStringList.Create;
@@ -1173,6 +1191,7 @@ destructor TACBrTitulo.Destroy;
 begin
    fMensagem.Free;
    fSacado.Free;
+   fLiquidacao.Free;
    fInstrucoes.Free;
    fOcorrenciaOriginal.Free;
    fMotivoRejeicaoComando.Free;
