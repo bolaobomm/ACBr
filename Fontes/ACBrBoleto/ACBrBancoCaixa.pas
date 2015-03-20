@@ -530,10 +530,10 @@ begin
                ' '                                                                         + //  15 a 15  - Uso exclusivo FEBRABAN/CNAB: Branco
                ATipoOcorrencia                                                             + //  16 a 17  - Tipo Ocorrencia
                padR('', 1,  '0')                                                           + //  18 a 18  - Codigo do Desconto 2
-               padR('', 8,  ' ')                                                           + //  19 a 26  - Data do Desconto 2
+               padR('', 8,  '0')                                                           + //  19 a 26  - Data do Desconto 2     
                padR('', 15, '0')                                                           + //  27 a 41  - Valor/Percentual a ser concedido
                padR('', 1,  '0')                                                           + //  42 a 42  - Código do Desconto 3
-               padR('', 8,  ' ')                                                           + //  43 a 50  - Data do Desconto 3
+               padR('', 8,  '0')                                                           + //  43 a 50  - Data do Desconto 3    
                padR('', 15, '0')                                                           + //  51 a 65  - Valor/Percentual a ser concedido
                IfThen((PercentualMulta <> null) and (PercentualMulta > 0), '2', '0')       + //  66 a 66  - Código da Multa
                FormatDateTime('ddmmyyyy',Vencimento)                                       + //  67 a 74  - Data da Multa
@@ -542,7 +542,7 @@ begin
                PadL('', 10, ' ')                                                           + //  90 a 99  - Informação ao Sacado
                PadL('', 40, ' ')                                                           + // 100 a 139 - Mensagem 3
                PadL('', 40, ' ')                                                           + // 140 a 179 - Mensagem 4
-               PadL('', 50, ' ')                                                           + // 180 a 229 - Email do Sacado P/ Envio de Informacoes
+               PadL(Sacado.Email, 50, ' ')                                                 + // 180 a 229 - Email do Sacado P/ Envio de Informacoes // alterado, consult atech 11/03/2015
                PadL('', 11, ' ');                                                            // 230 a 240 - Uso Exclusivo Febraban/CNAB
       end;
 end;
