@@ -46,7 +46,7 @@ interface
 
 uses SysUtils,
      Classes, Graphics,
-     ACBrBase,
+     ACBrBase, ACBrConsts,
      pcnCFe, pcnCFeCanc;
 
 type
@@ -210,7 +210,7 @@ var
   ValorStr: String;
 begin
   ValorStr := StringReplace( FormatFloat('0.00', Valor),
-     {$IFDEF DELPHI17_UP}FormatSettings.{$ENDIF}DecimalSeparator, '.', [rfReplaceAll]);
+     DecimalSeparator, '.', [rfReplaceAll]);
 
   Result := ID + '|' +
             FormatDateTime('yyyymmddhhmmss',dEmi_hEmi) + '|' +
