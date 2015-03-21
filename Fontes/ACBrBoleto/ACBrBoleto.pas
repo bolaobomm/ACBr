@@ -57,7 +57,7 @@ uses  ACBrBase,  {Units da ACBr}
      Graphics, Contnrs, Classes;
 
 const
-  CACBrBoleto_Versao = '0.0.120a' ;
+  CACBrBoleto_Versao = '0.0.121a' ;
 
 type
   TACBrTipoCobranca =
@@ -507,7 +507,9 @@ type
     property CEP         : String  read fCEP         write fCEP;
     property Telefone    : String  read fTelefone    write fTelefone;
     property ACBrBoleto  : TACBrBoleto read fACBrBoleto;
+    property CaracTitulo: TACBrCaracTitulo read fCaracTitulo  write fCaracTitulo default tcSimples;
   end;
+
 
   TACBrTituloLiquidacao = class
   private
@@ -654,7 +656,8 @@ type
     fCodigoLiquidacaoDescricao: String;
     fCarteiraEnvio        : TACBrCarteiraEnvio;
     fCodigoGeracao        : String;
-    fValorPago: Currency;
+    fValorPago            : Currency;
+    fCaracTitulo          :TACBrCaracTitulo;
 
     procedure SetCarteira(const AValue: String);
     procedure SetCodigoMora(AValue: String);
@@ -724,6 +727,7 @@ type
      property LinhaDigitada : String read fpLinhaDigitada;
      property CodigoGeracao: String read fCodigoGeracao write SetCodigoGeracao;
      property Liquidacao: TACBrTituloLiquidacao read fLiquidacao write fLiquidacao;
+     property CaracTitulo: TACBrCaracTitulo read fCaracTitulo  write fCaracTitulo default tcSimples;
    end;
 
   { TListadeBoletos }
@@ -1185,6 +1189,7 @@ begin
 
    fCodigoMora    := '12';
    fCodigoGeracao := '2';
+   fCaracTitulo   := fACBrBoleto.Cedente.CaracTitulo;
 end;
 
 destructor TACBrTitulo.Destroy;

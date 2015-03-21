@@ -425,7 +425,7 @@ begin
          tbBancoNaoReemite : ATipoBoleto := '5' + '2';
       end;
 
-      case ACBrBoleto.Cedente.CaracTitulo of
+      case CaracTitulo of
         tcSimples     : ACaracTitulo  := '1';
         tcVinculada   : ACaracTitulo  := '2';
         tcCaucionada  : ACaracTitulo  := '3';
@@ -735,7 +735,7 @@ begin
       { Pegando Tipo de Cobrança}
       case StrToInt(ACBrTitulo.Carteira) of
         11,17 :
-          case ACBrBoleto.Cedente.CaracTitulo of
+          case CaracTitulo of
             tcSimples: aTipoCobranca:='     ';
             tcDescontada: aTipoCobranca:='04DSC';
             tcVendor: aTipoCobranca:='08VDR';
