@@ -507,7 +507,6 @@ type
     property CEP         : String  read fCEP         write fCEP;
     property Telefone    : String  read fTelefone    write fTelefone;
     property ACBrBoleto  : TACBrBoleto read fACBrBoleto;
-    property CaracTitulo: TACBrCaracTitulo read fCaracTitulo  write fCaracTitulo default tcSimples;
   end;
 
 
