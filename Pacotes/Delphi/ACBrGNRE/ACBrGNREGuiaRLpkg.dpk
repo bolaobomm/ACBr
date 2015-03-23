@@ -35,6 +35,7 @@ requires
   ACBr_GNRE,
   designide,
   {$IFDEF VER150} RLibWinD7vcl, vcljpg;{$ENDIF} // D7
+  {$IFDEF VER180} RLibWinD2007vcl, vcljpg;{$ENDIF} // D2007  
   {$IFDEF VER200} RLibWinD2009, vclimg;{$ENDIF} // D2009
   {$IFDEF VER210} RLibWinD2010, vclimg;{$ENDIF} // D2010
   {$IFDEF VER220} RLibWinDXE, vclimg;{$ENDIF} // XE
