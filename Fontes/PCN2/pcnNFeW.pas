@@ -647,7 +647,9 @@ begin
           if not ValidarIE(nfe.Dest.IE, UF) then
             Gerador.wAlerta('E17', 'IE', DSC_IE, ERR_MSG_INVALIDO);
       end;
-   end;
+   end
+   else
+     Gerador.wCampo(tcStr, 'E17', 'IE ', 00, 14, 1, '', DSC_IE);
 
   Gerador.wCampo(tcStr, 'E18', 'ISUF   ', 08, 09, 0, nfe.Dest.ISUF, DSC_ISUF);
   if (FOpcoes.ValidarInscricoes) and (nfe.Dest.ISUF <> '') then
