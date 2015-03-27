@@ -686,7 +686,7 @@ begin
             begin
               SeuNumero := NossoNumero;
               NumeroDocumento := NossoNumero
-            end;
+            end;            
           
             MotivoLinha := 214;
 

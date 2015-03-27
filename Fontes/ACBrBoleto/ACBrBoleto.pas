@@ -57,7 +57,7 @@ uses  ACBrBase,  {Units da ACBr}
      Graphics, Contnrs, Classes;
 
 const
-  CACBrBoleto_Versao = '0.0.121a' ;
+  CACBrBoleto_Versao = '0.0.122a' ;
 
 type
   TACBrTipoCobranca =
