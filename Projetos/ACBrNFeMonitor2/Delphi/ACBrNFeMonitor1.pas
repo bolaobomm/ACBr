@@ -2075,7 +2075,7 @@ begin
   begin
     ACBrCTe1.Conhecimentos.Clear;
     ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
-    ACBrNFe1.Enviar(StrToInt(vAux));
+    ACBrCTe1.Enviar(StrToInt(vAux));
     ExibeResp(ACBrCTe1.WebServices.Retorno.RetWS);
   end;
 end;
