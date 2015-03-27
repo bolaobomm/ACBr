@@ -1717,8 +1717,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 574
         Height = 10
         Top = 210
-        Width = 62
-        Caption = '( + ) Mora / Multa'
+        Width = 87
+        Caption = '( + ) Mora / Multa / Juros'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -2966,8 +2966,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 552
         Height = 10
         Top = 221
-        Width = 62
-        Caption = '( + ) Mora / Multa'
+        Width = 87
+        Caption = '( + ) Mora / Multa / Juros'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'

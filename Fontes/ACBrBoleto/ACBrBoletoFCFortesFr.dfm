@@ -1,9 +1,9 @@
 object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
-  Left = 352
-  Top = 115
+  Left = 179
+  Top = 94
+  Width = 1101
+  Height = 784
   Caption = 'ACBRBoletoFCFortesFr'
-  ClientHeight = 730
-  ClientWidth = 1068
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,8 +17,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   PixelsPerInch = 96
   TextHeight = 13
   object LayoutBoleto: TRLReport
-    Left = 5
-    Top = -69
+    Left = -3
+    Top = -253
     Width = 794
     Height = 1123
     Margins.LeftMargin = 4.000000000000000000
@@ -189,9 +189,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel6: TRLLabel
         Left = 289
         Top = 46
-        Width = 91
+        Width = 103
         Height = 10
-        Caption = 'Agencia / Codigo Cedente'
+        Caption = 'Agencia / Codigo Benefici'rio'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1219,11 +1219,11 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel80: TRLLabel
         Left = 4
         Top = 157
-        Width = 325
+        Width = 338
         Height = 10
         Caption = 
           'Instru'#231#245'es (Todas as informa'#231#245'es deste bloqueto s'#227'o de exclusiva' +
-          ' responsabilidade do cedente.)'
+          ' responsabilidade do benefici'#225'rio.)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1283,9 +1283,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel82: TRLLabel
         Left = 574
         Top = 69
-        Width = 106
+        Width = 103
         Height = 10
-        Caption = 'Ag'#234'ncia / C'#243'digo Cedente'
+        Caption = 'Ag'#234'ncia / C'#243'digo Benefici'#225'rio'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1987,9 +1987,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel148: TRLLabel
         Left = 551
         Top = 85
-        Width = 91
+        Width = 103
         Height = 10
-        Caption = 'Ag'#234'ncia / C'#243'digo Cedente'
+        Caption = 'Ag'#234'ncia / C'#243'digo Benefici'#225'rio'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -2350,9 +2350,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel161: TRLLabel
         Left = 4
         Top = 174
-        Width = 171
+        Width = 184
         Height = 10
-        Caption = 'Instru'#231#245'es - Texto de responsabilidade do cedente.'
+        Caption = 'Instru'#231#245'es - Texto de responsabilidade do benefici'#225'rio.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -2615,8 +2615,6 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 350
         Width = 414
         Height = 58
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         Behavior = [beSiteExpander]
         Caption = '00000000000000000000000000000000000000000000'
         CheckSumMethod = cmNone
@@ -2626,6 +2624,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         InvalidCode = icDrawAnyway
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         ParentFont = False
         Ratio = 3.000000000000000000
         RealBounds.UsedUnit = buMilimeters
@@ -2768,7 +2768,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoCarne: TRLReport
-    Left = 798
+    Left = 790
     Top = 27
     Width = 794
     Height = 1123
@@ -3316,7 +3316,6 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
-        Text = ''
       end
       object RLDBText18: TRLDBText
         Left = 570
@@ -3331,7 +3330,6 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
-        Text = ''
       end
       object RLLabel16: TRLLabel
         Left = 644
@@ -3383,9 +3381,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel38: TRLLabel
         Left = 0
         Top = 71
-        Width = 91
+        Width = 103
         Height = 10
-        Caption = 'Ag'#234'ncia / C'#243'digo Cedente'
+        Caption = 'Ag'#234'ncia / C'#243'digo Benefici'#225'rio'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -3931,8 +3929,6 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 286
         Width = 465
         Height = 66
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         AutoSize = False
         Caption = '23790-3571000000100120'
         CheckSumMethod = cmNone
@@ -3942,6 +3938,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Name = 'Arial'
         Font.Style = []
         InvalidCode = icDrawAnyway
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         ParentFont = False
         Ratio = 3.000000000000000000
       end
