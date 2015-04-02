@@ -1295,7 +1295,7 @@ begin
     end;
   end;
 
-  //Verificando se existe algum conhecimento confirmado
+  //Verificando se existe algum Manifesto confirmado
   for I := 0 to FManifestos.Count - 1 do
   begin
     if FManifestos.Items[I].Confirmada then
@@ -1305,12 +1305,12 @@ begin
     end;
   end;
 
-  //Verificando se existe algum conhecimento nao confirmado
+  //Verificando se existe algum Manifesto nao confirmado
   for I := 0 to FManifestos.Count - 1 do
   begin
     if not FManifestos.Items[I].Confirmada then
     begin
-      FMsg := 'Conhecimento(s) não confirmado(s):' + LineBreak;
+      FMsg := 'Manifestos(s) não confirmado(s):' + LineBreak;
       break;
     end;
   end;
