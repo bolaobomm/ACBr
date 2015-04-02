@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/04/2015
+[+] Adicionado propriedade para definir se o danfe deve ou não imprimir informações na descrição do 
+    produtos quando for Arma. (necessida, possibilitar ter seu propio formato de impressão)
+[*] Remoção do TDatamodule e todos seus componentes do "ACBrNFeDANFEFRDM", criado no lugar uma class 
+    que cria todos os componentes em tempo de execução. (A unit continua com o mesmo nome para compatibilidade)
+    por: Isaque Pinheiro
+
 04/03/2015
 [*] Inclusão das URLs do QR-Code para DF.
     Por: Gilson_ST

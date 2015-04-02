@@ -61,6 +61,9 @@
 |* 26/02/2013: João Henrique de Souza
 |*  - Foi realizado inúmeras modificações para Normalizar o Danfe com o Manual
 |*    e ter uma versão que fosse possível imprimir com o FR que vem com o Delphi
+|* 02/04/2015: Isaque Pinheiro
+|*  - Criação de uma class, removendo o datamodule e os componentes não visuais
+|*    dele, sendo criado todos em tempo de execução.
 ******************************************************************************}
 {$I ACBr.inc}
 
@@ -75,242 +78,10 @@ uses
   ACBrDelphiZXingQrCode, Graphics;
 
 type
-  TdmACBrNFeFR = class(TDataModule)
-    frxPDFExport: TfrxPDFExport;
-    cdsIdentificacao: TClientDataSet;
-    cdsIdentificacaoId: TStringField;
-    cdsIdentificacaoChave: TStringField;
-    cdsIdentificacaocUF: TStringField;
-    cdsIdentificacaocNF: TStringField;
-    cdsIdentificacaoNatOp: TStringField;
-    cdsIdentificacaoIndPag: TStringField;
-    cdsIdentificacaoMod_: TStringField;
-    cdsIdentificacaoSerie: TStringField;
-    cdsIdentificacaoNNF: TStringField;
-    cdsIdentificacaoDEmi: TStringField;
-    cdsIdentificacaoDSaiEnt: TStringField;
-    cdsIdentificacaoTpNF: TStringField;
-    cdsIdentificacaoCMunFG: TStringField;
-    cdsIdentificacaoTpImp: TStringField;
-    cdsIdentificacaoTpEmis: TStringField;
-    cdsIdentificacaoCDV: TStringField;
-    cdsIdentificacaoTpAmb: TStringField;
-    cdsIdentificacaoFinNFe: TStringField;
-    cdsIdentificacaoProcEmi: TStringField;
-    cdsIdentificacaoVerProc: TStringField;
-    cdsIdentificacaoHoraSaida: TStringField;
-    cdsEmitente: TClientDataSet;
-    cdsEmitenteCNPJ: TStringField;
-    cdsEmitenteXNome: TStringField;
-    cdsEmitenteXFant: TStringField;
-    cdsEmitenteXLgr: TStringField;
-    cdsEmitenteNro: TStringField;
-    cdsEmitenteXCpl: TStringField;
-    cdsEmitenteXBairro: TStringField;
-    cdsEmitenteCMun: TStringField;
-    cdsEmitenteXMun: TStringField;
-    cdsEmitenteUF: TStringField;
-    cdsEmitenteCEP: TStringField;
-    cdsEmitenteCPais: TStringField;
-    cdsEmitenteXPais: TStringField;
-    cdsEmitenteFone: TStringField;
-    cdsEmitenteIE: TStringField;
-    cdsEmitenteIM: TStringField;
-    cdsEmitenteIEST: TStringField;
-    cdsEmitenteCRT: TStringField;
-    cdsEmitenteDESCR_CST: TStringField;
-    cdsEmitenteDADOS_ENDERECO: TStringField;
-    cdsDestinatario: TClientDataSet;
-    cdsDestinatarioCNPJCPF: TStringField;
-    cdsDestinatarioXNome: TStringField;
-    cdsDestinatarioXLgr: TStringField;
-    cdsDestinatarioNro: TStringField;
-    cdsDestinatarioXCpl: TStringField;
-    cdsDestinatarioXBairro: TStringField;
-    cdsDestinatarioCMun: TStringField;
-    cdsDestinatarioXMun: TStringField;
-    cdsDestinatarioUF: TStringField;
-    cdsDestinatarioCEP: TStringField;
-    cdsDestinatarioCPais: TStringField;
-    cdsDestinatarioXPais: TStringField;
-    cdsDestinatarioFone: TStringField;
-    cdsDestinatarioIE: TStringField;
-    cdsDadosProdutos: TClientDataSet;
-    cdsDadosProdutosCProd: TStringField;
-    cdsDadosProdutoscEAN: TStringField;
-    cdsDadosProdutosXProd: TStringField;
-    cdsDadosProdutosinfAdProd: TStringField;
-    cdsDadosProdutosNCM: TStringField;
-    cdsDadosProdutosEXTIPI: TStringField;
-    cdsDadosProdutosgenero: TStringField;
-    cdsDadosProdutosCFOP: TStringField;
-    cdsDadosProdutosUCom: TStringField;
-    cdsDadosProdutosQCom: TFloatField;
-    cdsDadosProdutosVUnCom: TFloatField;
-    cdsDadosProdutosVProd: TFloatField;
-    cdsDadosProdutoscEANTrib: TStringField;
-    cdsDadosProdutosUTrib: TStringField;
-    cdsDadosProdutosQTrib: TFloatField;
-    cdsDadosProdutosVUnTrib: TFloatField;
-    cdsDadosProdutosvFrete: TFloatField;
-    cdsDadosProdutosVOutro: TFloatField;
-    cdsDadosProdutosvSeg: TFloatField;
-    cdsDadosProdutosvDesc: TStringField;
-    cdsDadosProdutosORIGEM: TStringField;
-    cdsDadosProdutosCST: TStringField;
-    cdsDadosProdutosVBC: TFloatField;
-    cdsDadosProdutosPICMS: TFloatField;
-    cdsDadosProdutosVICMS: TFloatField;
-    cdsDadosProdutosVIPI: TFloatField;
-    cdsDadosProdutosPIPI: TFloatField;
-    cdsDadosProdutosDescricaoProduto: TStringField;
-    cdsDadosProdutosVTotTrib: TFloatField;
-    cdsDadosProdutosChaveNFe: TStringField;
-    cdsParametros: TClientDataSet;
-    cdsParametrosResumoCanhoto: TStringField;
-    cdsParametrosMensagem0: TStringField;
-    cdsParametrosImagem: TStringField;
-    cdsParametrosSistema: TStringField;
-    cdsParametrosUsuario: TStringField;
-    cdsParametrosFax: TStringField;
-    cdsParametrosSite: TStringField;
-    cdsParametrosEmail: TStringField;
-    cdsParametrosDesconto: TStringField;
-    cdsParametrosTotalLiquido: TStringField;
-    cdsParametrosChaveAcesso_Descricao: TStringField;
-    cdsParametrosContingencia_ID: TStringField;
-    cdsParametrosContingencia_Descricao: TStringField;
-    cdsParametrosContingencia_Valor: TStringField;
-    cdsParametrosLinhasPorPagina: TIntegerField;
-    cdsParametrosLogoExpandido: TStringField;
-    cdsParametrosDESCR_CST: TStringField;
-    cdsParametrosConsultaAutenticidade: TStringField;
-    cdsParametrosCasas_qCom: TIntegerField;
-    cdsParametrosCasas_vUnCom: TIntegerField;
-    cdsParametrosMask_qCom: TStringField;
-    cdsParametrosMask_vUnCom: TStringField;
-    cdsParametrosLogoCarregado: TBlobField;
-    cdsInformacoesAdicionais: TClientDataSet;
-    cdsInformacoesAdicionaisOBS: TStringField;
-    cdsInformacoesAdicionaisLinhasOBS: TIntegerField;
-    cdsDuplicatas: TClientDataSet;
-    cdsDuplicatasNDup: TStringField;
-    cdsDuplicatasDVenc: TStringField;
-    cdsDuplicatasVDup: TFloatField;
-    cdsDuplicatasChaveNFe: TStringField;
-    cdsCalculoImposto: TClientDataSet;
-    cdsCalculoImpostoVBC: TFloatField;
-    cdsCalculoImpostoVICMS: TFloatField;
-    cdsCalculoImpostoVBCST: TFloatField;
-    cdsCalculoImpostoVST: TFloatField;
-    cdsCalculoImpostoVProd: TFloatField;
-    cdsCalculoImpostoVFrete: TFloatField;
-    cdsCalculoImpostoVSeg: TFloatField;
-    cdsCalculoImpostoVDesc: TFloatField;
-    cdsCalculoImpostoVII: TFloatField;
-    cdsCalculoImpostoVIPI: TFloatField;
-    cdsCalculoImpostoVPIS: TFloatField;
-    cdsCalculoImpostoVCOFINS: TFloatField;
-    cdsCalculoImpostoVOutro: TFloatField;
-    cdsCalculoImpostoVNF: TFloatField;
-    cdsCalculoImpostoVTotTrib: TFloatField;
-    cdsCalculoImpostoVTribPerc: TFloatField;
-    cdsCalculoImpostoVTribFonte: TStringField;
-    cdsTransportador: TClientDataSet;
-    cdsTransportadorModFrete: TStringField;
-    cdsTransportadorCNPJCPF: TStringField;
-    cdsTransportadorXNome: TStringField;
-    cdsTransportadorIE: TStringField;
-    cdsTransportadorXEnder: TStringField;
-    cdsTransportadorXMun: TStringField;
-    cdsTransportadorUF: TStringField;
-    cdsVeiculo: TClientDataSet;
-    cdsVeiculoPLACA: TStringField;
-    cdsVeiculoUF: TStringField;
-    cdsVeiculoRNTC: TStringField;
-    cdsVolumes: TClientDataSet;
-    cdsVolumesQVol: TFloatField;
-    cdsVolumesEsp: TStringField;
-    cdsVolumesMarca: TStringField;
-    cdsVolumesNVol: TStringField;
-    cdsVolumesPesoL: TFloatField;
-    cdsVolumesPesoB: TFloatField;
-    cdsISSQN: TClientDataSet;
-    cdsISSQNvSERV: TFloatField;
-    cdsISSQNvBC: TFloatField;
-    cdsISSQNvISS: TFloatField;
-    cdsFatura: TClientDataSet;
-    cdsFaturaPagamento: TStringField;
-    cdsFaturanFat: TStringField;
-    cdsFaturavOrig: TFloatField;
-    cdsFaturavDesc: TFloatField;
-    cdsFaturavLiq: TFloatField;
-    cdsLocalRetirada: TClientDataSet;
-    cdsLocalRetiradaCNPJ: TStringField;
-    cdsLocalRetiradaXLgr: TStringField;
-    cdsLocalRetiradaNro: TStringField;
-    cdsLocalRetiradaXCpl: TStringField;
-    cdsLocalRetiradaXBairro: TStringField;
-    cdsLocalRetiradaCMun: TStringField;
-    cdsLocalRetiradaXMun: TStringField;
-    cdsLocalRetiradaUF: TStringField;
-    cdsLocalEntrega: TClientDataSet;
-    cdsLocalEntregaCNPJ: TStringField;
-    cdsLocalEntregaXLgr: TStringField;
-    cdsLocalEntregaNro: TStringField;
-    cdsLocalEntregaXCpl: TStringField;
-    cdsLocalEntregaXBairro: TStringField;
-    cdsLocalEntregaCMun: TStringField;
-    cdsLocalEntregaXMun: TStringField;
-    cdsLocalEntregaUF: TStringField;
-    frxIdentificacao: TfrxDBDataset;
-    frxEmitente: TfrxDBDataset;
-    frxDestinatario: TfrxDBDataset;
-    frxDadosProdutos: TfrxDBDataset;
-    frxParametros: TfrxDBDataset;
-    frxDuplicatas: TfrxDBDataset;
-    frxCalculoImposto: TfrxDBDataset;
-    frxTransportador: TfrxDBDataset;
-    frxVeiculo: TfrxDBDataset;
-    frxVolumes: TfrxDBDataset;
-    frxISSQN: TfrxDBDataset;
-    frxFatura: TfrxDBDataset;
-    frxLocalRetirada: TfrxDBDataset;
-    frxLocalEntrega: TfrxDBDataset;
-    frxInformacoesAdicionais: TfrxDBDataset;
-    frxBarCodeObject: TfrxBarCodeObject;
-    frxReport: TfrxReport;
-    cdsEventos: TClientDataSet;
-    frxEventos: TfrxDBDataset;
-    cdsDadosProdutosvISSQN: TFloatField;
-    cdsIdentificacaoMensagemFiscal: TStringField;
-    cdsIdentificacaoURL: TStringField;
-    cdsCalculoImpostovTotPago: TFloatField;
-    cdsParametrosQrCodeCarregado: TBlobField;
-    cdsParametrosDescricaoViaEstabelec: TStringField;
-    cdsDestinatarioConsumidor: TStringField;
-    cdsPagamento: TClientDataSet;
-    cdsPagamentotPag: TStringField;
-    cdsPagamentovPag: TFloatField;
-    cdsPagamentoCNPJ: TStringField;
-    cdsPagamentotBand: TStringField;
-    cdsPagamentocAut: TStringField;
-    frxPagamento: TfrxDBDataset;
-    cdsParametrosQtdeItens: TIntegerField;
-    cdsCalculoImpostovTroco: TFloatField;
-    cdsDadosProdutosvBcISSQN: TFloatField;
-    cdsDadosProdutosUTrib2: TStringField;
-    cdsDadosProdutosQTrib2: TFloatField;
-    cdsDadosProdutosVUnTrib2: TFloatField;
-    cdsDadosProdutosvBcST: TFloatField;
-    cdsDadosProdutosvICMSST: TFloatField;
-    cdsDadosProdutosnLote: TStringField;
-    cdsDadosProdutosqLote: TFloatField;
-    cdsDadosProdutosdFab: TDateField;
-    cdsDadosProdutosdVal: TDateField;
-    cdsParametrosExpandirDadosAdicionaisAuto: TStringField;
-    constructor Create(AOwner: TComponent); override;
-    procedure frxReportBeforePrint(Sender: TfrxReportComponent);
+  ArrOfStr = Array of String;
+  TSplitResult = array of string;
+
+  TACBrNFeFRClass = class
   private
     FDANFEClassOwner: TACBrNFeDANFEClass;
     FNFe: TNFe;
@@ -327,6 +98,47 @@ type
     FDescricaoViaEstabelec: string;
     FImprimirUnQtVlComercial: boolean;
     FExpandirDadosAdicionaisAuto: boolean;
+    FImprimirDadosArma: Boolean;
+
+    FfrxReport: TfrxReport;
+    FfrxPDFExport: TfrxPDFExport;
+    FfrxBarCodeObject: TfrxBarCodeObject;
+    cdsIdentificacao: TClientDataSet;
+    FfrxIdentificacao: TfrxDBDataset;
+    cdsEmitente: TClientDataSet;
+    FfrxEmitente: TfrxDBDataset;
+    cdsDestinatario: TClientDataSet;
+    FfrxDestinatario: TfrxDBDataset;
+    cdsDadosProdutos: TClientDataSet;
+    FfrxDadosProdutos: TfrxDBDataset;
+    cdsParametros: TClientDataSet;
+    FfrxParametros: TfrxDBDataset;
+    cdsDuplicatas: TClientDataSet;
+    FfrxDuplicatas: TfrxDBDataset;
+    cdsCalculoImposto: TClientDataSet;
+    FfrxCalculoImposto: TfrxDBDataset;
+    cdsTransportador: TClientDataSet;
+    FfrxTransportador: TfrxDBDataset;
+    cdsVeiculo: TClientDataSet;
+    FfrxVeiculo: TfrxDBDataset;
+    cdsVolumes: TClientDataSet;
+    FfrxVolumes: TfrxDBDataset;
+    cdsEventos: TClientDataSet;
+    FfrxEventos: TfrxDBDataset;
+    cdsISSQN: TClientDataSet;
+    FfrxISSQN: TfrxDBDataset;
+    cdsFatura: TClientDataSet;
+    FfrxFatura: TfrxDBDataset;
+    cdsLocalRetirada: TClientDataSet;
+    FfrxLocalRetirada: TfrxDBDataset;
+    cdsLocalEntrega: TClientDataSet;
+    FfrxLocalEntrega: TfrxDBDataset;
+    cdsInformacoesAdicionais: TClientDataSet;
+    FfrxInformacoesAdicionais: TfrxDBDataset;
+    cdsPagamento: TClientDataSet;
+    FfrxPagamento: TfrxDBDataset;
+
+    procedure frxReportBeforePrint(Sender: TfrxReportComponent);
     procedure CarregaIdentificacao;
     procedure CarregaEmitente;
     procedure CarregaDestinatario;
@@ -343,7 +155,15 @@ type
     procedure CarregaFatura;
     procedure CarregaPagamento;
     procedure CarregaInformacoesAdicionais;
+
+    function SubstrCount(const ASubString, AString: string): Integer;
+    function Split(const ADelimiter, AString: string): TSplitResult;
+    function CollateBr(Str: String): String;
+    function Explode(sPart, sInput: String): ArrOfStr;
   public
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+
     property NFe: TNFe read FNFe write FNFe;
     property Evento: TEventoNFe read FEvento write FEvento;
     property DANFEClassOwner: TACBrNFeDANFEClass read FDANFEClassOwner;
@@ -359,27 +179,22 @@ type
     property Detalhado: Boolean read FDetalhado write FDetalhado;
     property URLConsultaPublica:String read FURLConsultaPublica write FURLConsultaPublica;
     property DescricaoViaEstabelec: string read FDescricaoViaEstabelec write FDescricaoViaEstabelec;
+    property frxReport: TfrxReport read FfrxReport write FfrxReport;
+    property frxPDFExport: TfrxPDFExport read FfrxPDFExport write FfrxPDFExport;
+    property ImprimirDadosArma: Boolean read FImprimirDadosArma write FImprimirDadosArma;
+
     procedure CarregaDadosNFe;
     procedure CarregaDadosEventos;
     procedure PintarQRCode(QRCodeData: String; APict: TPicture);
   end;
 
-var
-  dmACBrNFeFR: TdmACBrNFeFR;
-
 implementation
 
 uses ACBrNFe, ACBrNFeUtil, ACBrDFeUtil, StrUtils, Math, DateUtils;
 
-{$R *.dfm}
+{ TACBrNFeFRClass }
 
-type
-  ArrOfStr = Array of String;
-  TSplitResult = array of string;
-
-{ TdmACBrNFeFR }
-
-function SubstrCount(const ASubString, AString: string): Integer;
+function TACBrNFeFRClass.SubstrCount(const ASubString, AString: string): Integer;
 var
   i: integer;
 begin
@@ -391,7 +206,7 @@ begin
   until i = 0;
 end;
 
-function Split(const ADelimiter, AString: string): TSplitResult;
+function TACBrNFeFRClass.Split(const ADelimiter, AString: string): TSplitResult;
 var
   Step: ^String;
   Chr: PChar;
@@ -440,7 +255,7 @@ begin
   end;
 end;
 
-function Explode(sPart, sInput: String): ArrOfStr;
+function TACBrNFeFRClass.Explode(sPart, sInput: String): ArrOfStr;
 begin
   while Pos(sPart, sInput) <> 0 do
     begin
@@ -453,7 +268,7 @@ begin
   Result[Length(Result) - 1] := sInput;
 end;
 
-function CollateBr(Str: String): String;
+function TACBrNFeFRClass.CollateBr(Str: String): String;
 var
   Resultado,Temp: string;
   vChar: Char;
@@ -489,7 +304,7 @@ begin
   end;
 end;
 
-procedure TdmACBrNFeFR.CarregaCalculoImposto;
+procedure TACBrNFeFRClass.CarregaCalculoImposto;
 begin
   with cdsCalculoImposto do
   begin
@@ -536,7 +351,7 @@ begin
   end;
 end;
 
-procedure TdmACBrNFeFR.CarregaDadosNFe;
+procedure TACBrNFeFRClass.CarregaDadosNFe;
 begin
   CarregaIdentificacao;
   CarregaEmitente;
@@ -556,7 +371,7 @@ begin
   CarregaInformacoesAdicionais;
 end;
 
-procedure TdmACBrNFeFR.CarregaDadosProdutos;
+procedure TACBrNFeFRClass.CarregaDadosProdutos;
 var
   i: Integer;
   vTemp2: TStringList;
@@ -654,7 +469,7 @@ begin
                 vTemp2.Clear;
               end;
 
-              if arma.Count > 0 then
+              if (FImprimirDadosArma) and (arma.Count > 0) then
               begin
                 for j := 0 to arma.Count - 1 do
                   begin
@@ -885,9 +700,9 @@ begin
           end;
         end;
 
-        cdsDadosProdutosDescricaoProduto.AsString := Trim(FieldByName('xProd').AsString);
+        cdsDadosProdutos.FieldByName('DescricaoProduto').AsString := Trim(FieldByName('xProd').AsString);
         if Trim(FieldByName('InfAdProd').AsString) <> '' then
-          cdsDadosProdutosDescricaoProduto.AsString := cdsDadosProdutosDescricaoProduto.AsString+#13+
+          cdsDadosProdutos.FieldByName('DescricaoProduto').AsString := cdsDadosProdutos.FieldByName('DescricaoProduto').AsString+#13+
                                                      trim(FieldByName('InfAdProd').AsString);
 
         Post;
@@ -896,7 +711,7 @@ begin
   end;
 end;
 
-procedure TdmACBrNFeFR.CarregaDestinatario;
+procedure TACBrNFeFRClass.CarregaDestinatario;
 begin
   { destinatário }
   with cdsDestinatario do
@@ -933,7 +748,7 @@ begin
         FieldByName('Fone').AsString := DFeUtil.FormatarFone(Fone);
       end;
       FieldByName('IE').AsString := IE;
-      if (cdsIdentificacaoMod_.AsString = '65') then
+      if (cdsIdentificacao.FieldByName('Mod_').AsString = '65') then
       begin
         if (FieldByName('CNPJCPF').AsString = '') then
           FieldByName('Consumidor').AsString := 'CONSUMIDOR NÃO IDENTIFICADO'
@@ -963,7 +778,7 @@ begin
   end;
 end;
 
-procedure TdmACBrNFeFR.CarregaDuplicatas;
+procedure TACBrNFeFRClass.CarregaDuplicatas;
 var
   i: Integer;
 begin
@@ -988,7 +803,7 @@ begin
   end;
 end;
 
-procedure TdmACBrNFeFR.CarregaEmitente;
+procedure TACBrNFeFRClass.CarregaEmitente;
 begin
   { emitente }
   with cdsEmitente do
@@ -1027,22 +842,22 @@ begin
         FieldByName('DESCR_CST').AsString  := 'CST';
 
       //Modificado por Fábio Gabriel - 10/06/2013 - Para evitar que fique truncado.
-      cdsEmitenteDADOS_ENDERECO.AsString :=
+      cdsEmitente.FieldByName('DADOS_ENDERECO').AsString :=
         Trim(FieldByName('XLgr').AsString) + ', ' + trim(FieldByName('Nro').AsString);
 	   if (trim(FieldByName('XCpl').AsString) <> '') then
-          cdsEmitenteDADOS_ENDERECO.AsString := cdsEmitenteDADOS_ENDERECO.AsString + ', ' +
+          cdsEmitente.FieldByName('DADOS_ENDERECO').AsString := cdsEmitente.FieldByName('DADOS_ENDERECO').AsString + ', ' +
             Trim(FieldByName('XCpl').AsString);
-       cdsEmitenteDADOS_ENDERECO.AsString := cdsEmitenteDADOS_ENDERECO.AsString + ' - ' +
+       cdsEmitente.FieldByName('DADOS_ENDERECO').AsString := cdsEmitente.FieldByName('DADOS_ENDERECO').AsString + ' - ' +
 											 Trim(FieldByName('XBairro').AsString) + ' - ' + Trim(FieldByName('XMun').AsString) + ' - ' + Trim(FieldByName('UF').AsString) + #13 +
 											'Fone: ' + Trim(FieldByName('Fone').AsString) +
         DFeUtil.SeSenao(trim(FDANFEClassOwner.Fax) <> '',
                         ' - FAX: ' + DFeUtil.FormatarFone(trim(FDANFEClassOwner.Fax)),'')+
         ' - CEP: ' + Trim(FieldByName('CEP').AsString);
       if trim(FDANFEClassOwner.Site) <> '' then
-        cdsEmitenteDADOS_ENDERECO.AsString := cdsEmitenteDADOS_ENDERECO.AsString + #13 +
+        cdsEmitente.FieldByName('DADOS_ENDERECO').AsString := cdsEmitente.FieldByName('DADOS_ENDERECO').AsString + #13 +
         trim(FDANFEClassOwner.Site);
       if trim(FDANFEClassOwner.Email) <> '' then
-        cdsEmitenteDADOS_ENDERECO.AsString := cdsEmitenteDADOS_ENDERECO.AsString + #13 +
+        cdsEmitente.FieldByName('DADOS_ENDERECO').AsString := cdsEmitente.FieldByName('DADOS_ENDERECO').AsString + #13 +
         trim(FDANFEClassOwner.Email);
     end;
 
@@ -1050,7 +865,7 @@ begin
   end;
 end;
 
-procedure TdmACBrNFeFR.CarregaFatura;
+procedure TACBrNFeFRClass.CarregaFatura;
 begin
   with cdsFatura do
   begin
@@ -1084,7 +899,7 @@ begin
   end;
 end;
 
-procedure TdmACBrNFeFR.CarregaPagamento;
+procedure TACBrNFeFRClass.CarregaPagamento;
 var
   i: Integer;
   bPag, wPag: String;
@@ -1135,7 +950,7 @@ begin
   end;
 end;
 
-procedure TdmACBrNFeFR.CarregaIdentificacao;
+procedure TACBrNFeFRClass.CarregaIdentificacao;
 begin
   with cdsIdentificacao do
   begin
@@ -1204,7 +1019,7 @@ begin
   end;
 end;
 
-procedure TdmACBrNFeFR.CarregaInformacoesAdicionais;
+procedure TACBrNFeFRClass.CarregaInformacoesAdicionais;
 var
   i: Integer;
   vTemp: TStringList;
@@ -1306,7 +1121,7 @@ begin
   end;
 end;
 
-procedure TdmACBrNFeFR.CarregaISSQN;
+procedure TACBrNFeFRClass.CarregaISSQN;
 begin
   with cdsISSQN do
   begin
@@ -1323,7 +1138,7 @@ begin
   end;
 end;
 
-procedure TdmACBrNFeFR.CarregaLocalEntrega;
+procedure TACBrNFeFRClass.CarregaLocalEntrega;
 begin
   { local de entrega }
   with cdsLocalEntrega do
@@ -1360,7 +1175,7 @@ begin
   end;
 end;
 
-procedure TdmACBrNFeFR.CarregaLocalRetirada;
+procedure TACBrNFeFRClass.CarregaLocalRetirada;
 begin
   { local de retirada }
   with cdsLocalRetirada do
@@ -1397,7 +1212,7 @@ begin
   end;
 end;
 
-procedure TdmACBrNFeFR.CarregaParametros;
+procedure TACBrNFeFRClass.CarregaParametros;
 var
   vChave_Contingencia: String;
   vResumo: String;
@@ -1487,7 +1302,7 @@ begin
            end;
         end;
         vStream.Position := 0;
-        cdsParametrosLogoCarregado.LoadFromStream(vStream);
+        TBlobField(cdsParametros.FieldByName('LogoCarregado')).LoadFromStream(vStream);
       finally
         vStream.Free;
       end;
@@ -1602,7 +1417,7 @@ begin
   end;
 end;
 
-procedure TdmACBrNFeFR.CarregaTransportador;
+procedure TACBrNFeFRClass.CarregaTransportador;
 var
   wFrete: String;
 begin
@@ -1646,7 +1461,7 @@ begin
   end;
 end;
 
-procedure TdmACBrNFeFR.CarregaVeiculo;
+procedure TACBrNFeFRClass.CarregaVeiculo;
 begin
   with cdsVeiculo do
   begin
@@ -1665,7 +1480,7 @@ begin
   end;
 end;
 
-procedure TdmACBrNFeFR.CarregaVolumes;
+procedure TACBrNFeFRClass.CarregaVolumes;
 var
   i: Integer;
 begin
@@ -1692,7 +1507,7 @@ begin
   end;
 end;
 
-procedure TdmACBrNFeFR.CarregaDadosEventos;
+procedure TACBrNFeFRClass.CarregaDadosEventos;
 var
   i: Integer;
   CondicoesUso, Correcao: String;
@@ -1783,13 +1598,551 @@ begin
   end;
 end;
 
-constructor TdmACBrNFeFR.Create(AOwner: TComponent);
+constructor TACBrNFeFRClass.Create(AOwner: TComponent);
 begin
-  inherited;
   FDANFEClassOwner := TACBrNFeDANFEClass(AOwner);
+
+  FfrxReport := TfrxReport.Create(nil);
+  with FfrxReport do
+  begin
+     EngineOptions.DoublePass := True;
+     StoreInDFM := False;
+     OnBeforePrint := frxReportBeforePrint;
+     OnReportPrint := 'frxReportOnReportPrint';
+  end;
+  FfrxPDFExport := TfrxPDFExport.Create(nil);
+  with FfrxPDFExport do
+  begin
+     Background := True;
+     PrintOptimized := True;
+     Subject := 'Exportando DANFE para PDF';
+  end;
+
+  // cdsIdentificacao
+  if not Assigned(cdsIdentificacao) then
+  begin
+     cdsIdentificacao := TClientDataSet.Create(nil);
+     FfrxIdentificacao := TfrxDBDataset.Create(nil);
+     with FfrxIdentificacao do
+     begin
+        DataSet := cdsIdentificacao;
+        OpenDataSource := False;
+        UserName := 'Identificacao';
+     end;
+     with cdsIdentificacao do
+     begin
+        FieldDefs.Add('Id', ftString, 44);
+        FieldDefs.Add('Chave', ftString, 60);
+        FieldDefs.Add('cUF', ftString, 2);
+        FieldDefs.Add('cNF', ftString, 9);
+        FieldDefs.Add('NatOp', ftString, 60);
+        FieldDefs.Add('IndPag', ftString, 1);
+        FieldDefs.Add('Mod_', ftString, 2);
+        FieldDefs.Add('Serie', ftString, 3);
+        FieldDefs.Add('NNF', ftString, 11);
+        FieldDefs.Add('DEmi', ftString, 10);
+        FieldDefs.Add('DSaiEnt', ftString, 10);
+        FieldDefs.Add('TpNF', ftString, 1);
+        FieldDefs.Add('CMunFG', ftString, 7);
+        FieldDefs.Add('TpImp', ftString, 1);
+        FieldDefs.Add('TpEmis', ftString, 1);
+        FieldDefs.Add('CDV', ftString, 1);
+        FieldDefs.Add('TpAmb', ftString, 1);
+        FieldDefs.Add('FinNFe', ftString, 1);
+        FieldDefs.Add('ProcEmi', ftString, 1);
+        FieldDefs.Add('VerProc', ftString, 6);
+        FieldDefs.Add('HoraSaida', ftString, 10);
+        FieldDefs.Add('MensagemFiscal', ftString, 200);
+        FieldDefs.Add('URL', ftString, 1000);
+        CreateDataSet;
+     end;
+   end;
+
+   // cdsEmitente
+   if not Assigned(cdsEmitente) then
+   begin
+     cdsEmitente := TClientDataSet.Create(nil);
+     FfrxEmitente := TfrxDBDataset.Create(nil);
+     with FfrxEmitente do
+     begin
+        DataSet := cdsEmitente;
+        OpenDataSource := False;
+        UserName := 'Emitente';
+     end;
+     with cdsEmitente do
+     begin
+        FieldDefs.Add('CNPJ', ftString, 18);
+        FieldDefs.Add('XNome', ftString, 60);
+        FieldDefs.Add('XFant', ftString, 60);
+        FieldDefs.Add('XLgr', ftString, 60);
+        FieldDefs.Add('Nro', ftString, 6);
+        FieldDefs.Add('XCpl', ftString, 60);
+        FieldDefs.Add('XBairro', ftString, 60);
+        FieldDefs.Add('CMun', ftString, 7);
+        FieldDefs.Add('XMun', ftString, 60);
+        FieldDefs.Add('UF', ftString, 2);
+        FieldDefs.Add('CEP', ftString, 9);
+        FieldDefs.Add('CPais', ftString, 4);
+        FieldDefs.Add('XPais', ftString, 60);
+        FieldDefs.Add('Fone', ftString, 15);
+        FieldDefs.Add('IE', ftString, 14);
+        FieldDefs.Add('IM', ftString, 15);
+        FieldDefs.Add('IEST', ftString, 15);
+        FieldDefs.Add('CRT', ftString, 1);
+        FieldDefs.Add('DESCR_CST', ftString, 30);
+        FieldDefs.Add('DADOS_ENDERECO', ftString, 1000);
+        CreateDataSet;
+     end;
+   end;
+
+   // cdsDestinatario
+   if not Assigned(cdsDestinatario) then
+   begin
+     cdsDestinatario := TClientDataSet.Create(nil);
+     FfrxDestinatario := TfrxDBDataset.Create(nil);
+     with FfrxDestinatario do
+     begin
+        DataSet := cdsDestinatario;
+        OpenDataSource := False;
+        UserName := 'Destinatario';
+     end;
+     with cdsDestinatario do
+     begin
+        FieldDefs.Add('CNPJCPF', ftString, 18);
+        FieldDefs.Add('XNome', ftString, 60);
+        FieldDefs.Add('XLgr', ftString, 60);
+        FieldDefs.Add('Nro', ftString, 6);
+        FieldDefs.Add('XCpl', ftString, 60);
+        FieldDefs.Add('XBairro', ftString, 60);
+        FieldDefs.Add('CMun', ftString, 7);
+        FieldDefs.Add('XMun', ftString, 60);
+        FieldDefs.Add('UF', ftString, 2);
+        FieldDefs.Add('CEP', ftString, 9);
+        FieldDefs.Add('CPais', ftString, 4);
+        FieldDefs.Add('XPais', ftString, 60);
+        FieldDefs.Add('Fone', ftString, 15);
+        FieldDefs.Add('IE', ftString, 18);
+        FieldDefs.Add('Consumidor', ftString, 150);
+        CreateDataSet;
+     end;
+   end;
+
+   // cdsDadosProdutos
+   if not Assigned(cdsDadosProdutos) then
+   begin
+     cdsDadosProdutos := TClientDataSet.Create(nil);
+     FfrxDadosProdutos := TfrxDBDataset.Create(nil);
+     with FfrxDadosProdutos do
+     begin
+        DataSet := cdsDadosProdutos;
+        OpenDataSource := False;
+        UserName := 'DadosProdutos';
+     end;
+     with cdsDadosProdutos do
+     begin
+        FieldDefs.Add('CProd', ftString, 60);
+        FieldDefs.Add('cEAN', ftString, 60);
+        FieldDefs.Add('XProd', ftString, 120);
+        FieldDefs.Add('infAdProd', ftString, 500);
+        FieldDefs.Add('NCM', ftString, 9);
+        FieldDefs.Add('EXTIPI', ftString, 8);
+        FieldDefs.Add('genero', ftString, 8);
+        FieldDefs.Add('CFOP', ftString, 4);
+        FieldDefs.Add('UCom', ftString, 6);
+        FieldDefs.Add('QCom', ftFloat);
+        FieldDefs.Add('VUnCom', ftFloat);
+        FieldDefs.Add('VProd', ftFloat);
+        FieldDefs.Add('cEANTrib', ftString, 60);
+        FieldDefs.Add('UTrib', ftString, 6);
+        FieldDefs.Add('QTrib', ftFloat);
+        FieldDefs.Add('vUnTrib', ftFloat);
+        FieldDefs.Add('vFrete', ftFloat);
+        FieldDefs.Add('vOutro', ftFloat);
+        FieldDefs.Add('vSeg', ftFloat);
+        FieldDefs.Add('vDesc', ftFloat);
+        FieldDefs.Add('ORIGEM', ftString, 1);
+        FieldDefs.Add('CST', ftString, 3);
+        FieldDefs.Add('vBC', ftFloat);
+        FieldDefs.Add('pICMS', ftFloat);
+        FieldDefs.Add('vICMS', ftFloat);
+        FieldDefs.Add('vIPI', ftFloat);
+        FieldDefs.Add('pIPI', ftFloat);
+        FieldDefs.Add('DescricaoProduto', ftString, 1000);
+        FieldDefs.Add('VTotTrib', ftFloat);
+        FieldDefs.Add('ChaveNFe', ftString, 50);
+        FieldDefs.Add('vISSQN', ftFloat);
+        FieldDefs.Add('vBcISSQN', ftFloat);
+        FieldDefs.Add('Unidade', ftString, 6);
+        FieldDefs.Add('Quantidade', ftFloat);
+        FieldDefs.Add('ValorUnitario', ftFloat);
+        FieldDefs.Add('vBcST', ftFloat);
+        FieldDefs.Add('vICMSST', ftFloat);
+        FieldDefs.Add('nLote', ftString, 20);
+        FieldDefs.Add('qLote', ftFloat);
+        FieldDefs.Add('dFab', ftDateTime);
+        FieldDefs.Add('dVal', ftDateTime);
+        CreateDataSet;
+     end;
+   end;
+
+   // cdsParametros
+   if not Assigned(cdsParametros) then
+   begin
+     cdsParametros := TClientDataSet.Create(nil);
+     FfrxParametros := TfrxDBDataset.Create(nil);
+     with FfrxParametros do
+     begin
+        DataSet := cdsParametros;
+        OpenDataSource := False;
+        UserName := 'Parametros';
+     end;
+     with cdsParametros do
+     begin
+        FieldDefs.Add('ResumoCanhoto', ftString, 200);
+        FieldDefs.Add('Mensagem0', ftString, 60);
+        FieldDefs.Add('Imagem', ftString, 256);
+        FieldDefs.Add('Sistema', ftString, 60);
+        FieldDefs.Add('Usuario', ftString, 60);
+        FieldDefs.Add('Fax', ftString, 60);
+        FieldDefs.Add('Site', ftString, 60);
+        FieldDefs.Add('Email', ftString, 60);
+        FieldDefs.Add('Desconto', ftString, 60);
+        FieldDefs.Add('TotalLiquido', ftString, 60);
+        FieldDefs.Add('ChaveAcesso_Descricao', ftString, 90);
+        FieldDefs.Add('Contingencia_ID', ftString, 36);
+        FieldDefs.Add('Contingencia_Descricao', ftString, 60);
+        FieldDefs.Add('Contingencia_Valor', ftString, 60);
+        FieldDefs.Add('LinhasPorPagina', ftInteger);
+        FieldDefs.Add('LogoExpandido', ftString, 1);
+        FieldDefs.Add('DESCR_CST', ftString, 30);
+        FieldDefs.Add('ConsultaAutenticidade', ftString, 300);
+        FieldDefs.Add('Casas_qCom', ftInteger);
+        FieldDefs.Add('Casas_vUnCom', ftInteger);
+        FieldDefs.Add('Mask_qCom', ftString, 20);
+        FieldDefs.Add('Mask_vUnCom', ftString, 20);
+        FieldDefs.Add('LogoCarregado', ftBlob);
+        FieldDefs.Add('QrCodeCarregado', ftGraphic, 1000);
+        FieldDefs.Add('DescricaoViaEstabelec', ftString, 30);
+        FieldDefs.Add('QtdeItens', ftInteger);
+        FieldDefs.Add('ExpandirDadosAdicionaisAuto', ftString, 1);
+        CreateDataSet;
+     end;
+   end;
+
+   // cdsDuplicatas
+   if not Assigned(cdsDuplicatas) then
+   begin
+     cdsDuplicatas := TClientDataSet.Create(nil);
+     FfrxDuplicatas := TfrxDBDataset.Create(nil);
+     with FfrxDuplicatas do
+     begin
+        DataSet := cdsDuplicatas;
+        OpenDataSource := False;
+        UserName := 'Duplicatas';
+     end;
+     with cdsDuplicatas do
+     begin
+        FieldDefs.Add('NDup', ftString, 60);
+        FieldDefs.Add('DVenc', ftString, 10);
+        FieldDefs.Add('VDup', ftFloat);
+        FieldDefs.Add('ChaveNFe', ftString, 50);
+        CreateDataSet;
+     end;
+   end;
+
+   // cdsCalculoImposto
+   if not Assigned(cdsCalculoImposto) then
+   begin
+     cdsCalculoImposto := TClientDataSet.Create(nil);
+     FfrxCalculoImposto := TfrxDBDataset.Create(nil);
+     with FfrxCalculoImposto do
+     begin
+        DataSet := cdsCalculoImposto;
+        OpenDataSource := False;
+        UserName := 'CalculoImposto';
+     end;
+     with cdsCalculoImposto do
+     begin
+        FieldDefs.Add('VBC', ftFloat);
+        FieldDefs.Add('VICMS', ftFloat);
+        FieldDefs.Add('VBCST', ftFloat);
+        FieldDefs.Add('VST', ftFloat);
+        FieldDefs.Add('VProd', ftFloat);
+        FieldDefs.Add('VFrete', ftFloat);
+        FieldDefs.Add('VSeg', ftFloat);
+        FieldDefs.Add('VDesc', ftFloat);
+        FieldDefs.Add('VII', ftFloat);
+        FieldDefs.Add('VIPI', ftFloat);
+        FieldDefs.Add('VPIS', ftFloat);
+        FieldDefs.Add('VCOFINS', ftFloat);
+        FieldDefs.Add('VOutro', ftFloat);
+        FieldDefs.Add('VNF', ftFloat);
+        FieldDefs.Add('VTotTrib', ftFloat);
+        FieldDefs.Add('VTribPerc', ftFloat);
+        FieldDefs.Add('VTribFonte', ftString, 100);
+        FieldDefs.Add('vTotPago', ftFloat);
+        FieldDefs.Add('vTroco', ftFloat);
+        CreateDataSet;
+     end;
+   end;
+
+   // cdsTransportador
+   if not Assigned(cdsTransportador) then
+   begin
+     cdsTransportador := TClientDataSet.Create(nil);
+     FfrxTransportador := TfrxDBDataset.Create(nil);
+     with FfrxTransportador do
+     begin
+        DataSet := cdsTransportador;
+        OpenDataSource := False;
+        UserName := 'Transportador';
+     end;
+     with cdsTransportador do
+     begin
+        FieldDefs.Add('ModFrete', ftString, 14);
+        FieldDefs.Add('CNPJCPF', ftString, 18);
+        FieldDefs.Add('XNome', ftString, 60);
+        FieldDefs.Add('IE', ftString, 14);
+        FieldDefs.Add('XEnder', ftString, 60);
+        FieldDefs.Add('XMun', ftString, 60);
+        FieldDefs.Add('UF', ftString, 2);
+        CreateDataSet;
+     end;
+   end;
+
+   // cdsVeiculo
+   if not Assigned(cdsVeiculo) then
+   begin
+     cdsVeiculo := TClientDataSet.Create(nil);
+     FfrxVeiculo := TfrxDBDataset.Create(nil);
+     with FfrxVeiculo do
+     begin
+        DataSet := cdsVeiculo;
+        OpenDataSource := False;
+        UserName := 'Veiculo';
+     end;
+     with cdsVeiculo do
+     begin
+        FieldDefs.Add('PLACA', ftString, 8);
+        FieldDefs.Add('UF', ftString, 2);
+        FieldDefs.Add('RNTC', ftString, 20);
+        CreateDataSet;
+     end;
+   end;
+
+   // cdsVolumes
+   if not Assigned(cdsVolumes) then
+   begin
+     cdsVolumes := TClientDataSet.Create(nil);
+     FfrxVolumes := TfrxDBDataset.Create(nil);
+     with FfrxVolumes do
+     begin
+        DataSet := cdsVolumes;
+        OpenDataSource := False;
+        UserName := 'Volumes';
+     end;
+     with cdsVolumes do
+     begin
+        FieldDefs.Add('QVol', ftFloat);
+        FieldDefs.Add('Esp', ftString, 60);
+        FieldDefs.Add('Marca', ftString, 60);
+        FieldDefs.Add('NVol', ftString, 60);
+        FieldDefs.Add('PesoL', ftFloat);
+        FieldDefs.Add('PesoB', ftFloat);
+        CreateDataSet;
+     end;
+   end;
+
+   // csdEvento
+   if not Assigned(cdsEventos) then
+   begin
+      cdsEventos := TClientDataSet.Create(nil);
+      FfrxEventos := TfrxDBDataset.Create(nil);
+      with FfrxEventos do
+      begin
+         DataSet := cdsEventos;
+         OpenDataSource := False;
+         UserName := 'Eventos';
+      end;
+   end;
+
+   // cdsISSQN
+   if not Assigned(cdsISSQN) then
+   begin
+      cdsISSQN := TClientDataSet.Create(nil);
+      FfrxISSQN := TfrxDBDataset.Create(nil);
+      with FfrxISSQN do
+      begin
+         DataSet := cdsISSQN;
+         OpenDataSource := False;
+         UserName := 'ISSQN';
+      end;
+      with cdsISSQN do
+      begin
+         FieldDefs.Add('vSERV', ftFloat);
+         FieldDefs.Add('vBC', ftFloat);
+         FieldDefs.Add('vISS', ftFloat);
+         CreateDataSet;
+      end;
+   end;
+
+   // cdsFatura
+   if not Assigned(cdsFatura) then
+   begin
+      cdsFatura := TClientDataSet.Create(nil);
+      FfrxFatura := TfrxDBDataset.Create(nil);
+      with FfrxFatura do
+      begin
+         DataSet := cdsFatura;
+         OpenDataSource := False;
+         UserName := 'Fatura';
+      end;
+      with cdsFatura do
+      begin
+         FieldDefs.Add('Pagamento', ftString, 20);
+         FieldDefs.Add('nFat', ftString, 60);
+         FieldDefs.Add('vOrig', ftFloat);
+         FieldDefs.Add('vDesc', ftFloat);
+         FieldDefs.Add('vLiq', ftFloat);
+         CreateDataSet;
+      end;
+   end;
+
+   // cdsLocalRetirada
+   if not Assigned(cdsLocalRetirada) then
+   begin
+      cdsLocalRetirada := TClientDataSet.Create(nil);
+      FfrxLocalRetirada := TfrxDBDataset.Create(nil);
+      with FfrxLocalRetirada do
+      begin
+         DataSet := cdsLocalRetirada;
+         OpenDataSource := False;
+         UserName := 'LocalRetirada';
+      end;
+      with cdsLocalRetirada do
+      begin
+         FieldDefs.Add('CNPJ', ftString, 18);
+         FieldDefs.Add('XLgr', ftString, 60);
+         FieldDefs.Add('Nro', ftString, 60);
+         FieldDefs.Add('XCpl', ftString, 60);
+         FieldDefs.Add('XBairro', ftString, 60);
+         FieldDefs.Add('CMun', ftString, 7);
+         FieldDefs.Add('XMun', ftString, 60);
+         FieldDefs.Add('UF', ftString, 2);
+         CreateDataSet;
+      end;
+   end;
+
+   // cdsLocalEntrega
+   if not Assigned(cdsLocalEntrega) then
+   begin
+      cdsLocalEntrega := TClientDataSet.Create(nil);
+      FfrxLocalEntrega := TfrxDBDataset.Create(nil);
+      with FfrxLocalEntrega do
+      begin
+         DataSet := cdsLocalEntrega;
+         OpenDataSource := False;
+         UserName := 'LocalEntrega';
+      end;
+      with cdsLocalEntrega do
+      begin
+         FieldDefs.Add('CNPJ', ftString, 18);
+         FieldDefs.Add('XLgr', ftString, 60);
+         FieldDefs.Add('Nro', ftString, 6);
+         FieldDefs.Add('XCpl', ftString, 60);
+         FieldDefs.Add('XBairro', ftString, 60);
+         FieldDefs.Add('CMun', ftString, 7);
+         FieldDefs.Add('XMun', ftString, 60);
+         FieldDefs.Add('UF', ftString, 2);
+         CreateDataSet;
+      end;
+   end;
+
+   // cdsInformacoesAdicionais
+   if not Assigned(cdsInformacoesAdicionais) then
+   begin
+      cdsInformacoesAdicionais := TClientDataSet.Create(nil);
+      FfrxInformacoesAdicionais := TfrxDBDataset.Create(nil);
+      with FfrxInformacoesAdicionais do
+      begin
+         DataSet := cdsInformacoesAdicionais;
+         OpenDataSource := False;
+         UserName := 'InformacoesAdicionais';
+      end;
+      with cdsInformacoesAdicionais do
+      begin
+         FieldDefs.Add('OBS', ftString, 6900);
+         FieldDefs.Add('LinhasOBS', ftInteger);
+         CreateDataSet;
+      end;
+   end;
+
+   // cdsPagamento
+   if not Assigned(cdsPagamento) then
+   begin
+      cdsPagamento := TClientDataSet.Create(nil);
+      FfrxPagamento := TfrxDBDataset.Create(nil);
+      with FfrxPagamento do
+      begin
+         DataSet := cdsPagamento;
+         OpenDataSource := False;
+         UserName := 'Pagamento';
+      end;
+      with cdsPagamento do
+      begin
+         FieldDefs.Add('tPag', ftString, 50);
+         FieldDefs.Add('vPag', ftFloat);
+         FieldDefs.Add('CNPJ', ftString, 50);
+         FieldDefs.Add('tBand', ftString, 50);
+         FieldDefs.Add('cAut', ftString, 20);
+         CreateDataSet;
+      end;
+   end;
 end;
 
-procedure TdmACBrNFeFR.PintarQRCode(QRCodeData: String; APict: TPicture);
+destructor TACBrNFeFRClass.Destroy;
+begin
+    FfrxReport.Free;
+    FfrxPDFExport.Free;
+    FfrxBarCodeObject.Free;
+    cdsIdentificacao.Free;
+    FfrxIdentificacao.Free;
+    cdsEmitente.Free;
+    FfrxEmitente.Free;
+    cdsDestinatario.Free;
+    FfrxDestinatario.Free;
+    cdsDadosProdutos.Free;
+    FfrxDadosProdutos.Free;
+    cdsParametros.Free;
+    FfrxParametros.Free;
+    cdsDuplicatas.Free;
+    FfrxDuplicatas.Free;
+    cdsCalculoImposto.Free;
+    FfrxCalculoImposto.Free;
+    cdsTransportador.Free;
+    FfrxTransportador.Free;
+    cdsVeiculo.Free;
+    FfrxVeiculo.Free;
+    cdsVolumes.Free;
+    FfrxVolumes.Free;
+    cdsEventos.Free;
+    FfrxEventos.Free;
+    cdsISSQN.Free;
+    FfrxISSQN.Free;
+    cdsFatura.Free;
+    FfrxFatura.Free;
+    cdsLocalRetirada.Free;
+    FfrxLocalRetirada.Free;
+    cdsLocalEntrega.Free;
+    FfrxLocalEntrega.Free;
+    cdsInformacoesAdicionais.Free;
+    FfrxInformacoesAdicionais.Free;
+    cdsPagamento.Free;
+    FfrxPagamento.Free;
+  inherited;
+end;
+
+procedure TACBrNFeFRClass.PintarQRCode(QRCodeData: String; APict: TPicture);
 var
   QRCode: TDelphiZXingQRCode;
   QRCodeBitmap: TBitmap;
@@ -1824,7 +2177,7 @@ begin
   end;
 end;
 
-procedure TdmACBrNFeFR.frxReportBeforePrint(Sender: TfrxReportComponent);
+procedure TACBrNFeFRClass.frxReportBeforePrint(Sender: TfrxReportComponent);
 var
   qrcode: String;
 begin
