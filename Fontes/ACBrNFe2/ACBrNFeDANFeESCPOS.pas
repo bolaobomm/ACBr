@@ -597,6 +597,14 @@ begin
   else
     FBuffer.Add(cCmdAlinhadoCentro + cCmdImpNegrito + FpNFe.Emit.xNome + cCmdImpFimNegrito);
 
+  if Trim(FpNFe.Emit.xFant) <> '' then
+   begin
+    if Length ( Trim( FpNFe.Emit.xFant ) ) > nColunasPapel then
+     FBuffer.Add(cCmdAlinhadoCentro + cCmdImpNegrito + cCmdFontePequena + FpNFe.Emit.xFant + cCmdImpFimNegrito)
+    else
+     FBuffer.Add(cCmdAlinhadoCentro + cCmdImpNegrito + FpNFe.Emit.xFant + cCmdImpFimNegrito);
+   end;
+
   FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(QuebraLinhas(
     Trim(FpNFe.Emit.EnderEmit.xLgr) + ', ' +
     Trim(FpNFe.Emit.EnderEmit.nro) + '  ' +
