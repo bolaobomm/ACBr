@@ -1055,7 +1055,7 @@ begin
   begin
     NFe.pag.Add;
     i := NFe.pag.Count - 1;
-    NFe.pag[i].tPag := LerCampo(tcStr, 'tPag');
+    NFe.pag[i].tPag := StrToFormaPagamento(ok, LerCampo(tcStr, 'tPag'));
     NFe.pag[i].vPag := LerCampo(tcDe2, 'vPag');
 //    NFe.pag[i].card := LerCampo(tcStr, 'card'); // é um grupo
     NFe.pag[i].CNPJ := LerCampo(tcStr, 'CNPJ');

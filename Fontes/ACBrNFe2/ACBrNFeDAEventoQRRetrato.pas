@@ -47,7 +47,7 @@ unit ACBrNFeDAEventoQRRetrato;
 // Quando enviar os fontes referentes ao DAEvento favor alterar
 // a data e o nome da linha abaixo.
 // Última liberação:
-// 27/11/2013 por Italo Jurisato Junior
+// 07/04/2015 por Italo Jurisato Junior
 
 interface
 
