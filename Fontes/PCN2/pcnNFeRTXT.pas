@@ -176,6 +176,7 @@ begin
       tcDe2,
       tcDe3,
       tcDe4,
+//      tcDe10    : result := StringToFloat('0' + ConteudoTag);
       tcDe10    : result := StrToFloat(StringReplace('0' + ConteudoTag, '.', DecimalSeparator, []));
       tcEsp     : result := ConteudoTag;
       tcInt     : result := StrToInt('0' + Trim(SomenteNumeros(ConteudoTag)));
