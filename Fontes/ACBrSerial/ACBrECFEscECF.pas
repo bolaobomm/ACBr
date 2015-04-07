@@ -1314,7 +1314,7 @@ begin
     Máximo de 15, Mínimo de 4 caracteres ASCII de posição 65 a 90 (letras maiúsculas)
     ou 97 a 122 (letras minúsculas) }
 
-  Result := OnlyAlpha( LeftStr( TiraAcentos( ADescricao ),15) );
+  Result := LeftStr( TiraAcentos( ADescricao ),15);
 end ;
 
 procedure TACBrECFEscECF.SalvaRespostasMemoria(AtualizaVB : Boolean) ;
