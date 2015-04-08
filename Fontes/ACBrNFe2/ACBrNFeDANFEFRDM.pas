@@ -554,7 +554,8 @@ begin
                FieldByName('vDesc').AsString := DFeUtil.FormatFloat(vDesc);
           end
           else
-            FieldByName('vDesc').AsString := DFeUtil.FormatFloat(vDesc);
+//            FieldByName('vDesc').AsString := DFeUtil.FormatFloat(vDesc); //linha comentada por Rodrigo F. Ricardo em 07.04.2015 - erro quando valor do desconto passava dos 999,99 devido a formatação atribuida pelo DFeUtil.FormatFloat
+            FieldByName('vDesc').AsString := FloatToStr(vDesc);
 
           with FNFe.Det.Items[i].Imposto.ISSQN do
           begin
