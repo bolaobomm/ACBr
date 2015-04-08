@@ -1356,7 +1356,6 @@ begin
    Result    := FRegistroF001.RegistroF010.Items[F010Count].RegistroF525.New;
 end;
 
-(*Por: Edilson Alves de Oliveira - *)
 procedure TBloco_F.WriteRegistroF525(RegF010: TRegistroF010);
   var
     intFor : integer;
@@ -1393,7 +1392,7 @@ begin
                   LFill( CstPisToStr(CST_PIS) ) +
                   LFill( CstCofinsToStr(CST_COFINS)) +
                   LFill( INFO_COMPL)      +
-                  LFill( COD_CTA ) ) ;
+                  LFill( COD_CTA, 60) ) ;
            end;
            ///
            RegistroF990.QTD_LIN_F := RegistroF990.QTD_LIN_F + 1;

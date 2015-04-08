@@ -757,15 +757,12 @@ type
     property Items[Index: Integer]: TRegistroF519 read GetItem write SetItem;
   end;
 
-  (*Edilson Alves de oliveira (28/11/2011)
-    Registro F525 - COMPOSIÇÃO  DA  RECEITA  ESCRITURADA  NO  PERÍODO  –
-                    DETALHAMENTO DA RECEITA RECEBIDA PELO REGIME DE CAIXA  *)
   TRegistroF525 = class
   private
      FVL_REC                   : Currency;
      FIND_REC                  : TACBrIndicadorDaComposicaoDaReceitaRecebida;
      FCNPJ_CPF                 : string;
-     FNUM_DOC                  : Integer;
+     FNUM_DOC                  : string;
      FCOD_ITEM                 : string;
      FVL_REC_DET               : Currency;
      FCST_PIS                  : TACBrCstPis;
@@ -776,7 +773,7 @@ type
      property  VL_REC       : Currency       read FVL_REC     write FVL_REC     ;
      property  IND_REC      : TACBrInd_Rec   read FIND_REC    write FIND_REC    ;
      property  CNPJ_CPF     : string         read FCNPJ_CPF   write FCNPJ_CPF   ;
-     property  NUM_DOC      : Integer        read FNUM_DOC    write FNUM_DOC    ;
+     property  NUM_DOC      : string         read FNUM_DOC    write FNUM_DOC    ;
      property  COD_ITEM     : string         read FCOD_ITEM   write FCOD_ITEM   ;
      property  VL_REC_DET   : Currency       read FVL_REC_DET write FVL_REC_DET ;
      property  CST_PIS      : TACBrCstPis    read FCST_PIS    write FCST_PIS    ;
