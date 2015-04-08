@@ -3183,27 +3183,26 @@ begin
         Observacao := Observacao + '|Endereco: '+Consumidor.Endereco ;
   end
   else
-  if IdentificaConsumidorRodape then
   begin
-    InfoConsumidorRodapeBobina := '';
-
-    if Consumidor.Documento <> '' then
-      InfoConsumidorRodapeBobina := InfoConsumidorRodapeBobina + '|CPF/CNPJ consumidor: '+Consumidor.Documento ;
-
-    if Consumidor.Nome <> '' then
-      InfoConsumidorRodapeBobina := InfoConsumidorRodapeBobina + '|Nome: '+Consumidor.Nome ;
-
-    if Consumidor.Endereco <> '' then
-      InfoConsumidorRodapeBobina := InfoConsumidorRodapeBobina + '|Endereco: '+Consumidor.Endereco ;
-
-    InfoConsumidorRodapeBobina := StringReplace(InfoConsumidorRodapeBobina,CR+LF,#10,[rfReplaceAll]) ;
-    InfoConsumidorRodapeBobina := StringReplace(InfoConsumidorRodapeBobina,'|',#10,[rfReplaceAll]) ;
-
-    InfoConsumidorRodapeBobina := Trim(InfoConsumidorRodapeBobina);
-
     {$IFNDEF NOGUI}
-    if MemoAssigned then
+    if IdentificaConsumidorRodape and MemoAssigned then
     begin
+      InfoConsumidorRodapeBobina := '';
+
+      if Consumidor.Documento <> '' then
+        InfoConsumidorRodapeBobina := InfoConsumidorRodapeBobina + '|CPF/CNPJ consumidor: '+Consumidor.Documento ;
+
+      if Consumidor.Nome <> '' then
+        InfoConsumidorRodapeBobina := InfoConsumidorRodapeBobina + '|Nome: '+Consumidor.Nome ;
+
+      if Consumidor.Endereco <> '' then
+        InfoConsumidorRodapeBobina := InfoConsumidorRodapeBobina + '|Endereco: '+Consumidor.Endereco ;
+
+      InfoConsumidorRodapeBobina := StringReplace(InfoConsumidorRodapeBobina,CR+LF,#10,[rfReplaceAll]) ;
+      InfoConsumidorRodapeBobina := StringReplace(InfoConsumidorRodapeBobina,'|',#10,[rfReplaceAll]) ;
+
+      InfoConsumidorRodapeBobina := Trim(InfoConsumidorRodapeBobina);
+
       InfoConsumidorRodapeBobina := AjustaLinhas( InfoConsumidorRodapeBobina, fsMemoColunas, 8 ) ;
       MemoAdicionaLinha( InfoConsumidorRodapeBobina );
     end ;
