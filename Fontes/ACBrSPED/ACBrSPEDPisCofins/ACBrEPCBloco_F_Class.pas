@@ -1386,7 +1386,7 @@ begin
                   LFill( VL_REC,0,2 )     +
                   LFill( strIND_REC )     +
                   LFill( CNPJ_CPF   )     +
-                  LFill( NUM_DOC    )     +
+                  LFill( NUM_DOC, 60)     +
                   LFill( COD_ITEM   )     +
                   LFill( VL_REC_DET,0,2 ) +
                   LFill( CstPisToStr(CST_PIS) ) +
