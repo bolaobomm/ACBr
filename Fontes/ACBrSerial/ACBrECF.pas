@@ -3166,7 +3166,7 @@ end;
 procedure TACBrECF.FechaCupom(Observacao: AnsiString; IndiceBMP : Integer);
 var
   Tratado : Boolean;
-  RodapePafECF: String;
+  RodapePafECF, InfoConsumidorRodapeBobina: String;
 begin
   if (Observacao = '') then
      Observacao := fsMensagemRodape ;
@@ -3181,7 +3181,34 @@ begin
 
      if Consumidor.Endereco <> '' then
         Observacao := Observacao + '|Endereco: '+Consumidor.Endereco ;
-  end ;
+  end
+  else
+  if IdentificaConsumidorRodape then
+  begin
+    InfoConsumidorRodapeBobina := '';
+
+    if Consumidor.Documento <> '' then
+      InfoConsumidorRodapeBobina := InfoConsumidorRodapeBobina + '|CPF/CNPJ consumidor: '+Consumidor.Documento ;
+
+    if Consumidor.Nome <> '' then
+      InfoConsumidorRodapeBobina := InfoConsumidorRodapeBobina + '|Nome: '+Consumidor.Nome ;
+
+    if Consumidor.Endereco <> '' then
+      InfoConsumidorRodapeBobina := InfoConsumidorRodapeBobina + '|Endereco: '+Consumidor.Endereco ;
+
+    InfoConsumidorRodapeBobina := StringReplace(InfoConsumidorRodapeBobina,CR+LF,#10,[rfReplaceAll]) ;
+    InfoConsumidorRodapeBobina := StringReplace(InfoConsumidorRodapeBobina,'|',#10,[rfReplaceAll]) ;
+
+    InfoConsumidorRodapeBobina := Trim(InfoConsumidorRodapeBobina);
+
+    {$IFNDEF NOGUI}
+    if MemoAssigned then
+    begin
+      InfoConsumidorRodapeBobina := AjustaLinhas( InfoConsumidorRodapeBobina, fsMemoColunas, 8 ) ;
+      MemoAdicionaLinha( InfoConsumidorRodapeBobina );
+    end ;
+    {$ENDIF}
+  end;
 
   { Tirando os Acentos e trocando todos os #13+#10 e '|' por #10 }
   Observacao := StringReplace(Observacao,CR+LF,#10,[rfReplaceAll]) ;
