@@ -338,6 +338,17 @@ begin
     LayCTeCadastro:      Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
     LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cteRecepcaoEvento/cteRecepcaoEvento.asmx', 'https://homologacao.cte.sefaz.rs.gov.br/ws/cterecepcaoevento/cterecepcaoevento.asmx');
   end;
+  (*
+  case ALayOut of
+    LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.svrs.rs.gov.br/ws/cterecepcao/CteRecepcao.asmx'                 , 'https://cte-homologacao.svrs.rs.gov.br/ws/cterecepcao/CteRecepcao.asmx');
+    LayCTeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.svrs.rs.gov.br/ws/cteretrecepcao/cteRetRecepcao.asmx'           , 'https://cte-homologacao.svrs.rs.gov.br/ws/cteretrecepcao/cteRetRecepcao.asmx');
+    LayCTeInutilizacao:  Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.svrs.rs.gov.br/ws/cteinutilizacao/cteinutilizacao.asmx'         , 'https://cte-homologacao.svrs.rs.gov.br/ws/cteinutilizacao/cteinutilizacao.asmx');
+    LayCTeConsultaCT:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.svrs.rs.gov.br/ws/cteconsulta/CteConsulta.asmx'                 , 'https://cte-homologacao.svrs.rs.gov.br/ws/cteconsulta/CteConsulta.asmx');
+    LayCTeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.svrs.rs.gov.br/ws/ctestatusservico/CteStatusServico.asmx'       , 'https://cte-homologacao.svrs.rs.gov.br/ws/ctestatusservico/CteStatusServico.asmx');
+    LayCTeCadastro:      Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
+    LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.svrs.rs.gov.br/ws/cterecepcaoevento/cterecepcaoevento.asmx'     , 'https://cte-homologacao.svrs.rs.gov.br/ws/cterecepcaoevento/cterecepcaoevento.asmx');
+  end;
+  *)
 end;
 
 class function CTeUtil.GetURLAC(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
@@ -534,6 +545,17 @@ begin
     LayCTeCadastro:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://sef.sefaz.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx', 'https://sef.sefaz.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx');
     LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cteRecepcaoEvento/cteRecepcaoEvento.asmx'     , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cterecepcaoevento/cterecepcaoevento.asmx');
   end;
+  (*
+  case ALayOut of
+    LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.svrs.rs.gov.br/ws/cterecepcao/CteRecepcao.asmx'                 , 'https://cte-homologacao.svrs.rs.gov.br/ws/cterecepcao/CteRecepcao.asmx');
+    LayCTeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.svrs.rs.gov.br/ws/cteretrecepcao/cteRetRecepcao.asmx'           , 'https://cte-homologacao.svrs.rs.gov.br/ws/cteretrecepcao/cteRetRecepcao.asmx');
+    LayCTeInutilizacao:  Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.svrs.rs.gov.br/ws/cteinutilizacao/cteinutilizacao.asmx'         , 'https://cte-homologacao.svrs.rs.gov.br/ws/cteinutilizacao/cteinutilizacao.asmx');
+    LayCTeConsultaCT:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.svrs.rs.gov.br/ws/cteconsulta/CteConsulta.asmx'                 , 'https://cte-homologacao.svrs.rs.gov.br/ws/cteconsulta/CteConsulta.asmx');
+    LayCTeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.svrs.rs.gov.br/ws/ctestatusservico/CteStatusServico.asmx'       , 'https://cte-homologacao.svrs.rs.gov.br/ws/ctestatusservico/CteStatusServico.asmx');
+    LayCTeCadastro:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cad.sefazrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx', 'https://cad.sefazrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx');
+    LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.svrs.rs.gov.br/ws/cterecepcaoevento/cterecepcaoevento.asmx'     , 'https://cte-homologacao.svrs.rs.gov.br/ws/cterecepcaoevento/cterecepcaoevento.asmx');
+  end;
+  *)
 end;
 
 // As URLs da SEFAZ de SP são as mesmas para o SVSP = SEFAZ Virtual de SP

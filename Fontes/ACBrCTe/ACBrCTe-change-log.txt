@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/04/2015
+[*] Alteração das URLs da SEFAZ-RS e SEFAZ-Vitural-RS, conforme comunicado em
+    08/04/2015 no Portal Nacional do CT-e.
+    por: Italo Jurisato Junior
+
 09/03/2015
 [*] Incluido a leitura do Atributo Id do grupo infProt.
     por: Italo Jurisato Junior
