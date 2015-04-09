@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/04/2015
+[*] Alteração das URLs da SEFAZ-RS e SEFAZ-Vitural-RS, conforme comunicado em
+    08/04/2015 no Portal Nacional da NF-e.
+    por: Italo Jurisato Junior
+
 02/04/2015
 [+] Adicionado propriedade para definir se o danfe deve ou não imprimir informações na descrição do 
     produtos quando for Arma. (necessida, possibilitar ter seu propio formato de impressão)
