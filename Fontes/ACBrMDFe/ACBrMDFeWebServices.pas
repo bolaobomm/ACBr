@@ -2171,6 +2171,9 @@ begin
 
               if FConfiguracoes.Arquivos.Salvar then
                 FConfiguracoes.Geral.Save(NomeArq, wProc.Text, GerarPathEvento);
+
+              if FConfiguracoes.Arquivos.SalvarEvento then
+                FConfiguracoes.Geral.Save(NomeArq, wProc.Text, GerarPathEvento);
             finally
               wProc.Free;
             end;
