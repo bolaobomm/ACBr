@@ -50,7 +50,7 @@ Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:Ad
 Source: ACBrMonitor.exe; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: banner_acbrmonitor.gif; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: ACBrMonitorConsole.exe; DestDir: {app}; Flags: ignoreversion; Components: console
-Source: {#ACBrDIR}\Exemplos\ACBrECF\Lazarus\ECFTeste.exe; DestDir: {app}; Flags: ignoreversion; Components: programa
+;Source: {#ACBrDIR}\Exemplos\ACBrECF\Lazarus\ECFTeste.exe; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: PRICETAB.TXT; DestDir: {app}; Flags: onlyifdoesntexist; Components: programa
 Source: ..\Exemplos\TesteTXT.BAT; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
 Source: ..\Exemplos\Clipper_TXT_xHarbour_Socket.zip; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos

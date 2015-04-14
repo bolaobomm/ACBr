@@ -1674,7 +1674,7 @@ type
     fCOD_MOD: String;
     fDOC_FIM: Integer;
     fDOC_INI: Integer;
-    fDT_DOC: TDate;
+    fDT_DOC: TDateTime;
     fNR_SAT: Integer;
     FRegistroC870: TRegistroC870List;
     FRegistroC880: TRegistroC880List;
@@ -1685,7 +1685,7 @@ type
 
     property COD_MOD : String read fCOD_MOD write fCOD_MOD;
     property NR_SAT : Integer read fNR_SAT write fNR_SAT;
-    property DT_DOC : TDate read fDT_DOC write fDT_DOC;
+    property DT_DOC : TDateTime read fDT_DOC write fDT_DOC;
     property DOC_INI : Integer read fDOC_INI write fDOC_INI;
     property DOC_FIM : Integer read fDOC_FIM write fDOC_FIM;
 

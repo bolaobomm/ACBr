@@ -52,7 +52,7 @@ uses ACBrDevice,
           , System.UITypes, FMX.Types, FMX.TextLayout, FMX.Objects
        {$ELSEIF DEFINED(VCL)}
           , Controls, Forms, Graphics, Dialogs, ExtCtrls
-       {$ENDIF}
+       {$IFEND}
        {$IFDEF MSWINDOWS}
          , Windows, messages
        {$ENDIF}

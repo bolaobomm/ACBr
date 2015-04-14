@@ -95,7 +95,7 @@ uses ACBrECFClass, ACBrDevice, ACBrUtil, ACBrConsts,
        , FMX.Controls, FMX.Forms, FMX.Dialogs, System.UITypes
        {$ELSEIF DEFINED(VCL)}
        , Controls, Forms, Dialogs
-       {$ENDIF}
+       {$IFEND}
      {$ENDIF} ;
 
 const

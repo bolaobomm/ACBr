@@ -155,7 +155,7 @@ uses ACBrECFClass, ACBrDevice, ACBrUtil,
        , FMX.Controls, FMX.Forms, FMX.Dialogs, System.UITypes
        {$ELSEIF DEFINED(VCL)}
        , Controls, Forms, Dialogs
-       {$ENDIF}
+       {$IFEND}
        {$IFDEF VisualCLX}, QDialogs, QControls, QForms {$ENDIF}
      {$ENDIF};
 

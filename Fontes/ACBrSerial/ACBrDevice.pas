@@ -78,7 +78,7 @@ uses synaser, {Unit da SynaSer (comunicação serial) }
           FMX.Forms, FMX.Printer,
        {$ELSE}
           Forms, Printers,
-       {$ENDIF}
+       {$IFEND}
      {$ENDIF}
      Classes ;
 

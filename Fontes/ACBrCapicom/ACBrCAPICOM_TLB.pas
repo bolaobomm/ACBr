@@ -63,7 +63,7 @@ uses Windows, ActiveX, Classes
      ,FMX.Graphics, FMX.OleServer
   {$ELSE}
      ,Graphics, OleServer
-  {$IFEND}
+  {$ENDIF}
   {$IFNDEF FPC}, StdVCL {$ENDIF}, Variants;
 
 
