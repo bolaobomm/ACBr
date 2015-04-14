@@ -34,7 +34,7 @@ unit pnfsConsNfseResposta;
 interface
 
 uses
-  SysUtils, Classes, Forms, DateUtils,
+  SysUtils, Classes, DateUtils,
   pcnAuxiliar, pcnConversao, pcnLeitor,
   pnfsConversao, pnfsNFSe, ACBrUtil, ACBrNFSeUtil, ACBrDFeUtil;
 

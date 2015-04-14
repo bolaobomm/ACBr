@@ -48,7 +48,15 @@ unit ACBrGNREGuiaClass;
 
 interface
 
-uses Forms, SysUtils, Classes, pcnConversao, pgnreGNRERetorno;
+uses SysUtils, Classes
+    {$IF DEFINED(VisualCLX)}
+       ,QForm
+    {$ELSEIF DEFINED(FMX)}
+       ,FMX.Forms
+    {$ELSE}
+       ,Forms
+    {$IFEND}
+    ,pcnConversao, pgnreGNRERetorno;
 
 type
   TACBrGNREGuiaClass = class( TComponent )

@@ -55,11 +55,13 @@ uses
     StrUtils,
   {$ENDIF}
     Classes, SysUtils,
-  {$IFDEF CLX}
-    QDialogs,
+  {$IF DEFINED(VisualCLX)}
+     QDialog,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Dialogs,
   {$ELSE}
-    Dialogs,
-  {$ENDIF}
+     Dialogs,
+  {$IFEND}
   {$IFDEF ACBrGNREOpenSSL}
     HTTPSend,
   {$ELSE}

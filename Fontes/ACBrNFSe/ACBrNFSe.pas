@@ -36,13 +36,15 @@ interface
 uses
   Classes, Sysutils,
   pnfsNFSe, pnfsConversao,
-{$IFDEF CLX}
-  QDialogs,
-{$ELSE}
-  Dialogs,
-{$ENDIF}
+  {$IF DEFINED(VisualCLX)}
+     QForms, QDialogs,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Forms, FMX.Dialogs, System.UITypes,
+  {$ELSE}
+     Forms, Dialogs,
+  {$IFEND}
   ACBrNFSeNotasFiscais, ACBrNFSeConfiguracoes, ACBrNFSeWebServices,
-  ACBrDFeUtil, ACBrUtil, ACBrNFSeUtil, ACBrNFSeDANFSeClass, Forms,
+  ACBrDFeUtil, ACBrUtil, ACBrNFSeUtil, ACBrNFSeDANFSeClass,
   smtpsend, ssl_openssl, mimemess, mimepart; // units para enviar email
 
 const
@@ -187,7 +189,11 @@ begin
         'Projeto Cooperar - PCN'+#10+#10+
         'http://www.projetocooperar.org/pcn/';
 
- MessageDlg(Msg ,mtInformation ,[mbOk],0);
+  {$IFDEF FMX}
+  MessageDlg(Msg, TMsgDlgType.mtInformation, [TMsgDlgBtn.mbOK],0);
+  {$ELSE}
+  MessageDlg(Msg ,mtInformation ,[mbOk],0);
+  {$ENDIF}
 end;
 
 { TACBrNFSe }

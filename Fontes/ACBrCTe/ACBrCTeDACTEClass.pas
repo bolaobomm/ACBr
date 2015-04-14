@@ -51,7 +51,7 @@ unit ACBrCTeDACTEClass;
 interface
 
 uses
-  Forms, SysUtils, Classes,
+  SysUtils, Classes,
   pcteCTE, pcnConversao;
 
 type

@@ -34,7 +34,7 @@ unit pnfsNFSeG;
 interface
 
 uses
-  SysUtils, Classes, Forms, pcnAuxiliar,
+  SysUtils, Classes, pcnAuxiliar,
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}

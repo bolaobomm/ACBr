@@ -42,12 +42,13 @@ interface
 
 uses
   Classes, Sysutils,
-{$IFDEF VisualCLX}
-  QDialogs,
-{$ELSE}
-  Dialogs,
-{$ENDIF}
-  Forms,
+  {$IF DEFINED(VisualCLX)}
+     QForms, QDialogs,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Forms, FMX.Dialogs, System.UITypes,
+  {$ELSE}
+     Forms, Dialogs,
+  {$IFEND}
   smtpsend, ssl_openssl, mimemess, mimepart, // units para enviar email
   pcnConversao, pmdfeMDFe,
   pmdfeEnvEventoMDFe, pmdfeRetEnvEventoMDFe,
@@ -198,7 +199,11 @@ begin
          'Projeto Cooperar - PCN' + #10 + #10 +
          'http://www.projetocooperar.org/pcn/';
 
+  {$IFDEF FMX}
+  MessageDlg(Msg, TMsgDlgType.mtInformation, [TMsgDlgBtn.mbOK],0);
+  {$ELSE}
   MessageDlg(Msg, mtInformation, [mbOk], 0);
+  {$ENDIF}
 end;
 
 { TACBrMDFe }

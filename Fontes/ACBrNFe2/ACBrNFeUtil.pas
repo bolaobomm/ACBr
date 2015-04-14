@@ -55,9 +55,17 @@ unit ACBrNFeUtil;
 interface
 
 uses {$IFNDEF ACBrNFeOpenSSL}ACBrCAPICOM_TLB, ACBrMSXML2_TLB, JwaWinCrypt, {$ENDIF}
-  Classes, Forms, TypInfo,
+  Classes,
+  {$IF DEFINED(VisualCLX)}
+     QDialogs, QForms, QGraphics,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Dialogs, FMX.Forms, FMX.Graphics,
+  {$ELSE}
+     Dialogs, Forms, Graphics,
+  {$IFEND}
+  TypInfo,
   {$IFDEF FPC}
-     LResources, Controls, Graphics, Dialogs, strutils,
+     LResources, Controls, strutils,
   {$ELSE}
      StrUtils,
   {$ENDIF}
@@ -156,7 +164,7 @@ type
                                 AdhEmi: TDateTime;
                                 AvNF, AvICMS: Currency;
                                 AdigVal, AidToken, AToken: String) : String;
-    class function CstatProcessado(AValue: Integer): Boolean;                                
+    class function CstatProcessado(AValue: Integer): Boolean;
   end;
 
 implementation
@@ -1395,35 +1403,35 @@ begin
 
     Schema := CoXMLSchemaCache50.Create;
 
-    if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',PathWithDelim(APathSchemas))) then
+    if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas',PathWithDelim(APathSchemas))) then
        raise EACBrNFeException.Create('Diretório de Schemas não encontrado'+sLineBreak+
-                           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',PathWithDelim(APathSchemas)));
+                           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas',PathWithDelim(APathSchemas)));
 
     if AModeloDF = moNFe then
      begin
       case Tipo of
-        1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+        1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+
                                                'Schemas\',PathWithDelim(APathSchemas))+'nfe_v' +
                                                GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeRecepcao) + '.xsd';
-        2: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+        2: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+
                                                'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v' +
                                                GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeCancelamento) + '.xsd';
-        3: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+        3: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+
                                                'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v' +
                                                GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeInutilizacao) + '.xsd';
-        4: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+        4: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+
                                                'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v' +
                                                GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEnvDPEC) + '.xsd';
-        5: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+        5: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+
                                                'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v' +
                                                GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeCCe) + '.xsd';
-        6: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+        6: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+
                                                'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v' +
                                                GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
-        7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+        7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+
                                                    'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' +
                                                    GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
-        11: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+        11: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+
                                                'Schemas\',PathWithDelim(APathSchemas))+'envEPEC_v' +
                                                GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEventoAN) + '.xsd';
         else schema_filename := '';
@@ -1432,28 +1440,28 @@ begin
     else
      begin
       case Tipo of
-        1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+        1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+
                                                'Schemas\',PathWithDelim(APathSchemas))+'nfe_v' +
                                                GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeRecepcao) + '.xsd';
-        2: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+        2: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+
                                                'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v' +
                                                GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeCancelamento) + '.xsd';
-        3: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+        3: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+
                                                'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v' +
                                                GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeInutilizacao) + '.xsd';
-        4: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+        4: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+
                                                'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v' +
                                                GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEnvDPEC) + '.xsd';
-        5: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+        5: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+
                                                'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v' +
                                                GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeCCe) + '.xsd';
-        6: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+        6: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+
                                                'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v' +
                                                GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
-        7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+        7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+
                                                    'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' +
                                                    GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
-        11: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+        11: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+
                                                'Schemas\',PathWithDelim(APathSchemas))+'envEPEC_v' +
                                                GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEventoAN) + '.xsd';
         else schema_filename := '';

@@ -51,18 +51,20 @@ interface
 uses
   Classes, Sysutils,
   pgnreGNRE,
-  pgnreConversao,
-{$IFDEF CLX}
-  QDialogs,
-{$ELSE}
-  Dialogs,
-{$ENDIF}
-  ACBrGNREGuias,
-  ACBrGNREGuiasRetorno,
-  ACBrGNREWebServices,
-  ACBrGNREConfiguracoes,
-  ACBrGNREGuiaClass,
-  ACBrUtil, ACBrGNREUtil;
+  pgnreConversao
+  {$IF DEFINED(VisualCLX)}
+     ,QDialogs
+  {$ELSEIF DEFINED(FMX)}
+     ,FMX.Dialogs, System.UITypes
+  {$ELSE}
+     ,Dialogs
+  {$IFEND}
+  ,ACBrGNREGuias
+  ,ACBrGNREGuiasRetorno
+  ,ACBrGNREWebServices
+  ,ACBrGNREConfiguracoes
+  ,ACBrGNREGuiaClass
+  ,ACBrUtil, ACBrGNREUtil;
 
 const
   ACBrGNRE_VERSAO = '0.1.0';
@@ -120,7 +122,11 @@ begin
         'Projeto Cooperar - PCN'+#10+#10+
         'http://www.projetocooperar.org/pcn/';
 
- MessageDlg(Msg ,mtInformation ,[mbOk],0);
+  {$IFDEF FMX}
+  MessageDlg(Msg, TMsgDlgType.mtInformation, [TMsgDlgBtn.mbOK],0);
+  {$ELSE}
+  MessageDlg(Msg ,mtInformation ,[mbOk],0);
+  {$ENDIF}
 end;
 
 { TACBrGNRE }

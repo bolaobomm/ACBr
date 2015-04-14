@@ -58,7 +58,6 @@ interface
 
 uses
   Classes, SysUtils,
-{$IFDEF CLX} QDialogs,{$ELSE} Dialogs,{$ENDIF}
 {$IFDEF ACBrCTeOpenSSL}
   HTTPSend,
 {$ELSE}
@@ -68,6 +67,13 @@ uses
         ACBrHTTPReqResp,
      {$ENDIF}
 {$ENDIF}
+  {$IF DEFINED(VisualCLX)}
+     QDialogs,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Dialogs,
+  {$ELSE}
+     Dialogs,
+  {$IFEND}
   pcnAuxiliar, pcnConversao, pcteRetConsCad,
   ACBrCTeConfiguracoes, ACBrCteConhecimentos,
   pcteRetConsReciCTe, pcteProcCte, pcteRetCancCTe, pcteConsReciCTe,

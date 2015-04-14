@@ -63,7 +63,7 @@ uses
 {$IFNDEF ACBrCTeOpenSSL}
   ACBrCAPICOM_TLB, ACBrMSXML2_TLB, JwaWinCrypt,
 {$ENDIF}
-  Classes, Forms,
+  Classes,
 {$IFDEF FPC}
   LResources, Controls, Graphics, Dialogs,
 {$ELSE}
@@ -661,30 +661,30 @@ begin
   Tipo := CTeUtil.IdentificaTipoSchema(AXML, I);
 
   if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                 PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',
+                 PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas',
                  PathWithDelim(APathSchemas))) then
     raise Exception.Create('Diretório de Schemas não encontrado'+sLineBreak+
                            DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                           PathWithDelim(ExtractFileDir(application.ExeName))+
+                           PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+
                            'Schemas',PathWithDelim(APathSchemas)));
 
 {$IFDEF PL_103}
   case Tipo of
    1: begin
        if DFeUtil.EstaVazio(APathSchemas) then
-         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\cte_v1.03.xsd')
+         schema_filename := pchar(PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\cte_v1.03.xsd')
         else
          schema_filename := pchar(PathWithDelim(APathSchemas)+'cte_v1.03.xsd');
       end;
    2: begin
        if DFeUtil.EstaVazio(APathSchemas) then
-         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\canccte_v1.03.xsd')
+         schema_filename := pchar(PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\canccte_v1.03.xsd')
         else
          schema_filename := pchar(PathWithDelim(APathSchemas)+'canccte_v1.03.xsd');
       end;
    3: begin
        if DFeUtil.EstaVazio(APathSchemas) then
-         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\inutcte_v1.03.xsd')
+         schema_filename := pchar(PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\inutcte_v1.03.xsd')
         else
          schema_filename := pchar(PathWithDelim(APathSchemas)+'inutcte_v1.03.xsd');
       end;
@@ -695,26 +695,26 @@ begin
   case Tipo of
    1: begin
        if DFeUtil.EstaVazio(APathSchemas) then
-         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\cte_v' + CTeenviCTe + '.xsd')
+         schema_filename := pchar(PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\cte_v' + CTeenviCTe + '.xsd')
         else
          schema_filename := pchar(PathWithDelim(APathSchemas)+'cte_v' + CTeenviCTe + '.xsd');
       end;
    2: begin
        if DFeUtil.EstaVazio(APathSchemas) then
-         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\canccte_v' + CTecancCTe + '.xsd')
+         schema_filename := pchar(PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\canccte_v' + CTecancCTe + '.xsd')
         else
          schema_filename := pchar(PathWithDelim(APathSchemas)+'canccte_v' + CTecancCTe + '.xsd');
       end;
    3: begin
        if DFeUtil.EstaVazio(APathSchemas) then
-         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\inutcte_v' + CTeinutCTe + '.xsd')
+         schema_filename := pchar(PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\inutcte_v' + CTeinutCTe + '.xsd')
         else
          schema_filename := pchar(PathWithDelim(APathSchemas)+'inutcte_v' + CTeinutCTe + '.xsd');
       end;
    4: begin
        {
        if DFeUtil.EstaVazio(APathSchemas) then
-         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\envDPEC_v1.04.xsd')
+         schema_filename := pchar(PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\envDPEC_v1.04.xsd')
         else
          schema_filename := pchar(PathWithDelim(APathSchemas)+'envDPEC_v1.04.xsd');
        }
@@ -723,7 +723,7 @@ begin
    5..11:
       begin
        if DFeUtil.EstaVazio(APathSchemas) then
-         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\eventoCTe_v' + CTeEventoCTe + '.xsd')
+         schema_filename := pchar(PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\eventoCTe_v' + CTeEventoCTe + '.xsd')
         else
          schema_filename := pchar(PathWithDelim(APathSchemas)+'eventoCTe_v' + CTeEventoCTe + '.xsd');
       end;
@@ -924,62 +924,62 @@ begin
 
 
   if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                 PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',
+                 PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas',
                  PathWithDelim(APathSchemas))) then
     raise Exception.Create('Diretório de Schemas não encontrado'+sLineBreak+
                            DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                           PathWithDelim(ExtractFileDir(application.ExeName))+
+                           PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+
                            'Schemas',PathWithDelim(APathSchemas)));
 
   case Tipo of
    1: begin
        schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'cteModalAereo_v' + CTeModalAereo + '.xsd');
       end;
    2: begin
        schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'cteModalAquaviario_v' + CTeModalAqua + '.xsd');
       end;
    3: begin
        schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'cteModalDutoviario_v' + CTeModalDuto + '.xsd');
       end;
    4: begin
        schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'cteModalFerroviario_v' + CTeModalFerro + '.xsd');
       end;
    5: begin
        schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'cteModalRodoviario_v' + CTeModalRodo + '.xsd');
       end;
    6: begin
        schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'cteMultiModal_v' + CTeMultiModal + '.xsd');
       end;
    7: begin
        schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'evEPECCTe_v' + CTeEventoCTe + '.xsd');
       end;
    8: begin
        schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'evCancCTe_v' + CTeEventoCTe + '.xsd');
       end;
    9: begin
        schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'evRegMultimodal_v' + CTeEventoCTe + '.xsd');
       end;
   10: begin
        schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'evCCeCTe_v' + CTeEventoCTe + '.xsd');
       end;
   end;
@@ -1084,11 +1084,11 @@ begin
     Schema := CoXMLSchemaCache50.Create;
 
     if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                    PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',
+                    PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas',
                     PathWithDelim(APathSchemas))) then
       raise Exception.Create('Diretório de Schemas não encontrado'+sLineBreak+
                               DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                              PathWithDelim(ExtractFileDir(application.ExeName))+
+                              PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+
                               'Schemas',PathWithDelim(APathSchemas)));
 
 {$IFDEF PL_103}
@@ -1098,19 +1098,19 @@ begin
      1: begin
          Schema.add('http://www.portalfiscal.inf.br/cte',
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'cte_v1.03.xsd')
         end;
      2: begin
          Schema.add('http://www.portalfiscal.inf.br/cte',
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'cancCte_v1.03.xsd')
         end;
      3: begin
          Schema.add('http://www.portalfiscal.inf.br/cte',
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'inutCte_v1.03.xsd')
         end;
     end;
@@ -1122,23 +1122,23 @@ begin
     case Tipo of
      1: begin
          ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                      PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                      PathWithDelim(ExtractFileDir(DFeUtil.ExeName)) + 'Schemas\',
                       PathWithDelim(APathSchemas)) + 'cte_v' + CTeenviCTe + '.xsd';
         end;
      2: begin
          ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                      PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                      PathWithDelim(ExtractFileDir(DFeUtil.ExeName)) + 'Schemas\',
                       PathWithDelim(APathSchemas)) + 'cancCte_v' + CTecancCTe + '.xsd';
         end;
      3: begin
          ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                      PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                      PathWithDelim(ExtractFileDir(DFeUtil.ExeName)) + 'Schemas\',
                       PathWithDelim(APathSchemas)) + 'inutCte_v' + CTeinutCTe + '.xsd';
         end;
       5..11:
         begin
          ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                      PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                      PathWithDelim(ExtractFileDir(DFeUtil.ExeName)) + 'Schemas\',
                       PathWithDelim(APathSchemas)) + 'eventoCTe_v' + CTeEventoCTe + '.xsd';
         end;
     end;
@@ -1285,11 +1285,11 @@ begin
   Schema := CoXMLSchemaCache50.Create;
 
   if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                  PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',
+                  PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+'Schemas',
                   PathWithDelim(APathSchemas))) then
     raise Exception.Create('Diretório de Schemas não encontrado'+sLineBreak+
                             DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                            PathWithDelim(ExtractFileDir(application.ExeName))+
+                            PathWithDelim(ExtractFileDir(DFeUtil.ExeName))+
                             'Schemas',PathWithDelim(APathSchemas)));
 
   Schema.remove('http://www.portalfiscal.inf.br/cte');
@@ -1297,52 +1297,52 @@ begin
   case Tipo of
    1: begin
        ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                    PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                    PathWithDelim(ExtractFileDir(DFeUtil.ExeName)) + 'Schemas\',
                     PathWithDelim(APathSchemas)) + 'cteModalAereo_v' + CTeModalAereo + '.xsd';
       end;
    2: begin
        ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                    PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                    PathWithDelim(ExtractFileDir(DFeUtil.ExeName)) + 'Schemas\',
                     PathWithDelim(APathSchemas)) + 'cteModalAquaviario_v' + CTeModalAqua + '.xsd';
       end;
    3: begin
        ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                    PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                    PathWithDelim(ExtractFileDir(DFeUtil.ExeName)) + 'Schemas\',
                     PathWithDelim(APathSchemas)) + 'cteModalDutoviario_v' + CTeModalDuto + '.xsd';
       end;
    4: begin
        ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                    PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                    PathWithDelim(ExtractFileDir(DFeUtil.ExeName)) + 'Schemas\',
                     PathWithDelim(APathSchemas)) + 'cteModalFerroviario_v' + CTeModalFerro + '.xsd';
       end;
    5: begin
        ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                    PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                    PathWithDelim(ExtractFileDir(DFeUtil.ExeName)) + 'Schemas\',
                     PathWithDelim(APathSchemas)) + 'cteModalRodoviario_v' + CTeModalRodo + '.xsd';
       end;
    6: begin
        ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                    PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                    PathWithDelim(ExtractFileDir(DFeUtil.ExeName)) + 'Schemas\',
                     PathWithDelim(APathSchemas)) + 'cteMultiModal_v' + CTeMultiModal + '.xsd';
       end;
    7: begin
        ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                    PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                    PathWithDelim(ExtractFileDir(DFeUtil.ExeName)) + 'Schemas\',
                     PathWithDelim(APathSchemas)) + 'evEPECCTe_v' + CTeEventoCTe + '.xsd';
       end;
    8: begin
        ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                    PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                    PathWithDelim(ExtractFileDir(DFeUtil.ExeName)) + 'Schemas\',
                     PathWithDelim(APathSchemas)) + 'evCancCTe_v' + CTeEventoCTe + '.xsd';
       end;
    9: begin
        ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                    PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                    PathWithDelim(ExtractFileDir(DFeUtil.ExeName)) + 'Schemas\',
                     PathWithDelim(APathSchemas)) + 'evRegMultimodal_v' + CTeEventoCTe + '.xsd';
       end;
   10: begin
        ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                    PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                    PathWithDelim(ExtractFileDir(DFeUtil.ExeName)) + 'Schemas\',
                     PathWithDelim(APathSchemas)) + 'evCCeCTe_v' + CTeEventoCTe + '.xsd';
       end;
   end;

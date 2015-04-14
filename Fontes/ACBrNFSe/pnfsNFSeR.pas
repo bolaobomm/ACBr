@@ -34,7 +34,14 @@ unit pnfsNFSeR;
 interface
 
 uses
-  SysUtils, Classes, Forms, DateUtils,
+  SysUtils, Classes, DateUtils,
+  {$IF DEFINED(VisualCLX)}
+     QForms,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Forms,
+  {$ELSE}
+     Forms,
+  {$IFEND}
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}

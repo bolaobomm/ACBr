@@ -51,7 +51,14 @@ unit ACBrDFeUtil;
 interface
 
 uses
-  Classes, Forms,
+  Classes,
+  {$IF DEFINED(VisualCLX)}
+     QForms,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Forms,
+  {$ELSE}
+     Forms,
+  {$IFEND}
   {$IFDEF FPC}
     LResources, Controls, Graphics, Dialogs,
   {$ENDIF}
@@ -129,6 +136,7 @@ type
      class function ValidaSUFRAMA(AValue: string): Boolean;
      class function ValidaRECOPI(AValue: string): Boolean;
      class function ValidaNVE(AValue: string): Boolean;
+     class function ExeName: string;
 //   published
 
    end;
@@ -177,6 +185,15 @@ class procedure DFeUtil.EstaZerado(AValue: Integer; AMensagem: String);
 begin
   if EstaZerado(AValue) then
     raise EACBrDFeException.Create(AMensagem);
+end;
+
+class function DFeUtil.ExeName: string;
+begin
+  {$IFDEF FMX}
+    Result := ParamStr(0);
+  {$ELSE}
+    Result := Application.ExeName;
+  {$ENDIF}
 end;
 
 class function DFeUtil.FormatarCEP(AValue: String): String;
@@ -719,7 +736,11 @@ end;
 
 class function DFeUtil.PathAplication: String;
 begin
-  Result := ExtractFilePath({$IFNDEF Framework}Application.ExeName{$ELSE}ParamStr(0){$ENDIF});
+  Result := ExtractFilePath({$IFNDEF FRAMEWORK}
+                              {$IFDEF FMX}ParamStr(0){$ELSE}Application.ExeName{$ENDIF}
+                            {$ELSE}
+                              ParamStr(0)
+                            {$ENDIF});
 end;
 
 class function DFeUtil.CollateBr(Str: String): String;

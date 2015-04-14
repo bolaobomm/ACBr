@@ -58,11 +58,13 @@ interface
 
 uses
   SysUtils, Classes,
-{$IFDEF DELPHI16_UP}
-  Vcl.Dialogs,
-{$ELSE}
-  Dialogs,
-{$ENDIF}
+  {$IF DEFINED(VisualCLX)}
+     QDialogs,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Dialogs,
+  {$ELSE}
+     Dialogs,
+  {$IFEND}
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}

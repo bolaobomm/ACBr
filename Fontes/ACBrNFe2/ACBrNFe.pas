@@ -54,11 +54,17 @@ uses
   pcnNFe, pcnConversao, pcnCCeNFe, pcnRetCCeNFe,
   pcnEnvEventoNFe, pcnRetEnvEventoNFe, pcnInutNFe, pcnRetInutNFe,
   pcnDownloadNFe, pcnRetDownloadNFe, pcnRetDistDFeInt,
-  {$IFDEF CLX} QDialogs,{$ELSE} Dialogs,{$ENDIF}
+  {$IF DEFINED(VisualCLX)}
+     QDialogs, QForms,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Dialogs, FMX.Forms, System.UITypes,
+  {$ELSE}
+     Dialogs, Forms,
+  {$IFEND}
   ACBrNFeNotasFiscais,
   ACBrNFeConfiguracoes,
   ACBrNFeWebServices, ACBrNFeUtil, ACBrDFeUtil,
-  ACBrNFeDANFEClass, ACBrUtil, Forms,
+  ACBrNFeDANFEClass, ACBrUtil,
   smtpsend, ssl_openssl, mimemess, mimepart; // units para enviar email
 
 const
@@ -224,7 +230,12 @@ begin
            'http://acbr.sourceforge.net'+#10+#10+
            'Projeto Cooperar - PCN'+#10+#10+
            'http://www.projetocooperar.org/pcn/';
-     MessageDlg(Msg ,mtInformation ,[mbOk],0);
+
+  {$IFDEF FMX}
+  MessageDlg(Msg, TMsgDlgType.mtInformation, [TMsgDlgBtn.mbOK],0);
+  {$ELSE}
+  MessageDlg(Msg ,mtInformation ,[mbOk],0);
+  {$ENDIF}
 end;
 
 { TACBrNFe }

@@ -176,4 +176,9 @@ begin
   end;
 end;
 
+//{$IFNDEF FPC}
+//initialization
+//  GroupDescendentsWith(TACBrCalculadora, TControl);
+//{$ENDIF}
+
 end.

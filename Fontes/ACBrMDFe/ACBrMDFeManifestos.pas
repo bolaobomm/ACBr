@@ -41,7 +41,15 @@ unit ACBrMDFeManifestos;
 interface
 
 uses
-  Classes, Sysutils, Dialogs, Forms, StrUtils,
+  Classes, Sysutils,
+  {$IF DEFINED(VisualCLX)}
+     QForms, QDialogs,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Forms, FMX.Dialogs,
+  {$ELSE}
+     Forms, Dialogs,
+  {$IFEND}
+  StrUtils,
   ACBrMDFeUtil, ACBrMDFeConfiguracoes,
   //{$IFDEF FPC}
      //ACBrMDFeDMLaz,

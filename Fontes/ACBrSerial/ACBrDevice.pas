@@ -72,8 +72,10 @@ uses synaser, {Unit da SynaSer (comunicação serial) }
         Windows, ACBrD5,
      {$ENDIF}
      {$IFNDEF NOGUI}
-       {$IFDEF VisualCLX}
+       {$IF DEFINED(VisualCLX)}
           QForms, QPrinters,
+       {$ELSEIF DEFINED(FMX)}
+          FMX.Forms, FMX.Printer,
        {$ELSE}
           Forms, Printers,
        {$ENDIF}

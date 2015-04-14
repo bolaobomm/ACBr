@@ -52,7 +52,15 @@ unit ACBrNFeNotasFiscais;
 interface
 
 uses
-  Classes, Sysutils, Dialogs, Forms, StrUtils,
+  Classes, Sysutils,
+  {$IF DEFINED(VisualCLX)}
+     QDialogs, QForms,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Dialogs, FMX.Forms,
+  {$ELSE}
+     Dialogs, Forms,
+  {$IFEND}
+  StrUtils,
   ACBrNFeUtil, ACBrNFeConfiguracoes, ACBrDFeUtil,
   ACBrNFeDANFEClass,
   smtpsend, ssl_openssl, mimemess, mimepart, // units para enviar email

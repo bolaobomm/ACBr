@@ -60,7 +60,13 @@ unit ACBrNFeWebServices;
 interface
 
 uses Classes, SysUtils,
-  {$IFDEF CLX} QDialogs,{$ELSE} Dialogs,{$ENDIF}
+  {$IF DEFINED(VisualCLX)}
+     QDialogs,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Dialogs,
+  {$ELSE}
+     Dialogs,
+  {$IFEND}
   {$IFDEF ACBrNFeOpenSSL}
     HTTPSend,
   {$ELSE}

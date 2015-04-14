@@ -1158,6 +1158,26 @@ sdFiscalCompl = sdfComplementar;
 sdExtempCompl = sdfExtComplementar;
 sdRegimeEspecNEsp = sdfEspecial;
 
+bcc00 = bccVazio;
+bcc01 = bccAqBensRevenda;
+bcc02 = bccAqBensUtiComoInsumo;
+bcc03 = bccAqServUtiComoInsumo;
+bcc04 = bccEnergiaEletricaTermica;
+bcc05 = bccAluguelPredios;
+bcc06 = bccAluguelMaqEquipamentos;
+bcc07 = bccArmazenagemMercadoria;
+bcc08 = bccConArrendamentoMercantil;
+bcc09 = bccMaqCredDepreciacao;
+bcc10 = bccMaqCredAquisicao;
+bcc11 = bccAmortizacaoDepreciacaoImoveis;
+bcc12 = bccDevolucaoSujeita;
+bcc13 = bccOutrasOpeComDirCredito;
+bcc14 = bccAtTransporteSubcontratacao;
+bcc15 = bccAtImobCustoIncorrido;
+bcc16 = bccAtImobCustoOrcado;
+bcc17 = bccAtPresServ;
+bcc18 = bccEstoqueAberturaBens;
+
 function CodVerToStr(AValue: TACBrCodVer): string;
 function StrToCodVer(AValue: string): TACBrCodVer;
 function TipoEscritToStr(AValue: TACBrTipoEscrit): string;
@@ -1388,7 +1408,7 @@ end;
 
 function IndOperToStr(AVAlue: TACBrIndOper): string;
 begin
-   Result := IntToStr( Integer( AValue ) + 1 );
+   Result := IntToStr( Integer( AValue ) );
 end;
 
 function StrToIndOper(AVAlue: string): TACBrIndOper;
@@ -1398,7 +1418,7 @@ end;
 
 function IndEmitToStr(AValue: TACBrIndEmit): string;
 begin
-   Result := IntToStr( Integer( AValue ) + 1 );
+   Result := IntToStr( Integer( AValue ) );
 end;
 
 function StrToIndEmit(AValue: string): TACBrIndEmit;
@@ -1478,7 +1498,7 @@ begin
    if AValue = bccVazio then
       Result := ''
    else
-      Result := FormatFloat('00', Integer( AValue ) + 1 );
+      Result := FormatFloat('00', Integer( AValue ) );
 end;
 
 function StrToNatBcCred(AValue: string): TACBrNatBcCred;
@@ -1494,7 +1514,7 @@ begin
    if AValue = opcVazio then
       Result := ''
    else
-      Result := IntToStr( Integer( AValue ) + 1 );
+      Result := IntToStr( Integer( AValue ) );
 end;
 
 function StrToIndOrigCred(AValue: String): TACBrIndOrigCred;

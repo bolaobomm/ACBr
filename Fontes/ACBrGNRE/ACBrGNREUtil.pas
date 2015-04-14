@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componente ACBrGNRE                                                 }
 {  Biblioteca multiplataforma de componentes Delphi/Lazarus para emissão da    }
 {  Guia Nacional de Recolhimento de Tributos Estaduais                         }
@@ -49,10 +49,17 @@ unit ACBrGNREUtil;
 interface
 
 uses
+  Classes,
   {$IFNDEF ACBrGNREOpenSSL}
     ACBrCAPICOM_TLB, ACBrMSXML2_TLB,
   {$ENDIF}
-  Classes, Forms,
+  {$IF DEFINED(VisualCLX)}
+     QForms,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Forms,
+  {$ELSE}
+     Forms,
+  {$IFEND}
   {$IFDEF FPC}
     LResources, Controls, Graphics, Dialogs,
   {$ELSE}

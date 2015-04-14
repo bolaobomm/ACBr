@@ -47,11 +47,13 @@ interface
 uses
   Classes, SysUtils, Contnrs, ACBrBase
   {$IFNDEF NOGUI}
-    {$IFDEF VisualCLX}
+    {$IF DEFINED(VisualCLX)}
        ,QForms, QDialogs, QControls
+    {$ELSEIF DEFINED(FMX)}
+       ,FMX.Forms, FMX.Dialogs, FMX.Controls, System.UITypes
     {$ELSE}
        ,Forms, Dialogs, Controls
-    {$ENDIF}
+    {$IFEND}
   {$ENDIF} ;
 
 {$IFDEF NOGUI}

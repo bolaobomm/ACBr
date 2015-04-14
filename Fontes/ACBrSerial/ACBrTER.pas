@@ -51,10 +51,16 @@ Unit ACBrTER;
 Interface
 
 Uses ACBrBase, ACBrDevice, ACBrTERClass,  {Units da ACBr}
-     SysUtils,
-     {$IFDEF VisualCLX} QExtCtrls {$ELSE} ExtCtrls {$ENDIF},
-     {$IFDEF COMPILER6_UP} Types {$ELSE} Windows {$ENDIF},
-      Classes;
+     SysUtils
+     {$IF DEFINED(VisualCLX)}
+        ,QExtCtrls
+     {$ELSEIF DEFINED(FMX)}
+        ,FMX.ExtCtrls, FMX.Types
+     {$ELSE}
+        ,ExtCtrls
+     {$IFEND}
+     {$IFDEF COMPILER6_UP}, Types {$ELSE}, Windows {$ENDIF}
+      ,Classes;
 
 Type
     TACBrTERModelo = ( terNenhum, terWilbor );

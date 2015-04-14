@@ -47,7 +47,13 @@ interface
 uses
   Classes, SysUtils, ACBrTEFDClass
   {$IFNDEF NOGUI}
-   {$IFDEF VisualCLX} ,QControls {$ELSE} ,Controls {$ENDIF}
+    {$IF DEFINED(VisualCLX)}
+       ,QControls
+    {$ELSEIF DEFINED(FMX)}
+       ,FMX.Controls, System.UITypes
+    {$ELSE}
+       ,Controls
+    {$IFEND}
   {$ENDIF};
 
 

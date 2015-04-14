@@ -76,7 +76,11 @@ uses ACBrECFClass, ACBrDevice, ACBrUtil, ACBrConsts,
      Classes
      {$IFNDEF NOGUI}
        {$IFDEF VisualCLX}, QDialogs, QControls {$ENDIF}
-       {$IFDEF VCL}, Dialogs, Controls {$ENDIF}
+       {$IF DEFINED(FMX)}
+       , FMX.Controls, FMX.Forms, FMX.Dialogs, System.UITypes
+       {$ELSEIF DEFINED(VCL)}
+       , Controls, Forms, Dialogs
+       {$ENDIF}
      {$ENDIF} ;
 
 const
@@ -1278,7 +1282,7 @@ procedure TACBrECFSchalter.ProgramaComprovanteNaoFiscal(var Descricao: String;
 Var PV, ProxIndice, IndiceFPG : Integer ;
     FlagD, FlagA, FlagC, FlagP, FlagV : String ;
     FPG : TACBrECFFormaPagamento ;
-    DescrFPG : String ;
+    Msg, DescrFPG : String ;
     CNF : TACBrECFComprovanteNaoFiscal ;
 begin
   Tipo      := UpperCase(Tipo) ;
@@ -1329,7 +1333,7 @@ begin
   if pos('V',Tipo) > 0 then FlagV := 'S' else FlagV := 'N' ;
 
   CarregaComprovantesNaoFiscais ;
-  
+
   ProxIndice := StrToIntDef(Posicao,-1) ;
   if (ProxIndice < 0) or (ProxIndice > 19) then { Indice passado é válido ? }
   begin
@@ -1346,16 +1350,21 @@ begin
   {$IFNDEF NOGUI}
     if (IndiceFPG > 0) and (IndiceFPG <> 99) then
     begin
-       if MessageDlg( ACBrStr( 'Atenção. Você irá criar um vinculo entre:'+sLineBreak+
+       Msg := ACBrStr( 'Atenção. Você irá criar um vinculo entre:'+sLineBreak+
                      'Forma de Pagamento: '+DescrFPG+' e o '+sLineBreak+
                      'Comprovante não Fiscal: '+Descricao+sLineBreak+sLineBreak+
                      'Dessa maneira, toda vez que a Forma de Pagamento for '+
                      'utilizada, será OBRIGATÓRIA a emissao de um Comprovante '+
                      'Não Fiscal Vinculado. (Consulte o manual da '+fpModeloStr+
                      ')'+sLineBreak+sLineBreak+
-                     'Continua com a operação ?' ) ,
-                     mtConfirmation,mbYesNoCancel,0) <> mrYes then
-          raise EACBrECFERRO.create(ACBrStr('Programaçao de Comprovante não Fiscal cancelada'));
+                     'Continua com a operação ?' );
+       {$IFDEF FMX}
+       if MessageDlg(Msg, TMsgDlgType.mtWarning, [TMsgDlgBtn.mbYes,TMsgDlgBtn.mbNo,TMsgDlgBtn.mbCancel],0) <> mrYes then
+          raise EACBrECFERRO.Create( ACBrStr('Programaçao de Comprovante não Fiscal cancelada'));
+       {$ELSE}
+       if MessageDlg(Msg, mtWarning, mbYesNoCancel,0) <> mrYes then
+          raise EACBrECFERRO.Create( ACBrStr('Programaçao de Comprovante não Fiscal cancelada'));
+       {$ENDIF}
     end ;
   {$ENDIF}
   

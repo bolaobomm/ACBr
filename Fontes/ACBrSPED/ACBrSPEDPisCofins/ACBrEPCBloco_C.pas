@@ -43,7 +43,7 @@ unit ACBrEPCBloco_C;
 interface
 
 uses
-  SysUtils, Classes, Contnrs, Controls, DateUtils, ACBrEPCBlocos;
+  Contnrs, ACBrEPCBlocos;
 
 type
   TRegistroC010List = class;
@@ -1514,7 +1514,7 @@ type
     FDT_DOC               : TDateTime;
     FVL_PIS               : Variant;
     FVL_COFINS            : Variant;
-    FVL_CFE               : Currency;
+    FVL_CFE               : Variant;
     FCNPJ_CPF             : String;
     FNR_SAT               : String;
     FCHV_CFE              : String;
@@ -1536,7 +1536,7 @@ type
     property COD_SIT      : TACBrCodSit read FCOD_SIT      write FCOD_SIT;
     property NUM_CFE      : Integer     read FNUM_CFE      write FNUM_CFE;
     property DT_DOC       : TDateTime   read FDT_DOC       write FDT_DOC;
-    property VL_CFE       : Currency    read FVL_CFE       write FVL_CFE;
+    property VL_CFE       : Variant     read FVL_CFE       write FVL_CFE;
     property VL_PIS       : Variant     read FVL_PIS       write FVL_PIS;
     property VL_COFINS    : Variant     read FVL_COFINS    write FVL_COFINS;
     property CNPJ_CPF     : String      read FCNPJ_CPF     write FCNPJ_CPF;

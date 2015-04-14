@@ -34,12 +34,19 @@ unit ACBrNFSeUtil;
 interface
 
 uses
+  Classes,
   {$IFNDEF ACBrNFSeOpenSSL}
     ACBrCAPICOM_TLB, ACBrMSXML2_TLB,
   {$ENDIF}
-  Classes, Forms,
+  {$IF DEFINED(VisualCLX)}
+     QForms, QDialogs, QGraphics,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Forms, FMX.Dialogs, FMX.Graphics,
+  {$ELSE}
+     Forms, Dialogs, Graphics,
+  {$IFEND}
   {$IFDEF FPC}
-    LResources, Controls, Graphics, Dialogs,
+    LResources, Controls,
   {$ELSE}
     StrUtils, Activex,
   {$ENDIF}
@@ -1454,15 +1461,15 @@ var
 // Tipo, I : Integer;
 begin
  if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                        PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas',
+                        PathWithDelim(ExtractFileDir(DFeUtil.ExeName)) + 'Schemas',
                         PathWithDelim(APathSchemas)))
   then raise Exception.Create('Diretório de Schemas não encontrado' + sLineBreak +
                               DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                              PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas',
+                              PathWithDelim(ExtractFileDir(DFeUtil.ExeName)) + 'Schemas',
                               PathWithDelim(APathSchemas)));
 
  if DFeUtil.EstaVazio(APathSchemas)
-  then schema_filename := PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\' + Servico
+  then schema_filename := PathWithDelim(ExtractFileDir(DFeUtil.ExeName)) + 'Schemas\' + Servico
   else schema_filename := PathWithDelim(APathSchemas) + Servico;
 
  if not FilesExists(schema_filename)
@@ -1570,15 +1577,15 @@ begin
     Schema := CoXMLSchemaCache50.Create;
 
     if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                           PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas',
+                           PathWithDelim(ExtractFileDir(DFeUtil.ExeName)) + 'Schemas',
                            PathWithDelim(APathSchemas)))
      then raise Exception.Create('Diretório de Schemas não encontrado' + sLineBreak +
                                  DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                                 PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas',
+                                 PathWithDelim(ExtractFileDir(DFeUtil.ExeName)) + 'Schemas',
                                  PathWithDelim(APathSchemas)));
 
     schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                       PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                       PathWithDelim(ExtractFileDir(DFeUtil.ExeName)) + 'Schemas\',
                        PathWithDelim(APathSchemas)) + Servico;
 
     if not FilesExists(schema_filename)
@@ -1692,7 +1699,7 @@ var
   List: TstringList;
 begin
   result := '';
-  PathArquivo := ExtractFilePath(Application.ExeName) + 'MunIBGE\MunIBGE-UF' + InttoStr(UFparaCodigo(xUF)) + '.txt';
+  PathArquivo := ExtractFilePath(DFeUtil.ExeName) + 'MunIBGE\MunIBGE-UF' + InttoStr(UFparaCodigo(xUF)) + '.txt';
   if FileExists(PathArquivo) then
    begin
      List := TstringList.Create;
@@ -1727,7 +1734,7 @@ var
   List: TstringList;
 begin
   result := 0;
-  PathArquivo :=  PathWithDelim(ExtractFilePath(Application.ExeName))+ 'MunIBGE\MunIBGE-UF' + InttoStr(UFparaCodigo(xUF)) + '.txt';
+  PathArquivo :=  PathWithDelim(ExtractFilePath(DFeUtil.ExeName))+ 'MunIBGE\MunIBGE-UF' + InttoStr(UFparaCodigo(xUF)) + '.txt';
   if FileExists(PathArquivo) then
    begin
      List := TstringList.Create;
@@ -1802,7 +1809,7 @@ var
  List        : TstringList;
 begin
  result := '';
- PathArquivo :=  PathWithDelim(ExtractFilePath(Application.ExeName))+ 'TabServicos.txt';
+ PathArquivo :=  PathWithDelim(ExtractFilePath(DFeUtil.ExeName))+ 'TabServicos.txt';
  if (FileExists(PathArquivo)) and (cCodigo <> '')
   then begin
    List := TstringList.Create;

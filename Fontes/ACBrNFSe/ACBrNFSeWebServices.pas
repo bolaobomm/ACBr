@@ -39,11 +39,13 @@ uses
   {$ENDIF}
     StrUtils,
     Classes, SysUtils,
-  {$IFDEF CLX}
-    QDialogs,
+  {$IF DEFINED(VisualCLX)}
+     QDialogs,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Dialogs,
   {$ELSE}
-    Dialogs,
-  {$ENDIF}
+     Dialogs,
+  {$IFEND}
   {$IFDEF ACBrNFSeOpenSSL}
     HTTPSend,
   {$ELSE}
@@ -3968,8 +3970,8 @@ begin
               'Provedor...... : ' + FxProvedor + LineBreak;
      end;
 
-    if FConfiguracoes.WebServices.Visualizar
-     then ShowMessage(aMsg);
+    if FConfiguracoes.WebServices.Visualizar then
+       ShowMessage(aMsg);
 
     if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
      then TACBrNFSe( FACBrNFSe ).OnGerarLog(aMsg);

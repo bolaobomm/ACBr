@@ -41,7 +41,7 @@ unit ACBrMDFeDAMDFeClass;
 interface
 
 uses
-  Forms, SysUtils, Classes,
+  SysUtils, Classes,
   pmdfeMDFe, pcnConversao;
 
 type

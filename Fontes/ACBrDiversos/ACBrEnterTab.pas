@@ -180,4 +180,9 @@ begin
   FEnterAsTab := Value;
 end;
 
+//{$IFNDEF FPC}
+//initialization
+//  GroupDescendentsWith(TACBrCalculadora, TControl);
+//{$ENDIF}
+
 end.

@@ -42,7 +42,15 @@ interface
 
 uses
   ACBrBase, ACBrConsts, ACBrDevice, ACBrSMSClass,
-  SysUtils , Classes{$IFNDEF FRAMEWORK}, Forms{$ENDIF};
+  SysUtils , Classes{$IFNDEF FRAMEWORK}
+                      {$IF DEFINED(VisualCLX)}
+                         ,QForms
+                      {$ELSEIF DEFINED(FMX)}
+                         ,FMX.Forms
+                      {$ELSE}
+                         ,Forms
+                      {$IFEND}
+                    {$ENDIF};
 
 type
   TACBrSMS = class(TACBrComponent)

@@ -57,11 +57,13 @@ uses
     {$IFDEF MSWINDOWS}
       ,Windows, Messages
     {$ENDIF}
-    {$IFDEF VisualCLX}
+    {$IF DEFINED(VisualCLX)}
       ,QForms, QControls, Qt
+    {$ELSEIF DEFINED(FMX)}
+       ,FMX.Forms, FMX.Controls, System.UITypes
     {$ELSE}
       ,Forms, Controls
-    {$ENDIF}
+    {$IFEND}
   {$ENDIF};
 
 type
@@ -1895,7 +1897,11 @@ end;
    {$IFNDEF NOGUI}
    if not Tratado then
    begin
+      {$IFDEF FMX}
+      Application.MainForm.BringToFront;
+      {$ELSE}
       Application.BringToFront ;
+      {$ENDIF}
 
       {$IFDEF MSWINDOWS}
        if Assigned( Screen.ActiveForm ) then
@@ -1903,7 +1909,11 @@ end;
          {$IFDEF VisualCLX}
           QWidget_setActiveWindow( Screen.ActiveForm.Handle );
          {$ELSE}
-          SetForeGroundWindow( Screen.ActiveForm.Handle );
+           {$IFDEF FMX}
+           Screen.ActiveForm.Activate;
+           {$ELSE}
+           SetForeGroundWindow( Screen.ActiveForm.Handle );
+           {$ENDIF}
          {$ENDIF}
        end;
       {$ENDIF}

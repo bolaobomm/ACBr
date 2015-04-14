@@ -46,8 +46,13 @@ interface
 uses ACBrDevice, ACBrECF,
      Classes
      {$IFNDEF NOGUI}
-       {$IFDEF VisualCLX}, QForms {$ENDIF}
-       {$IFDEF VCL}, Forms {$ENDIF}
+        {$IF DEFINED(VisualCLX)}
+           ,QForms
+        {$ELSEIF DEFINED(FMX)}
+           ,FMX.Forms
+        {$ELSE}
+           ,Forms
+        {$IFEND}
      {$ENDIF} ;
 
 const

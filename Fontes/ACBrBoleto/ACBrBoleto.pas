@@ -53,8 +53,15 @@ uses  ACBrBase,  {Units da ACBr}
        LResources,
      {$ENDIF}
      SysUtils, ACBrValidador,
-     smtpsend, ssl_openssl, mimemess, mimepart, // units para enviar email
-     Graphics, Contnrs, Classes;
+     smtpsend, ssl_openssl, mimemess, mimepart // units para enviar email
+    {$IF DEFINED(VisualCLX)}
+       ,QForms, QGraphics
+    {$ELSEIF DEFINED(FMX)}
+       ,FMX.Forms, FMX.Graphics
+    {$ELSE}
+       ,Forms ,Graphics
+    {$IFEND}
+     , Contnrs, Classes, Math, dateutils, strutils;
 
 const
   CACBrBoleto_Versao = '0.0.124a' ;
@@ -843,7 +850,7 @@ type
  {TACBrBoletoFCClass}
  TACBrBoletoFCFiltro = (fiNenhum, fiPDF, fiHTML ) ;
 
- TACBrBoletoFCOnObterLogo = procedure( const PictureLogo : TPicture; const NumeroBanco: Integer ) of object ;
+ TACBrBoletoFCOnObterLogo = procedure( const PictureLogo : {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF}; const NumeroBanco: Integer ) of object ;
 
  TACBrBoletoFCClass = class(TACBrComponent)
   private
@@ -877,7 +884,7 @@ type
     procedure GerarPDF; virtual;
     procedure GerarHTML; virtual;
 
-    procedure CarregaLogo( const PictureLogo : TPicture; const NumeroBanco: Integer ) ;
+    procedure CarregaLogo( const PictureLogo : {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF}; const NumeroBanco: Integer ) ;
 
     property ArquivoLogo : String read GetArqLogo;
   published
@@ -926,8 +933,7 @@ Uses ACBrUtil, ACBrBancoBradesco, ACBrBancoBrasil, ACBrBancoBanestes, ACBrBancoI
      ACBrBancoSicredi, ACBrBancoMercantil, ACBrBancoCaixa, ACBrBancoBanrisul,
      ACBrBancoSantander, ACBrBancoBancoob, ACBrBancoCaixaSICOB ,ACBrBancoHSBC,
      ACBrBancoNordeste , ACBrBancoBRB, ACBrBancoBic, ACBrBancoBradescoSICOOB,
-     ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred,
-     Forms, Math, dateutils, strutils;
+     ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -2302,7 +2308,7 @@ begin
       fACBrBoleto := nil ;
 end;
 
-procedure TACBrBoletoFCClass.CarregaLogo(const PictureLogo : TPicture; const NumeroBanco: Integer ) ;
+procedure TACBrBoletoFCClass.CarregaLogo(const PictureLogo : {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF}; const NumeroBanco: Integer ) ;
 begin
   if Assigned( fOnObterLogo ) then
      fOnObterLogo( PictureLogo, NumeroBanco)

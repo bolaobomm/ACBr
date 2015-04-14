@@ -48,9 +48,12 @@ unit ACBrSocket;
 interface
 
 uses SysUtils, Classes,
-     blcksock, synsock, httpsend, ssl_openssl,  {Units da Synapse}
-     {$IFDEF MSWINDOWS} windows, wininet, {$ENDIF}  { Units para a auto-detecção de Proxy }
-     ACBrBase ;
+     blcksock, synsock, httpsend, ssl_openssl  {Units da Synapse}
+     {$IFDEF MSWINDOWS}, windows, wininet {$ENDIF}  { Units para a auto-detecção de Proxy }
+     {$IFDEF FMX}
+       ,System.UITypes
+     {$ENDIF}
+     ,ACBrBase ;
 
 type
 
@@ -220,7 +223,16 @@ function GetURLBasePath(URL: String): String;
 
 implementation
 
-Uses ACBrUtil, synacode, synautil {$IFNDEF NOGUI},Controls, Forms {$ENDIF} ;
+Uses ACBrUtil, synacode, synautil
+     {$IFNDEF NOGUI}
+       {$IF DEFINED(VisualCLX)}
+         ,QControls, QDialogs, QForms
+       {$ELSEIF DEFINED(FMX)}
+         ,FMX.Controls, FMX.Forms
+       {$ELSE}
+         ,Controls, Forms
+       {$IFEND}
+     {$ENDIF} ;
 
 function GetURLBasePath(URL: String): String;
 begin
@@ -650,8 +662,13 @@ var
    CT, Location : String ;
 begin
   {$IFNDEF NOGUI}
-   OldCursor := Screen.Cursor ;
-   Screen.Cursor := crHourGlass;
+    {$IFDEF FMX}
+    OldCursor := Screen.ActiveForm.Cursor ;
+    Screen.ActiveForm.Cursor := crHourGlass;
+    {$ELSE}
+     OldCursor := Screen.Cursor ;
+     Screen.Cursor := crHourGlass;
+    {$ENDIF}
   {$ENDIF}
   try
     RespHTTP.Clear;
@@ -701,7 +718,11 @@ begin
                                      String(AjustaLinhas( AnsiString(RespHTTP.Text), 80, 20) )) ;
   finally
     {$IFNDEF NOGUI}
+    {$IFDEF FMX}
+     Screen.ActiveForm.Cursor := OldCursor;
+    {$ELSE}
      Screen.Cursor := OldCursor;
+    {$ENDIF}
     {$ENDIF}
   end;
 end;

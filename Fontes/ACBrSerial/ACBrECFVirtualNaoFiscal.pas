@@ -39,11 +39,13 @@ interface
 uses ACBrECFVirtualPrinter, ACBrECFClass, ACBrUtil, ACBrConsts,
      Classes, SysUtils
      {$IFNDEF NOGUI}
-       {$IFDEF VisualCLX}
+       {$IF DEFINED(VisualCLX)}
          ,QControls, QDialogs, QForms
+       {$ELSEIF DEFINED(FMX)}
+         ,FMX.Controls, FMX.Dialogs, FMX.Forms, System.UITypes
        {$ELSE}
          ,Controls, Dialogs, Forms
-       {$ENDIF}
+       {$IFEND}
      {$ENDIF} ;
 
 const
@@ -150,17 +152,24 @@ begin
 end;
 
 procedure TACBrECFVirtualNaoFiscalClass.MostraAvisoLegal ;
+var
+Msg: string;
 begin
   {$IFNDEF NOGUI}
-   if MessageDlg(ACBrStr( 'Este Emulador destina-se EXCLUSIVAMENTE para auxiliar no '+
+   Msg := ACBrStr( 'Este Emulador destina-se EXCLUSIVAMENTE para auxiliar no '+
                  'desenvolvimento de aplicativos para as impressoras fiscais. '+
                  sLineBreak + sLineBreak +
                  'Usar o emulador para fins comerciais sem a devida impressão '+
                  'do Cupom Fiscal ou Nota Fiscal pode caracterizar crime de '+
                  'Sonegação Fiscal.' + sLineBreak + sLineBreak +
-                 'Continua com o uso do Emulador ?' )
-                 ,mtWarning,mbYesNoCancel,0) <> mrYes then
+                 'Continua com o uso do Emulador ?' );
+   {$IFDEF FMX}
+   if MessageDlg(Msg,TMsgDlgType.mtWarning,[TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo, TMsgDlgBtn.mbCancel],0) <> mrYes then
      raise EACBrECFERRO.Create( ACBrStr('Uso indevido do emulador'));
+   {$ELSE}
+   if MessageDlg(Msg,mtWarning,mbYesNoCancel,0) <> mrYes then
+     raise EACBrECFERRO.Create( ACBrStr('Uso indevido do emulador'));
+   {$ENDIF}
   {$ENDIF}
 end ;
 

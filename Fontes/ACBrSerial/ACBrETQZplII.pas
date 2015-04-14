@@ -44,7 +44,15 @@
 unit ACBrETQZplII;
 
 interface
-uses ACBrETQClass, ACBrUtil, ACBrDevice, Dialogs, Classes ;
+uses ACBrETQClass, ACBrUtil, ACBrDevice
+       {$IF DEFINED(VisualCLX)}
+          ,QDialogs
+       {$ELSEIF DEFINED(FMX)}
+          ,FMX.Dialogs
+       {$ELSE}
+          ,Dialogs
+       {$IFEND}
+       , Classes ;
 
 type
 

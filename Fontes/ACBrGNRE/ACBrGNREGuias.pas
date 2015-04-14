@@ -49,17 +49,24 @@ unit ACBrGNREGuias;
 interface
 
 uses
-  Classes, Sysutils, Dialogs, Forms,
-  ACBrGNREUtil,
-  ACBrGNREConfiguracoes,
+  Classes, Sysutils
+  {$IF DEFINED(VisualCLX)}
+     ,QDialogs, QForms
+  {$ELSEIF DEFINED(FMX)}
+     ,FMX.Dialogs, FMX.Forms
+  {$ELSE}
+     ,Dialogs, Forms
+  {$IFEND}
+  ,ACBrGNREUtil
+  ,ACBrGNREConfiguracoes
 //  {$IFDEF FPC}
 //     ACBrNFSeDMLaz,
 //  {$ELSE}
 //     ACBrNFSeDANFSeClass,
 //  {$ENDIF}
-  smtpsend, ssl_openssl, mimemess, mimepart, // units para enviar email
-  pgnreGNRE, pgnreGNRER, pgnreGNREW, pgnreConversao,
-  pcnConversao, pcnAuxiliar, pcnLeitor;
+  ,smtpsend, ssl_openssl, mimemess, mimepart // units para enviar email
+  ,pgnreGNRE, pgnreGNRER, pgnreGNREW, pgnreConversao
+  ,pcnConversao, pcnAuxiliar, pcnLeitor;
 
 type
 

@@ -34,7 +34,14 @@ unit ACBrNFSeNotasFiscais;
 interface
 
 uses
-  Classes, Sysutils, Dialogs, Forms,
+  Classes, Sysutils,
+  {$IF DEFINED(VisualCLX)}
+     QForms, QDialogs,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Forms, FMX.Dialogs,
+  {$ELSE}
+     Forms, Dialogs,
+  {$IFEND}
   ACBrNFSeUtil, ACBrNFSeConfiguracoes,
 //  {$IFDEF FPC}
 //     ACBrNFSeDMLaz,

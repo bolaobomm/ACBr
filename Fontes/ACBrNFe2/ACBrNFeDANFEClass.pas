@@ -48,7 +48,15 @@ unit ACBrNFeDANFEClass;
 interface
 
 uses
-  Forms, SysUtils, Classes, pcnNFe, pcnConversao;
+  SysUtils, Classes,
+  {$IF DEFINED(VisualCLX)}
+     QForms,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Forms,
+  {$ELSE}
+     Forms,
+  {$IFEND}
+  pcnNFe, pcnConversao;
 
 type
 

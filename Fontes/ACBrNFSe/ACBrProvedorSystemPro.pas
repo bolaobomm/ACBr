@@ -34,7 +34,7 @@ unit ACBrProvedorSystemPro;
 interface
 
 uses
-  Classes, SysUtils, Forms,
+  Classes, SysUtils,
   pnfsConversao, pcnAuxiliar, IniFiles,
   ACBrNFSeConfiguracoes, ACBrNFSeUtil, ACBrUtil, ACBrDFeUtil,
   {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF};

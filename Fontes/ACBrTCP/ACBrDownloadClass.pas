@@ -50,9 +50,14 @@ unit ACBrDownloadClass;
 interface
 
 uses
-  Classes, SysUtils, Forms,
-  ACBrUtil, ACBrBase,
-  httpsend, ftpsend, blcksock, synautil;
+  Classes, SysUtils
+  {$IFDEF FMX}
+  , FMX.Forms
+  {$ELSE}
+  , Forms
+  {$ENDIF}
+  ,ACBrUtil, ACBrBase
+  ,httpsend, ftpsend, blcksock, synautil;
 
 type
   TMemory = pointer;

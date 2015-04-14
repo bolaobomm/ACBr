@@ -34,7 +34,14 @@ unit ACBrNFSeDANFSeClass;
 interface
 
 uses
- Forms, SysUtils, Classes,
+ SysUtils, Classes,
+ {$IF DEFINED(VisualCLX)}
+    QForms,
+ {$ELSEIF DEFINED(FMX)}
+    FMX.Forms,
+ {$ELSE}
+    Forms,
+ {$IFEND}
  pnfsNFSe, pnfsConversao;
 
 type

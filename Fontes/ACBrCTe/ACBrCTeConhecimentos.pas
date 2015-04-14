@@ -49,7 +49,14 @@ unit ACBrCTeConhecimentos;
 interface
 
 uses
-  Classes, Sysutils, Dialogs, Forms, StrUtils,
+  Classes, Sysutils, StrUtils,
+  {$IF DEFINED(VisualCLX)}
+     QForms,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Forms,
+  {$ELSE}
+     Forms,
+  {$IFEND}
   ACBrCTeUtil, ACBrCTeConfiguracoes,
   ACBrCTeDACTEClass,
   smtpsend, ssl_openssl, mimemess, mimepart, // units para enviar email

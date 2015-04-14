@@ -54,7 +54,13 @@ interface
 uses ACBrBase, ACBrDevice, ACBrDISClass,  {Units da ACBr}
      SysUtils
      {$IFNDEF NOGUI}
-       {$IFDEF VisualCLX}, QExtCtrls {$ELSE}, ExtCtrls {$ENDIF}
+        {$IF DEFINED(VisualCLX)}
+           ,QExtCtrls
+        {$ELSEIF DEFINED(FMX)}
+           ,FMX.ExtCtrls, FMX.Types
+        {$ELSE}
+           ,ExtCtrls
+        {$IFEND}
      {$ENDIF}
      {$IFDEF COMPILER6_UP}, Types {$ELSE}, Windows {$ENDIF}
      ,Contnrs, Classes;

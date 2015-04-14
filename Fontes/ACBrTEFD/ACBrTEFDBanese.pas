@@ -50,11 +50,13 @@ interface
 uses
   Classes, SysUtils, ACBrTEFDClass
   {$IFNDEF NOGUI}
-  {$IFDEF VisualCLX}
-     ,QForms, QControls
-  {$ELSE}
-     ,Forms, Controls
-  {$ENDIF}
+    {$IF DEFINED(VisualCLX)}
+       ,QForms, QDialogs, QControls
+    {$ELSEIF DEFINED(FMX)}
+       ,FMX.Forms, FMX.Dialogs, FMX.Controls, System.UITypes
+    {$ELSE}
+       ,Forms, Dialogs, Controls
+    {$IFEND}
   {$ENDIF};
 
 

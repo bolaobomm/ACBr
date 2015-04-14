@@ -49,7 +49,14 @@ unit ACBrGNREGuiasRetorno;
 interface
 
 uses
-  Classes, Sysutils, Dialogs, Forms,
+  Classes, Sysutils,
+  {$IF DEFINED(VisualCLX)}
+     QForms, QDialog,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Forms, FMX.Dialogs,
+  {$ELSE}
+     Forms, Dialogs,
+  {$IFEND}
   ACBrGNREUtil,
   //{$IFDEF FPC}
      //ACBrGNREDMLaz,

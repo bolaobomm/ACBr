@@ -151,7 +151,11 @@ interface
 uses ACBrECFClass, ACBrDevice, ACBrUtil,
      Classes
      {$IFNDEF NOGUI}
-       {$IFDEF VCL}, Dialogs , Controls , Forms {$ENDIF}
+       {$IF DEFINED(FMX)}
+       , FMX.Controls, FMX.Forms, FMX.Dialogs, System.UITypes
+       {$ELSEIF DEFINED(VCL)}
+       , Controls, Forms, Dialogs
+       {$ENDIF}
        {$IFDEF VisualCLX}, QDialogs, QControls, QForms {$ENDIF}
      {$ENDIF};
 
@@ -2696,9 +2700,15 @@ begin
 
         if ComPapel then
            {$IFNDEF NOGUI}
+              {$IFDEF FMX}
+              if MessageDlg(ACBrStr('Favor remover o cheque e pressionar OK'),
+                            TMsgDlgType.mtConfirmation, [TMsgDlgBtn.mbOK,TMsgDlgBtn.mbCancel],0) = mrCancel then
+                 break ;
+              {$ELSE}
               if (MessageDlg( ACBrStr('Favor remover o cheque e pressionar OK'),
                              mtConfirmation,[mbOk,mbCancel],0) = mrCancel) then
                  break ;
+              {$ENDIF}
            {$ELSE}
               writeln('Favor remover o cheque') ;
            {$ENDIF}
