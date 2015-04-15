@@ -602,12 +602,12 @@ begin
    if not(CTeUtil.Assinar( AXML, FConfiguracoes.Certificados.Certificado,
                             FConfiguracoes.Certificados.Senha,
                             FDadosMsg, FMsg )) then
-   FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] );
   {$ELSE}
    if not(CTeUtil.Assinar( AXML, FConfiguracoes.Certificados.GetCertificado,
                            FDadosMsg, FMsg )) then
   {$ENDIF}
-   GerarException(MsgErro);
+     GerarException(MsgErro);
+   FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] );
 end;
 
 {$IFDEF ACBrCTeOpenSSL}
