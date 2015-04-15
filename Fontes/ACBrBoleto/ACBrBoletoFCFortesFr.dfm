@@ -2768,7 +2768,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoCarne: TRLReport
-    Left = 790
+    Left = 454
     Top = 27
     Width = 794
     Height = 1123
@@ -2789,7 +2789,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       Left = 30
       Top = 15
       Width = 745
-      Height = 352
+      Height = 360
       BeforePrint = RLBand3BeforePrint
       object RLDraw30: TRLDraw
         Left = 150
@@ -2896,9 +2896,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLDraw62: TRLDraw
         Left = 0
-        Top = 349
+        Top = 344
         Width = 756
-        Height = 16
+        Height = 15
         DrawKind = dkLine
         Pen.Style = psDot
       end
@@ -3279,7 +3279,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel13: TRLLabel
         Left = 0
-        Top = 345
+        Top = 341
         Width = 26
         Height = 14
         Caption = '"'
@@ -3926,7 +3926,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object imgBarrasCarne: TRLBarcode
         Left = 154
-        Top = 286
+        Top = 282
         Width = 465
         Height = 66
         AutoSize = False
