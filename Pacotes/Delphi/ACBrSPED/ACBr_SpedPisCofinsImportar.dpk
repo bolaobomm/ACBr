@@ -1,0 +1,52 @@
+package ACBr_SpedPisCofinsImportar;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE VCL}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  designide,
+  vcl,
+  ACBrComum,
+  ACBrDiversos,
+  ACBr_SPED;
+
+contains
+  ACBrSpedPCImportar in '..\..\..\Fontes\ACBrSPED\ACBrSPEDPisCofinsImportar\ACBrSpedPCImportar.pas',
+  ACBrSpedPCImportar_Base in '..\..\..\Fontes\ACBrSPED\ACBrSPEDPisCofinsImportar\ACBrSpedPCImportar_Base.pas',
+  ACBrSpedPCImportar_Bloco0 in '..\..\..\Fontes\ACBrSPED\ACBrSPEDPisCofinsImportar\ACBrSpedPCImportar_Bloco0.pas',
+  ACBrSpedPCImportar_Bloco1 in '..\..\..\Fontes\ACBrSPED\ACBrSPEDPisCofinsImportar\ACBrSpedPCImportar_Bloco1.pas',
+  ACBrSpedPCImportar_BlocoA in '..\..\..\Fontes\ACBrSPED\ACBrSPEDPisCofinsImportar\ACBrSpedPCImportar_BlocoA.pas',
+  ACBrSpedPCImportar_BlocoC in '..\..\..\Fontes\ACBrSPED\ACBrSPEDPisCofinsImportar\ACBrSpedPCImportar_BlocoC.pas',
+  ACBrSpedPCImportar_BlocoD in '..\..\..\Fontes\ACBrSPED\ACBrSPEDPisCofinsImportar\ACBrSpedPCImportar_BlocoD.pas',
+  ACBrSpedPCImportar_BlocoF in '..\..\..\Fontes\ACBrSPED\ACBrSPEDPisCofinsImportar\ACBrSpedPCImportar_BlocoF.pas',
+  ACBrSpedPCImportar_BlocoI in '..\..\..\Fontes\ACBrSPED\ACBrSPEDPisCofinsImportar\ACBrSpedPCImportar_BlocoI.pas',
+  ACBrSpedPCImportar_BlocoM in '..\..\..\Fontes\ACBrSPED\ACBrSPEDPisCofinsImportar\ACBrSpedPCImportar_BlocoM.pas',
+  ACBrSpedPCImportar_BlocoP in '..\..\..\Fontes\ACBrSPED\ACBrSPEDPisCofinsImportar\ACBrSpedPCImportar_BlocoP.pas';
+
+end.
