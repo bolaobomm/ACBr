@@ -1538,9 +1538,9 @@ end;
 function StrToIndEscrituracao(const AValue: string): TACBrIndEscrituracao;
 begin
   if AValue = '2' then
-    Result := TACBrIndEscrituracao.IndEscriConsolidado
+    Result := IndEscriConsolidado
   else
-    Result := TACBrIndEscrituracao.IndEscriConsolidado;
+    Result := IndEscriConsolidado;
 end;
 
 // 20-02-2015 - Data Lider - Início da alteração nos arquivo.
