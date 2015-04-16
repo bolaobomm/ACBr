@@ -353,8 +353,6 @@ end;
 procedure TBLOCO_I.WriteRegistroI030;
 var strLinha: string;
 begin
-  Result := '';
-
   if Assigned(FRegistroI030) then
   begin
      with FRegistroI030 do
@@ -883,8 +881,6 @@ end;
 procedure TBLOCO_I.WriteRegistroI990;
 var strLinha: string;
 begin
-  Result := '';
-
   if Assigned(FRegistroI990) then
   begin
      with FRegistroI990 do

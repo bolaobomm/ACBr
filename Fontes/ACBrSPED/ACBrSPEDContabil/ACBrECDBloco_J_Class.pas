@@ -378,8 +378,6 @@ end;
 procedure TBloco_J.WriteRegistroJ900;
 var strLinha: String;
 begin
-  Result := '';
-
   if Assigned(FRegistroJ900) then
   begin
      with FRegistroJ900 do
@@ -466,8 +464,6 @@ end;
 procedure TBloco_J.WriteRegistroJ990;
 var strLinha : String;
 begin
-  Result := '';
-
   if Assigned(FRegistroJ990) then
   begin
      with FRegistroJ990 do
