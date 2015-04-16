@@ -73,7 +73,7 @@ const
 
 type
   TACBrValTipoDocto = ( docCPF, docCNPJ, docUF, docInscEst, docNumCheque,
-                       docPIS, docCEP, docCartaoCredito, docSuframa, docGTIN ) ;
+                       docPIS, docCEP, docCartaoCredito, docSuframa, docGTIN, docRenavam ) ;
 
 type
   TACBrCalcDigFormula = (frModulo11, frModulo10PIS, frModulo10) ;
@@ -138,6 +138,7 @@ type
     procedure ValidarCartaoCredito ;
     procedure ValidarSuframa ;
     procedure ValidarGTIN;
+    procedure ValidarRenavam(Numero: AnsiString);
   public
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy  ; override;
@@ -184,6 +185,7 @@ function ACBrValidadorValidarCNPJouCPF( const Documento : AnsiString ) : String 
 function ACBrValidadorValidarIE(const AIE, AUF: AnsiString): String ;
 function ACBrValidadorValidarSuframa( const Documento : AnsiString ) : String ;
 function ACBrValidadorValidarGTIN( const Documento : AnsiString ) : String ;
+function ACBrValidadorValidarRenavam( const Documento : AnsiString ) : String ;
 
 Function FormatarFone( const AString : String; DDDPadrao: String = '' ): String;
 
@@ -219,6 +221,11 @@ end;
 function ACBrValidadorValidarGTIN( const Documento : AnsiString ) : String ;
 begin
   Result := ACBrValidadorValidarDocumento( docGTIN, Documento );
+end;
+
+function ACBrValidadorValidarRenavam( const Documento : AnsiString ) : String ;
+begin
+  Result := ACBrValidadorValidarDocumento( docRenavam, Documento );
 end;
 
 function FormatarFone(const AString : String; DDDPadrao: String = '') : String ;
@@ -407,6 +414,7 @@ begin
           docCartaoCredito : NomeDocto := 'Número de Cartão' ;
           docSuframa       : NomeDocto := 'SUFRAMA';
           docGTIN          : NomeDocto := 'GTIN';
+          docRenavam       : NomeDocto := 'Renavam';
         end;
 
         fsMsgErro := NomeDocto + ' não pode ser vazio.' ;
@@ -425,6 +433,7 @@ begin
        docCartaoCredito : ValidarCartaoCredito ;
        docSuframa       : ValidarSuframa ;
        docGTIN          : ValidarGTIN ;
+       docRenavam       : ValidarRenavam( fsDocto );
      end;
 
   if fsMsgErro <> '' then
@@ -1226,6 +1235,27 @@ begin
      if fsExibeDigitoCorreto then
         fsMsgErro := fsMsgErro + '.. Dígito calculado: '+fsDigitoCalculado ;
   end ;
+end;
+
+procedure TACBrValidador.ValidarRenavam(Numero: AnsiString);
+const
+  vSequencia = '3298765432';
+var
+  iFor, vSoma, vDV: integer;
+begin
+  // Adicionar zeros a esquerda.
+  Numero := PadR(Numero, 11, '0');
+
+  vSoma := 0;
+  for iFor := 1 to 10 do
+     vSoma := vSoma + (StrtoInt(Numero[iFor]) * StrToInt(vSequencia[iFor]));
+
+  vDV := (vSoma * 10) mod 11;
+  if vDV = 10 then
+     vDV := 0;
+
+  if vDV <> StrtoInt(Numero[11]) then
+     fsMsgErro := 'Número do RENAVAM inválido.';
 end;
 
 procedure TACBrValidador.ValidarSuframa;
