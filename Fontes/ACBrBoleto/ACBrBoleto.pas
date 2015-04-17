@@ -64,7 +64,7 @@ uses  ACBrBase,  {Units da ACBr}
      , Contnrs, Classes, Math, dateutils, strutils;
 
 const
-  CACBrBoleto_Versao = '0.0.124a' ;
+  CACBrBoleto_Versao = '0.0.125a' ;
 
 type
   TACBrTipoCobranca =
