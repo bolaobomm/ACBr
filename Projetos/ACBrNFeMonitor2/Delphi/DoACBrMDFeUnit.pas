@@ -356,13 +356,13 @@ begin
            else
               raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
 
-           ACBrMDFe1.Conhecimentos.Clear;
+           ACBrMDFe1.Manifestos.Clear;
            if FileExists(Cmd.Params(1)) or FileExists(PathWithDelim(ACBrMDFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(1)) then
             begin
               if FileExists(Cmd.Params(1)) then
-                 ACBrMDFe1.Conhecimentos.LoadFromFile(Cmd.Params(1))
+                 ACBrMDFe1.Manifestos.LoadFromFile(Cmd.Params(1))
               else
-                 ACBrMDFe1.Conhecimentos.LoadFromFile(PathWithDelim(ACBrMDFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(1));
+                 ACBrMDFe1.Manifestos.LoadFromFile(PathWithDelim(ACBrMDFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(1));
             end
            else
             begin
@@ -399,13 +399,13 @@ begin
            else
               raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
 
-           ACBrMDFe1.Conhecimentos.Clear;
+           ACBrMDFe1.Manifestos.Clear;
            if FileExists(Cmd.Params(1)) or FileExists(PathWithDelim(ACBrMDFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(1)) then
             begin
               if FileExists(Cmd.Params(1)) then
-                 ACBrMDFe1.Conhecimentos.LoadFromFile(Cmd.Params(1))
+                 ACBrMDFe1.Manifestos.LoadFromFile(Cmd.Params(1))
               else
-                 ACBrMDFe1.Conhecimentos.LoadFromFile(PathWithDelim(ACBrMDFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(1));
+                 ACBrMDFe1.Manifestos.LoadFromFile(PathWithDelim(ACBrMDFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(1));
             end
            else
             begin
