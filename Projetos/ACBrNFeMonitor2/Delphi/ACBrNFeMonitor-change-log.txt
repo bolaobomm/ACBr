@@ -48,6 +48,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/04/2015
+[+] : Incluido os comandos MDFe.ImprimirEvento e MDFe.ImprimirEventoPDF.
+      Por: Italo Jurisato Junior
+
 20/01/2015
 [-] : Correção em 3 linhas que impedia a compilação do Monitor.
       Por: Italo Jurisato Junior

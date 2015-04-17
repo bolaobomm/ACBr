@@ -337,6 +337,93 @@ begin
               raise Exception.Create('Erro ao criar o arquivo PDF');
            end;
          end
+        else if Cmd.Metodo = 'imprimirevento' then
+         begin
+           if ACBrMDFe1.DAMDFe.MostrarPreview then
+            begin
+              Restaurar1.Click;
+              Application.BringToFront;
+            end;
+
+           ACBrMDFe1.EventoMDFe.Evento.Clear;
+           if FileExists(Cmd.Params(0)) or FileExists(PathWithDelim(ACBrMDFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(0)) then
+            begin
+              if FileExists(Cmd.Params(0)) then
+                 ACBrMDFe1.EventoMDFe.LerXML(Cmd.Params(0))
+              else
+                 ACBrMDFe1.EventoMDFe.LerXML(PathWithDelim(ACBrMDFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(0));
+            end
+           else
+              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
+
+           ACBrMDFe1.Conhecimentos.Clear;
+           if FileExists(Cmd.Params(1)) or FileExists(PathWithDelim(ACBrMDFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(1)) then
+            begin
+              if FileExists(Cmd.Params(1)) then
+                 ACBrMDFe1.Conhecimentos.LoadFromFile(Cmd.Params(1))
+              else
+                 ACBrMDFe1.Conhecimentos.LoadFromFile(PathWithDelim(ACBrMDFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(1));
+            end
+           else
+            begin
+              if DFeUtil.NaoEstaVazio(Cmd.Params(1)) then
+                 raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
+            end;
+
+           if DFeUtil.NaoEstaVazio(Cmd.Params(2)) then
+              ACBrMDFe1.DAMDFe.Impressora := Cmd.Params(2)
+           else
+              ACBrMDFe1.DAMDFe.Impressora := cbxImpressora.Text;
+
+           if DFeUtil.NaoEstaVazio(Cmd.Params(3)) then
+              ACBrMDFe1.DAMDFe.NumCopias := StrToIntDef(Cmd.Params(3),1)
+           else
+              ACBrMDFe1.DAMDFe.NumCopias := StrToIntDef(edtNumCopia.Text,1);
+
+           ACBrMDFe1.ImprimirEvento;
+           Cmd.Resposta := 'Evento Impresso com sucesso';
+           if ACBrMDFe1.DAMDFe.MostrarPreview then
+              Ocultar1.Click;
+         end
+
+        else if Cmd.Metodo = 'imprimireventopdf' then
+         begin
+           ACBrMDFe1.EventoMDFe.Evento.Clear;
+           if FileExists(Cmd.Params(0)) or FileExists(PathWithDelim(ACBrMDFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(0)) then
+            begin
+              if FileExists(Cmd.Params(0)) then
+                 ACBrMDFe1.EventoMDFe.LerXML(Cmd.Params(0))
+              else
+                 ACBrMDFe1.EventoMDFe.LerXML(PathWithDelim(ACBrMDFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(0));
+            end
+           else
+              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
+
+           ACBrMDFe1.Conhecimentos.Clear;
+           if FileExists(Cmd.Params(1)) or FileExists(PathWithDelim(ACBrMDFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(1)) then
+            begin
+              if FileExists(Cmd.Params(1)) then
+                 ACBrMDFe1.Conhecimentos.LoadFromFile(Cmd.Params(1))
+              else
+                 ACBrMDFe1.Conhecimentos.LoadFromFile(PathWithDelim(ACBrMDFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(1));
+            end
+           else
+            begin
+              if DFeUtil.NaoEstaVazio(Cmd.Params(1)) then
+                 raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
+            end;
+
+           try
+              ACBrMDFe1.ImprimirEventoPDF;
+              ArqPDF := OnlyNumber(ACBrMDFe1.EventoMDFe.Evento[0].InfEvento.Id);
+              ArqPDF := PathWithDelim(ACBrMDFe1.DAMDFe.PathPDF)+ArqPDF+'-procEventoMDFe.pdf';
+              Cmd.Resposta := 'Arquivo criado em: ' + ArqPDF;
+           except
+              raise Exception.Create('Erro ao criar o arquivo PDF');
+           end;
+         end
+
+
         else if Cmd.Metodo = 'inutilizarmdfe' then
          begin                            //CNPJ         //Justificat   //Ano                    //Modelo                 //Série                  //Num.Inicial            //Num.Final
            (*
