@@ -257,8 +257,8 @@ begin
     ComentarLinha('{$DEFINE ACBrNFeOpenSSL}', not(AUtilizar));
     ComentarLinha('{$DEFINE ACBrCTeOpenSSL}', not(AUtilizar));
     ComentarLinha('{$DEFINE ACBrNFSeOpenSSL}', not(AUtilizar));
-		ComentarLinha('{$DEFINE ACBrMDFeOpenSSL}', not(AUtilizar));
-		ComentarLinha('{$DEFINE ACBrGNREOpenSSL}', not(AUtilizar));
+	 ComentarLinha('{$DEFINE ACBrMDFeOpenSSL}', not(AUtilizar));
+	 ComentarLinha('{$DEFINE ACBrGNREOpenSSL}', not(AUtilizar));
 
     WriteToTXT(PathArquivo, F.Text, False, False);
   finally
@@ -588,6 +588,7 @@ var
   ListaPaths: TStringList;
   I: Integer;
   PathsAtuais: String;
+  PathFonte: string;
 begin
   with oACBr.Installations[iVersion] do
   begin
@@ -618,7 +619,7 @@ begin
       ListaPaths.Add(APath);
 
       // escrever a variavel no override da ide
-      ConfigData.WriteString('Environment Variables', 'PATH', ListaPaths.DelimitedText);
+      ConfigData.WriteString(cs, 'PATH', ListaPaths.DelimitedText);
 
       // enviar um broadcast de atualização para o windows
       wParam := 0;
@@ -672,8 +673,6 @@ procedure TfrmPrincipal.AddLibrarySearchPath;
    end;
 
 begin
-  // -- Adiciona todos os paths dos fontes na versão do delphi selecionada
-  // -- se os paths já existirem não serão duplicados.
   FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Fontes');
 
   // --
@@ -858,7 +857,11 @@ begin
     else if oACBr.Installations[iFor].VersionNumberStr = 'd21' then
       edtDelphiVersion.Items.Add('Delphi XE7')
     else if oACBr.Installations[iFor].VersionNumberStr = 'd22' then
-      edtDelphiVersion.Items.Add('Delphi XE8');
+      edtDelphiVersion.Items.Add('Delphi XE8')
+    else if oACBr.Installations[iFor].VersionNumberStr = 'd23' then
+      edtDelphiVersion.Items.Add('Delphi XE9')
+    else if oACBr.Installations[iFor].VersionNumberStr = 'd24' then
+      edtDelphiVersion.Items.Add('Delphi XE10');
 
     // -- Evento disparado antes de iniciar a execução do processo.
     oACBr.Installations[iFor].DCC32.OnBeforeExecute := BeforeExecute;
@@ -1206,6 +1209,7 @@ procedure TfrmPrincipal.wizPgInicioNextButtonClick(Sender: TObject;
   var Stop: Boolean);
 begin
   // Verificar se o delphi está aberto
+  {$IFNDEF DEBUG}
   if oACBr.AnyInstanceRunning then
   begin
     Stop := True;
@@ -1215,6 +1219,7 @@ begin
       MB_ICONERROR + MB_OK
     );
   end;
+  {$ENDIF}
 
   // Verificar se o tortoise está instalado
   if not TSVN_Class.IsTortoiseInstalado then
@@ -1245,7 +1250,7 @@ begin
   lblInfoCompilacao.Caption :=
     edtDelphiVersion.Text + ' ' + edtPlatform.Text + sLineBreak +
     'Dir. Instalação: ' + edtDirDestino.Text + sLineBreak +
-    'Dir. Bibliotecas:' + sDirLibrary;
+    'Dir. Bibliotecas: ' + sDirLibrary;
 end;
 
 procedure TfrmPrincipal.wizPgInstalacaoNextButtonClick(Sender: TObject;

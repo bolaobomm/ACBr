@@ -1065,6 +1065,10 @@ object frmPrincipal: TfrmPrincipal
       Header.Subtitle.Font.Style = []
       Caption = 'Configura'#231#245'es'
       OnNextButtonClick = wizPgConfiguracaoNextButtonClick
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label4: TLabel
         Left = 17
         Top = 68
@@ -1268,20 +1272,27 @@ object frmPrincipal: TfrmPrincipal
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
+        ExplicitWidth = 554
+        ExplicitHeight = 499
         inherited Label18: TLabel
           Width = 509
           Caption = 
             'S'#243' selecione os pacotes abaixo, que voc'#234' tenha a suite do gerado' +
             'r instalada no seu delphi.'
+          ExplicitWidth = 509
         end
         inherited pnlBotoesPacotes: TPanel
           Top = 467
           Width = 554
+          ExplicitTop = 467
+          ExplicitWidth = 554
           inherited btnPacotesDesmarcarTodos: TSpeedButton
             Left = 522
+            ExplicitLeft = 522
           end
           inherited btnPacotesMarcarTodos: TSpeedButton
             Left = 490
+            ExplicitLeft = 490
           end
         end
       end
@@ -1310,6 +1321,10 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Reposit'#243'rio'
       OnEnterPage = wizPgObterFontesEnterPage
       OnNextButtonClick = wizPgObterFontesNextButtonClick
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label1: TLabel
         Left = 77
         Top = 177
@@ -1394,6 +1409,10 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Instala'#231#227'o'
       OnEnterPage = wizPgInstalacaoEnterPage
       OnNextButtonClick = wizPgInstalacaoNextButtonClick
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object btnInstalarACBr: TSpeedButton
         Left = 430
         Top = 463
@@ -1473,6 +1492,10 @@ object frmPrincipal: TfrmPrincipal
       VisibleButtons = [bkFinish]
       Color = clWhite
       Caption = 'Fim'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label3: TLabel
         Left = 39
         Top = 58
@@ -1627,6 +1650,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
+        FrameIndex = 3
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5
