@@ -1471,7 +1471,12 @@ begin
 
         else if Cmd.Metodo = 'versao' then
            Cmd.Resposta := Versao
-
+        else if Cmd.Metodo ='datahora' then
+           Cmd.Resposta := FormatDateTime('dd/mm/yyyy dd:hh:mm', Now )
+        else if Cmd.Metodo ='data' then
+           Cmd.Resposta := FormatDateTime('dd/mm/yyyy', Now )
+        else if Cmd.Metodo ='hora' then
+           Cmd.Resposta := FormatDateTime('dd:hh:mm', Now )
         else if Cmd.Metodo = 'versaonome' then
            Cmd.Resposta := {$IFDEF ACBrNFeOpenSSL} 'OpenSSL' {$ELSE} 'CAPICOM' {$ENDIF}
 

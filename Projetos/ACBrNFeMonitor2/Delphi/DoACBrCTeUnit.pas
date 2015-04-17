@@ -1097,7 +1097,14 @@ begin
 
         else if Cmd.Metodo = 'ativo' then
            Cmd.Resposta := 'Ativo'
-
+        else if Cmd.Metodo = 'versao' then
+           Cmd.Resposta := Versao
+        else if Cmd.Metodo ='datahora' then
+           Cmd.Resposta := FormatDateTime('dd/mm/yyyy dd:hh:mm', Now )
+        else if Cmd.Metodo ='data' then
+           Cmd.Resposta := FormatDateTime('dd/mm/yyyy', Now )
+        else if Cmd.Metodo ='hora' then
+           Cmd.Resposta := FormatDateTime('dd:hh:mm', Now )
         else if pos('|'+Cmd.Metodo+'|', '|exit|bye|fim|sair|') > 0 then {fecha conexao}
          begin
            Cmd.Resposta := 'Obrigado por usar o ACBrNFeMonitor';
