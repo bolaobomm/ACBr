@@ -37,7 +37,7 @@
 |* 23/02/2015: Macgayver Armini Apolonio
 |*  - Criação
 *******************************************************************************}
-unit ACBrSpedPCImportar_Bloco1;
+unit ACBrEPCBloco_1_Importar;
 
 interface
 
@@ -45,7 +45,7 @@ uses
   Classes,
   SysUtils,
 
-  ACBrSpedPCImportar_Base,
+  ACBrEPCBase,
   ACBrUtil, ACBrSpedPisCofins, ACBrEPCBlocos;
 
 type

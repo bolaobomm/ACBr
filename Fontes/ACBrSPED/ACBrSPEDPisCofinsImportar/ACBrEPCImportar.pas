@@ -38,7 +38,7 @@
 |*  - Criação
 *******************************************************************************}
 
-unit ACBrSpedPCImportar;
+unit ACBrEPCImportar;
 
 interface
 
@@ -49,16 +49,16 @@ uses
     LResources,
   {$ENDIF}
   ACBrUtil, ACBrSpedPisCofins, ACBrEPCBlocos,
-  ACBrSpedPCImportar_Base,
-  ACBrSpedPCImportar_Bloco0,
-  ACBrSpedPCImportar_BlocoA,
-  ACBrSpedPCImportar_BlocoC,
-  ACBrSpedPCImportar_BlocoD,
-  ACBrSpedPCImportar_BlocoF,
-  ACBrSpedPCImportar_BlocoI,
-  ACBrSpedPCImportar_BlocoM,
-  ACBrSpedPCImportar_BlocoP,
-  ACBrSpedPCImportar_Bloco1;
+  ACBrEPCBase,
+  ACBrEPCBloco_0_Importar,
+  ACBrEPCBloco_1_Importar,
+  ACBrEPCBloco_A_Importar,
+  ACBrEPCBloco_C_Importar,
+  ACBrEPCBloco_D_Importar,
+  ACBrEPCBloco_F_Importar,
+  ACBrEPCBloco_I_Importar,
+  ACBrEPCBloco_M_Importar,
+  ACBrEPCBloco_P_Importar;
 
 const
   CACBrSpedPisCofinsImportar_Versao = '1.00';

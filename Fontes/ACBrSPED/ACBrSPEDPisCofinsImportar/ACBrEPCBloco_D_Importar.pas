@@ -38,7 +38,7 @@
 |*  - Criação
 *******************************************************************************}
 
-unit ACBrSpedPCImportar_BlocoD;
+unit ACBrEPCBloco_D_Importar;
 
 interface
 
@@ -46,7 +46,7 @@ uses
   Classes,
   SysUtils,
 
-  ACBrSpedPCImportar_Base,
+  ACBrEPCBase,
   ACBrUtil, ACBrSpedPisCofins, ACBrEPCBlocos;
 
 type

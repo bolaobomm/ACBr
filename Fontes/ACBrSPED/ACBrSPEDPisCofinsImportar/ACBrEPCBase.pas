@@ -37,7 +37,7 @@
 |* 23/02/2015: Macgayver Armini Apolonio
 |*  - Criação
 *******************************************************************************}
-unit ACBrSpedPCImportar_Base;
+unit ACBrEPCBase;
 
 interface
 
