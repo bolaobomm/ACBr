@@ -872,6 +872,7 @@ begin
                             FDadosMsg, FMsg )) then
   {$ENDIF}
      GerarException(MsgErro);
+   FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] );
 end;
 
 function TWebServicesBase.GerarSoapDEPC: AnsiString;
