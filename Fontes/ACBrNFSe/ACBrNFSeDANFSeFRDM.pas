@@ -161,7 +161,7 @@ begin
 
       with IdentificacaoRps do
       begin
-        FieldByName('Numero').AsString    := DFeUtil.FormatarNumeroDocumentoFiscal(Numero);
+        FieldByName('Numero').AsString    := DFeUtil.FormatarNumeroDocumentoFiscalNFSe(Numero);
 //        FieldByName('Serie').AsString     := Serie;
 //        FieldByName('Tipo').AsString      := DFeUtil.SeSenao(Tipo = trRPS, '0','1');
       end;
