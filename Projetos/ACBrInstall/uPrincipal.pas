@@ -101,7 +101,6 @@ type
     ckbFecharTortoise: TCheckBox;
     btnVisualizarLogCompilacao: TSpeedButton;
     pnlInfoCompilador: TPanel;
-    lblInfoCompilacao: TLabel;
     ckbInstalarCapicom: TCheckBox;
     ckbInstalarOpenSSL: TCheckBox;
     wizPgPacotes: TJvWizardInteriorPage;
@@ -111,6 +110,7 @@ type
     ckbCopiarTodasDll: TCheckBox;
     Label8: TLabel;
     ckbBCB: TCheckBox;
+    lbInfo: TListBox;
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -931,11 +931,13 @@ begin
   wizPgInstalacao.EnableButton(bkBack, False);
   wizPgInstalacao.EnableButton(TJvWizardButtonKind(bkCancel), False);
   try
-    Cabecalho :=
-      'Caminho: ' + edtDirDestino.Text + sLineBreak +
-      'Versão do delphi: ' + edtDelphiVersion.Text + ' (' + IntToStr(iVersion)+ ')' + sLineBreak +
-      'Plataforma: ' + edtPlatform.Text + '(' + IntToStr(Integer(tPlatform)) + ')' + sLineBreak +
-      StringOfChar('=', 80);
+    Cabecalho := 'Caminho: ' + edtDirDestino.Text + sLineBreak +
+                 'Versão do delphi: ' + edtDelphiVersion.Text + ' (' + IntToStr(iVersion)+ ')' + sLineBreak +
+                 'Plataforma: ' + edtPlatform.Text + '(' + IntToStr(Integer(tPlatform)) + ')' + sLineBreak +
+                 'Última Revisão: ' + TSVN_Class.WCInfo.Revision  + sLineBreak +
+                 'Autor: ' + TSVN_Class.WCInfo.Author  + sLineBreak +
+                 'Data: ' + TSVN_Class.WCInfo.Date  + sLineBreak +
+                 StringOfChar('=', 80);
 
     // limpar o log
     lstMsgInstalacao.Clear;
@@ -1222,7 +1224,8 @@ begin
   {$ENDIF}
 
   // Verificar se o tortoise está instalado
-  if not TSVN_Class.IsTortoiseInstalado then
+//  if not TSVN_Class.IsTortoiseInstalado then
+  if not TSVN_Class.SVNInstalled then
   begin
     Stop := True;
     Application.MessageBox(
@@ -1236,6 +1239,9 @@ end;
 procedure TfrmPrincipal.wizPgInstalacaoEnterPage(Sender: TObject;
   const FromPage: TJvWizardCustomPage);
 begin
+  // capturar informações da última revisão
+  TSVN_Class.GetRevision(edtDirDestino.Text);
+
   SetPlatformSelected;
   lstMsgInstalacao.Clear;
   pgbInstalacao.Position := 0;
@@ -1247,10 +1253,16 @@ begin
     btnInstalarACBr.Caption := 'Compilar';
 
   // mostrar ao usuário as informações de compilação
-  lblInfoCompilacao.Caption :=
-    edtDelphiVersion.Text + ' ' + edtPlatform.Text + sLineBreak +
-    'Dir. Instalação: ' + edtDirDestino.Text + sLineBreak +
-    'Dir. Bibliotecas: ' + sDirLibrary;
+  with lbInfo.Items do
+  begin
+    Clear;
+    Add(edtDelphiVersion.Text + ' ' + edtPlatform.Text);
+    Add('Dir. Instalação  : ' + edtDirDestino.Text);
+    Add('Dir. Bibliotecas : ' + sDirLibrary);
+    Add('Última Revisão   : ' + TSVN_Class.WCInfo.Revision);
+    Add('Autor            : ' + TSVN_Class.WCInfo.Author);
+    Add('Data:            : ' + TSVN_Class.WCInfo.Date);
+  end;
 end;
 
 procedure TfrmPrincipal.wizPgInstalacaoNextButtonClick(Sender: TObject;

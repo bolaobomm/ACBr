@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = wizPgInicio
+  ActiveControl = lstMsgInstalacao
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgInicio
+    ActivePage = wizPgInstalacao
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -1065,10 +1065,6 @@ object frmPrincipal: TfrmPrincipal
       Header.Subtitle.Font.Style = []
       Caption = 'Configura'#231#245'es'
       OnNextButtonClick = wizPgConfiguracaoNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label4: TLabel
         Left = 17
         Top = 68
@@ -1295,6 +1291,50 @@ object frmPrincipal: TfrmPrincipal
             ExplicitLeft = 490
           end
         end
+        inherited PageControl1: TPageControl
+          inherited tsNFe: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
+          end
+          inherited tsCTe: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
+          end
+          inherited tsNFSe: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
+          end
+          inherited tsBoletos: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
+          end
+          inherited tsMDFe: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
+          end
+          inherited tsSAT: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
+          end
+          inherited tsGNRE: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
+          end
+        end
       end
     end
     object wizPgObterFontes: TJvWizardInteriorPage
@@ -1321,10 +1361,6 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Reposit'#243'rio'
       OnEnterPage = wizPgObterFontesEnterPage
       OnNextButtonClick = wizPgObterFontesNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label1: TLabel
         Left = 77
         Top = 177
@@ -1409,10 +1445,6 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Instala'#231#227'o'
       OnEnterPage = wizPgInstalacaoEnterPage
       OnNextButtonClick = wizPgInstalacaoNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object btnInstalarACBr: TSpeedButton
         Left = 430
         Top = 463
@@ -1431,9 +1463,9 @@ object frmPrincipal: TfrmPrincipal
       end
       object lstMsgInstalacao: TListBox
         Left = 20
-        Top = 79
+        Top = 111
         Width = 516
-        Height = 355
+        Height = 323
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -1456,17 +1488,28 @@ object frmPrincipal: TfrmPrincipal
         Left = 20
         Top = 15
         Width = 516
-        Height = 58
+        Height = 90
         BevelOuter = bvLowered
         TabOrder = 2
-        object lblInfoCompilacao: TLabel
+        object lbInfo: TListBox
           Left = 1
           Top = 1
           Width = 514
-          Height = 56
+          Height = 88
           Align = alClient
-          AutoSize = False
-          Caption = 'Linha 1'#13#10'Linha 2'#13#10'Linha 3'#13#10'Linha 4'
+          BorderStyle = bsNone
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Courier New'
+          Font.Style = []
+          ItemHeight = 14
+          ParentColor = True
+          ParentFont = False
+          TabOrder = 0
+          ExplicitLeft = 0
+          ExplicitTop = 2
+          ExplicitHeight = 56
         end
       end
     end
@@ -1492,10 +1535,6 @@ object frmPrincipal: TfrmPrincipal
       VisibleButtons = [bkFinish]
       Color = clWhite
       Caption = 'Fim'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label3: TLabel
         Left = 39
         Top = 58
@@ -1650,7 +1689,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 3
+        FrameIndex = 5
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5
