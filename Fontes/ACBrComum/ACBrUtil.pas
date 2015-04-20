@@ -1149,14 +1149,14 @@ function StoD( YYYYMMDDhhnnss: String) : TDateTime;
   Var OldShortDateFormat : String ;
 begin
   YYYYMMDDhhnnss := trim( YYYYMMDDhhnnss ) ;
-  OldShortDateFormat := ShortDateFormat ;
+  OldShortDateFormat := {$IFDEF DELPHI17_UP}FormatSettings.{$ENDIF}ShortDateFormat ;
   try
-     ShortDateFormat := 'yyyy/mm/dd' ;
+     {$IFDEF DELPHI17_UP}FormatSettings.{$ENDIF}ShortDateFormat := 'yyyy/MM/dd' ;
      Result := StrToDateDef( copy(YYYYMMDDhhnnss, 1,4) + DateSeparator +
                              copy(YYYYMMDDhhnnss, 5,2) + DateSeparator +
                              copy(YYYYMMDDhhnnss, 7,2), 0 ) ;
   finally
-     ShortDateFormat := OldShortDateFormat ;
+     {$IFDEF DELPHI17_UP}FormatSettings.{$ENDIF}ShortDateFormat := OldShortDateFormat ;
   end ;
   if Length( YYYYMMDDhhnnss ) > 8 then  { Informou Hora:minuto:segundos ? }
   begin
