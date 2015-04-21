@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = lstMsgInstalacao
+  ActiveControl = edtDirDestino
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgInstalacao
+    ActivePage = wizPgConfiguracao
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -1118,13 +1118,11 @@ object frmPrincipal: TfrmPrincipal
         OnClick = btnSelecDirInstallClick
       end
       object Label8: TLabel
-        Left = 33
+        Left = 34
         Top = 125
-        Width = 355
+        Width = 316
         Height = 13
-        Caption = 
-          'Experimental : A suite ACBr n'#227'o est'#225' 100% compativel com o C++ B' +
-          'uilder'
+        Caption = 'Nota : A suite ACBr n'#227'o est'#225' 100% compativel com o C++ Builder'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clRed
         Font.Height = -11
@@ -1507,9 +1505,6 @@ object frmPrincipal: TfrmPrincipal
           ParentColor = True
           ParentFont = False
           TabOrder = 0
-          ExplicitLeft = 0
-          ExplicitTop = 2
-          ExplicitHeight = 56
         end
       end
     end
@@ -1689,7 +1684,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 5
+        FrameIndex = 4
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

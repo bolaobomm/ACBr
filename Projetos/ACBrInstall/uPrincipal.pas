@@ -50,8 +50,6 @@ uses
   JvExComCtrls, JvComCtrls, JvCheckTreeView, uFrameLista;
 
 type
-  ToACBr = TJclBorRADToolInstallation;
-
   TDestino = (tdSystem, tdDelphi, tdNone);
 
   TfrmPrincipal = class(TForm)
@@ -108,9 +106,9 @@ type
     ckbUtilizarOpenSSL: TCheckBox;
     rdgDLL: TRadioGroup;
     ckbCopiarTodasDll: TCheckBox;
-    Label8: TLabel;
     ckbBCB: TCheckBox;
     lbInfo: TListBox;
+    Label8: TLabel;
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -678,6 +676,7 @@ begin
   // --
   with oACBr.Installations[iVersion] do
   begin
+
     AddToLibraryBrowsingPath(sDirLibrary, tPlatform);
     AddToLibrarySearchPath(sDirLibrary, tPlatform);
     AddToDebugDCUPath(sDirLibrary, tPlatform);
@@ -689,13 +688,16 @@ begin
   //-- ************ C++ Builder *************** //
   if ckbBCB.Checked then
   begin
-//  if oACBr.Installations[iVersion] is TJclBDSInstallation then
-//  begin
-//     TJclBDSInstallation(oACBr.Installations[iVersion]).AddToCppSearchPath(sDirLibrary, tPlatform);
-//     TJclBDSInstallation(oACBr.Installations[iVersion]).AddToCppLibraryPath(sDirLibrary, tPlatform);
-//     TJclBDSInstallation(oACBr.Installations[iVersion]).AddToCppBrowsingPath(sDirLibrary, tPlatform);
-//     TJclBDSInstallation(oACBr.Installations[iVersion]).AddToCppIncludePath(sDirLibrary, tPlatform);
-//  end;
+     if oACBr.Installations[iVersion] is TJclBDSInstallation then
+     begin
+        with TJclBDSInstallation(oACBr.Installations[iVersion]) do
+        begin
+           AddToCppSearchPath(sDirLibrary, tPlatform);
+           AddToCppLibraryPath(sDirLibrary, tPlatform);
+           AddToCppBrowsingPath(sDirLibrary, tPlatform);
+           AddToCppIncludePath(sDirLibrary, tPlatform);
+        end;
+     end;
   end;
 end;
 
@@ -709,10 +711,7 @@ begin
   sVersao  := AnsiUpperCase(oACBr.Installations[iVersion].VersionNumberStr);
   sDirRoot := IncludeTrailingPathDelimiter(edtDirDestino.Text);
 
-  if ckbBCB.Checked then
-    sTipo := 'Lib\BCB\'
-  else
-    sTipo := 'Lib\Delphi\';
+  sTipo := 'Lib\Delphi\';
 
   if edtPlatform.ItemIndex = 0 then // Win32
   begin
@@ -777,7 +776,7 @@ begin
   Sender.AddPathOption('LE', sDirLibrary);
   Sender.AddPathOption('LN', sDirLibrary);
 
-  //-- ************ C++ Builder *************** //
+  // ************ C++ Builder *************** //
   if ckbBCB.Checked then
   begin
      // -JL compila c++ builder
@@ -802,7 +801,7 @@ begin
      if VersionNumberStr = 'd16' then
         Sender.Options.Add('-NSData.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;System.Win');
 
-     if MatchText(VersionNumberStr, ['d17','d18','d19','d20', 'd21', 'd22']) then
+     if MatchText(VersionNumberStr, ['d17','d18','d19','d20','d21','d22']) then
         Sender.Options.Add('-NSWinapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell');
 
   end;
@@ -1189,7 +1188,7 @@ begin
     edtPlatform.ItemIndex := 0;
 
   // C++ Builder a partir do D2006, versões anteriores tem IDE independentes.
-  ckbBCB.Enabled := MatchText(oACBr.Installations[iVersion].VersionNumberStr, ['d10','d11','d12','d14','d15','d16','d17','d18','d19','d20','d21']);
+  ckbBCB.Enabled := MatchText(oACBr.Installations[iVersion].VersionNumberStr, ['d10','d11','d12','d14','d15','d16','d17','d18','d19','d20','d21','d22','d23','d24']);
   if not ckbBCB.Enabled then
      ckbBCB.Checked := False;
 end;
