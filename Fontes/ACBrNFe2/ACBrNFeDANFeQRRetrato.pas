@@ -467,13 +467,7 @@ type
     qrmProdutoVALORDESC: TQRDBText;
     QRShape78: TQRShape;
     qrs15: TQRShape;
-    QRShape79: TQRShape;
-    qrs16: TQRShape;
-    QRShape80: TQRShape;
     QRShape81: TQRShape;
-    QRShape82: TQRShape;
-    qrs18: TQRShape;
-    qrs17: TQRShape;
     procedure QRNFeBeforePrint(Sender: TCustomQuickRep;
       var PrintReport: Boolean);
     procedure qrbReciboBeforePrint(Sender: TQRCustomBand;
@@ -1319,7 +1313,7 @@ inherited;
       end;
    end;
 
-   intAlturaLinha := (intLinhasDescricao + intLinhasAdicionais) * 12;
+   intAlturaLinha := (intLinhasDescricao + intLinhasAdicionais) * 11;
 
     qrs2.Height:= intAlturaLinha;
     qrs3.Height:= intAlturaLinha;
@@ -1335,9 +1329,9 @@ inherited;
     qrs13.Height:= intAlturaLinha;
     qrs14.Height:= intAlturaLinha;
     qrs15.Height:= intAlturaLinha;
-    qrs16.Height:= intAlturaLinha;
-    qrs17.Height:= intAlturaLinha;
-    qrs18.Top   := intAlturaLinha;
+    //qrs16.Height:= intAlturaLinha;
+    //qrs17.Height:= intAlturaLinha;
+   // qrs18.Top   := intAlturaLinha;
 
     qrs2.Repaint;
     qrs3.Repaint;
@@ -1353,10 +1347,10 @@ inherited;
     qrs13.Repaint;
     qrs14.Repaint;
     qrs15.Repaint;
-    qrs16.Repaint;
-    qrs17.Repaint;
-    qrs18.Repaint;
- 
+    //qrs16.Repaint;
+    //qrs17.Repaint;
+   // qrs18.Repaint;
+
 
    if cdsItensINFADIPROD.AsString<>'' then begin
       Value:=Value+#13+'InfAd: '+cdsItensINFADIPROD.AsString;
@@ -1907,6 +1901,7 @@ procedure TfqrDANFeQRRetrato.qrbItensBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 begin
   inherited;
+
   {if Length(cdsItensCODIGO.AsString) > 10 then
     qrmProdutoCodigo.Font.Size:=5
   else
