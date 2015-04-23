@@ -42,7 +42,7 @@ uses
   {$ELSE}
      Forms, Dialogs,
   {$IFEND}
-  ACBrNFSeUtil, ACBrNFSeConfiguracoes,
+  ACBrNFSeUtil, ACBrNFSeConfiguracoes,ACBrMail,
 //  {$IFDEF FPC}
 //     ACBrNFSeDMLaz,
 //  {$ELSE}
@@ -94,6 +94,7 @@ type
                                 TLS: Boolean = True;
                                 UsarThread: Boolean = True;
                                 FormatoEmHTML: Boolean = False);
+
     property NFSe: TNFSe  read FNFSe write FNFSe;
     property XML_Rps: AnsiString read FXML_Rps write FXML_Rps;
     property XML_Rps_Ass: AnsiString read FXML_Rps_Ass write FXML_Rps_Ass;
@@ -536,7 +537,7 @@ begin
   Result   := True;
   LocNFSeW := TNFSeW.Create(NFSe);
   try
-  (*
+
    LocNFSeW.Provedor      := TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).Configuracoes.WebServices.Provedor;
    LocNFSeW.Prefixo4      := TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).Configuracoes.WebServices.Prefixo4;
    LocNFSeW.Identificador := TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).Configuracoes.WebServices.Identificador;
@@ -546,7 +547,7 @@ begin
    LocNFSeW.ServicoEnviar := TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).Configuracoes.WebServices.ServicoEnviar;
    LocNFSeW.GerarXml;
    Stream.WriteString(LocNFSeW.Gerador.ArquivoFormatoXML);
-   *)
+   
    if XML_NFSe <> ''
     then Stream.WriteString(XML_NFSe)
     else if XML_RPS <> ''

@@ -306,6 +306,8 @@ type
     TcpServer: TACBrTCPServer;
     cbxSalvarNFesProcessadas: TCheckBox;
     cbxImprimirTributos: TCheckBox;
+    cbxAutoExpandirDadosAdicionais: TCheckBox;
+
     procedure DoACBrTimer(Sender: TObject);
     procedure edOnlyNumbers(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
@@ -787,7 +789,16 @@ begin
      ArqLogTXT := AcertaPath( edLogArq.Text ) ;
      ArqLogCompTXT := AcertaPath( edLogComp.Text ) ;     
 
-     TcpServer.Port    := edPortaTCP.Text ;
+     if (TcpServer.Port <> edPortaTCP.Text) then
+       if not TcpServer.Ativo then
+         TcpServer.Port    := edPortaTCP.Text
+       else
+        begin
+         TcpServer.Desativar;
+         TcpServer.Port    := edPortaTCP.Text;
+         TcpServer.Ativar;
+        end;
+
 {     TcpServer.MaxConnections := sedConexoesTCP.Value ;
      TcpServer.MaxConnectionReply.Text.Add( 'Pedido de conexão negado.') ;
      TcpServer.MaxConnectionReply.Text.Add(
@@ -940,12 +951,13 @@ begin
      rgCasasDecimaisQtd.ItemIndex   := Ini.ReadInteger('DANFE','DecimaisQTD',2) ;
      spedtDecimaisVUnit.Value  := Ini.ReadInteger('DANFE','DecimaisValor',2) ;
      cbxExibeResumo.Checked    := Ini.ReadBool(   'DANFE','ExibeResumo',False) ;
-     cbxImprimirTributos.Checked   := Ini.ReadBool(   'DANFE','ImprimirTributosItem',False) ;
+     cbxImprimirTributos.Checked    := Ini.ReadBool(   'DANFE','ImprimirTributosItem',False) ;
+     cbxAutoExpandirDadosAdicionais.Checked := Ini.ReadBool(   'DANFE','ExpandirDadosAdicionais',False) ;
      cbxImpValLiq.Checked      := Ini.ReadBool(   'DANFE','ImprimirValLiq',False) ;
      cbxFormCont.Checked       := Ini.ReadBool(   'DANFE','PreImpresso',False) ;
      cbxMostraStatus.Checked   := Ini.ReadBool(   'DANFE','MostrarStatus',True) ;
      cbxExpandirLogo.Checked   := Ini.ReadBool(   'DANFE','ExpandirLogo',False) ;
-     rgTipoFonte.ItemIndex     := Ini.ReadInteger( 'DANFE','Fonte'   ,0) ;
+     rgTipoFonte.ItemIndex     := Ini.ReadInteger('DANFE','Fonte'   ,0) ;
      rgLocalCanhoto.ItemIndex  := Ini.ReadInteger('DANFE','LocalCanhoto',0);
 
      if rgModeloDanfe.ItemIndex = 0 then
@@ -1181,6 +1193,7 @@ begin
      Ini.WriteInteger('DANFE','DecimaisValor' ,spedtDecimaisVUnit.Value);
      Ini.WriteBool(   'DANFE','ExibeResumo'   ,cbxExibeResumo.Checked) ;
      Ini.WriteBool(   'DANFE','ImprimirTributosItem',cbxImprimirTributos.Checked) ;
+     Ini.WriteBool(   'DANFE','ExpandirDadosAdicionais',cbxAutoExpandirDadosAdicionais.Checked) ;
      Ini.WriteBool(   'DANFE','ImprimirValLiq',cbxImpValLiq.Checked) ;
      Ini.WriteBool(   'DANFE','PreImpresso'   ,cbxFormCont.Checked) ;
      Ini.WriteBool(   'DANFE','MostrarStatus' ,cbxMostraStatus.Checked) ;
@@ -1190,7 +1203,6 @@ begin
 
      Ini.WriteInteger('NFCe','Modelo'              ,rgModeloDANFeNFCE.ItemIndex) ;
      Ini.WriteInteger('NFCe','ModoImpressaoEvento' ,rgModoImpressaoEvento.ItemIndex) ;
-     Ini.WriteInteger('NFCe','ModoImpressaoEvento'   ,rgModoImpressaoEvento.ItemIndex) ;
      Ini.WriteInteger('NFCe', 'MarcaImpressora', cbMarcaImpressoraESCPOS.ItemIndex);
      Ini.WriteString('NFCe', 'Porta', cbPortaESCPOS.Text);
      Ini.WriteString('NFCe', 'Velocidade', cbVelocidadeESCPOS.Text);
@@ -2239,6 +2251,7 @@ begin
         ACBrNFeDANFERaveCB1.EspessuraBorda := StrToIntDef(edtEspBorda.Text, 1);
         ACBrNFeDANFERaveCB1.Fonte  := DFeUtil.SeSenao(rgTipoFonte.ItemIndex=0,ftTimes,ftCourier);
         ACBrNFeDANFERaveCB1.ImprimirTributosItem := cbxImprimirTributos.Checked;
+        ACBrNFeDANFERaveCB1.ExpandirDadosAdicionaisAuto := cbxAutoExpandirDadosAdicionais.Checked;
       end
      else if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
       begin

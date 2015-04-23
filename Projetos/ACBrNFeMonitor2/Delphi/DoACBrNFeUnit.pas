@@ -388,7 +388,7 @@ begin
 
            ConfiguraDANFe;
 
-           if rgModoImpressaoEvento.ItemIndex = 0 then
+           if (ACBrNFe1.Configuracoes.Geral.ModeloDF = moNFe) or (rgModoImpressaoEvento.ItemIndex = 0) then
               ACBrNFe1.DANFE := ACBrNFeDANFERaveCB1
            else
             begin
@@ -443,7 +443,7 @@ begin
 
            ConfiguraDANFe;
 
-           if rgModoImpressaoEvento.ItemIndex = 0 then
+           if (ACBrNFe1.Configuracoes.Geral.ModeloDF = moNFe) or  (rgModoImpressaoEvento.ItemIndex = 0) then
               ACBrNFe1.DANFE := ACBrNFeDANFERaveCB1
            else
               ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1;

@@ -662,6 +662,15 @@ begin
 end;
 
 function TArquivosConf.GetPathCan(CNPJ : String = ''): String;
+begin
+  Result := GetPathEvento( teCancelamento, CNPJ );
+end;
+{
+ *
+ * A função pode ser substituida pela função acima
+ *
+
+function TArquivosConf.GetPathCan(CNPJ : String = ''): String;
 var
   wDia, wMes, wAno : Word;
   Dir : String;
@@ -702,6 +711,16 @@ begin
 
   Result  := Dir;
 end;
+}
+
+function TArquivosConf.GetPathCCe(CNPJ : String = ''): String;
+begin
+  Result := GetPathEvento( teCCe, CNPJ );
+end;
+{
+ *
+ * A função pode ser substituida pela função acima
+ *
 
 function TArquivosConf.GetPathCCe(CNPJ : String = ''): String;
 var
@@ -744,6 +763,7 @@ begin
 
   Result  := Dir;
 end;
+}
 
 function TArquivosConf.GetPathDPEC(CNPJ : String = ''): String;
 var
@@ -823,14 +843,15 @@ begin
         Dir := PathWithDelim(Dir)+'Evento';
    end;
 
-  case tipoEvento of
-    teCCe                      : Dir := PathWithDelim(Dir)+'CCe';
-    teCancelamento             : Dir := PathWithDelim(Dir)+'Cancelamento';
-    teManifDestConfirmacao     : Dir := PathWithDelim(Dir)+'Confirmacao';
-    teManifDestCiencia         : Dir := PathWithDelim(Dir)+'Ciencia';
-    teManifDestDesconhecimento : Dir := PathWithDelim(Dir)+'Desconhecimento';
-    teManifDestOperNaoRealizada: Dir := PathWithDelim(Dir)+'NaoRealizada';
-  end;
+  if FSalvarEvento then
+    case tipoEvento of
+      teCCe                      : Dir := PathWithDelim(Dir)+'CCe';
+      teCancelamento             : Dir := PathWithDelim(Dir)+'Cancelamento';
+      teManifDestConfirmacao     : Dir := PathWithDelim(Dir)+'Confirmacao';
+      teManifDestCiencia         : Dir := PathWithDelim(Dir)+'Ciencia';
+      teManifDestDesconhecimento : Dir := PathWithDelim(Dir)+'Desconhecimento';
+      teManifDestOperNaoRealizada: Dir := PathWithDelim(Dir)+'NaoRealizada';
+    end;
 
   if not DirectoryExists(Dir) then
      ForceDirectories(Dir);
