@@ -599,6 +599,7 @@ end;
 procedure TWebServicesBase.AssinarXML(AXML: String; MsgErro: String);
 begin
   {$IFDEF ACBrCTeOpenSSL}
+   CTeUtil.InitXmlSec;
    if not(CTeUtil.Assinar( AXML, FConfiguracoes.Certificados.Certificado,
                             FConfiguracoes.Certificados.Senha,
                             FDadosMsg, FMsg )) then
