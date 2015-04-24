@@ -42,7 +42,7 @@ uses
   {$ELSE}
      Forms, Dialogs,
   {$IFEND}
-  ACBrNFSeUtil, ACBrNFSeConfiguracoes,ACBrMail,
+  ACBrNFSeUtil, ACBrNFSeConfiguracoes,
 //  {$IFDEF FPC}
 //     ACBrNFSeDMLaz,
 //  {$ELSE}

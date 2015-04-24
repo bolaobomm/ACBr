@@ -90,6 +90,7 @@ type
     FAtividade : String;
     FNFSeCancelada: boolean;
     FImprimeCanhoto: Boolean;
+    FTipoDANFSE: TTipoDANFSE;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
@@ -141,6 +142,8 @@ type
     property Atividade: String read FAtividade write FAtividade;
     property NFSeCancelada: Boolean read FNFSeCancelada write FNFSeCancelada;
     property ImprimeCanhoto: Boolean read FImprimeCanhoto write FImprimeCanhoto default False;
+
+    property TipoDANFSE: TTipoDANFSE read FTipoDANFSE write FTipoDANFSE default tpPadrao;
   end;
 
 implementation
