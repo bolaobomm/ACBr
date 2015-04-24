@@ -1,6 +1,6 @@
 object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
-  Left = 469
-  Top = 133
+  Left = 1234
+  Top = 287
   Width = 587
   Height = 583
   ActiveControl = btMinimizar
@@ -27,7 +27,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     Left = 0
     Top = 0
     Width = 571
-    Height = 222
+    Height = 200
     Align = alClient
     TabOrder = 0
     object Splitter1: TSplitter
@@ -85,7 +85,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
       Left = 1
       Top = 92
       Width = 569
-      Height = 129
+      Height = 107
       Align = alClient
       TabOrder = 1
       object pTodResp: TPanel
@@ -102,7 +102,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         Left = 1
         Top = 18
         Width = 567
-        Height = 110
+        Height = 88
         Align = alClient
         Lines.Strings = (
           '')
@@ -4122,9 +4122,9 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
   end
   object pConfig: TPanel
     Left = 0
-    Top = 222
+    Top = 200
     Width = 571
-    Height = 263
+    Height = 285
     Align = alBottom
     TabOrder = 1
     Visible = False
@@ -4132,8 +4132,8 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
       Left = 1
       Top = 1
       Width = 569
-      Height = 261
-      ActivePage = DANFE
+      Height = 283
+      ActivePage = WebService
       Align = alClient
       Style = tsFlatButtons
       TabOrder = 0
@@ -4493,7 +4493,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         ImageIndex = 1
         DesignSize = (
           561
-          230)
+          252)
         object Label27: TLabel
           Left = 6
           Top = 116
@@ -4582,7 +4582,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Left = 0
           Top = 0
           Width = 561
-          Height = 230
+          Height = 252
           ActivePage = tsWSNFeCTe
           Align = alClient
           Style = tsFlatButtons
@@ -4924,7 +4924,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         ImageIndex = 3
         DesignSize = (
           561
-          230)
+          252)
         object GroupBox1: TGroupBox
           Left = 6
           Top = 4
@@ -5061,7 +5061,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Left = 0
           Top = 0
           Width = 561
-          Height = 230
+          Height = 252
           ActivePage = tsDanfe
           Align = alClient
           Style = tsFlatButtons
@@ -5105,7 +5105,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
             end
             object Label44: TLabel
               Left = 316
-              Top = 126
+              Top = 145
               Width = 106
               Height = 13
               Caption = 'Fonte Demais Campos'
@@ -5135,8 +5135,8 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Top = 50
               Width = 219
               Height = 21
-              ItemHeight = 13
-              TabOrder = 10
+              ItemHeight = 0
+              TabOrder = 11
             end
             object cbxImpDescPorc: TCheckBox
               Left = 316
@@ -5159,7 +5159,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Top = 50
               Width = 66
               Height = 21
-              TabOrder = 11
+              TabOrder = 12
               Text = '1'
               OnKeyPress = edtNumCopiaKeyPress
             end
@@ -5169,7 +5169,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Width = 291
               Height = 54
               Caption = 'Margens'
-              TabOrder = 12
+              TabOrder = 13
               object Label2: TLabel
                 Left = 8
                 Top = 12
@@ -5275,7 +5275,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
             end
             object rgTipoFonte: TRadioGroup
               Left = 316
-              Top = 164
+              Top = 183
               Width = 221
               Height = 36
               Caption = 'Tipo de Fonte(Rave CB)'
@@ -5284,30 +5284,30 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Items.Strings = (
                 'Times'
                 'Courier')
-              TabOrder = 20
+              TabOrder = 21
             end
             object cbxMostraStatus: TCheckBox
               Left = 316
-              Top = 94
+              Top = 113
               Width = 200
               Height = 17
               Caption = 'Mostrar Status'
-              TabOrder = 8
+              TabOrder = 9
             end
             object cbxExpandirLogo: TCheckBox
               Left = 316
-              Top = 110
+              Top = 129
               Width = 200
               Height = 17
               Caption = 'Expandir Logo '
-              TabOrder = 9
+              TabOrder = 10
             end
             object edtProdPag: TEdit
               Left = 6
               Top = 142
               Width = 99
               Height = 21
-              TabOrder = 13
+              TabOrder = 14
               Text = '0'
               OnKeyPress = edtNumCopiaKeyPress
             end
@@ -5316,7 +5316,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Top = 142
               Width = 83
               Height = 21
-              TabOrder = 14
+              TabOrder = 15
               Text = '1'
               OnKeyPress = edtNumCopiaKeyPress
             end
@@ -5325,16 +5325,16 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Top = 142
               Width = 98
               Height = 21
-              TabOrder = 15
+              TabOrder = 16
               Text = '12'
               OnKeyPress = edtNumCopiaKeyPress
             end
             object edtFonteCampos: TEdit
               Left = 316
-              Top = 142
+              Top = 161
               Width = 106
               Height = 21
-              TabOrder = 16
+              TabOrder = 17
               Text = '10'
               OnKeyPress = edtNumCopiaKeyPress
             end
@@ -5350,7 +5350,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 '2'
                 '3'
                 '4')
-              TabOrder = 18
+              TabOrder = 19
             end
             object spedtDecimaisVUnit: TSpinEdit
               Left = 177
@@ -5359,12 +5359,12 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Height = 22
               MaxValue = 10
               MinValue = 0
-              TabOrder = 19
+              TabOrder = 20
               Value = 0
             end
             object rgLocalCanhoto: TRadioGroup
               Left = 432
-              Top = 102
+              Top = 121
               Width = 103
               Height = 60
               Hint = 'Funcionalidade dispon'#237'vel somente no Rave'
@@ -5373,7 +5373,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Items.Strings = (
                 'Cabe'#231'alho'
                 'Rodap'#233)
-              TabOrder = 17
+              TabOrder = 18
             end
             object cbxImprimirTributos: TCheckBox
               Left = 316
@@ -5382,6 +5382,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Height = 17
               Caption = 'Imprimir Valor dos Tributos por Item'
               TabOrder = 7
+            end
+            object cbxAutoExpandirDadosAdicionais: TCheckBox
+              Left = 316
+              Top = 95
+              Width = 221
+              Height = 17
+              Caption = 'Auto expandir campo Dados Adicionais'
+              TabOrder = 8
             end
           end
           object tsDadosEmpresa: TTabSheet
@@ -5535,7 +5543,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 Width = 120
                 Height = 21
                 Style = csDropDownList
-                ItemHeight = 13
+                ItemHeight = 0
                 TabOrder = 0
               end
               object cbPortaESCPOS: TComboBox
@@ -5544,7 +5552,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 Width = 90
                 Height = 21
                 Style = csDropDownList
-                ItemHeight = 13
+                ItemHeight = 0
                 TabOrder = 1
               end
               object cbVelocidadeESCPOS: TComboBox
@@ -5917,14 +5925,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Left = 0
           Top = 0
           Width = 161
-          Height = 230
+          Height = 252
           Align = alLeft
           TabOrder = 0
           object pgTestes: TPageControl
             Left = 1
             Top = 1
             Width = 159
-            Height = 228
+            Height = 250
             ActivePage = tsTesteNFe
             Align = alClient
             Style = tsFlatButtons
@@ -6135,7 +6143,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Left = 161
           Top = 0
           Width = 400
-          Height = 230
+          Height = 252
           Align = alClient
           TabOrder = 1
           object WBResposta: TWebBrowser
@@ -6205,6 +6213,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     Configuracoes.Geral.ExibirErroSchema = True
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.RetirarAcentos = True
+    Configuracoes.Geral.ValidarDigest = False
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.IntervaloTentativas = 1000
@@ -6682,6 +6691,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     TamanhoCampoCodigo = 0
     TamanhoCampoVlUnit = 0
     TamanhoFonte_ANTT = 10
+    TamanhoFonte_infComplementares = 6
     Fonte = ftTimes
     EspessuraBorda = 1
     ExpandirDadosAdicionaisAuto = False
@@ -6697,6 +6707,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     Configuracoes.Geral.ExibirErroSchema = True
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.RetirarAcentos = True
+    Configuracoes.Geral.ValidarDigest = False
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.IntervaloTentativas = 1000
@@ -6786,6 +6797,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     Configuracoes.Geral.ExibirErroSchema = True
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.RetirarAcentos = True
+    Configuracoes.Geral.ValidarDigest = False
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.IntervaloTentativas = 0
