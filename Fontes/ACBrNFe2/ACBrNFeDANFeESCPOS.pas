@@ -60,15 +60,15 @@ uses
 
 type
   TACBrCabecalhoNaoFiscal = class
-    RazaoSocial : string;
-    Endereco : string;
-    nro : string;
-    Complemento : string;
-    Bairro : string;
-    Cidade : string;
-    Estado : string;
-    CNPJ : string;
-    IE : string;
+    RazaoSocial : AnsiString;
+    Endereco : AnsiString;
+    nro : AnsiString;
+    Complemento : AnsiString;
+    Bairro : AnsiString;
+    Cidade : AnsiString;
+    Estado : AnsiString;
+    CNPJ : AnsiString;
+    IE : AnsiString;
   end;
 
   TACBrNFeMarcaImpressora = (iEpson, iBematech, iDaruma, iDiebold);
@@ -87,58 +87,64 @@ type
     FCortaPapel : Boolean;
     FCabecalho : TACBrCabecalhoNaoFiscal;
 
-    cCmdImpZera: String;
-    cCmdAbreGaveta: String;
-    cCmdEspacoLinha: String;
-    cCmdPagCod: String;
-    cCmdImpNegrito: String;
-    cCmdImpFimNegrito: String;
-    cCmdImpExpandido: String;
-    cCmdImpFimExpandido: String;
-    cCmdFonteNormal: String;
-    cCmdFontePequena: String;
-    cCmdImpSublinhado: String;
-    cCmdImpFimSublinhado: String;
-    cCmdImpItalico: String;
-    cCmdImpFimItalico: String;
-    cCmdImpCondensado: String;
-    cCmdImpFimCondensado: String;
-    cCmdAlinhadoEsquerda: String;
-    cCmdAlinhadoCentro: String;
-    cCmdAlinhadoDireita: String;
-    cCmdCortaPapel: String;
-    cCmdImprimeLogo: String;
+    cCmdImpZera: AnsiString;
+    cCmdAbreGaveta: AnsiString;
+    cCmdEspacoLinha: AnsiString;
+    cCmdPagCod: AnsiString;
+    cCmdImpNegrito: AnsiString;
+    cCmdImpFimNegrito: AnsiString;
+    cCmdImpExpandido: AnsiString;
+    cCmdImpFimExpandido: AnsiString;
+    cCmdFonteNormal: AnsiString;
+    cCmdFontePequena: AnsiString;
+    cCmdImpSublinhado: AnsiString;
+    cCmdImpFimSublinhado: AnsiString;
+    cCmdImpItalico: AnsiString;
+    cCmdImpFimItalico: AnsiString;
+    cCmdImpCondensado: AnsiString;
+    cCmdImpFimCondensado: AnsiString;
+    cCmdAlinhadoEsquerda: AnsiString;
+    cCmdAlinhadoCentro: AnsiString;
+    cCmdAlinhadoDireita: AnsiString;
+    cCmdCortaPapel: AnsiString;
+    cCmdImprimeLogo: AnsiString;
 
-    cCmdCodeBarEAN8: String;
-    cCmdCodeBarEAN13: String;
-    cCmdCodeBarSTD25: String;
-    cCmdCodeBarINTER25: String;
-    cCmdCodeBarCODE11: String;
-    cCmdCodeBarCODE39: String;
-    cCmdCodeBarCODE93: String;
-    cCmdCodeBarCODE128: String;
-    cCmdCodeBarUPCA: String;
-    cCmdCodeBarCODABAR: String;
-    cCmdCodeBarMSI: String;
-    cCmdCodeBarFim: String;
+    cCmdCodeBarEAN8: AnsiString;
+    cCmdCodeBarEAN13: AnsiString;
+    cCmdCodeBarSTD25: AnsiString;
+    cCmdCodeBarINTER25: AnsiString;
+    cCmdCodeBarCODE11: AnsiString;
+    cCmdCodeBarCODE39: AnsiString;
+    cCmdCodeBarCODE93: AnsiString;
+    cCmdCodeBarCODE128: AnsiString;
+    cCmdCodeBarUPCA: AnsiString;
+    cCmdCodeBarCODABAR: AnsiString;
+    cCmdCodeBarMSI: AnsiString;
+    cCmdCodeBarFim: AnsiString;
 
     nColunasPapel: Integer;
     FConfigBarras: TACBrECFConfigBarras;
     FUsaCodigoEanImpressao: Boolean;
+    FArquivoLog: AnsiString;
 
     procedure InicializarComandos;
     procedure ImprimePorta(AString: AnsiString);
     procedure MontarEnviarDANFE(NFE: TNFe; const AResumido: Boolean);
 
     function Int2TB(AInteger: Integer): AnsiString;
-    function GetLinhaSimples: String;
-    function GetLinhaDupla: String;
+    function GetLinhaSimples: AnsiString;
+    function GetLinhaDupla: AnsiString;
     function DecodificarTagsFormatacao(AString: AnsiString): AnsiString;
     function TraduzirTag(const ATag: AnsiString): AnsiString;
     function ConfigurarBarrasDaruma(const ACodigo: AnsiString): AnsiString;
     function ConfigurarBarrasBematech(const ACodigo: AnsiString): AnsiString;
 
     procedure DoLinesChange(Sender: TObject);
+    procedure GravaLog(AString: AnsiString; Traduz: Boolean = False);
+    function GetAtivo: Boolean;
+    function GetTimeOut: Integer;
+    procedure SetTimeOut(const Value: Integer);
+    procedure SetMarcaImpressora(const Value: TACBrNFeMarcaImpressora);
   protected
     FpNFe: TNFe;
     FpEvento: TEventoNFe;
@@ -159,6 +165,12 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+
+    procedure Ativar;
+    procedure Desativar;
+    function ModeloStr: AnsiString;
+
+
     procedure ImprimirDANFE(NFE: TNFe = nil); override;
     procedure ImprimirDANFEResumido(NFE: TNFe = nil); override;
     procedure ImprimirEVENTO(NFE: TNFe = nil); override;
@@ -170,12 +182,18 @@ type
 
     procedure GerarCabecalhoGenerico;
     procedure GerarRodapeGenerico(const CortaPapel : boolean = True);
-    procedure Suprimento(AValor : Double; AObserv, AFormaPag : string);
-    procedure Sangria(AValor : Double; AObserv, AFormaPag : string);
+    procedure Suprimento(AValor : Double; AObserv, AFormaPag : AnsiString);
+    procedure Sangria(AValor : Double; AObserv, AFormaPag : AnsiString);
+
+    function VersaoFirmware: String;
+    function DataFirmware: TDateTime;
   published
+    property Ativo: Boolean read GetAtivo;
     property Device: TACBrDevice read FDevice;
+    property MarcaImpressora: TACBrNFeMarcaImpressora read FMarcaImpressora write SetMarcaImpressora default iEpson;
+    property TimeOut: Integer read GetTimeOut write SetTimeOut;
+    property ArquivoLog: AnsiString read FArquivoLog write FArquivoLog;
     property ConfigBarras: TACBrECFConfigBarras read FConfigBarras write FConfigBarras;
-    property MarcaImpressora: TACBrNFeMarcaImpressora read FMarcaImpressora write FMarcaImpressora default iEpson;
     property LinhasEntreCupons: Integer read FLinhasEntreCupons write FLinhasEntreCupons default 21;
     property ImprimeEmUmaLinha: Boolean read FImprimeEmUmaLinha write FImprimeEmUmaLinha default True;
     property ImprimeDescAcrescItem: Boolean read FImprimeDescAcrescItem write FImprimeDescAcrescItem default True;
@@ -198,6 +216,143 @@ begin
 end;
 
 { TACBrNFeDANFeESCPOS }
+
+procedure TACBrNFeDANFeESCPOS.Ativar;
+begin
+  GravaLog(sLineBreak +
+    StringOfChar('-',80) + sLineBreak +
+    'ATIVAR - ' + FormatDateTime('dd/mm/yy hh:nn:ss:zzz', now) + sLineBreak +
+    '  - Modelo.: ' + ModeloStr + sLineBreak +
+    '  - Porta..: ' + FDevice.Porta + sLineBreak +
+    '  - TimeOut: ' + IntToStr(TimeOut) + sLineBreak +
+    '  - Device.: ' + FDevice.DeviceToString(False) + sLineBreak +
+    StringOfChar('-',80) + sLineBreak
+  );
+  FDevice.Ativar;
+end;
+
+procedure TACBrNFeDANFeESCPOS.Desativar;
+begin
+  FDevice.Desativar;
+  GravaLog(sLineBreak +
+    StringOfChar('-',80) + sLineBreak +
+    'DESATIVAR - ' + FormatDateTime('dd/mm/yy hh:nn:ss:zzz', now) + sLineBreak +
+    StringOfChar('-',80) + sLineBreak
+  );
+end;
+
+procedure TACBrNFeDANFeESCPOS.ImprimePorta(AString: AnsiString);
+begin
+  if not Self.Ativo then
+    raise Exception.Create('Componente "ACBrNFeDANFeESCPOS" não está ativo!');
+
+  GravaLog('-- TX -> ' + AString, True);
+  try
+    // limpa o buffer de envio
+    FDevice.Serial.Purge;
+    // envia novo buffer
+    FDevice.EnviaString(AString);
+  except
+    on E: Exception do
+    begin
+      GravaLog('');
+      GravaLog('-- ERRO -> ' + E.ClassName + ': ' + E.Message);
+      GravaLog('');
+      raise;
+    end;
+  end;
+end;
+
+procedure TACBrNFeDANFeESCPOS.DoLinesChange(Sender: TObject);
+begin
+  if (FLinhasBuffer > 0) and (FBuffer.Count > FLinhasBuffer) then
+  begin
+    ImprimePorta(FBuffer.Text);
+    FBuffer.Clear;
+  end;
+end;
+
+procedure TACBrNFeDANFeESCPOS.GravaLog(AString : AnsiString; Traduz : Boolean);
+begin
+  WriteLog(FArquivoLog, AString, Traduz);
+end ;
+
+function TACBrNFeDANFeESCPOS.ModeloStr: AnsiString;
+begin
+  case MarcaImpressora of
+    iEpson:    Result := 'Epson';
+    iBematech: Result := 'Bematech';
+    iDaruma:   Result := 'Daruma';
+    iDiebold:  Result := 'Diebold';
+  else
+    raise Exception.Create('modelo desconhecido, verifique a implementação do método "ModeloStr"');
+  end;
+end;
+
+function TACBrNFeDANFeESCPOS.GetAtivo: Boolean;
+begin
+  Result := FDevice.Ativo;
+end;
+
+function TACBrNFeDANFeESCPOS.GetTimeOut: Integer;
+begin
+  Result := FDevice.TimeOut;
+end;
+
+function TACBrNFeDANFeESCPOS.VersaoFirmware: String;
+var
+  Resposta: AnsiString;
+begin
+  case MarcaImpressora of
+    iEpson:    Result := 'não implementado para está marca';
+    iBematech: Result := 'não implementado para está marca';
+    iDiebold:  Result := 'não implementado para está marca';
+
+    iDaruma:
+      begin
+        FDevice.EnviaString(ESC + #199);
+        Resposta := FDevice.LeString(100);
+        Result := Trim(Copy(Resposta, 2, 8));
+      end;
+  end;
+
+  GravaLog('Versão Firmware: ' + Resposta);
+end;
+
+function TACBrNFeDANFeESCPOS.DataFirmware: TDateTime;
+var
+  Resposta: AnsiString;
+begin
+  case MarcaImpressora of
+    iEpson:    Result := 0.0;
+    iBematech: Result := 0.0;
+    iDiebold:  Result := 0.0;
+
+    iDaruma:
+      begin
+        FDevice.EnviaString(ESC + #199);
+        Resposta := FDevice.LeString(100);
+
+        Result := StrToDateTimeDef(Trim(Copy(Resposta, 12, 19)), 0.0);
+      end;
+  end;
+
+  GravaLog('Versão Firmware: ' + Resposta);
+end;
+
+procedure TACBrNFeDANFeESCPOS.SetMarcaImpressora(
+  const Value: TACBrNFeMarcaImpressora);
+begin
+  FMarcaImpressora := Value;
+  InicializarComandos;
+end;
+
+procedure TACBrNFeDANFeESCPOS.SetTimeOut(const Value: Integer);
+begin
+  if FDevice.TimeOut <> Value then
+    FDevice.TimeOut := Value;
+end;
+
 
 function TACBrNFeDANFeESCPOS.Int2TB(AInteger: Integer): AnsiString;
 var
@@ -223,6 +378,7 @@ begin
     Result := ACodigo + chr(Largura) + chr(Altura) + Mostrar;
   end;
 end;
+
 
 function TACBrNFeDANFeESCPOS.ConfigurarBarrasBematech(const ACodigo: AnsiString): AnsiString;
 var
@@ -432,12 +588,12 @@ begin
   FBuffer.OnChange   := DoLinesChange;
   FMarcaImpressora   := iEpson;
   FLinhasEntreCupons := 21;
-  FCortaPapel        := True;  
+  FCortaPapel        := True;
 end;
 
 destructor TACBrNFeDANFeESCPOS.Destroy;
 begin
-  FBuffer.Free;
+  FreeAndNil(FBuffer);
   FreeAndNil(FDevice);
   FreeAndNil(FConfigBarras);
 
@@ -446,143 +602,159 @@ end;
 
 procedure TACBrNFeDANFeESCPOS.InicializarComandos;
 begin
-  if MarcaImpressora = iBematech then
-  begin
-    cCmdImpZera          := ESC + '@'#29#249#32#48;  // ESC + +'@' Inicializa impressora, demais selecionam ESC/Bema temporariamente
-    cCmdAbreGaveta       := ESC + 'v'#200;
-    cCmdEspacoLinha      := ESC + '3'#14;  // Verificar comando BEMA/POS
-    cCmdPagCod           := ESC + 't'#8;   // codepage UTF-8
-    cCmdImpNegrito       := ESC + 'E';
-    cCmdImpFimNegrito    := ESC + 'F';
-    cCmdImpExpandido     := ESC + 'W'#1;
-    cCmdImpFimExpandido  := ESC + 'W'#0;
-    cCmdFonteNormal      := DC2;
-    cCmdFontePequena     := SI;
-    cCmdImpSublinhado    := ESC + '-'#1;
-    cCmdImpFimSublinhado := ESC + '-'#0;
-    cCmdImpItalico       := ESC + '4';
-    cCmdImpFimItalico    := ESC + '5';
-    cCmdImpCondensado    := ESC + SI;
-    cCmdImpFimCondensado := ESC + 'H';
-    cCmdAlinhadoEsquerda := ESC + 'a0';
-    cCmdAlinhadoCentro   := ESC + 'a1';
-    cCmdAlinhadoDireita  := ESC + 'a2'; // Verificar comando BEMA/POS
-    cCmdCortaPapel       := ESC + 'w'#29#249#32#48; // ESC + +'w' corta papel, demais voltam a configuração da impressora
-    cCmdImprimeLogo      := '';
-    cCmdCodeBarEAN8      := ConfigurarBarrasBematech( GS + 'k' + ETX );
-    cCmdCodeBarEAN13     := ConfigurarBarrasBematech( GS + 'k' + STX );
-    cCmdCodeBarSTD25     := '';
-    cCmdCodeBarINTER25   := ConfigurarBarrasBematech( GS + 'k' + ENQ );
-    cCmdCodeBarCODE11    := '';
-    cCmdCodeBarCODE39    := ConfigurarBarrasBematech( GS + 'k' + EOT );
-    cCmdCodeBarCODE93    := '';
-    cCmdCodeBarCODE128   := '';
-    cCmdCodeBarUPCA      := ConfigurarBarrasBematech( GS + 'k' + NUL );
-    cCmdCodeBarCODABAR   := ConfigurarBarrasBematech( GS + 'k' + ACK );
-    cCmdCodeBarMSI       := ConfigurarBarrasBematech( GS + 'k' + SYN );
-    cCmdCodeBarFim       := NUL;
-    nColunasPapel        := 64;
-  end
-  else if MarcaImpressora = iDaruma then
-  begin
-    cCmdImpZera          := ESC + '@';
-    cCmdAbreGaveta       := ESC + 'p';
-    cCmdEspacoLinha      := ESC + '2';
-    cCmdPagCod           := ''; // pelo aplicativo da Daruma (Tool) selecione ISO 8859-1 (TODO: tentar implementar essa mudança via código)
-    cCmdImpNegrito       := ESC + 'E';
-    cCmdImpFimNegrito    := ESC + 'F';
-    cCmdImpExpandido     := ESC + 'W'#1;
-    cCmdImpFimExpandido  := ESC + 'W'#0;
-    cCmdFonteNormal      := DC4;
-    cCmdFontePequena     := SI;
-    cCmdImpSublinhado    := ESC + '-'#1;
-    cCmdImpFimSublinhado := ESC + '-'#0;
-    cCmdImpItalico       := ESC + '4'#1;
-    cCmdImpFimItalico    := ESC + '4'#0;
-    cCmdImpCondensado    := ESC + SI + #1;
-    cCmdImpFimCondensado := ESC + SI + #0;
-    cCmdAlinhadoEsquerda := ESC + 'j'#0;
-    cCmdAlinhadoCentro   := ESC + 'j'#1;
-    cCmdAlinhadoDireita  := ESC + 'j'#2;
-    cCmdCortaPapel       := ESC + 'm';
-    cCmdImprimeLogo      := SYN + BS + SYN + TAB;
-    cCmdCodeBarEAN8      := ConfigurarBarrasDaruma( ESC + 'b' + chr($02) );
-    cCmdCodeBarEAN13     := ConfigurarBarrasDaruma( ESC + 'b' + chr($01) );
-    cCmdCodeBarSTD25     := ConfigurarBarrasDaruma( ESC + 'b' + chr($03) );
-    cCmdCodeBarINTER25   := ConfigurarBarrasDaruma( ESC + 'b' + chr($04) );
-    cCmdCodeBarCODE11    := ConfigurarBarrasDaruma( ESC + 'b' + chr($11) );
-    cCmdCodeBarCODE39    := ConfigurarBarrasDaruma( ESC + 'b' + chr($06) );
-    cCmdCodeBarCODE93    := ConfigurarBarrasDaruma( ESC + 'b' + chr($07) );
-    cCmdCodeBarCODE128   := ConfigurarBarrasDaruma( ESC + 'b' + chr($05) );
-    cCmdCodeBarUPCA      := ConfigurarBarrasDaruma( ESC + 'b' + chr($08) );
-    cCmdCodeBarCODABAR   := ConfigurarBarrasDaruma( ESC + 'b' + chr($09) );
-    cCmdCodeBarMSI       := ConfigurarBarrasDaruma( ESC + 'b' + chr($10) );
-    cCmdCodeBarFim       := NUL;
-    nColunasPapel        := 57;
-  end
-  else if MarcaImpressora = iDiebold then
-   begin
-     cCmdImpZera          := ESC + '@';
-     cCmdAbreGaveta       := '';
-     cCmdEspacoLinha      := ESC + '3'+#14;
-     cCmdPagCod           := ESC + 't'+#2;
-     cCmdImpNegrito       := ESC + 'E';
-     cCmdImpFimNegrito    := ESC + 'F';
-     cCmdImpExpandido     := ESC + 'A';
-     cCmdImpFimExpandido  := ESC + 'B';
-     cCmdFonteNormal      := #20;
-     cCmdFontePequena     := #15;
-     cCmdAlinhadoEsquerda := ESC + #106#0;
-     cCmdAlinhadoCentro   := ESC + #106#1;
-     cCmdAlinhadoDireita  := ESC + #106#2;
-     cCmdCortaPapel       := ESC + #109;
-     cCmdImprimeLogo      := '';
-   end
-  else
-  begin
-    cCmdImpZera          := ESC + '@';
-    cCmdAbreGaveta       := ESC + 'p' + #0 + #10 + #100;
-    cCmdEspacoLinha      := ESC + '3'#14;
-    cCmdPagCod           := ESC + 't'#39;
-    cCmdImpNegrito       := ESC + 'E1';
-    cCmdImpFimNegrito    := ESC + 'E2';
-    cCmdImpExpandido     := GS  + '!'#16;
-    cCmdImpFimExpandido  := GS  + '!'#0;
-    cCmdFonteNormal      := ESC + 'M0';
-    cCmdFontePequena     := ESC + 'M1';
-    cCmdImpSublinhado    := ESC + '-'#1;
-    cCmdImpFimSublinhado := ESC + '-'#0;
-    cCmdImpItalico       := ESC + '4'#1;
-    cCmdImpFimItalico    := ESC + '4'#0;
-    cCmdImpCondensado    := ESC + SI + #1;
-    cCmdImpFimCondensado := ESC + SI + #0;
-    cCmdAlinhadoEsquerda := ESC + 'a0';
-    cCmdAlinhadoCentro   := ESC + 'a1';
-    cCmdAlinhadoDireita  := ESC + 'a2';
-    cCmdCortaPapel       := #29'V1';
-    cCmdImprimeLogo      := #29'(L'#6#0'0E  '#1#1;
-    cCmdCodeBarEAN8      := '';
-    cCmdCodeBarEAN13     := '';
-    cCmdCodeBarSTD25     := '';
-    cCmdCodeBarINTER25   := '';
-    cCmdCodeBarCODE11    := '';
-    cCmdCodeBarCODE39    := '';
-    cCmdCodeBarCODE93    := '';
-    cCmdCodeBarCODE128   := '';
-    cCmdCodeBarUPCA      := '';
-    cCmdCodeBarCODABAR   := '';
-    cCmdCodeBarMSI       := '';
-    cCmdCodeBarFim       := NUL;
-    nColunasPapel        := 64;
+  // valores padrão (iguais para todas ou podem ser alterados pela marca)
+  cCmdImpZera          := ESC + '@';
+  cCmdAbreGaveta       := '';
+  cCmdEspacoLinha      := '';
+  cCmdPagCod           := '';
+  cCmdImpNegrito       := '';
+  cCmdImpFimNegrito    := '';
+  cCmdImpExpandido     := '';
+  cCmdImpFimExpandido  := '';
+  cCmdFonteNormal      := '';
+  cCmdFontePequena     := '';
+  cCmdImpSublinhado    := '';
+  cCmdImpFimSublinhado := '';
+  cCmdImpItalico       := '';
+  cCmdImpFimItalico    := '';
+  cCmdImpCondensado    := '';
+  cCmdImpFimCondensado := '';
+  cCmdAlinhadoEsquerda := '';
+  cCmdAlinhadoCentro   := '';
+  cCmdAlinhadoDireita  := '';
+  cCmdCortaPapel       := '';
+  cCmdImprimeLogo      := '';
+  cCmdCodeBarEAN8      := '';
+  cCmdCodeBarEAN13     := '';
+  cCmdCodeBarSTD25     := '';
+  cCmdCodeBarINTER25   := '';
+  cCmdCodeBarCODE11    := '';
+  cCmdCodeBarCODE39    := '';
+  cCmdCodeBarCODE93    := '';
+  cCmdCodeBarCODE128   := '';
+  cCmdCodeBarUPCA      := '';
+  cCmdCodeBarCODABAR   := '';
+  cCmdCodeBarMSI       := '';
+  cCmdCodeBarFim       := NUL;
+  nColunasPapel        := 64;
+
+  // especificidades por marca
+  case MarcaImpressora of
+    iEpson:
+      begin
+        cCmdAbreGaveta       := ESC + 'p' + #0 + #10 + #100;
+        cCmdEspacoLinha      := ESC + '3'#14;
+        cCmdPagCod           := ESC + 't'#39;
+        cCmdImpNegrito       := ESC + 'E1';
+        cCmdImpFimNegrito    := ESC + 'E2';
+        cCmdImpExpandido     := GS + '!'#16;
+        cCmdImpFimExpandido  := GS + '!'#0;
+        cCmdFonteNormal      := ESC + 'M0';
+        cCmdFontePequena     := ESC + 'M1';
+        cCmdImpSublinhado    := ESC + '-'#1;
+        cCmdImpFimSublinhado := ESC + '-'#0;
+        cCmdImpItalico       := ESC + '4'#1;
+        cCmdImpFimItalico    := ESC + '4'#0;
+        cCmdImpCondensado    := ESC + SI + #1;
+        cCmdImpFimCondensado := ESC + SI + #0;
+        cCmdAlinhadoEsquerda := ESC + 'a0';
+        cCmdAlinhadoCentro   := ESC + 'a1';
+        cCmdAlinhadoDireita  := ESC + 'a2';
+        cCmdCortaPapel       := #29'V1';
+        cCmdImprimeLogo      := #29'(L'#6#0'0E  '#1#1;
+      end;
+
+    iBematech:
+      begin
+        cCmdImpZera          := ESC + '@'#29#249#32#48; // ESC + +'@' Inicializa impressora, demais selecionam ESC/Bema temporariamente
+        cCmdAbreGaveta       := ESC + 'v'#200;
+        cCmdEspacoLinha      := ESC + '3'#14;  // Verificar comando BEMA/POS
+        cCmdPagCod           := ESC + 't'#8;   // codepage UTF-8
+        cCmdImpNegrito       := ESC + 'E';
+        cCmdImpFimNegrito    := ESC + 'F';
+        cCmdImpExpandido     := ESC + 'W'#1;
+        cCmdImpFimExpandido  := ESC + 'W'#0;
+        cCmdFonteNormal      := DC2;
+        cCmdFontePequena     := SI;
+        cCmdImpSublinhado    := ESC + '-'#1;
+        cCmdImpFimSublinhado := ESC + '-'#0;
+        cCmdImpItalico       := ESC + '4';
+        cCmdImpFimItalico    := ESC + '5';
+        cCmdImpCondensado    := ESC + SI;
+        cCmdImpFimCondensado := ESC + 'H';
+        cCmdAlinhadoEsquerda := ESC + 'a0';
+        cCmdAlinhadoCentro   := ESC + 'a1';
+        cCmdAlinhadoDireita  := ESC + 'a2'; // Verificar comando BEMA/POS
+        cCmdCortaPapel       := ESC + 'w'#29#249#31#49; // ESC + +'w' corta papel, demais voltam a configuração da impressora
+        cCmdCodeBarEAN8      := ConfigurarBarrasBematech(GS + 'k' + ETX);
+        cCmdCodeBarEAN13     := ConfigurarBarrasBematech(GS + 'k' + STX);
+        cCmdCodeBarINTER25   := ConfigurarBarrasBematech(GS + 'k' + ENQ);
+        cCmdCodeBarCODE39    := ConfigurarBarrasBematech(GS + 'k' + EOT);
+        cCmdCodeBarUPCA      := ConfigurarBarrasBematech(GS + 'k' + NUL);
+        cCmdCodeBarCODABAR   := ConfigurarBarrasBematech(GS + 'k' + ACK);
+        cCmdCodeBarMSI       := ConfigurarBarrasBematech(GS + 'k' + SYN);
+      end;
+
+    iDaruma:
+      begin
+        cCmdAbreGaveta       := ESC + 'p';
+        cCmdEspacoLinha      := ESC + '2';
+        cCmdImpNegrito       := ESC + 'E';
+        cCmdImpFimNegrito    := ESC + 'F';
+        cCmdImpExpandido     := ESC + 'W'#1;
+        cCmdImpFimExpandido  := ESC + 'W'#0;
+        cCmdFonteNormal      := DC4;
+        cCmdFontePequena     := SI;
+        cCmdImpSublinhado    := ESC + '-'#1;
+        cCmdImpFimSublinhado := ESC + '-'#0;
+        cCmdImpItalico       := ESC + '4'#1;
+        cCmdImpFimItalico    := ESC + '4'#0;
+        cCmdImpCondensado    := ESC + SI + #1;
+        cCmdImpFimCondensado := ESC + SI + #0;
+        cCmdAlinhadoEsquerda := ESC + 'j'#0;
+        cCmdAlinhadoCentro   := ESC + 'j'#1;
+        cCmdAlinhadoDireita  := ESC + 'j'#2;
+        cCmdCortaPapel       := ESC + 'm';
+        cCmdImprimeLogo      := SYN + BS + SYN + TAB;
+        cCmdCodeBarEAN8      := ConfigurarBarrasDaruma(ESC + 'b' + chr($02));
+        cCmdCodeBarEAN13     := ConfigurarBarrasDaruma(ESC + 'b' + chr($01));
+        cCmdCodeBarSTD25     := ConfigurarBarrasDaruma(ESC + 'b' + chr($03));
+        cCmdCodeBarINTER25   := ConfigurarBarrasDaruma(ESC + 'b' + chr($04));
+        cCmdCodeBarCODE11    := ConfigurarBarrasDaruma(ESC + 'b' + chr($11));
+        cCmdCodeBarCODE39    := ConfigurarBarrasDaruma(ESC + 'b' + chr($06));
+        cCmdCodeBarCODE93    := ConfigurarBarrasDaruma(ESC + 'b' + chr($07));
+        cCmdCodeBarCODE128   := ConfigurarBarrasDaruma(ESC + 'b' + chr($05));
+        cCmdCodeBarUPCA      := ConfigurarBarrasDaruma(ESC + 'b' + chr($08));
+        cCmdCodeBarCODABAR   := ConfigurarBarrasDaruma(ESC + 'b' + chr($09));
+        cCmdCodeBarMSI       := ConfigurarBarrasDaruma(ESC + 'b' + chr($10));
+        nColunasPapel        := 57;
+      end;
+
+    iDiebold:
+      begin
+        cCmdEspacoLinha      := ESC + '3' + #14;
+        cCmdPagCod           := ESC + 't' + #2;
+        cCmdImpNegrito       := ESC + 'E';
+        cCmdImpFimNegrito    := ESC + 'F';
+        cCmdImpExpandido     := ESC + 'A';
+        cCmdImpFimExpandido  := ESC + 'B';
+        cCmdFonteNormal      := #20;
+        cCmdFontePequena     := #15;
+        cCmdAlinhadoEsquerda := ESC + 'j'#0;
+        cCmdAlinhadoCentro   := ESC + 'j'#1;
+        cCmdAlinhadoDireita  := ESC + 'j'#2;
+        cCmdCortaPapel       := ESC + 'm';
+        cCmdImprimeLogo      := '';
+      end;
   end;
 end;
 
-function TACBrNFeDANFeESCPOS.GetLinhaSimples: String;
+function TACBrNFeDANFeESCPOS.GetLinhaSimples: AnsiString;
 begin
   Result := cCmdAlinhadoEsquerda + cCmdFontePequena + LinhaSimples(nColunasPapel);
 end;
 
-function TACBrNFeDANFeESCPOS.GetLinhaDupla: String;
+function TACBrNFeDANFeESCPOS.GetLinhaDupla: AnsiString;
 begin
   Result := cCmdAlinhadoEsquerda + cCmdFontePequena + LinhaDupla(nColunasPapel);
 end;
@@ -598,14 +770,9 @@ begin
     FBuffer.Add('');
 end;
 
-procedure TACBrNFeDANFeESCPOS.ImprimePorta(AString: AnsiString);
-begin
-  FDevice.EnviaString(AString);
-end;
-
 procedure TACBrNFeDANFeESCPOS.GerarClicheEmpresa;
 begin
-  InicializarComandos;
+  //InicializarComandos;
 
   FBuffer.clear;
   FBuffer.Add(cCmdImpZera + cCmdEspacoLinha + cCmdPagCod + cCmdFonteNormal + cCmdAlinhadoCentro + cCmdImprimeLogo);
@@ -616,12 +783,12 @@ begin
     FBuffer.Add(cCmdAlinhadoCentro + cCmdImpNegrito + FpNFe.Emit.xNome + cCmdImpFimNegrito);
 
   if Trim(FpNFe.Emit.xFant) <> '' then
-   begin
+  begin
     if Length ( Trim( FpNFe.Emit.xFant ) ) > nColunasPapel then
-     FBuffer.Add(cCmdAlinhadoCentro + cCmdImpNegrito + cCmdFontePequena + FpNFe.Emit.xFant + cCmdImpFimNegrito)
+      FBuffer.Add(cCmdAlinhadoCentro + cCmdImpNegrito + cCmdFontePequena + FpNFe.Emit.xFant + cCmdImpFimNegrito)
     else
-     FBuffer.Add(cCmdAlinhadoCentro + cCmdImpNegrito + FpNFe.Emit.xFant + cCmdImpFimNegrito);
-   end;
+      FBuffer.Add(cCmdAlinhadoCentro + cCmdImpNegrito + FpNFe.Emit.xFant + cCmdImpFimNegrito);
+  end;
 
   FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(QuebraLinhas(
     Trim(FpNFe.Emit.EnderEmit.xLgr) + ', ' +
@@ -919,14 +1086,13 @@ end;
 
 procedure TACBrNFeDANFeESCPOS.GerarRodape(Cancelamento: Boolean = False);
 var
-  qrcode: string;
-  cCaracter: String;
+  qrcode: AnsiString;
+  cCaracter: AnsiString;
   i, cTam1, cTam2: Integer;
   bMenos, bMais, iQtdBytes, iLargMod, iNivelCorrecao: Integer;
 begin
   FBuffer.Add(GetLinhaSimples);
   FBuffer.Add(cCmdAlinhadoCentro + ParseTextESCPOS('Consulta via leitor de QR Code'));
-//  FBuffer.Add(' ');
 
   qrcode := NotaUtil.GetURLQRCode(
     FpNFe.ide.cUF,
@@ -1164,7 +1330,7 @@ procedure TACBrNFeDANFeESCPOS.ImprimirRelatorio(const ATexto: TStrings; const AV
 var
   I: Integer;
 begin
-  InicializarComandos;
+  //InicializarComandos;
 
   FBuffer.clear;
   if ALogo then
@@ -1185,17 +1351,17 @@ end;
 
 procedure TACBrNFeDANFeESCPOS.CortarPapel;
 begin
-  InicializarComandos;
+  //InicializarComandos;
   ImprimePorta(cCmdImpZera + cCmdEspacoLinha + cCmdPagCod + cCmdFonteNormal + cCmdCortaPapel);
 end;
 
 procedure TACBrNFeDANFeESCPOS.AbrirGaveta;
 begin
-  InicializarComandos;
+  //InicializarComandos;
   ImprimePorta(cCmdImpZera + cCmdAbreGaveta);
 end;
 
-procedure TACBrNFeDANFeESCPOS.Suprimento(AValor : Double; AObserv, AFormaPag : string);
+procedure TACBrNFeDANFeESCPOS.Suprimento(AValor : Double; AObserv, AFormaPag : AnsiString);
 begin
   GerarCabecalhoGenerico;
 
@@ -1256,7 +1422,7 @@ begin
   FBuffer.Add(FLinhaCmd);
 end;
 
-procedure TACBrNFeDANFeESCPOS.Sangria(AValor : Double; AObserv, AFormaPag : string);
+procedure TACBrNFeDANFeESCPOS.Sangria(AValor : Double; AObserv, AFormaPag : AnsiString);
 begin
   GerarCabecalhoGenerico;
 
@@ -1272,18 +1438,6 @@ begin
 
   GerarRodapeGenerico(FCortaPapel);
   ImprimePorta(FBuffer.Text);
-end;
-
-procedure TACBrNFeDANFeESCPOS.DoLinesChange(Sender: TObject);
-begin
-
-  if (FLinhasBuffer > 0) and
-     (FBuffer.Count > FLinhasBuffer) then
-   begin
-     ImprimePorta(FBuffer.Text);
-     FBuffer.Clear;
-   end;
-
 end;
 
 
