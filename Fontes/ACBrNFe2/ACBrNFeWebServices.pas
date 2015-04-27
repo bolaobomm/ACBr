@@ -1096,6 +1096,10 @@ begin
   Texto := Texto +   '<soap12:Body>';
 
   Texto := Texto +     '<nfeDadosMsg xmlns="' + Servico + '">';
+
+  if FConfiguracoes.WebServices.UFCodigo = 35 then
+    Texto := Texto + '<?xml version="1.0" encoding="utf-8"?>';
+    
   Texto := Texto +       DadosMsg;
   Texto := Texto +     '</nfeDadosMsg>';
   Texto := Texto +   '</soap12:Body>';
