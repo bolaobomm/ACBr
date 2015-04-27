@@ -103,7 +103,7 @@ function TNFeR.LerXml: Boolean;
 var
   ok: Boolean;
   i, j, k, z, nItem: Integer;
-  Arquivo, Itens, ItensTemp, VersaoInfNFe, Temp_VersaoInfNFe, NumItem: AnsiString;
+  Arquivo, Itens, ItensTemp, Temp_VersaoInfNFe, NumItem: AnsiString;
   Aspas: String;
 
   function VerificaParSt(const t: TpcnCSTIcms): TpcnCSTIcms;
@@ -135,10 +135,8 @@ begin
     raise Exception.Create('Não encontrei o atributo: Id');
 
   NFe.infNFe.versao := Leitor.rAtributo('versao=');
-  if OnlyNumber(NFe.infNFe.versao) = '' then
+  if OnlyNumber(VarToStrDef(NFe.infNFe.versao, '')) = '' then
     raise Exception.Create('Não encontrei o atributo: versao');
-
-  VersaoInfNFe := FloatToStr(NFe.infNFe.Versao);
 
   (*
   if Pos('Id="', Leitor.Arquivo) <> 0 then
