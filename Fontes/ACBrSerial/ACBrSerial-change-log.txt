@@ -97,6 +97,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 27/04/2015       (por: DSA)
+-- ACBrECFSwedaSTX --
+[-] Correção para correta impressão de Descrição Grande
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=21320
 Data: 07/04/2015       (por: DSA)
 -- ACBrECFEscECF --
 [*] Removida a restrição de apenas permitir Letras no cadastro de

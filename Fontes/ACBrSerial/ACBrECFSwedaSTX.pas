@@ -1771,6 +1771,7 @@ procedure TACBrECFSwedaSTX.VendeItem(Codigo, Descricao : String ;
 var
    Aliquota : TACBrECFAliquota;
    IAT:String;
+   LimiteDescricao: Integer;
 begin
   if Qtd > 9999 then
      raise EACBrECFCMDInvalido.Create( ACBrStr(
@@ -1800,12 +1801,14 @@ begin
      AliquotaECF := FormatFloat(Aliquota.Tipo+'00.00%',Aliquota.Aliquota);
   end;
 
+  LimiteDescricao := ifthen(DescricaoGrande, 233, 33);
+
   EnviaComando('02|' + AjustaValor(Qtd,fpDecimaisQtd)              +'|'+
                        Trim(LeftStr(Codigo,14))                    +'|'+
                        AjustaValor(ValorUnitario, fpDecimaisPreco) +'|'+
                        Trim(LeftStr(Unidade,2))                    +'|'+
                        AliquotaECF                                 +'|'+
-                       Trim(LeftStr(Descricao,33))                 +
+                       Trim(LeftStr(Descricao,LimiteDescricao))    +
                        IAT
                        );
 
