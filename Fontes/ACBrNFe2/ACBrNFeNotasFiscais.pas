@@ -374,9 +374,9 @@ var
 begin
   LocNFeW := TNFeW.Create(Self.NFe);
   try
-    NFe.infNFe.Versao := DFeUtil.StringToFloat(GetVersaoNFe(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF,
+    NFe.infNFe.Versao := DFeUtil.StringToFloatDef(GetVersaoNFe(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF,
                                               TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.VersaoDF,
-                                              LayNfeRecepcao));
+                                              LayNfeRecepcao), -1);
 
      LocNFeW.Opcoes.GerarTXTSimultaneamente := GerarTXT;
      LocNFeW.Gerador.Opcoes.FormatoAlerta   := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;
