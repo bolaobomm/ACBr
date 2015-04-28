@@ -1097,10 +1097,10 @@ begin
 
   Texto := Texto +     '<nfeDadosMsg xmlns="' + Servico + '">';
 
-  if (Servico = CURL_WSDL + 'NfeAutorizacao') and
-     (FConfiguracoes.WebServices.UFCodigo = 35) and
-     (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-    Texto := Texto + '<?xml version="1.0" encoding="utf-8"?>';
+//  if (Servico = CURL_WSDL + 'NfeAutorizacao') and
+//     (FConfiguracoes.WebServices.UFCodigo = 35) and
+//     (FConfiguracoes.Geral.ModeloDF = moNFCe) then
+//    Texto := Texto + '<?xml version="1.0" encoding="utf-8"?>';
 
   Texto := Texto +       DadosMsg;
   Texto := Texto +     '</nfeDadosMsg>';
