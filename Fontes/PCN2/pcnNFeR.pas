@@ -134,8 +134,8 @@ begin
   if OnlyNumber(NFe.infNFe.Id) = '' then
     raise Exception.Create('Não encontrei o atributo: Id');
 
-  NFe.infNFe.versao := Leitor.rAtributo('versao=');
-  if OnlyNumber(VarToStrDef(NFe.infNFe.versao, '')) = '' then
+  NFe.infNFe.versao := StringToFloatDef(Leitor.rAtributo('versao='), -1);
+  if NFe.infNFe.versao = -1 then
     raise Exception.Create('Não encontrei o atributo: versao');
 
   (*
