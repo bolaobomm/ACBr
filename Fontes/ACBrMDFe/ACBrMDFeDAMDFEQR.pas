@@ -75,6 +75,7 @@ type
     FImpressora: String;
     FMDFeCancelada: Boolean;
     FMDFeEncerrado: Boolean;
+    FTotalPages: Integer;
 
     procedure qrlSemValorFiscalPrint(sender: TObject; var Value: String);
     procedure SetBarCodeImage(ACode: String; QRImage: TQRImage);
@@ -182,6 +183,7 @@ begin
          {$ENDIF}
 
            QRMDFe.Prepare;
+           FTotalPages := QRMDFe.QRPrinter.PageCount;
            QRMDFe.Preview;
            // Incluido por Italo em 11/04/2013
            // Segundo o Rodrigo Chiva resolveu o problema de travamento
@@ -192,6 +194,7 @@ begin
            AfterPreview := True;
            QRMDFe.PrinterSettings.Copies := FNumCopias;
            QRMDFe.Prepare;
+           FTotalPages := QRMDFe.QRPrinter.PageCount;
            QRMDFe.Print;
          end;
 
@@ -251,6 +254,7 @@ begin
           end;
         AfterPreview := True;
         QRMDFe.Prepare;
+        FTotalPages := QRMDFe.QRPrinter.PageCount;
         qf := TQRPDFDocumentFilter.Create(AFile);
         try
           qf.CompressionOn := False;
