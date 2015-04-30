@@ -127,6 +127,14 @@ type
     FViaConsumidor : Boolean;
     FvTroco: Currency;
 
+    // Incluido por Leandro da Silva Alves em 17/04/2015
+    FTributosSeparadamente : Boolean; //informação dos tributos separadamente
+    FvTribFed: Currency; //total tributos federais
+    FvTribEst: Currency; //total tributos estaduais
+    FvTribMun: Currency; //total tributos municipais
+    FFonteTributos: String;
+    FChaveTributos: String;
+
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
     constructor Create(AOwner: TComponent); override;
@@ -175,6 +183,15 @@ type
     property ImprimeItens: Boolean                   read FImprimeItens                   write FImprimeItens;
     property vTroco: Currency                        read FvTroco                         write FvTroco;
     property ViaConsumidor : Boolean                 read FViaConsumidor                  write FViaConsumidor;
+
+    // Incluido por Leandro da Silva Alves em 17/04/2015
+    property TributosSeparadamente: Boolean          read FTributosSeparadamente          write FTributosSeparadamente;
+    property vTribFed: Currency                      read FvTribFed                       write FvTribFed;
+    property vTribEst: Currency                      read FvTribEst                       write FvTribEst;
+    property vTribMun: Currency                      read FvTribMun                       write FvTribMun;
+    property FonteTributos: String                   read FFonteTributos                  write FFonteTributos;
+    property ChaveTributos: String                   read FChaveTributos                  write FChaveTributos;
+
   end;
 
 implementation
@@ -255,6 +272,11 @@ begin
   FImprimeItens := True;
   FViaConsumidor:= True;
   FvTroco       := 0.0;
+
+  FTributosSeparadamente:= False;
+  FvTribFed:= 0.0;
+  FvTribEst:= 0.0;
+  FvTribMun:= 0.0;
 
   {$IFDEF COMPILER6_UP}
       FCasasDecimais.SetSubComponent( true );{ para gravar no DFM/XFM }
