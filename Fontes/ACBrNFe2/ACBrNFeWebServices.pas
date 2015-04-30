@@ -646,6 +646,7 @@ type
     FDownload: TDownLoadNFe;
 
     FretDownloadNFe: TretDownloadNFe;
+    function GerarPathDownload: String;
   protected
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
@@ -709,6 +710,7 @@ type
     FNSU: String;
 
     FretDistDFeInt: TretDistDFeInt;
+    function GerarPathDistribuicao: String;
   protected
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
@@ -3592,7 +3594,8 @@ begin
     if FRetDownloadNFe.retNFe.Items[I].cStat = 140 then
     begin
       NomeArq := FRetDownloadNFe.retNFe.Items[I].chNFe + '-nfe.xml';
-      FConfiguracoes.Geral.Save(NomeArq, FRetDownloadNFe.retNFe.Items[I].procNFe);
+      FConfiguracoes.Geral.Save(NomeArq, FRetDownloadNFe.retNFe.Items[I].procNFe,
+                                GerarPathDownload);
     end;
   end;
 end;
@@ -3615,6 +3618,11 @@ begin
   Result := 'WebService Download de NF-e:' + LineBreak +
             '- Inativo ou Inoperante tente novamente.' + LineBreak +
             '- ' + E.Message;
+end;
+
+function TNFeDownloadNFe.GerarPathDownload: String;
+begin
+  Result := FConfiguracoes.Arquivos.GetPathDownload( '' );
 end;
 
 { TAdministrarCSCNFCe }
@@ -3774,7 +3782,7 @@ end;
 function TDistribuicaoDFe.TratarResposta: Boolean;
 var
   I: Integer;
-  NomeArq: String;
+  AXML, NomeArq: String;
 begin
   FRetWS := SeparaDados( FRetornoWS, 'nfeDistDFeInteresseResult' );
 
@@ -3793,29 +3801,28 @@ begin
   // Incluido por Italo em 22/01/2015
   for I := 0 to FretDistDFeInt.docZip.Count - 1 do
   begin
-    if (FretDistDFeInt.docZip.Items[I].XML <> '') then
+    AXML := FretDistDFeInt.docZip.Items[I].XML;
+    NomeArq := '';
+    if (AXML <> '') then
     begin
       case FretDistDFeInt.docZip.Items[I].schema of
-//        tsresNFe
-//        tsresEvento
-        tsprocNFe: begin
-                     NomeArq := FretDistDFeInt.docZip.Items[I].resNFe.chNFe + '-nfe.xml';
-                     FConfiguracoes.Geral.Save(NomeArq, FretDistDFeInt.docZip.Items[I].XML);
-                   end;
-        tsprocEventoNFe: begin
-                           NomeArq := OnlyNumber(FretDistDFeInt.docZip.Items[I].procEvento.Id) + '-procEventoNFe.xml';
-                           FConfiguracoes.Geral.Save(NomeArq, FretDistDFeInt.docZip.Items[I].XML);
-                         end;
+        tsresNFe:
+          NomeArq := FretDistDFeInt.docZip.Items[I].resNFe.chNFe + '-resNFe.xml';
+        tsresEvento:
+          NomeArq := OnlyNumber(TpEventoToStr(FretDistDFeInt.docZip.Items[I].resEvento.tpEvento) +
+             FretDistDFeInt.docZip.Items[I].resEvento.chNFe +
+             Format('%.2d', [FretDistDFeInt.docZip.Items[I].resEvento.nSeqEvento])) +
+             '-resEventoNFe.xml';
+        tsprocNFe:
+          NomeArq := FretDistDFeInt.docZip.Items[I].resNFe.chNFe + '-nfe.xml';
+        tsprocEventoNFe:
+          NomeArq := OnlyNumber(FretDistDFeInt.docZip.Items[I].procEvento.Id) +
+            '-procEventoNFe.xml';
       end;
+
+      if NomeArq <> '' then
+        FConfiguracoes.Geral.Save(NomeArq, AXML, GerarPathDistribuicao);
     end;
-    (*
-    if (FretDistDFeInt.docZip.Items[I].XML <> '') and
-       (Copy(FretDistDFeInt.docZip.Items[I].schema, 1, 7) = 'procNFe') then
-    begin
-      NomeArq := FretDistDFeInt.docZip.Items[I].resNFe.chNFe + '-nfe.xml';
-      FConfiguracoes.Geral.Save(NomeArq, FretDistDFeInt.docZip.Items[I].XML);
-    end;
-    *)
   end;
 end;
 
@@ -3839,6 +3846,11 @@ begin
   Result := 'WebService Distribuição de DFe:' + LineBreak +
             '- Inativo ou Inoperante tente novamente.' + LineBreak +
             '- ' + E.Message;
+end;
+
+function TDistribuicaoDFe.GerarPathDistribuicao: String;
+begin
+  Result := FConfiguracoes.Arquivos.GetPathDownload( '' );
 end;
 
 { TNFeEnvioWebService }
@@ -3921,12 +3933,10 @@ begin
                                                 TACBrNFe(AFNotaFiscalEletronica).NotasFiscais);
   FRecibo             := TNFeRecibo.Create(AFNotaFiscalEletronica);
   FConsulta           := TNFeConsulta.Create(AFNotaFiscalEletronica);
-//  FCancelamento       := TNFeCancelamento.Create(AFNotaFiscalEletronica);
   FInutilizacao       := TNFeInutilizacao.Create(AFNotaFiscalEletronica);
   FConsultaCadastro   := TNFeConsultaCadastro.Create(AFNotaFiscalEletronica);
   FEnviaDPEC          := TNFeEnvDPEC.Create(AFNotaFiscalEletronica);
   FConsultaDPEC       := TNFeConsultaDPEC.Create(AFNotaFiscalEletronica);
-//  FCartaCorrecao      := TNFeCartaCorrecao.Create(AFNotaFiscalEletronica,TACBrNFe(AFNotaFiscalEletronica).CartaCorrecao.CCe);
   FEnvEvento          := TNFeEnvEvento.Create(AFNotaFiscalEletronica,
                                               TACBrNFe(AFNotaFiscalEletronica).EventoNFe);
   FConsNFeDest        := TNFeConsNFeDest.Create(AFNotaFiscalEletronica);
@@ -3944,12 +3954,10 @@ begin
   FRetorno.Free;
   FRecibo.Free;
   FConsulta.Free;
-//  FCancelamento.Free;
   FInutilizacao.Free;
   FConsultaCadastro.Free;
   FEnviaDPEC.Free;
   FConsultaDPEC.Free;
-//  FCartaCorrecao.Free;
   FEnvEvento.Free;
   FConsNFeDest.Free;
   FDownloadNFe.Free;

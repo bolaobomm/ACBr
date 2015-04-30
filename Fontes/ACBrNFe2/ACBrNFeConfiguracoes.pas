@@ -197,6 +197,7 @@ type
     FPathCCe  : String;
     FPathMDe  : String;
     FPathEvento  : String;
+    FPathDownload: String;
   public
     constructor Create(AOwner: TComponent); override;
     function GetPathCan(CNPJ : String = ''): String;
@@ -206,6 +207,7 @@ type
     function GetPathCCe(CNPJ : String = ''): String;
     function GetPathMDe(CNPJ : String = ''): String;
     function GetPathEvento(tipoEvento : TpcnTpEvento; CNPJ : String = ''): String;
+    function GetPathDownload(CNPJ : String = ''): String;
   published
     property Salvar     : Boolean read FSalvar  write FSalvar  default False;
     property PastaMensal: Boolean read FMensal  write FMensal  default False;
@@ -222,6 +224,7 @@ type
     property PathCCe : String read FPathCCe  write FPathCCe;
     property PathMDe : String read FPathMDe  write FPathMDe;
     property PathEvento : String read FPathEvento  write FPathEvento;
+    property PathDownload: String read FPathDownload write FPathDownload;
   end;
 
   TConfiguracoes = class(TComponent)
@@ -765,6 +768,48 @@ begin
 end;
 }
 
+function TArquivosConf.GetPathDownload(CNPJ: String): String;
+var
+  wDia, wMes, wAno : Word;
+  Dir : String;
+  Data : TDateTime;
+begin
+  if DFeUtil.EstaVazio(FPathDownload) then
+     Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
+  else
+     Dir := FPathInu;
+
+  if FSepararCNPJ then
+     Dir := PathWithDelim(Dir)+TConfiguracoes( Self.Owner ).Certificados.CNPJ;
+
+  if FSepararModelo then
+   begin
+     if TConfiguracoes( Self.Owner ).Geral.ModeloDF = moNFCe then
+        Dir := PathWithDelim(Dir)+'NFCe'
+     else
+        Dir := PathWithDelim(Dir)+'NFe';
+   end;
+
+  if FMensal then
+   begin
+     Data := Now;
+     DecodeDate(Data, wAno, wMes, wDia);
+     if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0 then
+        Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
+   end;
+
+  if FLiteral then
+   begin
+     if copy(Dir,length(Dir)-3, 4) <> 'Down' then
+        Dir := PathWithDelim(Dir) + 'Down';
+   end;
+
+  if not DirectoryExists(Dir) then
+     ForceDirectories(Dir);
+
+  Result  := Dir;
+end;
+
 function TArquivosConf.GetPathDPEC(CNPJ : String = ''): String;
 var
   wDia, wMes, wAno : Word;
@@ -797,7 +842,7 @@ begin
 
   if FLiteral then
    begin
-     if copy(Dir,length(Dir)-3,4) <> 'DPEC' then
+     if copy(Dir,length(Dir)-3, 4) <> 'DPEC' then
         Dir := PathWithDelim(Dir)+'DPEC';
    end;
 
@@ -839,7 +884,7 @@ begin
 
   if FLiteral then
    begin
-     if copy(Dir,length(Dir)-2,3) <> 'Evento' then
+     if copy(Dir,length(Dir)-5, 6) <> 'Evento' then
         Dir := PathWithDelim(Dir)+'Evento';
    end;
 
@@ -858,7 +903,6 @@ begin
 
   Result  := Dir;
 end;
-
 
 function TArquivosConf.GetPathInu(CNPJ : String = ''): String;
 var
@@ -892,7 +936,7 @@ begin
 
   if FLiteral then
    begin
-     if copy(Dir,length(Dir)-2,3) <> 'Inu' then
+     if copy(Dir,length(Dir)-2, 3) <> 'Inu' then
         Dir := PathWithDelim(Dir)+'Inu';
    end;
 
@@ -934,7 +978,7 @@ begin
 
   if FLiteral then
    begin
-     if copy(Dir,length(Dir)-2,3) <> 'MDe' then
+     if copy(Dir,length(Dir)-2, 3) <> 'MDe' then
         Dir := PathWithDelim(Dir)+'MDe';
    end;
 
@@ -976,7 +1020,7 @@ begin
 
   if FLiteral then
    begin
-     if copy(Dir,length(Dir)-2,3) <> 'NFe' then
+     if copy(Dir,length(Dir)-2, 3) <> 'NFe' then
         Dir := PathWithDelim(Dir)+'NFe';
    end;
 
