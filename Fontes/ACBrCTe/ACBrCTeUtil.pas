@@ -329,17 +329,6 @@ end;
 class function CTeUtil.GetURLSVRS(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
-    LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cterecepcao/CteRecepcao.asmx'            , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cterecepcao/CteRecepcao.asmx');
-    LayCTeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cteretrecepcao/CteRetRecepcao.asmx'      , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cteretrecepcao/CteRetRecepcao.asmx');
-    LayCTeCancelamento:  Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/ctecancelamento/ctecancelamento.asmx'    , 'https://homologacao.cte.sefaz.rs.gov.br/ws/ctecancelamento/ctecancelamento.asmx');
-    LayCTeInutilizacao:  Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cteinutilizacao/cteinutilizacao.asmx'    , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cteinutilizacao/cteinutilizacao.asmx');
-    LayCTeConsultaCT:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cteconsulta/cteconsulta.asmx'            , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cteconsulta/cteconsulta.asmx');
-    LayCTeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/ctestatusservico/ctestatusservico.asmx'  , 'https://homologacao.cte.sefaz.rs.gov.br/ws/ctestatusservico/ctestatusservico.asmx');
-    LayCTeCadastro:      Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
-    LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cteRecepcaoEvento/cteRecepcaoEvento.asmx', 'https://homologacao.cte.sefaz.rs.gov.br/ws/cterecepcaoevento/cterecepcaoevento.asmx');
-  end;
-  (*
-  case ALayOut of
     LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.svrs.rs.gov.br/ws/cterecepcao/CteRecepcao.asmx'                 , 'https://cte-homologacao.svrs.rs.gov.br/ws/cterecepcao/CteRecepcao.asmx');
     LayCTeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.svrs.rs.gov.br/ws/cteretrecepcao/cteRetRecepcao.asmx'           , 'https://cte-homologacao.svrs.rs.gov.br/ws/cteretrecepcao/cteRetRecepcao.asmx');
     LayCTeInutilizacao:  Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.svrs.rs.gov.br/ws/cteinutilizacao/cteinutilizacao.asmx'         , 'https://cte-homologacao.svrs.rs.gov.br/ws/cteinutilizacao/cteinutilizacao.asmx');
@@ -348,7 +337,6 @@ begin
     LayCTeCadastro:      Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
     LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.svrs.rs.gov.br/ws/cterecepcaoevento/cterecepcaoevento.asmx'     , 'https://cte-homologacao.svrs.rs.gov.br/ws/cterecepcaoevento/cterecepcaoevento.asmx');
   end;
-  *)
 end;
 
 class function CTeUtil.GetURLAC(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
@@ -536,17 +524,6 @@ end;
 class function CTeUtil.GetURLRS(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
-    LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cterecepcao/CteRecepcao.asmx'                 , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cterecepcao/CteRecepcao.asmx');
-    LayCTeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cteretrecepcao/cteRetRecepcao.asmx'           , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cteretrecepcao/cteRetRecepcao.asmx'); //CteRetRecepcao.asmx
-    LayCTeCancelamento:  Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/ctecancelamento/ctecancelamento.asmx'         , 'https://homologacao.cte.sefaz.rs.gov.br/ws/ctecancelamento/ctecancelamento.asmx');
-    LayCTeInutilizacao:  Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cteinutilizacao/cteinutilizacao.asmx'         , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cteinutilizacao/cteinutilizacao.asmx');
-    LayCTeConsultaCT:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cteconsulta/CteConsulta.asmx'                 , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cteconsulta/CteConsulta.asmx');
-    LayCTeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/ctestatusservico/CteStatusServico.asmx'       , 'https://homologacao.cte.sefaz.rs.gov.br/ws/ctestatusservico/CteStatusServico.asmx');
-    LayCTeCadastro:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://sef.sefaz.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx', 'https://sef.sefaz.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx');
-    LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cteRecepcaoEvento/cteRecepcaoEvento.asmx'     , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cterecepcaoevento/cterecepcaoevento.asmx');
-  end;
-  (*
-  case ALayOut of
     LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.svrs.rs.gov.br/ws/cterecepcao/CteRecepcao.asmx'                 , 'https://cte-homologacao.svrs.rs.gov.br/ws/cterecepcao/CteRecepcao.asmx');
     LayCTeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.svrs.rs.gov.br/ws/cteretrecepcao/cteRetRecepcao.asmx'           , 'https://cte-homologacao.svrs.rs.gov.br/ws/cteretrecepcao/cteRetRecepcao.asmx');
     LayCTeInutilizacao:  Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.svrs.rs.gov.br/ws/cteinutilizacao/cteinutilizacao.asmx'         , 'https://cte-homologacao.svrs.rs.gov.br/ws/cteinutilizacao/cteinutilizacao.asmx');
@@ -555,7 +532,6 @@ begin
     LayCTeCadastro:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cad.sefazrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx', 'https://cad.sefazrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx');
     LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.svrs.rs.gov.br/ws/cterecepcaoevento/cterecepcaoevento.asmx'     , 'https://cte-homologacao.svrs.rs.gov.br/ws/cterecepcaoevento/cterecepcaoevento.asmx');
   end;
-  *)
 end;
 
 // As URLs da SEFAZ de SP são as mesmas para o SVSP = SEFAZ Virtual de SP
