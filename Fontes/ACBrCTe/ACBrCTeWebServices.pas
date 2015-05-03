@@ -2304,7 +2304,7 @@ end;
 
 procedure TCTeConsultaCadastro.DefinirServicoEAction;
 begin
-  FServico    := CURL_WSDL + 'CteInutilizacao';
+  FServico    := CURL_WSDL + 'CadConsultaCadastro2';
   FSoapAction := FServico;
 end;
 

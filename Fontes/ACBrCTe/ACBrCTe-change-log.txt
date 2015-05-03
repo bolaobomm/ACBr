@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/05/2015
+[-] Correção da URL do Serviço de consulta ao cadastro do contribuinte.
+    por: Italo Jurisato Junior
+
 01/05/2015
 [*] Atualização das URLs de produção e homologação do CT-e publicadas 
     pela SEFAZ-RS.
