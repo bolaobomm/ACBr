@@ -671,7 +671,7 @@ begin
   if Tam < nLen then
     Result := StringOfChar(Caracter, (nLen - Tam)) + AString
   else
-    Result := copy(AString,1,nLen) ;
+    Result := AnsiRightStr(AString, nLen);
 end ;
 
 {-----------------------------------------------------------------------------
