@@ -107,6 +107,7 @@ type
     procedure LoadMsgEntrada;
     procedure LoadURL;
     function Confirma(AResultado: string): Boolean;
+    procedure GerarException(Msg: AnsiString);    
   public
     function Executar: Boolean; virtual;
     constructor Create(AOwner : TComponent); virtual;
@@ -255,6 +256,12 @@ constructor TWebServicesBase.Create(AOwner: TComponent);
 begin
  FConfiguracoes := TConfiguracoes( TACBrGNRE( AOwner ).Configuracoes );
  FACBrGNRE      := TACBrGNRE( AOwner );
+end;
+
+procedure TWebServicesBase.GerarException(Msg: AnsiString);
+begin
+  //FazerLog( 'ERRO: ' + Msg, False );
+  raise Exception.Create( Msg );
 end;
 
 {$IFDEF ACBrGNREOpenSSL}
