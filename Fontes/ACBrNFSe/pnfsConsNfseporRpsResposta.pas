@@ -354,7 +354,7 @@ begin
                then ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio := Leitor.rCampo(tcStr, 'MunicipioPrestacaoServico')
                else ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
 
-              Item := StrToInt(OnlyNumber(ListaNfse.FCompNfse[i].FNfse.Servico.ItemListaServico));
+              Item := StrToIntDef(OnlyNumber(ListaNfse.FCompNfse[i].FNfse.Servico.ItemListaServico),0);
               if Item<100 then Item:=Item*100+1;
 
               ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
