@@ -64,7 +64,7 @@ uses  ACBrBase,  {Units da ACBr}
      , Contnrs, Classes, Math, dateutils, strutils;
 
 const
-  CACBrBoleto_Versao = '0.0.125a' ;
+  CACBrBoleto_Versao = '0.0.126a' ;
 
 type
   TACBrTipoCobranca =
@@ -630,6 +630,7 @@ type
     fEspecieMod        : String;
     fValorDocumento    : Currency;
     fMensagem          : TStrings;
+    fInformativo       : TStrings;
     fInstrucoes        : TStrings;
     fSacado            : TACBrSacado;
     fLiquidacao        : TACBrTituloLiquidacao;
@@ -690,6 +691,7 @@ type
      property EspecieMod        : String      read fEspecieMod        write fEspecieMod;
      property ValorDocumento    : Currency    read fValorDocumento    write fValorDocumento;
      property Mensagem          : TStrings    read fMensagem          write fMensagem;
+     property Informativo       : TStrings    read fInformativo       write fInformativo;
      property Instrucao1        : String      read fInstrucao1        write fInstrucao1;
      property Instrucao2        : String      read fInstrucao2        write fInstrucao2;
      property Instrucao3        : String      read fInstrucao3        write fInstrucao3;
@@ -1165,6 +1167,7 @@ begin
    fEspecieMod        := '';
    fValorDocumento    := 0;
    fMensagem          := TStringList.Create;
+   fInformativo       := TStringList.Create;
    fInstrucoes        := TStringList.Create;
    fSacado            := TACBrSacado.Create;
    fLiquidacao        := TACBrTituloLiquidacao.Create;
@@ -1200,6 +1203,7 @@ end;
 destructor TACBrTitulo.Destroy;
 begin
    fMensagem.Free;
+   fInformativo.Free;
    fSacado.Free;
    fLiquidacao.Free;
    fInstrucoes.Free;

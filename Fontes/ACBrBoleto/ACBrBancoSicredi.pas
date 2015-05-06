@@ -123,7 +123,6 @@ begin
                       CalcularDigitoVerificador(ACBrTitulo)   + { Dígito verificador do nosso número }
                       padR(OnlyNumber(Cedente.Agencia),4,'0') + { Código agência (cooperativa) }
                       padR(Cedente.AgenciaDigito,2,'0')       + { Dígito da agência (posto da cooperativa) }
-//                      padR(OnlyNumber(Cedente.Conta),7,'0')   + { Código cedente = Número da conta } Número da conta é diferente do código do cedente
                       padR(OnlyNumber(Cedente.CodigoCedente),5,'0')   + { Código cedente }  //  Ver manual página 86 - CNAB240 ou 51 - CNAB400
                       '1'                                     + { Filler - zero. Obs: Será 1 quando o valor do documento for diferente se zero }
                       '0';                                    { Filler - zero }
@@ -157,8 +156,10 @@ function TACBrBancoSicredi.MontarCampoNossoNumero (const ACBrTitulo: TACBrTitulo
 var
   aNossoNumero: String;
 begin
-   ACBrTitulo.NossoNumero:=FormatDateTime('yy',ACBrTitulo.DataDocumento)+
-                           ACBrTitulo.CodigoGeracao +copy(ACBrTitulo.NossoNumero,4,6);
+   ACBrTitulo.NossoNumero := FormatDateTime('yy',ACBrTitulo.DataDocumento) +
+                             ACBrTitulo.CodigoGeracao +
+                             copy(ACBrTitulo.NossoNumero,4,6);
+
    Result:= copy(ACBrTitulo.NossoNumero,1,2) + '/' +
             copy(ACBrTitulo.NossoNumero,3,6) + '-' +
             CalcularDigitoVerificador(ACBrTitulo);
@@ -170,16 +171,10 @@ begin
    Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia+'.'+
              padR(ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito,2,'0')+'.'+
              padR(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,5,'0'); // Código do Cedente é diferente do número da conta
-
-//   Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia+'.'+
-//             padR(ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito,2,'0')+'.'+
-//             ACBrTitulo.ACBrBoleto.Cedente.Conta;}
-
 end;
 
 procedure TACBrBancoSicredi.GerarRegistroHeader400(NumeroRemessa : Integer; aRemessa: TStringList);
-var
-  wLinha: String;
+var wLinha: String;
 begin
    with ACBrBanco.ACBrBoleto.Cedente do
    begin
@@ -209,6 +204,7 @@ var
   DigitoNossoNumero, CodProtesto, DiasProtesto: String;
   TipoSacado, AceiteStr, wLinha, Ocorrencia   : String;
   TipoBoleto, wModalidade: Char;
+  TextoRegInfo: String;
 begin
 
    with ACBrTitulo do
@@ -222,7 +218,6 @@ begin
          toRemessaConcederAbatimento             : Ocorrencia := '04'; {Concessão de Abatimento}
          toRemessaCancelarAbatimento             : Ocorrencia := '05'; {Cancelamento de Abatimento concedido}
          toRemessaAlterarVencimento              : Ocorrencia := '06'; {Alteração de vencimento}
-         //toRemessaAlterarNumeroControle         : Ocorrencia := '08'; {Alteração de seu número}
          toRemessaProtestar                      : Ocorrencia := '09'; {Pedido de protesto}
          toRemessaCancelarInstrucaoProtestoBaixa : Ocorrencia := '18'; {Sustar protesto e baixar}
          toRemessaCancelarInstrucaoProtesto      : Ocorrencia := '19'; {Sustar protesto e manter na carteira}
@@ -232,11 +227,11 @@ begin
       end;
 
       {Pegando Tipo de Boleto}
-      case ACBrBoleto.Cedente.ResponEmissao of
-         tbCliEmite : TipoBoleto := 'B';
+      if (ACBrBoleto.Cedente.ResponEmissao <> tbCliEmite) or 
+         (CarteiraEnvio = tceBanco) then  
+        TipoBoleto := 'A'
       else
-         TipoBoleto := 'A';
-      end;
+        TipoBoleto := 'B';       
 
       {Pegando campo Protesto}
       if (DataProtesto > 0) and (DataProtesto >= Vencimento + 3) then // mínimo de 3 dias de protesto
@@ -285,6 +280,8 @@ begin
       case Aceite of
         atSim: AceiteStr := 'S';
         atNao: AceiteStr := 'N';
+      else
+         AceiteStr := 'N';
       end;
 
       if StrToIntDef(ACBrBoleto.Cedente.Modalidade,1) = 1 then
@@ -401,6 +398,77 @@ begin
          wLinha:= wLinha + IntToStrZero(aRemessa.Count + 1, 6 );  // 395 a 400 - Número sequencial do registro
 
          aRemessa.Text:= aRemessa.Text + UpperCase(wLinha);
+
+         { Registro Informativo }
+         if Informativo.Count > 0 then
+         begin
+           TextoRegInfo := padR('1', 2, '0')          + // Numero da linha do informativo
+                           padL(Informativo[0], 80);   // Texto da linha do informativo
+
+           if Informativo.Count >= 2 then
+             TextoRegInfo:= TextoRegInfo + padR('2', 2, '0') +
+                            padL(Informativo[1], 80)
+           else
+             TextoRegInfo:= TextoRegInfo + '02' + padL('', 80);
+
+           if Informativo.Count >= 3 then
+             TextoRegInfo:= TextoRegInfo + padR('3', 2, '0') +
+                            padL(Informativo[2], 80)
+           else
+             TextoRegInfo:= TextoRegInfo + '03' + padL('', 80);
+
+           if Informativo.Count >= 4 then
+             TextoRegInfo:= TextoRegInfo + padR('4', 2, '0') +
+                            padL(Informativo[3], 80)
+           else
+             TextoRegInfo:= TextoRegInfo + '04' + padL('', 80);
+
+           wLinha:=  '5'                                                         + // 001 a 001 - Identificação do registro Informativo
+                     'E'                                                         + // 002 a 002 - Tipo de informativo
+                     padR( ACBrBanco.ACBrBoleto.Cedente.CodigoCedente, 5, '0')+ // 003 a 004 - Codigo do Cedente
+                     padL( NumeroDocumento,  10)                             + // 008 a 017 - Seu numero
+                     Space(1)                                                    + // 018 a 018 - Filler
+                     'A'                                                         + // 019 a 019 - "A"-Com registro  "C"-Sem registro
+                     TextoRegInfo                                                + // 020 a 347
+                     Space(47)                                                   + // 348 a 394 - Filler
+                     IntToStrZero( ARemessa.Count + 1, 6);                         // 395 a 400 - Número sequencial do registro
+           ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
+
+
+           if Informativo.Count >= 5 then
+           begin
+             TextoRegInfo:= padR('5', 2, '0') + padL(Informativo[4], 80);
+
+             if Informativo.Count >= 6 then
+               TextoRegInfo:= TextoRegInfo + padR('6', 2, '0') +
+                              padL(Informativo[5], 80)
+             else
+               TextoRegInfo:= TextoRegInfo + '06' + padL('', 80);
+
+             if Informativo.Count >= 7 then
+               TextoRegInfo:= TextoRegInfo + padR('7', 2, '0') +
+                              padL(Informativo[6], 80)
+             else
+               TextoRegInfo:= TextoRegInfo + '07' + padL('', 80);
+
+             if Informativo.Count >= 8 then
+               TextoRegInfo:= TextoRegInfo + padR('8', 2, '0') +
+                              padL(Informativo[7], 80)
+             else
+               TextoRegInfo:= TextoRegInfo + '08' + padL('', 80);
+
+             wLinha:=  '5'                                                         + // 001 a 001 - Identificação do registro Informativo
+                       'E'                                                         + // 002 a 002 - Tipo de informativo
+                       padR( ACBrBanco.ACBrBoleto.Cedente.CodigoCedente, 5, '0')   + // 003 a 004 - Codigo do Cedente
+                       padL( NumeroDocumento,  10)                                 + // 008 a 017 - Seu numero
+                       Space(1)                                                    + // 018 a 018 - Filler
+                       'A'                                                         + // 019 a 019 - "A"-Com registro  "C"-Sem registro
+                       TextoRegInfo                                                + // 020 a 347
+                       Space(47)                                                   + // 348 a 394 - Filler
+                       IntToStrZero( ARemessa.Count + 1, 6);                         // 395 a 400 - Número sequencial do registro
+             ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
+          end;
+        end;
       end;
    end;
 end;
@@ -437,17 +505,19 @@ begin
 
   rCNPJCPF      := trim(Copy(ARetorno[0],32,14));
   rCodCedente   := trim(Copy(ARetorno[0],27,5));
-  rCedente      := ''; // não existe essa info no arquivo de retorno do Sicredi;
-  rAgencia      := ''; // não existe essa info no arquivo de retorno do Sicredi;
-  rDigitoAgencia:= ''; // não existe essa info no arquivo de retorno do Sicredi;
-  rConta        := ''; // não existe essa info no arquivo de retorno do Sicredi;
-  rDigitoConta  := ''; // não existe essa info no arquivo de retorno do Sicredi;
+
+  {Informações não são retornadas pelo Sicredi}
+  rCedente      := '';
+  rAgencia      := '';
+  rDigitoAgencia:= '';
+  rConta        := '';
+  rDigitoConta  := '';
 
   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],111,7),0);
 
-  ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno[0],101,2)+'/'+
-                                                           Copy(ARetorno[0],99,2)+'/'+
-                                                           Copy(ARetorno[0],95,4),0, 'DD/MM/YYYY' );
+  ACBrBanco.ACBrBoleto.DataArquivo := StringToDateTimeDef(Copy(ARetorno[0],101,2)+'/'+
+                                                          Copy(ARetorno[0],99,2)+'/'+
+                                                          Copy(ARetorno[0],95,4),0, 'DD/MM/YYYY' );
 
   with ACBrBanco.ACBrBoleto do
   begin
@@ -541,17 +611,15 @@ begin
                                           Copy(Linha,329,4),0, 'DD/MM/YYYY' );
 
 
-
-      OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
-                                    copy(Linha,109,2),0));
+      OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,109,2),0));
       CodOcorrencia := StrToInt(IfThen(copy(Linha,109,2) = '00','00',copy(Linha,109,2)));
       DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
-                                            Copy(Linha,113,2)+'/'+
-                                            Copy(Linha,115,2),0, 'DD/MM/YY' );
+                                             Copy(Linha,113,2)+'/'+
+                                             Copy(Linha,115,2),0, 'DD/MM/YY' );
 
       //-|Se a ocorrência for igual a  19 - Confirmação de Receb. de Protesto
       //-|Verifica o motivo na posição 295 - A = Aceite , D = Desprezado
-      if(CodOcorrencia = 19)then
+      if (CodOcorrencia = 19) then
       begin
         CodMotivo_19:= Copy(Linha,295,1);
         if(CodMotivo_19 = 'A')then
@@ -1388,32 +1456,32 @@ function TACBrBancoSicredi.GerarRegistroTrailler240(
   ARemessa: TStringList): String;
 begin
    {REGISTRO TRAILER DO LOTE}
-   Result:= IntToStrZero(ACBrBanco.Numero, 3)                               + // 001 a 003 - Código do banco na compensação
-            '0001'                                                          + // 004 a 007 - Lote de serviço = "9999"
-            '5'                                                             + // 008 a 008 - Tipo do registro = "5" TRAILLER LOTE
-            Space(9)                                                        + // 009 a 017 - Uso exclusivo FEBRABAN/CNAB
-            IntToStrZero(ARemessa.Count*2, 6)                               + // 018 a 023 - Quantidade de registros no lote
-            padL('', 6, '0')                                                + // 024 a 029 - Quantidade de títulos em cobrança
-            padL('',17, '0')                                                + // 030 a 046 - Valor total dos títulos em carteiras
-            padL('', 6, '0')                                                + // 047 a 052 - Quantidade de títulos em cobrança
-            padL('',17, '0')                                                + // 053 a 069 - Valor total dos títulos em carteiras
-            padL('', 6, '0')                                                + // 070 a 075 - Quantidade de títulos em cobrança
-            padL('',17, '0')                                                + // 076 a 092 - Quantidade de títulos em carteiras
-            padL('', 6, '0')                                                + // 093 a 098 - Quantidade de títulos em cobrança
-            padL('',17, '0')                                                + // 099 a 115 - Valor total dos títulos em carteiras
-            Space(8)                                                        + // 116 a 123 - Número do aviso de lançamento
-            Space(117);                                                       // 124 a 240 - Uso exclusivo FEBRABAN/CNAB
+   Result:= IntToStrZero(ACBrBanco.Numero, 3)           + // 001 a 003 - Código do banco na compensação
+            '0001'                                      + // 004 a 007 - Lote de serviço = "9999"
+            '5'                                         + // 008 a 008 - Tipo do registro = "5" TRAILLER LOTE
+            Space(9)                                    + // 009 a 017 - Uso exclusivo FEBRABAN/CNAB
+            IntToStrZero(ARemessa.Count * 2, 6)         + // 018 a 023 - Quantidade de registros no lote
+            StringOfChar('0',6)                         + // 024 a 029 - Quantidade de títulos em cobrança
+            StringOfChar('0',17)                        + // 030 a 046 - Valor total dos títulos em carteiras
+            StringOfChar('0',6)                         + // 047 a 052 - Quantidade de títulos em cobrança
+            StringOfChar('0',17)                        + // 053 a 069 - Valor total dos títulos em carteiras
+            StringOfChar('0',6)                         + // 070 a 075 - Quantidade de títulos em cobrança
+            StringOfChar('0',17)                        + // 076 a 092 - Quantidade de títulos em carteiras
+            StringOfChar('0',6)                         + // 093 a 098 - Quantidade de títulos em cobrança
+            StringOfChar('0',17)                        + // 099 a 115 - Valor total dos títulos em carteiras
+            Space(8)                                    + // 116 a 123 - Número do aviso de lançamento
+            Space(117);                                   // 124 a 240 - Uso exclusivo FEBRABAN/CNAB
 
    {GERAR REGISTRO TRAILER DO ARQUIVO}
    Result:= Result + #13#10 +
-            '748'                                                           + // 001 a 003 - Código do banco na compensação
-            '9999'                                                          + // 004 a 007 - Lote de serviço = "9999"
-            '9'                                                             + // 008 a 008 - Tipo do registro = "9" TRAILLER ARQUIVO
-            Space(9)                                                        + // 009 a 017 - Uso exclusivo FEBRABAN/CNAB
-            '000001'                                                        + // 018 a 023 - Quantidade de lotes do arquivo
-            IntToStrZero((ARemessa.Count*2)+2, 6)                           + // 024 a 029 - Quantidade de registros do arquivo, inclusive este registro que está sendo criado agora
-            padL('', 6, '0')                                                + // 030 a 035 - Quantidade de contas para conciliação (lotes)
-            Space(205);                                                       // 036 a 240 - Uso exclusivo FEBRABAN/CNAB
+            '748'                                       + // 001 a 003 - Código do banco na compensação
+            '9999'                                      + // 004 a 007 - Lote de serviço = "9999"
+            '9'                                         + // 008 a 008 - Tipo do registro = "9" TRAILLER ARQUIVO
+            Space(9)                                    + // 009 a 017 - Uso exclusivo FEBRABAN/CNAB
+            '000001'                                    + // 018 a 023 - Quantidade de lotes do arquivo
+            IntToStrZero((ARemessa.Count * 2) + 2, 6)   + // 024 a 029 - Quantidade de registros do arquivo, inclusive este registro que está sendo criado agora
+            StringOfChar('0', 6)                        + // 030 a 035 - Quantidade de contas para conciliação (lotes)
+            Space(205);                                   // 036 a 240 - Uso exclusivo FEBRABAN/CNAB
 end;
 
 function TACBrBancoSicredi.GerarRegistroTransacao240(
