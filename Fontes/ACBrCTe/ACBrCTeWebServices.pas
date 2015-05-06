@@ -2305,7 +2305,7 @@ end;
 
 procedure TCTeConsultaCadastro.DefinirServicoEAction;
 begin
-  FServico    := CURL_WSDL + 'CadConsultaCadastro2';
+  FServico    := 'http://www.portalfiscal.inf.br/nfe/wsdl/CadConsultaCadastro2';
   FSoapAction := FServico;
 end;
 
