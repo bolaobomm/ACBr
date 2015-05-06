@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/05/2015
+[*] Criado uma nova definição do Envelope Soap para a consulta ao cadastro de
+    contribuinte.
+    por: Italo Jurisato Junior
+
 03/05/2015
 [-] Correção da URL do Serviço de consulta ao cadastro do contribuinte.
     por: Italo Jurisato Junior
