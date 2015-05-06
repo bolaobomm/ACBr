@@ -29,18 +29,18 @@ package ACBr_NFSe;
 {$IMPLICITBUILD ON}
 
 requires
-  rtl,
   vcl,
-  ACBrComum,
+  rtl,
   designide,
+  xmlrtl,
+  dbrtl,
+  inet,
+  soaprtl,
+  ACBrComum,
+  ACBrOpenSSL,
   ACBrCapicom,
   synapse,
-  soaprtl,
-  xmlrtl,
-  inet,
-  dbrtl,
-  dsnap,
-  PCN2;
+  PCN2;	
 
 contains
   ACBrNFSe in '..\..\..\Fontes\ACBrNFSe\ACBrNFSe.pas',
