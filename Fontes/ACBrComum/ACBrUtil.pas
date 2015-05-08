@@ -1151,7 +1151,7 @@ begin
   YYYYMMDDhhnnss := trim( YYYYMMDDhhnnss ) ;
   OldShortDateFormat := {$IFDEF DELPHI17_UP}FormatSettings.{$ENDIF}ShortDateFormat ;
   try
-     {$IFDEF DELPHI17_UP}FormatSettings.{$ENDIF}ShortDateFormat := 'yyyy/MM/dd' ;
+     {$IFDEF DELPHI17_UP}FormatSettings.{$ENDIF}ShortDateFormat := 'yyyy/mm/dd' ;
      Result := StrToDateDef( copy(YYYYMMDDhhnnss, 1,4) + DateSeparator +
                              copy(YYYYMMDDhhnnss, 5,2) + DateSeparator +
                              copy(YYYYMMDDhhnnss, 7,2), 0 ) ;

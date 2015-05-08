@@ -38,6 +38,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/05/2015
+[*] Na formatação da data estava MM em vez mm.
+    Por: Italo Jurisato Junior
+
 Data: 19/03/2015
 [-] Corrigido o erro da função que valida o numero RE.
     Por: Italo Jurisato Junior
