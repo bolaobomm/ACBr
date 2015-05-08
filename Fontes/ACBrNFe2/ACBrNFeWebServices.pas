@@ -2555,6 +2555,7 @@ end;
 
 procedure TNFeInutilizacao.DefinirServicoEAction;
 begin
+(*
   if (FConfiguracoes.Geral.VersaoDF = ve310) and
      (FConfiguracoes.WebServices.UFCodigo in [29]) then // 29 = BA
   begin
@@ -2566,9 +2567,9 @@ begin
     FServico    := CURL_WSDL + 'NfeInutilizacao2';
     FSoapAction := FServico;
   end;
-
-//  FServico    := CURL_WSDL + 'NfeInutilizacao2';
-//  FSoapAction := FServico;
+*)
+  FServico    := CURL_WSDL + 'NfeInutilizacao2';
+  FSoapAction := FServico;
 end;
 
 procedure TNFeInutilizacao.DefinirDadosMsg;
