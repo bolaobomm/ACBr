@@ -2178,7 +2178,8 @@ end;
 
 procedure TNFeConsulta.DefinirServicoEAction;
 begin
-  if (FConfiguracoes.Geral.VersaoDF = ve310) and
+  if (FConfiguracoes.Geral.ModeloDF = moNFe) and
+     (FConfiguracoes.Geral.VersaoDF = ve310) and
      (FConfiguracoes.WebServices.UFCodigo in [29, 41]) then // 29 = BA, 41 = PR
     FServico := CURL_WSDL + 'NfeConsulta'
   else
@@ -2555,8 +2556,8 @@ end;
 
 procedure TNFeInutilizacao.DefinirServicoEAction;
 begin
-(*
-  if (FConfiguracoes.Geral.VersaoDF = ve310) and
+  if (FConfiguracoes.Geral.ModeloDF = moNFe) and
+     (FConfiguracoes.Geral.VersaoDF = ve310) and
      (FConfiguracoes.WebServices.UFCodigo in [29]) then // 29 = BA
   begin
     FServico    := CURL_WSDL + 'NfeInutilizacao';
@@ -2567,9 +2568,8 @@ begin
     FServico    := CURL_WSDL + 'NfeInutilizacao2';
     FSoapAction := FServico;
   end;
-*)
-  FServico    := CURL_WSDL + 'NfeInutilizacao2';
-  FSoapAction := FServico;
+//  FServico    := CURL_WSDL + 'NfeInutilizacao2';
+//  FSoapAction := FServico;
 end;
 
 procedure TNFeInutilizacao.DefinirDadosMsg;
