@@ -171,6 +171,7 @@ TACBrECFEscECF = class( TACBrECFClass )
 
     function IsBematech: Boolean;
     function IsEpson: Boolean;
+    function IsDaruma: Boolean;
 
     procedure EnviaConsumidor;
     function PreparaCmd(CmdExtBcd: AnsiString): AnsiString;
@@ -426,7 +427,7 @@ TACBrECFEscECF = class( TACBrECFClass )
  end ;
 
 implementation
-Uses SysUtils, Math, ACBrECF, ACBrECFBematech, ACBrECFEpson,
+Uses SysUtils, Math, ACBrECF, ACBrECFBematech, ACBrECFEpson, ACBrECFDaruma,
     {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF} ;
 
 { TACBrECFEscECFRET }
@@ -1021,8 +1022,13 @@ end;
 
 function TACBrECFEscECF.IsBematech : Boolean ;
 begin
-   Result := (pos('BEMATECH',UpperCase(fsMarcaECF)) > 0) ;
-end ;
+  Result := (pos('BEMATECH',UpperCase(fsMarcaECF)) > 0) ;
+end;
+
+function TACBrECFEscECF.IsDaruma: Boolean;
+begin
+  Result := (pos('DARUMA',UpperCase(fsMarcaECF)) > 0) ;
+end;
 
 function TACBrECFEscECF.IsEpson: Boolean;
 begin
@@ -1266,7 +1272,10 @@ begin
          MsgCategoria := 'Erro específico do Fabricante';
 
          if IsEpson then
-           MsgMotivo := DescricaoRetornoEpson( EscECFResposta.RET.SPR, Motivo );
+           MsgMotivo := DescricaoRetornoEpson( EscECFResposta.RET.SPR, Motivo )
+         else
+         if IsDaruma then
+           MsgMotivo := DescricaoRetornoDaruma( EscECFResposta.RET.SPR, Motivo );
        end;
    end;
 
@@ -3241,11 +3250,36 @@ end;
 
 function TACBrECFEscECF.AchaICMSAliquota(var AliquotaICMS: String
    ): TACBrECFAliquota;
+var
+  AliquotaStr : String ;
 begin
-  if (upcase(AliquotaICMS[1]) = 'T') then
-    AliquotaICMS := 'TT'+PadL(copy(AliquotaICMS,2,2),2,'0') ; {Indice}
+  AliquotaStr := '' ;
+  Result      := nil ;
 
-Result := inherited AchaICMSAliquota( AliquotaICMS );
+  if pos(copy(AliquotaICMS,1,2), 'TT,SS') > 0 then { Corrige Duplo T ou S }
+     AliquotaICMS := Trim(Copy(AliquotaICMS,2,5));
+
+  if copy(AliquotaICMS,1,2) = 'SF' then
+     AliquotaStr := 'FS1'
+  else if copy(AliquotaICMS,1,2) = 'SN' then
+     AliquotaStr := 'NS1'
+  else if copy(AliquotaICMS,1,2) = 'SI' then
+     AliquotaStr := 'IS1'
+  else if pos(copy(AliquotaICMS,1,2), 'IS|FS|NS') > 0 then
+     AliquotaStr := copy(AliquotaICMS,1,2) +
+                    ifthen( AliquotaICMS[3] in ['1'..'3'],AliquotaICMS[3],'1' )
+  else
+     case AliquotaICMS[1] of
+        'F','I','N' : AliquotaStr  := AliquotaICMS[1] +
+                        ifthen( AliquotaICMS[2] in ['1'..'3'],AliquotaICMS[2],'1' ) ;
+        'T','S'     : AliquotaStr  := AliquotaICMS[1] +
+                        padR( Trim( Copy(AliquotaICMS,2,2) ), 2, '0' );
+     end ;
+
+  if AliquotaStr = '' then
+     Result := inherited AchaICMSAliquota( AliquotaICMS )
+  else
+     AliquotaICMS := AliquotaStr ;
 end;
 
 end.

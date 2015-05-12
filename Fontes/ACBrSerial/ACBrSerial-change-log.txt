@@ -97,6 +97,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 12/05/2015 (por: regys.silveira)
+-- ACBrECFEscECF --
+[-] acertos no tratamento de aliquotas para o protocolo EscECF
+[-] Acertos no tratamento de retorno das impressoras Daruma EscECF
+[-] Acertos no retorno de aliquotas
+
 Data: 20/04/2015       (por: Juliomar Marchetti) = Merge
 -- ACBrECF --
 [+] Adicionada a propriedade TotalizadoresNaoTributados, que retorna uma lista
