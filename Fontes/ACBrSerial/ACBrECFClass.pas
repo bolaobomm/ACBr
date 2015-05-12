@@ -209,7 +209,7 @@ TACBrECFAliquota = class
     fsTotal: Double;
     function GetAsString: String;
     procedure SetAsString(AValue: String);
-    procedure SetTipo(const Value: Char);
+    procedure SetTipo(const AValue: Char);
  public
     constructor create ;
     procedure Assign( AAliquota : TACBrECFAliquota ) ;
@@ -224,6 +224,7 @@ TACBrECFAliquota = class
 end;
 
 { Lista de Objetos do tipo TACBrECFAliquota }
+
 TACBrECFAliquotas = class(TObjectList)
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFAliquota);
@@ -1396,16 +1397,18 @@ begin
   fsTotal     := AAliquota.Total ;
 end;
 
-procedure TACBrECFAliquota.SetTipo(const Value: Char);
-  Var NewVar : Char ;
+procedure TACBrECFAliquota.SetTipo(const AValue: Char);
+Var
+  NewVar : Char ;
 begin
-  NewVar := UpCase(Value) ;
+  NewVar := UpCase(AValue) ;
   if NewVar = ' ' then
      NewVar := 'T' ;
 
   if not (NewVar in ['T','S']) then
      raise EACBrECFErro.create( ACBrStr(cACBrECFAliquotaSetTipoException));
-  fsTipo := Value;
+
+  fsTipo := NewVar;
 end;
 
 function TACBrECFAliquota.GetAsString: String;
@@ -3531,46 +3534,73 @@ function TACBrECFClass.AchaICMSAliquota( var AliquotaICMS: String):
      end ;
    end;
 
-   Var AliquotaStr : String ;
-       Tipo        : Char ;
-       ValAliquota : Double ;
+Var
+  AliquotaStr : String ;
+  Tipo        : Char ;
+  ValAliquota : Double ;
+  N: Integer;
 begin
   GetAliquotas;
 
   Result := nil ;
 
-  AliquotaICMS := UpperCase( TrimLeft( AliquotaICMS ) ) ;
   case AliquotaICMS[1] of
-    'I' : AliquotaICMS := 'II' ;
-    'N' : AliquotaICMS := 'NN' ;
-    'F' : AliquotaICMS := 'FF' ;
-  else 
-     begin
-        if AliquotaICMS[1] = 'T' then  { Informou por Indice ? }
-         begin
-            AliquotaICMS := copy(AliquotaICMS,2,Length(AliquotaICMS)) ; {Remove o "T"}
-            Result := AchaICMSIndice( AliquotaICMS ) ;
-         end
-        else      { Informou por valor }
-         begin
-           { Verificando se informou T ou S no final da Aliquota (Tipo) }
-           AliquotaStr := AliquotaICMS ;
-           Tipo        := ' ' ;
-           VerificaTipoAliquota( AliquotaStr, Tipo) ;
+    'I','N','F' :
+      begin
+        if copy(AliquotaICMS,2,1) = 'S' then
+        begin
+          N := min(max(StrToIntDef(copy(AliquotaICMS,3,1),1),1),3);
+          AliquotaICMS := copy(AliquotaICMS,1,2) + IntToStr(N);
+        end
+        else
+        begin
+          N := min(max(StrToIntDef(copy(AliquotaICMS,2,1),1),1),3);
+          AliquotaICMS := AliquotaICMS[1] + IntToStr(N);
+        end;
 
-           try
-              ValAliquota := StringToFloat( AliquotaStr ) ;
-           except
-              raise EACBrECFCMDInvalido.Create(ACBrStr(cACBrECFAchaICMSAliquotaInvalida) + AliquotaICMS);
-           end ;
+        if (AchaTotalizadorNaoTributadoIndice(AliquotaICMS) = nil) then
+          raise EACBrECFCMDInvalido.Create(ACBrStr(cACBrECFAchaICMSAliquotaInvalida) + AliquotaICMS);
+      end;
 
-           Result := AchaICMSAliquota( ValAliquota, Tipo ) ;
-         end ;
+    'T' :
+      begin
+        AliquotaICMS := copy(AliquotaICMS,2,Length(AliquotaICMS)) ; {Remove o "T"}
+        Result := AchaICMSIndice( AliquotaICMS ) ;
+      end;
 
-        if Result = nil then
-           raise EACBrECFCMDInvalido.Create(ACBrStr(cACBrECFAchaICMSCMDInvalido) + AliquotaICMS)
-     end ;
-  end ;
+    'S' : {ISSQN}
+      begin
+        if pos(copy(AliquotaICMS,2,1),'INF') > 0 then
+        begin
+          N := min(max(StrToIntDef(copy(AliquotaICMS,3,1),1),1),3);
+          AliquotaICMS  := copy(AliquotaICMS,2,1)+'S'+ IntToStr(N);
+
+          if (AchaTotalizadorNaoTributadoIndice(AliquotaICMS) = nil) then
+            raise EACBrECFCMDInvalido.Create(ACBrStr(cACBrECFAchaICMSAliquotaInvalida) + AliquotaICMS);
+        end
+        else
+        begin
+          AliquotaICMS := copy(AliquotaICMS,2,Length(AliquotaICMS)) ; {Remove o "S"}
+          Result := AchaICMSIndice( AliquotaICMS ) ;
+        end;
+      end;
+  else
+    { Verificando se informou T ou S no final da Aliquota (Tipo) }
+    AliquotaStr := AliquotaICMS ;
+    Tipo        := ' ' ;
+    VerificaTipoAliquota( AliquotaStr, Tipo) ;
+
+    try
+      ValAliquota := StringToFloat( AliquotaStr ) ;
+    except
+      raise EACBrECFCMDInvalido.Create(ACBrStr(cACBrECFAchaICMSAliquotaInvalida) + AliquotaICMS);
+    end ;
+
+    Result := AchaICMSAliquota( ValAliquota, Tipo ) ;
+
+    if Result = Nil then
+      raise EACBrECFCMDInvalido.Create(ACBrStr(cACBrECFAchaICMSCMDInvalido) + AliquotaICMS)
+  end;
 
   if Result <> nil then
      AliquotaICMS := Result.Indice ;

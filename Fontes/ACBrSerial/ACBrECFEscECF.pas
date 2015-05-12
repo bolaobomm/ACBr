@@ -3250,36 +3250,11 @@ end;
 
 function TACBrECFEscECF.AchaICMSAliquota(var AliquotaICMS: String
    ): TACBrECFAliquota;
-var
-  AliquotaStr : String ;
 begin
-  AliquotaStr := '' ;
-  Result      := nil ;
+  if (upcase(AliquotaICMS[1]) = 'T') then
+    AliquotaICMS := 'TT'+PadL(copy(AliquotaICMS,2,2),2,'0') ; {Indice}
 
-  if pos(copy(AliquotaICMS,1,2), 'TT,SS') > 0 then { Corrige Duplo T ou S }
-     AliquotaICMS := Trim(Copy(AliquotaICMS,2,5));
-
-  if copy(AliquotaICMS,1,2) = 'SF' then
-     AliquotaStr := 'FS1'
-  else if copy(AliquotaICMS,1,2) = 'SN' then
-     AliquotaStr := 'NS1'
-  else if copy(AliquotaICMS,1,2) = 'SI' then
-     AliquotaStr := 'IS1'
-  else if pos(copy(AliquotaICMS,1,2), 'IS|FS|NS') > 0 then
-     AliquotaStr := copy(AliquotaICMS,1,2) +
-                    ifthen( AliquotaICMS[3] in ['1'..'3'],AliquotaICMS[3],'1' )
-  else
-     case AliquotaICMS[1] of
-        'F','I','N' : AliquotaStr  := AliquotaICMS[1] +
-                        ifthen( AliquotaICMS[2] in ['1'..'3'],AliquotaICMS[2],'1' ) ;
-        'T','S'     : AliquotaStr  := AliquotaICMS[1] +
-                        padR( Trim( Copy(AliquotaICMS,2,2) ), 2, '0' );
-     end ;
-
-  if AliquotaStr = '' then
-     Result := inherited AchaICMSAliquota( AliquotaICMS )
-  else
-     AliquotaICMS := AliquotaStr ;
+  Result := inherited AchaICMSAliquota( AliquotaICMS );
 end;
 
 end.
