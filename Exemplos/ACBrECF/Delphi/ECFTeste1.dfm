@@ -557,7 +557,7 @@ object Form1: TForm1
         Left = 0
         Top = 55
         Width = 782
-        Height = 246
+        Height = 266
         ActivePage = TabSheet6
         Align = alClient
         TabOrder = 1
@@ -889,7 +889,7 @@ object Form1: TForm1
         Left = 0
         Top = 0
         Width = 782
-        Height = 233
+        Height = 253
         Align = alClient
         Caption = 'Op'#231#245'es do Menu fiscal'
         TabOrder = 0
@@ -1018,7 +1018,7 @@ object Form1: TForm1
       end
       object pgcMenuFiscalTipo: TPageControl
         Left = 0
-        Top = 233
+        Top = 253
         Width = 782
         Height = 68
         ActivePage = tbsMenuFiscalTipoData
@@ -1529,8 +1529,8 @@ object Form1: TForm1
       OnClick = Image1Click
     end
     object bAtivar: TBitBtn
-      Left = 689
-      Top = 4
+      Left = 690
+      Top = 6
       Width = 96
       Height = 32
       Anchors = [akTop, akRight]
@@ -2336,13 +2336,6 @@ object Form1: TForm1
     MsgRelatorio = 'Imprimindo %s  %d'#170' Via '
     MsgPausaRelatorio = 'Destaque a %d'#170' via, <ENTER> proxima, %d seg.'
     PaginaDeCodigo = 0
-    FormMsgColor = clBlack
-    FormMsgFonte.Charset = DEFAULT_CHARSET
-    FormMsgFonte.Color = clWhite
-    FormMsgFonte.Height = 11
-    FormMsgFonte.Name = 'MS Sans Serif'
-    FormMsgFonte.Pitch = fpVariable
-    FormMsgFonte.Style = []
     OnMsgAguarde = ACBrECF1MsgAguarde
     OnAguardandoRespostaChange = ACBrECF1AguardandoRespostaChange
     OnMsgPoucoPapel = ACBrECF1MsgPoucoPapel
@@ -2391,6 +2384,7 @@ object Form1: TForm1
     ConfigBarras.MostrarCodigo = True
     ConfigBarras.LarguraLinha = 3
     ConfigBarras.Altura = 10
+    InfoRodapeCupom.Imposto.ModoCompacto = False
     Left = 128
     Top = 317
   end
