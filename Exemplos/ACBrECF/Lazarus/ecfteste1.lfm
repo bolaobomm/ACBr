@@ -4246,6 +4246,37 @@ object Form1: TForm1
           Caption = 'Achar Aliquota por Valor'
           OnClick = mAcharAliqPorValorClick
         end
+        object MenuItem43: TMenuItem
+          Caption = '-'
+        end
+        object MenuItem44: TMenuItem
+          Caption = 'IndiceTotalizadoresNaoTributadosICMS'
+        end
+        object MenuItem45: TMenuItem
+          Caption = 'IndiceTotalizadoresNaoTributadosISSQN'
+        end
+      end
+      object MenuItem46: TMenuItem
+        Caption = 'Totalizadores Não Fiscais'
+        object MenuItem47: TMenuItem
+          Caption = 'Carrega Totalizadores Nao Tributados'
+          OnClick = MenuItem47Click
+        end
+        object MenuItem48: TMenuItem
+          Caption = 'Ler Totais Totalizadores Nao Tributados'
+          OnClick = MenuItem48Click
+        end
+        object MenuItem49: TMenuItem
+          Caption = '-'
+        end
+        object MenuItem50: TMenuItem
+          Caption = 'Acha Totalizador Nao Tributado Indice'
+          OnClick = MenuItem50Click
+        end
+        object MenuItem51: TMenuItem
+          Caption = 'Testar Leitura de Totais'
+          OnClick = MenuItem51Click
+        end
       end
       object FormasdePagamento2: TMenuItem
         Caption = 'Formas de Pagamento'

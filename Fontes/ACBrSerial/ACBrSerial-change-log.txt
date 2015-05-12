@@ -97,6 +97,38 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 20/04/2015       (por: Juliomar Marchetti) = Merge
+-- ACBrECF --
+[+] Adicionada a propriedade TotalizadoresNaoTributados, que retorna uma lista
+    de Objetos com os Totalizadores Não Tributados Disponíveis e ativados no ECF
+    { Exemplos: F1, F2, F3, N1, N2, N3, I1, I2, I3, FS1, NS1, IS1 }
+[+] Adicionado o método: CarregaTotalizadoresNaoTributados, para ler do ECF e
+    popular a lista de Totalizadores Nao Tributados existentes e ativados.
+[+] Adiconado o método: LerTotaisTotalizadoresNaoTributados, para ler o Valor
+    Total acumulado em Cada Totalizador Nao Tributado existente.
+[+] Adicionado método AchaTotalizadorNaoTributadoIndice( Indice : String )
+    para efetuar Busca e retornar o Objeto do Totalizador Nao Tributado
+    referente ao Indice. Se não encontrar, retorna NIL
+[+] Adicionado o método: SomaTotalizadorNaoTributadoIndice(Indice: String): Double;
+    que retorna o total de um Grupo de Totalizador Nao Tributado. Exemplo:
+    SomaTotalizadorNaoTributadoIndice('F'), retorna a Soma de F1, F2 e F3
+
+[*] Método AchaICMSAliquota, modificado, para:
+    - Considerar corretamente todos os Totalizadores Nao Tributados existentes no
+      ECF
+    - Um Exception será disparado, se o Totalizador Nao Tributado informado, não
+      existir no ECF
+
+-- ACBrECFEscECF --
+[*] Méotodo GetEstado modificado para considerar o Cupom Aberto, mesmo quando
+    existir uma Redução Z pendente em conformidade com os demais modelos
+
+
+-- ECFTeste --
+[+] Adiconado Menu "Variaveis -> Totalizadores Não Fiscais", para demonstrar e
+    testar o funcionamento dos métodos: CarregaTotalizadoresNaoTributados,
+    LerTotaisTotalizadoresNaoTributados, AchaTotalizadorNaoTributadoIndice.
+
 Data: 27/04/2015       (por: DSA)
 -- ACBrECFSwedaSTX --
 [-] Correção para correta impressão de Descrição Grande
