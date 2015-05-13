@@ -133,6 +133,8 @@ procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
 
 function ACBrStr( AString : AnsiString ) : String ;
 function ACBrStrToAnsi( AString : String ) : AnsiString ;
+function AnsiChr( b: Byte) : AnsiChar;
+
 function TruncFix( X : Double ) : Integer ;
 function RoundABNT(const AValue: Double; const Digits: SmallInt): Double;
 function CompareVersions( const VersionStr1, VersionStr2 : String;
@@ -200,7 +202,9 @@ Function Poem_Zeros(const Texto : AnsiString; const Tamanho : Integer) : AnsiStr
 Function IntToStrZero(const NumInteiro : Int64; Tamanho : Integer) : AnsiString;
 
 function FloatToIntStr(const AValue: Double; const DecimalDigits: SmallInt = 2): String;
-function FloatToString(const AValue: Double): String;
+function FloatToString(const AValue: Double; SeparadorDecimal: Char = '.';
+  AFormat: String = ''): String;
+function FloatMask(const DecimalDigits: SmallInt = 2): String;
 Function StringToFloat( NumString : String ) : Double ;
 Function StringToFloatDef( const NumString : String ;
    const DefaultValue : Double ) : Double ;
@@ -242,6 +246,7 @@ function StrCrypt(const AString, StrChave: AnsiString): AnsiString;
 function SomaAscII(const AString : AnsiString): Integer;
 function StringCrc16(AString : AnsiString ) : word;
 
+function ApplicationPath: String;
 Procedure FindFiles( const FileMask : String; AStringList : TStrings;
   IncludePath : Boolean = True ) ;
 Function FilesExists(const FileMask: String) : Boolean ;
@@ -338,6 +343,16 @@ begin
 {$ELSE}
   Result := AString
 {$ENDIF}
+end;
+
+{-----------------------------------------------------------------------------
+ Faz o mesmo que o comando chr(), porém retorna um AnsiChar ao invés de Char
+ Util quando for usada para compor valores em AnsiString,
+ veja exemplos nesse mesmo fonte...
+ -----------------------------------------------------------------------------}
+function AnsiChr(b: Byte): AnsiChar;
+begin
+  Result := AnsiChar(chr(b));
 end;
 
 {-----------------------------------------------------------------------------
@@ -1059,6 +1074,15 @@ begin
   end ;
 end ;
 
+
+function FloatMask(const DecimalDigits: SmallInt): String;
+begin
+  Result := '0';
+
+  if DecimalDigits > 0 then
+     Result := Result + '.' + StringOfChar('0',DecimalDigits)
+end;
+
 {-----------------------------------------------------------------------------
   Converte uma <NumString> para Double, semelhante ao StrToFloat, mas
   verifica se a virgula é '.' ou ',' efetuando a conversão se necessário
@@ -1091,16 +1115,29 @@ begin
 end;
 
 {-----------------------------------------------------------------------------
-  Converte um Double para string com o decimal separator sendo o .(ponto)
+  Converte um Double para string, semelhante a FloatToStr(), porém
+  garante que não haverá separador de Milhar e o Separador Decimal será igual a
+  "SeparadorDecimal" ( o default é .(ponto))
  ---------------------------------------------------------------------------- }
-function FloatToString(const AValue: Double): String;
+function FloatToString(const AValue: Double; SeparadorDecimal: Char;
+  AFormat: String): String;
+var
+  DS, TS: Char;
 begin
-  Result :=
-    StringReplace(
-      StringReplace(FloatToStr(AValue),
-        '.', '', [rfReplaceAll]),
-      ',', '.', [rfReplaceAll]
-    );
+  if AFormat = '' then
+    Result := FloatToStr(AValue)
+  else
+    Result := FormatFloat(AFormat, AValue);
+
+  DS := {$IFDEF DELPHI17_UP}FormatSettings.{$ENDIF}DecimalSeparator;
+  TS := {$IFDEF DELPHI17_UP}FormatSettings.{$ENDIF}ThousandSeparator;
+
+  // Removendo Separador de milhar //
+  Result := StringReplace(Result, TS, '', [rfReplaceAll]);
+
+  // Verificando se precisa mudar Separador decimal //
+  if DS <> SeparadorDecimal then
+    Result := StringReplace(Result, DS, SeparadorDecimal, [rfReplaceAll]);
 end;
 
 {-----------------------------------------------------------------------------
@@ -1403,6 +1440,10 @@ end ;
 {-----------------------------------------------------------------------------
   Quebra Linhas grandes no máximo de Colunas especificado, ou caso encontre 
   uma quebra de Linha (CR ou CR+LF)
+  Retorna uma String usando o #10 como separador de Linha
+  Se <NumMaxLinhas> for especificado, para ao chegar no Limite de Linhas
+  Se <PadLinhas> for True, Todas as linhas terão o mesmo tamanho de Colunas
+    com espaços a esquerda se necessário.
  ---------------------------------------------------------------------------- }
 function AjustaLinhas(Texto: AnsiString; Colunas: Integer ;
    NumMaxLinhas: Integer = 0; PadLinhas: Boolean = False): AnsiString;
@@ -1456,6 +1497,11 @@ begin
     Result := Result + #10;
 end;
 
+{-----------------------------------------------------------------------------
+  Quebra amigável de Linhas de um <Texto>, em um determinado numero de <Colunas>,
+  respeitando o espaço existente entre as palavras. Permite especificar um
+  separador diferente de espaço em <CaracterQuebrar>
+ ---------------------------------------------------------------------------- }
 function QuebraLinhas(const Texto: String; const Colunas: Integer;
    const CaracterQuebrar : Char = ' '): String;
 Var
@@ -1766,6 +1812,18 @@ begin
 {$ENDIF}
 end ;
 
+{-----------------------------------------------------------------------------
+ Retorna String contendo o Path da Aplicação
+-----------------------------------------------------------------------------}
+function ApplicationPath: String;
+begin
+  Result := PathWithDelim(ExtractFilePath(ParamStr(0)));
+end;
+
+{-----------------------------------------------------------------------------
+ Encontra arquivos que correspondam a "FileMask" e cria lista com o Path e nome
+ dos mesmos em "AstringList"
+-----------------------------------------------------------------------------}
 procedure FindFiles(const FileMask : String ; AStringList : TStrings ;
    IncludePath : Boolean) ;
 var SearchRec : TSearchRec ;
