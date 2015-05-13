@@ -89,8 +89,7 @@ begin
   begin
     CFeCanc.infCFe.ID     := Leitor.rAtributo( 'Id' ) ;
     CFeCanc.infCFe.ID     := StringReplace( UpperCase(CFeCanc.infCFe.ID), 'CFE', '', [rfReplaceAll] ) ;
-    CFeCanc.infCFe.versao := StrToFloatDef(StringReplace( Leitor.rAtributo( 'versao' ),
-                                              '.', DecimalSeparator, []), 0) ;
+    CFeCanc.infCFe.versao := StringToFloatDef( Leitor.rAtributo( 'versao' ), 0) ;
 
     (*A06*) CFeCanc.infCFe.chCanc := Leitor.rAtributo('chCanc');
     (*A07*) CFeCanc.infCFe.dEmi := Leitor.rCampo(tcDatCFe, 'dEmi');
