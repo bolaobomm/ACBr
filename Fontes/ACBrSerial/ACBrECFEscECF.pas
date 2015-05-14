@@ -44,8 +44,8 @@
 unit ACBrECFEscECF ;
 
 interface
-uses ACBrECFClass, ACBrUtil, ACBrDevice, ACBrConsts,
-     Classes ;
+uses Classes,
+    ACBrECFClass, ACBrDevice;
 
 const
     cEscECFMaxBuffer = 4096 ;
@@ -427,8 +427,10 @@ TACBrECFEscECF = class( TACBrECFClass )
  end ;
 
 implementation
-Uses SysUtils, Math, ACBrECF, ACBrECFBematech, ACBrECFEpson, ACBrECFDaruma,
-    {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF} ;
+Uses SysUtils, Math,
+    {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
+    ACBrECF, ACBrECFBematech, ACBrECFEpson, ACBrConsts, ACBrUtil,
+  ACBrECFDaruma;
 
 { TACBrECFEscECFRET }
 
@@ -676,6 +678,7 @@ begin
   fsMarcaECF      := '' ;
   fsModeloECF     := '' ;
   fsEmPagamento   := False ;
+
   fsFalhas        := 0;
   fsACK           := False;
 
@@ -1273,8 +1276,7 @@ begin
 
          if IsEpson then
            MsgMotivo := DescricaoRetornoEpson( EscECFResposta.RET.SPR, Motivo )
-         else
-         if IsDaruma then
+         else if IsDaruma then
            MsgMotivo := DescricaoRetornoDaruma( EscECFResposta.RET.SPR, Motivo );
        end;
    end;
@@ -2076,6 +2078,8 @@ end;
 
 function TACBrECFEscECF.TraduzirTag(const ATag : AnsiString) : AnsiString ;
 begin
+  // TODO: Usar Tradução de classe original  ??
+
   if IsBematech then
     Result := BematechTraduzirTag( ATag )
   else
@@ -2268,6 +2272,9 @@ end;
 procedure TACBrECFEscECF.AbreNaoFiscal(CPF_CNPJ: String; Nome: String;
    Endereco: String);
 begin
+  if Trim(CPF_CNPJ) <> '' then
+     Consumidor.AtribuiConsumidor(CPF_CNPJ,Nome,Endereco);
+
   EscECFComando.CMD := 16;
   EscECFComando.AddParamString(LeftStr(OnlyNumber(Consumidor.Documento),14)) ;
   EscECFComando.AddParamString(LeftStr(Consumidor.Nome,30)) ;
@@ -2451,7 +2458,7 @@ begin
        { Adiciona o tipo no Indice, pois no comando de Venda de Item ele será necessario }
        Aliquota.Indice    := Aliquota.Tipo + EscECFResposta.Params[ 4*I ] ;
        Aliquota.Aliquota  := StrToIntDef( OnlyNumber(EscECFResposta.Params[ 4*I + 2 ]), 0 ) / 100 ;
-       Aliquota.Total     := StrToIntDef( EscECFResposta.Params[ 4*I + 3 ], 0) / 100 ;
+       Aliquota.Total     := StrToIntDef( EscECFResposta.Params[ 4*I + 3 ], 0 ) / 100 ;
 
        fpAliquotas.Add(Aliquota);
      end;
@@ -3252,7 +3259,7 @@ function TACBrECFEscECF.AchaICMSAliquota(var AliquotaICMS: String
    ): TACBrECFAliquota;
 begin
   if (upcase(AliquotaICMS[1]) = 'T') then
-    AliquotaICMS := 'TT'+PadL(copy(AliquotaICMS,2,2),2,'0') ; {Indice}
+    AliquotaICMS := 'TT'+PadR(copy(AliquotaICMS,2,2),2,'0') ; {Indice}
 
   Result := inherited AchaICMSAliquota( AliquotaICMS );
 end;
