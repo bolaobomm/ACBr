@@ -36,7 +36,8 @@
 unit ACBrECFSwedaSTX ;
 
 interface
-uses ACBrECFClass, ACBrDevice, ACBrUtil, Classes, Contnrs;
+uses Classes, Contnrs,
+     ACBrECFClass, ACBrDevice ;
 
 const
    CFALHAS = 3 ;
@@ -251,6 +252,8 @@ TACBrECFSwedaSTX = class( TACBrECFClass )
     procedure LerTotaisAliquota ; override ;
     Procedure ProgramaAliquota( Aliquota : Double; Tipo : Char = 'T';
        Posicao : String = '') ; override ;
+    function AchaICMSAliquota( var AliquotaICMS : String ) :
+       TACBrECFAliquota ;  override;
 
     procedure CarregaTotalizadoresNaoTributados ; override;
     procedure LerTotaisTotalizadoresNaoTributados ; override;
@@ -304,10 +307,9 @@ TACBrECFSwedaSTX = class( TACBrECFClass )
  end ;
 
 implementation
-Uses ACBrECF, ACBrConsts,
-     SysUtils, IniFiles,
-   {$IFDEF COMPILER6_UP} DateUtils, StrUtils, {$ELSE} ACBrD5, Windows,{$ENDIF}
-     Math;
+Uses SysUtils, IniFiles, Math,
+   {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
+   ACBrECF, ACBrConsts, ACBrUtil;
 
 { --------------------------- TACBrECFSwedaCache ---------------------------- }
 function TACBrECFSwedaCache.AchaSecao(Secao: String): Integer;
@@ -396,7 +398,7 @@ begin
   fsRespostasComando := '' ;
   fsFalhasRX         := 0 ;
   fsPoucoPapel       := False;
-  
+
   fpColunas := 56;
   fpMFD     := True ;
   fpTermica := True ;
@@ -1894,6 +1896,17 @@ begin
    sAliquota := FormatFloat(Tipo+'00.00',Aliquota);
    {Nesse protocolo não é necessário a posição :) }
    EnviaComando('32|'+sAliquota);
+end;
+
+function TACBrECFSwedaSTX.AchaICMSAliquota(var AliquotaICMS: String
+  ): TACBrECFAliquota;
+begin
+  { Sweda usa a letra T/S no Indice, e ACBrECFClass.AchaICMSAliquota(), que é
+   chamada logo abaixo, irá remove-lo, portanto vamos adicionar um T/S extra }
+  if (upcase(AliquotaICMS[1]) in ['T','S']) then
+    AliquotaICMS := AliquotaICMS[1]+AliquotaICMS[1]+PadR(copy(AliquotaICMS,2,2),2,'0') ; {Indice T01, T1, T02}
+
+  Result := inherited AchaICMSAliquota(AliquotaICMS);
 end;
 
 procedure TACBrECFSwedaSTX.CarregaTotalizadoresNaoTributados;
