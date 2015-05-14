@@ -889,8 +889,10 @@ begin
           if int(valorDbl) = valorDbl then
             ConteudoProcessado := IntToStr(Round(valorDbl));
 
+//        if Length(ConteudoProcessado) < TamMin then
+//          ConteudoProcessado := PadLeft(ConteudoProcessado, TamMin, '0');
         if Length(ConteudoProcessado) < TamMin then
-          ConteudoProcessado := PadLeft(ConteudoProcessado, TamMin, '0');
+          ConteudoProcessado := PadR(ConteudoProcessado, TamMin, '0');
       end;
 
     tcEsp:
@@ -915,8 +917,10 @@ begin
 
         EstaVazio := (valorInt = 0) and (ocorrencias = 0);
 
+//        if Length(ConteudoProcessado) < TamMin then
+//          ConteudoProcessado := PadLeft(ConteudoProcessado, TamMin, '0');
         if Length(ConteudoProcessado) < TamMin then
-          ConteudoProcessado := PadLeft(ConteudoProcessado, TamMin, '0');
+          ConteudoProcessado := PadR(ConteudoProcessado, TamMin, '0');
       end;
   end;
 
