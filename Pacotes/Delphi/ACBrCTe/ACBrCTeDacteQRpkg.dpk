@@ -72,7 +72,6 @@ package ACBrCTeDacteQRpkg;
 requires
   ACBr_CTe,
   ACBrComum,
-  bdertl,
   {$IFDEF VER150} QR5RunD7, vcljpg, visualclx; {$ENDIF} // D7
   {$IFDEF VER170} QR5RunD2005, vcljpg; {$ENDIF} // D2005
   {$IFDEF VER180}
