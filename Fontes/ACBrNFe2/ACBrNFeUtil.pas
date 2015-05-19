@@ -2033,7 +2033,7 @@ begin
    51: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.sefaz.mt.gov.br/nfce/consultanfce',          'http://homologacao.sefaz.mt.gov.br/nfce/consultanfce');      // MT
    50: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //MS
    31: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //MG
-   15: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PA
+   15: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://appnfc.sefa.pa.gov.br/portal/view/consultas/nfce/consultanfce.seam', 'https://appnfc.sefa.pa.gov.br/portal-homologacao/view/consultas/nfce/consultanfce.seam'); //PA
    25: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www5.receita.pb.gov.br/atf/seg/SEGf_AcessarFuncao.jsp?cdFuncao=FIS_1410', 'https://www6.receita.pb.gov.br/atf/seg/SEGf_AcessarFuncao.jsp?cdFuncao=FIS_1410'); //PB
    41: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.fazenda.pr.gov.br/', 'http://www.fazenda.pr.gov.br/'); //PR
    26: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PE
@@ -2077,7 +2077,7 @@ begin
    51: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.sefaz.mt.gov.br/nfce/consultanfce',             'http://homologacao.sefaz.mt.gov.br/nfce/consultanfce');         // MT
    50: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // MS
    31: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // MG
-   15: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PA
+   15: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://appnfc.sefa.pa.gov.br/portal/view/consultas/nfce/nfceForm.seam', 'https://appnfc.sefa.pa.gov.br/portal-homologacao/view/consultas/nfce/nfceForm.seam'); // PA
    25: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www5.receita.pb.gov.br/atf/seg/SEGf_AcessarFuncao.jsp?cdFuncao=FIS_1410', 'https://www6.receita.pb.gov.br/atf/seg/SEGf_AcessarFuncao.jsp?cdFuncao=FIS_1410'); //PB
    41: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'www.dfeportal.fazenda.pr.gov.br/dfe-portal/rest/servico/consultaNFCe', 'www.dfeportal.fazenda.pr.gov.br/dfe-portal/rest/servico/consultaNFCe'); // PR
    26: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PE
