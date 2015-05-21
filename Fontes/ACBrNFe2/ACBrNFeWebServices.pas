@@ -3821,7 +3821,7 @@ begin
             '-procEventoNFe.xml';
       end;
 
-      if NomeArq <> '' then
+      if (FConfiguracoes.Arquivos.Salvar) and (NomeArq <> '') then
         FConfiguracoes.Geral.Save(NomeArq, AXML, GerarPathDistribuicao);
     end;
   end;
