@@ -1572,7 +1572,18 @@ begin
            FlagEst := StrToInt( EscECFResposta.Params[1] );
 
            if FlagEst = 2 then
-              fpEstado := estRequerZ
+           begin
+              if IsBematech then
+              begin
+                 RetornaInfoECF( '99|10' ) ;
+                 if TestBit(StrToInt(EscECFResposta.Params[0]),3) then
+                   fpEstado := estBloqueada
+                 else
+                   fpEstado := estRequerZ;
+              end
+              else
+                 fpEstado := estRequerZ;
+           end
            // Workaround para Epson que não responde Flag de Status de Movimento corretamente
            else if (fpEstado = estBloqueada) and (FlagEst = 0) and IsEpson then
            begin
