@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/05/2015
+[+] Acrescentado propriedade para Separar por Nome os XML das NF-e retornadas pelos
+    métodos: DistribuicaoDFe e DownloadNFe.
+    por: Isaque Pinheiro
+
 20/05/2015
 [*] Acrescentado uma condição para determinar se será salvo em disco ou não os
     XML retornados pelo DistribuicaoDFe.

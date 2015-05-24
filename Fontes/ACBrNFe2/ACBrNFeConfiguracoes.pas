@@ -188,6 +188,7 @@ type
     FEmissaoPathNFe  : Boolean;
     FSalvarEvento : Boolean;
     FSepararCNPJ : Boolean;
+    FSepararNome : Boolean;
     FSepararModelo : Boolean;
     FSalvarApenasNFeProcessadas : Boolean;
     FPathNFe  : String;
@@ -207,7 +208,7 @@ type
     function GetPathCCe(CNPJ : String = ''): String;
     function GetPathMDe(CNPJ : String = ''): String;
     function GetPathEvento(tipoEvento : TpcnTpEvento; CNPJ : String = ''): String;
-    function GetPathDownload(CNPJ : String = ''): String;
+    function GetPathDownload(xNome: String = ''; CNPJ: String = ''): String;
   published
     property Salvar     : Boolean read FSalvar  write FSalvar  default False;
     property PastaMensal: Boolean read FMensal  write FMensal  default False;
@@ -216,6 +217,7 @@ type
     property SalvarCCeCanEvento: Boolean read FSalvarEvento write FSalvarEvento default False;
     property SepararPorCNPJ: Boolean read FSepararCNPJ write FSepararCNPJ default False ;
     property SepararPorModelo: Boolean read FSepararModelo write FSepararModelo default False ;
+    property SepararDownloadPorNome: Boolean read FSepararNome write FSepararNome default False ;
     property SalvarApenasNFeProcessadas: Boolean read FSalvarApenasNFeProcessadas write FSalvarApenasNFeProcessadas default False ;
     property PathNFe : String read FPathNFe  write FPathNFe;
     property PathCan : String read FPathCan  write FPathCan;
@@ -768,7 +770,7 @@ begin
 end;
 }
 
-function TArquivosConf.GetPathDownload(CNPJ: String): String;
+function TArquivosConf.GetPathDownload(xNome: String; CNPJ: String): String;
 var
   wDia, wMes, wAno : Word;
   Dir : String;
@@ -777,10 +779,14 @@ begin
   if DFeUtil.EstaVazio(FPathDownload) then
      Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
   else
-     Dir := FPathInu;
+     Dir := FPathDownload;
+
+  if FSepararNome then
+     if not DFeUtil.EstaVazio(xNome) then
+        Dir := PathWithDelim(Dir)+TiraAcentos(xNome);
 
   if FSepararCNPJ then
-     Dir := PathWithDelim(Dir)+TConfiguracoes( Self.Owner ).Certificados.CNPJ;
+     Dir := PathWithDelim(Dir)+CNPJ; // PathWithDelim(Dir)+TConfiguracoes( Self.Owner ).Certificados.CNPJ;
 
   if FSepararModelo then
    begin

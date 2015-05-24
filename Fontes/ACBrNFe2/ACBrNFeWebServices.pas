@@ -646,7 +646,7 @@ type
     FDownload: TDownLoadNFe;
 
     FretDownloadNFe: TretDownloadNFe;
-    function GerarPathDownload: String;
+    function GerarPathDownload(AItem :TRetNFeCollectionItem): String;
   protected
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
@@ -710,7 +710,7 @@ type
     FNSU: String;
 
     FretDistDFeInt: TretDistDFeInt;
-    function GerarPathDistribuicao: String;
+    function GerarPathDistribuicao(AItem :TdocZipCollectionItem): String;
   protected
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
@@ -3596,7 +3596,7 @@ begin
     begin
       NomeArq := FRetDownloadNFe.retNFe.Items[I].chNFe + '-nfe.xml';
       FConfiguracoes.Geral.Save(NomeArq, FRetDownloadNFe.retNFe.Items[I].procNFe,
-                                GerarPathDownload);
+                                GerarPathDownload( FRetDownloadNFe.retNFe.Items[I] ));
     end;
   end;
 end;
@@ -3621,9 +3621,9 @@ begin
             '- ' + E.Message;
 end;
 
-function TNFeDownloadNFe.GerarPathDownload: String;
+function TNFeDownloadNFe.GerarPathDownload(AItem :TRetNFeCollectionItem): String;
 begin
-  Result := FConfiguracoes.Arquivos.GetPathDownload( '' );
+  Result := FConfiguracoes.Arquivos.GetPathDownload('', Copy(AItem.chNFe,7,14));
 end;
 
 { TAdministrarCSCNFCe }
@@ -3822,7 +3822,7 @@ begin
       end;
 
       if (FConfiguracoes.Arquivos.Salvar) and (NomeArq <> '') then
-        FConfiguracoes.Geral.Save(NomeArq, AXML, GerarPathDistribuicao);
+        FConfiguracoes.Geral.Save(NomeArq, AXML, GerarPathDistribuicao( FretDistDFeInt.docZip.Items[I] ));
     end;
   end;
 end;
@@ -3849,9 +3849,9 @@ begin
             '- ' + E.Message;
 end;
 
-function TDistribuicaoDFe.GerarPathDistribuicao: String;
+function TDistribuicaoDFe.GerarPathDistribuicao(AItem :TdocZipCollectionItem): String;
 begin
-  Result := FConfiguracoes.Arquivos.GetPathDownload( '' );
+  Result := FConfiguracoes.Arquivos.GetPathDownload(AItem.resNFe.xNome, AItem.resNFe.CNPJCPF);
 end;
 
 { TNFeEnvioWebService }
