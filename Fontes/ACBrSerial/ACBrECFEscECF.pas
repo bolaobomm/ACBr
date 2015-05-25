@@ -1403,7 +1403,7 @@ end;
 function TACBrECFEscECF.RetornaInfoECF(Registrador: String): AnsiString;
 begin
   if Pos('|',Registrador) = 0 then
-     Registrador := Registrador + '|' ;
+     Registrador := Registrador + '|0' ;
 
   EscECFComando.CMD := 26;
   EscECFComando.AddParamString(Registrador);
@@ -1573,16 +1573,14 @@ begin
 
            if FlagEst = 2 then
            begin
-              if IsBematech then
+              fpEstado := estRequerZ;
+
+              if IsBematech then  // Workaround para Bematech, que não responde corretamente após Z emitida
               begin
                  RetornaInfoECF( '99|10' ) ;
                  if TestBit(StrToInt(EscECFResposta.Params[0]),3) then
-                   fpEstado := estBloqueada
-                 else
-                   fpEstado := estRequerZ;
-              end
-              else
-                 fpEstado := estRequerZ;
+                   fpEstado := estBloqueada;
+              end;
            end
            // Workaround para Epson que não responde Flag de Status de Movimento corretamente
            else if (fpEstado = estBloqueada) and (FlagEst = 0) and IsEpson then
