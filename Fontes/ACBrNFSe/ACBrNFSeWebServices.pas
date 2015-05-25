@@ -1292,6 +1292,7 @@ begin
    if FDadosMsg <> ''
     then begin
     {$IFDEF ACBrNFSeOpenSSL}
+     NotaUtil.InitXmlSec;
      if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
                      FConfiguracoes.Certificados.Certificado,
                      FConfiguracoes.Certificados.Senha,
@@ -1438,6 +1439,7 @@ begin
    if FDadosMsg <> ''
     then begin
     {$IFDEF ACBrNFSeOpenSSL}
+     NotaUtil.InitXmlSec;
      if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
                      FConfiguracoes.Certificados.Certificado,
                      FConfiguracoes.Certificados.Senha,
@@ -1637,6 +1639,7 @@ begin
    if FDadosMsg <> ''
     then begin
     {$IFDEF ACBrNFSeOpenSSL}
+     NotaUtil.InitXmlSec;
      if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
                      FConfiguracoes.Certificados.Certificado,
                      FConfiguracoes.Certificados.Senha,
@@ -1803,6 +1806,7 @@ begin
    if FDadosMsg <> ''
     then begin
     {$IFDEF ACBrNFSeOpenSSL}
+     NotaUtil.InitXmlSec;
      if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
                      FConfiguracoes.Certificados.Certificado,
                      FConfiguracoes.Certificados.Senha,
@@ -1944,6 +1948,7 @@ begin
  if FProvedorClass.GetAssinarXML(acConsSecRps)
   then begin
   {$IFDEF ACBrNFSeOpenSSL}
+   NotaUtil.InitXmlSec;
    if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
                    FConfiguracoes.Certificados.Certificado,
                    FConfiguracoes.Certificados.Senha,
@@ -2186,6 +2191,7 @@ begin
     then begin
     {$IFDEF ACBrNFSeOpenSSL}
      URIRef := '';
+     NotaUtil.InitXmlSec;
      if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
                      FConfiguracoes.Certificados.Certificado,
                      FConfiguracoes.Certificados.Senha,
@@ -3202,6 +3208,7 @@ begin
     then begin
     {$IFDEF ACBrNFSeOpenSSL}
      URIRef := '';
+     NotaUtil.InitXmlSec;
      if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
                      FConfiguracoes.Certificados.Certificado,
                      FConfiguracoes.Certificados.Senha,
