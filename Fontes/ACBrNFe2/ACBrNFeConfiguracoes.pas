@@ -180,6 +180,15 @@ type
     property ValidarDigest: Boolean read FValidarDigest write FValidarDigest default True;
   end;
 
+  TDownloadConf = class(TPersistent)
+  private
+    FPathDownload: String;
+    FSepararPorNome : Boolean;
+  published
+    property PathDownload: String read FPathDownload write FPathDownload;
+    property SepararPorNome: Boolean read FSepararPorNome write FSepararPorNome default False;
+  end;
+
   TArquivosConf = class(TComponent)
   private
     FSalvar   : Boolean;
@@ -188,7 +197,6 @@ type
     FEmissaoPathNFe  : Boolean;
     FSalvarEvento : Boolean;
     FSepararCNPJ : Boolean;
-    FSepararNome : Boolean;
     FSepararModelo : Boolean;
     FSalvarApenasNFeProcessadas : Boolean;
     FPathNFe  : String;
@@ -198,9 +206,10 @@ type
     FPathCCe  : String;
     FPathMDe  : String;
     FPathEvento  : String;
-    FPathDownload: String;
+    FDownload: TDownloadConf;
   public
     constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
     function GetPathCan(CNPJ : String = ''): String;
     function GetPathDPEC(CNPJ : String = ''): String;
     function GetPathInu(CNPJ : String = ''): String;
@@ -217,7 +226,6 @@ type
     property SalvarCCeCanEvento: Boolean read FSalvarEvento write FSalvarEvento default False;
     property SepararPorCNPJ: Boolean read FSepararCNPJ write FSepararCNPJ default False ;
     property SepararPorModelo: Boolean read FSepararModelo write FSepararModelo default False ;
-    property SepararDownloadPorNome: Boolean read FSepararNome write FSepararNome default False ;
     property SalvarApenasNFeProcessadas: Boolean read FSalvarApenasNFeProcessadas write FSalvarApenasNFeProcessadas default False ;
     property PathNFe : String read FPathNFe  write FPathNFe;
     property PathCan : String read FPathCan  write FPathCan;
@@ -226,7 +234,7 @@ type
     property PathCCe : String read FPathCCe  write FPathCCe;
     property PathMDe : String read FPathMDe  write FPathMDe;
     property PathEvento : String read FPathEvento  write FPathEvento;
-    property PathDownload: String read FPathDownload write FPathDownload;
+    property Download: TDownloadConf read FDownload write FDownload;
   end;
 
   TConfiguracoes = class(TComponent)
@@ -664,6 +672,13 @@ end;
 constructor TArquivosConf.Create(AOwner: TComponent);
 begin
   inherited;
+  FDownload := TDownloadConf.Create;
+end;
+
+destructor TArquivosConf.Destroy;
+begin
+  FDownload.Free;
+  inherited;
 end;
 
 function TArquivosConf.GetPathCan(CNPJ : String = ''): String;
@@ -776,17 +791,17 @@ var
   Dir : String;
   Data : TDateTime;
 begin
-  if DFeUtil.EstaVazio(FPathDownload) then
+  if DFeUtil.EstaVazio(FDownload.PathDownload) then
      Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
   else
-     Dir := FPathDownload;
+     Dir := FDownload.PathDownload;
 
-  if FSepararNome then
+  if FDownload.SepararPorNome then
      if not DFeUtil.EstaVazio(xNome) then
         Dir := PathWithDelim(Dir)+TiraAcentos(xNome);
 
   if FSepararCNPJ then
-     Dir := PathWithDelim(Dir)+CNPJ; // PathWithDelim(Dir)+TConfiguracoes( Self.Owner ).Certificados.CNPJ;
+     Dir := PathWithDelim(Dir)+CNPJ;
 
   if FSepararModelo then
    begin

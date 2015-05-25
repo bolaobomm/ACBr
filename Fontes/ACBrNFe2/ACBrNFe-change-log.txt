@@ -48,6 +48,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/05/2015
+[*] Criado um class DownloadConf, essa class passa a ser um propriedade Download do 
+    componente ACBrNFe, e tem como sub-propriedades "PathDownload" e "SepararPorNome".
+    Favor recompilar os pacotes e abrir seu projeto onde tem o componente ACBrNFe para
+    atualização do dfm.
+    por: Isaque Pinheiro
+
+25/05/2015
 [*] Incluido a chamada a procedure InitXmlSec antes de realizar a assinatura usando
     o OpenSSL.
     por: André J. da Silva, Italo Jurisato Junior
