@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/05/2015
+[*] Melhorias no DAMDFE em Fortes Report.
+    por: André J. da Silva
 [*] Incluido a chamada a procedure InitXmlSec antes de realizar a assinatura usando
     o OpenSSL.
     por: André J. da Silva, Italo Jurisato Junior
