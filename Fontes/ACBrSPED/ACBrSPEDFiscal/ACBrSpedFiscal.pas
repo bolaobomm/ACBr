@@ -769,31 +769,34 @@ begin
          QTD_REG_BLC := 1;
       end;
    end;
+   with Bloco_9.Registro9900 do
+   begin
+      if Bloco_0.Registro0005Count > 0 then
+      begin
+         with New do
+         begin
+            REG_BLC := '0005';
+            QTD_REG_BLC := Bloco_0.Registro0005Count;
+         end;
+      end;
+      if Bloco_0.Registro0015Count > 0 then
+      begin
+         with New do
+         begin
+            REG_BLC := '0015';
+            QTD_REG_BLC := Bloco_0.Registro0015Count;
+         end;
+      end;
+      with New do
+      begin
+         REG_BLC := '0100';
+         QTD_REG_BLC := 1;
+      end;
+   end;
    if Bloco_0.Registro0001.IND_MOV = imComDados then
    begin
       with Bloco_9.Registro9900 do
       begin
-         if Bloco_0.Registro0005Count > 0 then
-         begin
-            with New do
-            begin
-               REG_BLC := '0005';
-               QTD_REG_BLC := Bloco_0.Registro0005Count;
-            end;
-         end;
-         if Bloco_0.Registro0015Count > 0 then
-         begin
-            with New do
-            begin
-               REG_BLC := '0015';
-               QTD_REG_BLC := Bloco_0.Registro0015Count;
-            end;
-         end;
-         with New do
-         begin
-            REG_BLC := '0100';
-            QTD_REG_BLC := 1;
-         end;
          if Bloco_0.Registro0150Count > 0 then
          begin
             with New do
@@ -2048,20 +2051,23 @@ begin
          QTD_REG_BLC := 1;
       end;
    end;
+   with Bloco_9.Registro9900 do
+   begin
+      with New do
+      begin
+         REG_BLC := 'E100';
+         QTD_REG_BLC := Bloco_E.RegistroE100Count;
+      end;
+      with New do
+      begin
+         REG_BLC := 'E110';
+         QTD_REG_BLC := Bloco_E.RegistroE110Count;
+      end;
+   end;
    if Bloco_E.RegistroE001.IND_MOV = imComDados then
    begin
       with Bloco_9.Registro9900 do
       begin
-         with New do
-         begin
-            REG_BLC := 'E100';
-            QTD_REG_BLC := Bloco_E.RegistroE100Count;
-         end;
-         with New do
-         begin
-            REG_BLC := 'E110';
-            QTD_REG_BLC := Bloco_E.RegistroE110Count;
-         end;
          if Bloco_E.RegistroE111Count > 0 then
          begin
             with New do
