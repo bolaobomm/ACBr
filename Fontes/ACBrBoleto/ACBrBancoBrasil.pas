@@ -607,8 +607,8 @@ begin
    with ACBrBanco.ACBrBoleto.Cedente do
    begin
       TamConvenioMaior6:= Length(trim(Convenio)) > 6;
-      aAgencia:= PadR(Agencia, 4, '0');
-      aConta  := PadR(Conta, 8, '0');
+      aAgencia:= RightStr(Agencia, 4);
+      aConta  := RightStr(Conta, 8);
       
       wLinha:= '0'                            + // ID do Registro
                '1'                            + // ID do Arquivo( 1 - Remessa)

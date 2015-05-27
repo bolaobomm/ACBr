@@ -64,7 +64,7 @@ uses  ACBrBase,  {Units da ACBr}
      , Contnrs, Classes, Math, dateutils, strutils;
 
 const
-  CACBrBoleto_Versao = '0.0.128a' ;
+  CACBrBoleto_Versao = '0.0.129a' ;
 
   cACBrTipoOcorrenciaDecricao: array[1..179] of String = (
   'Remessa Registrar',
@@ -2485,8 +2485,8 @@ begin
 
   for I:= 1 to 38 do
   begin
-    Result[0].Tipo := TACBrTipoOcorrencia(I);
-    Result[0].descricao := cACBrTipoOcorrenciaDecricao[I];
+    Result[I-1].Tipo := TACBrTipoOcorrencia(I);
+    Result[I-1].descricao := cACBrTipoOcorrenciaDecricao[I];
   end;
 end;
 
