@@ -544,6 +544,9 @@ begin
     else
       m.header.From := sFrom;
 
+    if PedeConfirma then
+       m.Header.CustomHeaders.Add('Disposition-Notification-To: '+sFrom);
+
      m.header.subject := sAssunto;
      m.EncodeMessage;
      msg_lines.Add(m.Lines.Text);

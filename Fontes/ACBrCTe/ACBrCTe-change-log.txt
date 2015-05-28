@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/05/2015
+[*] Incluida a linha para pedir confirmação de envio de e-mail, no procedimento:
+    EnviaEmailNormal.
+    por: jfBatista
+
 06/05/2015
 [*] Criado uma nova definição do Envelope Soap para a consulta ao cadastro de
     contribuinte.
