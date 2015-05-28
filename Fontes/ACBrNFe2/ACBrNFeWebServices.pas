@@ -2181,7 +2181,8 @@ procedure TNFeConsulta.DefinirServicoEAction;
 begin
   if (FConfiguracoes.Geral.ModeloDF = moNFe) and
      (FConfiguracoes.Geral.VersaoDF = ve310) and
-     (FConfiguracoes.WebServices.UFCodigo in [29, 41]) then // 29 = BA, 41 = PR
+     (FConfiguracoes.WebServices.UFCodigo in [29]) then // 29 = BA
+//     (FConfiguracoes.WebServices.UFCodigo in [29, 41]) then // 29 = BA, 41 = PR
     FServico := CURL_WSDL + 'NfeConsulta'
   else
     FServico := CURL_WSDL + 'NfeConsulta2';
