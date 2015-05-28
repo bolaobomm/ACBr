@@ -192,8 +192,7 @@ var
   ok: boolean;
   i: Integer;
   StrStream: TStringStream;
-  StrAux, StrDecod: String;
-  oLeitorInfZip: TLeitor;
+  StrAux, StrDecod, versao: String;
   XMLNFe: String;
 
   {$IFDEF FPC}
@@ -286,13 +285,13 @@ begin
             FreeAndNil(StrStream);
           end;
 
-         (*JR12 *)FretNFe.Items[i].FprocNFe := '<'+ENCODING_UTF8+'>' +
+          FretNFe.Items[i].FprocNFe := {'<'+ENCODING_UTF8+'>' +}
                                                FretNFe.Items[i].FNFeZip;
         end;
 
         if pos('procNFe', Leitor.Grupo) > 0 then
         begin
-          (*JR12 *)FretNFe.Items[i].FprocNFe := '<'+ENCODING_UTF8+'>' +
+          FretNFe.Items[i].FprocNFe := {'<'+ENCODING_UTF8+'>' +}
                                            SeparaDados(Leitor.Grupo, 'procNFe');
         end;
 
@@ -335,14 +334,15 @@ begin
             FreeAndNil(StrStream);
           end;
 
-          oLeitorInfZip := TLeitor.Create;
-          oLeitorInfZip.Arquivo := FretNFe.Items[i].FNFeZip;
+          versao := RetornarConteudoEntre(FretNFe.Items[i].FNFeZip, 'versao="', '">');
 
-          (*JR12 *)FretNFe.Items[i].FprocNFe := '<' + ENCODING_UTF8 + '>' +
-                  '<nfeProc versao="' + oLeitorInfZip.rAtributo('versao') + '" ' +
-                      NAME_SPACE + '>' +
+          FretNFe.Items[i].FprocNFe := {'<' + ENCODING_UTF8 + '>' +}
+                  '<nfeProc versao="' + copy(versao, 1, 4) + '" ' + NAME_SPACE + '>' +
                     FretNFe.Items[i].FNFeZip +
-                    FretNFe.Items[i].FProtNFeZip +
+                    '<protNFe' +
+                      RetornarConteudoEntre(FretNFe.Items[i].FProtNFeZip,
+                                                     '<protNFe', '</protNFe>') +
+                    '</protNFe>' +
                   '</nfeProc>';
         end;
 
