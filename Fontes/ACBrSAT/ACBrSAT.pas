@@ -511,6 +511,7 @@ function TACBrSAT.ConsultarStatusOperacional : String ;
 Var
   ok: Boolean;
   I: Integer;
+  AStr: String;
 begin
   fsComandoLog := 'ConsultarStatusOperacional';
   IniciaComando;
@@ -560,7 +561,11 @@ begin
       Inc(I);
       CERT_VENCIMENTO:= StoD( fsResposta.RetornoLst[I] ) ;
       Inc(I);
-      ESTADO_OPERACAO:= StrToEstadoOperacao(ok, fsResposta.RetornoLst[I]) ;;
+      AStr := fsResposta.RetornoLst[I];
+      if StrIsNumber(AStr) then
+        ESTADO_OPERACAO := TACBrSATEstadoOperacao( StrToInt(AStr) )
+      else
+        ESTADO_OPERACAO:= StrToEstadoOperacao(ok, AStr) ;;
     end;
   end;
 end ;
@@ -869,7 +874,7 @@ end;
 
 procedure TACBrSAT.ImprimirExtratoCancelamento;
 begin
-  VerificaCondicoesImpressao;
+  VerificaCondicoesImpressao( True );
   Extrato.ImprimirExtratoCancelamento;
 end;
 
