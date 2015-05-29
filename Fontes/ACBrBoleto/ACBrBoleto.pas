@@ -64,7 +64,7 @@ uses  ACBrBase,  {Units da ACBr}
      , Contnrs, Classes, Math, dateutils, strutils;
 
 const
-  CACBrBoleto_Versao = '0.0.129a' ;
+  CACBrBoleto_Versao = '0.0.130a' ;
 
   cACBrTipoOcorrenciaDecricao: array[1..179] of String = (
   'Remessa Registrar',
@@ -2270,7 +2270,12 @@ end;
 
 function TACBrBancoClass.CalcularFatorVencimento(const DataVencimento: TDatetime) : String;
 begin
-   Result := IntToStrZero( Max(Trunc(DataVencimento - EncodeDate(1997,10,07)),0),4 );
+   {** Padrão para vencimentos até 21/02/2025 **}
+   //Result := IntToStrZero( Max(Trunc(DataVencimento - EncodeDate(1997,10,07)),0),4 );
+
+  {** Padrão com suporte a datas superiores a 21/02/2025
+      http://www.abbc.org.br/images/content/manual%20operacional.pdf **}
+   Result := IntToStrZero(Max((Trunc(DataVencimento) - Trunc(EncodeDate(2000,07,03))) mod 9000 + 1000, 0), 4);
 end;
 
 function TACBrBancoClass.CalcularDigitoCodigoBarras (

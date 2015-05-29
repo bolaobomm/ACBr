@@ -879,7 +879,7 @@ begin
           (ACBrBoleto.Cedente.ResponEmissao <>  tbCliEmite)) then
        begin
          ANossoNumero       := '00000000000000000000';
-         ADigitoNossoNumero := '';
+         ADigitoNossoNumero := ' ';
        end
       else
        begin
@@ -950,7 +950,7 @@ begin
       { Pegando Tipo de Cobrança}
       case RetornaCodCarteira(ACBrTitulo.Carteira) of
         11,17 :
-          case ACBrBoleto.Cedente.CaracTitulo of
+          case CaracTitulo of
             tcSimples: aTipoCobranca:='     ';
             tcDescontada: aTipoCobranca:='04DSC';
             tcVendor: aTipoCobranca:='08VDR';
