@@ -689,6 +689,7 @@ begin
         cCmdAlinhadoCentro   := ESC + 'a1';
         cCmdAlinhadoDireita  := ESC + 'a2'; // Verificar comando BEMA/POS
         cCmdCortaPapel       := ESC + 'w'#29#249#31#49; // ESC + +'w' corta papel, demais voltam a configuração da impressora
+        cCmdImprimeLogo      := FS + 'p'#1#3; 
         cCmdCodeBarEAN8      := ConfigurarBarrasBematech(GS + 'k' + ETX);
         cCmdCodeBarEAN13     := ConfigurarBarrasBematech(GS + 'k' + STX);
         cCmdCodeBarINTER25   := ConfigurarBarrasBematech(GS + 'k' + ENQ);
