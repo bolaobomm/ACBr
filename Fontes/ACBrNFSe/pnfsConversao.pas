@@ -966,8 +966,11 @@ begin
   3549409, // Sao Joaquim Da Barra/SP
   3551603, // Serra Negra/SP
   3555000, // Tupã/SP
-  5003207  // Corumba/MS
-//  5102637  // Campo Novo Do Parecis/MT
+  5003207, // Corumba/MS
+  3511300  // Cedral / SP        Daniel Jr - Mirassol-SP
+
+  //  5102637  // Campo Novo Do Parecis/MT
+
          : Provedor := 'Fiorilli';
 
   1100304, // Vilhena/RO
@@ -983,6 +986,7 @@ begin
   5107875, // Sapezal/MT
   5107909  // Sinop/MT
 //  5107958  // Tangara da Serra/MT
+
          : Provedor := 'FISSLEX';
 
 //  2919553  // Luis Eduardo Magalhaes/BA
@@ -1026,7 +1030,7 @@ begin
   3503208, // Araraquara/SP
   3506359, // Bertioga/SP
   3510401, // Capivari/SP
-  3511300, // Cedral/SP
+//  3511300, // Cedral/SP Daniel Jr
   3512001, // Colina/SP
   3513009, // Cotia/SP
   3513801, // Diadema/SP
