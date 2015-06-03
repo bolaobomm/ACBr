@@ -457,7 +457,64 @@ begin
               raise Exception.Create('Erro ao criar o arquivo PDF');
            end;
          end
+				else if Cmd.Metodo = 'imprimirinutilizacao' then
+				 begin
+						if ACBrNFe1.DANFE.MostrarPreview then
+            begin
+              Restaurar1.Click;
+              Application.BringToFront;
+            end;
 
+           if FileExists(Cmd.Params(0)) or FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(0)) then
+            begin
+              if FileExists(Cmd.Params(0)) then
+                 ACBrNFe1.InutNFe.LerXML(Cmd.Params(0))
+              else
+                 ACBrNFe1.InutNFe.LerXML(PathWithDelim(ACBrNFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(0));
+            end
+           else
+              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');        
+
+           ConfiguraDANFe;
+
+           if DFeUtil.NaoEstaVazio(Cmd.Params(1)) then
+              ACBrNFe1.DANFE.Impressora := Cmd.Params(1)
+           else
+              ACBrNFe1.DANFE.Impressora := cbxImpressora.Text;
+
+           if DFeUtil.NaoEstaVazio(Cmd.Params(2)) then
+              ACBrNFe1.DANFE.NumCopias := StrToIntDef(Cmd.Params(2),1)
+           else
+              ACBrNFe1.DANFE.NumCopias := StrToIntDef(edtNumCopia.Text,1);
+
+  				 ACBrNFe1.ImprimirInutilizacao;
+					 Cmd.Resposta := 'Inutilização Impresso com sucesso';
+					 if ACBrNFe1.DANFE.MostrarPreview then
+             Ocultar1.Click;
+				 end
+				else if Cmd.Metodo = 'imprimirinutilizacaopdf' then
+         begin
+           if FileExists(Cmd.Params(0)) or FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(0)) then
+            begin
+              if FileExists(Cmd.Params(0)) then
+                 ACBrNFe1.InutNFe.LerXML(Cmd.Params(0))
+              else
+                 ACBrNFe1.InutNFe.LerXML(PathWithDelim(ACBrNFe1.Configuracoes.Geral.PathSalvar)+Cmd.Params(0));
+            end
+           else
+              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');         
+
+           ConfiguraDANFe;
+
+           try
+              ACBrNFe1.ImprimirInutilizacaoPDF;
+              ArqPDF := OnlyNumber(ACBrNFe1.InutNFe.Id);
+              ArqPDF := PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ArqPDF+'-procInutNFe.pdf';
+              Cmd.Resposta := 'Arquivo criado em: ' + ArqPDF ;
+           except
+              raise Exception.Create('Erro ao criar o arquivo PDF');
+           end;
+         end				
         else if Cmd.Metodo = 'inutilizarnfe' then
          begin                            //CNPJ         //Justificat   //Ano                    //Modelo                 //Série                  //Num.Inicial            //Num.Final
            ACBrNFe1.WebServices.Inutiliza(Cmd.Params(0), Cmd.Params(1), StrToInt(Cmd.Params(2)), StrToInt(Cmd.Params(3)), StrToInt(Cmd.Params(4)), StrToInt(Cmd.Params(5)), StrToInt(Cmd.Params(6)));
