@@ -887,8 +887,8 @@ begin
   5100201, // Água Boa/MT
   5102686, // Campos de Júlio/MT
   5103379, // Cotriguacu/MT
-  5103502  // Diamantino/MT
-  4216602: // São José/SC
+  5103502, // Diamantino/MT
+  4216602  // São José/SC
 
          : Provedor := 'Betha';
 

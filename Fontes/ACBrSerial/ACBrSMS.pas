@@ -99,6 +99,8 @@ type
     procedure TrocarBandeja(const ASimCard: TACBrSMSSimCard);
     procedure EnviarSMS(const ATelefone, AMensagem: String;
       var AIndice: String);
+
+    procedure ApagarSMS(const ANumeroMensagem: String);
     procedure EnviarSMSLote(const ALote: TACBrSMSMensagens;
       var AIndice: String);
     procedure ListarMensagens(const AFiltro: TACBrSMSFiltro;
@@ -431,6 +433,13 @@ begin
 
   fsSMS.Desativar;
   fsAtivo := False;
+end;
+
+procedure TACBrSMS.ApagarSMS(const ANumeroMensagem: String);
+begin
+  TestaAtivo;
+  TestaEmLinha;
+  fsSMS.ApagarSMS(ANumeroMensagem);
 end;
 
 end.
