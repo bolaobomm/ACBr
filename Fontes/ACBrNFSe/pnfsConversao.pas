@@ -970,7 +970,8 @@ begin
   3551603, // Serra Negra/SP
   3555000, // Tupã/SP
   5003207, // Corumba/MS
-  3511300  // Cedral / SP        Daniel Jr - Mirassol-SP
+  3511300,  // Cedral / SP        Daniel Jr - Mirassol-SP
+  3544905  // Sales Oliveira/SP
 
   //  5102637  // Campo Novo Do Parecis/MT
 
