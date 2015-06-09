@@ -314,7 +314,7 @@ begin
                 with Header do
                 begin
                   WriteString('Host: ' + AHost + sLineBreak);
-                  WriteString('Content-Type: ' + FMimeType + SLineBreak);
+                  WriteString('Content-Type: ' + FMimeType + '; charset=' + FCharsets + SLineBreak);
                   WriteString('Accept-Charset: ' + FCharsets + SLineBreak);
                   WriteString('SOAPAction: "' + FSOAPAction + '"' + SLineBreak);
                   WriteString(SLineBreak);
