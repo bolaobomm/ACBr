@@ -1025,7 +1025,7 @@ begin
     Gerador.wCampoNFSe(tcStr, '#38', 'RazaoSocial', 001, 115, 0, NFSe.Tomador.RazaoSocial, '');
 
     Gerador.wGrupoNFSe('Endereco');
-
+    (*
     if FProvedor = proVirtual then
     begin
       Gerador.wCampoNFSe(tcStr, '#39', 'Endereco   ', 001, 125, 1, NFSe.Tomador.Endereco.Endereco, '');
@@ -1033,7 +1033,7 @@ begin
       Gerador.wCampoNFSe(tcStr, '#41', 'Complemento', 001, 060, 1, NFSe.Tomador.Endereco.Complemento, '');
       Gerador.wCampoNFSe(tcStr, '#42', 'Bairro     ', 001, 060, 1, NFSe.Tomador.Endereco.Bairro, '');
     end
-    else begin
+    else begin*)
       Gerador.wCampoNFSe(tcStr, '#39', 'Endereco   ', 001, 125, 0, NFSe.Tomador.Endereco.Endereco, '');
       Gerador.wCampoNFSe(tcStr, '#40', 'Numero     ', 001, 010, 0, NFSe.Tomador.Endereco.Numero, '');
       if FProvedor <> proNFSeBrasil then
@@ -1041,7 +1041,7 @@ begin
       else
         Gerador.wCampoNFSe(tcStr, '#41', 'Complemento', 001, 060, 1, NFSe.Tomador.Endereco.Complemento, '');
       Gerador.wCampoNFSe(tcStr, '#42', 'Bairro     ', 001, 060, 0, NFSe.Tomador.Endereco.Bairro, '');
-    end;
+    //end;
 
     if FProvedor in [proEquiplano, proISSNet] then
     begin
@@ -1060,12 +1060,13 @@ begin
     Gerador.wGrupoNFSe('/Endereco');
 
     case FProvedor of
+    (*
      proVirtual: begin
                    Gerador.wGrupoNFSe('Contato');
                    Gerador.wCampoNFSe(tcStr, '#46', 'Telefone', 01, 11, 1, OnlyNumber(NFSe.Tomador.Contato.Telefone), '');
                    Gerador.wCampoNFSe(tcStr, '#47', 'Email   ', 01, 80, 1, NFSe.Tomador.Contato.Email, '');
                    Gerador.wGrupoNFSe('/Contato');
-                 end;
+                 end;*)
      proNFSeBrasil: begin
                       Gerador.wCampoNFSe(tcStr, '#47', 'Email   ', 01, 80, 1, NFSe.Tomador.Contato.Email, '');
                       Gerador.wCampoNFSe(tcStr, '#46', 'Telefone', 01, 11, 1, OnlyNumber(NFSe.Tomador.Contato.Telefone), '');

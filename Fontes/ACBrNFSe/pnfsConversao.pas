@@ -1321,6 +1321,7 @@ begin
   3521408, // Iracemapolis/SP;
   3511508, // Cerquilho/SP
   3514106, // Dois Corregos/SP
+  3519006, // Herculandia/SP
   3520608, // Indiana/SP
   3524808, // Jales/SP
   3530201, // Mirante Do Paranapanema/SP
