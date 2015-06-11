@@ -194,7 +194,7 @@ type
 
 implementation
 
-Uses ACBrUtil, ACBrSATDinamico_cdecl, ACBrSATDinamico_stdcall;
+Uses ACBrUtil, ACBrSATDinamico_cdecl, ACBrSATDinamico_stdcall, synautil;
 
 { TACBrSAT }
 
@@ -369,6 +369,7 @@ begin
     ide.tpAmb             := fsConfig.ide_tpAmb;
     ide.numeroCaixa       := fsConfig.ide_numeroCaixa;
     ide.signAC            := signAC;
+    ide.modelo            := 59;
     Emit.CNPJCPF          := fsConfig.emit_CNPJ;
     Emit.IE               := fsConfig.emit_IE;
     Emit.IM               := fsConfig.emit_IM;
@@ -439,6 +440,7 @@ begin
   begin
     ForceDirectories( PastaCFeCancelamento );
     NomeCFe := PastaCFeCancelamento + PathDelim + chave + '-can-env.xml';
+    ForceDirectories(ExtractFilePath(NomeCFe));
     WriteToTXT(NomeCFe, dadosCancelamento, False, False);
   end;
 
@@ -466,6 +468,7 @@ begin
      if SalvarCFes then
      begin
        NomeCFe := PastaCFeCancelamento + PathDelim + chave + '-can.xml';
+       ForceDirectories(ExtractFilePath(NomeCFe));
        WriteToTXT(NomeCFe, XMLRecebido, False, False);
      end;
   end;
@@ -598,6 +601,7 @@ begin
     NomeCFe := PastaCFeVenda + PathDelim +
                FormatDateTime('YYYYMMDDHHNNSS',Now) + '-' +
                IntToStrZero(numeroSessao, 6) + '-cfe-env.xml';
+    ForceDirectories(ExtractFilePath(NomeCFe));
     WriteToTXT(NomeCFe, dadosVenda, False, False);
   end;
 
@@ -611,6 +615,7 @@ begin
      if SalvarCFes then
      begin
        NomeCFe := PastaCFeVenda + PathDelim + CPREFIXO_CFe + CFe.infCFe.ID + '.xml';
+       ForceDirectories(ExtractFilePath(NomeCFe));
        WriteToTXT(NomeCFe, XMLRecebido, False, False);
      end;
   end;
@@ -664,9 +669,8 @@ begin
   begin
     LogBin := DecodeBase64( Resposta.RetornoLst[5] );
 
-    AStream.Size     := 0;
-    AStream.Position := 0;
-    AStream.WriteBuffer(LogBin[1], Length(LogBin));
+    AStream.Size := 0;
+    WriteStrToStream(AStream, LogBin);
   end;
 end;
 
@@ -686,6 +690,7 @@ begin
      if SalvarCFes then
      begin
        NomeCFe := PastaCFeVenda + PathDelim + CPREFIXO_CFe + CFe.infCFe.ID + '-teste.xml';
+       ForceDirectories(ExtractFilePath(NomeCFe));
        WriteToTXT(NomeCFe, XMLRecebido, False, False);
      end;
   end;
