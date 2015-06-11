@@ -1405,12 +1405,19 @@ begin
 
  FTagI := FProvedorClass.Gera_TagI(acConsLote, Prefixo3, Prefixo4, NameSpaceDad, FConfiguracoes.WebServices.Identificador, URISig);
 
- if (TNFSeConsultarLoteRPS(Self).FCNPJ = '') then
-    TNFSeConsultarLoteRPS(Self).FCNPJ:=OnlyNumber(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj);
+ if FProvedor = proEL then
+ begin
+   if (TNFSeConsultarLoteRPS(Self).FCNPJ = '') then
+     TNFSeConsultarLoteRPS(Self).FCNPJ := OnlyNumber(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj);
+ end
+ else begin
+   if (TNFSeConsultarLoteRPS(Self).FCNPJ = '') then
+     TNFSeConsultarLoteRPS(Self).FCNPJ := OnlyNumber(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj);
+ end;
  if (TNFSeConsultarLoteRPS(Self).FIM = '') then
-    TNFSeConsultarLoteRPS(Self).FIM:=TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
+    TNFSeConsultarLoteRPS(Self).FIM := TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
  if (TNFSeConsultarLoteRPS(Self).FRazaoSocial = '') and (FProvedor = proTecnos) then
-    TNFSeConsultarLoteRPS(Self).FRazaoSocial:=TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
+    TNFSeConsultarLoteRPS(Self).FRazaoSocial := TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
 
  FDadosSenha := FProvedorClass.Gera_DadosSenha(FConfiguracoes.WebServices.UserWeb,
                                                FConfiguracoes.WebServices.SenhaWeb);
@@ -4301,6 +4308,14 @@ begin
 		//2 - Não Processado, lote com erro
 		//3 - Processado com sucesso
 		//4 - Processado com avisos
+  //Alterado por Anderson Grampinha
+  //Provedor EL
+  else if (FProvedor = proEL) then
+    Result := (FSituacao = '1') or (FSituacao = '3') or (FSituacao = '4')
+		//1 - Aguardando processamento
+		//2 - Não Processado, lote com erro
+		//3 - Processado com avisos
+		//4 - Processado com sucesso
   else if (FProvedor = proInfisc) then
     Result := (FSituacao = '4')
 		//3 - Processado com sucesso

@@ -920,6 +920,16 @@ begin
        end;
       end;
    4: begin
+       // Alterado por Anderson Grampinha
+       // alterado para pegar o CNPJ provedor EL
+       if self.Configuracoes.WebServices.Provedor = proEl then
+       begin
+         if Trim(CNPJ) = '' then
+           CNPJ := Copy(ArquivoXML.Text,
+                        Pos('<CpfCnpj>', ArquivoXML.Text) + 9,
+                        Pos('</CpfCnpj>',ArquivoXML.Text) - (Pos('<CpfCnpj>', ArquivoXML.Text) + 9));
+       end;
+
        if Trim(RazaoSocial) = '' then
           Prestador := Copy(ArquivoXML.Text,
                       Pos('<Prestador>', ArquivoXML.Text) + 11,
@@ -941,6 +951,8 @@ begin
             LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
             LocNFSeR.TabServicosExt := self.Configuracoes.Arquivos.TabServicosExt;
             LocNFSeR.Provedor       := self.Configuracoes.WebServices.Provedor;
+            //Alterado por Anderson Grampinha
+            LocNFSeR.NFSe.Prestador.Cnpj:= CNPJ;
             LocNFSeR.LerXml;
             LocNFSeR.NFSe.PrestadorServico.RazaoSocial := RazaoSocial;
             Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
@@ -961,6 +973,8 @@ begin
             LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
             LocNFSeR.TabServicosExt := self.Configuracoes.Arquivos.TabServicosExt;
             LocNFSeR.Provedor       := self.Configuracoes.WebServices.Provedor;
+            //Alterado por Anderson Grampinha
+            LocNFSeR.NFSe.Prestador.Cnpj := CNPJ;
             LocNFSeR.LerXml;
             Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
             Items[Self.Count-1].NomeArq := CaminhoArquivo;

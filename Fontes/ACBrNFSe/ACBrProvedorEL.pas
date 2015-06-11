@@ -142,48 +142,115 @@ begin
   
      case ACodCidade of
           3203205: begin // Linhares/ES
-                        ConfigURL.HomNomeCidade := 'notafiscal.linhares.es';
-                        ConfigURL.ProNomeCidade := 'notafiscal.linhares.es';
-                        nfse                    := '/el-nfse';
+                        ConfigURL.HomNomeCidade := '187.60.167.217/';
+                        ConfigURL.ProNomeCidade := 'notafiscal.linhares.es.gov.br/';
+                        nfse                    := 'el-nfse';
 
-                        ConfigURL.HomRecepcaoLoteRPS    := 'https://' + ConfigURL.HomNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-                        ConfigURL.HomConsultaLoteRPS    := 'https://' + ConfigURL.HomNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-                        ConfigURL.HomConsultaNFSeRPS    := 'https://' + ConfigURL.HomNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-                        ConfigURL.HomConsultaSitLoteRPS := 'https://' + ConfigURL.HomNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-                        ConfigURL.HomConsultaNFSe       := 'https://' + ConfigURL.HomNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-                        ConfigURL.HomCancelaNFSe        := 'https://' + ConfigURL.HomNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
+                        //http://187.60.167.217/el-nfse/RpsService?wsdl
+                        //http://notafiscal.linhares.es.gov.br/el-nfse/RpsService?wsdl
 
-                        ConfigURL.ProRecepcaoLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-                        ConfigURL.ProConsultaLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-                        ConfigURL.ProConsultaNFSeRPS    := 'https://' + ConfigURL.ProNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-                        ConfigURL.ProConsultaSitLoteRPS := 'https://' + ConfigURL.ProNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-                        ConfigURL.ProConsultaNFSe       := 'https://' + ConfigURL.ProNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-                        ConfigURL.ProCancelaNFSe        := 'https://' + ConfigURL.ProNomeCidade + '.gov.br' + nfse + '/WSNacional/nfse.asmx';
-                   end;
-          3202603: begin
-                        ConfigURL.HomNomeCidade := 'nf-iconha-es';
-                        ConfigURL.ProNomeCidade := 'nf-iconha-es';          
-                        nfse                    := '.el.com.br';
-
-                        ConfigURL.HomRecepcaoLoteRPS    := 'https://' + ConfigURL.HomNomeCidade + nfse + '/RpsServiceService?wsdl';
+                        ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + nfse + '/RpsService?wsdl';
                         ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
                         ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
                         ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
                         ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
                         ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
 
-                        ConfigURL.ProRecepcaoLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + nfse + '/RpsServiceService?wsdl';
+                        ConfigURL.ProRecepcaoLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + nfse + '/RpsService?wsdl';
                         ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
                         ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
                         ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
                         ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
                         ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
                    end;
-          3128006: begin // Guanhães/MG
+
+          3202603: begin // Iconha
+                        ConfigURL.HomNomeCidade := 'nf-iconha-es';
+                        ConfigURL.ProNomeCidade := 'nf-iconha-es';
+                        nfse                    := '.el.com.br';
+
+                        // https://nf-iconha-es.el.com.br/RpsServiceService?wsdl
+                        ConfigURL.HomRecepcaoLoteRPS    := 'https://' + ConfigURL.HomNomeCidade + nfse + '/RpsService?wsdl';
+                        ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+                        ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+                        ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+                        ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+                        ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+
+                        ConfigURL.ProRecepcaoLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + nfse + '/RpsService?wsdl';
+                        ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+                        ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+                        ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+                        ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+                        ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+                   end;
+          3204906: begin // São Mateus - ES
+                        ConfigURL.HomNomeCidade := 'nfse00.el.com.br:17080/';
+                        ConfigURL.ProNomeCidade := 'nfse00.el.com.br:17080/';
+                        nfse                    := 'nfse_es_saomateus';
+
+                        // http://nfse00.el.com.br:17080/nfse_es_saomateus/RpsServiceService?wsdl
+                        ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + nfse + '/RpsService?wsdl';
+                        ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+                        ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+                        ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+                        ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+                        ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+
+                        ConfigURL.ProRecepcaoLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + nfse + '/RpsService?wsdl';
+                        ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+                        ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+                        ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+                        ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+                        ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+                   end;
+          3201506: begin // Colatina - ES
+                        ConfigURL.HomNomeCidade := 'nfse00.el.com.br:19080/';
+                        ConfigURL.ProNomeCidade := 'nfse00.el.com.br:19080/';
+                        nfse                    := 'nfse_es_colatina';
+
+                        // http://nfse00.el.com.br:19080/nfse_es_colatina/RpsServiceService?wsdl
+                        ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + nfse + '/RpsService?wsdl';
+                        ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+                        ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+                        ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+                        ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+                        ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+
+                        ConfigURL.ProRecepcaoLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + nfse + '/RpsService?wsdl';
+                        ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+                        ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+                        ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+                        ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+                        ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+                   end;
+          3200607: begin // Aracruz - ES
+                        ConfigURL.HomNomeCidade := 'nfe.pma.es.gov.br:8080/';
+                        ConfigURL.ProNomeCidade := 'nfe.pma.es.gov.br:8080/';
+                        nfse                    := 'nfse';
+
+                        // http://nfe.pma.es.gov.br:8080/nfse/RpsServiceService?wsdl
+                        ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + nfse + '/RpsServiceService?wsdl';
+                        ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
+                        ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
+                        ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
+                        ConfigURL.HomConsultaNFSe       := ConfigURL.HomRecepcaoLoteRPS;
+                        ConfigURL.HomCancelaNFSe        := ConfigURL.HomRecepcaoLoteRPS;
+
+                        ConfigURL.ProRecepcaoLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + nfse + '/RpsServiceService?wsdl';
+                        ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
+                        ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
+                        ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;
+                        ConfigURL.ProConsultaNFSe       := ConfigURL.ProRecepcaoLoteRPS;
+                        ConfigURL.ProCancelaNFSe        := ConfigURL.ProRecepcaoLoteRPS;
+                   end;
+
+          3128006: begin // Guanhães - MG
                         ConfigURL.HomNomeCidade := 'nfse00.el.com.br:17080/';
                         ConfigURL.ProNomeCidade := 'nfse00.el.com.br:17080/';
                         nfse                    := 'nfse_mg_guanhaes';
 
+                        // http://nfse00.el.com.br:17080/nfse_mg_guanhaes/RpsServiceService?wsdl
                         ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + nfse + '/RpsServiceService?wsdl';
                         ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
                         ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
@@ -382,32 +449,35 @@ end;
 
 function TProvedorEL.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
-  {case Acao of
-   acRecepcionar: Result := 'https://nf-iconha-es.el.com.br/RpsService/RecepcionarLoteRps';
-   acConsSit    : Result := 'https://nf-iconha-es.el.com.br/RpsService/ConsultarSituacaoLoteRps';
-   acConsLote   : Result := 'https://nf-iconha-es.el.com.br/RpsService/ConsultarLoteRps';
-   acConsNFSeRps: Result := 'https://nf-iconha-es.el.com.br/RpsService/ConsultarNfsePorRps';
-   acConsNFSe   : Result := 'https://nf-iconha-es.el.com.br/RpsService/ConsultarNfse';
-   acCancelar   : Result := 'https://nf-iconha-es.el.com.br/RpsService/CancelarNfse';
-   acGerar:       Result := '';
-   acRecSincrono: Result := '';
-   acSubstituir:  Result := '';
-  end;}
-  Result := 'https://nf-iconha-es.el.com.br/RpsService?xsd=1';
+(*  case Acao of
+    acRecepcionar: Result := 'http://www.el.com.br/nfse/xsd/el-nfse.xsd/RecepcionarLoteRps';
+    acConsSit    : Result := 'http://www.el.com.br/nfse/xsd/el-nfse.xsd/ConsultarSituacaoLoteRps';
+    acConsLote   : Result := 'http://www.el.com.br/nfse/xsd/el-nfse.xsd/ConsultarLoteRps';
+    acConsNFSeRps: Result := 'http://www.el.com.br/nfse/xsd/el-nfse.xsd/ConsultarNfsePorRps';
+    acConsNFSe   : Result := 'http://www.el.com.br/nfse/xsd/el-nfse.xsd/ConsultarNfse';
+    acCancelar   : Result := 'http://www.el.com.br/nfse/xsd/el-nfse.xsd/CancelarNfse';
+    acGerar      : Result := '';
+    acRecSincrono: Result := '';
+    acSubstituir : Result := '';
+  end; *)
+
+  //Result := 'https://nf-iconha-es.el.com.br/RpsService?xsd=1';
+
+  Result := '';
 end;
 
 function TProvedorEL.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
 begin
   case Acao of
-   acRecepcionar: Result := RetornoWS;
-   acConsSit    : Result := RetornoWS;
-   acConsLote   : Result := RetornoWS;
-   acConsNFSeRps: Result := RetornoWS;
-   acConsNFSe   : Result := RetornoWS;
-   acCancelar   : Result := RetornoWS;
-   acGerar:       Result := RetornoWS;
-   acRecSincrono: Result := SeparaDados( RetornoWS, 'return' ); // Usado para autenticarContribuinte
-   acSubstituir:  Result := RetornoWS;
+    acRecepcionar: Result := RetornoWS;
+    acConsSit    : Result := RetornoWS;
+    acConsLote   : Result := RetornoWS;
+    acConsNFSeRps: Result := RetornoWS;
+    acConsNFSe   : Result := RetornoWS;
+    acCancelar   : Result := RetornoWS;
+    acGerar:       Result := RetornoWS;
+    acRecSincrono: Result := SeparaDados( RetornoWS, 'return' ); // Usado para autenticarContribuinte
+    acSubstituir:  Result := RetornoWS;
   end;
 end;
 

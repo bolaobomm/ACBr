@@ -376,6 +376,11 @@ begin
   if (FConfiguracoes.WebServices.Provedor in [proTecnos]) and (ARazaoSocial = '') then
     ARazaoSocial := NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
 
+  //Alterado por Anderson Grampinha
+  //obrigatorio passar a cnpj para o provedor EL
+  if (FConfiguracoes.WebServices.Provedor in [proEl]) and (ACNPJ = '') then
+    ACNPJ := NotasFiscais.Items[0].NFSe.Prestador.Cnpj;
+
  Result := WebServices.ConsultaLoteRps(AProtocolo, ACNPJ, AInscricaoMunicipal, ASenha, AFraseSecreta, ARazaoSocial);
 end;
 
