@@ -912,6 +912,7 @@ begin
   5106224, // Nova Mutum/MT
   5106307, // Paranatinga/MT
   5106455, // Planalto da Serra/MT
+  5100250, // Alta Floresta/MT
   5108006  // Tapurah/MT
          : Provedor := 'Coplan';
 
@@ -1236,7 +1237,6 @@ begin
   5006002, // Nova Alvorada do Sul/MS
   5007208, // Rio Brilhante/MS
   5007901, // Sidrolândia/MS
-  5100250, // Alta Floresta/MT
   5103403, // Cuiaba/MT
   5105101, // Juara/MT
 //  5105903, // Nobres/MT
