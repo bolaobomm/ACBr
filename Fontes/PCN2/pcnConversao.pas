@@ -77,7 +77,8 @@ type
                     stCTeCadastro, stCTeEmail, stCTeCCe, stCTeEvento, stCTeEnvioWebService);
 
   TStatusACBrMDFe = (stMDFeIdle, stMDFeStatusServico, stMDFeRecepcao, stMDFeRetRecepcao,
-                     stMDFeConsulta, stMDFeRecibo, stMDFeEmail, stMDFeEvento, stMDFeEnvioWebService);
+                     stMDFeConsulta, stMDFeRecibo, stMDFeEmail, stMDFeEvento, stMDFeDistDFeInt,
+                     stMDFeEnvioWebService);
 
   (* IMPORTANTE - Sempre que alterar um Tipo efetuar a atualização das funções de conversão correspondentes *)
   TLayOut = (LayNfeRecepcao, LayNfeRetRecepcao, LayNfeCancelamento,
@@ -228,7 +229,8 @@ type
   TpcnIndOperacao = (ioConsultaCSC, ioNovoCSC, ioRevogaCSC);
 
   // Incluido por Italo em 18/02/2015
-  TpcnTipoSchema = (tsresNFe, tsresEvento, tsprocNFe, tsprocEventoNFe);
+  TpcnTipoSchema = (tsresNFe, tsresEvento, tsprocNFe, tsprocEventoNFe,
+                    tsprocMDFe, tsprocEventoMDFe);
 
 const
   TpcnTpEventoString : array[0..18] of String =('110110',
@@ -1968,18 +1970,22 @@ function TipoSchemaToStr(const t: TpcnTipoSchema ): string;
 begin
   result := EnumeradoToStr(t, ['resNFe_v1.00.xsd', 'resEvento_v1.00.xsd',
                                'procNFe_v1.00.xsd', 'procNFe_v2.00.xsd',
-                               'procNFe_v3.10.xsd', 'procEventoNFe_v1.00.xsd'],
+                               'procNFe_v3.10.xsd', 'procEventoNFe_v1.00.xsd',
+                               'procMDFe_v1.00.xsd', 'procEventoMDFe_v1.00.xsd'],
                               [tsresNFe, tsresEvento, tsprocNFe, tsprocNFe,
-                               tsprocNFe, tsprocEventoNFe]);
+                               tsprocNFe, tsprocEventoNFe,
+                               tsprocMDFe, tsprocEventoMDFe]);
 end;
 
 function StrToTipoSchema(out ok: boolean; const s: string): TpcnTipoSchema;
 begin
   result := StrToEnumerado(ok, s, ['resNFe_v1.00.xsd', 'resEvento_v1.00.xsd',
                                    'procNFe_v1.00.xsd', 'procNFe_v2.00.xsd',
-                                   'procNFe_v3.10.xsd', 'procEventoNFe_v1.00.xsd'],
+                                   'procNFe_v3.10.xsd', 'procEventoNFe_v1.00.xsd',
+                                   'procMDFe_v1.00.xsd', 'procEventoMDFe_v1.00.xsd'],
                                   [tsresNFe, tsresEvento, tsprocNFe, tsprocNFe,
-                                   tsprocNFe, tsprocEventoNFe]);
+                                   tsprocNFe, tsprocEventoNFe,
+                                   tsprocMDFe, tsprocEventoMDFe]);
 end;
 
 end.

@@ -167,6 +167,15 @@ type
     property ValidarDigest: Boolean read FValidarDigest write FValidarDigest default True;
   end;
 
+  TDownloadConf = class(TPersistent)
+  private
+    FPathDownload: String;
+    FSepararPorNome : Boolean;
+  published
+    property PathDownload: String read FPathDownload write FPathDownload;
+    property SepararPorNome: Boolean read FSepararPorNome write FSepararPorNome default False;
+  end;
+
   TArquivosConf = class(TComponent)
   private
     FSalvar: Boolean;
@@ -178,10 +187,13 @@ type
     FPathMDFe: String;
     FPathEvento: String;
     FSalvarApenasMDFeProcessados: Boolean;
+    FDownload: TDownloadConf;
   public
     constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
     function GetPathMDFe(Data: TDateTime = 0; CNPJ : String = ''): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; Data: TDateTime = 0; CNPJ : String = ''): String;
+    function GetPathDownload(xNome: String = ''; CNPJ: String = ''): String;
   published
     property Salvar: Boolean           read FSalvar          write FSalvar          default False;
     property PastaMensal: Boolean      read FMensal          write FMensal          default False;
@@ -192,6 +204,7 @@ type
     property PathMDFe: String          read FPathMDFe        write FPathMDFe;
     property PathEvento: String        read FPathEvento      write FPathEvento;
     property SalvarApenasMDFeProcessados: Boolean read FSalvarApenasMDFeProcessados write FSalvarApenasMDFeProcessados default False;
+    property Download: TDownloadConf read FDownload write FDownload;
   end;
 
   TConfiguracoes = class(TComponent)
@@ -621,6 +634,13 @@ end;
 constructor TArquivosConf.Create(AOwner: TComponent);
 begin
   inherited;
+  FDownload := TDownloadConf.Create;
+end;
+
+destructor TArquivosConf.Destroy;
+begin
+  FDownload.Free;
+  inherited;
 end;
 
 function TArquivosConf.GetPathMDFe(Data: TDateTime = 0; CNPJ : String = ''): String;
@@ -695,6 +715,44 @@ begin
      ForceDirectories(Dir);
 
   Result := Dir;
+end;
+
+function TArquivosConf.GetPathDownload(xNome, CNPJ: String): String;
+var
+  wDia, wMes, wAno : Word;
+  Dir : String;
+  Data : TDateTime;
+begin
+  if DFeUtil.EstaVazio(FDownload.PathDownload) then
+     Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
+  else
+     Dir := FDownload.PathDownload;
+
+  if FDownload.SepararPorNome then
+     if not DFeUtil.EstaVazio(xNome) then
+        Dir := PathWithDelim(Dir)+TiraAcentos(xNome);
+
+  if FSepararCNPJ then
+     Dir := PathWithDelim(Dir)+CNPJ;
+
+  if FMensal then
+   begin
+     Data := Now;
+     DecodeDate(Data, wAno, wMes, wDia);
+     if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0 then
+        Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
+   end;
+
+  if FLiteral then
+   begin
+     if copy(Dir,length(Dir)-3, 4) <> 'Down' then
+        Dir := PathWithDelim(Dir) + 'Down';
+   end;
+
+  if not DirectoryExists(Dir) then
+     ForceDirectories(Dir);
+
+  Result  := Dir;
 end;
 
 end.

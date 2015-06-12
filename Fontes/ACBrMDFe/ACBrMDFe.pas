@@ -50,7 +50,7 @@ uses
      Forms, Dialogs,
   {$IFEND}
   smtpsend, ssl_openssl, mimemess, mimepart, // units para enviar email
-  pcnConversao, pmdfeMDFe,
+  pcnConversao, pmdfeMDFe, mdfeRetDistDFeInt,
   pmdfeEnvEventoMDFe, pmdfeRetEnvEventoMDFe,
   ACBrMDFeManifestos, ACBrMDFeConfiguracoes, ACBrUtil, 
   ACBrMDFeWebServices, ACBrMDFeUtil, ACBrDFeUtil, ACBrMDFeDAMDFeClass;
@@ -75,6 +75,7 @@ type
     FDAMDFe: TACBrMDFeDAMDFeClass;
     FManifestos: TManifestos;
     FEventoMDFe: TEventoMDFe;
+    FRetDistDFeInt: TRetDistDFeInt;
     FWebServices: TWebServices;
     FConfiguracoes: TConfiguracoes;
     FStatus: TStatusACBrMDFe;
@@ -134,6 +135,7 @@ type
     property WebServices: TWebServices read FWebServices write FWebServices;
     property Manifestos: TManifestos   read FManifestos  write FManifestos;
     property EventoMDFe: TEventoMDFe   read FEventoMDFe  write FEventoMDFe;
+    property RetDistDFeInt: TRetDistDFeInt read FRetDistDFeInt write FRetDistDFeInt;
     property Status: TStatusACBrMDFe   read FStatus;
 
     procedure SetStatus(const stNewStatus: TStatusACBrMDFe);
@@ -176,6 +178,10 @@ type
                          NomeArq: String = '';
                          UsarThread: Boolean = True;
                          HTML: Boolean = False);
+    function DistribuicaoDFe(AcUFAutor: Integer;
+                             ACNPJCPF,
+                             AultNSU,
+                             ANSU: String): Boolean;
   published
     property Configuracoes: TConfiguracoes     read FConfiguracoes  write FConfiguracoes;
     property OnStatusChange: TNotifyEvent      read FOnStatusChange write FOnStatusChange;
@@ -222,6 +228,7 @@ begin
   FManifestos               := TManifestos.Create(Self, Manifesto);
   FManifestos.Configuracoes := FConfiguracoes;
   FEventoMDFe               := TEventoMDFe.Create;
+  FRetDistDFeInt            := TRetDistDFeInt.Create;
   FWebServices              := TWebServices.Create(Self);
 
   if FConfiguracoes.WebServices.Tentativas <= 0
@@ -240,6 +247,7 @@ begin
   FConfiguracoes.Free;
   FManifestos.Free;
   FEventoMDFe.Free;
+  FRetDistDFeInt.Free;
   FWebServices.Free;
 
 {$IFDEF ACBrMDFeOpenSSL}
@@ -672,6 +680,24 @@ begin
      raise EACBrMDFeException.Create('Componente DAMDFE não associado.')
   else
      DAMDFE.ImprimirEVENTOPDF(nil);
+end;
+
+function TACBrMDFe.DistribuicaoDFe(AcUFAutor: Integer; ACNPJCPF, AultNSU,
+  ANSU: String): Boolean;
+begin
+  WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
+  WebServices.DistribuicaoDFe.CNPJCPF  := ACNPJCPF;
+  WebServices.DistribuicaoDFe.ultNSU   := AultNSU;
+  WebServices.DistribuicaoDFe.NSU      := ANSU;
+
+  Result := WebServices.DistribuicaoDFe.Executar;
+
+  if not Result then
+  begin
+    if Assigned(Self.OnGerarLog) then
+      Self.OnGerarLog(WebServices.DistribuicaoDFe.Msg);
+    raise EACBrMDFeException.Create(WebServices.DistribuicaoDFe.Msg);
+  end;
 end;
 
 { EACBrMDFeException }
