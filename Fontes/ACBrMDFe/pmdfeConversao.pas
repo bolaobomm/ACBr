@@ -54,7 +54,7 @@ type
   TLayOutMDFe     = (LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta,
                      LayMDFeStatusServico, LayMDFeEvento, LayMDFeConsNaoEnc,
                      LayMDFeDistDFeInt);
-
+  TSituacaoMDFe = (snAutorizado, snDenegado, snCancelado, snEncerrado);
 
 const
 

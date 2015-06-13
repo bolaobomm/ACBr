@@ -143,7 +143,7 @@ type
     FdigVal: String;
     FdhRecbto: TDateTime;
     FnProt: String;
-    FcSitMDFe: TpcnSituacaoNFe;
+    FcSitMDFe: TSituacaoMDFe;
   public
     property chMDFe: String           read FchMDFe   write FchMDFe;
     property CNPJCPF: String          read FCNPJCPF  write FCNPJCPF;
@@ -155,7 +155,7 @@ type
     property digVal: String           read FdigVal   write FdigVal;
     property dhRecbto: TDateTime      read FdhRecbto write FdhRecbto;
     property nProt: String            read FnProt    write FnProt;
-    property cSitMDFe: TpcnSituacaoNFe read FcSitMDFe  write FcSitMDFe;
+    property cSitMDFe: TSituacaoMDFe  read FcSitMDFe  write FcSitMDFe;
   end;
   (*
   TresEvento = class
@@ -562,8 +562,9 @@ begin
 
           case oLeitorInfZip.rCampo(tcInt, 'cStat') of
             100: FdocZip.Items[i].FresMDFe.FcSitMDFe := snAutorizado;
-            101: FdocZip.Items[i].FresMDFe.FcSitMDFe := snCancelada;
+            101: FdocZip.Items[i].FresMDFe.FcSitMDFe := snCancelado;
             110: FdocZip.Items[i].FresMDFe.FcSitMDFe := snDenegado;
+            132: FdocZip.Items[i].FresMDFe.FcSitMDFe := snEncerrado;
           end;
         end;
 
