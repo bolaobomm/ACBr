@@ -38,7 +38,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnLeitor, synacode;
+  pcnAuxiliar, pcnConversao, pmdfeConversao, pcnLeitor, synacode;
 
 type
   TresMDFe              = class;

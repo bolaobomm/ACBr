@@ -206,6 +206,7 @@ begin
                 LayMDFeConsulta:      result := '1.00';
                 LayMDFeEvento:        result := '1.00';
                 LayMDFeConsNaoEnc:    result := '1.00';
+                LayMDFeDistDFeInt:    result := '1.00';
               end;
             end;
   end;

@@ -230,12 +230,13 @@ class function MDFeUtil.GetURLSVRS(AAmbiente: Integer;
   ALayOut: TLayOutMDFe): WideString;
 begin
   case ALayOut of
-    LayMDFeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx'            , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx');
-    LayMDFeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx'      , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx');
-    LayMDFeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx', 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx');
-    LayMDFeConsulta:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx'            , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx');
-    LayMDFeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx'  , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx');
-    LayMDFeConsNaoEnc:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx'        , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx');
+    LayMDFeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx'              , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx');
+    LayMDFeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx'        , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx');
+    LayMDFeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx'  , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx');
+    LayMDFeConsulta:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx'              , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx');
+    LayMDFeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx'    , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx');
+    LayMDFeConsNaoEnc:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx'          , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx');
+    LayMDFeDistDFeInt:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/WS/MDFeDistribuicaoDFe/MDFeDistribuicaoDFe.asmx', 'https://mdfe-homologacao.svrs.rs.gov.br/WS/MDFeDistribuicaoDFe/MDFeDistribuicaoDFe.asmx');
   end;
 end;
 
@@ -243,12 +244,13 @@ class function MDFeUtil.GetURLMG(AAmbiente: Integer;
   ALayOut: TLayOutMDFe): WideString;
 begin
   case ALayOut of
-    LayMDFeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx'            , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx');
-    LayMDFeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx'      , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx');
-    LayMDFeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx', 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx');
-    LayMDFeConsulta:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx'            , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx');
-    LayMDFeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx'  , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx');
-    LayMDFeConsNaoEnc:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx'        , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx');
+    LayMDFeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx'              , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx');
+    LayMDFeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx'        , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx');
+    LayMDFeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx'  , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx');
+    LayMDFeConsulta:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx'              , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx');
+    LayMDFeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx'    , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx');
+    LayMDFeConsNaoEnc:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx'          , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx');
+    LayMDFeDistDFeInt:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/WS/MDFeDistribuicaoDFe/MDFeDistribuicaoDFe.asmx', 'https://mdfe-homologacao.svrs.rs.gov.br/WS/MDFeDistribuicaoDFe/MDFeDistribuicaoDFe.asmx');
   end;
 end;
 
@@ -256,12 +258,13 @@ class function MDFeUtil.GetURLRS(AAmbiente: Integer;
   ALayOut: TLayOutMDFe): WideString;
 begin
   case ALayOut of
-    LayMDFeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx'            , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx');
-    LayMDFeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx'      , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx');
-    LayMDFeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx', 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx');
-    LayMDFeConsulta:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx'            , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx');
-    LayMDFeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx'  , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx');
-    LayMDFeConsNaoEnc:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx'        , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx');
+    LayMDFeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx'              , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx');
+    LayMDFeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx'        , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx');
+    LayMDFeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx'  , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx');
+    LayMDFeConsulta:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx'              , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx');
+    LayMDFeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx'    , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx');
+    LayMDFeConsNaoEnc:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx'          , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx');
+    LayMDFeDistDFeInt:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/WS/MDFeDistribuicaoDFe/MDFeDistribuicaoDFe.asmx', 'https://mdfe-homologacao.svrs.rs.gov.br/WS/MDFeDistribuicaoDFe/MDFeDistribuicaoDFe.asmx');
   end;
 end;
 
@@ -269,12 +272,13 @@ class function MDFeUtil.GetURLSP(AAmbiente: Integer;
   ALayOut: TLayOutMDFe): WideString;
 begin
   case ALayOut of
-    LayMDFeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx'            , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx');
-    LayMDFeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx'      , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx');
-    LayMDFeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx', 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx');
-    LayMDFeConsulta:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx'            , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx');
-    LayMDFeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx'  , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx');
-    LayMDFeConsNaoEnc:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx'        , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx');
+    LayMDFeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx'              , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx');
+    LayMDFeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx'        , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx');
+    LayMDFeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx'  , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx');
+    LayMDFeConsulta:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx'              , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx');
+    LayMDFeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx'    , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx');
+    LayMDFeConsNaoEnc:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx'          , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx');
+    LayMDFeDistDFeInt:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/WS/MDFeDistribuicaoDFe/MDFeDistribuicaoDFe.asmx', 'https://mdfe-homologacao.svrs.rs.gov.br/WS/MDFeDistribuicaoDFe/MDFeDistribuicaoDFe.asmx');
   end;
 end;
 
@@ -282,12 +286,13 @@ class function MDFeUtil.GetURLMS(AAmbiente: Integer;
   ALayOut: TLayOutMDFe): WideString;
 begin
   case ALayOut of
-    LayMDFeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx'            , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx');
-    LayMDFeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx'      , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx');
-    LayMDFeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx', 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx');
-    LayMDFeConsulta:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx'            , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx');
-    LayMDFeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx'  , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx');
-    LayMDFeConsNaoEnc:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx'        , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx');
+    LayMDFeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx'              , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx');
+    LayMDFeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx'        , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx');
+    LayMDFeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx'  , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx');
+    LayMDFeConsulta:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx'              , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx');
+    LayMDFeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx'    , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx');
+    LayMDFeConsNaoEnc:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx'          , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx');
+    LayMDFeDistDFeInt:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/WS/MDFeDistribuicaoDFe/MDFeDistribuicaoDFe.asmx', 'https://mdfe-homologacao.svrs.rs.gov.br/WS/MDFeDistribuicaoDFe/MDFeDistribuicaoDFe.asmx');
   end;
 end;
 
@@ -295,12 +300,13 @@ class function MDFeUtil.GetURLMT(AAmbiente: Integer;
   ALayOut: TLayOutMDFe): WideString;
 begin
   case ALayOut of
-    LayMDFeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx'            , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx');
-    LayMDFeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx'      , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx');
-    LayMDFeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx', 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx');
-    LayMDFeConsulta:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx'            , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx');
-    LayMDFeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx'  , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx');
-    LayMDFeConsNaoEnc:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx'        , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx');
+    LayMDFeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx'              , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcao/MDFeRecepcao.asmx');
+    LayMDFeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx'        , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferetrecepcao/MDFeRetRecepcao.asmx');
+    LayMDFeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx'  , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdferecepcaoevento/MDFeRecepcaoEvento.asmx');
+    LayMDFeConsulta:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx'              , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsulta/MDFeConsulta.asmx');
+    LayMDFeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx'    , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfestatusservico/MDFeStatusServico.asmx');
+    LayMDFeConsNaoEnc:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx'          , 'https://mdfe-homologacao.svrs.rs.gov.br/ws/mdfeconsnaoenc/MDFeConsNaoEnc.asmx');
+    LayMDFeDistDFeInt:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.svrs.rs.gov.br/WS/MDFeDistribuicaoDFe/MDFeDistribuicaoDFe.asmx', 'https://mdfe-homologacao.svrs.rs.gov.br/WS/MDFeDistribuicaoDFe/MDFeDistribuicaoDFe.asmx');
   end;
 end;
 
