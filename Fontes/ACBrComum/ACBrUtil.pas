@@ -1528,8 +1528,10 @@ begin
      PosIni := PosFim + 1 ;
 
      // Pula CaracterQuebrar no Inicio da String
-     while (Texto[PosIni] = CaracterQuebrar) and (PosIni <= Tamanho) do
-        Inc(PosIni) ;
+     if (PosIni <= Tamanho) then
+         // Pula CaracterQuebrar no Inicio da String
+         while (Texto[PosIni] = CaracterQuebrar) and (PosIni <= Tamanho) do
+            Inc(PosIni) ;
 
   until (PosIni > Tamanho);
 end;
