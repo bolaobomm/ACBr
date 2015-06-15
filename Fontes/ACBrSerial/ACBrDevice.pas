@@ -152,10 +152,12 @@ TACBrECFConfigBarras = class(TPersistent)
     FMostrarCodigo: Boolean;
     FAltura: Integer;
     FLarguraLinha: Integer;
+    FMargem: Integer;
   published
     property MostrarCodigo: Boolean read FMostrarCodigo write FMostrarCodigo;
     property LarguraLinha: Integer read FLarguraLinha write FLarguraLinha;
     property Altura: Integer read FAltura write FAltura;
+    property Margem: Integer read FMargem write FMargem;
 end;
 
 { TACBrDevice }

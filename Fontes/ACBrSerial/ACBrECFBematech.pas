@@ -698,11 +698,14 @@ const
     TamFixo: Integer = 0): AnsiString;
   var
     L, A : Integer ;
+    M1, M2 : Byte ;
   begin
     with AECFClass.ConfigBarras do
     begin
       L := IfThen( LarguraLinha = 0, 3, max(min(LarguraLinha,4),2) );
       A := IfThen( Altura = 0, 162, max(min(Altura,255),1) );
+      M1 := Byte(Margem SHR 0);
+      M2 := Byte(Margem SHR 8);
     end ;
 
     ACodigo := Trim( ACodigo );
@@ -711,9 +714,11 @@ const
 
     Result := GS + 'w' + chr( L ) + // Largura
               GS + 'h' + chr( A ) + // Altura
+              GS + 'k' + #132 + char(M1) + char(M2) + // Margem
               GS + 'H' + ifthen( AECFClass.ConfigBarras.MostrarCodigo, #1, #0 ) +
               ATipo + chr( Length( ACodigo ) ) + ACodigo;
   end;
+
 
   Function AddStartStop( Conteudo: AnsiString ) : AnsiString ;
   begin
