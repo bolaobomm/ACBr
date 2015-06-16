@@ -597,8 +597,8 @@ begin
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx',            'https://nfe-homologacao.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx');
       LayNfeCadastro       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://cad.svrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx', 'https://cad-homologacao.svrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx');
-      LayNfeConsNFeDest    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.svrs.rs.gov.br/ws/nfeConsultaDest/nfeConsultaDest.asmx',          'https://nfe-homologacao.svrs.rs.gov.br/ws/nfeConsultaDest/nfeConsultaDest.asmx');
-      LayNfeDownloadNFe    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.svrs.rs.gov.br/ws/nfeDownloadNF/nfeDownloadNF.asmx',              'https://nfe-homologacao.svrs.rs.gov.br/ws/nfeDownloadNF/nfeDownloadNF.asmx');
+//      LayNfeConsNFeDest    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.svrs.rs.gov.br/ws/nfeConsultaDest/nfeConsultaDest.asmx',          'https://nfe-homologacao.svrs.rs.gov.br/ws/nfeConsultaDest/nfeConsultaDest.asmx');
+//      LayNfeDownloadNFe    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.svrs.rs.gov.br/ws/nfeDownloadNF/nfeDownloadNF.asmx',              'https://nfe-homologacao.svrs.rs.gov.br/ws/nfeDownloadNF/nfeDownloadNF.asmx');
     end;
    end
   else
@@ -1053,8 +1053,8 @@ begin
       LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx',       'https://nfe-homologacao.sefazrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx');
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazrs.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx',            'https://nfe-homologacao.sefazrs.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx');
-      LayNfeConsNFeDest    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazrs.rs.gov.br/ws/nfeConsultaDest/nfeConsultaDest.asmx',          'https://nfe-homologacao.sefazrs.rs.gov.br/ws/nfeConsultaDest/nfeConsultaDest.asmx');
-      LayNfeDownloadNFe    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazrs.rs.gov.br/ws/nfeDownloadNF/nfeDownloadNF.asmx',              'https://nfe-homologacao.sefazrs.rs.gov.br/ws/nfeDownloadNF/nfeDownloadNF.asmx');
+//      LayNfeConsNFeDest    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazrs.rs.gov.br/ws/nfeConsultaDest/nfeConsultaDest.asmx',          'https://nfe-homologacao.sefazrs.rs.gov.br/ws/nfeConsultaDest/nfeConsultaDest.asmx');
+//      LayNfeDownloadNFe    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazrs.rs.gov.br/ws/nfeDownloadNF/nfeDownloadNF.asmx',              'https://nfe-homologacao.sefazrs.rs.gov.br/ws/nfeDownloadNF/nfeDownloadNF.asmx');
       LayNfeCadastro       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://cad.sefazrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx', 'https://cad.sefazrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx');
     end;
    end
