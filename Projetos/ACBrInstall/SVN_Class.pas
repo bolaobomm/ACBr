@@ -76,7 +76,7 @@ type
     class function  WinExecAndWait32(CmdLine: AnsiString; Visibility: Integer = SW_SHOW): DWORD; static;
 
     // Métodos que utilizam o tortoise
-//    class function IsTortoiseInstalado: Boolean; static;
+    class function IsTortoiseInstalado: Boolean; static;
     class procedure SVNTortoise_CheckOut(const AUrl, APath: String;
       const AFecharAutomaticamente: Boolean); static;
     class procedure SVNTortoise_Update(const APath: String;
@@ -188,7 +188,10 @@ const
     end;
   end;
 begin
-  FSVNInstalled := IsOLEObjectInstalled(SVN_OBJECT_NAME);
+  try
+    FSVNInstalled := IsOLEObjectInstalled(SVN_OBJECT_NAME);
+  except
+  end;
 
   Reg := TRegistry.Create;
   try
@@ -239,10 +242,10 @@ begin
   WinExecAndWait32(CmdLine, SW_SHOW);
 end;
 
-//class function TSVN_Class.IsTortoiseInstalado: Boolean;
-//begin
-//  Result := FileExists(TSVNTortoisePath);
-//end;
+class function TSVN_Class.IsTortoiseInstalado: Boolean;
+begin
+  Result := FileExists(TSVNTortoisePath);
+end;
 
 class procedure TSVN_Class.SVNTortoise_CheckOut(const AUrl, APath: String;
   const AFecharAutomaticamente: Boolean);

@@ -1223,8 +1223,8 @@ begin
   {$ENDIF}
 
   // Verificar se o tortoise está instalado
-//  if not TSVN_Class.IsTortoiseInstalado then
-  if not TSVN_Class.SVNInstalled then
+  if not TSVN_Class.IsTortoiseInstalado then
+//  if not TSVN_Class.SVNInstalled then
   begin
     Stop := True;
     Application.MessageBox(
