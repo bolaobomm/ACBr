@@ -318,12 +318,12 @@ begin
 
       NomeArqPDF := StringReplace(NomeArqPDF, 'NFSe', '', [rfIgnoreCase]);
 //      NomeArqPDF := StringReplace(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe.Numero, 'NFSe', '', [rfIgnoreCase]);
-      NomeArqPDF := PathWithDelim(Self.PathPDF) + NomeArqPDF + '.pdf';
+      NomeArqPDF := PathWithDelim(Self.PathPDF) + NomeArqPDF + '-nfse.pdf';
 
       if NomeArqPDF = ''
       then begin
         NomeArqPDF := trim(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NomeArq);
-        NomeArqPDF := StringReplace(NomeArqPDF, '-nfse.xml', '.pdf', [rfIgnoreCase]);
+        NomeArqPDF := StringReplace(NomeArqPDF, '-nfse.xml', '-nfse.pdf', [rfIgnoreCase]);
       end;
 
       fqrDANFSeQRRetrato.SavePDF( NomeArqPDF
@@ -360,12 +360,12 @@ begin
      NomeArqPDF := NFSe.Numero;
 
    NomeArqPDF := StringReplace(NomeArqPDF, 'NFSe', '', [rfIgnoreCase]);
-   NomeArqPDF := PathWithDelim(Self.PathPDF) + NomeArqPDF + '.pdf';
+   NomeArqPDF := PathWithDelim(Self.PathPDF) + NomeArqPDF + '-nfse.pdf';
 
    if NomeArqPDF = ''
     then begin
      NomeArqPDF := StringReplace(NFSe.Numero, 'NFSe', '', [rfIgnoreCase]);
-     NomeArqPDF := PathWithDelim(Self.PathPDF) + NomeArqPDF + '.pdf';
+     NomeArqPDF := PathWithDelim(Self.PathPDF) + NomeArqPDF + '-nfse.pdf';
     end;
 //    else NomeArqPDF := StringReplace(NomeArqPDF, '-nfse.xml', '.pdf', [rfIgnoreCase]);
 
