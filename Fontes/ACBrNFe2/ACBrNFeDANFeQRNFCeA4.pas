@@ -655,7 +655,7 @@ begin
                        
   qrlSiteConsulta.Caption := NotaUtil.GetURLConsultaNFCe(FNFE.Ide.cUF, FNFe.Ide.tpAmb);
 
-  qrlChave.Caption := NotaUtil.FormatarChaveAcesso(Copy(FNFe.InfNFe.Id, 4, 44));
+  qrlChave.Caption := NotaUtil.FormatarChaveAcesso(FNFe.InfNFe.Id);
 end;
 
 procedure TfqrDANFeQRNFCeA4.qrb07_ConsumidorBeforePrint(Sender: TQRCustomBand;

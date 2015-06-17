@@ -656,7 +656,7 @@ begin
                        
   qrlSiteConsulta.Caption := NotaUtil.GetURLConsultaNFCe(FNFE.Ide.cUF, FNFe.Ide.tpAmb);
 
-  qrlChave.Caption := NotaUtil.FormatarChaveAcesso(Copy(FNFe.InfNFe.Id, 4, 44));
+  qrlChave.Caption := NotaUtil.FormatarChaveAcesso(FNFe.InfNFe.Id);
 end;
 
 procedure TfqrDANFeQRNFCe.qrb07_ConsumidorBeforePrint(Sender: TQRCustomBand;
@@ -704,7 +704,7 @@ begin
 
       sURL := NotaUtil.GetURLQRCode(FNFE.Ide.cUF,
                                     FNFe.Ide.tpAmb,
-                                    OnlyNumber(CopyFNFe.InfNFe.Id),
+                                    OnlyNumber(FNFe.InfNFe.Id),
                                     cDest,
                                     FNFe.Ide.dEmi,
                                     FNFe.Total.ICMSTot.vNF,
