@@ -703,7 +703,7 @@ begin
 
       sURL := NotaUtil.GetURLQRCode(FNFE.Ide.cUF,
                                     FNFe.Ide.tpAmb,
-                                    Copy(FNFe.InfNFe.Id, 4, 44),
+                                    OnlyNumber(FNFe.InfNFe.Id),
                                     cDest,
                                     FNFe.Ide.dEmi,
                                     FNFe.Total.ICMSTot.vNF,
