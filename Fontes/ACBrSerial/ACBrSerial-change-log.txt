@@ -97,6 +97,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 16/06/2015
+-- ACBrECFEscECF -- (por: DSA)
+[-] Corrigido Bug na detecção do estado "estPagamento" após a Subtotalização do
+    Cupom
+[*] Melhorada rotina de Sincronismo com o ECF, adicionando 5 tentativas.
+[*] Melhorada a rotina de calculo de Checksum, para desprezar buffer de Resposta
+    adicional e não solicitado.
+[+] Adicionada verificação de Falha de Resposta ao pedido de Status (ECF mudo)
+    problema detectado na Leitura de DadosUltimaReducaoZ em Bematech MP4200-TH
+
 Data: 15/06/2015
 -- ACBrECFBematech e ACBrDevice -- (por: batiati)
 [*] Inclusão da propriedade "Margem" na classe ConfigBarras
