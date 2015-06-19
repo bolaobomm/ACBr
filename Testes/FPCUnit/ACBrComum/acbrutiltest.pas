@@ -1766,62 +1766,62 @@ end;
 
 procedure EAN13Test.EAN13Valido_StringValida_RetornaTrue;
 begin
-  CheckTrue(ACBrUtil.EAN13Valido('1234567890123'));
+  CheckTrue(ACBrUtil.EAN13Valido('1234567890128'));
 end;
 
 procedure EAN13Test.EAN13_DV_Codigo000000000000_Retorna0;
 begin
-  CheckEqualsString('0', ACBrUtil.EAN13_DV('000000000000'));
+  CheckEquals('0', ACBrUtil.EAN13_DV('000000000000'));
 end;
 
 procedure EAN13Test.EAN13_DV_Codigo200010000262_Retorna9;
 begin
-  CheckEqualsString('9', ACBrUtil.EAN13_DV('200010000262'));
+  CheckEquals('9', ACBrUtil.EAN13_DV('200010000262'));
 end;
 
 procedure EAN13Test.EAN13_DV_Codigo750619518556_Retorna8;
 begin
-  CheckEqualsString('8', ACBrUtil.EAN13_DV('750619518556'));
+  CheckEquals('8', ACBrUtil.EAN13_DV('750619518556'));
 end;
 
 procedure EAN13Test.EAN13_DV_Codigo789106088613_Retorna9;
 begin
-  CheckEqualsString('9', ACBrUtil.EAN13_DV('789106088613'));
+  CheckEquals('9', ACBrUtil.EAN13_DV('789106088613'));
 end;
 
 procedure EAN13Test.EAN13_DV_Codigo789394608717_Retorna3;
 begin
-  CheckEqualsString('3', ACBrUtil.EAN13_DV('789394608717'));
+  CheckEquals('3', ACBrUtil.EAN13_DV('789394608717'));
 end;
 
 procedure EAN13Test.EAN13_DV_Codigo789623251782_Retorna8;
 begin
-  CheckEqualsString('8', ACBrUtil.EAN13_DV('789623251782'));
+  CheckEquals('8', ACBrUtil.EAN13_DV('789623251782'));
 end;
 
 procedure EAN13Test.EAN13_DV_Codigo789664590002_Retorna6;
 begin
-  CheckEqualsString('6', ACBrUtil.EAN13_DV('789664590002'));
+  CheckEquals('6', ACBrUtil.EAN13_DV('789664590002'));
 end;
 
 procedure EAN13Test.EAN13_DV_Codigo789718601509_Retorna5;
 begin
-  CheckEqualsString('5', ACBrUtil.EAN13_DV('789718601509'));
+  CheckEquals('5', ACBrUtil.EAN13_DV('789718601509'));
 end;
 
 procedure EAN13Test.EAN13_DV_Codigo789813213201_Retorna9;
 begin
-  CheckEqualsString('9', ACBrUtil.EAN13_DV('789813213201'));
+  CheckEquals('9', ACBrUtil.EAN13_DV('789813213201'));
 end;
 
 procedure EAN13Test.EAN13_DV_Codigo789890814101_Retorna6;
 begin
-  CheckEqualsString('6', ACBrUtil.EAN13_DV('789890814101'));
+  CheckEquals('6', ACBrUtil.EAN13_DV('789890814101'));
 end;
 
 procedure EAN13Test.EAN13_DV_StringAlphanumerica_RetornaVazio;
 begin
-  CheckEqualsString('', ACBrUtil.EAN13_DV('1234567890ab'));
+  CheckEquals('', ACBrUtil.EAN13_DV('1234567890ab'));
 end;
 
 procedure EAN13Test.SetUp;
