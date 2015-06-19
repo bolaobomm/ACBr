@@ -2506,7 +2506,7 @@ function EAN13_DV(CodEAN13: String): String;
 Var A,DV : Integer ;
 begin
    Result   := '' ;
-   CodEAN13 := String( PadR(AnsiString(Trim(String(CodEAN13))),12,'0') ) ;
+   CodEAN13 := String( PadL(AnsiString(Trim(String(CodEAN13))),12,'0') ) ;
    if not StrIsNumber( AnsiString( CodEAN13 ) ) then
       exit ;
 
