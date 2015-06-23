@@ -1,6 +1,6 @@
 object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
-  Left = 192
-  Top = 125
+  Left = 205
+  Top = 119
   Width = 871
   Height = 568
   Caption = 'Demo ACBrCTe'

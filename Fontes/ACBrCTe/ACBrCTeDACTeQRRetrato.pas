@@ -596,6 +596,19 @@ type
     QRShape107: TQRShape;
     qrlResumoCanhotoCTe: TQRLabel;
     qrlResumoCanhotoCTe2: TQRLabel;
+    qrb_11_ModRodValePedagio: TQRChildBand;
+    QRShape20: TQRShape;
+    QRShape22: TQRShape;
+    QRShape23: TQRShape;
+    QRShape112: TQRShape;
+    QRLabel20: TQRLabel;
+    QRLabel55: TQRLabel;
+    QRLabel56: TQRLabel;
+    QRLabel58: TQRLabel;
+    qrmCNPJForn2: TQRMemo;
+    qrmNumCompra2: TQRMemo;
+    QRShape113: TQRShape;
+    qrmCNPJPg2: TQRMemo;
     procedure QRCTeBeforePrint(Sender: TCustomQuickRep; var PrintReport: Boolean);
     procedure qrb_01_ReciboBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_02_CabecalhoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
@@ -618,6 +631,8 @@ type
     procedure qrb_11_ModRodLot104BeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_18_ReciboBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_06_ProdutosPerigososBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_11_ModRodValePedagioBeforePrint(Sender: TQRCustomBand;
+      var PrintBand: Boolean);
   private
     procedure Itens;
   public
@@ -1742,7 +1757,7 @@ begin
         qrlBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vBCSTRet);
         qrlAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS60.pICMSSTRet);
         qrlVlrICMS.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vICMSSTRet);
-        qrlICMS_ST.Caption     := '';
+        qrlICMS_ST.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vCred);
       end;
     cst90:
       begin
@@ -1982,6 +1997,7 @@ begin
   qrb_10_ModRodFracionado.Enabled := (FCTe.Ide.tpCTe = tcNormal) and (FCTe.Ide.modal = mdRodoviario);
   qrb_11_ModRodLot103.Enabled := False;
   qrb_11_ModRodLot104.Enabled := False;
+  qrb_11_ModRodValePedagio.Enabled := False;
 
 {$IFDEF PL_200}
   with FCTe.infCTeNorm.rodo do
@@ -2006,6 +2022,7 @@ begin
       ltNao: begin
               qrlTituloLotacao.Caption := 'DADOS ESPECÍFICOS DO MODAL RODOVIÁRIO - CARGA FRACIONADA';
               qrlLotacao.Caption       := 'NÃO';
+              qrb_11_ModRodValePedagio.Enabled := True;
              end;
       ltsim: begin
               qrlTituloLotacao.Caption := 'DADOS ESPECÍFICOS DO MODAL RODOVIÁRIO - LOTAÇÃO';
@@ -2201,6 +2218,48 @@ begin
   for i := 0 to (FCTe.Rodo.Lacres.Count - 1) do
   begin
    qrlLacres2.Caption := qrlLacres2.Caption + FCTe.Rodo.Lacres.Items[i].nLacre + '/';
+  end;
+{$ENDIF}
+end;
+
+procedure TfrmDACTeQRRetrato.qrb_11_ModRodValePedagioBeforePrint(
+  Sender: TQRCustomBand; var PrintBand: Boolean);
+var
+  i: Integer;
+begin
+  inherited;
+PrintBand := QRCTe.PageNumber = 1;
+
+  qrmCNPJForn2.Lines.Clear;
+  qrmNumCompra2.Lines.Clear;
+  qrmCNPJPg2.Lines.Clear;
+
+{$IFDEF PL_200}
+  for i := 0 to (FCTe.infCTeNorm.Rodo.valePed.Count -1) do
+  begin
+   qrmCNPJForn2.Lines.Add(DFeUtil.FormatarCNPJ(FCTe.infCTeNorm.Rodo.valePed.Items[i].CNPJForn));
+   qrmNumCompra2.Lines.Add(FCTe.infCTeNorm.Rodo.valePed.Items[i].nCompra);
+   qrmCNPJPg2.Lines.Add(DFeUtil.FormatarCNPJ(FCTe.infCTeNorm.Rodo.valePed.Items[i].CNPJPg));
+  end;
+{$ELSE}
+{$IFDEF PL_104}
+  for i := 0 to (FCTe.Rodo.valePed.Count -1) do
+  begin
+   qrmCNPJForn2.Lines.Add(DFeUtil.FormatarCNPJ(FCTe.Rodo.valePed.Items[i].CNPJForn));
+   qrmNumCompra2.Lines.Add(FCTe.Rodo.valePed.Items[i].nCompra);
+   qrmCNPJPg2.Lines.Add(DFeUtil.FormatarCNPJ(FCTe.Rodo.valePed.Items[i].CNPJPg));
+  end;
+{$ENDIF}
+
+  if FCTe.Rodo.moto.Count > 0
+   then begin
+    qrlNomeMotorista3.Caption := FCTe.Rodo.moto.Items[0].xNome;
+    qrlCPFMotorista3.Caption  := DFeUtil.FormatarCPF(FCTe.Rodo.moto.Items[0].CPF);
+   end;
+
+  for i := 0 to (FCTe.Rodo.Lacres.Count - 1) do
+  begin
+   qrlLacres3.Caption := qrlLacres3.Caption + FCTe.Rodo.Lacres.Items[i].nLacre + '/';
   end;
 {$ENDIF}
 end;
