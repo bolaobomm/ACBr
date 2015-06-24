@@ -64,7 +64,7 @@ uses  ACBrBase,  {Units da ACBr}
      , Contnrs, Classes, Math, dateutils, strutils;
 
 const
-  CACBrBoleto_Versao = '0.0.134a' ;
+  CACBrBoleto_Versao = '0.0.135a' ;
 
   cACBrTipoOcorrenciaDecricao: array[1..179] of String = (
   'Remessa Registrar',
