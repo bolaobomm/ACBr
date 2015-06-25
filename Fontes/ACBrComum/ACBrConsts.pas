@@ -54,7 +54,7 @@ Uses
    SysUtils;
 
 // delphi XE3 em diante não possui mais essas var, então criar e preencher
-{$IFDEF DELPHI17_UP}
+{$IFDEF DELPHI15_UP}
 var
   fmtst: TFormatSettings;
   CurrencyString: string;
@@ -227,7 +227,7 @@ implementation
 
 initialization
   // delphi XE3 em diante não possui mais essas var, então criar e preencher
-  {$IFDEF DELPHI17_UP}
+  {$IFDEF DELPHI15_UP}
     fmtst := TFormatSettings.Create('');
     CurrencyString := fmtst.CurrencyString;
     CurrencyFormat := fmtst.CurrencyFormat;
