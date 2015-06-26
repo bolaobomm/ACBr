@@ -1083,27 +1083,29 @@ begin
    then qrb_06_ProdutosPerigosos.Height := 82;
 {$ENDIF}
 
-  qrb_10_ModRodFracionado.Height := 0;
-  qrb_11_ModRodLot103.Height     := 0;
-  qrb_11_ModRodLot104.Height     := 0;
-  qrb_12_ModAereo.Height         := 0;
-  qrb_13_ModAquaviario.Height    := 0;
-  qrb_14_ModFerroviario.Height   := 0;
-  qrb_15_ModDutoviario.Height    := 0;
+  qrb_11_ModRodLot103.Height      := 0;
+  qrb_11_ModRodLot104.Height      := 0;
+  qrb_12_ModAereo.Height          := 0;
+  qrb_13_ModAquaviario.Height     := 0;
+  qrb_14_ModFerroviario.Height    := 0;
+  qrb_15_ModDutoviario.Height     := 0;
 
   case FCTe.Ide.modal of
    mdRodoviario: begin
-                   qrb_10_ModRodFracionado.Height := 44;
+                   qrb_10_ModRodFracionado.Height  := 42;
+                   qrb_11_ModRodValePedagio.Height := 75;
                  {$IFDEF PL_200}
                    if FCTe.infCTeNorm.rodo.lota = ltSim
                  {$ELSE}
                    if FCTe.Rodo.Lota = ltSim
                  {$ENDIF}
                     then begin
+                      qrb_10_ModRodFracionado.Height  := 0;
+                      qrb_11_ModRodValePedagio.Height := 0;
                       if Versao = 103 then
                         qrb_11_ModRodLot103.Height := 108
                       else
-                        qrb_11_ModRodLot104.Height := 105;
+                        qrb_11_ModRodLot104.Height := 102; //105;
                     end;
                  end;
    mdAereo: begin
@@ -1142,6 +1144,11 @@ begin
   qrlNumCte2.Caption := FormatFloat('000,000,000', FCTe.Ide.nCT);
 
   qrb_01_Recibo.Enabled := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento);
+  if qrb_01_Recibo.Enabled then
+  begin
+    qrb_01_Recibo.Height := 82;
+    qrb_18_Recibo.Height := 0;
+  end;
 end;
 
 procedure TfrmDACTeQRRetrato.qrb_01_Recibo_AereoBeforePrint(
@@ -1151,6 +1158,12 @@ begin
   PrintBand := (QRCTe.PageNumber = 1) and (FCTe.Ide.modal = mdAereo);
 
   qrb_01_Recibo_Aereo.Enabled := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento);
+  if qrb_01_Recibo_Aereo.Enabled then
+  begin
+    qrb_01_Recibo.Height := 0;
+    qrb_01_Recibo_Aereo.Height := 146;
+    qrb_18_Recibo.Height := 0;
+  end;
 end;
 
 procedure TfrmDACTeQRRetrato.qrb_02_CabecalhoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
@@ -2447,14 +2460,20 @@ begin
   qrlSerie3.Caption  := IntToStr(FCTe.Ide.serie); // FormatFloat( '000', FCTe.Ide.serie);
   qrlNumCte3.Caption := FormatFloat('000,000,000', FCTe.Ide.nCT);
 
-  if PrintBand
-   then begin
+  if PrintBand then
+  begin
     qrb_18_Recibo.Enabled := ((FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento)) and
                              (FCTe.Ide.modal <> mdAereo) and (FPosRecibo = prRodape);
-    if qrb_18_Recibo.Enabled
-     then qrb_18_Recibo.Height  := 68
-     else qrb_18_Recibo.Height  := 0;
-   end;
+//    if qrb_18_Recibo.Enabled
+//     then qrb_18_Recibo.Height  := 68
+//     else qrb_18_Recibo.Height  := 0;
+    if qrb_18_Recibo.Enabled then
+    begin
+      qrb_01_Recibo.Height := 0;
+      qrb_01_Recibo_Aereo.Height := 0;
+      qrb_18_Recibo.Height := 68;
+    end;
+  end;
 end;
 
 procedure TfrmDACTeQRRetrato.qrb_06_ProdutosPerigososBeforePrint(
