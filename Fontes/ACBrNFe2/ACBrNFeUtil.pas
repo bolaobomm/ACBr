@@ -2154,7 +2154,11 @@ begin
   end;
 
   // Passo 6
-  Result := urlUF + '?' + sEntrada + cIdToken+ '&cHashQRCode=' + cHashQRCode;
+  if Pos('?', urlUF) > 0 then
+    Result := urlUF + '&' + sEntrada + cIdToken + '&cHashQRCode=' + cHashQRCode
+  else
+    Result := urlUF + '?' + sEntrada + cIdToken + '&cHashQRCode=' + cHashQRCode;
+//  Result := urlUF + '?' + sEntrada + cIdToken + '&cHashQRCode=' + cHashQRCode;
 end;
 
 class function NotaUtil.CstatProcessado(AValue: Integer): Boolean;
