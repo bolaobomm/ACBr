@@ -181,13 +181,8 @@ type
     LerXMLinterfaceRede1: TMenuItem;
     GerarXMLInterfaceRede1: TMenuItem;
     SaveDialog1: TSaveDialog;
-    {$IFDEF DELPHI9_UP}
-     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
-     procedure ACBrSAT1GetsignAC(var Chave: AnsiString);
-    {$ELSE}
-     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: String);
-     procedure ACBrSAT1GetsignAC(var Chave: String);
-	{$ENDIF} 
+    procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
+    procedure ACBrSAT1GetsignAC(var Chave: AnsiString);
     procedure ACBrSAT1Log(const AString: String);
     procedure bImpressoraClick(Sender: TObject);
     procedure bInicializarClick(Sender : TObject) ;
@@ -333,27 +328,15 @@ begin
   end
 end ;
 
-{$IFDEF DELPHI9_UP}
- procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
- begin
-   Chave := edtCodigoAtivacao.Text;
- end;
+procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
+begin
+  Chave := edtCodigoAtivacao.Text;
+end;
 
- procedure TForm1.ACBrSAT1GetsignAC(var Chave: AnsiString);
- begin
-   Chave := edtSwHAssinatura.Text;
- end;
-{$ELSE}
- procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave: String);
- begin
-   Chave := edtCodigoAtivacao.Text;
- end;
-
- procedure TForm1.ACBrSAT1GetsignAC(var Chave: String);
- begin
-   Chave := edtSwHAssinatura.Text;
- end;
-{$ENDIF}
+procedure TForm1.ACBrSAT1GetsignAC(var Chave: AnsiString);
+begin
+  Chave := edtSwHAssinatura.Text;
+end;
 
 procedure TForm1.ACBrSAT1Log(const AString: String);
 begin
