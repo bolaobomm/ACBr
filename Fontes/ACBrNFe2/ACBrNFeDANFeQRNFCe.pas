@@ -550,8 +550,8 @@ begin
   qrmPagValor.Lines.Add(IntToStr(TotalItens));
 
   qrmPagDesc.Lines.Add('VALOR TOTAL');
-//  qrmPagValor.Lines.Add(DFeUtil.FormatFloat(FNFE.Total.ICMSTot.vNF));
-  qrmPagValor.Lines.Add(DFeUtil.FormatFloat(FNFE.Total.ICMSTot.vProd));
+  // Alterado por Italo em 01/07/2015 + vTroco
+  qrmPagValor.Lines.Add(DFeUtil.FormatFloat(FNFE.Total.ICMSTot.vProd + FvTroco));
 
   if FNFE.Total.ICMSTot.vDesc > 0.0
    then begin
