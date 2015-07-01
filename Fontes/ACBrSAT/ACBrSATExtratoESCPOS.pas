@@ -266,9 +266,9 @@ begin
 
      if (Descontos > 0) or (Acrescimos > 0) then
         FBuffer.Add(cCmdFontePequena+padS('Subtotal|'+DFeUtil.FormatFloat(CFe.Total.ICMSTot.vProd,'#,###,##0.00'),64, '|'));
-     if CFe.Total.ICMSTot.vDesc > 0 then
+     if Descontos > 0 then
         FBuffer.Add(cCmdFontePequena+padS('Descontos|'+DFeUtil.FormatFloat(Descontos,'-#,###,##0.00'),64, '|'));
-     if CFe.Total.ICMSTot.vOutro > 0 then
+     if Acrescimos > 0 then
         FBuffer.Add(cCmdFontePequena+padS('Acréscimos|'+DFeUtil.FormatFloat(Acrescimos,'+#,###,##0.00'),64, '|'));
    end;
 
