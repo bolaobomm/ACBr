@@ -1507,20 +1507,32 @@ end;
 
 function TNotasFiscais.SaveToFile(PathArquivo: string): boolean;
 var
- i              : integer;
- CaminhoArquivo : String;
+ i: integer;
+ CaminhoArquivo: String;
 begin
  Result := True;
  try
   for i := 0 to TACBrNFSe( FACBrNFSe ).NotasFiscais.Count-1 do
-   begin
+  begin
     if DFeUtil.EstaVazio(PathArquivo)
      then PathArquivo := TACBrNFSe( FACBrNFSe ).Configuracoes.Geral.PathSalvar
      else PathArquivo := ExtractFilePath(PathArquivo);
 
 //    CaminhoArquivo := NotaUtil.PathWithDelim(PathArquivo) + (TACBrNFSe( FACBrNFSe ).NotasFiscais.NumeroLote)+'-LoteNFSe.xml';
-    TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[i].SaveToFile(CaminhoArquivo);
-   end;
+//    TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[i].SaveToFile(CaminhoArquivo);
+
+    if TACBrNFSe(ACBrNFSe).Configuracoes.Arquivos.NomeLongoNFSe then
+      TACBrNFSe( FACBrNFSe ).Configuracoes.Geral.Save(NotaUtil.GerarNomeNFSe(UFparaCodigo(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe.PrestadorServico.Endereco.UF),
+                                                      TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].Nfse.DataEmissao,
+                                                      TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].Nfse.PrestadorServico.IdentificacaoPrestador.Cnpj,
+                                                      StrToIntDef(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].Nfse.Numero, 0)) + '-nfse.xml',
+                                                      TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[i].XML_NFSE,
+                                                      PathArquivo)
+    else
+       TACBrNFSe( FACBrNFSe ).Configuracoes.Geral.Save((TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[i].NFSe.Numero) + '-nfse.xml',
+                                                       TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[i].XML_NFSE,
+                                                       PathArquivo);
+  end;
  except
   Result := False;
  end;
