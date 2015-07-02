@@ -1115,6 +1115,7 @@ begin
       LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.fazenda.sp.gov.br/ws/nfestatusservico2.asmx', 'https://homologacao.nfce.fazenda.sp.gov.br/ws/nfestatusservico2.asmx');
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.fazenda.sp.gov.br/ws/recepcaoevento.asmx',    'https://homologacao.nfce.fazenda.sp.gov.br/ws/recepcaoevento.asmx');
+      LayNFCeEPEC          : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.epec.fazenda.sp.gov.br/EPECws/RecepcaoEPEC.asmx', 'https://homologacao.nfce.epec.fazenda.sp.gov.br/EPECws/RecepcaoEPEC.asmx');
 
       LayAdministrarCSCNFCe: Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
     end;

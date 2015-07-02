@@ -86,7 +86,7 @@ type
              LayNfeCadastro, LayNfeEnvDPEC, LayNfeConsultaDPEC, LayNFeCCe,
              LayNFeEvento, LayNFeEventoAN, LayNFeConsNFeDest, LayNFeDownloadNFe,
              LayNfeAutorizacao, LayNfeRetAutorizacao, LayAdministrarCSCNFCe,
-             LayDistDFeInt);
+             LayDistDFeInt, LayNFCeEPEC);
 
   TLayOutCTe = (LayCTeRecepcao, LayCTeRetRecepcao, LayCTeCancelamento,
                 LayCTeInutilizacao, LayCTeConsultaCT, LayCTeStatusServico,
@@ -1887,6 +1887,7 @@ begin
                 LayNfeRetAutorizacao: result := '3.00';
                 LayDistDFeInt:        result := '1.00';
                 LayAdministrarCSCNFCe: result := '1.00';
+                LayNFCeEPEC:          result := '1.00';
               end;
             end;
 
@@ -1910,6 +1911,7 @@ begin
                 LayNfeAutorizacao:    result := '3.10';
                 LayNfeRetAutorizacao: result := '3.10';
                 LayDistDFeInt:        result := '1.00';
+                LayNFCeEPEC:          result := '1.00';
 
                 LayAdministrarCSCNFCe: result := '1.00';
               end;
