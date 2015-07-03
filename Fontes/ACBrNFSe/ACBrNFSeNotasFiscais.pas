@@ -247,14 +247,9 @@ begin
        begin
           TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).DANFSE.ImprimirDANFSEPDF(NFSe);
 
-          // removido por ala NomeArqPDF := Trim(NomeArq);
-          // removido por ala if NomeArqPDF <> ''
-           // removido por ala then begin
-             NomeArqPDF := StringReplace(NFSe.Numero, 'NFSe', '', [rfIgnoreCase]); // // removido o comentario por ala em 02/04/2014,
-             NomeArqPDF := NomeArqXML;
-             NomeArqPDF := PathWithDelim(TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).DANFSE.PathPDF) + NomeArqPDF + '.pdf';
-           // removido o comentario por ala em 02/04/2014,  end
-           // removido o comentario por ala em 02/04/2014,   else NomeArqPDF := StringReplace(NomeArqPDF, '-nfse.xml', '.pdf', [rfIgnoreCase]);
+          NomeArqPDF := NomeArqXML;
+          NomeArqPDF := StringReplace(NomeArqPDF, 'NFSe', '', [rfIgnoreCase]);
+          NomeArqPDF := PathWithDelim(TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).DANFSE.PathPDF) + NomeArqPDF + '-nfse.pdf';
 
           AnexosEmail.Add(NomeArqPDF);
        end;
@@ -275,166 +270,14 @@ begin
                 NomeRemetente,
                 TLS,
                 StreamNFSe,
-//                copy(NFSe.Numero, (length(NFSe.Numero) - 44) + 1, 44) + '-NFSe.xml',
                 NomeArqXML + '-nfse.xml',
                 UsarThread,
                 FormatoEmHTML);
 
-// Mantive a linha NomeArqXML + '-nfse.xml', para que o desenvolvedor escolha a forma
-// que o componente vai gerar o nome do arquivo xml da NFS-e
- 
   finally
     AnexosEmail.Free;
     StreamNFSe.Free;
   end;
-(*
- AnexosEmail := TStringList.Create;
- StreamNFSe  := TStringStream.Create('');
-
- if TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).Configuracoes.Arquivos.NomeLongoNFSe
-  then NomeArqXML := NotaUtil.GerarNomeNFSe(UFparaCodigo(Nfse.PrestadorServico.Endereco.UF),
-                                            Nfse.DataEmissao,
-                                            Nfse.PrestadorServico.IdentificacaoPrestador.Cnpj,
-                                            StrToIntDef(Nfse.Numero, 0))
-  else NomeArqXML := NFSe.Numero;
-
- try
-    AnexosEmail.Clear;
-    if Anexos <> nil then
-      AnexosEmail.Text := Anexos.Text;
-    if NomeArq <> '' then
-     begin
-//       SaveToFile(NomeArq);
-//       AnexosEmail.Add(NomeArq);
-     end
-    else
-     begin
-       SaveToStream(StreamNFSe);
-     end;
-    if (EnviaPDF) then
-    begin
-       if TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).DANFSE <> nil then
-       begin
-          TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).DANFSE.ImprimirDANFSEPDF(NFSe);
-
-          NomeArqPDF := Trim(NomeArq);
-          if NomeArqPDF <> ''
-           then begin
-//             NomeArqPDF := StringReplace(NFSe.Numero, 'NFSe', '', [rfIgnoreCase]);
-             NomeArqPDF := NomeArqXML;
-             NomeArqPDF := PathWithDelim(TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).DANFSE.PathPDF) + NomeArqPDF + '.pdf';
-           end
-           else NomeArqPDF := StringReplace(NomeArqPDF, '-nfse.xml', '.pdf', [rfIgnoreCase]);
-
-          AnexosEmail.Add(NomeArqPDF);
-       end;
-    end;
-    TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).EnviaEmail(sSmtpHost,
-                sSmtpPort,
-                sSmtpUser,
-                sSmtpPasswd,
-                sFrom,
-                sTo,
-                sAssunto,
-                sMensagem,
-                SSL,
-                sCC,
-                AnexosEmail,
-                PedeConfirma,
-                AguardarEnvio,
-                NomeRemetente,
-                TLS,
-                StreamNFSe,
-//                copy(NFSe.Numero, (length(NFSe.Numero) - 44) + 1, 44) + '-NFSe.xml',
-                NomeArqXML + '-nfse.xml',
-                UsarThread,
-                FormatoEmHTML);
- finally
-    AnexosEmail.Free;
-    StreamNFSe.Free;
- end;
-*)
-(*
- m := TMimemess.create;
-
- ThreadSMTP := TSendMailThread.Create(Self);  // Não Libera, pois usa FreeOnTerminate := True ;
- StreamNFSe := TStringStream.Create('');
- try
-  p := m.AddPartMultipart('mixed', nil);
-  if sMensagem <> nil
-   then m.AddPartText(sMensagem, p);
-  SaveToStream(StreamNFSe);
-  m.AddPartBinary(StreamNFSe, copy(NFSe.Numero, (length(NFSe.Numero) - 44) + 1, 44) + '-NFSe.xml', p);
-
-  if (EnviaPDF)
-   then begin
-    if TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).DANFSE <> nil
-     then begin
-      TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).DANFSE.ImprimirDANFSEPDF(NFSe);
-      // Alterado por Italo em 04/12/2012
-      NomeArqPDF := Trim(NomeArq);
-      if NomeArqPDF <> ''
-       then begin
-         NomeArqPDF := StringReplace(NFSe.Numero, 'NFSe', '', [rfIgnoreCase]);
-         NomeArqPDF := PathWithDelim(TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).DANFSE.PathPDF) + NomeArqPDF + '.pdf';
-       end
-       else NomeArqPDF := StringReplace(NomeArqPDF, '-nfse.xml', '.pdf', [rfIgnoreCase]);
-
-      m.AddPartBinaryFromFile(NomeArqPDF, p);
-     end;
-   end;
-
-  if assigned(Anexos) then
-   for i := 0 to Anexos.Count - 1 do
-    begin
-     m.AddPartBinaryFromFile(Anexos[i], p);
-    end;
-
-  m.header.tolist.add(sTo);
-
-  if Trim(NomeRemetente) <> ''
-   then m.header.From := Format('%s<%s>', [NomeRemetente, sFrom])
-   else m.header.From := sFrom;
-
-  m.header.subject := sAssunto;
-  m.Header.ReplyTo := sFrom;
-  if PedeConfirma
-   then m.Header.CustomHeaders.Add('Disposition-Notification-To: '+sFrom);
-  m.EncodeMessage;
-
-  ThreadSMTP.sFrom := sFrom;
-  ThreadSMTP.sTo   := sTo;
-  if sCC <> nil
-   then ThreadSMTP.sCC.AddStrings(sCC);
-  ThreadSMTP.slmsg_Lines.AddStrings(m.Lines);
-
-  ThreadSMTP.smtp.UserName   := sSmtpUser;
-  ThreadSMTP.smtp.Password   := sSmtpPasswd;
-  ThreadSMTP.smtp.TargetHost := sSmtpHost;
-
-  if not DFeUtil.EstaVazio( sSmtpPort )
-   then ThreadSMTP.smtp.TargetPort := sSmtpPort; // Usa default
-
-  ThreadSMTP.smtp.FullSSL := SSL;
-  ThreadSMTP.smtp.AutoTLS := TLS;
-
-  TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).SetStatus( stNFSeEmail );
-  ThreadSMTP.Resume; // inicia a thread
-
-  if AguardarEnvio
-   then begin
-    repeat
-     Sleep(1000);
-     Application.ProcessMessages;
-    until ThreadSMTP.Terminado;
-   end;
-
-  TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).SetStatus( stNFSeIdle );
- finally
-  m.free;
-  StreamNFSe.Free;
- end;
- *)
 end;
 
 function NotaFiscal.GetNFSeXML: AnsiString;

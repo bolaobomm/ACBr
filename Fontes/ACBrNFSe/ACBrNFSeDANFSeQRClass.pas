@@ -306,8 +306,6 @@ begin
   then begin
    for i:= 0 to TACBrNFSe(ACBrNFSe).NotasFiscais.Count-1 do
     begin
-      // Alterado por Italo em 20/06/2014
-
       if TACBrNFSe(ACBrNFSe).Configuracoes.Arquivos.NomeLongoNFSe then
         NomeArqPDF := NotaUtil.GerarNomeNFSe(UFparaCodigo(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe.PrestadorServico.Endereco.UF),
                                              TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].Nfse.DataEmissao,
@@ -317,7 +315,6 @@ begin
         NomeArqPDF := TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe.Numero;
 
       NomeArqPDF := StringReplace(NomeArqPDF, 'NFSe', '', [rfIgnoreCase]);
-//      NomeArqPDF := StringReplace(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe.Numero, 'NFSe', '', [rfIgnoreCase]);
       NomeArqPDF := PathWithDelim(Self.PathPDF) + NomeArqPDF + '-nfse.pdf';
 
       if NomeArqPDF = ''
@@ -347,10 +344,6 @@ begin
     end;
   end
   else begin
-   // Alterado por Italo em 05/11/2012
-//   NomeArqPDF := trim(NFSe.NomeArq);
-
-   // Alterado por Italo em 30/09/2014
    if TACBrNFSe(ACBrNFSe).Configuracoes.Arquivos.NomeLongoNFSe then
      NomeArqPDF := NotaUtil.GerarNomeNFSe(UFparaCodigo(NFSe.PrestadorServico.Endereco.UF),
                                           NFSe.DataEmissao,
@@ -367,7 +360,6 @@ begin
      NomeArqPDF := StringReplace(NFSe.Numero, 'NFSe', '', [rfIgnoreCase]);
      NomeArqPDF := PathWithDelim(Self.PathPDF) + NomeArqPDF + '-nfse.pdf';
     end;
-//    else NomeArqPDF := StringReplace(NomeArqPDF, '-nfse.xml', '.pdf', [rfIgnoreCase]);
 
    fqrDANFSeQRRetrato.SavePDF( NomeArqPDF
                              , NFSe
