@@ -97,6 +97,25 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 03/07/2015
+-- ACBrECFSwedaStx --  (por: DSA)
+[-] Correção para VerificaFimLeitura, em mudança de estado com Erro =  0
+
+Data: 02/07/2015
+-- ACBrECFEscECF --  (por: DSA)
+[-] Ajuste do tamanho máximo de Buffer a ser enviado pro ECF em Relatórios
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=22615
+
+Data: 29/06/2015
+-- ACBrECFSwedaStx --  (por: DSA)
+[-] Ajustes para decodificar Página de Código em AbreRelatorioGerencial
+
+Data: 28/06/2015
+-- ACBrECFSwedaStx --  (por: DSA)
+[-] Tentativa de correção de A.V. em algumas versões do Delphi
+    http://www.projetoacbr.com.br/forum/topic/22492-erro-classe-acbrecfswedastx-trunk2/
+[-] Correção para captura de informações pela Serial
+
 Data: 19/06/2015
 -- ACBrCHQ --
 [-] Adicionado o suporte a impressora de cheques Elgin

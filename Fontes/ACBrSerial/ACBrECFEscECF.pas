@@ -48,7 +48,7 @@ uses Classes,
     ACBrECFClass, ACBrDevice;
 
 const
-    cEscECFMaxBuffer = 4096 ;
+    cEscECFMaxBuffer = 1024 ;
     cNumFalhasMax = 5;
 
 type
@@ -1499,6 +1499,10 @@ begin
     begin
       RetornaInfoECF( '99|5' ) ;
       fsNumLoja := EscECFResposta.Params[1] ;
+    end
+    else if IsEpson then
+    begin
+      fsNumLoja := RetornaInfoECF('15|5');
     end ;
   end ;
 
