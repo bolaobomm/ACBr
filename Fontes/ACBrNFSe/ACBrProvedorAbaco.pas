@@ -153,6 +153,10 @@ begin
               ConfigURL.HomNomeCidade := 'rondonopolis';
               ConfigURL.ProNomeCidade := 'e-nfs_roo';
             end;
+   1200401: begin // Rio Branco/AC
+              ConfigURL.HomNomeCidade := 'riobranco';
+              ConfigURL.ProNomeCidade := 'riobranco';
+            end;
   end;
 
  (*

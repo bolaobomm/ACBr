@@ -764,7 +764,8 @@ begin
   3201209, // Cachoeiro do Itapemirim/ES
   4304606, // Canoas/RS
   5107040, // Primavera do Leste/MT
-  5107602  // Rondonopolis/MT
+  5107602, // Rondonopolis/MT
+  1200401  // Rio Branco/AC
          : Provedor := 'Abaco';
 
   3127701, // Governador Valadares/MG
@@ -13112,7 +13113,7 @@ begin
       0655: CodCidade := 1200351; // Marechal Thaumaturgo/AC  
       0151: CodCidade := 1200385; // Placido De Castro/AC  
       0657: CodCidade := 1200393; // Porto Walter/AC  
-      0139: CodCidade := 1200401; // Rio Branco/AC  
+      0139: CodCidade := 1200401; // Rio Branco/AC
       0659: CodCidade := 1200427; // Rodrigues Alves/AC  
       0661: CodCidade := 1200435; // Santa Rosa Do Purus/AC  
       0153: CodCidade := 1200450; // Senador Guiomard/AC  
