@@ -184,6 +184,34 @@ type
      class function Gera_DadosMsgCancelarNFSeEL(CodCidade: Integer; CNPJ,
        IM, NumeroNFSe, MotivoCancelamento: String; TagI,
        TagF: AnsiString): AnsiString;
+
+
+     //As classes abaixos são exclusivas do provedor CTA
+     class function Gera_DadosMsgEnviarLoteCTA(Prefixo3, Prefixo4,Identificador, NameSpaceDad, VersaoXML,
+                                               NumeroLote, CodCidade, CNPJ, IM, RazaoSocial, Transacao,
+                                               QtdeNotas, ValorTotalServicos, ValorTotalDeducoes: String;
+                                               DataInicial, DataFinal: TDateTime;
+                                               Notas, TagI, TagF: AnsiString): AnsiString;
+
+     class function Gera_DadosMsgConsLoteCTA(Prefixo3, Prefixo4, NameSpaceDad,
+                                             VersaoXML, CodCidade, CNPJ, NumeroLote: String;
+                                             TagI, TagF: AnsiString): AnsiString;
+
+     class function Gera_DadosMsgConsNFSeRPSCTA(Prefixo3, Prefixo4, NameSpaceDad,VersaoXML,
+                                                CodCidade, CNPJ, Transacao, NumeroLote: String;
+                                                Notas, TagI, TagF: AnsiString): AnsiString;
+
+     class function Gera_DadosMsgConsNFSeCTA(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML, CodCidade,
+                                             CNPJ, IM, NotaInicial: String; DataInicial, DataFinal: TDateTime;
+                                             TagI, TagF: AnsiString): AnsiString;
+
+     class function Gera_DadosMsgCancelarNFSeCTA(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
+                                                 CNPJ, Transacao, CodMunicipio, NumeroLote: String;
+                                                 Notas, TagI, TagF: AnsiString): AnsiString;
+
+     class function Gera_DadosMsgConsSeqRPSCTA(TagI, TagF: AnsiString; VersaoXML, CodCidade,
+                                               IM, CNPJ, SeriePrestacao: String): AnsiString;
+
    published
 
    end;
@@ -787,7 +815,7 @@ begin
                   proIssIntel, proIssNet, proLexsom, proNatal, proTinus, proProdemge,
                   proRJ, proSimplIss, proThema, proTiplan, proIssDSF, proInfisc, proAgili,
                   proSpeedGov, proPronim, proActcon,
-                  proSalvador, proNFSEBrasil] then Result := '';
+                  proSalvador, proNFSEBrasil, proCTA] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
@@ -1240,6 +1268,135 @@ begin
   Result:= '<wsn:ConsultarUltimaRps>' +
               '<identificacaoPrestador>' + CNPJ + '</identificacaoPrestador>' +
            '<wsn:ConsultarUltimaRps>';
+end;
+
+
+class function TNFSeG.Gera_DadosMsgEnviarLoteCTA(Prefixo3, Prefixo4,
+  Identificador, NameSpaceDad, VersaoXML, NumeroLote, CodCidade, CNPJ, IM,
+  RazaoSocial, Transacao, QtdeNotas, ValorTotalServicos,
+  ValorTotalDeducoes: String; DataInicial, DataFinal: TDateTime; Notas,
+  TagI, TagF: AnsiString): AnsiString;
+var
+ DadosMsg: AnsiString;
+begin
+ DadosMsg := '<Cabecalho>' +
+               '<CodCidade>'            + CodCidade   + '</CodCidade>' +
+               '<CPFCNPJRemetente>'     + Cnpj        + '</CPFCNPJRemetente>' +
+               '<RazaoSocialRemetente>' + RazaoSocial + '</RazaoSocialRemetente>' +
+               '<transacao>'            + Transacao   + '</transacao>' +
+               '<dtInicio>' + FormatDateTime('yyyy-mm-dd', DataInicial) + '</dtInicio>' +
+               '<dtFim>'    + FormatDateTime('yyyy-mm-dd', DataFinal) + '</dtFim>' +
+               '<QtdRPS>'               + QtdeNotas               + '</QtdRPS>' +
+               '<ValorTotalServicos>'   + StringReplace(ValorTotalServicos, ',', '.', [rfReplaceAll]) + '</ValorTotalServicos>' +
+               '<ValorTotalDeducoes>'   + StringReplace(ValorTotalDeducoes, ',', '.', [rfReplaceAll]) + '</ValorTotalDeducoes>' +
+               '<Versao>'               + VersaoXML          + '</Versao>' +
+               '<MetodoEnvio>'          + 'WS'               + '</MetodoEnvio>' +
+             '</Cabecalho>' +
+             //'<Lote ' + Identificador + '="Lote:' + NumeroLote + '">' +        //Alterado por Ailton 28/07/2017 Retirado o item "Lote" no provedor DSF da erro
+             '<Lote ' + Identificador + '="' + NumeroLote + '">' +
+                Notas +
+             '</Lote>';
+
+  Result := TagI + DadosMsg + TagF;
+end;
+
+class function TNFSeG.Gera_DadosMsgConsLoteCTA(Prefixo3, Prefixo4,
+  NameSpaceDad, VersaoXML, CodCidade, CNPJ, NumeroLote: String; TagI,
+  TagF: AnsiString): AnsiString;
+var
+ DadosMsg: AnsiString;
+begin
+ DadosMsg := '<Cabecalho>' +
+               '<CodCidade>' + CodCidade + '</CodCidade>' +
+               '<CPFCNPJRemetente>' + Cnpj + '</CPFCNPJRemetente>' +
+               '<Versao>' + VersaoXML + '</Versao>' +
+               '<NumeroLote>' + NumeroLote + '</NumeroLote>' +
+             '</Cabecalho>';
+
+ Result := TagI + DadosMsg + TagF;
+end;
+
+class function TNFSeG.Gera_DadosMsgConsNFSeRPSCTA(Prefixo3, Prefixo4,
+  NameSpaceDad, VersaoXML, CodCidade, CNPJ, Transacao, NumeroLote: String;
+  Notas, TagI, TagF: AnsiString): AnsiString;
+var
+ DadosMsg: AnsiString;
+begin
+  DadosMsg := '<Cabecalho>' +
+               '<CodCidade>' + CodCidade + '</CodCidade>' +
+               '<CPFCNPJRemetente>' + Cnpj + '</CPFCNPJRemetente>' +
+               '<transacao>' + Transacao + '</transacao>' +
+               '<Versao>' + VersaoXML + '</Versao>' +
+             '</Cabecalho>' +
+             '<Lote  Id="lote:' + NumeroLote + '">' +
+                Notas +
+             '</Lote>';
+
+ Result := TagI + DadosMsg + TagF;
+end;
+
+class function TNFSeG.Gera_DadosMsgConsNFSeCTA(Prefixo3, Prefixo4,
+  NameSpaceDad, VersaoXML, CodCidade, CNPJ, IM, NotaInicial: String;
+  DataInicial, DataFinal: TDateTime; TagI, TagF: AnsiString): AnsiString;
+var
+ DadosMsg: AnsiString;
+begin
+ DadosMsg := '<Cabecalho Id="Consulta:notas">' +
+               '<CodCidade>'         + CodCidade    + '</CodCidade>' +
+               '<CPFCNPJRemetente>'  + CNPJ         + '</CPFCNPJRemetente>' +
+               '<InscricaoMunicipalPrestador>' + IM + '</InscricaoMunicipalPrestador>' +
+
+               '<dtInicio>' +
+                 FormatDateTime('yyyy-mm-dd', DataInicial) +
+               '</dtInicio>' +
+
+               '<dtFim>' +
+                 FormatDateTime('yyyy-mm-dd', DataFinal) +
+               '</dtFim>' +
+
+               '<NotaInicial>' + NotaInicial + '</NotaInicial>' +
+               '<Versao>'      + VersaoXML   + '</Versao>' +
+             '</Cabecalho>';
+
+ Result := TagI + DadosMsg + TagF;
+end;
+
+class function TNFSeG.Gera_DadosMsgCancelarNFSeCTA(Prefixo3, Prefixo4,
+  NameSpaceDad, VersaoXML, CNPJ, Transacao, CodMunicipio,
+  NumeroLote: String; Notas, TagI, TagF: AnsiString): AnsiString;
+var
+ DadosMsg: AnsiString;
+begin
+
+ DadosMsg := '<Cabecalho>' +
+		         '<CodCidade>'        + CodMunicipio + '</CodCidade>' +
+		         '<CPFCNPJRemetente>' + CNPJ      + '</CPFCNPJRemetente> ' +
+		         '<transacao>'        + Transacao + '</transacao>' +
+		         '<Versao>'           + VersaoXML + '</Versao>' +
+	          '</Cabecalho>' +
+            // '<Lote Id="Lote:' + NumeroLote + '">' +
+            '<Lote  Id="' + NumeroLote + '">' + //Alterado por Ailton 28/07/2017 Retirado o item "Lote" no provedor DSF da erro
+                Notas +
+             '</Lote>';
+
+ Result := TagI + DadosMsg + TagF;
+end;
+
+class function TNFSeG.Gera_DadosMsgConsSeqRPSCTA(TagI, TagF: AnsiString;
+  VersaoXML, CodCidade, IM, CNPJ, SeriePrestacao: String): AnsiString;
+var
+ DadosMsg: AnsiString;
+begin
+ //consultar sequencial RPS
+ DadosMsg := '<Cabecalho>' +
+               '<CodCid>' + CodCidade + '</CodCid>' +
+               '<IMPrestador>' + IM + '</IMPrestador>' +
+               '<CPFCNPJRemetente>' + CNPJ + '</CPFCNPJRemetente>' +
+               '<SeriePrestacao>' + SeriePrestacao + '</SeriePrestacao>' +
+               '<Versao>' + VersaoXML + '</Versao>' +
+             '</Cabecalho>';
+
+ Result := TagI + DadosMsg + TagF;
 end;
 
 end.

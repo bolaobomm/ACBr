@@ -127,9 +127,9 @@ type
     function LerXml: boolean;
     function LerXml_provedorIssDsf: boolean;
     function LerXml_provedorInfisc(VersaoXML: string = '1'): Boolean;
-    function LerXML_provedorEquiplano: Boolean;    
+    function LerXML_provedorEquiplano: Boolean;
     function LerXml_provedorNFSEBrasil: boolean;
-	
+    function LerXml_provedorCTA: boolean;
   published
     property Leitor: TLeitor   read FLeitor   write FLeitor;
     property InfCanc: TInfCanc read FInfCanc  write FInfCanc;
@@ -603,6 +603,72 @@ begin
     result := False;
   end;
   *)
+end;
+
+function TretCancNFSe.LerXml_provedorCTA: boolean;
+var
+  i{, posI, count}: Integer;
+  VersaoXML: String;
+//  strAux: AnsiString;
+//  leitorAux: TLeitor;
+begin
+  result := False;
+
+  try
+    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    VersaoXML      := '1';
+    Leitor.Grupo   := Leitor.Arquivo;
+
+    if leitor.rExtrai(1, 'RetornoCancelamentoNFSe') <> '' then
+    begin
+
+      if (leitor.rExtrai(2, 'Cabecalho') <> '') then
+      begin
+         FInfCanc.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
+      end;
+
+      i := 0 ;
+      if (leitor.rExtrai(2, 'NotasCanceladas') <> '') then
+      begin
+        while (Leitor.rExtrai(2, 'Nota', '', i + 1) <> '') do
+        begin
+          FInfCanc.FNotasCanceladas.Add;
+          FInfCanc.FNotasCanceladas[i].InscricaoMunicipalPrestador := Leitor.rCampo(tcStr, 'InscricaoMunicipalPrestador');
+          FInfCanc.FNotasCanceladas[i].NumeroNota                  := Leitor.rCampo(tcStr, 'NumeroNota');
+          FInfCanc.FNotasCanceladas[i].CodigoVerficacao            := Leitor.rCampo(tcStr,'CodigoVerificacao');
+          inc(i);
+        end;
+      end;
+
+      i := 0 ;
+      if (leitor.rExtrai(2, 'Alertas') <> '') then
+      begin
+        while (Leitor.rExtrai(2, 'Alerta', '', i + 1) <> '') do
+        begin
+          InfCanc.FMsgRetorno.Add;
+          InfCanc.FMsgRetorno[i].FCodigo  := Leitor.rCampo(tcStr, 'Codigo');
+          InfCanc.FMsgRetorno[i].Mensagem := Leitor.rCampo(tcStr, 'Descricao');
+          inc(i);
+        end;
+      end;
+
+      i := 0 ;
+      if (leitor.rExtrai(2, 'Erros') <> '') then
+      begin
+        while (Leitor.rExtrai(2, 'Erro', '', i + 1) <> '') do
+        begin
+          InfCanc.FMsgRetorno.Add;
+          InfCanc.FMsgRetorno[i].FCodigo  := Leitor.rCampo(tcStr, 'Codigo');
+          InfCanc.FMsgRetorno[i].Mensagem := Leitor.rCampo(tcStr, 'Descricao');
+          inc(i);
+        end;
+      end;
+
+      Result := True;
+    end;
+  except
+    result := False;
+  end;
 end;
 
 end.

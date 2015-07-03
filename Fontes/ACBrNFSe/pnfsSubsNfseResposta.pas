@@ -59,6 +59,7 @@ type
     function LerXml: boolean;
     function LerXml_provedorIssDsf: boolean;
     function LerXML_provedorEquiplano: Boolean;
+    function LerXml_provedorCTA: boolean;
   published
     property Leitor: TLeitor   read FLeitor   write FLeitor;
     property MsgRetorno: TMsgRetornoSubsCollection read FMsgRetorno write SetMsgRetorno;
@@ -283,6 +284,11 @@ begin
 end;
 
 function TretSubsNFSe.LerXML_provedorEquiplano: Boolean;
+begin
+  result := False;
+end;
+
+function TretSubsNFSe.LerXml_provedorCTA: boolean;
 begin
   result := False;
 end;
