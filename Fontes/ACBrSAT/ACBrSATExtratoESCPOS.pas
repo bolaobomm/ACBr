@@ -77,7 +77,12 @@ type
     FLinhasEntreCupons : Integer ;
     FLinhaCmd : String;
     FBuffer : TStringList;
-
+    FLinhasEntItens        : Integer;
+    FLinhasEntTotais       : Integer;
+    FLinhasEntPagamentos   : Integer;
+    FLinhasEntDadosEntrega : Integer;
+    FLinhasEntRodape       : Integer;
+    FImprimirLei12741      : Boolean;
     procedure ImprimePorta( AString : AnsiString ) ;
   protected
     procedure GerarCabecalho;
@@ -98,9 +103,15 @@ type
     procedure ImprimirExtratoResumido(ACFe : TCFe = nil); override;
     procedure ImprimirExtratoCancelamento(ACFe : TCFe = nil; ACFeCanc: TCFeCanc = nil); override;
   published
-    property Device : TACBrDevice read FDevice ;
-    property MarcaImpressora: TACBrSATMarcaImpressora read FMarcaImpressora write FMarcaImpressora default iEpson ;
-    property LinhasEntreCupons : Integer read FLinhasEntreCupons write FLinhasEntreCupons default 16 ;
+    property Device                : TACBrDevice read FDevice ;
+    property MarcaImpressora       : TACBrSATMarcaImpressora read FMarcaImpressora write FMarcaImpressora default iEpson ;
+    property LinhasEntreCupons     : Integer read FLinhasEntreCupons write FLinhasEntreCupons default 16 ;
+    property LinhasEntItens        : Integer read FLinhasEntItens write FLinhasEntItens default 0;
+    property LinhasEntTotais       : Integer read FLinhasEntTotais write FLinhasEntTotais default 0;
+    property LinhasEntPagamentos   : Integer read FLinhasEntPagamentos write FLinhasEntPagamentos default 0;
+    property LinhasEntDadosEntrega : Integer read FLinhasEntDadosEntrega write FLinhasEntDadosEntrega default 0;  
+    property LinhasEntRodape       : Integer read FLinhasEntRodape write FLinhasEntRodape default 0;
+    property ImprimirLei12741      : Boolean read FImprimirLei12741 write FImprimirLei12741 default True;
   end ;
 
 procedure Register;
@@ -222,7 +233,7 @@ begin
     FLinhaCmd := IntToStrZero(CFe.Det.Items[i].nItem,3)+' '+
                  Trim(CFe.Det.Items[i].Prod.cProd)+' '+
                  Trim(CFe.Det.Items[i].Prod.xProd)+' '+
-                 DFeUtil.FormatFloat(CFe.Det.Items[i].Prod.qCom,Mask_qCom)+' '+
+                 DFeUtil.FormatFloat(CFe.Det.Items[i].Prod.qCom,Mask_vUnCom)+' '+
                  Trim(CFe.Det.Items[i].Prod.uCom)+' X '+
                  DFeUtil.FormatFloat(CFe.Det.Items[i].Prod.vUnCom,Mask_vUnCom)+' ';
     if CFe.Det.Items[i].Imposto.vItem12741 > 0 then
@@ -236,21 +247,36 @@ begin
 
     if CFe.Det.Items[i].Prod.vDesc > 0 then
     begin
+    if FLinhasEntItens > 0 then
+       PulaLinhas(FLinhasEntItens);
       FBuffer.Add(padS('Desconto|'+DFeUtil.FormatFloat(CFe.Det.Items[i].Prod.vDesc,'-#,###,##0.00'),64, '|'));
+    if FLinhasEntItens > 0 then
+       PulaLinhas(FLinhasEntItens);
       FBuffer.Add(padS('Valor líquido|'+DFeUtil.FormatFloat(CFe.Det.Items[i].Prod.vProd-CFe.Det.Items[i].Prod.vDesc,'#,###,##0.00'),64, '|'));
     end;
 
     if CFe.Det.Items[i].Prod.vOutro > 0 then
     begin
+    if FLinhasEntItens > 0 then
+       PulaLinhas(FLinhasEntItens);
       FBuffer.Add(padS('Acréscimo|'+DFeUtil.FormatFloat(CFe.Det.Items[i].Prod.vOutro,'+#,###,##0.00'),64, '|'));
+    if FLinhasEntItens > 0 then
+       PulaLinhas(FLinhasEntItens);
       FBuffer.Add(padS('Valor líquido|'+DFeUtil.FormatFloat(CFe.Det.Items[i].Prod.vProd+CFe.Det.Items[i].Prod.vOutro,'#,###,##0.00'),64, '|'));
     end;
 
     if CFe.Det.Items[i].Imposto.ISSQN.vDeducISSQN > 0 then
     begin
+    if FLinhasEntItens > 0 then
+       PulaLinhas(FLinhasEntItens);
       FBuffer.Add(padS('Dedução para ISSQN|'+DFeUtil.FormatFloat(CFe.Det.Items[i].Imposto.ISSQN.vDeducISSQN,'-#,###,##0.00'),64, '|'));
+    if FLinhasEntItens > 0 then
+       PulaLinhas(FLinhasEntItens);
       FBuffer.Add(padS('Base de cálculo ISSQN|'+DFeUtil.FormatFloat(CFe.Det.Items[i].Imposto.ISSQN.vBC,'#,###,##0.00'),64, '|'));
     end;
+
+    if FLinhasEntItens > 0 then
+       PulaLinhas(FLinhasEntItens);
   end;
   FBuffer.Add(cCmdAlinhadoEsquerda+cCmdFonteNormal);
 end;
@@ -265,11 +291,23 @@ begin
      Acrescimos := (CFe.Total.ICMSTot.vOutro + CFe.Total.DescAcrEntr.vAcresSubtot);
 
      if (Descontos > 0) or (Acrescimos > 0) then
+        Begin
         FBuffer.Add(cCmdFontePequena+padS('Subtotal|'+DFeUtil.FormatFloat(CFe.Total.ICMSTot.vProd,'#,###,##0.00'),64, '|'));
-     if Descontos > 0 then
+        if FLinhasEntTotais > 0 then
+           PulaLinhas(FLinhasEntItens);
+        End;
+     if (CFe.Total.ICMSTot.vDesc > 0) or (CFe.Total.DescAcrEntr.vDescSubtot>0) then
+        Begin
         FBuffer.Add(cCmdFontePequena+padS('Descontos|'+DFeUtil.FormatFloat(Descontos,'-#,###,##0.00'),64, '|'));
-     if Acrescimos > 0 then
+        if FLinhasEntTotais > 0 then
+           PulaLinhas(FLinhasEntItens);
+        End;
+     if (CFe.Total.ICMSTot.vOutro > 0) or (CFe.Total.DescAcrEntr.vAcresSubtot>0) then
+        Begin
         FBuffer.Add(cCmdFontePequena+padS('Acréscimos|'+DFeUtil.FormatFloat(Acrescimos,'+#,###,##0.00'),64, '|'));
+        if FLinhasEntTotais > 0 then
+           PulaLinhas(FLinhasEntItens);
+        End;
    end;
 
   FLinhaCmd := cCmdAlinhadoEsquerda+cCmdImpExpandido+
@@ -288,6 +326,9 @@ begin
    begin
      FBuffer.Add(cCmdFontePequena+padS(CodigoMPToDescricao(CFe.Pagto.Items[i].cMP)+'|'+
                  DFeUtil.FormatFloat(CFe.Pagto.Items[i].vMP,'#,###,##0.00'),64, '|'));
+     
+    if FLinhasEntPagamentos > 0 then
+       PulaLinhas(FLinhasEntPagamentos);
    end;
   if CFe.Pagto.vTroco > 0 then
      FBuffer.Add(cCmdFontePequena+padS('Troco R$|'+FormatFloat('#,###,##0.00',CFe.Pagto.vTroco),64, '|'));
@@ -321,11 +362,15 @@ begin
    begin
      FBuffer.Add(cCmdFonteNormal+'------------------------------------------------');
      FBuffer.Add('DADOS PARA ENTREGA');
+    if FLinhasEntDadosEntrega > 0 then
+       PulaLinhas(FLinhasEntDadosEntrega);
      FBuffer.Add(cCmdFontePequena+Trim(CFe.Entrega.xLgr)+' '+
                  Trim(CFe.Entrega.nro)+' '+
                  Trim(CFe.Entrega.xCpl)+' '+
                  Trim(CFe.Entrega.xBairro)+' '+
                  Trim(CFe.Entrega.xMun));
+    if FLinhasEntDadosEntrega > 0 then
+       PulaLinhas(FLinhasEntDadosEntrega);
      FBuffer.Add(CFe.Dest.xNome);
    end;
 end;
@@ -336,20 +381,27 @@ begin
   begin
     FBuffer.Add(cCmdFonteNormal+'------------------------------------------------');
     FBuffer.Add('OBSERVAÇÕES DO CONTRIBUINTE');
+    if FLinhasEntRodape > 0 then
+       PulaLinhas(FLinhasEntRodape);
     FBuffer.Add(cCmdFontePequena+StringReplace(Trim(CFe.InfAdic.infCpl),';',sLineBreak,[rfReplaceAll]));
   end;
 
-  if CFe.Total.vCFeLei12741 > 0 then
+  if (CFe.Total.vCFeLei12741 > 0) and
+     ((ImprimirLei12741) or (Trim(CFe.InfAdic.infCpl) = '' )) then
   begin
     if Trim(CFe.InfAdic.infCpl) = '' then
     begin
       FBuffer.Add(cCmdFonteNormal+'------------------------------------------------');
       FBuffer.Add('OBSERVAÇÕES DO CONTRIBUINTE');
+      if FLinhasEntRodape > 0 then
+         PulaLinhas(FLinhasEntRodape);
     end
     else
       FBuffer.Add(' ');
 
     FBuffer.Add(cCmdFontePequena+padS('Valor aproximado dos tributos do deste cupom R$ |'+cCmdImpNegrito+FormatFloat('#,###,##0.00',CFe.Total.vCFeLei12741),66, '|'));
+    if FLinhasEntRodape > 0 then
+       PulaLinhas(FLinhasEntRodape);
     FBuffer.Add(cCmdImpFimNegrito+'(conforme Lei Fed. 12.741/2012)');
     if not Resumido then
     begin
