@@ -1335,7 +1335,8 @@ begin
   3549102, // São João da Boa Vista/SP
   3549706, // São José do Rio Pardo/SP
   3556404, // Vargem Grande do Sul/SP
-  4202008  // Balneario Camboriu/SC
+  4202008, // Balneario Camboriu/SC
+  4126504  // Sertanopolis/PR
          : Provedor := 'SimplISS';
 
   4125506  // Sao Jose dos Pinhais/PR
