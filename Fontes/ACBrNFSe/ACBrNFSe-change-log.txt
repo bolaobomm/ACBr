@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/07/2015
+[*] Acrescentado a cidade Itumbiara/GO ao provedor ProData.
+    por: Ts1Desenvolvedor
+
 11/06/2015
 [*] Alterações para o provedor E&L.
     por: Heronim Antonio Marçal

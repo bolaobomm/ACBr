@@ -1261,6 +1261,7 @@ begin
          : Provedor := 'Natal';
 
   5208004, // Formosa/GO
+  5211503, // Itumbiara/GO
   5213103, // Mineiros/GO
   5217302, // Pirenopolis/GO
   5218805  // Rio Verde/GO
