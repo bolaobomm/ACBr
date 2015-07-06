@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/07/2015
+[*] Acrescentado a cidade Ubatuba/SP ao provedor Ginfes.
+    por: Danny
 [*] Acrescentado a cidade Paranaiba/MS ao provedor ISSNet.
     por: Foleyjf
 [*] Acrescentado a cidade Itumbiara/GO ao provedor ProData.
