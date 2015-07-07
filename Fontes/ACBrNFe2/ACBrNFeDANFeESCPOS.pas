@@ -79,6 +79,7 @@ type
     FMarcaImpressora: TACBrNFeMarcaImpressora;
     FLinhasEntreCupons: Integer;
     FImprimeEmUmaLinha: Boolean;
+    FImprimeInfAdProd: Boolean;
     FLinhaCmd: AnsiString;
     FBuffer: TStringList;
     FImprimeDescAcrescItem: Boolean;
@@ -197,6 +198,7 @@ type
     property ConfigBarras: TACBrECFConfigBarras read FConfigBarras write FConfigBarras;
     property LinhasEntreCupons: Integer read FLinhasEntreCupons write FLinhasEntreCupons default 21;
     property ImprimeEmUmaLinha: Boolean read FImprimeEmUmaLinha write FImprimeEmUmaLinha default True;
+    property ImprimeInfAdProd: Boolean read FImprimeInfAdProd write FImprimeInfAdProd default False;
     property ImprimeDescAcrescItem: Boolean read FImprimeDescAcrescItem write FImprimeDescAcrescItem default True;
     property UsaCodigoEanImpressao: Boolean read FUsaCodigoEanImpressao write FUsaCodigoEanImpressao default False;
     property IgnorarTagsFormatacao: Boolean read FIgnorarTagsFormatacao write FIgnorarTagsFormatacao default False;
@@ -842,7 +844,8 @@ var
   i: Integer;
   nTamDescricao: Integer;
   fQuant, VlrLiquido: Double;
-  sItem, sCodigo, sDescricao, sQuantidade, sUnidade, sVlrUnitario, sVlrProduto: AnsiString;
+  sItem, sCodigo, sDescricao, sInfadProd, sQuantidade, sUnidade, sVlrUnitario, sVlrProduto: AnsiString;
+  Txt : TStringList;
 begin
   if ImprimeItens then
   begin
@@ -854,6 +857,7 @@ begin
     begin
       sItem        := IntToStrZero(FpNFe.Det.Items[i].Prod.nItem, 3);
       sDescricao   := Trim(FpNFe.Det.Items[i].Prod.xProd);
+      sInfadProd   := Trim(FpNFe.Det.Items[i].infAdProd);
       sUnidade     := Trim(FpNFe.Det.Items[i].Prod.uCom);
       sVlrProduto  := FormatFloat('#,###,##0.00', FpNFe.Det.Items[i].Prod.vProd);
 
@@ -897,13 +901,41 @@ begin
         FLinhaCmd := StringReplace(FLinhaCmd, '[DesProd]', sDescricao, [rfReplaceAll]);
         FLinhaCmd := ParseTextESCPOS(FLinhaCmd);
         FBuffer.Add(cCmdAlinhadoEsquerda + cCmdFontePequena + FLinhaCmd);
+
+        if ImprimeInfAdProd then
+         begin
+          if trim(sInfadProd) <> '' then
+            begin
+              Txt := QuebraLinhas(sInfadProd,60);
+              for y := 0 to Txt.Count - 1 do
+                begin
+                  FBuffer.Add(cCmdAlinhadoEsquerda + cCmdFontePequena + '    '+ParseTextESCPOS(Txt.Strings[y]));
+                end;
+
+              Txt.Free;
+            end;  
+         end;
+         
       end
       else
       begin
         FLinhaCmd := sItem + ' ' + sCodigo + ' ' + sDescricao;
         FBuffer.Add(cCmdAlinhadoEsquerda + cCmdFontePequena + FLinhaCmd);
 
-        FLinhaCmd :=
+        if ImprimeInfAdProd then
+         begin
+          if trim(sInfadProd) <> '' then
+            begin
+              Txt := QuebraLinhas(sInfadProd,60);
+              for y := 0 to Txt.Count - 1 do
+                begin
+                  FBuffer.Add(cCmdAlinhadoEsquerda + cCmdFontePequena + '    '+ParseTextESCPOS(Txt.Strings[y]));
+                end;
+              Txt.Free;
+            end;
+         end;
+
+        FLinhaCmd := 
           padL(sQuantidade, 15) + ' ' + padL(sUnidade, 6) + ' X ' +
           padL(sVlrUnitario, 13) + '|' + sVlrProduto;
         FLinhaCmd := padS(FLinhaCmd, nColunasPapel, '|');
