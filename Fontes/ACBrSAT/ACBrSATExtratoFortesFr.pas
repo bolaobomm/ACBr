@@ -501,7 +501,7 @@ begin
       Endereco := Endereco + ' - '+Emit.EnderEmit.xMun;
     if (Emit.EnderEmit.CEP <> 0) then
     begin
-      CEP := IntToStrZero(Emit.EnderEmit.CEP, 8)
+      CEP := IntToStrZero(Emit.EnderEmit.CEP, 8);
       Endereco := Endereco + ' - '+copy(CEP,1,5)+'-'+copy(CEP,6,3);
     end;
   end;
