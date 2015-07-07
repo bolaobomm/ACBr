@@ -841,7 +841,7 @@ end;
 
 procedure TACBrNFeDANFeESCPOS.GerarItens;
 var
-  i: Integer;
+  i, y: Integer;
   nTamDescricao: Integer;
   fQuant, VlrLiquido: Double;
   sItem, sCodigo, sDescricao, sInfadProd, sQuantidade, sUnidade, sVlrUnitario, sVlrProduto: AnsiString;
@@ -906,7 +906,7 @@ begin
          begin
           if trim(sInfadProd) <> '' then
             begin
-              Txt := QuebraLinhas(sInfadProd,60);
+              Txt.Text := QuebraLinhas(sInfadProd,60);
               for y := 0 to Txt.Count - 1 do
                 begin
                   FBuffer.Add(cCmdAlinhadoEsquerda + cCmdFontePequena + '    '+ParseTextESCPOS(Txt.Strings[y]));
@@ -926,7 +926,7 @@ begin
          begin
           if trim(sInfadProd) <> '' then
             begin
-              Txt := QuebraLinhas(sInfadProd,60);
+              Txt.Text := QuebraLinhas(sInfadProd,60);
               for y := 0 to Txt.Count - 1 do
                 begin
                   FBuffer.Add(cCmdAlinhadoEsquerda + cCmdFontePequena + '    '+ParseTextESCPOS(Txt.Strings[y]));
