@@ -3156,7 +3156,8 @@ begin
     FLayout := LayNFeEvento;
 
   if (FEvento.Evento.Items[0].InfEvento.tpEvento = teEPECNFe) and
-     (FConfiguracoes.WebServices.UFCodigo = 35) then
+     (FConfiguracoes.WebServices.UFCodigo = 35) and
+     (FConfiguracoes.Geral.ModeloDF = moNFCe) then
     FLayout := LayNFCeEPEC;
 
   inherited DefinirURL;
