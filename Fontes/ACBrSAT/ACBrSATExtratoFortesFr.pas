@@ -905,12 +905,12 @@ begin
       if LayOut = lCancelamento then
       begin
          RLLayout := rlCancelamento;
-         RLLayout.Title := 'CFeCan: '+FormatarChaveAcesso(CFeCanc.infCFe.ID);
+         RLLayout.Title := 'CFeCan: '+DFeUtil.FormatarChaveAcesso(CFeCanc.infCFe.ID);
       end
       else
       begin
         RLLayout := rlVenda;
-        RLLayout.Title := 'CFe: '+FormatarChaveAcesso(CFe.infCFe.ID);
+        RLLayout.Title := 'CFe: '+DFeUtil.FormatarChaveAcesso(CFe.infCFe.ID);
         Resumido := (LayOut = lResumido);
       end;
 
