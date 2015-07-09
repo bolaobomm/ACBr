@@ -658,7 +658,7 @@ begin
   fsEscECFResposta := TACBrECFEscECFResposta.create ;
 
   fpDevice.HandShake := hsDTR_DSR ;
-  fpPaginaDeCodigo   := 850;
+  fpPaginaDeCodigo   := 1252;
   fsArqMemoria       := '';
 
   fpModeloStr := 'EscECF' ;
@@ -760,12 +760,14 @@ begin
 
      if IsBematech then
       begin
-        fpPaginaDeCodigo := 1252;
         if MaxLinhasBuffer = 0 then  // Bematech congela se receber um Buffer muito grande
            MaxLinhasBuffer := 5;
       end
      else if IsEpson then
+      begin
+        fpPaginaDeCodigo := 850;
         fpColunas := 57;
+      end;
 
      LeRespostasMemoria;
   except
@@ -1392,6 +1394,8 @@ begin
 
   if IsBematech then
     Result := TACBrECFBematech.create(fpOwner)
+  else if IsDaruma then
+    Result := TACBrECFDaruma.create(fpOwner)
   else if IsEpson then
   begin
     Result := TACBrECFEpson.create(fpOwner);
@@ -1498,7 +1502,12 @@ begin
     end
     else if IsEpson then
     begin
-      fsNumLoja := RetornaInfoECF('15|5');
+      RetornaInfoECF('99|15');
+      fsNumLoja := EscECFResposta.Params[9] ;
+    end
+    else if IsDaruma then
+    begin
+      fsNumLoja := RetornaInfoECF('200|129');
     end;
   end;
 
@@ -2534,7 +2543,11 @@ begin
 
   EscECFComando.CMD := 81;
 
-  PosAliq := Aliquotas.Count + 1;
+  if Aliquotas.Count < 1 then
+    PosAliq := 1
+  else
+    PosAliq := StrToIntDef( Aliquotas[ Aliquotas.Count-1 ].Indice, Aliquotas.Count)+1;
+
   if Posicao <> '' then
      PosAliq := StrToIntDef( Posicao, PosAliq );
 
@@ -2634,7 +2647,11 @@ begin
 
   EscECFComando.CMD := 84;
 
-  PosFPG := FormasPagamento.Count + 1;
+  if FormasPagamento.Count < 1 then
+    PosFPG := 1
+  else
+    PosFPG := StrToIntDef( FormasPagamento[ FormasPagamento.Count-1 ].Indice, FormasPagamento.Count)+1;
+
   if Posicao <> '' then
      PosFPG := StrToIntDef( Posicao, PosFPG );
 
@@ -2711,7 +2728,11 @@ begin
 
   EscECFComando.CMD := 86;
 
-  PosRel := RelatoriosGerenciais.Count + 1;
+  if RelatoriosGerenciais.Count < 1 then
+    PosRel := 1
+  else
+    PosRel := StrToIntDef( RelatoriosGerenciais[ RelatoriosGerenciais.Count-1 ].Indice, RelatoriosGerenciais.Count)+1;
+
   if Posicao <> '' then
      PosRel := StrToIntDef( Posicao, PosRel );
 
@@ -2794,7 +2815,11 @@ begin
 
   EscECFComando.CMD := 85;
 
-  PosCNF := ComprovantesNaoFiscais.Count + 1;
+  if ComprovantesNaoFiscais.Count < 1 then
+    PosCNF := 1
+  else
+    PosCNF := StrToIntDef( ComprovantesNaoFiscais[ ComprovantesNaoFiscais.Count-1 ].Indice, ComprovantesNaoFiscais.Count)+1;
+
   if Posicao <> '' then
      PosCNF := StrToIntDef( Posicao, PosCNF );
 

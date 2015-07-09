@@ -100,6 +100,13 @@ Símbolo : Significado
 Data: 09/07/2015
 -- ACBrECFEscECF -- (por: DSA)
 [*] Ajustes de Tamanho de colunas e Pag.Codigo para a Daruma FS800i
+[-] Correção de GetNumLoja para Epson TM-T800
+[+] Implementação de GetNumLoja para Daruma FS800i
+[+] Implementação de TraduzirTag e TraduzirTagBloco em Epson e Daruma (a testar)
+[+] Implementação de chamada a Metodos de uso da DLL (Ex: EspelhoMFD_DLL) em Daruma
+    (a testar)
+[-] Correção para numeração automática de Posição em ProgramaAliquota,
+    ProgramaFormaPagamento, ProgramaRelatorioGerencial, ProgramaComprovanteNaoFiscal
 
 Data: 08/07/2015
 -- ACBrECFEscECF -- (por: DSA)
@@ -114,7 +121,7 @@ Data: 06/07/2015
 [*] Workaround para falta de resposta do ECF Daruma FS800i em EfetuaPagamento
 
 Data: 03/07/2015
--- ACBrECFSwedaStx --  (por: DSA)
+-- ACBrECFSwedaStx -- (por: DSA)
 [-] Correção para VerificaFimLeitura, em mudança de estado com Erro =  0
 
 Data: 02/07/2015
@@ -150,7 +157,7 @@ Data: 16/06/2015
 Data: 15/06/2015
 -- ACBrECFBematech e ACBrDevice -- (por: batiati)
 [*] Inclusão da propriedade "Margem" na classe ConfigBarras
-	http://www.projetoacbr.com.br/forum/index.php?/topic/22083-acbrecf-centralizar-c%C3%B3digo-de-barras/
+    http://www.projetoacbr.com.br/forum/index.php?/topic/22083-acbrecf-centralizar-c%C3%B3digo-de-barras/
 
 Data: 08/06/2015
 -- ACBrECFSwedaStx -- (por: DSA)
