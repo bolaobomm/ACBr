@@ -97,6 +97,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 09/07/2015
+-- ACBrECFEscECF -- (por: DSA)
+[*] Ajustes de Tamanho de colunas e Pag.Codigo para a Daruma FS800i
+
 Data: 08/07/2015
 -- ACBrECFEscECF -- (por: DSA)
 [*] Ajuste para AbreNaoFiscal quando o CNPJ/CPF é recusado pelo ECF
